@@ -128,7 +128,9 @@ function verifyTypeScriptSetup() {
       parsedValue: ts.JsxEmit.React,
       suggested: 'react',
     },
-    jsxFactory: 'tpl',
+    jsxFactory: {
+      suggested: 'tpl',
+    },
     paths: { value: undefined, reason: 'aliased imports are not supported' },
   };
 

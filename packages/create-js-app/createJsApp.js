@@ -9,21 +9,21 @@
 //   /!\ DO NOT MODIFY THIS FILE /!\
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //
-// create-react-app is installed globally on people's computers. This means
+// create-js-app is installed globally on people's computers. This means
 // that it is extremely difficult to have them upgrade the version and
 // because there's only one global version installed, it is very prone to
 // breaking changes.
 //
-// The only job of create-react-app is to init the repository and then
-// forward all the commands to the local version of create-react-app.
+// The only job of create-js-app is to init the repository and then
+// forward all the commands to the local version of create-js-app.
 //
 // If you need to add a new command, please add it to the scripts/ folder.
 //
 // The only reason to modify this file is to add more warnings and
-// troubleshooting information for the `create-react-app` command.
+// troubleshooting information for the `create-js-app` command.
 //
 // Do not make breaking changes! We absolutely don't want to have to
-// tell people to update their global version of create-react-app.
+// tell people to update their global version of create-js-app.
 //
 // Also be careful with new language features.
 // This file must work on Node 6+.
@@ -77,7 +77,7 @@ const program = new commander.Command(packageJson.name)
   // TODO: Remove this in next major release.
   .option(
     '--typescript',
-    '(this option will be removed in favour of templates in the next major release of create-react-app)'
+    '(this option will be removed in favour of templates in the next major release of create-js-app)'
   )
   .allowUnknownOption()
   .on('--help', () => {
@@ -89,23 +89,21 @@ const program = new commander.Command(packageJson.name)
     console.log(`      - a specific npm version: ${chalk.green('0.8.2')}`);
     console.log(`      - a specific npm tag: ${chalk.green('@next')}`);
     console.log(
-      `      - a custom fork published on npm: ${chalk.green(
-        'my-react-scripts'
-      )}`
+      `      - a custom fork published on npm: ${chalk.green('my-js-scripts')}`
     );
     console.log(
       `      - a local path relative to the current working directory: ${chalk.green(
-        'file:../my-react-scripts'
+        'file:../my-js-scripts'
       )}`
     );
     console.log(
       `      - a .tgz archive: ${chalk.green(
-        'https://mysite.com/my-react-scripts-0.8.2.tgz'
+        'https://mysite.com/my-js-scripts-0.8.2.tgz'
       )}`
     );
     console.log(
       `      - a .tar.gz archive: ${chalk.green(
-        'https://mysite.com/my-react-scripts-0.8.2.tar.gz'
+        'https://mysite.com/my-js-scripts-0.8.2.tar.gz'
       )}`
     );
     console.log(
@@ -115,7 +113,7 @@ const program = new commander.Command(packageJson.name)
     console.log(`    A custom ${chalk.cyan('--template')} can be one of:`);
     console.log(
       `      - a custom fork published on npm: ${chalk.green(
-        'cra-template-typescript'
+        'cjsa-template-typescript'
       )}`
     );
     console.log(
@@ -138,9 +136,7 @@ const program = new commander.Command(packageJson.name)
       `    If you have any problems, do not hesitate to file an issue:`
     );
     console.log(
-      `      ${chalk.cyan(
-        'https://github.com/facebook/create-react-app/issues/new'
-      )}`
+      `      ${chalk.cyan('https://github.com/xania/create-js-app/issues/new')}`
     );
     console.log();
   })
@@ -158,8 +154,8 @@ if (program.info) {
         System: ['OS', 'CPU'],
         Binaries: ['Node', 'npm', 'Yarn'],
         Browsers: ['Chrome', 'Edge', 'Internet Explorer', 'Firefox', 'Safari'],
-        npmPackages: ['react', 'react-dom', 'react-scripts'],
-        npmGlobalPackages: ['create-react-app'],
+        npmPackages: ['react-scripts'],
+        npmGlobalPackages: ['create-js-app'],
       },
       {
         duplicates: true,
@@ -176,7 +172,7 @@ if (typeof projectName === 'undefined') {
   );
   console.log();
   console.log('For example:');
-  console.log(`  ${chalk.cyan(program.name())} ${chalk.green('my-react-app')}`);
+  console.log(`  ${chalk.cyan(program.name())} ${chalk.green('my-js-app')}`);
   console.log();
   console.log(
     `Run ${chalk.cyan(`${program.name()} --help`)} to see all options.`
@@ -233,7 +229,7 @@ function createApp(
   }
   console.log();
 
-  console.log(`Creating a new React app in ${chalk.green(root)}.`);
+  console.log(`Creating a new Js app in ${chalk.green(root)}.`);
   console.log();
 
   const packageJson = {
@@ -355,7 +351,7 @@ function install(root, useYarn, usePnp, dependencies, verbose, isOnline) {
       [].push.apply(args, dependencies);
 
       // Explicitly set cwd() to work around issues like
-      // https://github.com/facebook/create-react-app/issues/3326.
+      // https://github.com/facebook/create-js-app/issues/3326.
       // Unfortunately we can only do this for Yarn because npm support for
       // equivalent --prefix flag doesn't help with this issue.
       // This is why for npm, we run checkThatNpmCanReadCwd() early instead.
@@ -415,7 +411,7 @@ function run(
     getInstallPackage(version, originalDirectory),
     getTemplateInstallPackage(template, originalDirectory),
   ]).then(([packageToInstall, templateToInstall]) => {
-    const allDependencies = ['react', 'react-dom', packageToInstall];
+    const allDependencies = [packageToInstall];
 
     console.log('Installing packages. This might take a couple of minutes.');
 
@@ -459,19 +455,11 @@ function run(
 
         // TODO: Remove with next major release.
         if (!supportsTemplates && (template || '').includes('typescript')) {
-          allDependencies.push(
-            '@types/node',
-            '@types/react',
-            '@types/react-dom',
-            '@types/jest',
-            'typescript'
-          );
+          allDependencies.push('@types/node', '@types/jest', 'typescript');
         }
 
         console.log(
-          `Installing ${chalk.cyan('react')}, ${chalk.cyan(
-            'react-dom'
-          )}, and ${chalk.cyan(packageInfo.name)}${
+          `Installing ${chalk.cyan(packageInfo.name)}${
             supportsTemplates ? ` with ${chalk.cyan(templateInfo.name)}` : ''
           }...`
         );
@@ -590,7 +578,7 @@ function getInstallPackage(version, originalDirectory) {
     {
       name: 'react-scripts-ts',
       message: chalk.yellow(
-        `The react-scripts-ts package is deprecated. TypeScript is now supported natively in Create React App. You can use the ${chalk.green(
+        `The react-scripts-ts package is deprecated. TypeScript is now supported natively in Create Js App. You can use the ${chalk.green(
           '--template typescript'
         )} option instead when generating your app to include TypeScript support. Would you like to continue using react-scripts-ts?`
       ),
@@ -620,7 +608,7 @@ function getInstallPackage(version, originalDirectory) {
 }
 
 function getTemplateInstallPackage(template, originalDirectory) {
-  let templateToInstall = 'cra-template';
+  let templateToInstall = 'cjsa-template';
   if (template) {
     if (template.match(/^file:/)) {
       templateToInstall = `file:${path.resolve(
@@ -634,7 +622,7 @@ function getTemplateInstallPackage(template, originalDirectory) {
       // for tar.gz or alternative paths
       templateToInstall = template;
     } else {
-      // Add prefix 'cra-template-' to non-prefixed templates, leaving any
+      // Add prefix 'cjsa-template-' to non-prefixed templates, leaving any
       // @scope/ intact.
       const packageMatch = template.match(/^(@[^/]+\/)?(.+)$/);
       const scope = packageMatch[1] || '';
@@ -645,16 +633,16 @@ function getTemplateInstallPackage(template, originalDirectory) {
         templateName.startsWith(`${templateToInstall}-`)
       ) {
         // Covers:
-        // - cra-template
-        // - @SCOPE/cra-template
-        // - cra-template-NAME
-        // - @SCOPE/cra-template-NAME
+        // - cjsa-template
+        // - @SCOPE/cjsa-template
+        // - cjsa-template-NAME
+        // - @SCOPE/cjsa-template-NAME
         templateToInstall = `${scope}${templateName}`;
       } else if (templateName.startsWith('@')) {
         // Covers using @SCOPE only
         templateToInstall = `${templateName}/${templateToInstall}`;
       } else {
-        // Covers templates without the `cra-template` prefix:
+        // Covers templates without the `cjsa-template` prefix:
         // - NAME
         // - @SCOPE/NAME
         templateToInstall = `${scope}${templateToInstall}-${templateName}`;
@@ -831,7 +819,7 @@ function checkNodeVersion(packageName) {
     console.error(
       chalk.red(
         'You are running Node %s.\n' +
-          'Create React App requires Node %s or higher. \n' +
+          'Create Js App requires Node %s or higher. \n' +
           'Please update your version of Node.'
       ),
       process.version,
@@ -862,7 +850,7 @@ function checkAppName(appName) {
   }
 
   // TODO: there should be a single place that holds the dependencies
-  const dependencies = ['react', 'react-dom', 'react-scripts'].sort();
+  const dependencies = ['react-scripts'];
   if (dependencies.includes(appName)) {
     console.error(
       chalk.red(
@@ -915,9 +903,6 @@ function setCaretRangeForRuntimeDeps(packageName) {
     process.exit(1);
   }
 
-  makeCaretRange(packageJson.dependencies, 'react');
-  makeCaretRange(packageJson.dependencies, 'react-dom');
-
   fs.writeFileSync(packagePath, JSON.stringify(packageJson, null, 2) + os.EOL);
 }
 
@@ -925,7 +910,7 @@ function setCaretRangeForRuntimeDeps(packageName) {
 // Also, if project contains remnant error logs from a previous
 // installation, lets remove them now.
 // We also special case IJ-based products .idea because it integrates with CRA:
-// https://github.com/facebook/create-react-app/pull/368#issuecomment-243446094
+// https://github.com/facebook/create-js-app/pull/368#issuecomment-243446094
 function isSafeToCreateProjectIn(root, name) {
   const validFiles = [
     '.DS_Store',
@@ -1014,7 +999,7 @@ function getProxy() {
   }
 }
 
-// See https://github.com/facebook/create-react-app/pull/3355
+// See https://github.com/xania/create-js-app/pull/3355
 function checkThatNpmCanReadCwd() {
   const cwd = process.cwd();
   let childOutput = null;
