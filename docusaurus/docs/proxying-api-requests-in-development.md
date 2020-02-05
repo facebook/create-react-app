@@ -98,11 +98,17 @@ You can now register proxies as you wish! Here's an example using the above `htt
 const proxy = require('http-proxy-middleware');
 
 module.exports = function(app) {
-  app.use(
-    '/api',
-    proxy({
+  //http requests
+  app.use('/api', proxy('/api', {
       target: 'http://localhost:5000',
       changeOrigin: true,
+    })
+  );
+  //websocket requests
+  app.use('/ws', proxy('/ws', {
+      target: 'http://localhost:5000',
+      changeOrigin: true,
+      ws: true
     })
   );
 };
