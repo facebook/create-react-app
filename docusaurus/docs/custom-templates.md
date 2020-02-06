@@ -11,16 +11,8 @@ You'll notice that Custom Templates are always named in the format `cra-template
 
 Scoped templates are also supported, under the name `@[scope-name]/cra-template` or `@[scope-name]/cra-template-[template-name]`, which can be installed via `@[scope]` and `@[scope]/[template-name]` respectively.
 
-### npm
-
 ```sh
-npm init react-app my-app --template [template-name]
-```
-
-### Yarn
-
-```sh
-yarn create react-app my-app --template [template-name]
+npx create-react-app my-app --template [template-name]
 ```
 
 ## Finding custom templates
@@ -50,6 +42,14 @@ my-app/
       index.html
     src/
       index.js (or index.tsx)
+```
+
+### Testing a template
+
+To test a template locally, pass the file path to the directory of your template source using the `file:` prefix.
+
+```sh
+npx create-react-app my-app --template file:../path/to/your/template/cra-template-[template-name]
 ```
 
 ### The `template` folder

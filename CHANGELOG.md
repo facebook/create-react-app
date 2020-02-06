@@ -1,3 +1,125 @@
+## 3.3.1 (2020-01-31)
+
+v3.3.1 is a maintenance release that includes minor bug fixes and documentation updates.
+
+#### :bug: Bug Fix
+
+- `cra-template`
+  - [#8255](https://github.com/facebook/create-react-app/pull/8255) Add "Disallow:" to robots.txt ([@tomoyaf](https://github.com/tomoyaf))
+- `react-scripts`
+  - [#8281](https://github.com/facebook/create-react-app/pull/8281) Fix sass importLoaders ([@mariusc23](https://github.com/mariusc23))
+  - [#8099](https://github.com/facebook/create-react-app/pull/8099) Add titleProp to SVGR ReactComponent type definition ([@rhnorskov](https://github.com/rhnorskov))
+  - [#8028](https://github.com/facebook/create-react-app/pull/8028) fix(react-scripts): proactively append to .gitignore during generation ([@bmuenzenmeyer](https://github.com/bmuenzenmeyer))
+  - [#8106](https://github.com/facebook/create-react-app/pull/8106) Fix CSS font-face minification ([@sidonaldson](https://github.com/sidonaldson))
+- `babel-preset-react-app`
+  - [#8120](https://github.com/facebook/create-react-app/pull/8120) Sync dependencies babel config ([@ianschmitz](https://github.com/ianschmitz))
+- `react-dev-utils`
+  - [#8116](https://github.com/facebook/create-react-app/pull/8116) Add slashes to WebSocket protocol URL ([@Baael](https://github.com/Baael))
+  - [#8079](https://github.com/facebook/create-react-app/pull/8079) webpackHotDevClient now uses wss when https is used ([@mikecaulley](https://github.com/mikecaulley))
+
+#### :nail_care: Enhancement
+
+- `react-error-overlay`
+  - [#6548](https://github.com/facebook/create-react-app/pull/6548) Add helpful message to the footer ([@pyrogenic](https://github.com/pyrogenic))
+- `cra-template-typescript`
+  - [#8177](https://github.com/facebook/create-react-app/pull/8177) Remove React.FC from Typescript template ([@Retsam](https://github.com/Retsam))
+- `cra-template-typescript`, `cra-template`, `react-scripts`
+  - [#8219](https://github.com/facebook/create-react-app/pull/8219) Add template support for any package.json keys (#8082) ([@tomvalorsa](https://github.com/tomvalorsa))
+- `create-react-app`
+  - [#8298](https://github.com/facebook/create-react-app/pull/8298) Support shorthand scoped templates ([@kevin940726](https://github.com/kevin940726))
+  - [#8168](https://github.com/facebook/create-react-app/pull/8168) Add current version and bin location to --info output ([@heyimalex](https://github.com/heyimalex))
+- `cra-template-typescript`, `cra-template`
+  - [#8194](https://github.com/facebook/create-react-app/pull/8194) Replace favicon in templates ([@heyimalex](https://github.com/heyimalex))
+- `eslint-config-react-app`
+  - [#7803](https://github.com/facebook/create-react-app/pull/7803) Remove error for @typescript-eslint/no-namespace ([@szhu](https://github.com/szhu))
+
+#### :memo: Documentation
+
+- Other
+  - [#8380](https://github.com/facebook/create-react-app/pull/8380) docs: Add troubleshooting documentation on ENOSPC ([@huchenme](https://github.com/huchenme))
+  - [#8394](https://github.com/facebook/create-react-app/pull/8394) Update docs according to lint-staged v10 ([@lukyth](https://github.com/lukyth))
+  - [#8307](https://github.com/facebook/create-react-app/pull/8307) Remove outdated docs regarding vscode eslint extension and typescript autofix ([@alex-vukovity-cko](https://github.com/alex-vukovity-cko))
+  - [#8247](https://github.com/facebook/create-react-app/pull/8247) Update setting-up-your-editor.md ([@dev-xu](https://github.com/dev-xu))
+  - [#8092](https://github.com/facebook/create-react-app/pull/8092) Update custom template docs with instructions for testing custom template locally ([@kevinold](https://github.com/kevinold))
+  - [#8293](https://github.com/facebook/create-react-app/pull/8293) Minor grammatical edit ([@egrim](https://github.com/egrim))
+  - [#8212](https://github.com/facebook/create-react-app/pull/8212) Little typo ([@sonyarianto](https://github.com/sonyarianto))
+  - [#8147](https://github.com/facebook/create-react-app/pull/8147) update PWA docs links to point to template package ([@peet](https://github.com/peet))
+  - [#8132](https://github.com/facebook/create-react-app/pull/8132) Add package-runner note to readme ([@JeromeDeLeon](https://github.com/JeromeDeLeon))
+  - [#8111](https://github.com/facebook/create-react-app/pull/8111) chore: update docusaurus & tweak site ([@endiliey](https://github.com/endiliey))
+  - [#8080](https://github.com/facebook/create-react-app/pull/8080) Fix typo in CHANGELOG.md ([@Trontor](https://github.com/Trontor))
+  - [#8077](https://github.com/facebook/create-react-app/pull/8077) Add custom-templates to docs sidebar ([@ianschmitz](https://github.com/ianschmitz))
+- `babel-preset-react-app`
+  - [#8124](https://github.com/facebook/create-react-app/pull/8124) Fix typo in comment: `?.` is right, `.?` is not ([@vadzim](https://github.com/vadzim))
+
+#### :house: Internal
+
+- `create-react-app`
+  - [#8178](https://github.com/facebook/create-react-app/pull/8178) Minor refactors in create-react-app ([@heyimalex](https://github.com/heyimalex))
+
+#### :hammer: Underlying Tools
+
+- `babel-preset-react-app`, `create-react-app`, `react-dev-utils`, `react-error-overlay`, `react-scripts`
+  - [#8353](https://github.com/facebook/create-react-app/pull/8353) Remove outdated babel plugins ([@ianschmitz](https://github.com/ianschmitz))
+  - [#8324](https://github.com/facebook/create-react-app/pull/8324) Update Dependencies ([@RDIL](https://github.com/RDIL))
+  - [#8122](https://github.com/facebook/create-react-app/pull/8122) Fix CI build ([@ianschmitz](https://github.com/ianschmitz))
+- `react-dev-utils`
+  - [#8364](https://github.com/facebook/create-react-app/pull/8364) Downgrade open from 7.0.0 to 6.4.0 ([@vince1995](https://github.com/vince1995))
+  - [#8163](https://github.com/facebook/create-react-app/pull/8163) Bump pkgUp ([@andriijas](https://github.com/andriijas))
+- `babel-plugin-named-asset-import`
+  - [#8171](https://github.com/facebook/create-react-app/pull/8171) Bump babel-plugin-tester and fix breaking changes ([@andriijas](https://github.com/andriijas))
+- `create-react-app`, `react-app-polyfill`, `react-dev-utils`, `react-error-overlay`, `react-scripts`
+  - [#8176](https://github.com/facebook/create-react-app/pull/8176) Bump internal dependencies ([@andriijas](https://github.com/andriijas))
+- `create-react-app`, `react-dev-utils`, `react-error-overlay`
+  - [#8164](https://github.com/facebook/create-react-app/pull/8164) Bump chalk ([@andriijas](https://github.com/andriijas))
+- `react-error-overlay`, `react-scripts`
+  - [#8102](https://github.com/facebook/create-react-app/pull/8102) [Security] Update terser webpack plugin ([@RDIL](https://github.com/RDIL))
+
+#### Committers: 29
+
+- Alex Guerra ([@heyimalex](https://github.com/heyimalex))
+- Alex James Vukovity ([@alex-vukovity-cko](https://github.com/alex-vukovity-cko))
+- Andreas Cederström ([@andriijas](https://github.com/andriijas))
+- Boyuan Xu ([@dev-xu](https://github.com/dev-xu))
+- Brian Muenzenmeyer ([@bmuenzenmeyer](https://github.com/bmuenzenmeyer))
+- Endi ([@endiliey](https://github.com/endiliey))
+- Evan Grim ([@egrim](https://github.com/egrim))
+- Hu Chen ([@huchenme](https://github.com/huchenme))
+- Ian Schmitz ([@ianschmitz](https://github.com/ianschmitz))
+- Jerome De Leon ([@JeromeDeLeon](https://github.com/JeromeDeLeon))
+- Joshua Pollak ([@pyrogenic](https://github.com/pyrogenic))
+- Kai Hao ([@kevin940726](https://github.com/kevin940726))
+- Kanitkorn Sujautra ([@lukyth](https://github.com/lukyth))
+- Kevin Old ([@kevinold](https://github.com/kevinold))
+- Marius Craciunoiu ([@mariusc23](https://github.com/mariusc23))
+- Mike Caulley ([@mikecaulley](https://github.com/mikecaulley))
+- Peet Goddard ([@peet](https://github.com/peet))
+- Rasmus Nørskov ([@rhnorskov](https://github.com/rhnorskov))
+- Reece Dunham ([@RDIL](https://github.com/RDIL))
+- Sean Zhu ([@szhu](https://github.com/szhu))
+- Simon Donaldson ([@sidonaldson](https://github.com/sidonaldson))
+- Sony AK ([@sonyarianto](https://github.com/sonyarianto))
+- Tom Valorsa ([@tomvalorsa](https://github.com/tomvalorsa))
+- Tomoya Fujita ([@tomoyaf](https://github.com/tomoyaf))
+- Vadzim ([@vadzim](https://github.com/vadzim))
+- Vincent Semrau ([@vince1995](https://github.com/vince1995))
+- Wojciech Zieliński ([@Baael](https://github.com/Baael))
+- [@Retsam](https://github.com/Retsam)
+- [@Trontor](https://github.com/Trontor)
+
+### Migrating from 3.3.0 to 3.3.1
+
+Inside any created project that has not been ejected, run:
+
+```sh
+npm install --save --save-exact react-scripts@3.3.1
+```
+
+or
+
+```sh
+yarn add --exact react-scripts@3.3.1
+```
+
 ## 3.3.0 (2019-12-04)
 
 v3.3.0 is a minor release that adds new features, including custom templates and support for the new optional chaining and nullish coalescing operators.

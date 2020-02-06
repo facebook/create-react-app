@@ -22,21 +22,6 @@ Some editors, including Sublime Text, Atom, and Visual Studio Code, provide plug
 
 They are not required for linting. You should see the linter output right in your terminal as well as the browser console. If you prefer the lint results to appear right in your editor, please make sure you install an ESLint plugin/extension.
 
-If you're using TypeScript and Visual Studio Code, the [ESLint Visual Studio Code extension](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint#overview) currently [doesn't have TypeScript support enabled by default](https://github.com/Microsoft/vscode-eslint/issues/609). To enable TypeScript support in the ESLint extension, add the following to your project's Visual Studio Code settings file, located at `.vscode/settings.json` (you can create this file if it doesn't already exist):
-
-```json
-{
-  "eslint.validate": [
-    "javascript",
-    "javascriptreact",
-    { "language": "typescript", "autoFix": true },
-    { "language": "typescriptreact", "autoFix": true }
-  ]
-}
-```
-
-Now your editor should report the linting warnings.
-
 Note that even if you customise your ESLint config, these changes will **only affect the editor integration**. They won’t affect the terminal and in-browser lint output. This is because Create React App intentionally provides a minimal set of rules that find common mistakes.
 
 If you want to enforce a coding style for your project, consider using [Prettier](https://github.com/jlongster/prettier) instead of ESLint style rules.
@@ -166,8 +151,7 @@ Next we add a 'lint-staged' field to the `package.json`, for example:
   },
 + "lint-staged": {
 +   "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
-+     "prettier --write",
-+     "git add"
++     "prettier --write"
 +   ]
 + },
   "scripts": {
