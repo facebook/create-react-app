@@ -158,6 +158,13 @@ module.exports = function(webpackEnv) {
     // These are the "entry points" to our application.
     // This means they will be the "root" imports that are included in JS bundle.
     entry: [
+      // START: EVERLONG CHANGES - FRONTEND-99
+      // this is hopefully a temporary fix for
+      // https://github.com/facebook/create-react-app/issues/8405
+      // from this comment:https://github.com/facebook/create-react-app/issues/8405#issuecomment-582388530
+      './node_modules/core-js/es/object/entries.js',
+      // END: EVERLONG CHANGES - FRONTEND-99
+
       // Include an alternative client for WebpackDevServer. A client's job is to
       // connect to WebpackDevServer by a socket and get notified about changes.
       // When you save a file, the client will either apply hot updates (in case
