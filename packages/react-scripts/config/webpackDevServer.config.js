@@ -108,6 +108,7 @@ module.exports = function(proxy, allowedHost) {
       index: paths.publicUrlOrPath,
     },
     public: allowedHost,
+    // `proxy` is run between `before` and `after` `webpack-dev-server` hooks
     proxy,
     before(app, server) {
       // Keep `evalSourceMapMiddleware` and `errorOverlayMiddleware`
@@ -117,13 +118,14 @@ module.exports = function(proxy, allowedHost) {
       // This lets us open files from the runtime error overlay.
       app.use(errorOverlayMiddleware());
 
-      // Redirect to `PUBLIC_URL` or `homepage` from `package.json` if url not match
-      app.use(redirectServedPath(paths.publicUrlOrPath));
-
       if (fs.existsSync(paths.proxySetup)) {
         // This registers user provided middleware for proxy reasons
         require(paths.proxySetup)(app);
       }
+    },
+    after(app) {
+      // Redirect to `PUBLIC_URL` or `homepage` from `package.json` if url not match
+      app.use(redirectServedPath(paths.publicUrlOrPath));
 
       // This service worker file is effectively a 'no-op' that will reset any
       // previous service worker registered for the same host:port combination.

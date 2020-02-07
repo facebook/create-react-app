@@ -356,7 +356,7 @@ function onProxyError(proxy) {
   };
 }
 
-function prepareProxy(proxy, appPublicFolder) {
+function prepareProxy(proxy, appPublicFolder, servedPathname) {
   // `proxy` lets you specify alternate servers for specific requests.
   if (!proxy) {
     return undefined;
@@ -380,7 +380,10 @@ function prepareProxy(proxy, appPublicFolder) {
   const sockPath = process.env.WDS_SOCKET_PATH || '/sockjs-node';
   const isDefaultSockHost = !process.env.WDS_SOCKET_HOST;
   function mayProxy(pathname) {
-    const maybePublicPath = path.resolve(appPublicFolder, pathname.slice(1));
+    const maybePublicPath = path.resolve(
+      appPublicFolder,
+      pathname.replace(new RegExp('^' + servedPathname), '')
+    );
     const isPublicFileRequest = fs.existsSync(maybePublicPath);
     // used by webpackHotDevClient
     const isWdsEndpointRequest =
