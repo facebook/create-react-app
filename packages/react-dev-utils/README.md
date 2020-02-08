@@ -345,7 +345,7 @@ The `args` object accepts a number of properties:
 - **tscCompileOnError** `boolean`: If `true`, errors in TypeScript type checking will not prevent start script from running app, and will not cause build script to exit unsuccessfully. Also downgrades all TypeScript type checking error messages to warning messages.
 - **webpack** `function`: A reference to the webpack constructor.
 
-##### `prepareProxy(proxySetting: string, appPublicFolder: string): Object`
+##### `prepareProxy(proxySetting: string, appPublicFolder: string, servedPathname: string): Object`
 
 Creates a WebpackDevServer `proxy` configuration object from the `proxy` setting in `package.json`.
 
