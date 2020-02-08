@@ -12,6 +12,7 @@ const fs = require('fs');
 const path = require('path');
 const webpack = require('webpack');
 const resolve = require('resolve');
+const glob = require('glob');
 const StaticSiteGeneratorPlugin = require('static-site-generator-webpack-plugin');
 const PnpWebpackPlugin = require('pnp-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -409,7 +410,10 @@ module.exports = function(webpackEnv, options = {}) {
         // To fix this, we prevent you from importing files out of src/ -- if you'd like to,
         // please link the files into your node_modules/ and let module-resolution kick in.
         // Make sure your source files are compiled, as they will not be processed in any way.
-        new ModuleScopePlugin(paths.appSrc, [paths.appPackageJson]),
+        new ModuleScopePlugin(paths.appSrc, [
+          paths.appPackageJson,
+          ...glob.sync(path.join(paths.appPath, '/*.md')),
+        ]),
       ],
     },
     resolveLoader: {
