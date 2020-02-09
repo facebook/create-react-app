@@ -379,6 +379,9 @@ module.exports = function(webpackEnv) {
             },
           ],
           include: paths.appSrc,
+          resolve: {
+            symlinks: false,
+          },
         },
         {
           // "oneOf" will traverse all following loaders until one will
@@ -401,9 +404,6 @@ module.exports = function(webpackEnv) {
             {
               test: /\.(js|mjs|jsx|ts|tsx)$/,
               include: paths.appSrc,
-              resolve: {
-                symlinks: false
-              },
               loader: require.resolve('babel-loader'),
               options: {
                 customize: require.resolve(
@@ -576,6 +576,9 @@ module.exports = function(webpackEnv) {
             // ** STOP ** Are you adding a new loader?
             // Make sure to add the new loader(s) before the "file" loader.
           ],
+          resolve: {
+            symlinks: false,
+          },
         },
       ],
     },
