@@ -1,15 +1,15 @@
 {
-  "name": "babel-preset-react-app",
-  "version": "9.1.0",
-  "description": "Babel preset used by Create React App",
+  "name": "xometry-babel-preset-react-app",
+  "version": "9.2.0",
+  "description": "Xometry Babel preset used by Xometry Create React App",
   "repository": {
     "type": "git",
-    "url": "https://github.com/facebook/create-react-app.git",
+    "url": "https://github.com/xometry/create-react-app.git",
     "directory": "packages/babel-preset-react-app"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/facebook/create-react-app/issues"
+    "url": "https://github.com/xometry/create-react-app/issues"
   },
   "files": [
     "create.js",
@@ -38,6 +38,7 @@
     "@babel/preset-typescript": "7.7.4",
     "@babel/runtime": "7.7.6",
     "babel-plugin-dynamic-import-node": "2.3.0",
+    "babel-plugin-emotion": "^10.0.27",
     "babel-plugin-macros": "2.8.0",
     "babel-plugin-transform-react-remove-prop-types": "0.4.24"
   }
