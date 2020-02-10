@@ -1,6 +1,6 @@
 {
   "name": "xometry-react-scripts",
-  "version": "3.4.0",
+  "version": "3.5.0",
   "description": "Xometry configuration and scripts for Create React App.",
   "repository": {
     "type": "git",
@@ -36,7 +36,6 @@
     "babel-jest": "^24.9.0",
     "babel-loader": "8.0.6",
     "babel-plugin-named-asset-import": "^0.3.5",
-    "babel-preset-react-app": "^9.1.0",
     "camelcase": "^5.3.1",
     "case-sensitive-paths-webpack-plugin": "2.2.0",
     "css-loader": "3.3.2",
@@ -79,7 +78,8 @@
     "webpack": "4.41.2",
     "webpack-dev-server": "3.9.0",
     "webpack-manifest-plugin": "2.2.0",
-    "workbox-webpack-plugin": "4.3.1"
+    "workbox-webpack-plugin": "4.3.1",
+    "xometry-babel-preset-react-app": "^9.2.0"
   },
   "devDependencies": {
     "react": "^16.12.0",
