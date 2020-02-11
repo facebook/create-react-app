@@ -287,9 +287,14 @@ getProcessForPort(3000);
 
 On macOS, tries to find a known running editor process and opens the file in it. It can also be explicitly configured by `REACT_EDITOR`, `VISUAL`, or `EDITOR` environment variables. For example, you can put `REACT_EDITOR=atom` in your `.env.local` file, and Create React App will respect that.
 
-#### `noopServiceWorkerMiddleware(): ExpressMiddleware`
+#### `noopServiceWorkerMiddleware(servedPath: string): ExpressMiddleware`
 
-Returns Express middleware that serves a `/service-worker.js` that resets any previously set service worker configuration. Useful for development.
+Returns Express middleware that serves a `${servedPath}/service-worker.js` that resets any previously set service worker configuration. Useful for development.
+
+#### `redirectServedPathMiddleware(servedPath: string): ExpressMiddleware`
+
+Returns Express middleware that redirects to `${servedPath}/${req.path}`, if `req.url`
+does not start with `servedPath`. Useful for development.
 
 #### `openBrowser(url: string): boolean`
 
@@ -314,7 +319,7 @@ Pass your parsed `package.json` object as `appPackage`, your the URL where you p
 
 ```js
 const appPackage = require(paths.appPackageJson);
-const publicUrl = paths.publicUrl;
+const publicUrl = paths.publicUrlOrPath;
 const publicPath = config.output.publicPath;
 printHostingInstructions(appPackage, publicUrl, publicPath, 'build', true);
 ```
@@ -340,11 +345,11 @@ The `args` object accepts a number of properties:
 - **tscCompileOnError** `boolean`: If `true`, errors in TypeScript type checking will not prevent start script from running app, and will not cause build script to exit unsuccessfully. Also downgrades all TypeScript type checking error messages to warning messages.
 - **webpack** `function`: A reference to the webpack constructor.
 
-##### `prepareProxy(proxySetting: string, appPublicFolder: string): Object`
+##### `prepareProxy(proxySetting: string, appPublicFolder: string, servedPathname: string): Object`
 
 Creates a WebpackDevServer `proxy` configuration object from the `proxy` setting in `package.json`.
 
-##### `prepareUrls(protocol: string, host: string, port: number): Object`
+##### `prepareUrls(protocol: string, host: string, port: number, pathname: string = '/'): Object`
 
 Returns an object with local and remote URLs for the development server. Pass this object to `createCompiler()` described above.
 
@@ -414,5 +419,5 @@ Returns a cache identifier (string) consisting of the specified environment and 
 ```js
 var getCacheIdentifier = require('react-dev-utils/getCacheIdentifier');
 
-getCacheIdentifier('prod', ['react-dev-utils', 'chalk']); // # => 'prod:react-dev-utils@5.0.0:chalk@2.4.1'
+getCacheIdentifier('prod', ['react-dev-utils', 'chalk']); // # => 'prod:react-dev-utils@5.0.0:chalk@3.0.0'
 ```

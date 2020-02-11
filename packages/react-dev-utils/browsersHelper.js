@@ -67,7 +67,7 @@ function checkBrowsers(dir, isInteractive, retry = true) {
     }
 
     return (
-      pkgUp(dir)
+      pkgUp({ cwd: dir })
         .then(filePath => {
           if (filePath == null) {
             return Promise.reject();
