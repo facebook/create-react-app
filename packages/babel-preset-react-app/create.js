@@ -117,29 +117,29 @@ module.exports = function(api, opts, env) {
       // Experimental macros support. Will be documented after it's had some time
       // in the wild.
       require('babel-plugin-macros'),
-      // Necessary to include regardless of the environment because
-      // in practice some other transforms (such as object-rest-spread)
-      // don't work without it: https://github.com/babel/babel/issues/7215
-      [
-        require('@babel/plugin-transform-destructuring').default,
-        {
-          // Use loose mode for performance:
-          // https://github.com/facebook/create-react-app/issues/5602
-          loose: false,
-          selectiveLoose: [
-            'useState',
-            'useEffect',
-            'useContext',
-            'useReducer',
-            'useCallback',
-            'useMemo',
-            'useRef',
-            'useImperativeHandle',
-            'useLayoutEffect',
-            'useDebugValue',
-          ],
-        },
-      ],
+      // Disabled as it's handled automatically by preset-env, and `selectiveLoose` isn't
+      // yet merged into babel: https://github.com/babel/babel/pull/9486
+      // Related: https://github.com/facebook/create-react-app/pull/8215
+      // [
+      //   require('@babel/plugin-transform-destructuring').default,
+      //   {
+      //     // Use loose mode for performance:
+      //     // https://github.com/facebook/create-react-app/issues/5602
+      //     loose: false,
+      //     selectiveLoose: [
+      //       'useState',
+      //       'useEffect',
+      //       'useContext',
+      //       'useReducer',
+      //       'useCallback',
+      //       'useMemo',
+      //       'useRef',
+      //       'useImperativeHandle',
+      //       'useLayoutEffect',
+      //       'useDebugValue',
+      //     ],
+      //   },
+      // ],
       // Turn on legacy decorators for TypeScript files
       isTypeScriptEnabled && [
         require('@babel/plugin-proposal-decorators').default,
@@ -154,15 +154,8 @@ module.exports = function(api, opts, env) {
           loose: true,
         },
       ],
-      // The following two plugins use Object.assign directly, instead of Babel's
-      // extends helper. Note that this assumes `Object.assign` is available.
-      // { ...todo, completed: true }
-      [
-        require('@babel/plugin-proposal-object-rest-spread').default,
-        {
-          useBuiltIns: true,
-        },
-      ],
+      // Adds Numeric Separators
+      require('@babel/plugin-proposal-numeric-separator').default,
       // Polyfills the runtime needed for async/await, generators, and friends
       // https://babeljs.io/docs/en/babel-plugin-transform-runtime
       [
@@ -192,11 +185,6 @@ module.exports = function(api, opts, env) {
           removeImport: true,
         },
       ],
-      // Adds syntax support for import()
-      require('@babel/plugin-syntax-dynamic-import').default,
-      isEnvTest &&
-        // Transform dynamic import to require
-        require('babel-plugin-dynamic-import-node'),
     ].filter(Boolean),
     overrides: [
       isFlowEnabled && {

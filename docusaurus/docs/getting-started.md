@@ -30,11 +30,11 @@ When you’re ready to deploy to production, create a minified bundle with `npm 
 
 You **don’t** need to install or configure tools like Webpack or Babel. They are preconfigured and hidden so that you can focus on the code.
 
-Just create a project, and you’re good to go.
+Create a project, and you’re good to go.
 
 ## Creating an App
 
-**You’ll need to have Node >= 8.10 on your local development machine** (but it’s not required on the server). You can use [nvm](https://github.com/creationix/nvm#installation) (macOS/Linux) or [nvm-windows](https://github.com/coreybutler/nvm-windows#node-version-manager-nvm-for-windows) to easily switch Node versions between different projects.
+**You’ll need to have Node >= 8.10 on your local development machine** (but it’s not required on the server). You can use [nvm](https://github.com/creationix/nvm#installation) (macOS/Linux) or [nvm-windows](https://github.com/coreybutler/nvm-windows#node-version-manager-nvm-for-windows) to switch Node versions between different projects.
 
 To create a new app, you may choose one of the following methods:
 
@@ -62,13 +62,35 @@ yarn create react-app my-app
 
 _`yarn create` is available in Yarn 0.25+_
 
-### Creating a TypeScript app
+### Selecting a template
 
-Follow our [Adding TypeScript](adding-typescript.md) documentation to create a TypeScript app.
+You can now optionally start a new app from a template by appending `--template [template-name]` to the creation command.
+
+If you don't select a template, we'll create your project with our base template.
+
+Templates are always named in the format `cra-template-[template-name]`, however you only need to provide the `[template-name]` to the creation command.
+
+```sh
+npx create-react-app my-app --template [template-name]
+```
+
+> You can find a list of available templates by searching for ["cra-template-\*"](https://www.npmjs.com/search?q=cra-template-*) on npm.
+
+Our [Custom Templates](custom-templates.md) documentation describes how you can build your own template.
+
+#### Creating a TypeScript app
+
+You can start a new TypeScript app using templates. To use our provided TypeScript template, append `--template typescript` to the creation command.
+
+```sh
+npx create-react-app my-app --template typescript
+```
+
+If you already have a project and would like to add TypeScript, see our [Adding TypeScript](adding-typescript.md) documentation.
 
 ### Selecting a package manager
 
-When you create a new app, the CLI will use [Yarn](https://yarnpkg.com/) to install dependencies (when available). If you have Yarn installed, but would prefer to use npm, you can append --use-npm to the creation command. For example:
+When you create a new app, the CLI will use [Yarn](https://yarnpkg.com/) to install dependencies (when available). If you have Yarn installed, but would prefer to use npm, you can append `--use-npm` to the creation command. For example:
 
 ```sh
 npx create-react-app my-app --use-npm
@@ -101,7 +123,7 @@ my-app
     └── serviceWorker.js
 ```
 
-No configuration or complicated folder structures, just the files you need to build your app. Once the installation is done, you can open your project folder:
+No configuration or complicated folder structures, only the files you need to build your app. Once the installation is done, you can open your project folder:
 
 ```sh
 cd my-app
@@ -125,7 +147,7 @@ The page will automatically reload if you make changes to the code. You will see
 
 Runs the test watcher in an interactive mode. By default, runs tests related to files changed since the last commit.
 
-[Read more about testing](https://facebook.github.io/create-react-app/docs/running-tests).
+[Read more about testing](running-tests.md).
 
 ### `npm run build` or `yarn build`
 

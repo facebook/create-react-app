@@ -39,7 +39,7 @@ To enable `scss` in Create React App you will need to install `node-sass`.
 npm install --save node-sass
 ```
 
-Alternatively you may use `yarn`::
+Alternatively you may use `yarn`:
 
 ```sh
 yarn add node-sass
