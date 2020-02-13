@@ -123,7 +123,14 @@ function startBrowserProcess(browser, url, args) {
   // Fallback to open
   // (It will always open new tab)
   try {
-    var options = { app: browser, wait: false, url: true };
+    var options = {
+      // only pass app if there were explicit BROWSER_ARGS,
+      // because $BROWSER is better handled by 'open' (https://github.com/sindresorhus/open)
+      // which is based on xdg-open.
+      app: args.length > 0 ? browser : undefined,
+      wait: false,
+      url: true,
+    };
     open(url, options).catch(() => {}); // Prevent `unhandledRejection` error.
     return true;
   } catch (err) {
