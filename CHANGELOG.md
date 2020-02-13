@@ -219,6 +219,10 @@ In build mode (`npm run build`) entries are:
 
 `src/styleguide/index.js` is no longer treated as entry and have to be moved to `src/styleguide.js`. `src/styleguide/styleguide.html` to `public/styleguide.html` or `src/styleguide.html`.
 
+#### lighter-react-scripts Webpack entry names don't start with slash `/`
+
+Entry names in lighter-react-scripts don't start anymore with slash `/`.
+
 #### lighter-react-scripts paths in SCSS
 
 Import paths in SCSS files are no longer aliased to `src/styles` and full relative paths has to be written.
