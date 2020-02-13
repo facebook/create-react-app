@@ -59,7 +59,7 @@ module.exports = function(proxy, allowedHost) {
     // In JavaScript code, you can access it with `process.env.PUBLIC_URL`.
     // Note that we only recommend to use `public` folder as an escape hatch
     // for files like `favicon.ico`, `manifest.json`, and libraries that are
-    // for some reason broken when imported through Webpack. If you just want to
+    // for some reason broken when imported through webpack. If you just want to
     // use an image, put it in `src` and `import` it from JavaScript instead.
     contentBase: paths.appPublic,
     contentBasePublicPath: paths.publicUrlOrPath,
@@ -68,7 +68,7 @@ module.exports = function(proxy, allowedHost) {
     // Enable hot reloading server. It will provide WDS_SOCKET_PATH endpoint
     // for the WebpackDevServer client so it can learn when the files were
     // updated. The WebpackDevServer client is included as an entry point
-    // in the Webpack development configuration. Note that only changes
+    // in the webpack development configuration. Note that only changes
     // to CSS are currently hot reloaded. JS changes will refresh the browser.
     hot: true,
     // Use 'ws' instead of 'sockjs-node' on server since we're using native
@@ -84,7 +84,7 @@ module.exports = function(proxy, allowedHost) {
     sockPath,
     sockPort,
     // It is important to tell WebpackDevServer to use the same "publicPath" path as
-    // we specified in the Webpack config. When homepage is '.', default to serving
+    // we specified in the webpack config. When homepage is '.', default to serving
     // from the root.
     // remove last slash so user can land on `/test` instead of `/test/`
     publicPath: paths.publicUrlOrPath.slice(0, -1),

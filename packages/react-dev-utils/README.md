@@ -20,7 +20,7 @@ There is no single entry point. You can only import individual top-level modules
 
 #### `new InterpolateHtmlPlugin(htmlWebpackPlugin: HtmlWebpackPlugin, replacements: {[key:string]: string})`
 
-This Webpack plugin lets us interpolate custom variables into `index.html`.<br>
+This webpack plugin lets us interpolate custom variables into `index.html`.<br>
 It works in tandem with [HtmlWebpackPlugin](https://github.com/ampedandwired/html-webpack-plugin) 2.x via its [events](https://github.com/ampedandwired/html-webpack-plugin#events).
 
 ```js
@@ -28,7 +28,7 @@ var path = require('path');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 
-// Webpack config
+// webpack config
 var publicUrl = '/my-custom-url';
 
 module.exports = {
@@ -58,7 +58,7 @@ module.exports = {
 
 #### `new InlineChunkHtmlPlugin(htmlWebpackPlugin: HtmlWebpackPlugin, tests: Regex[])`
 
-This Webpack plugin inlines script chunks into `index.html`.<br>
+This webpack plugin inlines script chunks into `index.html`.<br>
 It works in tandem with [HtmlWebpackPlugin](https://github.com/ampedandwired/html-webpack-plugin) 4.x.
 
 ```js
@@ -66,7 +66,7 @@ var path = require('path');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var InlineChunkHtmlPlugin = require('react-dev-utils/InlineChunkHtmlPlugin');
 
-// Webpack config
+// webpack config
 var publicUrl = '/my-custom-url';
 
 module.exports = {
@@ -91,7 +91,7 @@ module.exports = {
 
 #### `new ModuleScopePlugin(appSrc: string | string[], allowedFiles?: string[])`
 
-This Webpack plugin ensures that relative imports from app's source directories don't reach outside of it.
+This webpack plugin ensures that relative imports from app's source directories don't reach outside of it.
 
 ```js
 var path = require('path');
@@ -113,21 +113,21 @@ module.exports = {
 
 #### `new WatchMissingNodeModulesPlugin(nodeModulesPath: string)`
 
-This Webpack plugin ensures `npm install <library>` forces a project rebuild.<br>
-We’re not sure why this isn't Webpack's default behavior.<br>
+This webpack plugin ensures `npm install <library>` forces a project rebuild.<br>
+We’re not sure why this isn't webpack's default behavior.<br>
 See [#186](https://github.com/facebook/create-react-app/issues/186) for details.
 
 ```js
 var path = require('path');
 var WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
 
-// Webpack config
+// webpack config
 module.exports = {
   // ...
   plugins: [
     // ...
     // If you require a missing module and then `npm install` it, you still have
-    // to restart the development server for Webpack to discover it. This plugin
+    // to restart the development server for webpack to discover it. This plugin
     // makes the discovery automatic so you don't have to restart.
     // See https://github.com/facebook/create-react-app/issues/186
     new WatchMissingNodeModulesPlugin(path.resolve('node_modules')),
@@ -315,7 +315,7 @@ if (openBrowser('http://localhost:3000')) {
 
 Prints hosting instructions after the project is built.
 
-Pass your parsed `package.json` object as `appPackage`, your the URL where you plan to host the app as `publicUrl`, `output.publicPath` from your Webpack configuration as `publicPath`, the `buildFolder` name, and whether to `useYarn` in instructions.
+Pass your parsed `package.json` object as `appPackage`, your the URL where you plan to host the app as `publicUrl`, `output.publicPath` from your webpack configuration as `publicPath`, the `buildFolder` name, and whether to `useYarn` in instructions.
 
 ```js
 const appPackage = require(paths.appPackageJson);
@@ -332,7 +332,7 @@ Returns a Promise resolving to either `defaultPort` or next available port if th
 
 ##### `createCompiler(args: Object): WebpackCompiler`
 
-Creates a Webpack compiler instance for WebpackDevServer with built-in helpful messages.
+Creates a webpack compiler instance for WebpackDevServer with built-in helpful messages.
 
 The `args` object accepts a number of properties:
 
@@ -357,10 +357,10 @@ Returns an object with local and remote URLs for the development server. Pass th
 
 This is an alternative client for [WebpackDevServer](https://github.com/webpack/webpack-dev-server) that shows a syntax error overlay.
 
-It currently supports only Webpack 3.x.
+It currently supports only webpack 3.x.
 
 ```js
-// Webpack development config
+// webpack development config
 module.exports = {
   // ...
   entry: [

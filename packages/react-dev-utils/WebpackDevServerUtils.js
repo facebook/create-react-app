@@ -111,7 +111,7 @@ function createCompiler({
   tscCompileOnError,
   webpack,
 }) {
-  // "Compiler" is a low-level interface to Webpack.
+  // "Compiler" is a low-level interface to webpack.
   // It lets us listen to some events and provide our own custom messages.
   let compiler;
   try {
@@ -124,7 +124,7 @@ function createCompiler({
     process.exit(1);
   }
 
-  // "invalid" event fires when you have changed a file, and Webpack is
+  // "invalid" event fires when you have changed a file, and webpack is
   // recompiling a bundle. WebpackDevServer takes care to pause serving the
   // bundle, so if you refresh, it'll wait instead of serving the old one.
   // "invalid" is short for "bundle invalidated", it doesn't imply any errors.
@@ -162,14 +162,14 @@ function createCompiler({
       });
   }
 
-  // "done" event fires when Webpack has finished recompiling the bundle.
+  // "done" event fires when webpack has finished recompiling the bundle.
   // Whether or not you have warnings or errors, you will get this event.
   compiler.hooks.done.tap('done', async stats => {
     if (isInteractive) {
       clearConsole();
     }
 
-    // We have switched off the default Webpack output in WebpackDevServer
+    // We have switched off the default webpack output in WebpackDevServer
     // options so we are going to "massage" the warnings and errors and present
     // them in a readable focused way.
     // We only construct the warnings and errors for speed:
