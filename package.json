@@ -59,5 +59,6 @@
     "yarn.lock": [
       "git rm --cached"
     ]
-  }
+  },
+  "version": "0.0.0"
 }
