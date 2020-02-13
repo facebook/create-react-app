@@ -1,0 +1,14 @@
+tasks:
+  - name: create-react-app
+    init: yarn install --mutex network && yarn build
+    command: yarn start
+  - name: create-react-app (website)
+    openMode: split-right
+    before: cd docusaurus/website
+    init: yarn install --mutex network
+    command: yarn start
+ports:
+  - port: 3000
+    onOpen: open-preview
+  - port: 3001
+    onOpen: ignore
