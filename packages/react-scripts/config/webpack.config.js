@@ -693,10 +693,10 @@ module.exports = function(webpackEnv) {
           // navigateFallback: paths.publicUrlOrPath + 'index.html',
           swSrc: `${paths.appSrc}/sw.js`,
           swDest: `${paths.appBuild}/service-worker.js`,
-          globDirectory: paths.appBuild,
-          importScripts: [
-            'https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js',
-          ],
+          // globDirectory: paths.appBuild,
+          // importScripts: [
+          //   'https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js',
+          // ],
         }),
       // TypeScript type checking
       useTypeScript &&

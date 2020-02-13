@@ -1,17 +1,22 @@
+/* eslint-disable no-restricted-globals */
+import { clientsClaim } from 'workbox-core';
+import { NavigationRoute, registerRoute } from 'workbox-routing';
+import { precacheAndRoute, createHandlerBoundToURL } from 'workbox-precaching';
+
 self.addEventListener('message', function(event) {
   if (event.data && event.data.type === 'SKIP_WAITING') {
     self.skipWaiting();
   }
 });
 
-workbox.core.clientsClaim();
+clientsClaim();
 
-self.__precacheManifest = [].concat(self.__precacheManifest || []);
-workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
+precacheAndRoute(self.__WB_MANIFEST);
 
-workbox.routing.registerNavigationRoute(
-  workbox.precaching.getCacheKeyForURL('/index.html'),
-  {
-    blacklist: [new RegExp('^/_'), new RegExp('/[^/?]+\\.[^/]+$')],
-  }
-);
+const handler = createHandlerBoundToURL('/index.html');
+
+const navigationRoute = new NavigationRoute(handler, {
+  denylist: [new RegExp('^/_'), new RegExp('/[^/?]+\\.[^/]+$')],
+});
+
+registerRoute(navigationRoute);
