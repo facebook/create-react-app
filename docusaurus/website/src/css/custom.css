@@ -27,6 +27,10 @@
   padding: 0 var(--ifm-pre-padding);
 }
 
+.contents__link.contents__link--active code {
+  color: var(--ifm-color-primary-darker);
+}
+
 .navbar .navbar__brand > strong {
   flex-shrink: 0;
   max-width: 100%;
