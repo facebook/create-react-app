@@ -673,7 +673,7 @@ module.exports = function(webpackEnv) {
       isEnvProduction &&
         new WorkboxWebpackPlugin.InjectManifest({
           exclude: [/\.map$/, /asset-manifest\.json$/],
-          swSrc: `${paths.appSrc}/sw-template.js`,
+          swSrc: `${paths.appSrc}/sw-template.${useTypeScript ? 'ts' : 'js'}`,
           swDest: `${paths.appBuild}/service-worker.js`,
         }),
       // TypeScript type checking
