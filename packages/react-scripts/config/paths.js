@@ -137,7 +137,10 @@ if (
     ownNodeModules: resolveOwn('node_modules'),
     appTypeDeclarations: resolveOwn(`${templatePath}/src/react-app-env.d.ts`),
     ownTypeDeclarations: resolveOwn('lib/react-app.d.ts'),
-    serviceWorkerTemplate: resolveModule(resolveApp, 'src/sw-template'),
+    serviceWorkerTemplate: resolveModule(
+      resolveOwn,
+      `${templatePath}/src/sw-template`
+    ),
   };
 }
 // @remove-on-eject-end
