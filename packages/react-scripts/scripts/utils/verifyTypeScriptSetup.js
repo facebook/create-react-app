@@ -99,7 +99,7 @@ function verifyTypeScriptSetup() {
       parsedValue: ts.ScriptTarget.ES5,
       suggested: 'es5',
     },
-    lib: { suggested: ['dom', 'dom.iterable', 'esnext'] },
+    lib: { suggested: ['dom', 'dom.iterable', 'esnext', 'webworker'] },
     allowJs: { suggested: true },
     skipLibCheck: { suggested: true },
     esModuleInterop: { suggested: true },

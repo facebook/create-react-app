@@ -1,9 +1,10 @@
-/* eslint-disable no-restricted-globals */
 import { clientsClaim } from 'workbox-core';
 import { NavigationRoute, registerRoute } from 'workbox-routing';
 import { precacheAndRoute, createHandlerBoundToURL } from 'workbox-precaching';
 
-self.addEventListener('message', function(event) {
+declare let self: ServiceWorkerGlobalScope;
+
+self.addEventListener('message', function(event: ExtendableMessageEvent) {
   if (event.data && event.data.type === 'SKIP_WAITING') {
     self.skipWaiting();
   }
