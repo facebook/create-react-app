@@ -1,7 +1,7 @@
 {
-  "name": "react-scripts",
+  "name": "@rewireltd/react-scripts",
   "version": "3.4.1",
-  "description": "Configuration and scripts for Create React App.",
+  "description": "Rewire LTD. Configuration and scripts for Create React App.",
   "repository": {
     "type": "git",
     "url": "https://github.com/facebook/create-react-app.git",
