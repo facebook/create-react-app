@@ -1,3 +1,88 @@
+## 3.4.0 (2020-02-14)
+
+v3.4.0 is a minor release that adds new features, including support for SSL and setting `PUBLIC_URL` in development. It also includes a fix for Hot Module Reloading with CSS Modules as well as other bug fixes.
+
+#### :bug: Bug Fix
+
+- `react-scripts`
+  - [#8378](https://github.com/facebook/create-react-app/pull/8378) Downgrade style-loader to v0.23.1 due to CSS modules hot reload not working with v1.0.0 and above ([@chybisov](https://github.com/chybisov))
+- `create-react-app`, `react-dev-utils`, `react-error-overlay`
+  - [#8439](https://github.com/facebook/create-react-app/pull/8439) Downgrade chalk for ie 11 support ([@ianschmitz](https://github.com/ianschmitz))
+- `react-dev-utils`
+  - [#8292](https://github.com/facebook/create-react-app/pull/8292) Fixes unchecked access to 'deploy' script on build ([@renato-bohler](https://github.com/renato-bohler))
+- `cra-template-typescript`, `cra-template`
+  - [#8272](https://github.com/facebook/create-react-app/pull/8272) Handle service worker error in Firefox ([@rosinghal](https://github.com/rosinghal))
+- `cra-template-typescript`
+  - [#8403](https://github.com/facebook/create-react-app/pull/8403) Fix robots.txt for TS ([@Kamahl19](https://github.com/Kamahl19))
+
+#### :nail_care: Enhancement
+
+- `react-dev-utils`, `react-scripts`
+  - [#8442](https://github.com/facebook/create-react-app/pull/8442) fix(react-scripts): do not redirect served path if request may proxy ([@iamandrewluca](https://github.com/iamandrewluca))
+  - [#7259](https://github.com/facebook/create-react-app/pull/7259) feat(react-scripts): allow PUBLIC_URL in develoment mode ([@iamandrewluca](https://github.com/iamandrewluca))
+  - [#7750](https://github.com/facebook/create-react-app/pull/7750) Enable custom sockjs pathname for hot reloading server. ([@heygrady](https://github.com/heygrady))
+- `cra-template-typescript`
+  - [#8412](https://github.com/facebook/create-react-app/pull/8412) Change arrow functions to function declarations ([@lewislbr](https://github.com/lewislbr))
+- `cra-template-typescript`, `cra-template`
+  - [#8272](https://github.com/facebook/create-react-app/pull/8272) Handle service worker error in Firefox ([@rosinghal](https://github.com/rosinghal))
+- `react-scripts`
+  - [#5845](https://github.com/facebook/create-react-app/pull/5845) Add option to provide custom ssl certificates during development ([@alexbrazier](https://github.com/alexbrazier))
+
+#### :memo: Documentation
+
+- `cra-template-typescript`, `cra-template`, `react-dev-utils`, `react-error-overlay`, `react-scripts`
+  - [#8475](https://github.com/facebook/create-react-app/pull/8475) Correct webpack name casing ([@lewislbr](https://github.com/lewislbr))
+- Other
+  - [#8437](https://github.com/facebook/create-react-app/pull/8437) Fix navbar line break in header ([@esvyridov](https://github.com/esvyridov))
+  - [#8299](https://github.com/facebook/create-react-app/pull/8299) Update public folder usage docs to clarify globals ([@keevan](https://github.com/keevan))
+  - [#8390](https://github.com/facebook/create-react-app/pull/8390) setupTestFrameworkScriptFile is deprecated ([@JimmyLv](https://github.com/JimmyLv))
+
+#### :hammer: Underlying Tools
+
+- `react-dev-utils`
+  - [#8459](https://github.com/facebook/create-react-app/pull/8459) update open to v7.0.2 ([@vince1995](https://github.com/vince1995))
+  - [#7948](https://github.com/facebook/create-react-app/pull/7948) Support JetBrains Rider IDE as an editor ([@djpowell](https://github.com/djpowell))
+  - [#8367](https://github.com/facebook/create-react-app/pull/8367) Wider Chromium support for openBrowser ([@handeyeco](https://github.com/handeyeco))
+- `react-scripts`
+  - [#8282](https://github.com/facebook/create-react-app/pull/8282) Run git init before template dependencies are installed ([@lukaszfiszer](https://github.com/lukaszfiszer))
+- Other
+  - [#8402](https://github.com/facebook/create-react-app/pull/8402) fix(test): force install npm in e2e-behaviour ([@iamandrewluca](https://github.com/iamandrewluca))
+
+#### Committers: 18
+
+- Alex Brazier ([@alexbrazier](https://github.com/alexbrazier))
+- Andrew Luca ([@iamandrewluca](https://github.com/iamandrewluca))
+- Cassidy Williams ([@cassidoo](https://github.com/cassidoo))
+- Christopher Button ([@devgeist](https://github.com/devgeist))
+- David Powell ([@djpowell](https://github.com/djpowell))
+- Eugene Chybisov ([@chybisov](https://github.com/chybisov))
+- Eugene Sviridov ([@esvyridov](https://github.com/esvyridov))
+- Grady Kuhnline ([@heygrady](https://github.com/heygrady))
+- Ian Schmitz ([@ianschmitz](https://github.com/ianschmitz))
+- Kevin Pham ([@keevan](https://github.com/keevan))
+- Lewis Llobera ([@lewislbr](https://github.com/lewislbr))
+- Martin Litvaj ([@Kamahl19](https://github.com/Kamahl19))
+- Matthew Curtis ([@handeyeco](https://github.com/handeyeco))
+- Renato Böhler ([@renato-bohler](https://github.com/renato-bohler))
+- Rohit Singhal ([@rosinghal](https://github.com/rosinghal))
+- Vincent Semrau ([@vince1995](https://github.com/vince1995))
+- Łukasz Fiszer ([@lukaszfiszer](https://github.com/lukaszfiszer))
+- 吕立青 ([@JimmyLv](https://github.com/JimmyLv))
+
+### Migrating from 3.3.1 to 3.4.0
+
+Inside any created project that has not been ejected, run:
+
+```sh
+npm install --save --save-exact react-scripts@3.4.0
+```
+
+or
+
+```sh
+yarn add --exact react-scripts@3.4.0
+```
+
 ## 3.3.1 (2020-01-31)
 
 v3.3.1 is a maintenance release that includes minor bug fixes and documentation updates.

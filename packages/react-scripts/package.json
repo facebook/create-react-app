@@ -1,6 +1,6 @@
 {
   "name": "react-scripts",
-  "version": "3.3.1",
+  "version": "3.4.0",
   "description": "Configuration and scripts for Create React App.",
   "repository": {
     "type": "git",
@@ -67,7 +67,7 @@
     "postcss-preset-env": "6.7.0",
     "postcss-safe-parser": "4.0.1",
     "react-app-polyfill": "^1.0.6",
-    "react-dev-utils": "^10.1.0",
+    "react-dev-utils": "^10.2.0",
     "resolve": "1.15.0",
     "resolve-url-loader": "3.1.1",
     "sass-loader": "8.0.2",
