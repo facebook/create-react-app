@@ -79,9 +79,6 @@
     "webpack": "4.41.5",
     "webpack-dev-server": "3.10.2",
     "webpack-manifest-plugin": "2.2.0",
-    "workbox-core": "5.0.0",
-    "workbox-precaching": "5.0.0",
-    "workbox-routing": "5.0.0",
     "workbox-webpack-plugin": "5.0.0"
   },
   "devDependencies": {
