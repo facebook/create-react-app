@@ -2,6 +2,8 @@ import React from 'react';
 import styleguide from './lib/styleguide';
 import pkg from '../package.json';
 
+import 'firacode/distr/fira_code.css';
+
 const Page = React.lazy(() => import('./components/Page'));
 
 const AppDocs = React.lazy(() => import('./components/App/App.docs.mdx'));

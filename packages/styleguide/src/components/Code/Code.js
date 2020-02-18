@@ -1,16 +1,21 @@
 import React from 'react';
-import { string, bool, oneOf } from 'prop-types';
+import { string, bool, oneOf, object } from 'prop-types';
 import styled from 'styled-components';
 import { stripUnit, em } from 'polished';
 import Highlight, { defaultProps } from 'prism-react-renderer';
 
-import 'prism-theme-one-dark/prism-onedark.css';
-import 'firacode/distr/fira_code.css';
+import oneDarkProTheme from './oneDarkProTheme';
 
 import * as theme from './../../style/theme';
 import { rem } from '../../style/utils';
 
-const PreviewCode = ({ children, language, inline }) => {
+const PreviewCode = ({
+  children,
+  language,
+  inline,
+  theme = oneDarkProTheme,
+  ...other
+}) => {
   if (!children) {
     return null;
   }
@@ -22,9 +27,9 @@ const PreviewCode = ({ children, language, inline }) => {
       {...defaultProps}
       code={children}
       language={language}
-      theme={undefined}
+      theme={theme}
     >
-      {({ tokens, getLineProps, getTokenProps }) => {
+      {({ tokens, style, getLineProps, getTokenProps }) => {
         const highlight = tokens.map((line, i) => (
           <Tag {...getLineProps({ line, key: i })}>
             {line.map((token, key) => (
@@ -34,7 +39,12 @@ const PreviewCode = ({ children, language, inline }) => {
         ));
 
         return (
-          <StyledHighlightWrapper inline={inline} as={inline ? 'span' : 'div'}>
+          <StyledHighlightWrapper
+            inline={inline}
+            as={inline ? 'span' : 'div'}
+            style={style}
+            {...other}
+          >
             {inline ? (
               <code
                 className={`code code--inline prism-code language-${language}`}
@@ -73,6 +83,8 @@ PreviewCode.propTypes = {
   ]),
   /** Inline code preview with text. */
   inline: bool,
+  /** Theme VSCode theme style object defined in https://github.com/FormidableLabs/prism-react-renderer#theming */
+  theme: object,
 };
 
 PreviewCode.defaultProps = {
@@ -91,7 +103,7 @@ const StyledHighlightWrapper = styled.span`
   code[class*='language-'] {
     font-feature-settings: 'calt' 1;
     text-rendering: optimizeLegibility;
-    font-family: 'Fira Code', monospace;
+    font-family: ${props => props.theme.codeFontFamily};
     font-size: ${props =>
       em(props.theme.fontSizes.small, props.theme.fontSizes.base)};
     line-height: ${props =>

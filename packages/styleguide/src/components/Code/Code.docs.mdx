@@ -1,4 +1,4 @@
-import { Preview, ComponentDocs, Code, Badge } from './../';
+import { Preview, ComponentDocs, Code, Badge, Note, Link } from './../';
 
 # Code
 
@@ -44,10 +44,11 @@ Supported languages are:
     <Code language="scss">{'%class { display: block; }'}</Code>,
     <Code language="bash">{'echo test;'}</Code>,
     <Code language="json">{'{ "key": "value" }'}</Code>,
-    <Code language="diff">{'+ added line'}</Code>
+    <Code language="diff">{'+ added line'}</Code>,
   ]}
 >
   <Code>{'<div>HTML</div>'}</Code>
+  <br />
   <Code language="javascript">{"console.log('log');"}</Code>
   <br />
   <Code language="jsx">{'<Component prop={prop} />'}</Code>
@@ -63,6 +64,97 @@ Supported languages are:
   <Code language="diff">{'+ added line'}</Code>
   <br />
 </Preview>
+
+### Theme
+
+Default theme is [One Dark Pro theme for VS Code](https://github.com/Binaryify/OneDark-Pro). This theme can by overrided via `theme` prop which takes theme as [object](https://github.com/FormidableLabs/prism-react-renderer#theming).
+
+<Preview>
+  <Code
+    inline={false}
+    language="javascript"
+    theme={{
+      plain: {
+        color: '#F8F8F2',
+        backgroundColor: '#282A36',
+      },
+      styles: [
+        {
+          types: ['prolog', 'constant', 'builtin'],
+          style: {
+            color: 'rgb(189, 147, 249)',
+          },
+        },
+        {
+          types: ['inserted', 'function'],
+          style: {
+            color: 'rgb(80, 250, 123)',
+          },
+        },
+        {
+          types: ['deleted'],
+          style: {
+            color: 'rgb(255, 85, 85)',
+          },
+        },
+        {
+          types: ['changed'],
+          style: {
+            color: 'rgb(255, 184, 108)',
+          },
+        },
+        {
+          types: ['punctuation', 'symbol'],
+          style: {
+            color: 'rgb(248, 248, 242)',
+          },
+        },
+        {
+          types: ['string', 'char', 'tag', 'selector'],
+          style: {
+            color: 'rgb(255, 121, 198)',
+          },
+        },
+        {
+          types: ['keyword', 'variable'],
+          style: {
+            color: 'rgb(189, 147, 249)',
+            fontStyle: 'italic',
+          },
+        },
+        {
+          types: ['comment'],
+          style: {
+            color: 'rgb(98, 114, 164)',
+          },
+        },
+        {
+          types: ['attr-name'],
+          style: {
+            color: 'rgb(241, 250, 140)',
+          },
+        },
+      ],
+    }}
+  >{`function getTheme() {
+  return 'Dracula theme';
+}`}</Code>
+</Preview>
+
+<Note type="info" title="Default Fira Code font">
+  Code uses Fira Code as default font and fallbacks to system monospace font if
+  Fira Code is not installed on your computer. If you want to show Fira Code to
+  everybody, import{' '}
+  <Link href="https://github.com/tonsky/FiraCode">
+    Fira Code to your project
+  </Link>
+  .
+</Note>
+
+<Note type="info" title="Different font">
+  If you want to preview Code with different font, overide `codeFontFamily`
+  property in theme.
+</Note>
 
 ## Props
 

@@ -100,4 +100,7 @@ export const borderRadius = {
   default: '0',
 };
 
+export const codeFontFamily =
+  "'Fira Code', 'Droid Sans Mono', 'Courier New', monospace";
+
 export const contentWidth = '55rem';
