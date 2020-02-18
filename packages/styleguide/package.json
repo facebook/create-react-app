@@ -1,6 +1,6 @@
 {
   "name": "@lighting-beetle/lighter-styleguide",
-  "version": "3.2.0",
+  "version": "3.3.0",
   "description": "Lighter styleguide",
   "main": "build/components/index.js",
   "files": [
@@ -57,7 +57,7 @@
     ]
   },
   "devDependencies": {
-    "@lighting-beetle/lighter-react-scripts": "~3.2.0",
+    "@lighting-beetle/lighter-react-scripts": "~3.4.0",
     "@testing-library/jest-dom": "~5.0.0",
     "@testing-library/react": "~9.4.0",
     "babel-plugin-react-docgen": "~2.0.0",

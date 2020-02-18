@@ -1,3 +1,21 @@
+## 3.4.0 (Feb 18, 2020)
+
+#### :rocket: New Feature
+
+- [lighter-react-scripts] allow support for glob syntax in scss imports ([#197](<(https://github.com/lightingbeetle/lighter/pull/197)>)
+- [lighter-react-scripts] allow to import .md files from app root ([#198](<(https://github.com/lightingbeetle/lighter/pull/198)>)
+- [lighter-styleguide] add possibility to override default Code theme ([#202](https://github.com/lightingbeetle/lighter/pull/202))
+
+#### :bug: Bug Fix
+
+- [lighter-react-scripts] add missing paths for `tsconfig.json` and `jsconfig.json` ([#200](https://github.com/lightingbeetle/lighter/pull/200))
+- [lighter-react-scripts] use hash for images and all assets that fall through other filters. ([#201](https://github.com/lightingbeetle/lighter/pull/201))
+
+#### :tada: version updates
+
+- `lighter-react-scripts@3.4.0`
+- `lighter-styleguide@3.3.0`
+
 ## 3.3.0 (Jan 28, 2020)
 
 #### :rocket: New Feature
