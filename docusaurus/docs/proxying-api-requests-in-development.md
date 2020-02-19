@@ -85,7 +85,7 @@ $ yarn add http-proxy-middleware
 Next, create `src/setupProxy.js` and place the following contents in it:
 
 ```js
-const proxy = require('http-proxy-middleware');
+const { createProxyMiddleware } = require('http-proxy-middleware');
 
 module.exports = function(app) {
   // ...
@@ -95,17 +95,17 @@ module.exports = function(app) {
 You can now register proxies as you wish! Here's an example using the above `http-proxy-middleware`:
 
 ```js
-const proxy = require('http-proxy-middleware');
+const { createProxyMiddleware } = require('http-proxy-middleware');
 
 module.exports = function(app) {
   //http requests
-  app.use('/api', proxy('/api', {
+  app.use('/api', createProxyMiddleware('/api', {
       target: 'http://localhost:5000',
       changeOrigin: true,
     })
   );
   //websocket requests
-  app.use('/ws', proxy('/ws', {
+  app.use('/ws', createProxyMiddleware('/ws', {
       target: 'http://localhost:5000',
       changeOrigin: true,
       ws: true
@@ -118,4 +118,4 @@ module.exports = function(app) {
 
 > **Note:** This file only supports Node's JavaScript syntax. Be sure to only use supported language features (i.e. no support for Flow, ES Modules, etc).
 
-> **Note:** Passing the path to the proxy function allows you to use globbing and/or pattern matching on the path, which is more flexible than the express route matching.
+> **Note:** Passing the path to the createProxyMiddleware function allows you to use globbing and/or pattern matching on the path, which is more flexible than the express route matching.
