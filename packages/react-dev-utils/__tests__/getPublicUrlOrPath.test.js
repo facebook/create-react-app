@@ -24,6 +24,11 @@ const tests = [
     homepage: 'https://create-react-app.dev/test',
     expect: '/test/',
   },
+  {
+    dev: true,
+    homepage: 'https://create-react-app.dev/page#fragment',
+    expect: '/page/',
+  },
   // DEVELOPMENT with publicURL
   { dev: true, publicUrl: '/', expect: '/' },
   { dev: true, publicUrl: '/test', expect: '/test/' },
