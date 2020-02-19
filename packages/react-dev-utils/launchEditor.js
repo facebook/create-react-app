@@ -57,6 +57,10 @@ const COMMON_EDITORS_OSX = {
   '/Applications/WebStorm.app/Contents/MacOS/webstorm':
     '/Applications/WebStorm.app/Contents/MacOS/webstorm',
   '/Applications/MacVim.app/Contents/MacOS/MacVim': 'mvim',
+  '/Applications/GoLand.app/Contents/MacOS/goland':
+    '/Applications/GoLand.app/Contents/MacOS/goland',
+  '/Applications/Rider.app/Contents/MacOS/rider':
+    '/Applications/Rider.app/Contents/MacOS/rider',
 };
 
 const COMMON_EDITORS_LINUX = {
@@ -74,6 +78,7 @@ const COMMON_EDITORS_LINUX = {
   vim: 'vim',
   'webstorm.sh': 'webstorm',
   'goland.sh': 'goland',
+  'rider.sh': 'rider',
 };
 
 const COMMON_EDITORS_WIN = [
@@ -97,6 +102,8 @@ const COMMON_EDITORS_WIN = [
   'webstorm64.exe',
   'goland.exe',
   'goland64.exe',
+  'rider.exe',
+  'rider64.exe',
 ];
 
 // Transpiled version of: /^([A-Za-z]:[/\\])?[\p{L}0-9/.\-_\\]+$/u
@@ -166,6 +173,8 @@ function getArgumentsForLineNumber(
     case 'webstorm64':
     case 'goland':
     case 'goland64':
+    case 'rider':
+    case 'rider64':
       return addWorkspaceToArgumentsIfExists(
         ['--line', lineNumber, fileName],
         workspace

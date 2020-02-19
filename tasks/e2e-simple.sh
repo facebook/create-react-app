@@ -113,9 +113,8 @@ npx npm-cli-login@0.0.10 -u user -p password -e user@example.com -r "$custom_reg
 cd packages/react-error-overlay/
 ./node_modules/.bin/eslint --max-warnings 0 src/
 yarn test
-
-if [ $APPVEYOR != 'True' ]; then
-  # Flow started hanging on AppVeyor after we moved to Yarn Workspaces :-(
+if [ "$AGENT_OS" != 'Windows_NT' ]; then
+  # Flow started hanging on Windows build agents
   yarn flow
 fi
 

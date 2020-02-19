@@ -28,7 +28,7 @@ When you’re ready to deploy to production, create a minified bundle with `npm 
 
 ### Get Started Immediately
 
-You **don’t** need to install or configure tools like Webpack or Babel. They are preconfigured and hidden so that you can focus on the code.
+You **don’t** need to install or configure tools like webpack or Babel. They are preconfigured and hidden so that you can focus on the code.
 
 Create a project, and you’re good to go.
 
@@ -147,7 +147,7 @@ The page will automatically reload if you make changes to the code. You will see
 
 Runs the test watcher in an interactive mode. By default, runs tests related to files changed since the last commit.
 
-[Read more about testing](https://facebook.github.io/create-react-app/docs/running-tests).
+[Read more about testing](running-tests.md).
 
 ### `npm run build` or `yarn build`
 
