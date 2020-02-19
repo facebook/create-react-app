@@ -1,3 +1,13 @@
+## 3.5.0 (Feb 19, 2020)
+
+#### :house: Internal
+
+- [lighter] update CRA to 3.4.0 ([#204](https://github.com/lightingbeetle/lighter/pull/204))
+
+#### :tada: version updates
+
+- `lighter-react-scripts@3.5.0`
+
 ## 3.4.0 (Feb 18, 2020)
 
 #### :rocket: New Feature
