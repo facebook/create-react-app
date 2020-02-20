@@ -178,6 +178,8 @@ module.exports = function(api, opts, env) {
           absoluteRuntime: absoluteRuntimePath,
         },
       ],
+      // Enable namespace exports e.g. `export * as Namespace from './module'`
+      require('@babel/plugin-proposal-export-namespace-from').default,
       isEnvProduction && [
         // Remove PropTypes from production build
         require('babel-plugin-transform-react-remove-prop-types').default,
