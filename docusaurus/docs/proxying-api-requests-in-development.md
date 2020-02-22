@@ -74,18 +74,18 @@ If the `proxy` option is **not** flexible enough for you, you can get direct acc
 
 You can use this feature in conjunction with the `proxy` property in `package.json`, but it is recommended you consolidate all of your logic into `src/setupProxy.js`.
 
-First, install `http-proxy-middleware` using npm or Yarn:
+First, install `http-proxy-middleware` as a dev dependency using npm or Yarn:
 
 ```sh
-$ npm install http-proxy-middleware --save
+$ npm install http-proxy-middleware --save-dev
 $ # or
-$ yarn add http-proxy-middleware
+$ yarn add --dev http-proxy-middleware
 ```
 
 Next, create `src/setupProxy.js` and place the following contents in it:
 
 ```js
-const proxy = require('http-proxy-middleware');
+const { createProxyMiddleware } = require('http-proxy-middleware');
 
 module.exports = function(app) {
   // ...
@@ -95,12 +95,12 @@ module.exports = function(app) {
 You can now register proxies as you wish! Here's an example using the above `http-proxy-middleware`:
 
 ```js
-const proxy = require('http-proxy-middleware');
+const { createProxyMiddleware } = require('http-proxy-middleware');
 
 module.exports = function(app) {
   app.use(
     '/api',
-    proxy({
+    createProxyMiddleware({
       target: 'http://localhost:5000',
       changeOrigin: true,
     })
