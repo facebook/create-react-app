@@ -85,7 +85,7 @@ $ yarn add http-proxy-middleware
 Next, create `src/setupProxy.js` and place the following contents in it:
 
 ```js
-const proxy = require('http-proxy-middleware');
+const { createProxyMiddleware } = require('http-proxy-middleware');
 
 module.exports = function(app) {
   // ...
@@ -95,12 +95,12 @@ module.exports = function(app) {
 You can now register proxies as you wish! Here's an example using the above `http-proxy-middleware`:
 
 ```js
-const proxy = require('http-proxy-middleware');
+const { createProxyMiddleware } = require('http-proxy-middleware');
 
 module.exports = function(app) {
   app.use(
     '/api',
-    proxy({
+    createProxyMiddleware({
       target: 'http://localhost:5000',
       changeOrigin: true,
     })
@@ -109,6 +109,8 @@ module.exports = function(app) {
 ```
 
 > **Note:** You do not need to import this file anywhere. It is automatically registered when you start the development server.
+
+> **Note:** If you are using a version prior to v1.x.x please do follow this documentation to proceed https://github.com/chimurai/http-proxy-middleware/tree/v0.21.0#readme.
 
 > **Note:** This file only supports Node's JavaScript syntax. Be sure to only use supported language features (i.e. no support for Flow, ES Modules, etc).
 
