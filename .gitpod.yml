@@ -9,6 +9,6 @@ tasks:
     command: yarn start
 ports:
   - port: 3000
-    onOpen: open-preview
+    onOpen: open-browser
   - port: 3001
     onOpen: ignore
