@@ -47,7 +47,7 @@ When you load the app in the browser and inspect the `<input>`, you will see its
 <div>
   <small>You are running this application in <b>development</b> mode.</small>
   <form>
-    <input type="hidden" value="abcdef" />
+    <input type="hidden" defaultValue="abcdef" />
   </form>
 </div>
 ```
