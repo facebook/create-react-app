@@ -690,9 +690,9 @@ npm install -g create-react-app@1.0.1
 
     Historically we have allowed specifying `NODE_PATH` environment variable as a way to allow “absolute imports”. For example, running `NODE_PATH=src npm start` in Bash or `set NODE_PATH=src&&npm start` in Windows Cmd would let you import anything inside `src` without specifying a relative path. However, we found a few nasty edge cases when Node.js core modules end up being in `NODE_PATH` and erroneously become bundled. As a result the build would crash on some systems when some libraries are imported. To fix this, we now only honor relative paths from `NODE_PATH` in Create React App. This means the existing use case for absolute imports is still supported (`src` in the example above is relative), but absolute paths in `NODE_PATH` (such as paths to Node.js core modules) will be ignored.
 
-  * [#1188](https://github.com/facebook/create-react-app/pull/1188) Update Webpack to fix source map issues. ([@gaearon](https://github.com/gaearon))
+  * [#1188](https://github.com/facebook/create-react-app/pull/1188) Update webpack to fix source map issues. ([@gaearon](https://github.com/gaearon))
 
-    Since 0.8.0, we show source maps in development instead of the compiled code. However, it has come to our attention that Webpack's source map implementation had issues interpreting Babel output, and caused source maps to be wrong and breakpoints to be unusable in some cases. Webpack has released a fix for this, and we have updated the minimal version of Webpack that we are using.
+    Since 0.8.0, we show source maps in development instead of the compiled code. However, it has come to our attention that webpack's source map implementation had issues interpreting Babel output, and caused source maps to be wrong and breakpoints to be unusable in some cases. webpack has released a fix for this, and we have updated the minimal version of webpack that we are using.
 
   * [#1180](https://github.com/facebook/create-react-app/pull/1180) Use `file-loader` for svgs. ([@bogdansoare](https://github.com/bogdansoare))
 
@@ -945,7 +945,7 @@ Thanks to [@fson](https://github.com/fson) for cutting this release.
 
 ### ESLint Config (`eslint-config-react-app`)
 
-* Adds `import/no-webpack-loader-syntax` rule that forbids using custom Webpack specific syntax to specify Webpack loaders in import statements. ([@fson](https://github.com/fson) in [#803](https://github.com/facebook/create-react-app/pull/803))
+* Adds `import/no-webpack-loader-syntax` rule that forbids using custom webpack specific syntax to specify webpack loaders in import statements. ([@fson](https://github.com/fson) in [#803](https://github.com/facebook/create-react-app/pull/803))
 * `react/react-in-jsx-scope` rule ("React must be in scope") is now an error. ([@gaearon](https://github.com/gaearon) in [#822](https://github.com/facebook/create-react-app/pull/822))
 * `no-unused-expressions` rule now allows the use of short circuit and ternary expressions. ([@cannona](https://github.com/cannona) in [#724](https://github.com/facebook/create-react-app/pull/724))
 
@@ -958,7 +958,7 @@ Thanks to [@fson](https://github.com/fson) for cutting this release.
 ### Utilities (`react-dev-utils`)
 
 * The error overlay is now disposed after fixing linting errors. ([@jarlef](https://github.com/jarlef) in [#856](https://github.com/facebook/create-react-app/pull/856))
-* Adds support for Webpack 2 to `webpackHotDevClient`. ([@michalkvasnicak](https://github.com/michalkvasnicak) in [#840](https://github.com/facebook/create-react-app/pull/840))
+* Adds support for webpack 2 to `webpackHotDevClient`. ([@michalkvasnicak](https://github.com/michalkvasnicak) in [#840](https://github.com/facebook/create-react-app/pull/840))
 
 ### Global CLI (`create-react-app`)
 
@@ -1201,7 +1201,7 @@ Paths like `/src/somefile.png` used to be served in development, but only by acc
 
 If you need a static file to be part for the build, [import it from JavaScript and you will get its filename](https://github.com/facebook/create-react-app/blob/master/template/README.md#adding-images-and-fonts). This ensures it gets included into the production build as well, and its filename contains the content hash.
 
-If you used static files with `<link href>`, [read this new guide](https://github.com/facebook/create-react-app/blob/master/template/README.md#referring-to-static-assets-from-link-href) on how to make sure these files get included into the builds. For example, you can replace `<link href="/src/favicons/favicon-32.png">` with `<link href="./src/favicons/favicon-32.png">`, and then Webpack will recognize it and include it into the build.
+If you used static files with `<link href>`, [read this new guide](https://github.com/facebook/create-react-app/blob/master/template/README.md#referring-to-static-assets-from-link-href) on how to make sure these files get included into the builds. For example, you can replace `<link href="/src/favicons/favicon-32.png">` with `<link href="./src/favicons/favicon-32.png">`, and then webpack will recognize it and include it into the build.
 
 If you referenced some other files from `index.html`, please file an issue to discuss your use case. In the meantime, you can serve them from a separate static server until your use case is supported.
 
@@ -1315,7 +1315,7 @@ Newly created projects will use `0.2.2` automatically. You **don’t** need to u
 ### Build Dependency (`react-scripts`)
 
 * Fixes an issue with `npm start` taking a very long time on OS X with Firewall enabled ([@gaearon](https://github.com/gaearon) in [#319](https://github.com/facebook/create-react-app/pull/319))
-* Fixes an issue with Webpack eating a lot of CPU in some cases ([@dceddia](https://github.com/dceddia) in [#294](https://github.com/facebook/create-react-app/pull/294))
+* Fixes an issue with webpack eating a lot of CPU in some cases ([@dceddia](https://github.com/dceddia) in [#294](https://github.com/facebook/create-react-app/pull/294))
 * We now warn if you import a file with mismatched casing because this breaks the watcher ([@alexzherdev](https://github.com/alexzherdev) in [#266](https://github.com/facebook/create-react-app/pull/266))
 * CSS files specifying `?v=` after asset filenames, such as Font Awesome, now works correctly ([@alexzherdev](https://github.com/alexzherdev) in [#298](https://github.com/facebook/create-react-app/pull/298))
 * Issues with `npm link`ing `react-scripts` have been fixed ([@dallonf](https://github.com/dallonf) in [#277](https://github.com/facebook/create-react-app/pull/277))
