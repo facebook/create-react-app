@@ -31,7 +31,7 @@ If you're interested in building a custom template, first take a look at how we'
 A template must have the following structure:
 
 ```
-my-app/
+cra-template-[template-name]/
   README.md (for npm)
   template.json
   package.json
