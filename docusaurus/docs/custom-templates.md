@@ -88,3 +88,14 @@ Below is an example `template.json` file:
 Any values you add for `"dependencies"` and `"scripts"` will be merged with the Create React App defaults. Values for any other keys will be used as-is, replacing any matching Create React App defaults.
 
 For convenience, we always replace `npm run` with `yarn` in your custom `"scripts"`, as well as in your `README` when projects are initialized with yarn.
+
+### `package.json`
+
+There are not many requirements specific to custom templates for your `package.json`, other than that the `main` key refers to your `template.json` file:
+
+```json
+{
+  "name": "cra-template-[template-name]",
+  "main": "template.json"
+}
+```
