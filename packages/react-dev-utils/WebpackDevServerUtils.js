@@ -119,7 +119,7 @@ function createCompiler({
   } catch (err) {
     console.log(chalk.red('Failed to compile.'));
     console.log();
-    console.log(err.message || err);
+    console.error(err);
     console.log();
     process.exit(1);
   }
