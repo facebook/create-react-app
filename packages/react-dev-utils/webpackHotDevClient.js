@@ -10,14 +10,51 @@
 // This alternative WebpackDevServer combines the functionality of:
 // https://github.com/webpack/webpack-dev-server/blob/webpack-1/client/index.js
 // https://github.com/webpack/webpack/blob/webpack-1/hot/dev-server.js
+
 // It only supports their simplest configuration (hot updates on same server).
 // It makes some opinionated choices on top, like adding a syntax error overlay
-// The error overlay is inspired by:
+// that looks similar to our console output. The error overlay is inspired by:
 // https://github.com/glenjamin/webpack-hot-middleware
-// The error overlay is provided by:
-// https://github.com/pmmmwh/react-refresh-webpack-plugin/tree/master/src/overlay
 
+var stripAnsi = require('strip-ansi');
 var url = require('url');
+var launchEditorEndpoint = require('./launchEditorEndpoint');
+var formatWebpackMessages = require('./formatWebpackMessages');
+var ErrorOverlay = require('react-error-overlay');
+
+ErrorOverlay.setEditorHandler(function editorHandler(errorLocation) {
+  // Keep this sync with errorOverlayMiddleware.js
+  fetch(
+    launchEditorEndpoint +
+      '?fileName=' +
+      window.encodeURIComponent(errorLocation.fileName) +
+      '&lineNumber=' +
+      window.encodeURIComponent(errorLocation.lineNumber || 1) +
+      '&colNumber=' +
+      window.encodeURIComponent(errorLocation.colNumber || 1)
+  );
+});
+
+// We need to keep track of if there has been a runtime error.
+// Essentially, we cannot guarantee application state was not corrupted by the
+// runtime error. To prevent confusing behavior, we forcibly reload the entire
+// application. This is handled below when we are notified of a compile (code
+// change).
+// See https://github.com/facebook/create-react-app/issues/3096
+var hadRuntimeError = false;
+ErrorOverlay.startReportingRuntimeErrors({
+  onError: function() {
+    hadRuntimeError = true;
+  },
+  filename: '/static/js/bundle.js',
+});
+
+if (module.hot && typeof module.hot.dispose === 'function') {
+  module.hot.dispose(function() {
+    // TODO: why do we need this?
+    ErrorOverlay.stopReportingRuntimeErrors();
+  });
+}
 
 // Connect to WebpackDevServer via a socket.
 var connection = new WebSocket(
@@ -45,15 +82,106 @@ connection.onclose = function() {
 // Remember some state related to hot module replacement.
 var isFirstCompilation = true;
 var mostRecentCompilationHash = null;
+var hasCompileErrors = false;
+
+function clearOutdatedErrors() {
+  // Clean up outdated compile errors, if any.
+  if (typeof console !== 'undefined' && typeof console.clear === 'function') {
+    if (hasCompileErrors) {
+      console.clear();
+    }
+  }
+}
 
 // Successful compilation.
 function handleSuccess() {
+  clearOutdatedErrors();
+
   var isHotUpdate = !isFirstCompilation;
   isFirstCompilation = false;
+  hasCompileErrors = false;
 
   // Attempt to apply hot updates or reload.
   if (isHotUpdate) {
-    tryApplyUpdates();
+    tryApplyUpdates(function onHotUpdateSuccess() {
+      // Only dismiss it when we're sure it's a hot update.
+      // Otherwise it would flicker right before the reload.
+      tryDismissErrorOverlay();
+    });
+  }
+}
+
+// Compilation with warnings (e.g. ESLint).
+function handleWarnings(warnings) {
+  clearOutdatedErrors();
+
+  var isHotUpdate = !isFirstCompilation;
+  isFirstCompilation = false;
+  hasCompileErrors = false;
+
+  function printWarnings() {
+    // Print warnings to the console.
+    var formatted = formatWebpackMessages({
+      warnings: warnings,
+      errors: [],
+    });
+
+    if (typeof console !== 'undefined' && typeof console.warn === 'function') {
+      for (var i = 0; i < formatted.warnings.length; i++) {
+        if (i === 5) {
+          console.warn(
+            'There were more warnings in other files.\n' +
+              'You can find a complete log in the terminal.'
+          );
+          break;
+        }
+        console.warn(stripAnsi(formatted.warnings[i]));
+      }
+    }
+  }
+
+  printWarnings();
+
+  // Attempt to apply hot updates or reload.
+  if (isHotUpdate) {
+    tryApplyUpdates(function onSuccessfulHotUpdate() {
+      // Only dismiss it when we're sure it's a hot update.
+      // Otherwise it would flicker right before the reload.
+      tryDismissErrorOverlay();
+    });
+  }
+}
+
+// Compilation with errors (e.g. syntax error or missing modules).
+function handleErrors(errors) {
+  clearOutdatedErrors();
+
+  isFirstCompilation = false;
+  hasCompileErrors = true;
+
+  // "Massage" webpack messages.
+  var formatted = formatWebpackMessages({
+    errors: errors,
+    warnings: [],
+  });
+
+  // Only show the first error.
+  ErrorOverlay.reportBuildError(formatted.errors[0]);
+
+  // Also log them to the console.
+  if (typeof console !== 'undefined' && typeof console.error === 'function') {
+    for (var i = 0; i < formatted.errors.length; i++) {
+      console.error(stripAnsi(formatted.errors[i]));
+    }
+  }
+
+  // Do not attempt to reload now.
+  // We will reload on next success instead.
+}
+
+function tryDismissErrorOverlay() {
+  if (!hasCompileErrors) {
+    ErrorOverlay.dismissBuildError();
   }
 }
 
@@ -77,6 +205,12 @@ connection.onmessage = function(e) {
     case 'content-changed':
       // Triggered when a file from `contentBase` changed.
       window.location.reload();
+      break;
+    case 'warnings':
+      handleWarnings(message.data);
+      break;
+    case 'errors':
+      handleErrors(message.data);
       break;
     default:
     // Do nothing.
@@ -108,7 +242,12 @@ function tryApplyUpdates(onHotUpdateSuccess) {
     return;
   }
 
-  function handleApplyUpdates() {
+  function handleApplyUpdates(err, updatedModules) {
+    if (err || !updatedModules || hadRuntimeError) {
+      window.location.reload();
+      return;
+    }
+
     if (typeof onHotUpdateSuccess === 'function') {
       // Maybe we want to do something.
       onHotUpdateSuccess();

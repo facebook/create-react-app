@@ -42,6 +42,13 @@ const appPackageJson = require(paths.appPackageJson);
 
 // Source maps are resource heavy and can cause out of memory issue for large source files.
 const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false';
+
+// React refresh isn't 100% stable right now. We have a feature flag to enable it.
+const shouldUseReactRefresh = process.env.REACT_REFRESH === 'true';
+const webpackDevClientEntry = shouldUseReactRefresh
+  ? require.resolve('react-dev-utils/webpackFastRefreshDevClient')
+  : require.resolve('react-dev-utils/webpackHotDevClient');
+
 // Some apps do not need the benefits of saving a web request, so not inlining the chunk
 // makes for a smoother build process.
 const shouldInlineRuntimeChunk = process.env.INLINE_RUNTIME_CHUNK !== 'false';
@@ -161,8 +168,7 @@ module.exports = function(webpackEnv) {
       // the line below with these two lines if you prefer the stock client:
       // require.resolve('webpack-dev-server/client') + '?/',
       // require.resolve('webpack/hot/dev-server'),
-      isEnvDevelopment &&
-        require.resolve('react-dev-utils/webpackHotDevClient'),
+      isEnvDevelopment && webpackDevClientEntry,
       // Finally, this is your app's code:
       paths.appIndexJs,
       // We include the app code last so that if there is a runtime error during
@@ -420,7 +426,9 @@ module.exports = function(webpackEnv) {
                         },
                       },
                     },
-                    isEnvDevelopment && require.resolve('react-refresh/babel'),
+                    isEnvDevelopment &&
+                      shouldUseReactRefresh &&
+                      require.resolve('react-refresh/babel'),
                   ].filter(Boolean),
                 ],
                 // This is a feature of `babel-loader` for webpack (not Babel itself).
@@ -611,6 +619,7 @@ module.exports = function(webpackEnv) {
       isEnvDevelopment && new webpack.HotModuleReplacementPlugin(),
       // Provide fast-refresh https://github.com/facebook/react/tree/master/packages/react-refresh
       isEnvDevelopment &&
+        shouldUseReactRefresh &&
         new ReactRefreshWebpackPlugin({ disableRefreshCheck: true }),
       // Watcher doesn't work well if you mistype casing in a path so we use
       // a plugin that prints an error when you attempt to do this.
