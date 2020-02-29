@@ -72,6 +72,7 @@ connection.onmessage = function(e) {
       break;
     case 'still-ok':
     case 'ok':
+    case 'warnings': // Warnings are not fatal. We should try refreshing.
       handleSuccess();
       break;
     case 'content-changed':
