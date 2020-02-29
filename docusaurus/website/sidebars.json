@@ -36,7 +36,8 @@
       "adding-a-router",
       "adding-custom-environment-variables",
       "making-a-progressive-web-app",
-      "production-build"
+      "production-build",
+      "minify-keep-class-names"
     ],
     "Testing": ["running-tests", "debugging-tests"],
     "Back-End Integration": [
