@@ -59,3 +59,4 @@ Absolute paths are enabled by default for imports. To use relative paths instead
 {
   "presets": [["react-app", { "absoluteRuntime": false }]]
 }
+```
