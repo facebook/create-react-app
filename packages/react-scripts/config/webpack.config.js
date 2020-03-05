@@ -45,6 +45,9 @@ const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false';
 // makes for a smoother build process.
 const shouldInlineRuntimeChunk = process.env.INLINE_RUNTIME_CHUNK !== 'false';
 
+// Some apps need the option to allow html comments (server side includes with nginx for example)
+const shouldEnableHtmlComments = process.env.ENABLE_HTML_COMMENTS === 'true';
+
 const isExtendingEslintConfig = process.env.EXTEND_ESLINT === 'true';
 
 const imageInlineSizeLimit = parseInt(
@@ -569,7 +572,7 @@ module.exports = function(webpackEnv) {
           isEnvProduction
             ? {
                 minify: {
-                  removeComments: true,
+                  removeComments: !shouldEnableHtmlComments,
                   collapseWhitespace: true,
                   removeRedundantAttributes: true,
                   useShortDoctype: true,
