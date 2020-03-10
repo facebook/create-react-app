@@ -221,11 +221,11 @@ connection.onmessage = function(e) {
 function isUpdateAvailable() {
   /* globals __webpack_hash__ */
   // __webpack_hash__ is the hash of the current compilation.
-  // It's a global variable injected by Webpack.
+  // It's a global variable injected by webpack.
   return mostRecentCompilationHash !== __webpack_hash__;
 }
 
-// Webpack disallows updates in other states.
+// webpack disallows updates in other states.
 function canApplyUpdates() {
   return module.hot.status() === 'idle';
 }
@@ -233,7 +233,7 @@ function canApplyUpdates() {
 // Attempt to update code on the fly, fall back to a hard reload.
 function tryApplyUpdates(onHotUpdateSuccess) {
   if (!module.hot) {
-    // HotModuleReplacementPlugin is not in Webpack configuration.
+    // HotModuleReplacementPlugin is not in webpack configuration.
     window.location.reload();
     return;
   }
@@ -262,7 +262,7 @@ function tryApplyUpdates(onHotUpdateSuccess) {
   // https://webpack.github.io/docs/hot-module-replacement.html#check
   var result = module.hot.check(/* autoApply */ true, handleApplyUpdates);
 
-  // // Webpack 2 returns a Promise instead of invoking a callback
+  // // webpack 2 returns a Promise instead of invoking a callback
   if (result && result.then) {
     result.then(
       function(updatedModules) {

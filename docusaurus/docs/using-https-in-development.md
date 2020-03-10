@@ -32,7 +32,6 @@ HTTPS=true npm start
 
 Note that the server will use a self-signed certificate, so your web browser will almost definitely display a warning upon accessing the page.
 
-
 ## Custom SSL certificate
 
 To set a custom certificate, set the `SSL_CRT_FILE` and `SSL_KEY_FILE` environment variables to the path of the certificate and key files in the same way you do for `HTTPS` above. Note that you will also need to set `HTTPS=true`.
@@ -42,7 +41,6 @@ To set a custom certificate, set the `SSL_CRT_FILE` and `SSL_KEY_FILE` environme
 ```bash
 HTTPS=true SSL_CRT_FILE=cert.crt SSL_KEY_FILE=cert.key npm start
 ```
-
 
 To avoid having to set the environment variable each time, you can either include in the `npm start` script like so:
 
@@ -54,4 +52,3 @@ To avoid having to set the environment variable each time, you can either includ
 
 Or you can create a `.env` file with `HTTPS=true` set.
 [Learn more about environment variables in CRA](https://create-react-app.dev/docs/adding-custom-environment-variables).
-
