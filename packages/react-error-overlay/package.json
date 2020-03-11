@@ -35,9 +35,9 @@
   ],
   "devDependencies": {
     "@babel/code-frame": "7.8.3",
-    "@babel/core": "7.8.4",
+    "@babel/core": "7.8.7",
     "anser": "1.4.9",
-    "babel-eslint": "10.0.3",
+    "babel-eslint": "10.1.0",
     "babel-jest": "^24.9.0",
     "babel-loader": "8.0.6",
     "babel-preset-react-app": "^9.1.1",
@@ -47,9 +47,9 @@
     "eslint": "^6.1.0",
     "eslint-config-react-app": "^5.2.0",
     "eslint-plugin-flowtype": "4.5.2",
-    "eslint-plugin-import": "2.20.0",
+    "eslint-plugin-import": "2.20.1",
     "eslint-plugin-jsx-a11y": "6.2.3",
-    "eslint-plugin-react": "7.17.0",
+    "eslint-plugin-react": "7.19.0",
     "flow-bin": "^0.116.0",
     "html-entities": "1.2.1",
     "jest": "24.9.0",
@@ -63,7 +63,7 @@
     "rimraf": "^3.0.0",
     "settle-promise": "1.0.0",
     "source-map": "0.5.6",
-    "terser-webpack-plugin": "2.3.4",
+    "terser-webpack-plugin": "2.3.5",
     "webpack": "^4.35.0"
   },
   "jest": {
