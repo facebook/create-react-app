@@ -1,3 +1,7 @@
+## 5.1.6
+
+- changed agni config to `create` instead of the deprecated `createWithDomain`
+
 ## 5.1.1
 
 - Merged with cra v3.3
