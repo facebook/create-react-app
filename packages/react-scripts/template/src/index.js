@@ -15,7 +15,7 @@ import * as serviceWorker from './serviceWorker';
 
 //Create a global api to be injected into thunk middleware
 //for further customization check https://github.com/guestyorg/agni
-const { api } = Resource.createWithDomain();
+const { api } = Resource.create();
 //Configure your redux store with your initial stare and global api
 //Store is configured with thunk as its default middleware
 const history = createHistory({ baseUrl: '/' });
