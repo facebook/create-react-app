@@ -100,6 +100,7 @@ module.exports = function(proxy, allowedHost) {
     },
     https: getHttpsConfig(),
     host,
+    allowedHosts: ['.'.concat(host)],
     overlay: false,
     historyApiFallback: {
       // Paths with dots should still use the history fallback.
