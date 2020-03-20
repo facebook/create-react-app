@@ -35,11 +35,11 @@
   ],
   "devDependencies": {
     "@babel/code-frame": "7.8.3",
-    "@babel/core": "7.8.7",
+    "@babel/core": "7.9.0",
     "anser": "1.4.9",
     "babel-eslint": "10.1.0",
     "babel-jest": "^24.9.0",
-    "babel-loader": "8.0.6",
+    "babel-loader": "8.1.0",
     "babel-preset-react-app": "^9.1.1",
     "chalk": "2.4.2",
     "chokidar": "^3.3.0",

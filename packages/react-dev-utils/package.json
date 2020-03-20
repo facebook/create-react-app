@@ -54,7 +54,7 @@
   "dependencies": {
     "@babel/code-frame": "7.8.3",
     "address": "1.1.2",
-    "browserslist": "4.9.1",
+    "browserslist": "4.10.0",
     "chalk": "2.4.2",
     "cross-spawn": "7.0.1",
     "detect-port-alt": "1.1.6",
