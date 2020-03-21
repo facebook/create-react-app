@@ -9,6 +9,7 @@
 'use strict';
 
 const fs = require('fs');
+const path = require('path');
 const errorOverlayMiddleware = require('react-dev-utils/errorOverlayMiddleware');
 const evalSourceMapMiddleware = require('react-dev-utils/evalSourceMapMiddleware');
 const noopServiceWorkerMiddleware = require('react-dev-utils/noopServiceWorkerMiddleware');
@@ -87,7 +88,7 @@ module.exports = function(proxy, allowedHost) {
     // we specified in the webpack config. When homepage is '.', default to serving
     // from the root.
     // remove last slash so user can land on `/test` instead of `/test/`
-    publicPath: paths.publicUrlOrPath.slice(0, -1),
+    publicPath: paths.publicUrlOrPath.endsWith(path.sep) ? paths.publicUrlOrPath.slice(0, -1) : paths.publicUrlOrPath,
     // WebpackDevServer is noisy by default so we emit custom message instead
     // by listening to the compiler events with `compiler.hooks[...].tap` calls above.
     quiet: true,

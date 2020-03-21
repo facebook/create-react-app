@@ -32,6 +32,7 @@ verifyTypeScriptSetup();
 // @remove-on-eject-end
 
 const fs = require('fs');
+const path = require('path');
 const chalk = require('react-dev-utils/chalk');
 const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
@@ -101,7 +102,7 @@ checkBrowsers(paths.appPath, isInteractive)
       protocol,
       HOST,
       port,
-      paths.publicUrlOrPath.slice(0, -1)
+      paths.publicUrlOrPath.endsWith(path.sep) ? paths.publicUrlOrPath.slice(0, -1) : paths.publicUrlOrPath
     );
     const devSocket = {
       warnings: warnings =>

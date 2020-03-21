@@ -75,7 +75,9 @@ module.exports = function(webpackEnv) {
   // as %PUBLIC_URL% in `index.html` and `process.env.PUBLIC_URL` in JavaScript.
   // Omit trailing slash as %PUBLIC_URL%/xyz looks better than %PUBLIC_URL%xyz.
   // Get environment variables to inject into our app.
-  const env = getClientEnvironment(paths.publicUrlOrPath.slice(0, -1));
+  const env = getClientEnvironment(
+  paths.publicUrlOrPath.endsWith(path.sep) ? paths.publicUrlOrPath.slice(0, -1) : paths.publicUrlOrPath
+  );
 
   // common function to get style loaders
   const getStyleLoaders = (cssOptions, preProcessor) => {

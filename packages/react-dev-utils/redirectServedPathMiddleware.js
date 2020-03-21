@@ -10,7 +10,7 @@ const path = require('path');
 
 module.exports = function createRedirectServedPathMiddleware(servedPath) {
   // remove end slash so user can land on `/test` instead of `/test/`
-  servedPath = servedPath.slice(0, -1);
+  servedPath = servedPath.endsWith(path.sep) ? servedPath.slice(0, -1) : servedPath
   return function redirectServedPathMiddleware(req, res, next) {
     if (
       servedPath === '' ||
