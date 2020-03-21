@@ -468,6 +468,12 @@ Your site will now deploy, and you will receive a link similar to the following:
 
 Out of the box, you are preconfigured for client-side routing compatibility and appropriate default caching headers. This behaviour can be overwritten [like this](https://zeit.co/docs/v2/advanced/routes/).
 
+## [Qovery](https://www.qovery.com)
+
+Qovery is a cloud platform for backend and frontend application, that you can use to deploy your Create React App projects to your personal domain (or a free `.qovery.io` suffixed URL).
+
+[This guide](https://docs.qovery.com/quickstart/examples/deploy-a-react-application) will show you how to get started and deploy your Create React App application in 2 minutes.
+
 ## [Render](https://render.com)
 
 Render offers free [static site](https://render.com/docs/static-sites) hosting with fully managed SSL, a global CDN and continuous auto deploys from GitHub.
