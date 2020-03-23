@@ -6,7 +6,7 @@ v3.4.1 is a maintenance release that includes minor bug fixes and documentation 
 
 - `react-scripts`
   - [#8276](https://github.com/facebook/create-react-app/pull/8276) Use native ESLint behaviour when extending ([@mrmckeb](https://github.com/mrmckeb))
-  - [#7203](https://github.com/facebook/create-react-app/pull/7203) Closes webpack dev server and exits process on "end" stdin ([@kelseyleftwich](https://github.com/kelseyleftwich))
+  - [#7203](https://github.com/facebook/create-react-app/pull/7203) Closes webpack dev server and exits process on "end" stdin ([@jakehasler](https://github.com/jakehasler))
 - `babel-preset-react-app`
   - [#8526](https://github.com/facebook/create-react-app/pull/8526) Fix optional chaining and nullish coalescing support ([@ianschmitz](https://github.com/ianschmitz))
 - `cra-template`, `eslint-config-react-app`, `react-scripts`
