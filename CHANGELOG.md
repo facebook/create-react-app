@@ -1,3 +1,7 @@
+## 5.1.7
+
+- updated `babel-plugin-transform-react-qa-classes` to 1.5.0
+
 ## 5.1.6
 
 - changed agni config to `create` instead of the deprecated `createWithDomain`
