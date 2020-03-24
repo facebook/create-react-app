@@ -168,6 +168,7 @@ checkBrowsers(paths.appPath, isInteractive)
     if (isInteractive || process.env.CI !== 'true') {
       // Gracefully exit when stdin ends
       process.stdin.on('end', function() {
+        console.log("Closing server as stdin ends...");
         devServer.close();
         process.exit();
       });
