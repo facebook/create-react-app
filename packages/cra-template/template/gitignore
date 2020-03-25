@@ -2,6 +2,8 @@
 
 # dependencies
 /node_modules
+yarn.lock
+package-lock.json
 /.pnp
 .pnp.js
 
@@ -12,6 +14,7 @@
 /build
 
 # misc
+.env
 .DS_Store
 .env.local
 .env.development.local
