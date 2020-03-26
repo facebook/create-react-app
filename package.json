@@ -44,7 +44,7 @@
     "wait-for-localhost": "^3.1.0"
   },
   "resolutions": {
-    "mkdirp": "0.5.1"
+    "mkdirp": "^0.5.1"
   },
   "husky": {
     "hooks": {
