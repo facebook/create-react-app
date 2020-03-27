@@ -51,3 +51,27 @@ Make sure you have a `tsconfig.json` file at the root directory. You can also us
   "presets": [["react-app", { "flow": false, "typescript": true }]]
 }
 ```
+
+## Opts of @babel/plugin-transform-runtime
+
+### opts.useESModules
+`boolean`, defaults to `isEnvDevelopment || isEnvProduction`
+
+```javascript
+const env = process.env.BABEL_ENV || process.env.NODE_ENV;
+var isEnvDevelopment = env === 'development';
+var isEnvProduction = env === 'production';
+```
+
+### opts.helpers
+`boolean`, defaults to `true`
+
+### opts.absoluteRuntime
+`boolean`, defaults to `true`
+
+```javascript
+// node_modules/babel-preset-react-app/create.js
+absoluteRuntimePath = path.dirname(
+  require.resolve('@babel/runtime/package.json')
+);
+```
