@@ -7,7 +7,6 @@
     "template"
   ],
   "description": "The base template for Create React App.",
-  "main": "template.json",
   "repository": {
     "type": "git",
     "url": "https://github.com/facebook/create-react-app.git",
