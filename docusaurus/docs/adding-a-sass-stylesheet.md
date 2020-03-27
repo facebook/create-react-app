@@ -61,3 +61,12 @@ If you set `SASS_PATH=node_modules:src`, this will allow you to do imports like
 > module.file_ext=.sass
 > module.file_ext=.scss
 > ```
+
+> **Note:** If you are using `@use`, `@forward` syntax to handle your css modules, you can import `Sass` package instead.
+
+Install Sass package:
+```sh
+$ npm install sass --save
+$ # or
+$ yarn add sass
+```
