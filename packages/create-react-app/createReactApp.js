@@ -640,10 +640,25 @@ function getTemplateInstallPackage(template, originalDirectory) {
       const scope = packageMatch[1] || '';
       const templateName = packageMatch[2];
 
-      const name = templateName.startsWith(templateToInstall)
-        ? templateName
-        : `${templateToInstall}-${templateName}`;
-      templateToInstall = `${scope}${name}`;
+      if (
+        templateName === templateToInstall ||
+        templateName.startsWith(`${templateToInstall}-`)
+      ) {
+        // Covers:
+        // - cra-template
+        // - @SCOPE/cra-template
+        // - cra-template-NAME
+        // - @SCOPE/cra-template-NAME
+        templateToInstall = `${scope}${templateName}`;
+      } else if (templateName.startsWith('@')) {
+        // Covers using @SCOPE only
+        templateToInstall = `${templateName}/${templateToInstall}`;
+      } else {
+        // Covers templates without the `cra-template` prefix:
+        // - NAME
+        // - @SCOPE/NAME
+        templateToInstall = `${scope}${templateToInstall}-${templateName}`;
+      }
     }
   }
 

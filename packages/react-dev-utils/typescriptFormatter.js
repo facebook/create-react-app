@@ -28,7 +28,7 @@ function formatter(message, useColors) {
         }
       : message;
 
-  const colors = new chalk.Instance({ enabled: useColors });
+  const colors = new chalk.constructor({ enabled: useColors });
   const messageColor = message.isWarningSeverity() ? colors.yellow : colors.red;
   const fileAndNumberColor = colors.bold.cyan;
 

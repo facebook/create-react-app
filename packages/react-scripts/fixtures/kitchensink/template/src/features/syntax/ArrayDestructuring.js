@@ -9,7 +9,12 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 function load() {
-  return [[1, '1'], [2, '2'], [3, '3'], [4, '4']];
+  return [
+    [1, '1'],
+    [2, '2'],
+    [3, '3'],
+    [4, '4'],
+  ];
 }
 
 export default class extends Component {

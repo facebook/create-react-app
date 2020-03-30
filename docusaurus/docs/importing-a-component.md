@@ -3,7 +3,7 @@ id: importing-a-component
 title: Importing a Component
 ---
 
-This project setup supports ES6 modules thanks to Webpack.
+This project setup supports ES6 modules thanks to webpack.
 
 While you can still use `require()` and `module.exports`, we encourage you to use [`import` and `export`](http://exploringjs.com/es6/ch_modules.html) instead.
 

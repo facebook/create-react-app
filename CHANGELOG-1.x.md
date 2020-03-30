@@ -280,7 +280,7 @@ yarn add --exact react-scripts@1.1.1
   - [#3757](https://github.com/facebook/create-react-app/pull/3757) Try updating Flow. ([@gaearon](https://github.com/gaearon))
   - [#3414](https://github.com/facebook/create-react-app/pull/3414) Export `dismissRuntimeErrors` function. ([@skidding](https://github.com/skidding))
   - [#3036](https://github.com/facebook/create-react-app/pull/3036) Cleaning up `printHostingInstructions` a bit. ([@GreenGremlin](https://github.com/GreenGremlin))
-  - [#3514](https://github.com/facebook/create-react-app/pull/3514) Fix `FileSizeReporter` for multi build Webpack setups. ([@iiska](https://github.com/iiska))
+  - [#3514](https://github.com/facebook/create-react-app/pull/3514) Fix `FileSizeReporter` for multi build webpack setups. ([@iiska](https://github.com/iiska))
   - [#3362](https://github.com/facebook/create-react-app/pull/3362) Refactor extra watch options regex to `react-dev-utils`. ([@xjlim](https://github.com/xjlim))
 
 #### Committers: 47
@@ -1104,7 +1104,7 @@ or
 yarn add --dev --exact react-scripts@1.0.8
 ```
 
-**If you previously used `HTTPS=true` environment variable in development**, make sure you aren't affected by a now-fixed vulnerability in Webpack by [visiting this page](http://badcert.mike.works/). You can read more about the vulnerability [here](https://medium.com/@mikenorth/webpack-preact-cli-vulnerability-961572624c54).
+**If you previously used `HTTPS=true` environment variable in development**, make sure you aren't affected by a now-fixed vulnerability in webpack by [visiting this page](http://badcert.mike.works/). You can read more about the vulnerability [here](https://medium.com/@mikenorth/webpack-preact-cli-vulnerability-961572624c54).
 
 You may optionally then move `react-scripts` from `devDependencies` to `dependencies` since that’s how we’ll structure newly created projects. It is not necessary though.
 
@@ -1724,7 +1724,7 @@ Please [file an issue](https://github.com/facebook/create-react-app/issues/new) 
 - `react-dev-utils`
   - [#2125](https://github.com/facebook/create-react-app/pull/2125) Only show the first compilation error. ([@gaearon](https://github.com/gaearon))
   - [#2120](https://github.com/facebook/create-react-app/pull/2120) Omit ESLint warnings when there are ESLint errors. ([@gaearon](https://github.com/gaearon))
-  - [#2113](https://github.com/facebook/create-react-app/pull/2113) Prettify errors and warnings for Webpack 2. ([@gaearon](https://github.com/gaearon))
+  - [#2113](https://github.com/facebook/create-react-app/pull/2113) Prettify errors and warnings for webpack 2. ([@gaearon](https://github.com/gaearon))
   - [#1842](https://github.com/facebook/create-react-app/pull/1842) Modularize and extract crash overlay to iframe. ([@Timer](https://github.com/Timer))
 - `create-react-app`
   - [#1811](https://github.com/facebook/create-react-app/pull/1811) Allow creation of apps in empty Mercurial repos. ([@GreenGremlin](https://github.com/GreenGremlin))
@@ -1770,7 +1770,7 @@ Please [file an issue](https://github.com/facebook/create-react-app/issues/new) 
   - [#1736](https://github.com/facebook/create-react-app/pull/1736) Fix eject for linked react-scripts. ([@tuchk4](https://github.com/tuchk4))
   - [#1741](https://github.com/facebook/create-react-app/pull/1741) Fix internal linting setup. ([@gaearon](https://github.com/gaearon))
   - [#1730](https://github.com/facebook/create-react-app/pull/1730) Fix Node 4 e2e tests. ([@Timer](https://github.com/Timer))
-  - [#1715](https://github.com/facebook/create-react-app/pull/1715) Remove unused `url` import in Webpack config. ([@pd4d10](https://github.com/pd4d10))
+  - [#1715](https://github.com/facebook/create-react-app/pull/1715) Remove unused `url` import in webpack config. ([@pd4d10](https://github.com/pd4d10))
   - [#1700](https://github.com/facebook/create-react-app/pull/1700) Update extract-text-webpack-plugin to stable. ([@SimenB](https://github.com/SimenB))
 - `react-dev-utils`, `react-scripts`
   - [#2209](https://github.com/facebook/create-react-app/pull/2209) Move more logic from react-scripts to react-dev-utils. ([@gaearon](https://github.com/gaearon))

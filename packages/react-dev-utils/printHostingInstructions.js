@@ -22,7 +22,9 @@ function printHostingInstructions(
   if (publicUrl && publicUrl.includes('.github.io/')) {
     // "homepage": "http://user.github.io/project"
     const publicPathname = url.parse(publicPath).pathname;
-    const hasDeployScript = typeof appPackage.scripts.deploy !== 'undefined';
+    const hasDeployScript =
+      typeof appPackage.scripts !== 'undefined' &&
+      typeof appPackage.scripts.deploy !== 'undefined';
     printBaseMessage(buildFolder, publicPathname);
 
     printDeployInstructions(publicUrl, hasDeployScript, useYarn);
