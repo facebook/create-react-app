@@ -366,13 +366,11 @@ module.exports = function (webpackEnv) {
                   // @remove-on-eject-begin
                   ignore: isExtendingEslintConfig,
                   baseConfig: isExtendingEslintConfig
-                  ? undefined
-                  : {
-                    extends: [
-                      require.resolve('eslint-config-react-app'),
-                    ],
-                  },
-                  useEslintrc: false,
+                    ? undefined
+                    : {
+                        extends: [require.resolve('eslint-config-react-app'),],
+                      },
+                  useEslintrc: isExtendingEslintConfig,
                   // @remove-on-eject-end
                 },
                 loader: require.resolve('eslint-loader'),
