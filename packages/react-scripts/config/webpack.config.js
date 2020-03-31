@@ -43,11 +43,9 @@ const appPackageJson = require(paths.appPackageJson);
 // Source maps are resource heavy and can cause out of memory issue for large source files.
 const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false';
 
-// React refresh isn't 100% stable right now. We have a feature flag to enable it.
-const shouldUseReactRefresh = process.env.REACT_REFRESH === 'true';
-const webpackDevClientEntry = shouldUseReactRefresh
-  ? require.resolve('react-dev-utils/webpackFastRefreshDevClient')
-  : require.resolve('react-dev-utils/webpackHotDevClient');
+const webpackDevClientEntry = require.resolve(
+  'react-dev-utils/webpackHotDevClient'
+);
 
 // Some apps do not need the benefits of saving a web request, so not inlining the chunk
 // makes for a smoother build process.
@@ -84,6 +82,8 @@ module.exports = function(webpackEnv) {
   // Omit trailing slash as %PUBLIC_URL%/xyz looks better than %PUBLIC_URL%xyz.
   // Get environment variables to inject into our app.
   const env = getClientEnvironment(paths.publicUrlOrPath.slice(0, -1));
+
+  const shouldUseReactRefresh = env.raw.REACT_REFRESH;
 
   // common function to get style loaders
   const getStyleLoaders = (cssOptions, preProcessor) => {
@@ -168,7 +168,7 @@ module.exports = function(webpackEnv) {
       // the line below with these two lines if you prefer the stock client:
       // require.resolve('webpack-dev-server/client') + '?/',
       // require.resolve('webpack/hot/dev-server'),
-      isEnvDevelopment && webpackDevClientEntry,
+      isEnvDevelopment && !shouldUseReactRefresh && webpackDevClientEntry,
       // Finally, this is your app's code:
       paths.appIndexJs,
       // We include the app code last so that if there is a runtime error during
@@ -620,7 +620,13 @@ module.exports = function(webpackEnv) {
       // Provide fast-refresh https://github.com/facebook/react/tree/master/packages/react-refresh
       isEnvDevelopment &&
         shouldUseReactRefresh &&
-        new ReactRefreshWebpackPlugin({ disableRefreshCheck: true }),
+        new ReactRefreshWebpackPlugin({
+          disableRefreshCheck: true,
+          overlay: {
+            entry: webpackDevClientEntry,
+            module: require.resolve('react-dev-utils/errorOverlayModuleEntry'),
+          },
+        }),
       // Watcher doesn't work well if you mistype casing in a path so we use
       // a plugin that prints an error when you attempt to do this.
       // See https://github.com/facebook/create-react-app/issues/240
