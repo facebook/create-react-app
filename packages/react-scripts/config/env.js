@@ -96,6 +96,7 @@ function getClientEnvironment(publicUrl) {
         // Whether or not react-refresh is enabled.
         // react-refresh is not 100% stable at this time,
         // which is why it's disabled by default.
+        // It is defined here so it is available in the webpackHotDevClient.
         REACT_REFRESH: process.env.REACT_REFRESH || false,
       }
     );

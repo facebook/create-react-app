@@ -166,8 +166,12 @@ module.exports = function(webpackEnv) {
       // Note: instead of the default WebpackDevServer client, we use a custom one
       // to bring better experience for Create React App users. You can replace
       // the line below with these two lines if you prefer the stock client:
+      //
       // require.resolve('webpack-dev-server/client') + '?/',
       // require.resolve('webpack/hot/dev-server'),
+      //
+      // When using the experimental react-refresh integration,
+      // the webpack plugin takes care of injecting the dev client for us.
       isEnvDevelopment && !shouldUseReactRefresh && webpackDevClientEntry,
       // Finally, this is your app's code:
       paths.appIndexJs,
@@ -617,14 +621,16 @@ module.exports = function(webpackEnv) {
       new webpack.DefinePlugin(env.stringified),
       // This is necessary to emit hot updates (currently CSS only):
       isEnvDevelopment && new webpack.HotModuleReplacementPlugin(),
-      // Provide fast-refresh https://github.com/facebook/react/tree/master/packages/react-refresh
+      // Experimental hot reloading for React .
+      // https://github.com/facebook/react/tree/master/packages/react-refresh
       isEnvDevelopment &&
         shouldUseReactRefresh &&
         new ReactRefreshWebpackPlugin({
           disableRefreshCheck: true,
           overlay: {
             entry: webpackDevClientEntry,
-            module: require.resolve('react-dev-utils/errorOverlayModuleEntry'),
+            // TODO: This is just a stub module. Clean this up if possible.
+            module: require.resolve('./hotRefreshOverlayModuleStub'),
           },
         }),
       // Watcher doesn't work well if you mistype casing in a path so we use
