@@ -42,12 +42,10 @@ var major = semver[0];
 
 if (major < 8) {
   console.error(
-    'You are running Node ' +
-      currentNodeVersion +
-      '.\n' +
+    'You are running Node %s .\n' +
       'Create React App requires Node 8 or higher. \n' +
       'Please update your version of Node.'
-  );
+  , currentNodeVersion);
   process.exit(1);
 }
 
