@@ -243,7 +243,7 @@ function tryApplyUpdates(onHotUpdateSuccess) {
   }
 
   function handleApplyUpdates(err, updatedModules) {
-    const hasReactRefresh = process.env.REACT_REFRESH;
+    const hasReactRefresh = process.env.FAST_REFRESH;
     const wantsForcedReload = err || !updatedModules || hadRuntimeError;
     // React refresh can handle hot-reloading over errors.
     if (!hasReactRefresh && wantsForcedReload) {
