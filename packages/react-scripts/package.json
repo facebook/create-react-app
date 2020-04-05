@@ -82,6 +82,7 @@
     "workbox-webpack-plugin": "4.3.1"
   },
   "devDependencies": {
+    "babel-plugin-rewire": "^1.2.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0"
   },
