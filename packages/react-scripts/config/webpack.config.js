@@ -32,6 +32,7 @@ const getClientEnvironment = require('./env');
 const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
 const ForkTsCheckerWebpackPlugin = require('react-dev-utils/ForkTsCheckerWebpackPlugin');
 const typescriptFormatter = require('react-dev-utils/typescriptFormatter');
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 // @remove-on-eject-begin
 const getCacheIdentifier = require('react-dev-utils/getCacheIdentifier');
 // @remove-on-eject-end
@@ -41,6 +42,11 @@ const appPackageJson = require(paths.appPackageJson);
 
 // Source maps are resource heavy and can cause out of memory issue for large source files.
 const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false';
+
+const webpackDevClientEntry = require.resolve(
+  'react-dev-utils/webpackHotDevClient'
+);
+
 // Some apps do not need the benefits of saving a web request, so not inlining the chunk
 // makes for a smoother build process.
 const shouldInlineRuntimeChunk = process.env.INLINE_RUNTIME_CHUNK !== 'false';
@@ -76,6 +82,8 @@ module.exports = function(webpackEnv) {
   // Omit trailing slash as %PUBLIC_URL%/xyz looks better than %PUBLIC_URL%xyz.
   // Get environment variables to inject into our app.
   const env = getClientEnvironment(paths.publicUrlOrPath.slice(0, -1));
+
+  const shouldUseReactRefresh = env.raw.FAST_REFRESH;
 
   // common function to get style loaders
   const getStyleLoaders = (cssOptions, preProcessor) => {
@@ -158,10 +166,13 @@ module.exports = function(webpackEnv) {
       // Note: instead of the default WebpackDevServer client, we use a custom one
       // to bring better experience for Create React App users. You can replace
       // the line below with these two lines if you prefer the stock client:
+      //
       // require.resolve('webpack-dev-server/client') + '?/',
       // require.resolve('webpack/hot/dev-server'),
-      isEnvDevelopment &&
-        require.resolve('react-dev-utils/webpackHotDevClient'),
+      //
+      // When using the experimental react-refresh integration,
+      // the webpack plugin takes care of injecting the dev client for us.
+      isEnvDevelopment && !shouldUseReactRefresh && webpackDevClientEntry,
       // Finally, this is your app's code:
       paths.appIndexJs,
       // We include the app code last so that if there is a runtime error during
@@ -419,7 +430,10 @@ module.exports = function(webpackEnv) {
                         },
                       },
                     },
-                  ],
+                    isEnvDevelopment &&
+                      shouldUseReactRefresh &&
+                      require.resolve('react-refresh/babel'),
+                  ].filter(Boolean),
                 ],
                 // This is a feature of `babel-loader` for webpack (not Babel itself).
                 // It enables caching results in ./node_modules/.cache/babel-loader/
@@ -607,6 +621,17 @@ module.exports = function(webpackEnv) {
       new webpack.DefinePlugin(env.stringified),
       // This is necessary to emit hot updates (currently CSS only):
       isEnvDevelopment && new webpack.HotModuleReplacementPlugin(),
+      // Experimental hot reloading for React .
+      // https://github.com/facebook/react/tree/master/packages/react-refresh
+      isEnvDevelopment &&
+        shouldUseReactRefresh &&
+        new ReactRefreshWebpackPlugin({
+          overlay: {
+            entry: webpackDevClientEntry,
+            // TODO: This is just a stub module. Clean this up if possible.
+            module: require.resolve('./hotRefreshOverlayModuleStub'),
+          },
+        }),
       // Watcher doesn't work well if you mistype casing in a path so we use
       // a plugin that prints an error when you attempt to do this.
       // See https://github.com/facebook/create-react-app/issues/240
