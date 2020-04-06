@@ -81,7 +81,6 @@ module.exports = {
         '@typescript-eslint/consistent-type-assertions': 'warn',
         'no-array-constructor': 'off',
         '@typescript-eslint/no-array-constructor': 'warn',
-        '@typescript-eslint/no-namespace': 'error',
         'no-use-before-define': 'off',
         '@typescript-eslint/no-use-before-define': [
           'warn',
@@ -188,7 +187,6 @@ module.exports = {
     'no-throw-literal': 'warn',
     'no-undef': 'error',
     'no-restricted-globals': ['error'].concat(restrictedGlobals),
-    'no-unexpected-multiline': 'warn',
     'no-unreachable': 'warn',
     'no-unused-expressions': [
       'error',

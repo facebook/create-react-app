@@ -43,6 +43,9 @@
     "tempy": "^0.2.1",
     "wait-for-localhost": "^3.1.0"
   },
+  "resolutions": {
+    "mkdirp": "0.5.1"
+  },
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
