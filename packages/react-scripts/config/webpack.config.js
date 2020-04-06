@@ -626,7 +626,6 @@ module.exports = function(webpackEnv) {
       isEnvDevelopment &&
         shouldUseReactRefresh &&
         new ReactRefreshWebpackPlugin({
-          disableRefreshCheck: true,
           overlay: {
             entry: webpackDevClientEntry,
             // TODO: This is just a stub module. Clean this up if possible.
