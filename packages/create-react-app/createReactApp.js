@@ -240,6 +240,15 @@ function createApp(
     name: appName,
     version: '0.1.0',
     private: true,
+    // entry points
+    appPages: [
+      {
+        name: 'index',
+        title: 'index',
+        appHtml: 'public/index.html',
+        appIndexJs: 'src/index',
+      },
+    ],
   };
   fs.writeFileSync(
     path.join(root, 'package.json'),
