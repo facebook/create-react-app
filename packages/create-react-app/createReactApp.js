@@ -283,7 +283,7 @@ function createApp(
       if (!yarnInfo.hasMaxYarnPnp) {
         console.log(
           chalk.yellow(
-            `The --use-pnp flag is no longer necessary with yarn ${yarnInfo.yarnVersion} and will be deprecated and removed in a future release.\n`
+            'The --use-pnp flag is no longer necessary with yarn 2 and will be deprecated and removed in a future release.\n'
           )
         );
         // 2 supports PnP by default and breaks when trying to use the flag
