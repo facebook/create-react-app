@@ -19,13 +19,22 @@ We recommend that you use a separate tool for browser end-to-end tests if you ne
 
 Jest will look for test files with any of the following popular naming conventions:
 
-- Files with `.js` suffix in `__tests__` folders.
-- Files with `.test.js` suffix.
-- Files with `.spec.js` suffix.
+- Files with `.js`, `.jsx`, `.ts`, `.tsx` suffixes in folders named `__tests__` underneath the top-level `src` folder.
+- Files underneath the top-level `src` folder with any of the following suffixes:
+  - `.spec.js`
+  - `.test.js`
+  - `.spec.jsx`
+  - `.test.jsx`
+  - `.spec.ts`
+  - `.test.ts`
+  - `.spec.tsx`
+  - `.test.tsx`
 
-The `.test.js` / `.spec.js` files (or the `__tests__` folders) can be located at any depth under the `src` top level folder.
+Note that tests written in TypeScript are only supported in Create React App 2.1 and above. No custom configuration is required to enable TypeScript tests, nor is it required to install special packages like `ts-jest` in order to run tests written in TypeScript.
 
-We recommend to put the test files (or `__tests__` folders) next to the code they are testing so that relative imports appear shorter. For example, if `App.test.js` and `App.js` are in the same folder, the test only needs to `import App from './App'` instead of a long relative path. Collocation also helps find tests more quickly in larger projects.
+Test files (or `__tests__` folders) can be located at any depth under the `src` top level folder.  A `__tests__` folder that's a peer to `src` WILL NOT work because `__tests__` folders must be underneath `src`.
+
+We recommend to put the test files (or `__tests__` folders) next to the code they are testing so that relative imports appear shorter. For example, if `App.test.js` and `App.js` are in the same folder, the test only needs to `import App from './App'` instead of a long relative path. Colocation also helps find tests more quickly in larger projects.
 
 ## Command Line Interface
 
