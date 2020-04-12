@@ -81,7 +81,7 @@
     "webpack": "4.42.0",
     "webpack-dev-server": "3.10.3",
     "webpack-manifest-plugin": "2.2.0",
-    "workbox-webpack-plugin": "4.3.1"
+    "workbox-webpack-plugin": "5.1.2"
   },
   "devDependencies": {
     "react": "^16.12.0",
