@@ -18,7 +18,7 @@
     "test": "cd packages/react-scripts && node bin/react-scripts.js test",
     "format": "prettier --trailing-comma es5 --single-quote --write 'packages/*/*.js' 'packages/*/!(node_modules)/**/*.js'",
     "compile:lockfile": "node tasks/compile-lockfile.js",
-    "publish-package": "echo $GOOGLE_AUTH_B64 | base64 --decode > .google_creds && GOOGLE_APPLICATION_CREDENTIALS=.google_creds npx google-artifactregistry-auth .npmrc && rm -f .google_creds && yarn publish"
+    "publish-package": "echo $GOOGLE_AUTH_B64 | base64 --decode > .google_creds && GOOGLE_APPLICATION_CREDENTIALS=$(cat .google_creds) npx google-artifactregistry-auth .npmrc && rm -f .google_creds && yarn publish"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^4.2.0",
