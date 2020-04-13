@@ -24,6 +24,9 @@
     "template-typescript",
     "utils"
   ],
+  "scripts": {
+    "publish-package": "echo $GOOGLE_AUTH_B64 | base64 --decode > .google_creds && GOOGLE_APPLICATION_CREDENTIALS=.google_creds npx google-artifactregistry-auth .npmrc && rm -f .google_creds && yarn publish"
+  },
   "bin": {
     "react-scripts": "./bin/react-scripts.js"
   },
