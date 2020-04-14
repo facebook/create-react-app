@@ -292,7 +292,10 @@ function verifyTypeScriptSetup() {
   if (!fs.existsSync(paths.appTypeDeclarations)) {
     fs.writeFileSync(
       paths.appTypeDeclarations,
-      `/// <reference types="react-scripts" />${os.EOL}`
+      /* webpack-5-react-scripts start */
+      // `/// <reference types="react-scripts" />${os.EOL}`
+      `/// <reference types="webpack-5-react-scripts" />${os.EOL}`
+      /* webpack-5-react-scripts end */
     );
   }
 }

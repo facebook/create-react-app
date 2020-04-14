@@ -1,3 +1,13 @@
+Updates CRA for use with Webpack 5 with Module Federation.
+
+To use:
+
+```
+npx create-react-app my-app --template webpack-5-typescript --scripts-version webpack-5-react-scripts
+```
+
+---
+
 # Create React App [![Build Status](https://dev.azure.com/facebook/create-react-app/_apis/build/status/facebook.create-react-app?branchName=master)](https://dev.azure.com/facebook/create-react-app/_build/latest?definitionId=1&branchName=master) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-green.svg)](https://github.com/facebook/create-react-app/blob/master/CONTRIBUTING.md)
 
 <img alt="Logo" align="right" src="https://create-react-app.dev/img/logo.svg" width="20%" />

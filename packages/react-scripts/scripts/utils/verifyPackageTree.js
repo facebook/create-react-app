@@ -42,9 +42,24 @@ function verifyPackageTree() {
       throw new Error('This dependency list is outdated, fix it.');
     }
     if (!getSemverRegex().test(expectedVersion)) {
-      throw new Error(
-        `The ${dep} package should be pinned, instead got version ${expectedVersion}.`
-      );
+      /* webpack-5-react-scripts start */
+      // throw new Error(
+      //   `The ${dep} package should be pinned, instead got version ${expectedVersion}.`
+      // );
+      // This is a temporary solution until module federation is merged into Webpack 5
+      if (expectedVersion.startsWith('git://')) {
+        const endsWithCommitHash = !!expectedVersion.match(/#[0-9a-f]{40}$/);
+        if (!endsWithCommitHash) {
+          throw new Error(
+            `The ${dep} package should be pinned to a specific git commit, instead got version ${expectedVersion}.`
+          );
+        }
+      } else {
+        throw new Error(
+          `The ${dep} package should be pinned, instead got version ${expectedVersion}.`
+        );
+      }
+      /* webpack-5-react-scripts end */
     }
     expectedVersionsByDep[dep] = expectedVersion;
   });
@@ -75,7 +90,14 @@ function verifyPackageTree() {
         fs.readFileSync(maybeDepPackageJson, 'utf8')
       );
       const expectedVersion = expectedVersionsByDep[dep];
-      if (!semver.satisfies(depPackageJson.version, expectedVersion)) {
+      /* webpack-5-react-scripts start */
+      // if (!semver.satisfies(depPackageJson.version, expectedVersion)) {
+      if (
+        // Dependencies with Git versions will not work with this check, so don't check them.
+        !expectedVersion.startsWith('git://') &&
+        !semver.satisfies(depPackageJson.version, expectedVersion)
+      ) {
+        /* webpack-5-react-scripts end */
         console.error(
           chalk.red(
             `\nThere might be a problem with the project dependency tree.\n` +
