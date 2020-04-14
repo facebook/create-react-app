@@ -70,13 +70,19 @@ module.exports = function (proxy, allowedHost) {
     // updated. The WebpackDevServer client is included as an entry point
     // in the webpack development configuration. Note that only changes
     // to CSS are currently hot reloaded. JS changes will refresh the browser.
-    hot: true,
+    /* webpack-5-react-scripts start */
+    // hot: true,
+    hot: false,
+    /* webpack-5-react-scripts end */
     // Use 'ws' instead of 'sockjs-node' on server since we're using native
     // websockets in `webpackHotDevClient`.
     transportMode: 'ws',
     // Prevent a WS client from getting injected as we're already including
     // `webpackHotDevClient`.
-    injectClient: false,
+    /* webpack-5-react-scripts start */
+    // injectClient: false,
+    injectClient: true,
+    /* webpack-5-react-scripts end */
     // Enable custom sockjs pathname for websocket connection to hot reloading server.
     // Enable custom sockjs hostname, pathname and port for websocket connection
     // to hot reloading server.
@@ -100,7 +106,10 @@ module.exports = function (proxy, allowedHost) {
     },
     https: getHttpsConfig(),
     host,
-    overlay: false,
+    /* webpack-5-react-scripts start */
+    // overlay: false,
+    overlay: true,
+    /* webpack-5-react-scripts end */
     historyApiFallback: {
       // Paths with dots should still use the history fallback.
       // See https://github.com/facebook/create-react-app/issues/387.

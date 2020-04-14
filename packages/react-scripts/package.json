@@ -1,7 +1,7 @@
 {
-  "name": "react-scripts",
-  "version": "3.4.1",
-  "description": "Configuration and scripts for Create React App.",
+  "name": "webpack-5-react-scripts",
+  "version": "0.3.1",
+  "description": "Configuration and scripts for Create React App using Webpack 5.",
   "repository": {
     "type": "git",
     "url": "https://github.com/facebook/create-react-app.git",
@@ -80,7 +80,8 @@
     "terser-webpack-plugin": "4.2.0",
     "ts-pnp": "1.2.0",
     "url-loader": "4.1.0",
-    "webpack": "4.44.1",
+    "wbpk-5-cra-utils": "^1.0.1",
+    "webpack": "5.0.0-beta.16",
     "webpack-dev-server": "3.11.0",
     "webpack-manifest-plugin": "2.2.0",
     "workbox-webpack-plugin": "5.1.4"
