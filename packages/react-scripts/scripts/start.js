@@ -42,7 +42,10 @@ const {
   createCompiler,
   prepareProxy,
   prepareUrls,
-} = require('react-dev-utils/WebpackDevServerUtils');
+  /* webpack-5-react-scripts start */
+  // } = require('react-dev-utils/WebpackDevServerUtils');
+} = require('wbpk-5-cra-utils/WebpackDevServerUtils');
+/* webpack-5-react-scripts end */
 const openBrowser = require('react-dev-utils/openBrowser');
 const semver = require('semver');
 const paths = require('../config/paths');

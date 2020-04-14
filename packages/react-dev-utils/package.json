@@ -1,7 +1,7 @@
 {
-  "name": "react-dev-utils",
-  "version": "10.2.1",
-  "description": "webpack utilities used by Create React App",
+  "name": "wbpk-5-cra-utils",
+  "version": "1.0.1",
+  "description": "Webpack 5 utilities used by Create React App",
   "repository": {
     "type": "git",
     "url": "https://github.com/facebook/create-react-app.git",

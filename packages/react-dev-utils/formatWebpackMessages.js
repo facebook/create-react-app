@@ -15,7 +15,15 @@ function isLikelyASyntaxError(message) {
 }
 
 // Cleans up webpack error messages.
-function formatMessage(message) {
+/* wbpk-5-cra-utils start */
+function formatMessage(messageObjOrString) {
+  let message;
+  if (typeof messageObjOrString === 'string') {
+    message = messageObjOrString;
+  } else {
+    message = messageObjOrString.message;
+  }
+  /* wbpk-5-cra-utils end */
   let lines = message.split('\n');
 
   // Strip webpack-added headers off errors/warnings
