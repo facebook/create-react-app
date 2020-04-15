@@ -125,6 +125,27 @@ module.exports = function(
 
   const templatePackage = templateJson.package || {};
 
+  // TODO: Deprecate support for root-level `dependencies` and `scripts` in v4.
+  // These should now be set under the `package` key.
+  if (templateJson.dependencies || templateJson.scripts) {
+    console.log();
+    console.log(
+      chalk.yellow(
+        'Root-level `dependencies` and `scripts` keys in `template.json` are deprecated.\n' +
+          'This template should be updated to use the new `package` key.'
+      )
+    );
+    console.log(
+      'For more information, visit https://create-react-app.dev/docs/custom-templates'
+    );
+  }
+  if (templateJson.dependencies) {
+    templatePackage.dependencies = templateJson.dependencies;
+  }
+  if (templateJson.scripts) {
+    templatePackage.scripts = templateJson.scripts;
+  }
+
   // Keys to ignore in templatePackage
   const templatePackageBlacklist = [
     'name',
@@ -141,7 +162,6 @@ module.exports = function(
     'man',
     'directories',
     'repository',
-    'devDependencies',
     'peerDependencies',
     'bundledDependencies',
     'optionalDependencies',
@@ -169,8 +189,7 @@ module.exports = function(
   appPackage.dependencies = appPackage.dependencies || {};
 
   // Setup the script rules
-  // TODO: deprecate 'scripts' key directly on templateJson
-  const templateScripts = templatePackage.scripts || templateJson.scripts || {};
+  const templateScripts = templatePackage.scripts || {};
   appPackage.scripts = Object.assign(
     {
       start: 'react-scripts start',
@@ -282,14 +301,15 @@ module.exports = function(
     args = ['install', '--save', verbose && '--verbose'].filter(e => e);
   }
 
-  // Install additional template dependencies, if present
-  // TODO: deprecate 'dependencies' key directly on templateJson
-  const templateDependencies =
-    templatePackage.dependencies || templateJson.dependencies;
-  if (templateDependencies) {
+  // Install additional template dependencies, if present.
+  const dependenciesToInstall = Object.entries({
+    ...templatePackage.dependencies,
+    ...templatePackage.devDependencies,
+  });
+  if (dependenciesToInstall.length) {
     args = args.concat(
-      Object.keys(templateDependencies).map(key => {
-        return `${key}@${templateDependencies[key]}`;
+      dependenciesToInstall.map(([dependency, version]) => {
+        return `${dependency}@${version}`;
       })
     );
   }
