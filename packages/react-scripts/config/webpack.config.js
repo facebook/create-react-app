@@ -157,7 +157,7 @@ module.exports = function(webpackEnv) {
       : isEnvDevelopment && 'cheap-module-source-map',
     // These are the "entry points" to our application.
     // This means they will be the "root" imports that are included in JS bundle.
-    entry: [
+    entry: isEnvDevelopment && !shouldUseReactRefresh ? [
       // Include an alternative client for WebpackDevServer. A client's job is to
       // connect to WebpackDevServer by a socket and get notified about changes.
       // When you save a file, the client will either apply hot updates (in case
@@ -172,13 +172,13 @@ module.exports = function(webpackEnv) {
       //
       // When using the experimental react-refresh integration,
       // the webpack plugin takes care of injecting the dev client for us.
-      isEnvDevelopment && !shouldUseReactRefresh && webpackDevClientEntry,
+      webpackDevClientEntry,
       // Finally, this is your app's code:
       paths.appIndexJs,
       // We include the app code last so that if there is a runtime error during
       // initialization, it doesn't blow up the WebpackDevServer client, and
       // changing JS code would still trigger a refresh.
-    ].filter(Boolean),
+    ] : paths.appIndexJs,
     output: {
       // The build folder.
       path: isEnvProduction ? paths.appBuild : undefined,
