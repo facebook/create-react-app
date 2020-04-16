@@ -106,9 +106,8 @@ module.exports = function(
     return;
   }
 
-  const templatePath = path.join(
-    require.resolve(templateName, { paths: [appPath] }),
-    '..'
+  const templatePath = path.dirname(
+    require.resolve(`${templateName}/package.json`, { paths: [appPath] })
   );
 
   let templateJsonPath;
@@ -137,7 +136,6 @@ module.exports = function(
     'author',
     'contributors',
     'files',
-    'main',
     'browser',
     'bin',
     'man',

@@ -185,6 +185,12 @@ module.exports = function(api, opts, env) {
           removeImport: true,
         },
       ],
+      // Optional chaining and nullish coalescing are supported in @babel/preset-env,
+      // but not yet supported in webpack due to support missing from acorn.
+      // These can be removed once webpack has support.
+      // See https://github.com/facebook/create-react-app/issues/8445#issuecomment-588512250
+      require('@babel/plugin-proposal-optional-chaining').default,
+      require('@babel/plugin-proposal-nullish-coalescing-operator').default,
     ].filter(Boolean),
     overrides: [
       isFlowEnabled && {
