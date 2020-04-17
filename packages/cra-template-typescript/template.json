@@ -9,8 +9,8 @@
       "@types/react-dom": "^16.9.0",
       "@types/jest": "^24.0.0",
       "typescript": "^3.8.0",
-      "@typescript-eslint/eslint-plugin": "^2.10.0",
-      "@typescript-eslint/parser": "^2.10.0"
+      "@typescript-eslint/eslint-plugin": "^2.28.0",
+      "@typescript-eslint/parser": "^2.28.0"
     }
   }
 }
