@@ -24,13 +24,15 @@
 const restrictedGlobals = require('confusing-browser-globals');
 
 const resolve = require('resolve');
+const path = require('path');
+const fs = require('fs');
 
 const overrides = [];
 
 // Lint tsx only if typescript is installed.
 try {
   resolve.sync('typescript', {
-    basedir: process.cwd()
+    basedir: path.resolve(fs.realpathSync(process.cwd()), 'node_modules');
   });
   overrides.push({
       files: ['**/*.ts?(x)'],
