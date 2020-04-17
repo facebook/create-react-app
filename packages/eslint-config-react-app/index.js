@@ -88,7 +88,9 @@ try {
       },
     })
 } catch(e) {
-  if (e.code !== 'MODULE_NOT_FOUND') throw e;
+  if (e.code !== 'MODULE_NOT_FOUND') {
+    throw e;
+  }
 }
 
 module.exports = {
