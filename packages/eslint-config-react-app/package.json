@@ -34,6 +34,7 @@
     }
   },
   "dependencies": {
-    "confusing-browser-globals": "^1.0.9"
+    "confusing-browser-globals": "^1.0.9",
+    "resolve": "^1.16.0"
   }
 }
