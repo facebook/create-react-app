@@ -87,6 +87,8 @@ try {
         '@typescript-eslint/no-useless-constructor': 'warn',
       },
     })
+} catch(e) {
+  if (e.code !== 'MODULE_NOT_FOUND') throw e;
 }
 
 module.exports = {
