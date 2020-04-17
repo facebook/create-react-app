@@ -27,7 +27,7 @@ const overrides = [];
 
 // Lint tsx only if typescript is installed.
 try {
-  require.resolve('typescript');
+  require.resolve('@typescript-eslint/eslint-plugin');
   overrides.push({
       files: ['**/*.ts?(x)'],
       parser: '@typescript-eslint/parser',
