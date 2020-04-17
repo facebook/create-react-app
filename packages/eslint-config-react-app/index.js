@@ -23,11 +23,13 @@
 // To use them, explicitly reference them, e.g. `window.name` or `window.status`.
 const restrictedGlobals = require('confusing-browser-globals');
 
+const resolve = require('resolve');
+
 const overrides = [];
 
 // Lint tsx only if typescript is installed.
 try {
-  require.resolve('@typescript-eslint/eslint-plugin');
+  resolve.sync('typescript');
   overrides.push({
       files: ['**/*.ts?(x)'],
       parser: '@typescript-eslint/parser',
