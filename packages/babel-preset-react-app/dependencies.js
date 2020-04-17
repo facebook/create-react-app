@@ -142,6 +142,8 @@ module.exports = function(api, opts) {
           absoluteRuntime: absoluteRuntimePath,
         },
       ],
+      isEnvProduction &&
+        require('babel-plugin-transform-react-create-element').default,
     ].filter(Boolean),
   };
 };
