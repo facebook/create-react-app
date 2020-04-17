@@ -87,7 +87,7 @@ try {
         '@typescript-eslint/no-useless-constructor': 'warn',
       },
     })
-} catch {}
+}
 
 module.exports = {
   root: true,
