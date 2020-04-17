@@ -32,7 +32,7 @@ const overrides = [];
 // Lint tsx only if typescript is installed.
 try {
   resolve.sync('typescript', {
-    basedir: path.resolve(fs.realpathSync(process.cwd()), 'node_modules');
+    basedir: path.resolve(fs.realpathSync(process.cwd()), 'node_modules')
   });
   overrides.push({
       files: ['**/*.ts?(x)'],
