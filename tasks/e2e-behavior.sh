@@ -63,7 +63,7 @@ root_path=$PWD
 
 if hash npm 2>/dev/null
 then
-  npm i -g npm@latest
+  npm i -g --force npm@latest
 fi
 
 # Bootstrap monorepo

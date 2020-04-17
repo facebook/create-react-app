@@ -194,7 +194,7 @@ Similar to `enzyme` you can create a `src/setupTests.js` file to avoid boilerpla
 ```js
 // react-testing-library renders your components to document.body,
 // this adds jest-dom's custom assertions
-import '@testing-library/jest-dom/extend-expect';
+import '@testing-library/jest-dom';
 ```
 
 Here's an example of using `react-testing-library` and `jest-dom` for testing that the `<App />` component renders "Welcome to React".
@@ -245,12 +245,12 @@ const localStorageMock = {
 global.localStorage = localStorageMock;
 ```
 
-> Note: Keep in mind that if you decide to "eject" before creating `src/setupTests.js`, the resulting `package.json` file won't contain any reference to it, so you should manually create the property `setupTestFrameworkScriptFile` in the configuration for Jest, something like the following:
+> Note: Keep in mind that if you decide to "eject" before creating `src/setupTests.js`, the resulting `package.json` file won't contain any reference to it, so you should manually create the property `setupFilesAfterEnv` in the configuration for Jest, something like the following:
 
 > ```js
 > "jest": {
 >   // ...
->   "setupTestFrameworkScriptFile": "<rootDir>/src/setupTests.js"
+>   "setupFilesAfterEnv": ["<rootDir>/src/setupTests.js"]
 >  }
 > ```
 

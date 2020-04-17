@@ -22,21 +22,6 @@ Some editors, including Sublime Text, Atom, and Visual Studio Code, provide plug
 
 They are not required for linting. You should see the linter output right in your terminal as well as the browser console. If you prefer the lint results to appear right in your editor, please make sure you install an ESLint plugin/extension.
 
-If you're using TypeScript and Visual Studio Code, the [ESLint Visual Studio Code extension](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint#overview) currently [doesn't have TypeScript support enabled by default](https://github.com/Microsoft/vscode-eslint/issues/609). To enable TypeScript support in the ESLint extension, add the following to your project's Visual Studio Code settings file, located at `.vscode/settings.json` (you can create this file if it doesn't already exist):
-
-```json
-{
-  "eslint.validate": [
-    "javascript",
-    "javascriptreact",
-    { "language": "typescript", "autoFix": true },
-    { "language": "typescriptreact", "autoFix": true }
-  ]
-}
-```
-
-Now your editor should report the linting warnings.
-
 Note that even if you customise your ESLint config, these changes will **only affect the editor integration**. They won’t affect the terminal and in-browser lint output. This is because Create React App intentionally provides a minimal set of rules that find common mistakes.
 
 If you want to enforce a coding style for your project, consider using [Prettier](https://github.com/jlongster/prettier) instead of ESLint style rules.
@@ -50,7 +35,6 @@ Note that any rules set to `"error"` will stop the project from building.
 There are a few things to remember:
 
 1. We highly recommend extending the base config, as removing it could introduce hard-to-find issues.
-1. `.eslintignore` files will be respected
 1. When working with TypeScript, you'll need to provide an `overrides` object for rules that should _only_ target TypeScript files.
 
 In the below example:
@@ -86,7 +70,7 @@ Visual Studio Code and WebStorm support debugging out of the box with Create Rea
 
 ### Visual Studio Code
 
-You would need to have the latest version of [VS Code](https://code.visualstudio.com) and VS Code [Chrome Debugger Extension](https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome) installed.
+You need to have the latest version of [VS Code](https://code.visualstudio.com) and VS Code [Chrome Debugger Extension](https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome) installed.
 
 Then add the block below to your `launch.json` file and put it inside the `.vscode` folder in your app’s root directory.
 
@@ -116,7 +100,7 @@ Having problems with VS Code Debugging? Please see their [troubleshooting guide]
 
 ### WebStorm
 
-You would need to have [WebStorm](https://www.jetbrains.com/webstorm/) and [JetBrains IDE Support](https://chrome.google.com/webstore/detail/jetbrains-ide-support/hmhgeddbohgjknpmjagkdomcpobmllji) Chrome extension installed.
+You need to have [WebStorm](https://www.jetbrains.com/webstorm/) and [JetBrains IDE Support](https://chrome.google.com/webstore/detail/jetbrains-ide-support/hmhgeddbohgjknpmjagkdomcpobmllji) Chrome extension installed.
 
 In the WebStorm menu `Run` select `Edit Configurations...`. Then click `+` and select `JavaScript Debug`. Paste `http://localhost:3000` into the URL field and save the configuration.
 
@@ -128,7 +112,7 @@ The same way you can debug your application in IntelliJ IDEA Ultimate, PhpStorm,
 
 ## Formatting Code Automatically
 
-Prettier is an opinionated code formatter with support for JavaScript, CSS and JSON. With Prettier you can format the code you write automatically to ensure a code style within your project. See the [Prettier's GitHub page](https://github.com/prettier/prettier) for more information, and look at this [page to see it in action](https://prettier.github.io/prettier/).
+Prettier is an opinionated code formatter with support for JavaScript, CSS and JSON. With Prettier you can format the code you write automatically to ensure a code style within your project. See the [Prettier's GitHub page](https://github.com/prettier/prettier) for more information, and look at this [page to see it in action](https://prettier.io/playground/).
 
 To format our code whenever we make a commit in git, we need to install the following dependencies:
 
@@ -166,8 +150,7 @@ Next we add a 'lint-staged' field to the `package.json`, for example:
   },
 + "lint-staged": {
 +   "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
-+     "prettier --write",
-+     "git add"
++     "prettier --write"
 +   ]
 + },
   "scripts": {

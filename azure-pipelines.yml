@@ -57,12 +57,12 @@ jobs:
       name: Behavior
       testScript: tasks/e2e-behavior.sh
       configurations:
-        LinuxNode8: { vmImage: 'ubuntu-16.04', nodeVersion: 8.x }
-        LinuxNode10: { vmImage: 'ubuntu-16.04', nodeVersion: 10.x }
+        LinuxNode8: { vmImage: 'ubuntu-18.04', nodeVersion: 8.x }
+        LinuxNode10: { vmImage: 'ubuntu-18.04', nodeVersion: 10.x }
         # WindowsNode8:  { vmImage: 'vs2017-win2016', nodeVersion: 8.x  }
         # WindowsNode10: { vmImage: 'vs2017-win2016', nodeVersion: 10.x }
-        MacNode8: { vmImage: 'macOS-10.13', nodeVersion: 8.x }
-        MacNode10: { vmImage: 'macOS-10.13', nodeVersion: 10.x }
+        MacNode8: { vmImage: 'macOS-10.15', nodeVersion: 8.x }
+        MacNode10: { vmImage: 'macOS-10.15', nodeVersion: 10.x }
 
   # ******************************************************************************
   # Old Node test suite
