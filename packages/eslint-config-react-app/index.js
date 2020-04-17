@@ -29,7 +29,9 @@ const overrides = [];
 
 // Lint tsx only if typescript is installed.
 try {
-  resolve.sync('typescript');
+  resolve.sync('typescript', {
+    basedir: process.cwd()
+  });
   overrides.push({
       files: ['**/*.ts?(x)'],
       parser: '@typescript-eslint/parser',
