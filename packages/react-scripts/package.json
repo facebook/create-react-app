@@ -35,7 +35,7 @@
     "babel-jest": "^24.9.0",
     "babel-loader": "8.0.6",
     "babel-plugin-named-asset-import": "^0.3.6",
-    "babel-plugin-transform-react-qa-classes": "^1.5.0",
+    "babel-plugin-transform-react-qa-classes": "^1.6.0",
     "babel-preset-react-app": "^9.1.1",
     "babel-types": "^6.26.0",
     "camelcase": "^5.3.1",
