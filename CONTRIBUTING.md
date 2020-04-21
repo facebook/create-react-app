@@ -54,11 +54,11 @@ These packages can be found in the [`packages/`](https://github.com/facebook/cre
 
 ```
 packages/
-  babel-preset-react-app/
-  create-react-app/
-  eslint-config-react-app/
-  react-dev-utils/
-  react-scripts/
+├── babel-preset-react-app/
+├── create-react-app/
+├── eslint-config-react-app/
+├── react-dev-utils/
+└── react-scripts/
 ```
 
 ### Package Descriptions
