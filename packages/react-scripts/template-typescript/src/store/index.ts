@@ -1,11 +1,10 @@
 import { combineReducers } from "redux";
+import { routerReducer } from 'react-router-redux'
+import application from './application/reducers'
 
-export interface ApplicationState
-{
-}
+export const allReducers = combineReducers({
+	application,
+	routing: routerReducer,
+})
 
-export const initialRootState: ApplicationState = {
-}
-
-export const reducers = {
-};
+export type IAppState = ReturnType<typeof allReducers>

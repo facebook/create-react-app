@@ -1,0 +1,13 @@
+@import '../../colors';
+@import '../../fonts';
+@import '../../media';
+
+$errorpage-namespace: "errorpage";
+
+.#{$errorpage-namespace} {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	align-items: center;
+	background-color: $white;
+}

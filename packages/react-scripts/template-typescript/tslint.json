@@ -1,0 +1,43 @@
+{
+	"extends": [
+		"tslint:latest",
+		"tslint-react"
+	],
+	"rules": {
+		"jsx-alignment": true,
+		"jsx-ban-elements": true,
+		"jsx-ban-props": true,
+		"jsx-curly-spacing": "always",
+		"jsx-equals-spacing": "never",
+		"jsx-no-string-ref": false,
+		"jsx-key": true,
+		"jsx-no-multiline-js": false,
+		"jsx-self-close": true,
+		"jsx-wrap-multiline": false,
+		"jsx-boolean-value": false,
+		"no-submodule-imports": [
+			true,
+			"cesium",
+			"antd"
+		],
+		"no-unused-expression": [
+			true,
+			"allow-fast-null-checks",
+			"allow-new"
+		],
+		"no-console": false,
+		"no-implicit-dependencies": false,
+		"only-arrow-functions": false,
+		"no-string-literal": false,
+		"no-var-requires": false,
+		"max-classes-per-file": false,
+		"no-this-assignment": [
+			true,
+			{
+				"allowed-names": [
+					"^self$"
+				]
+			}
+		]
+	}
+}
