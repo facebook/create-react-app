@@ -10,17 +10,21 @@ import StackFrame from './stack-frame';
 
 const regexExtractLocation = /\(?(.+?)(?::(\d+))?(?::(\d+))?\)?$/;
 
+// $FlowFixMe
 function extractLocation(token: string): [string, number, number] {
-  return regexExtractLocation
-    .exec(token)
-    .slice(1)
-    .map(v => {
-      const p = Number(v);
-      if (!isNaN(p)) {
-        return p;
-      }
-      return v;
-    });
+  return (
+    regexExtractLocation
+      .exec(token)
+      // $FlowFixMe
+      .slice(1)
+      .map(v => {
+        const p = Number(v);
+        if (!isNaN(p)) {
+          return p;
+        }
+        return v;
+      })
+  );
 }
 
 const regexValidFrame_Chrome = /^\s*(at|in)\s.+(:\d+)/;

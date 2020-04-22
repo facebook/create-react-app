@@ -6,15 +6,14 @@
  */
 
 /* @flow */
-import React from 'react';
+import React, { useContext } from 'react';
+import { ThemeContext } from '../iframeScript';
 import CodeBlock from '../components/CodeBlock';
-import { applyStyles } from '../utils/dom/css';
 import { absolutifyCaret } from '../utils/dom/absolutifyCaret';
 import type { ScriptLine } from '../utils/stack-frame';
-import { primaryErrorStyle, secondaryErrorStyle } from '../styles';
 import generateAnsiHTML from '../utils/generateAnsiHTML';
 
-import codeFrame from 'babel-code-frame';
+import { codeFrameColumns } from '@babel/code-frame';
 
 type StackFrameCodeBlockPropsType = {|
   lines: ScriptLine[],
@@ -29,6 +28,7 @@ type StackFrameCodeBlockPropsType = {|
 type Exact<T> = $Shape<T>;
 
 function StackFrameCodeBlock(props: Exact<StackFrameCodeBlockPropsType>) {
+  const theme = useContext(ThemeContext);
   const { lines, lineNum, columnNum, contextSize, main } = props;
   const sourceCode = [];
   let whiteSpace = Infinity;
@@ -53,17 +53,24 @@ function StackFrameCodeBlock(props: Exact<StackFrameCodeBlockPropsType>) {
     }
     sourceCode[line - 1] = text;
   });
-  const ansiHighlight = codeFrame(
+  const ansiHighlight = codeFrameColumns(
     sourceCode.join('\n'),
-    lineNum,
-    columnNum == null ? 0 : columnNum - (isFinite(whiteSpace) ? whiteSpace : 0),
+    {
+      start: {
+        line: lineNum,
+        column:
+          columnNum == null
+            ? 0
+            : columnNum - (isFinite(whiteSpace) ? whiteSpace : 0),
+      },
+    },
     {
       forceColor: true,
       linesAbove: contextSize,
       linesBelow: contextSize,
     }
   );
-  const htmlHighlight = generateAnsiHTML(ansiHighlight);
+  const htmlHighlight = generateAnsiHTML(ansiHighlight, theme);
   const code = document.createElement('code');
   code.innerHTML = htmlHighlight;
   absolutifyCaret(code);
@@ -82,8 +89,6 @@ function StackFrameCodeBlock(props: Exact<StackFrameCodeBlockPropsType>) {
       if (text.indexOf(' ' + lineNum + ' |') === -1) {
         continue;
       }
-      // $FlowFixMe
-      applyStyles(node, main ? primaryErrorStyle : secondaryErrorStyle);
       // eslint-disable-next-line
       break oLoop;
     }

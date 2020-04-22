@@ -1,0 +1,60 @@
+#
+# This is based on verdaccio's default config file. It allows all users
+# to do anything, so don't use it on production systems.
+#
+# Look here for more config file examples:
+# https://github.com/verdaccio/verdaccio/tree/master/conf
+#
+
+# path to a directory with all packages
+storage: ./storage
+
+auth:
+  htpasswd:
+    file: ./htpasswd
+    # Maximum amount of users allowed to register, defaults to "+inf".
+    # You can set this to -1 to disable registration.
+    #max_users: 1000
+
+# a list of other known repositories we can talk to
+uplinks:
+  npmjs:
+    url: https://registry.npmjs.org/
+    max_fails: 40
+    maxage: 30m
+    timeout: 60s
+    agent_options:
+      keepAlive: true
+      maxSockets: 40
+      maxFreeSockets: 10
+
+packages:
+  '@*/*':
+    # scoped packages
+    access: $all
+    publish: $all
+    proxy: npmjs
+
+  '**':
+    # allow all users (including non-authenticated users) to read and
+    # publish all packages
+    #
+    # you can specify usernames/groupnames (depending on your auth plugin)
+    # and three keywords: "$all", "$anonymous", "$authenticated"
+    access: $all
+
+    # allow all known users to publish packages
+    # (anyone can register by default, remember?)
+    publish: $all
+
+    # if package is not available locally, proxy requests to 'npmjs' registry
+    proxy: npmjs
+
+# log settings
+logs:
+  - {type: stdout, format: pretty, level: warn}
+  #- {type: file, path: verdaccio.log, level: info}
+
+# See https://github.com/verdaccio/verdaccio/issues/301
+server:
+  keepAliveTimeout: 0

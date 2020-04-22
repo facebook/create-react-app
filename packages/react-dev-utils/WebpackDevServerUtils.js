@@ -17,37 +17,25 @@ const inquirer = require('inquirer');
 const clearConsole = require('./clearConsole');
 const formatWebpackMessages = require('./formatWebpackMessages');
 const getProcessForPort = require('./getProcessForPort');
+const typescriptFormatter = require('./typescriptFormatter');
+const forkTsCheckerWebpackPlugin = require('./ForkTsCheckerWebpackPlugin');
 
 const isInteractive = process.stdout.isTTY;
-let handleCompile;
 
-// You can safely remove this after ejecting.
-// We only use this block for testing of Create React App itself:
-const isSmokeTest = process.argv.some(arg => arg.indexOf('--smoke-test') > -1);
-if (isSmokeTest) {
-  handleCompile = (err, stats) => {
-    if (err || stats.hasErrors() || stats.hasWarnings()) {
-      process.exit(1);
-    } else {
-      process.exit(0);
-    }
-  };
-}
-
-function prepareUrls(protocol, host, port) {
+function prepareUrls(protocol, host, port, pathname = '/') {
   const formatUrl = hostname =>
     url.format({
       protocol,
       hostname,
       port,
-      pathname: '/',
+      pathname,
     });
   const prettyPrintUrl = hostname =>
     url.format({
       protocol,
       hostname,
       port: chalk.bold(port),
-      pathname: '/',
+      pathname,
     });
 
   const isUnspecifiedHost = host === '0.0.0.0' || host === '::';
@@ -113,12 +101,21 @@ function printInstructions(appName, urls, useYarn) {
   console.log();
 }
 
-function createCompiler(webpack, config, appName, urls, useYarn) {
-  // "Compiler" is a low-level interface to Webpack.
+function createCompiler({
+  appName,
+  config,
+  devSocket,
+  urls,
+  useYarn,
+  useTypeScript,
+  tscCompileOnError,
+  webpack,
+}) {
+  // "Compiler" is a low-level interface to webpack.
   // It lets us listen to some events and provide our own custom messages.
   let compiler;
   try {
-    compiler = webpack(config, handleCompile);
+    compiler = webpack(config);
   } catch (err) {
     console.log(chalk.red('Failed to compile.'));
     console.log();
@@ -127,11 +124,11 @@ function createCompiler(webpack, config, appName, urls, useYarn) {
     process.exit(1);
   }
 
-  // "invalid" event fires when you have changed a file, and Webpack is
+  // "invalid" event fires when you have changed a file, and webpack is
   // recompiling a bundle. WebpackDevServer takes care to pause serving the
   // bundle, so if you refresh, it'll wait instead of serving the old one.
   // "invalid" is short for "bundle invalidated", it doesn't imply any errors.
-  compiler.plugin('invalid', () => {
+  compiler.hooks.invalid.tap('invalid', () => {
     if (isInteractive) {
       clearConsole();
     }
@@ -139,18 +136,93 @@ function createCompiler(webpack, config, appName, urls, useYarn) {
   });
 
   let isFirstCompile = true;
+  let tsMessagesPromise;
+  let tsMessagesResolver;
 
-  // "done" event fires when Webpack has finished recompiling the bundle.
+  if (useTypeScript) {
+    compiler.hooks.beforeCompile.tap('beforeCompile', () => {
+      tsMessagesPromise = new Promise(resolve => {
+        tsMessagesResolver = msgs => resolve(msgs);
+      });
+    });
+
+    forkTsCheckerWebpackPlugin
+      .getCompilerHooks(compiler)
+      .receive.tap('afterTypeScriptCheck', (diagnostics, lints) => {
+        const allMsgs = [...diagnostics, ...lints];
+        const format = message =>
+          `${message.file}\n${typescriptFormatter(message, true)}`;
+
+        tsMessagesResolver({
+          errors: allMsgs.filter(msg => msg.severity === 'error').map(format),
+          warnings: allMsgs
+            .filter(msg => msg.severity === 'warning')
+            .map(format),
+        });
+      });
+  }
+
+  // "done" event fires when webpack has finished recompiling the bundle.
   // Whether or not you have warnings or errors, you will get this event.
-  compiler.plugin('done', stats => {
+  compiler.hooks.done.tap('done', async stats => {
     if (isInteractive) {
       clearConsole();
     }
 
-    // We have switched off the default Webpack output in WebpackDevServer
+    // We have switched off the default webpack output in WebpackDevServer
     // options so we are going to "massage" the warnings and errors and present
     // them in a readable focused way.
-    const messages = formatWebpackMessages(stats.toJson({}, true));
+    // We only construct the warnings and errors for speed:
+    // https://github.com/facebook/create-react-app/issues/4492#issuecomment-421959548
+    const statsData = stats.toJson({
+      all: false,
+      warnings: true,
+      errors: true,
+    });
+
+    if (useTypeScript && statsData.errors.length === 0) {
+      const delayedMsg = setTimeout(() => {
+        console.log(
+          chalk.yellow(
+            'Files successfully emitted, waiting for typecheck results...'
+          )
+        );
+      }, 100);
+
+      const messages = await tsMessagesPromise;
+      clearTimeout(delayedMsg);
+      if (tscCompileOnError) {
+        statsData.warnings.push(...messages.errors);
+      } else {
+        statsData.errors.push(...messages.errors);
+      }
+      statsData.warnings.push(...messages.warnings);
+
+      // Push errors and warnings into compilation result
+      // to show them after page refresh triggered by user.
+      if (tscCompileOnError) {
+        stats.compilation.warnings.push(...messages.errors);
+      } else {
+        stats.compilation.errors.push(...messages.errors);
+      }
+      stats.compilation.warnings.push(...messages.warnings);
+
+      if (messages.errors.length > 0) {
+        if (tscCompileOnError) {
+          devSocket.warnings(messages.errors);
+        } else {
+          devSocket.errors(messages.errors);
+        }
+      } else if (messages.warnings.length > 0) {
+        devSocket.warnings(messages.warnings);
+      }
+
+      if (isInteractive) {
+        clearConsole();
+      }
+    }
+
+    const messages = formatWebpackMessages(statsData);
     const isSuccessful = !messages.errors.length && !messages.warnings.length;
     if (isSuccessful) {
       console.log(chalk.green('Compiled successfully!'));
@@ -190,6 +262,27 @@ function createCompiler(webpack, config, appName, urls, useYarn) {
       );
     }
   });
+
+  // You can safely remove this after ejecting.
+  // We only use this block for testing of Create React App itself:
+  const isSmokeTest = process.argv.some(
+    arg => arg.indexOf('--smoke-test') > -1
+  );
+  if (isSmokeTest) {
+    compiler.hooks.failed.tap('smokeTest', async () => {
+      await tsMessagesPromise;
+      process.exit(1);
+    });
+    compiler.hooks.done.tap('smokeTest', async stats => {
+      await tsMessagesPromise;
+      if (stats.hasErrors() || stats.hasWarnings()) {
+        process.exit(1);
+      } else {
+        process.exit(0);
+      }
+    });
+  }
+
   return compiler;
 }
 
@@ -263,125 +356,93 @@ function onProxyError(proxy) {
   };
 }
 
-function prepareProxy(proxy, appPublicFolder) {
+function prepareProxy(proxy, appPublicFolder, servedPathname) {
   // `proxy` lets you specify alternate servers for specific requests.
-  // It can either be a string or an object conforming to the Webpack dev server proxy configuration
-  // https://webpack.github.io/docs/webpack-dev-server.html
   if (!proxy) {
     return undefined;
   }
-  if (typeof proxy !== 'object' && typeof proxy !== 'string') {
+  if (typeof proxy !== 'string') {
     console.log(
-      chalk.red(
-        'When specified, "proxy" in package.json must be a string or an object.'
-      )
+      chalk.red('When specified, "proxy" in package.json must be a string.')
     );
     console.log(
       chalk.red('Instead, the type of "proxy" was "' + typeof proxy + '".')
     );
     console.log(
+      chalk.red('Either remove "proxy" from package.json, or make it a string.')
+    );
+    process.exit(1);
+  }
+
+  // If proxy is specified, let it handle any request except for
+  // files in the public folder and requests to the WebpackDevServer socket endpoint.
+  // https://github.com/facebook/create-react-app/issues/6720
+  const sockPath = process.env.WDS_SOCKET_PATH || '/sockjs-node';
+  const isDefaultSockHost = !process.env.WDS_SOCKET_HOST;
+  function mayProxy(pathname) {
+    const maybePublicPath = path.resolve(
+      appPublicFolder,
+      pathname.replace(new RegExp('^' + servedPathname), '')
+    );
+    const isPublicFileRequest = fs.existsSync(maybePublicPath);
+    // used by webpackHotDevClient
+    const isWdsEndpointRequest =
+      isDefaultSockHost && pathname.startsWith(sockPath);
+    return !(isPublicFileRequest || isWdsEndpointRequest);
+  }
+
+  if (!/^http(s)?:\/\//.test(proxy)) {
+    console.log(
       chalk.red(
-        'Either remove "proxy" from package.json, or make it an object.'
+        'When "proxy" is specified in package.json it must start with either http:// or https://'
       )
     );
     process.exit(1);
   }
 
-  // Otherwise, if proxy is specified, we will let it handle any request except for files in the public folder.
-  function mayProxy(pathname) {
-    const maybePublicPath = path.resolve(appPublicFolder, pathname.slice(1));
-    return !fs.existsSync(maybePublicPath);
+  let target;
+  if (process.platform === 'win32') {
+    target = resolveLoopback(proxy);
+  } else {
+    target = proxy;
   }
-
-  // Support proxy as a string for those who are using the simple proxy option
-  if (typeof proxy === 'string') {
-    if (!/^http(s)?:\/\//.test(proxy)) {
-      console.log(
-        chalk.red(
-          'When "proxy" is specified in package.json it must start with either http:// or https://'
-        )
-      );
-      process.exit(1);
-    }
-
-    let target;
-    if (process.platform === 'win32') {
-      target = resolveLoopback(proxy);
-    } else {
-      target = proxy;
-    }
-    return [
-      {
-        target,
-        logLevel: 'silent',
-        // For single page apps, we generally want to fallback to /index.html.
-        // However we also want to respect `proxy` for API calls.
-        // So if `proxy` is specified as a string, we need to decide which fallback to use.
-        // We use a heuristic: We want to proxy all the requests that are not meant
-        // for static assets and as all the requests for static assets will be using 
-        // `GET` method, we can proxy all non-`GET` requests.
-        // For `GET` requests, if request `accept`s text/html, we pick /index.html.
-        // Modern browsers include text/html into `accept` header when navigating.
-        // However API calls like `fetch()` won’t generally accept text/html.
-        // If this heuristic doesn’t work well for you, use a custom `proxy` object.
-        context: function(pathname, req) {
-          return (
-            req.method !== 'GET' ||
-            (mayProxy(pathname) &&
-              req.headers.accept &&
-              req.headers.accept.indexOf('text/html') === -1)
-          );
-        },
-        onProxyReq: proxyReq => {
-          // Browers may send Origin headers even with same-origin
-          // requests. To prevent CORS issues, we have to change
-          // the Origin to match the target URL.
-          if (proxyReq.getHeader('origin')) {
-            proxyReq.setHeader('origin', target);
-          }
-        },
-        onError: onProxyError(target),
-        secure: false,
-        changeOrigin: true,
-        ws: true,
-        xfwd: true,
-      },
-    ];
-  }
-
-  // Otherwise, proxy is an object so create an array of proxies to pass to webpackDevServer
-  return Object.keys(proxy).map(function(context) {
-    if (!proxy[context].hasOwnProperty('target')) {
-      console.log(
-        chalk.red(
-          'When `proxy` in package.json is as an object, each `context` object must have a ' +
-            '`target` property specified as a url string'
-        )
-      );
-      process.exit(1);
-    }
-    let target;
-    if (process.platform === 'win32') {
-      target = resolveLoopback(proxy[context].target);
-    } else {
-      target = proxy[context].target;
-    }
-    return Object.assign({}, proxy[context], {
-      context: function(pathname) {
-        return mayProxy(pathname) && pathname.match(context);
+  return [
+    {
+      target,
+      logLevel: 'silent',
+      // For single page apps, we generally want to fallback to /index.html.
+      // However we also want to respect `proxy` for API calls.
+      // So if `proxy` is specified as a string, we need to decide which fallback to use.
+      // We use a heuristic: We want to proxy all the requests that are not meant
+      // for static assets and as all the requests for static assets will be using
+      // `GET` method, we can proxy all non-`GET` requests.
+      // For `GET` requests, if request `accept`s text/html, we pick /index.html.
+      // Modern browsers include text/html into `accept` header when navigating.
+      // However API calls like `fetch()` won’t generally accept text/html.
+      // If this heuristic doesn’t work well for you, use `src/setupProxy.js`.
+      context: function(pathname, req) {
+        return (
+          req.method !== 'GET' ||
+          (mayProxy(pathname) &&
+            req.headers.accept &&
+            req.headers.accept.indexOf('text/html') === -1)
+        );
       },
       onProxyReq: proxyReq => {
-        // Browers may send Origin headers even with same-origin
+        // Browsers may send Origin headers even with same-origin
         // requests. To prevent CORS issues, we have to change
         // the Origin to match the target URL.
         if (proxyReq.getHeader('origin')) {
           proxyReq.setHeader('origin', target);
         }
       },
-      target,
       onError: onProxyError(target),
-    });
-  });
+      secure: false,
+      changeOrigin: true,
+      ws: true,
+      xfwd: true,
+    },
+  ];
 }
 
 function choosePort(host, defaultPort) {

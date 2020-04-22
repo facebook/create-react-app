@@ -1,0 +1,8 @@
+.RootSvg:before {
+  display: block;
+  content: ' ';
+  background-image: url(./logo.svg);
+  background-size: 28px 28px;
+  height: 28px;
+  width: 28px;
+}

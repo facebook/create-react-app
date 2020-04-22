@@ -17,11 +17,12 @@ process.on('unhandledRejection', err => {
 const fs = require('fs-extra');
 const path = require('path');
 const execSync = require('child_process').execSync;
-const chalk = require('chalk');
+const chalk = require('react-dev-utils/chalk');
 const paths = require('../config/paths');
 const createJestConfig = require('./utils/createJestConfig');
 const inquirer = require('react-dev-utils/inquirer');
 const spawnSync = require('react-dev-utils/crossSpawn').sync;
+const os = require('os');
 
 const green = chalk.green;
 const cyan = chalk.cyan;
@@ -36,6 +37,30 @@ function getGitStatus() {
     return '';
   }
 }
+
+function tryGitAdd(appPath) {
+  try {
+    spawnSync(
+      'git',
+      ['add', path.join(appPath, 'config'), path.join(appPath, 'scripts')],
+      {
+        stdio: 'inherit',
+      }
+    );
+
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
+console.log(
+  chalk.cyan.bold(
+    'NOTE: Create React App 2+ supports TypeScript, Sass, CSS Modules and more without ejecting: ' +
+      'https://reactjs.org/blog/2018/10/01/create-react-app-v2.html'
+  )
+);
+console.log();
 
 inquirer
   .prompt({
@@ -162,7 +187,10 @@ inquirer
     }
     Object.keys(ownPackage.dependencies).forEach(key => {
       // For some reason optionalDependencies end up in dependencies after install
-      if (ownPackage.optionalDependencies[key]) {
+      if (
+        ownPackage.optionalDependencies &&
+        ownPackage.optionalDependencies[key]
+      ) {
         return;
       }
       console.log(`  Adding ${cyan(key)} to dependencies`);
@@ -211,16 +239,45 @@ inquirer
     };
 
     // Add ESlint config
-    console.log(`  Adding ${cyan('ESLint')} configuration`);
-    appPackage.eslintConfig = {
-      extends: 'react-app',
-    };
+    if (!appPackage.eslintConfig) {
+      console.log(`  Adding ${cyan('ESLint')} configuration`);
+      appPackage.eslintConfig = {
+        extends: 'react-app',
+      };
+    }
 
     fs.writeFileSync(
       path.join(appPath, 'package.json'),
-      JSON.stringify(appPackage, null, 2) + '\n'
+      JSON.stringify(appPackage, null, 2) + os.EOL
     );
     console.log();
+
+    if (fs.existsSync(paths.appTypeDeclarations)) {
+      try {
+        // Read app declarations file
+        let content = fs.readFileSync(paths.appTypeDeclarations, 'utf8');
+        const ownContent =
+          fs.readFileSync(paths.ownTypeDeclarations, 'utf8').trim() + os.EOL;
+
+        // Remove react-scripts reference since they're getting a copy of the types in their project
+        content =
+          content
+            // Remove react-scripts types
+            .replace(
+              /^\s*\/\/\/\s*<reference\s+types.+?"react-scripts".*\/>.*(?:\n|$)/gm,
+              ''
+            )
+            .trim() + os.EOL;
+
+        fs.writeFileSync(
+          paths.appTypeDeclarations,
+          (ownContent + os.EOL + content).trim() + os.EOL
+        );
+      } catch (e) {
+        // It's not essential that this succeeds, the TypeScript user should
+        // be able to re-create these types with ease.
+      }
+    }
 
     // "Don't destroy what isn't ours"
     if (ownPath.indexOf(appPath) === 0) {
@@ -236,21 +293,35 @@ inquirer
     }
 
     if (fs.existsSync(paths.yarnLockFile)) {
-      // TODO: this is disabled for three reasons.
-      //
-      // 1. It produces garbage warnings on Windows on some systems:
-      //    https://github.com/facebookincubator/create-react-app/issues/2030
-      //
-      // 2. For the above reason, it breaks Windows CI:
-      //    https://github.com/facebookincubator/create-react-app/issues/2624
-      //
-      // 3. It is wrong anyway: re-running yarn will respect the lockfile
-      //    rather than package.json we just updated. Instead we should have
-      //    updated the lockfile. So we might as well not do it while it's broken.
-      //    https://github.com/facebookincubator/create-react-app/issues/2627
-      //
-      // console.log(cyan('Running yarn...'));
-      // spawnSync('yarnpkg', [], { stdio: 'inherit' });
+      const windowsCmdFilePath = path.join(
+        appPath,
+        'node_modules',
+        '.bin',
+        'react-scripts.cmd'
+      );
+      let windowsCmdFileContent;
+      if (process.platform === 'win32') {
+        // https://github.com/facebook/create-react-app/pull/3806#issuecomment-357781035
+        // Yarn is diligent about cleaning up after itself, but this causes the react-scripts.cmd file
+        // to be deleted while it is running. This trips Windows up after the eject completes.
+        // We'll read the batch file and later "write it back" to match npm behavior.
+        try {
+          windowsCmdFileContent = fs.readFileSync(windowsCmdFilePath);
+        } catch (err) {
+          // If this fails we're not worse off than if we didn't try to fix it.
+        }
+      }
+
+      console.log(cyan('Running yarn...'));
+      spawnSync('yarnpkg', ['--cwd', process.cwd()], { stdio: 'inherit' });
+
+      if (windowsCmdFileContent && !fs.existsSync(windowsCmdFilePath)) {
+        try {
+          fs.writeFileSync(windowsCmdFilePath, windowsCmdFileContent);
+        } catch (err) {
+          // If this fails we're not worse off than if we didn't try to fix it.
+        }
+      }
     } else {
       console.log(cyan('Running npm install...'));
       spawnSync('npm', ['install', '--loglevel', 'error'], {
@@ -259,6 +330,11 @@ inquirer
     }
     console.log(green('Ejected successfully!'));
     console.log();
+
+    if (tryGitAdd(appPath)) {
+      console.log(cyan('Staged ejected files for commit.'));
+      console.log();
+    }
 
     console.log(
       green('Please consider sharing why you ejected in this survey:')

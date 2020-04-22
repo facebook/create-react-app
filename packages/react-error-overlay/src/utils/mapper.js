@@ -34,7 +34,12 @@ async function map(
   });
   await settle(
     files.map(async fileName => {
-      const fileSource = await fetch(fileName).then(r => r.text());
+      const fetchUrl =
+        fileName.indexOf('webpack-internal:') === 0
+          ? `/__get-internal-source?fileName=${encodeURIComponent(fileName)}`
+          : fileName;
+
+      const fileSource = await fetch(fetchUrl).then(r => r.text());
       const map = await getSourceMap(fileName, fileSource);
       cache[fileName] = { fileSource, map };
     })

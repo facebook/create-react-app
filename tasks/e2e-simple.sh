@@ -15,9 +15,9 @@ cd "$(dirname "$0")"
 # App temporary location
 # http://unix.stackexchange.com/a/84980
 temp_app_path=`mktemp -d 2>/dev/null || mktemp -d -t 'temp_app_path'`
-custom_registry_url=http://localhost:4873
-original_npm_registry_url=`npm get registry`
-original_yarn_registry_url=`yarn config get registry`
+
+# Load functions for working with local NPM registry (Verdaccio)
+source local-registry.sh
 
 function cleanup {
   echo 'Cleaning up.'
@@ -25,8 +25,8 @@ function cleanup {
   # Uncomment when snapshot testing is enabled by default:
   # rm ./packages/react-scripts/template/src/__snapshots__/App.test.js.snap
   rm -rf "$temp_app_path"
-  npm set registry "$original_npm_registry_url"
-  yarn config set registry "$original_yarn_registry_url"
+  # Restore the original NPM and Yarn registry URLs and stop Verdaccio
+  stopLocalRegistry
 }
 
 # Error messages are redirected to stderr
@@ -79,42 +79,40 @@ fi
 if hash npm 2>/dev/null
 then
   npm i -g npm@latest
-  npm cache clean || npm cache verify
 fi
 
 # Bootstrap monorepo
 yarn
 
-# Start local registry
-tmp_registry_log=`mktemp`
-nohup npx verdaccio@2.7.2 &>$tmp_registry_log &
-# Wait for `verdaccio` to boot
-grep -q 'http address' <(tail -f $tmp_registry_log)
-
-# Set registry to local registry
-npm set registry "$custom_registry_url"
-yarn config set registry "$custom_registry_url"
-
-# Login so we can publish packages
-npx npm-cli-login@0.0.10 -u user -p password -e user@example.com -r "$custom_registry_url" --quotes
+# Start the local NPM registry
+startLocalRegistry "$root_path"/tasks/verdaccio.yaml
 
 # Lint own code
 ./node_modules/.bin/eslint --max-warnings 0 packages/babel-preset-react-app/
+./node_modules/.bin/eslint --max-warnings 0 packages/confusing-browser-globals/
 ./node_modules/.bin/eslint --max-warnings 0 packages/create-react-app/
 ./node_modules/.bin/eslint --max-warnings 0 packages/eslint-config-react-app/
 ./node_modules/.bin/eslint --max-warnings 0 packages/react-dev-utils/
+./node_modules/.bin/eslint --max-warnings 0 packages/react-error-overlay/src/
 ./node_modules/.bin/eslint --max-warnings 0 packages/react-scripts/
-cd packages/react-error-overlay/
-./node_modules/.bin/eslint --max-warnings 0 src/
-yarn test
 
-if [ $APPVEYOR != 'True' ]; then
-  # Flow started hanging on AppVeyor after we moved to Yarn Workspaces :-(
+cd packages/react-error-overlay/
+yarn test
+if [ "$AGENT_OS" != 'Windows_NT' ]; then
+  # Flow started hanging on Windows build agents
   yarn flow
 fi
-
 cd ../..
+
 cd packages/react-dev-utils/
+yarn test
+cd ../..
+
+cd packages/babel-plugin-named-asset-import/
+yarn test
+cd ../..
+
+cd packages/confusing-browser-globals/
 yarn test
 cd ../..
 
@@ -140,8 +138,8 @@ CI=true yarn test
 # Test local start command
 yarn start --smoke-test
 
-git clean -df
-./tasks/publish.sh --yes --force-publish=* --skip-git --cd-version=prerelease --exact --npm-tag=latest
+# Publish the monorepo
+publishToLocalRegistry
 
 # ******************************************************************************
 # Install react-scripts prerelease via create-react-app prerelease.
@@ -221,6 +219,8 @@ function verify_module_scope {
   yarn build; test $? -eq 1 || exit 1
   # TODO: check for error message
 
+  rm sample.json
+
   # Restore App.js
   rm src/App.js
   mv src/App.js.bak src/App.js
@@ -259,6 +259,9 @@ verify_module_scope
 # Eject...
 echo yes | npm run eject
 
+# Test ejected files were staged
+test -n "$(git diff --staged --name-only)"
+
 # Test the build
 yarn build
 # Check for expected output
@@ -268,7 +271,7 @@ exists build/static/css/*.css
 exists build/static/media/*.svg
 exists build/favicon.ico
 
-# Run tests, overring the watch option to disable it.
+# Run tests, overriding the watch option to disable it.
 # `CI=true yarn test` won't work here because `yarn test` becomes just `jest`.
 # We should either teach Jest to respect CI env variable, or make
 # `scripts/test.js` survive ejection (right now it doesn't).

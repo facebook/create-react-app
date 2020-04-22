@@ -16,18 +16,19 @@ cd "$(dirname "$0")"
 # http://unix.stackexchange.com/a/84980
 temp_app_path=`mktemp -d 2>/dev/null || mktemp -d -t 'temp_app_path'`
 temp_module_path=`mktemp -d 2>/dev/null || mktemp -d -t 'temp_module_path'`
-custom_registry_url=http://localhost:4873
-original_npm_registry_url=`npm get registry`
-original_yarn_registry_url=`yarn config get registry`
+
+# Load functions for working with local NPM registry (Verdaccio)
+source local-registry.sh
 
 function cleanup {
   echo 'Cleaning up.'
+  unset BROWSERSLIST
   ps -ef | grep 'react-scripts' | grep -v grep | awk '{print $2}' | xargs kill -9
   cd "$root_path"
   # TODO: fix "Device or resource busy" and remove ``|| $CI`
   rm -rf "$temp_app_path" "$temp_module_path" || $CI
-  npm set registry "$original_npm_registry_url"
-  yarn config set registry "$original_yarn_registry_url"
+  # Restore the original NPM and Yarn registry URLs and stop Verdaccio
+  stopLocalRegistry
 }
 
 # Error messages are redirected to stderr
@@ -63,11 +64,14 @@ set -x
 # Go to root
 cd ..
 root_path=$PWD
+# Set a Windows path for GitBash on Windows
+if [ "$AGENT_OS" == 'Windows_NT' ]; then
+  root_path=$(cmd //c cd)
+fi
 
 if hash npm 2>/dev/null
 then
   npm i -g npm@latest
-  npm cache clean || npm cache verify
 fi
 
 # Bootstrap monorepo
@@ -77,22 +81,11 @@ yarn
 # First, publish the monorepo.
 # ******************************************************************************
 
-# Start local registry
-tmp_registry_log=`mktemp`
-nohup npx verdaccio@2.7.2 &>$tmp_registry_log &
-# Wait for `verdaccio` to boot
-grep -q 'http address' <(tail -f $tmp_registry_log)
-
-# Set registry to local registry
-npm set registry "$custom_registry_url"
-yarn config set registry "$custom_registry_url"
-
-# Login so we can publish packages
-npx npm-cli-login@0.0.10 -u user -p password -e user@example.com -r "$custom_registry_url" --quotes
+# Start the local NPM registry
+startLocalRegistry "$root_path"/tasks/verdaccio.yaml
 
 # Publish the monorepo
-git clean -df
-./tasks/publish.sh --yes --force-publish=* --skip-git --cd-version=prerelease --exact --npm-tag=latest
+publishToLocalRegistry
 
 # ******************************************************************************
 # Now that we have published them, create a clean app folder and install them.
@@ -100,7 +93,7 @@ git clean -df
 
 # Install the app in a temporary location
 cd $temp_app_path
-npx create-react-app --internal-testing-template="$root_path"/packages/react-scripts/fixtures/kitchensink test-kitchensink
+npx create-react-app test-kitchensink --template=file:"$root_path"/packages/react-scripts/fixtures/kitchensink
 
 # Install the test module
 cd "$temp_module_path"
@@ -114,12 +107,14 @@ yarn add test-integrity@^2.0.1
 # Enter the app directory
 cd "$temp_app_path/test-kitchensink"
 
+# In kitchensink, we want to test all transforms
+export BROWSERSLIST='ie 9'
+
 # Link to test module
 npm link "$temp_module_path/node_modules/test-integrity"
 
 # Test the build
 REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
-  NODE_PATH=src \
   PUBLIC_URL=http://www.example.org/spa/ \
   yarn build
 
@@ -128,80 +123,35 @@ exists build/*.html
 exists build/static/js/main.*.js
 
 # Unit tests
+# https://facebook.github.io/jest/docs/en/troubleshooting.html#tests-are-extremely-slow-on-docker-and-or-continuous-integration-ci-server
 REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
   CI=true \
-  NODE_PATH=src \
   NODE_ENV=test \
-  yarn test --no-cache --testPathPattern=src
+  yarn test --no-cache --runInBand --testPathPattern=src
 
-# Test "development" environment
+# Prepare "development" environment
 tmp_server_log=`mktemp`
 PORT=3001 \
   REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
   NODE_PATH=src \
   nohup yarn start &>$tmp_server_log &
 grep -q 'You can now view' <(tail -f $tmp_server_log)
+
+# Test "development" environment
 E2E_URL="http://localhost:3001" \
   REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
   CI=true NODE_PATH=src \
   NODE_ENV=development \
-  node_modules/.bin/mocha --require babel-register --require babel-polyfill integration/*.test.js
-
+  BABEL_ENV=test \
+  node_modules/.bin/jest --no-cache --runInBand --config='jest.integration.config.js'
 # Test "production" environment
 E2E_FILE=./build/index.html \
   CI=true \
   NODE_PATH=src \
   NODE_ENV=production \
+  BABEL_ENV=test \
   PUBLIC_URL=http://www.example.org/spa/ \
-  node_modules/.bin/mocha --require babel-register --require babel-polyfill integration/*.test.js
-
-# ******************************************************************************
-# Finally, let's check that everything still works after ejecting.
-# ******************************************************************************
-
-# Eject...
-echo yes | npm run eject
-
-# Link to test module
-npm link "$temp_module_path/node_modules/test-integrity"
-
-# Test the build
-REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
-  NODE_PATH=src \
-  PUBLIC_URL=http://www.example.org/spa/ \
-  yarn build
-
-# Check for expected output
-exists build/*.html
-exists build/static/js/main.*.js
-
-# Unit tests
-REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
-  CI=true \
-  NODE_PATH=src \
-  NODE_ENV=test \
-  yarn test --no-cache --testPathPattern=src
-
-# Test "development" environment
-tmp_server_log=`mktemp`
-PORT=3002 \
-  REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
-  NODE_PATH=src \
-  nohup yarn start &>$tmp_server_log &
-grep -q 'You can now view' <(tail -f $tmp_server_log)
-E2E_URL="http://localhost:3002" \
-  REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
-  CI=true NODE_PATH=src \
-  NODE_ENV=development \
-  node_modules/.bin/mocha --require babel-register --require babel-polyfill integration/*.test.js
-
-# Test "production" environment
-E2E_FILE=./build/index.html \
-  CI=true \
-  NODE_ENV=production \
-  NODE_PATH=src \
-  PUBLIC_URL=http://www.example.org/spa/ \
-  node_modules/.bin/mocha --require babel-register --require babel-polyfill integration/*.test.js
+  node_modules/.bin/jest --no-cache --runInBand --config='jest.integration.config.js'
 
 # Cleanup
 cleanup

@@ -16,7 +16,6 @@
 // that looks similar to our console output. The error overlay is inspired by:
 // https://github.com/glenjamin/webpack-hot-middleware
 
-var SockJS = require('sockjs-client');
 var stripAnsi = require('strip-ansi');
 var url = require('url');
 var launchEditorEndpoint = require('./launchEditorEndpoint');
@@ -41,7 +40,7 @@ ErrorOverlay.setEditorHandler(function editorHandler(errorLocation) {
 // runtime error. To prevent confusing behavior, we forcibly reload the entire
 // application. This is handled below when we are notified of a compile (code
 // change).
-// See https://github.com/facebookincubator/create-react-app/issues/3096
+// See https://github.com/facebook/create-react-app/issues/3096
 var hadRuntimeError = false;
 ErrorOverlay.startReportingRuntimeErrors({
   onError: function() {
@@ -58,13 +57,14 @@ if (module.hot && typeof module.hot.dispose === 'function') {
 }
 
 // Connect to WebpackDevServer via a socket.
-var connection = new SockJS(
+var connection = new WebSocket(
   url.format({
-    protocol: window.location.protocol,
-    hostname: window.location.hostname,
-    port: window.location.port,
+    protocol: window.location.protocol === 'https:' ? 'wss' : 'ws',
+    hostname: process.env.WDS_SOCKET_HOST || window.location.hostname,
+    port: process.env.WDS_SOCKET_PORT || window.location.port,
     // Hardcoded in WebpackDevServer
-    pathname: '/sockjs-node',
+    pathname: process.env.WDS_SOCKET_PATH || '/sockjs-node',
+    slashes: true,
   })
 );
 
@@ -106,7 +106,7 @@ function handleSuccess() {
     tryApplyUpdates(function onHotUpdateSuccess() {
       // Only dismiss it when we're sure it's a hot update.
       // Otherwise it would flicker right before the reload.
-      ErrorOverlay.dismissBuildError();
+      tryDismissErrorOverlay();
     });
   }
 }
@@ -140,19 +140,15 @@ function handleWarnings(warnings) {
     }
   }
 
+  printWarnings();
+
   // Attempt to apply hot updates or reload.
   if (isHotUpdate) {
     tryApplyUpdates(function onSuccessfulHotUpdate() {
-      // Only print warnings if we aren't refreshing the page.
-      // Otherwise they'll disappear right away anyway.
-      printWarnings();
       // Only dismiss it when we're sure it's a hot update.
       // Otherwise it would flicker right before the reload.
-      ErrorOverlay.dismissBuildError();
+      tryDismissErrorOverlay();
     });
-  } else {
-    // Print initial warnings immediately.
-    printWarnings();
   }
 }
 
@@ -181,6 +177,12 @@ function handleErrors(errors) {
 
   // Do not attempt to reload now.
   // We will reload on next success instead.
+}
+
+function tryDismissErrorOverlay() {
+  if (!hasCompileErrors) {
+    ErrorOverlay.dismissBuildError();
+  }
 }
 
 // There is a newer version of the code available.
@@ -219,11 +221,11 @@ connection.onmessage = function(e) {
 function isUpdateAvailable() {
   /* globals __webpack_hash__ */
   // __webpack_hash__ is the hash of the current compilation.
-  // It's a global variable injected by Webpack.
+  // It's a global variable injected by webpack.
   return mostRecentCompilationHash !== __webpack_hash__;
 }
 
-// Webpack disallows updates in other states.
+// webpack disallows updates in other states.
 function canApplyUpdates() {
   return module.hot.status() === 'idle';
 }
@@ -231,7 +233,7 @@ function canApplyUpdates() {
 // Attempt to update code on the fly, fall back to a hard reload.
 function tryApplyUpdates(onHotUpdateSuccess) {
   if (!module.hot) {
-    // HotModuleReplacementPlugin is not in Webpack configuration.
+    // HotModuleReplacementPlugin is not in webpack configuration.
     window.location.reload();
     return;
   }
@@ -241,7 +243,10 @@ function tryApplyUpdates(onHotUpdateSuccess) {
   }
 
   function handleApplyUpdates(err, updatedModules) {
-    if (err || !updatedModules || hadRuntimeError) {
+    const hasReactRefresh = process.env.FAST_REFRESH;
+    const wantsForcedReload = err || !updatedModules || hadRuntimeError;
+    // React refresh can handle hot-reloading over errors.
+    if (!hasReactRefresh && wantsForcedReload) {
       window.location.reload();
       return;
     }
@@ -260,7 +265,7 @@ function tryApplyUpdates(onHotUpdateSuccess) {
   // https://webpack.github.io/docs/hot-module-replacement.html#check
   var result = module.hot.check(/* autoApply */ true, handleApplyUpdates);
 
-  // // Webpack 2 returns a Promise instead of invoking a callback
+  // // webpack 2 returns a Promise instead of invoking a callback
   if (result && result.then) {
     result.then(
       function(updatedModules) {

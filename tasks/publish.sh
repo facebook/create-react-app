@@ -8,7 +8,7 @@
 # This releases an update to the `react-scripts` package.
 # Don't use `npm publish` for it.
 # Read the release instructions:
-# https://github.com/facebookincubator/create-react-app/blob/master/CONTRIBUTING.md#cutting-a-release
+# https://github.com/facebook/create-react-app/blob/master/CONTRIBUTING.md#cutting-a-release
 # ******************************************************************************
 
 # Start in tasks/ even if run from root directory
@@ -26,6 +26,10 @@ set -x
 cd ..
 root_path=$PWD
 
+if [ -z $CI ]; then
+  yarn compile:lockfile
+fi
+
 if [ -n "$(git status --porcelain)" ]; then
   echo "Your git status is not clean. Aborting.";
   exit 1;
@@ -35,5 +39,13 @@ fi
 cd packages/react-error-overlay/
 npm run build:prod
 cd ../..
+
+# Get 2FA when not CI
+otp=""
+if [ -z $CI ]; then
+  echo "Please enter npm two-factor auth code: "
+  read otp
+fi
+
 # Go!
-./node_modules/.bin/lerna publish --independent "$@"
+NPM_CONFIG_OTP="$otp" ./node_modules/.bin/lerna publish "$@"
