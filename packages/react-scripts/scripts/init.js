@@ -107,7 +107,9 @@ module.exports = function(
   }
 
   const templatePath = path.dirname(
-    require.resolve(`${templateName}/package.json`, { paths: [appPath] })
+    require.resolve(`${templateName}/package.json`, {
+      paths: [`${appPath}/node_modules`],
+    })
   );
 
   let templateJsonPath;
