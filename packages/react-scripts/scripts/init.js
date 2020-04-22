@@ -99,6 +99,8 @@ module.exports = function(
     build: 'rm -rf ./wwwroot/dist/** && mesh build reactapp',
     deploy: 'mesh deploy reactapp',
     bootstrap: './scripts/bootstrap.sh',
+    lint: "tslint -c tslint.json 'src/**/*.{ts,tsx}'",
+		'lint:fix': "tslint --fix -c tslint.json 'src/**/*.{ts,tsx}'"
   };
 
   // Setup engine requirements

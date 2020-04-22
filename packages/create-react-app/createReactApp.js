@@ -389,12 +389,12 @@ function run(
     const allDependencies = ['react', 'react-dom', packageToInstall];
     if (useTypescript) {
       allDependencies.push(
-        // TODO: get user's node version instead of installing latest
-        '@types/node',
-        '@types/react',
-        '@types/react-dom',
-        // TODO: get version of Jest being used instead of installing latest
-        '@types/jest',
+        // // TODO: get user's node version instead of installing latest
+        // '@types/node',
+        // '@types/react',
+        // '@types/react-dom',
+        // // TODO: get version of Jest being used instead of installing latest
+        // '@types/jest',
         'typescript'
       );
     }
