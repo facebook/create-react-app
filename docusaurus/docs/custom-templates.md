@@ -44,6 +44,14 @@ cra-template-[template-name]/
       index.js (or index.tsx)
 ```
 
+Ensure that `package.json` declares its main entry point to `template.json`. On the other hand, the template won't work.
+
+```json
+{
+  "main": "template.json'
+}
+```
+
 ### Testing a template
 
 To test a template locally, pass the file path to the directory of your template source using the `file:` prefix.
