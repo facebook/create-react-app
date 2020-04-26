@@ -36,7 +36,15 @@ const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin'
 // @remove-on-eject-begin
 const getCacheIdentifier = require('react-dev-utils/getCacheIdentifier');
 // @remove-on-eject-end
-const postcssNormalize = require('postcss-normalize');
+const postcssLoadConfig = require('postcss-load-config');
+
+const hasPostcssConfig = (() => {
+  try {
+    return !!postcssLoadConfig.sync();
+  } catch (_error) {
+    return false;
+  }
+})();
 
 const appPackageJson = require(paths.appPackageJson);
 
@@ -110,19 +118,23 @@ module.exports = function (webpackEnv) {
           // Necessary for external CSS imports to work
           // https://github.com/facebook/create-react-app/issues/2677
           ident: 'postcss',
-          plugins: () => [
-            require('postcss-flexbugs-fixes'),
-            require('postcss-preset-env')({
-              autoprefixer: {
-                flexbox: 'no-2009',
-              },
-              stage: 3,
-            }),
-            // Adds PostCSS Normalize as the reset css with default options,
-            // so that it honors browserslist config in package.json
-            // which in turn let's users customize the target behavior as per their needs.
-            postcssNormalize(),
-          ],
+          ...(hasPostcssConfig
+            ? {}
+            : {
+                plugins: () => [
+                  require('postcss-flexbugs-fixes'),
+                  require('postcss-preset-env')({
+                    autoprefixer: {
+                      flexbox: 'no-2009',
+                    },
+                    stage: 3,
+                  }),
+                  // Adds PostCSS Normalize as the reset css with default options,
+                  // so that it honors browserslist config in package.json
+                  // which in turn let's users customize the target behavior as per their needs.
+                  require('postcss-normalize')(),
+                ],
+              }),
           sourceMap: isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
         },
       },

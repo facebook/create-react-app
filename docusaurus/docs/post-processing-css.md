@@ -42,3 +42,19 @@ If you need to disable autoprefixing for some reason, [follow this section](http
 If you'd like to opt-in to CSS Grid prefixing, [first familiarize yourself about its limitations](https://github.com/postcss/autoprefixer#does-autoprefixer-polyfill-grid-layout-for-ie).
 
 To enable CSS Grid prefixing, add `/* autoprefixer grid: autoplace */` to the top of your CSS file.
+
+### Customizing PostCSS Config
+
+However, if you want to add custom plugins, add a `postcss.config.js` file to the root of your project. It will replace the internal CRA postcss plugins.
+
+You can read more about common PostCSS Config [here](https://github.com/michael-ciniawsky/postcss-load-config).
+
+```js
+module.exports = {
+  parser: 'sugarss',
+  map: false,
+  plugins: {
+    'postcss-plugin': {},
+  },
+};
+```

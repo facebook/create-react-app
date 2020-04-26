@@ -1,0 +1,6 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`builds with custom postcss config 1`] = `
+"body{background:#056ef0}
+/*# sourceMappingURL=main.9b96d08a.chunk.css.map */"
+`;
