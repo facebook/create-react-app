@@ -35,6 +35,8 @@ yarn add typescript @types/node @types/react @types/react-dom @types/jest
 
 Next, rename any file to be a TypeScript file (e.g. `src/index.js` to `src/index.tsx`) and **restart your development server**!
 
+> If you are using your own ESLint configuration with `EXTEND_ESLINT=true`, you may also need to change the parser option from `babel-eslint` to `@typescript-eslint/parser`.
+
 Type errors will show up in the same console as the build one. You'll have to fix these type errors before you continue development or build your project. For advanced configuration, [see here](advanced-configuration.md).
 
 ## Getting Started with TypeScript and React
