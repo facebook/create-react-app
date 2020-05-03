@@ -86,6 +86,7 @@ my-app
     ├── index.js
     ├── logo.svg
     └── serviceWorker.js
+    └── setupTests.js
 ```
 
 No configuration or complicated folder structures, only the files you need to build your app.<br>
