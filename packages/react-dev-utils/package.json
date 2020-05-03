@@ -12,7 +12,7 @@
     "url": "https://github.com/facebook/create-react-app/issues"
   },
   "engines": {
-    "node": ">=8.10"
+    "node": ">=10"
   },
   "files": [
     "browsersHelper.js",
