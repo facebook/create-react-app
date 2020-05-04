@@ -5,9 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-export default () => [
+const absoluteLoad = () => [
   { id: 1, name: '1' },
   { id: 2, name: '2' },
   { id: 3, name: '3' },
   { id: 4, name: '4' },
 ];
+
+export default absoluteLoad;

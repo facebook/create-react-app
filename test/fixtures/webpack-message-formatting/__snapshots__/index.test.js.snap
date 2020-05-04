@@ -160,18 +160,3 @@ Attempted import error: 'bar' is not exported from './AppUnknownExport'.
   "stdout": "",
 }
 `;
-
-exports[`helps when users tries to use sass 1`] = `
-Object {
-  "stderr": "Creating an optimized production build...
-Failed to compile.
-
-./src/AppSass.scss
-To import Sass files, you first need to install node-sass.
-Run \`npm install node-sass\` or \`yarn add node-sass\` inside your workspace.
-
-
-",
-  "stdout": "",
-}
-`;
