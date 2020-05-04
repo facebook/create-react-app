@@ -6,10 +6,10 @@ parameters:
   name: ''
   testScript: ''
   configurations:
-    LinuxNode8: { vmImage: 'ubuntu-16.04', nodeVersion: 8.x }
     LinuxNode10: { vmImage: 'ubuntu-16.04', nodeVersion: 10.x }
-    # WindowsNode8:  { vmImage: 'vs2017-win2016', nodeVersion: 8.x  }
-    # WindowsNode10: { vmImage: 'vs2017-win2016', nodeVersion: 10.x }
+    LinuxNode12: { vmImage: 'ubuntu-16.04', nodeVersion: 12.x }
+    # WindowsNode10: { vmImage: 'windows-latest', nodeVersion: 10.x }
+    # WindowsNode12: { vmImage: 'windows-latest', nodeVersion: 12.x }
 
 jobs:
   - job: ${{ parameters.name }}
