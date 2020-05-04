@@ -20,9 +20,9 @@
     "compile:lockfile": "node tasks/compile-lockfile.js"
   },
   "devDependencies": {
-    "@testing-library/jest-dom": "^4.2.0",
-    "@testing-library/react": "^9.3.0",
-    "@testing-library/user-event": "^7.1.2",
+    "@testing-library/jest-dom": "^5.5.0",
+    "@testing-library/react": "^10.0.4",
+    "@testing-library/user-event": "^10.1.0",
     "alex": "^8.0.0",
     "eslint": "^6.1.0",
     "execa": "1.0.0",
