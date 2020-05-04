@@ -27,13 +27,13 @@ function getPrettyURL(
       prettyURL = sourceFileName;
     }
     prettyURL += ':' + sourceLineNumber;
-    // Note: we intentionally skip 0's because they're produced by cheap Webpack maps
+    // Note: we intentionally skip 0's because they're produced by cheap webpack maps
     if (sourceColumnNumber) {
       prettyURL += ':' + sourceColumnNumber;
     }
   } else if (fileName && typeof lineNumber === 'number') {
     prettyURL = fileName + ':' + lineNumber;
-    // Note: we intentionally skip 0's because they're produced by cheap Webpack maps
+    // Note: we intentionally skip 0's because they're produced by cheap webpack maps
     if (columnNumber) {
       prettyURL += ':' + columnNumber;
     }

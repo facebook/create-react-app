@@ -15,4 +15,4 @@ Alternatively you may use `yarn`:
 yarn add react-router-dom
 ```
 
-This works for any library, not just `react-router-dom`.
+This works for any library, not only `react-router-dom`.

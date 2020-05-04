@@ -18,6 +18,7 @@ function getStackFrames(
 ): Promise<StackFrame[] | null> {
   const parsedFrames = parse(error);
   let enhancedFramesPromise;
+  // $FlowFixMe
   if (error.__unmap_source) {
     enhancedFramesPromise = unmap(
       // $FlowFixMe

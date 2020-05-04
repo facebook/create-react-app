@@ -59,7 +59,10 @@ test('formats missing package', async () => {
     path.join(testSetup.testDirectory, 'src', 'App.js')
   );
 
-  const { stdout, stderr } = await testSetup.scripts.build();
+  let { stdout, stderr } = await testSetup.scripts.build();
+  if (process.platform === 'win32') {
+    stderr = stderr.replace('.\\src\\App.js', './src/App.js');
+  }
   expect({ stdout, stderr }).toMatchSnapshot();
 });
 
@@ -94,7 +97,11 @@ test('helps when users tries to use sass', async () => {
   );
 
   const { stdout, stderr } = await testSetup.scripts.build();
-  expect({ stdout, stderr }).toMatchSnapshot();
+  expect(stdout).toBeFalsy();
+  // TODO: Snapshots differ between Node 10/12 as the call stack log output has changed.
+  expect(stderr).toContain(
+    'To import Sass files, you first need to install node-sass.'
+  );
 });
 
 test('formats file not found error', async () => {
@@ -103,7 +110,12 @@ test('formats file not found error', async () => {
     path.join(testSetup.testDirectory, 'src', 'App.js')
   );
 
-  const { stdout, stderr } = await testSetup.scripts.build();
+  let { stdout, stderr } = await testSetup.scripts.build();
+  if (process.platform === 'win32') {
+    stderr = stderr
+      .replace('.\\src\\App.js', './src/App.js')
+      .replace('.\\src', './src');
+  }
   expect({ stdout, stderr }).toMatchSnapshot();
 });
 
@@ -131,6 +143,9 @@ test('formats out of scope error', async () => {
     path.join(testSetup.testDirectory, 'src', 'App.js')
   );
 
-  const { stdout, stderr } = await testSetup.scripts.build();
+  let { stdout, stderr } = await testSetup.scripts.build();
+  if (process.platform === 'win32') {
+    stderr = stderr.replace('.\\src\\App.js', './src/App.js');
+  }
   expect({ stdout, stderr }).toMatchSnapshot();
 });

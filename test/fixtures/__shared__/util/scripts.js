@@ -33,9 +33,9 @@ function execaSafe(...args) {
       stderr: stripYarn(
         stripAnsi(
           err.message
-            .split(os.EOL)
+            .split('\n')
             .slice(2)
-            .join(os.EOL)
+            .join('\n')
         )
       ),
     }));

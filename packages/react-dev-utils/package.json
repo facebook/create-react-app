@@ -1,7 +1,7 @@
 {
   "name": "react-dev-utils",
-  "version": "9.0.1",
-  "description": "Webpack utilities used by Create React App",
+  "version": "10.2.1",
+  "description": "webpack utilities used by Create React App",
   "repository": {
     "type": "git",
     "url": "https://github.com/facebook/create-react-app.git",
@@ -12,7 +12,7 @@
     "url": "https://github.com/facebook/create-react-app/issues"
   },
   "engines": {
-    "node": ">=8.10"
+    "node": ">=10"
   },
   "files": [
     "browsersHelper.js",
@@ -29,6 +29,7 @@
     "getCacheIdentifier.js",
     "getCSSModuleLocalIdent.js",
     "getProcessForPort.js",
+    "getPublicUrlOrPath.js",
     "globby.js",
     "ignoredFiles.js",
     "immer.js",
@@ -44,41 +45,41 @@
     "openChrome.applescript",
     "printBuildError.js",
     "printHostingInstructions.js",
+    "redirectServedPathMiddleware.js",
     "typescriptFormatter.js",
     "WatchMissingNodeModulesPlugin.js",
     "WebpackDevServerUtils.js",
     "webpackHotDevClient.js"
   ],
   "dependencies": {
-    "@babel/code-frame": "7.0.0",
-    "address": "1.0.3",
-    "browserslist": "4.5.4",
+    "@babel/code-frame": "7.8.3",
+    "address": "1.1.2",
+    "browserslist": "4.12.0",
     "chalk": "2.4.2",
-    "cross-spawn": "6.0.5",
+    "cross-spawn": "7.0.2",
     "detect-port-alt": "1.1.6",
-    "escape-string-regexp": "1.0.5",
-    "filesize": "3.6.1",
-    "find-up": "3.0.0",
-    "fork-ts-checker-webpack-plugin": "1.1.1",
+    "escape-string-regexp": "2.0.0",
+    "filesize": "6.1.0",
+    "find-up": "4.1.0",
+    "fork-ts-checker-webpack-plugin": "3.1.1",
     "global-modules": "2.0.0",
     "globby": "8.0.2",
-    "gzip-size": "5.0.0",
+    "gzip-size": "5.1.1",
     "immer": "1.10.0",
-    "inquirer": "6.2.2",
-    "is-root": "2.0.0",
+    "inquirer": "7.1.0",
+    "is-root": "2.1.0",
     "loader-utils": "1.2.3",
-    "opn": "5.4.0",
-    "pkg-up": "2.0.0",
-    "react-error-overlay": "^5.1.6",
+    "open": "^7.0.2",
+    "pkg-up": "3.1.0",
+    "react-error-overlay": "^6.0.7",
     "recursive-readdir": "2.2.2",
-    "shell-quote": "1.6.1",
-    "sockjs-client": "1.3.0",
-    "strip-ansi": "5.2.0",
+    "shell-quote": "1.7.2",
+    "strip-ansi": "6.0.0",
     "text-table": "0.2.0"
   },
   "devDependencies": {
-    "cross-env": "^5.2.0",
-    "jest": "24.7.1"
+    "cross-env": "^6.0.3",
+    "jest": "25.5.4"
   },
   "scripts": {
     "test": "cross-env FORCE_COLOR=true jest"

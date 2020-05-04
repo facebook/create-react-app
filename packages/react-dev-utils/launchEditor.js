@@ -40,6 +40,7 @@ const COMMON_EDITORS_OSX = {
   '/Applications/Visual Studio Code.app/Contents/MacOS/Electron': 'code',
   '/Applications/Visual Studio Code - Insiders.app/Contents/MacOS/Electron':
     'code-insiders',
+  '/Applications/VSCodium.app/Contents/MacOS/Electron': 'vscodium',
   '/Applications/AppCode.app/Contents/MacOS/appcode':
     '/Applications/AppCode.app/Contents/MacOS/appcode',
   '/Applications/CLion.app/Contents/MacOS/clion':
@@ -59,6 +60,8 @@ const COMMON_EDITORS_OSX = {
   '/Applications/MacVim.app/Contents/MacOS/MacVim': 'mvim',
   '/Applications/GoLand.app/Contents/MacOS/goland':
     '/Applications/GoLand.app/Contents/MacOS/goland',
+  '/Applications/Rider.app/Contents/MacOS/rider':
+    '/Applications/Rider.app/Contents/MacOS/rider',
 };
 
 const COMMON_EDITORS_LINUX = {
@@ -66,6 +69,7 @@ const COMMON_EDITORS_LINUX = {
   Brackets: 'brackets',
   code: 'code',
   'code-insiders': 'code-insiders',
+  vscodium: 'vscodium',
   emacs: 'emacs',
   gvim: 'gvim',
   'idea.sh': 'idea',
@@ -76,12 +80,14 @@ const COMMON_EDITORS_LINUX = {
   vim: 'vim',
   'webstorm.sh': 'webstorm',
   'goland.sh': 'goland',
+  'rider.sh': 'rider',
 };
 
 const COMMON_EDITORS_WIN = [
   'Brackets.exe',
   'Code.exe',
   'Code - Insiders.exe',
+  'VSCodium.exe',
   'atom.exe',
   'sublime_text.exe',
   'notepad++.exe',
@@ -99,6 +105,8 @@ const COMMON_EDITORS_WIN = [
   'webstorm64.exe',
   'goland.exe',
   'goland64.exe',
+  'rider.exe',
+  'rider64.exe',
 ];
 
 // Transpiled version of: /^([A-Za-z]:[/\\])?[\p{L}0-9/.\-_\\]+$/u
@@ -150,6 +158,8 @@ function getArgumentsForLineNumber(
     case 'Code':
     case 'code-insiders':
     case 'Code - Insiders':
+    case 'vscodium':
+    case 'VSCodium':
       return addWorkspaceToArgumentsIfExists(
         ['-g', fileName + ':' + lineNumber + ':' + colNumber],
         workspace
@@ -169,6 +179,8 @@ function getArgumentsForLineNumber(
     case 'webstorm64':
     case 'goland':
     case 'goland64':
+    case 'rider':
+    case 'rider64':
       return addWorkspaceToArgumentsIfExists(
         ['--line', lineNumber, fileName],
         workspace

@@ -24,12 +24,12 @@ This mechanism provides a number of benefits:
 
 However there is an **escape hatch** that you can use to add an asset outside of the module system.
 
-If you put a file into the `public` folder, it will **not** be processed by Webpack. Instead it will be copied into the build folder untouched. To reference assets in the `public` folder, you need to use a special variable called `PUBLIC_URL`.
+If you put a file into the `public` folder, it will **not** be processed by webpack. Instead it will be copied into the build folder untouched. To reference assets in the `public` folder, you need to use an environment variable called `PUBLIC_URL`.
 
 Inside `index.html`, you can use it like this:
 
 ```html
-<link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
+<link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
 ```
 
 Only files inside the `public` folder will be accessible by `%PUBLIC_URL%` prefix. If you need to use a file from `src` or `node_modules`, you’ll have to copy it there to explicitly specify your intention to make this file a part of the build.
@@ -61,6 +61,6 @@ The `public` folder is useful as a workaround for a number of less common cases:
 - You need a file with a specific name in the build output, such as [`manifest.webmanifest`](https://developer.mozilla.org/en-US/docs/Web/Manifest).
 - You have thousands of images and need to dynamically reference their paths.
 - You want to include a small script like [`pace.js`](https://github.hubspot.com/pace/docs/welcome/) outside of the bundled code.
-- Some library may be incompatible with Webpack and you have no other option but to include it as a `<script>` tag.
+- Some library may be incompatible with webpack and you have no other option but to include it as a `<script>` tag.
 
-Note that if you add a `<script>` that declares global variables, you also need to read the next section on using them.
+Note that if you add a `<script>` that declares global variables, you should read the topic [Using Global Variables](using-global-variables.md) in the next section which explains how to reference them.

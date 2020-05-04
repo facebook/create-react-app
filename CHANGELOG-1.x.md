@@ -1,6 +1,6 @@
 ## 2.0.3 and Newer Versions
 
-**Please refer to [CHANGELOG.md](./CHANGELOG.md) for the newer versions.**
+**Please refer to [CHANGELOG-2.x.md](./CHANGELOG-2.x.md) for the 2.x range, and [CHANGELOG.md](CHANGELOG.md) for the newer versions.**
 
 ## 1.1.5 (August 24, 2018)
 
@@ -280,7 +280,7 @@ yarn add --exact react-scripts@1.1.1
   - [#3757](https://github.com/facebook/create-react-app/pull/3757) Try updating Flow. ([@gaearon](https://github.com/gaearon))
   - [#3414](https://github.com/facebook/create-react-app/pull/3414) Export `dismissRuntimeErrors` function. ([@skidding](https://github.com/skidding))
   - [#3036](https://github.com/facebook/create-react-app/pull/3036) Cleaning up `printHostingInstructions` a bit. ([@GreenGremlin](https://github.com/GreenGremlin))
-  - [#3514](https://github.com/facebook/create-react-app/pull/3514) Fix `FileSizeReporter` for multi build Webpack setups. ([@iiska](https://github.com/iiska))
+  - [#3514](https://github.com/facebook/create-react-app/pull/3514) Fix `FileSizeReporter` for multi build webpack setups. ([@iiska](https://github.com/iiska))
   - [#3362](https://github.com/facebook/create-react-app/pull/3362) Refactor extra watch options regex to `react-dev-utils`. ([@xjlim](https://github.com/xjlim))
 
 #### Committers: 47
@@ -482,7 +482,7 @@ yarn add --exact react-scripts@1.0.16
 
   - [#3150](https://github.com/facebook/create-react-app/pull/3150) Remove an useless negation in `registerServiceWorker.js`. ([@dunglas](https://github.com/dunglas))
   - [#3158](https://github.com/facebook/create-react-app/pull/3158) Remove `output.path` from dev webpack config. ([@nikolas](https://github.com/nikolas))
-  - [#3281](https://github.com/facebook/create-react-app/pull/3281) Add a workaround for Uglify incompatiblity with Safari 10.0 in the future. ([@satyavh](https://github.com/satyavh))
+  - [#3281](https://github.com/facebook/create-react-app/pull/3281) Add a workaround for Uglify incompatibility with Safari 10.0 in the future. ([@satyavh](https://github.com/satyavh))
   - [#3146](https://github.com/facebook/create-react-app/pull/3146) Fix `reason-react` support. ([@lpalmes](https://github.com/lpalmes))
   - [#3236](https://github.com/facebook/create-react-app/pull/3236) Update `style-loader` and disable inclusion of its HMR code in builds. ([@insin](https://github.com/insin))
   - [#3246](https://github.com/facebook/create-react-app/pull/3246) Update `url-loader` to 0.6.2 for mime ReDoS vulnerability. ([@d3viant0ne](https://github.com/d3viant0ne))
@@ -1104,7 +1104,7 @@ or
 yarn add --dev --exact react-scripts@1.0.8
 ```
 
-**If you previously used `HTTPS=true` environment variable in development**, make sure you aren't affected by a now-fixed vulnerability in Webpack by [visiting this page](http://badcert.mike.works/). You can read more about the vulnerability [here](https://medium.com/@mikenorth/webpack-preact-cli-vulnerability-961572624c54).
+**If you previously used `HTTPS=true` environment variable in development**, make sure you aren't affected by a now-fixed vulnerability in webpack by [visiting this page](http://badcert.mike.works/). You can read more about the vulnerability [here](https://medium.com/@mikenorth/webpack-preact-cli-vulnerability-961572624c54).
 
 You may optionally then move `react-scripts` from `devDependencies` to `dependencies` since that’s how we’ll structure newly created projects. It is not necessary though.
 
@@ -1443,7 +1443,7 @@ yarn add --dev --exact react-scripts@1.0.1
 
 ## 1.0.0 (May 18, 2017)
 
-We’ve been working on this release for the past few months, and there are many big impovements, from migrating to webpack 2 to a brand new runtime error overlay and built-in support for Progressive Web Apps.
+We’ve been working on this release for the past few months, and there are many big improvements, from migrating to webpack 2 to a brand new runtime error overlay and built-in support for Progressive Web Apps.
 
 So instead of just enumerating them here, we decided to write a blog post about all the new features.<br>
 Check it out: **[What’s New in Create React App](https://facebook.github.io/react/blog/2017/05/18/whats-new-in-create-react-app.html)**.
@@ -1577,20 +1577,20 @@ Unhandled Promise rejections will now crash tests. You can fix them by explicitl
 After the regular update procedure above, add these line to `<head>` in `public/index.html`:
 
 ```html
-    <meta name="theme-color" content="#000000">
-    <!--
+<meta name="theme-color" content="#000000" />
+<!--
       manifest.json provides metadata used when your web app is added to the
       homescreen on Android. See https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/
     -->
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
+<link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
 ```
 
 Add `<noscript>` to `<body>` in `public/index.html`:
 
 ```html
-    <noscript>
-      You need to enable JavaScript to run this app.
-    </noscript>
+<noscript>
+  You need to enable JavaScript to run this app.
+</noscript>
 ```
 
 Then create a file called `public/manifest.json` that looks like this:
@@ -1724,7 +1724,7 @@ Please [file an issue](https://github.com/facebook/create-react-app/issues/new) 
 - `react-dev-utils`
   - [#2125](https://github.com/facebook/create-react-app/pull/2125) Only show the first compilation error. ([@gaearon](https://github.com/gaearon))
   - [#2120](https://github.com/facebook/create-react-app/pull/2120) Omit ESLint warnings when there are ESLint errors. ([@gaearon](https://github.com/gaearon))
-  - [#2113](https://github.com/facebook/create-react-app/pull/2113) Prettify errors and warnings for Webpack 2. ([@gaearon](https://github.com/gaearon))
+  - [#2113](https://github.com/facebook/create-react-app/pull/2113) Prettify errors and warnings for webpack 2. ([@gaearon](https://github.com/gaearon))
   - [#1842](https://github.com/facebook/create-react-app/pull/1842) Modularize and extract crash overlay to iframe. ([@Timer](https://github.com/Timer))
 - `create-react-app`
   - [#1811](https://github.com/facebook/create-react-app/pull/1811) Allow creation of apps in empty Mercurial repos. ([@GreenGremlin](https://github.com/GreenGremlin))
@@ -1770,7 +1770,7 @@ Please [file an issue](https://github.com/facebook/create-react-app/issues/new) 
   - [#1736](https://github.com/facebook/create-react-app/pull/1736) Fix eject for linked react-scripts. ([@tuchk4](https://github.com/tuchk4))
   - [#1741](https://github.com/facebook/create-react-app/pull/1741) Fix internal linting setup. ([@gaearon](https://github.com/gaearon))
   - [#1730](https://github.com/facebook/create-react-app/pull/1730) Fix Node 4 e2e tests. ([@Timer](https://github.com/Timer))
-  - [#1715](https://github.com/facebook/create-react-app/pull/1715) Remove unused `url` import in Webpack config. ([@pd4d10](https://github.com/pd4d10))
+  - [#1715](https://github.com/facebook/create-react-app/pull/1715) Remove unused `url` import in webpack config. ([@pd4d10](https://github.com/pd4d10))
   - [#1700](https://github.com/facebook/create-react-app/pull/1700) Update extract-text-webpack-plugin to stable. ([@SimenB](https://github.com/SimenB))
 - `react-dev-utils`, `react-scripts`
   - [#2209](https://github.com/facebook/create-react-app/pull/2209) Move more logic from react-scripts to react-dev-utils. ([@gaearon](https://github.com/gaearon))
