@@ -296,9 +296,8 @@ function createApp(
     let yarnUsesDefaultRegistry = true;
     try {
       yarnUsesDefaultRegistry =
-        execSync('yarnpkg config get registry')
-          .toString()
-          .trim() === 'https://registry.yarnpkg.com';
+        execSync('yarnpkg config get registry').toString().trim() ===
+        'https://registry.yarnpkg.com';
     } catch (e) {
       // ignore
     }
@@ -760,9 +759,7 @@ function checkNpmVersion() {
   let hasMinNpm = false;
   let npmVersion = null;
   try {
-    npmVersion = execSync('npm --version')
-      .toString()
-      .trim();
+    npmVersion = execSync('npm --version').toString().trim();
     hasMinNpm = semver.gte(npmVersion, '6.0.0');
   } catch (err) {
     // ignore
@@ -778,9 +775,7 @@ function checkYarnVersion() {
   let hasMinYarnPnp = false;
   let yarnVersion = null;
   try {
-    yarnVersion = execSync('yarnpkg --version')
-      .toString()
-      .trim();
+    yarnVersion = execSync('yarnpkg --version').toString().trim();
     if (semver.valid(yarnVersion)) {
       hasMinYarnPnp = semver.gte(yarnVersion, minYarnPnp);
     } else {
@@ -996,9 +991,7 @@ function getProxy() {
   } else {
     try {
       // Trying to read https-proxy from .npmrc
-      let httpsProxy = execSync('npm config get https-proxy')
-        .toString()
-        .trim();
+      let httpsProxy = execSync('npm config get https-proxy').toString().trim();
       return httpsProxy !== 'null' ? httpsProxy : undefined;
     } catch (e) {
       return;

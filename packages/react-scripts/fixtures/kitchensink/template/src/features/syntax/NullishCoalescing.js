@@ -39,7 +39,7 @@ export default class NullishCoalescing extends Component {
   render() {
     return (
       <div id="feature-nullish-coalescing">
-        {this.state.users.map((user) => (
+        {this.state.users.map(user => (
           <div key={user.id}>{user.name ?? 'John Doe'}</div>
         ))}
       </div>

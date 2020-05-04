@@ -39,7 +39,7 @@ export default class RestAndDefault extends Component {
   render() {
     return (
       <div id="feature-rest-and-default">
-        {this.state.users.map((user) => (
+        {this.state.users.map(user => (
           <div key={user.id}>{user.name}</div>
         ))}
       </div>

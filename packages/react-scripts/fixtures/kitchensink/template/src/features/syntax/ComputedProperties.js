@@ -39,7 +39,7 @@ export default class ComputedProperties extends Component {
   render() {
     return (
       <div id="feature-computed-properties">
-        {this.state.users.map((user) => (
+        {this.state.users.map(user => (
           <div key={user.id}>{user.user_name}</div>
         ))}
       </div>

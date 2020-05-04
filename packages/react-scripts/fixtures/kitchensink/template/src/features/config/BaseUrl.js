@@ -31,7 +31,7 @@ export default class BaseUrl extends Component {
   render() {
     return (
       <div id="feature-base-url">
-        {this.state.users.map((user) => (
+        {this.state.users.map(user => (
           <div key={user.id}>{user.name}</div>
         ))}
       </div>

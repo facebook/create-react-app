@@ -39,7 +39,7 @@ export default class TemplateInterpolation extends Component {
   render() {
     return (
       <div id="feature-template-interpolation">
-        {this.state.users.map((user) => (
+        {this.state.users.map(user => (
           <div key={user.id}>{user.name}</div>
         ))}
       </div>

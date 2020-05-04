@@ -39,7 +39,7 @@ export default class OptionalChaining extends Component {
   render() {
     return (
       <div id="feature-optional-chaining">
-        {this.state.users.map((user) => (
+        {this.state.users.map(user => (
           <div key={user.id}>{user?.name}</div>
         ))}
       </div>

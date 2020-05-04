@@ -39,7 +39,7 @@ export default class ArrayDestructuring extends Component {
   render() {
     return (
       <div id="feature-array-destructuring">
-        {this.state.users.map((user) => {
+        {this.state.users.map(user => {
           const [id, name] = user;
           return <div key={id}>{name}</div>;
         })}
