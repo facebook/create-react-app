@@ -23,7 +23,7 @@
     "eslint-plugin-import": "2.x",
     "eslint-plugin-jsx-a11y": "6.x",
     "eslint-plugin-react": "7.x",
-    "eslint-plugin-react-hooks": "1.x || 2.x || 3.x"
+    "eslint-plugin-react-hooks": "1.x || 2.x || 3.x || 4.x"
   },
   "dependencies": {
     "confusing-browser-globals": "^1.0.9"
