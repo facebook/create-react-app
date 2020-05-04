@@ -65,6 +65,7 @@ module.exports = (resolve, rootDir, isEjecting) => {
       'jest-watch-typeahead/filename',
       'jest-watch-typeahead/testname',
     ],
+    resetMocks: true,
   };
   if (rootDir) {
     config.rootDir = rootDir;
