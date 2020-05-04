@@ -10,7 +10,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import load from 'absoluteLoad';
 
-export default class extends Component {
+export default class App extends Component {
   static propTypes = {
     onReady: PropTypes.func.isRequired,
   };
@@ -32,7 +32,7 @@ export default class extends Component {
   render() {
     return (
       <div>
-        {this.state.users.map(user => (
+        {this.state.users.map((user) => (
           <div key={user.id}>{user.name}</div>
         ))}
       </div>

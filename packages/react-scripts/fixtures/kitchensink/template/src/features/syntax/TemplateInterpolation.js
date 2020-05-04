@@ -17,7 +17,7 @@ function load(name) {
   ];
 }
 
-export default class extends Component {
+export default class TemplateInterpolation extends Component {
   static propTypes = {
     onReady: PropTypes.func.isRequired,
   };
@@ -39,7 +39,7 @@ export default class extends Component {
   render() {
     return (
       <div id="feature-template-interpolation">
-        {this.state.users.map(user => (
+        {this.state.users.map((user) => (
           <div key={user.id}>{user.name}</div>
         ))}
       </div>

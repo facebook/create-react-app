@@ -8,7 +8,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-export default class extends Component {
+export default class ClassProperties extends Component {
   static propTypes = {
     onReady: PropTypes.func.isRequired,
   };
@@ -27,7 +27,7 @@ export default class extends Component {
   render() {
     return (
       <div id="feature-class-properties">
-        {this.users.map(user => (
+        {this.users.map((user) => (
           <div key={user.id}>{user.name}</div>
         ))}
       </div>

@@ -7,8 +7,10 @@
 
 import React from 'react';
 
-export default () => (
+const ShellEnvVariables = () => (
   <span id="feature-shell-env-variables">
     {process.env.REACT_APP_SHELL_ENV_MESSAGE}.
   </span>
 );
+
+export default ShellEnvVariables;

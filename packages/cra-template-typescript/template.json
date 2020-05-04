@@ -1,9 +1,9 @@
 {
   "package": {
     "dependencies": {
-      "@testing-library/react": "^9.3.2",
-      "@testing-library/jest-dom": "^4.2.4",
-      "@testing-library/user-event": "^7.1.2",
+      "@testing-library/jest-dom": "^5.5.0",
+      "@testing-library/react": "^10.0.4",
+      "@testing-library/user-event": "^10.1.0",
       "@types/node": "^12.0.0",
       "@types/react": "^16.9.0",
       "@types/react-dom": "^16.9.0",

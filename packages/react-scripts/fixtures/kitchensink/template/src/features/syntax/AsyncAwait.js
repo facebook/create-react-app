@@ -27,7 +27,7 @@ const x = async (
 };
 /* eslint-enable */
 
-export default class extends Component {
+export default class AsyncAwait extends Component {
   static propTypes = {
     onReady: PropTypes.func.isRequired,
   };
@@ -49,7 +49,7 @@ export default class extends Component {
   render() {
     return (
       <div id="feature-async-await">
-        {this.state.users.map(user => (
+        {this.state.users.map((user) => (
           <div key={user.id}>{user.name}</div>
         ))}
       </div>

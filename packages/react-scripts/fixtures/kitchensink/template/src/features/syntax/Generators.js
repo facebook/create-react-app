@@ -16,7 +16,7 @@ function* load(limit) {
   }
 }
 
-export default class extends Component {
+export default class Generators extends Component {
   static propTypes = {
     onReady: PropTypes.func.isRequired,
   };
@@ -41,7 +41,7 @@ export default class extends Component {
   render() {
     return (
       <div id="feature-generators">
-        {this.state.users.map(user => (
+        {this.state.users.map((user) => (
           <div key={user.id}>{user.name}</div>
         ))}
       </div>

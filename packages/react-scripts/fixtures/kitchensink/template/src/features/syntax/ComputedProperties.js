@@ -17,7 +17,7 @@ function load(prefix) {
   ];
 }
 
-export default class extends Component {
+export default class ComputedProperties extends Component {
   static propTypes = {
     onReady: PropTypes.func.isRequired,
   };
@@ -39,7 +39,7 @@ export default class extends Component {
   render() {
     return (
       <div id="feature-computed-properties">
-        {this.state.users.map(user => (
+        {this.state.users.map((user) => (
           <div key={user.id}>{user.user_name}</div>
         ))}
       </div>

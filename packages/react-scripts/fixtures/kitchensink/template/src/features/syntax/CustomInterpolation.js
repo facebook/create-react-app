@@ -12,7 +12,7 @@ const styled = ([style]) =>
   style
     .trim()
     .split(/\s*;\s*/)
-    .map(rule => rule.split(/\s*:\s*/))
+    .map((rule) => rule.split(/\s*:\s*/))
     .reduce((rules, rule) => ({ ...rules, [rule[0]]: rule[1] }), {});
 
 function load() {
@@ -24,7 +24,7 @@ function load() {
   ];
 }
 
-export default class extends Component {
+export default class CustomInterpolation extends Component {
   static propTypes = {
     onReady: PropTypes.func.isRequired,
   };
@@ -51,7 +51,7 @@ export default class extends Component {
 
     return (
       <div id="feature-custom-interpolation">
-        {this.state.users.map(user => (
+        {this.state.users.map((user) => (
           <div key={user.id} style={veryInlineStyle}>
             {user.name}
           </div>
