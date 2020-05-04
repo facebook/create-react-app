@@ -203,20 +203,12 @@ function createApp(
   usePnp,
   useTypeScript
 ) {
-  const unsupportedNodeVersion = !semver.satisfies(process.version, '>=8.10.0');
-  if (unsupportedNodeVersion && useTypeScript) {
-    console.error(
-      chalk.red(
-        `You are using Node ${process.version} with the TypeScript template. Node 8.10 or higher is required to use TypeScript.\n`
-      )
-    );
-
-    process.exit(1);
-  } else if (unsupportedNodeVersion) {
+  const unsupportedNodeVersion = !semver.satisfies(process.version, '>=10');
+  if (unsupportedNodeVersion) {
     console.log(
       chalk.yellow(
         `You are using Node ${process.version} so the project will be bootstrapped with an old unsupported version of tools.\n\n` +
-          `Please update to Node 8.10 or higher for a better, fully supported experience.\n`
+          `Please update to Node 10 or higher for a better, fully supported experience.\n`
       )
     );
     // Fall back to latest supported react-scripts on Node 4
@@ -260,7 +252,7 @@ function createApp(
         console.log(
           chalk.yellow(
             `You are using npm ${npmInfo.npmVersion} so the project will be bootstrapped with an old unsupported version of tools.\n\n` +
-              `Please update to npm 5 or higher for a better, fully supported experience.\n`
+              `Please update to npm 6 or higher for a better, fully supported experience.\n`
           )
         );
       }
@@ -516,7 +508,7 @@ function run(
           console.log(
             chalk.yellow(
               `\nNote: the project was bootstrapped with an old unsupported version of tools.\n` +
-                `Please update to Node >=8.10 and npm >=5 to get supported tools in new projects.\n`
+                `Please update to Node >=10 and npm >=6 to get supported tools in new projects.\n`
             )
           );
         }
@@ -771,7 +763,7 @@ function checkNpmVersion() {
     npmVersion = execSync('npm --version')
       .toString()
       .trim();
-    hasMinNpm = semver.gte(npmVersion, '5.0.0');
+    hasMinNpm = semver.gte(npmVersion, '6.0.0');
   } catch (err) {
     // ignore
   }
