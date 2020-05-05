@@ -41,7 +41,7 @@ function printHostingInstructions(
   console.log();
   console.log('Find out more about deployment here:');
   console.log();
-  console.log(`  ${chalk.yellow('create-react-app.dev/docs/deployment')}`);
+  console.log(`  ${chalk.yellow('https://cra.link/deployment')}`);
   console.log();
 }
 

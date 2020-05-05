@@ -135,9 +135,7 @@ module.exports = function(
           'This template should be updated to use the new `package` key.'
       )
     );
-    console.log(
-      'For more information, visit https://create-react-app.dev/docs/custom-templates'
-    );
+    console.log('For more information, visit https://cra.link/templates');
   }
   if (templateJson.dependencies) {
     templatePackage.dependencies = templateJson.dependencies;
