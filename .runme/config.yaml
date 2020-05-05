@@ -6,5 +6,5 @@ services:
         type: dockerfile
         config: ./.runme/Dockerfile
     ports:
-      - container: 80
+      - container: 3000
         public: 80
