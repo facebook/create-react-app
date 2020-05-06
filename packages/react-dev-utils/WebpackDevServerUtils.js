@@ -422,10 +422,11 @@ function prepareProxy(proxy, appPublicFolder, servedPathname) {
       // If this heuristic doesn’t work well for you, use `src/setupProxy.js`.
       context: function(pathname, req) {
         return (
-          req.method !== 'GET' ||
-          (mayProxy(pathname) &&
+          !(
+            req.method === 'GET' &&
             req.headers.accept &&
-            req.headers.accept.indexOf('text/html') === -1)
+            req.headers.accept.indexOf('text/html') !== -1
+          ) && mayProxy(pathname)
         );
       },
       onProxyReq: proxyReq => {
