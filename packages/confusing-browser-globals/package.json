@@ -20,6 +20,6 @@
     "index.js"
   ],
   "devDependencies": {
-    "jest": "26.0.0"
+    "jest": "26.0.1"
   }
 }
