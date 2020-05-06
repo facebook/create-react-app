@@ -46,6 +46,14 @@ declare module '*.svg' {
     SVGSVGElement
   > & { title?: string }>;
 
+  export const sprite: string;
+
+  const src: string;
+  export default src;
+}
+
+// iModel.js Change: Add support for SVG Sprites.
+declare module '*.svg?sprite' {
   const src: string;
   export default src;
 }

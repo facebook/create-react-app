@@ -1,10 +1,10 @@
 {
-  "name": "react-scripts",
+  "name": "@bentley/react-scripts",
   "version": "3.4.1",
-  "description": "Configuration and scripts for Create React App.",
+  "description": "iModel.js configuration and scripts for Create React App.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/facebook/create-react-app.git",
+    "url": "https://github.com/imodeljs/create-react-app.git",
     "directory": "packages/react-scripts"
   },
   "license": "MIT",
@@ -12,7 +12,7 @@
     "node": ">=8.10"
   },
   "bugs": {
-    "url": "https://github.com/facebook/create-react-app/issues"
+    "url": "https://github.com/imodeljs/create-react-app/issues"
   },
   "files": [
     "bin",
@@ -29,12 +29,14 @@
   "types": "./lib/react-app.d.ts",
   "dependencies": {
     "@babel/core": "7.9.0",
+    "@bentley/webpack-tools-core": "^2.0.0",
     "@svgr/webpack": "4.3.3",
     "@typescript-eslint/eslint-plugin": "^2.10.0",
     "@typescript-eslint/parser": "^2.10.0",
     "babel-eslint": "10.1.0",
     "babel-jest": "^24.9.0",
     "babel-loader": "8.1.0",
+    "babel-plugin-import-remove-resource-query": "^1.0.0",
     "babel-plugin-named-asset-import": "^0.3.6",
     "babel-preset-react-app": "^9.1.2",
     "camelcase": "^5.3.1",
@@ -50,6 +52,7 @@
     "eslint-plugin-jsx-a11y": "6.2.3",
     "eslint-plugin-react": "7.19.0",
     "eslint-plugin-react-hooks": "^1.6.1",
+    "fast-sass-loader": "^1.5.0",
     "file-loader": "4.3.0",
     "fs-extra": "^8.1.0",
     "html-webpack-plugin": "4.0.0-beta.11",
@@ -72,12 +75,17 @@
     "resolve-url-loader": "3.1.1",
     "sass-loader": "8.0.2",
     "semver": "6.3.0",
+    "source-map-loader": "^0.2.3",
+    "speed-measure-webpack-plugin": "^1.3.1",
     "style-loader": "0.23.1",
+    "svg-sprite-loader": "4.2.1",
     "terser-webpack-plugin": "2.3.5",
+    "ts-jest": "^24.2.0",
     "ts-pnp": "1.1.6",
     "url-loader": "2.3.0",
     "webpack": "4.42.0",
     "webpack-dev-server": "3.10.3",
+    "webpack-filter-warnings-plugin": "^1.2.1",
     "webpack-manifest-plugin": "2.2.0",
     "workbox-webpack-plugin": "4.3.1"
   },

@@ -20,6 +20,10 @@ const resolve = require('resolve');
  * @param {Object} options
  */
 function getAdditionalModulePaths(options = {}) {
+  if (process.env.RELATIVE_MODULE_PATH) {
+    return [path.resolve(process.cwd() + process.env.RELATIVE_MODULE_PATH)];
+  }
+
   const baseUrl = options.baseUrl;
 
   // We need to explicitly check for null and undefined (and not a falsy value) because

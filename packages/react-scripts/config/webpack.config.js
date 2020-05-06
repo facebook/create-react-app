@@ -39,6 +39,28 @@ const postcssNormalize = require('postcss-normalize');
 
 const appPackageJson = require(paths.appPackageJson);
 
+// iModel.js Changes block
+
+const SpeedMeasureWebpackPlugin = require('speed-measure-webpack-plugin');
+const FilterWarningsPlugin = require('webpack-filter-warnings-plugin');
+
+const {
+  IModeljsLibraryExportsPlugin,
+  CopyBentleyStaticResourcesPlugin,
+} = require('@bentley/webpack-tools-core');
+
+// iModel.js change to support using the fast-sass-loader instead of sass-loader.
+// This solves long build times on smaller machines attempting to build an app with
+// a large amount of sccs/sass files.
+const shouldUseFastSass = process.env.USE_FAST_SASS === 'true';
+
+const shouldDebugBuildPerformance =
+  process.env.DEBUG_BUILD_PERFORMANCE === 'true';
+
+const shouldUseProdSourceMap = process.env.USE_FULL_SOURCEMAP === 'true';
+
+// End iModel.js Changes block
+
 // Source maps are resource heavy and can cause out of memory issue for large source files.
 const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false';
 // Some apps do not need the benefits of saving a web request, so not inlining the chunk
@@ -120,25 +142,82 @@ module.exports = function(webpackEnv) {
       },
     ].filter(Boolean);
     if (preProcessor) {
-      loaders.push(
-        {
-          loader: require.resolve('resolve-url-loader'),
-          options: {
-            sourceMap: isEnvProduction && shouldUseSourceMap,
+      // preProcesor has no options, is loader module name
+      if (preProcessor.loader === undefined) {
+        loaders.push(
+          {
+            loader: require.resolve('resolve-url-loader'),
+            options: {
+              sourceMap: isEnvProduction && shouldUseSourceMap,
+            },
           },
-        },
-        {
-          loader: require.resolve(preProcessor),
-          options: {
-            sourceMap: true,
-          },
-        }
-      );
+          {
+            loader: require.resolve(preProcessor),
+            options: {
+              sourceMap: true,
+            },
+          }
+        );
+      } else {
+        loaders.push(preProcessor);
+      }
     }
     return loaders;
   };
 
-  return {
+  // iModel.js Changes to include a plugin to measure performance of a build.
+  const speedMeasurePluginIncompatiblePlugins = [
+    // Generates an `index.html` file with the <script> injected.
+    new HtmlWebpackPlugin(
+      Object.assign(
+        {},
+        {
+          inject: true,
+          template: paths.appHtml,
+        },
+        isEnvProduction
+          ? {
+              minify: {
+                removeComments: true,
+                collapseWhitespace: true,
+                removeRedundantAttributes: true,
+                useShortDoctype: true,
+                removeEmptyAttributes: true,
+                removeStyleLinkTypeAttributes: true,
+                keepClosingSlash: true,
+                minifyJS: true,
+                minifyCSS: true,
+                minifyURLs: true,
+              },
+            }
+          : undefined
+      )
+    ),
+    // Makes some environment variables available in index.html.
+    // The public URL is available as %PUBLIC_URL% in index.html, e.g.:
+    // <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
+    // In production, it will be an empty string unless you specify "homepage"
+    // in `package.json`, in which case it will be the pathname of that URL.
+    // In development, this will be an empty string.
+    new InterpolateHtmlPlugin(HtmlWebpackPlugin, env.raw),
+  ];
+  const injectSpeedMeasurePluginIncompatiblePlugins = webpackConfig => {
+    const plugins = webpackConfig.plugins;
+    plugins.unshift.apply(plugins, speedMeasurePluginIncompatiblePlugins);
+  };
+  const fastSassLoaderConfig = {
+    loader: require.resolve('fast-sass-loader'),
+    options: {
+      includePaths: [path.resolve('node_modules')],
+      outputStyle: isEnvProduction && 'compressed',
+    },
+  };
+
+  const sassLoaderConfig = shouldUseFastSass
+    ? fastSassLoaderConfig
+    : 'sass-loader';
+
+  const rawConfig = {
     mode: isEnvProduction ? 'production' : isEnvDevelopment && 'development',
     // Stop compilation early in production
     bail: isEnvProduction,
@@ -146,6 +225,8 @@ module.exports = function(webpackEnv) {
       ? shouldUseSourceMap
         ? 'source-map'
         : false
+      : shouldUseProdSourceMap
+      ? 'source-map'
       : isEnvDevelopment && 'cheap-module-source-map',
     // These are the "entry points" to our application.
     // This means they will be the "root" imports that are included in JS bundle.
@@ -168,6 +249,12 @@ module.exports = function(webpackEnv) {
       // initialization, it doesn't blow up the WebpackDevServer client, and
       // changing JS code would still trigger a refresh.
     ].filter(Boolean),
+    // iModel.js Change: Adds the ability to use `require("electron")` within the client-side code
+    //   WARNING: The require *should* still only be done when the client know it is running within an Electron context.  Otherwise, it will cause
+    //            a runtime error.
+    externals: {
+      electron: 'commonjs electron',
+    },
     output: {
       // The build folder.
       path: isEnvProduction ? paths.appBuild : undefined,
@@ -230,9 +317,15 @@ module.exports = function(webpackEnv) {
               // Pending further investigation:
               // https://github.com/terser-js/terser/issues/120
               inline: 2,
+              // Compressing classnames breaks the iModel.js RPC mechanism...
+              keep_classnames: true,
+              keep_fnames: true,
             },
             mangle: {
               safari10: true,
+              // Mangling classnames breaks reflection used in iModel.js
+              keep_classnames: true,
+              keep_fnames: true,
             },
             // Added for profiling in devtools
             keep_classnames: isEnvProductionProfile,
@@ -282,6 +375,7 @@ module.exports = function(webpackEnv) {
       },
     },
     resolve: {
+      symlinks: process.env.SYMLINKS !== 'false',
       // This allows you to set a fallback for where webpack should look for modules.
       // We placed these paths second because we want `node_modules` to "win"
       // if there are any conflicts. This matches Node resolution mechanism.
@@ -362,6 +456,21 @@ module.exports = function(webpackEnv) {
           include: paths.appSrc,
         },
         {
+          // iModel.js Changes
+          // always use source-map-loader and use strip-assert-loader on production builds;
+          test: /\.js$/,
+          enforce: 'pre',
+          use: isEnvProduction
+            ? [
+                require.resolve('source-map-loader'),
+                require.resolve(
+                  '@bentley/webpack-tools-core/lib/loaders/strip-assert-loader'
+                ),
+              ]
+            : [require.resolve('source-map-loader')],
+          exclude: /react-data-grid\.js/,
+        },
+        {
           // "oneOf" will traverse all following loaders until one will
           // match the requirements. When no loader matches it will fall
           // back to the "file" loader at the end of the loader list.
@@ -381,7 +490,9 @@ module.exports = function(webpackEnv) {
             // The preset includes JSX, Flow, TypeScript, and some ESnext features.
             {
               test: /\.(js|mjs|jsx|ts|tsx)$/,
-              include: paths.appSrc,
+              include: [paths.appSrc].concat(
+                modules.additionalModulePaths || []
+              ),
               loader: require.resolve('babel-loader'),
               options: {
                 customize: require.resolve(
@@ -512,7 +623,7 @@ module.exports = function(webpackEnv) {
                   importLoaders: 3,
                   sourceMap: isEnvProduction && shouldUseSourceMap,
                 },
-                'sass-loader'
+                sassLoaderConfig
               ),
               // Don't consider CSS imports dead code even if the
               // containing package claims to have no side effects.
@@ -532,8 +643,21 @@ module.exports = function(webpackEnv) {
                     getLocalIdent: getCSSModuleLocalIdent,
                   },
                 },
-                'sass-loader'
+                sassLoaderConfig
               ),
+            },
+            // iModel.js Change: Add support for SVG Sprites.
+            {
+              test: /\.svg$/,
+              resourceQuery: /sprite/,
+              use: {
+                loader: require.resolve('svg-sprite-loader'),
+                options: {
+                  symbolId: '[name]-[hash:6]',
+                  runtimeCompat: true,
+                  spriteFilename: 'sprite-[hash:6].svg',
+                },
+              },
             },
             // "file" loader makes sure those assets get served by WebpackDevServer.
             // When you `import` an asset, you get its (virtual) filename.
@@ -558,32 +682,24 @@ module.exports = function(webpackEnv) {
       ],
     },
     plugins: [
-      // Generates an `index.html` file with the <script> injected.
-      new HtmlWebpackPlugin(
-        Object.assign(
-          {},
-          {
-            inject: true,
-            template: paths.appHtml,
-          },
-          isEnvProduction
-            ? {
-                minify: {
-                  removeComments: true,
-                  collapseWhitespace: true,
-                  removeRedundantAttributes: true,
-                  useShortDoctype: true,
-                  removeEmptyAttributes: true,
-                  removeStyleLinkTypeAttributes: true,
-                  keepClosingSlash: true,
-                  minifyJS: true,
-                  minifyCSS: true,
-                  minifyURLs: true,
-                },
-              }
-            : undefined
-        )
-      ),
+      // NOTE: iModel.js specific plugin to allow exposing iModel.js shared libraries
+      // into the global scope for use within iModel.js Extensions.
+      new IModeljsLibraryExportsPlugin(),
+
+      // NOTE: iModel.js specific plugin to copy a set of static resources from the node_modules
+      // directory of each dependent package into the  'lib/public' directory.
+      // Used for resources such as locales, which are defined by each consuming package.
+      new CopyBentleyStaticResourcesPlugin(['public'], true),
+
+      // NOTE: FilterWarningsPlugin is used to ignore warning coming from sourcemaps
+      new FilterWarningsPlugin({ exclude: /Cannot find source file/ }),
+
+      // NOTE: HtmlWebpackPlugin, and InterpolateHtmlPlugin are injected here
+      // after SpeedMeasureWebpackPlugin makes a wrapper, so SMWP won't track them
+      // they cause issues when tracked by SMWP
+      // SEE: https://github.com/jantimon/html-webpack-plugin/issues/1090
+      // SEE: injectSpeedMeasurePluginIncompatiblePlugins
+
       // Inlines the webpack runtime script. This script is too small to warrant
       // a network request.
       // https://github.com/facebook/create-react-app/issues/5358
@@ -716,4 +832,12 @@ module.exports = function(webpackEnv) {
     // our own hints via the FileSizeReporter
     performance: false,
   };
+
+  const config = shouldDebugBuildPerformance
+    ? new SpeedMeasureWebpackPlugin().wrap(rawConfig)
+    : rawConfig;
+
+  injectSpeedMeasurePluginIncompatiblePlugins(config);
+
+  return config;
 };

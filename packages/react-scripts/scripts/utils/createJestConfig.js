@@ -39,8 +39,16 @@ module.exports = (resolve, rootDir, isEjecting) => {
       '<rootDir>/src/**/*.{spec,test}.{js,jsx,ts,tsx}',
     ],
     testEnvironment: 'jest-environment-jsdom-fourteen',
+    globals: {
+      'ts-jest': {
+        tsConfig: {
+          jsx: 'react',
+        },
+      },
+    },
     transform: {
-      '^.+\\.(js|jsx|ts|tsx)$': isEjecting
+      '^.+\\.(ts|tsx)$': 'ts-jest',
+      '^.+\\.(js|jsx)$': isEjecting
         ? '<rootDir>/node_modules/babel-jest'
         : resolve('config/jest/babelTransform.js'),
       '^.+\\.css$': resolve('config/jest/cssTransform.js'),
@@ -49,7 +57,7 @@ module.exports = (resolve, rootDir, isEjecting) => {
       ),
     },
     transformIgnorePatterns: [
-      '[/\\\\]node_modules[/\\\\].+\\.(js|jsx|ts|tsx)$',
+      '[/\\\\]node_modules[/\\\\](?!@bentley/ui).+\\.(js|jsx|ts|tsx)$',
       '^.+\\.module\\.(css|sass|scss)$',
     ],
     modulePaths: modules.additionalModulePaths || [],

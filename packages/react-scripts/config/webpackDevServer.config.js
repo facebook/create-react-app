@@ -61,7 +61,10 @@ module.exports = function(proxy, allowedHost) {
     // for files like `favicon.ico`, `manifest.json`, and libraries that are
     // for some reason broken when imported through webpack. If you just want to
     // use an image, put it in `src` and `import` it from JavaScript instead.
-    contentBase: paths.appPublic,
+
+    // NOTE: iModel.js specific change to include both the 'public' directory and the
+    // 'build/public' directory.
+    contentBase: [paths.appPublic, paths.appBuild],
     contentBasePublicPath: paths.publicUrlOrPath,
     // By default files from `contentBase` will not trigger a page reload.
     watchContentBase: true,

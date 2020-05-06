@@ -13,4 +13,7 @@ module.exports = babelJest.createTransformer({
   presets: [require.resolve('babel-preset-react-app')],
   babelrc: false,
   configFile: false,
+  // With the added support for svg-sprites using the resource query '?sprite', this
+  // plugin is needed to remove the query for imports during tests.
+  plugins: ['babel-plugin-import-remove-resource-query'],
 });

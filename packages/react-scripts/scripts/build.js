@@ -41,7 +41,14 @@ const checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
 const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
 const printHostingInstructions = require('react-dev-utils/printHostingInstructions');
 const FileSizeReporter = require('react-dev-utils/FileSizeReporter');
-const printBuildError = require('react-dev-utils/printBuildError');
+function printBuildError(err) {
+  const msg = ((err != null && err.message) ? err.message : err) + '\n';
+  if (process.env.TF_BUILD) {
+    console.log("##vso[task.logissue type=error;]%s", msg);
+  } else {
+    console.error(msg);
+  }
+}
 
 const measureFileSizesBeforeBuild =
   FileSizeReporter.measureFileSizesBeforeBuild;
@@ -83,8 +90,8 @@ checkBrowsers(paths.appPath, isInteractive)
   .then(
     ({ stats, previousFileSizes, warnings }) => {
       if (warnings.length) {
-        console.log(chalk.yellow('Compiled with warnings.\n'));
-        console.log(warnings.join('\n\n'));
+        console.error(chalk.yellow('Compiled with warnings.\n'));
+        console.error(warnings.join('\n\n'));
         console.log(
           '\nSearch for the ' +
             chalk.underline(chalk.yellow('keywords')) +
@@ -124,14 +131,14 @@ checkBrowsers(paths.appPath, isInteractive)
     err => {
       const tscCompileOnError = process.env.TSC_COMPILE_ON_ERROR === 'true';
       if (tscCompileOnError) {
-        console.log(
+        console.error(
           chalk.yellow(
             'Compiled with the following type errors (you may want to check these before deploying your app):\n'
           )
         );
         printBuildError(err);
       } else {
-        console.log(chalk.red('Failed to compile.\n'));
+        console.error(chalk.red('Failed to compile.\n'));
         printBuildError(err);
         process.exit(1);
       }
@@ -139,7 +146,7 @@ checkBrowsers(paths.appPath, isInteractive)
   )
   .catch(err => {
     if (err && err.message) {
-      console.log(err.message);
+      console.error(err.message);
     }
     process.exit(1);
   });
@@ -150,7 +157,7 @@ function build(previousFileSizes) {
   // This now has been deprecated in favor of jsconfig/tsconfig.json
   // This lets you use absolute paths in imports inside large monorepos:
   if (process.env.NODE_PATH) {
-    console.log(
+    console.error(
       chalk.yellow(
         'Setting NODE_PATH to resolve modules absolutely has been deprecated in favor of setting baseUrl in jsconfig.json (or tsconfig.json if you are using TypeScript) and will be removed in a future major release of create-react-app.'
       )
@@ -188,11 +195,7 @@ function build(previousFileSizes) {
         );
       }
       if (messages.errors.length) {
-        // Only keep the first error. Others are often indicative
-        // of the same problem, but confuse the reader with noise.
-        if (messages.errors.length > 1) {
-          messages.errors.length = 1;
-        }
+        // iModel.js Change: Leave `messages.errors.length` alone (don't just keep first error).
         return reject(new Error(messages.errors.join('\n\n')));
       }
       if (
@@ -201,7 +204,7 @@ function build(previousFileSizes) {
           process.env.CI.toLowerCase() !== 'false') &&
         messages.warnings.length
       ) {
-        console.log(
+        console.error(
           chalk.yellow(
             '\nTreating warnings as errors because process.env.CI = true.\n' +
               'Most CI servers set it automatically.\n'
