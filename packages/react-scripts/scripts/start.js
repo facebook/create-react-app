@@ -72,7 +72,7 @@ if (process.env.HOST) {
     `If this was unintentional, check that you haven't mistakenly set it in your shell.`
   );
   console.log(
-    `Learn more here: ${chalk.yellow('https://bit.ly/CRA-advanced-config')}`
+    `Learn more here: ${chalk.yellow('https://cra.link/advanced-config')}`
   );
   console.log();
 }
