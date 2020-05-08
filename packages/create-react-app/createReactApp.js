@@ -203,20 +203,12 @@ function createApp(
   usePnp,
   useTypeScript
 ) {
-  const unsupportedNodeVersion = !semver.satisfies(process.version, '>=8.10.0');
-  if (unsupportedNodeVersion && useTypeScript) {
-    console.error(
-      chalk.red(
-        `You are using Node ${process.version} with the TypeScript template. Node 8.10 or higher is required to use TypeScript.\n`
-      )
-    );
-
-    process.exit(1);
-  } else if (unsupportedNodeVersion) {
+  const unsupportedNodeVersion = !semver.satisfies(process.version, '>=10');
+  if (unsupportedNodeVersion) {
     console.log(
       chalk.yellow(
         `You are using Node ${process.version} so the project will be bootstrapped with an old unsupported version of tools.\n\n` +
-          `Please update to Node 8.10 or higher for a better, fully supported experience.\n`
+          `Please update to Node 10 or higher for a better, fully supported experience.\n`
       )
     );
     // Fall back to latest supported react-scripts on Node 4
@@ -260,7 +252,7 @@ function createApp(
         console.log(
           chalk.yellow(
             `You are using npm ${npmInfo.npmVersion} so the project will be bootstrapped with an old unsupported version of tools.\n\n` +
-              `Please update to npm 5 or higher for a better, fully supported experience.\n`
+              `Please update to npm 6 or higher for a better, fully supported experience.\n`
           )
         );
       }
@@ -269,17 +261,26 @@ function createApp(
     }
   } else if (usePnp) {
     const yarnInfo = checkYarnVersion();
-    if (!yarnInfo.hasMinYarnPnp) {
-      if (yarnInfo.yarnVersion) {
+    if (yarnInfo.yarnVersion) {
+      if (!yarnInfo.hasMinYarnPnp) {
         console.log(
           chalk.yellow(
             `You are using Yarn ${yarnInfo.yarnVersion} together with the --use-pnp flag, but Plug'n'Play is only supported starting from the 1.12 release.\n\n` +
               `Please update to Yarn 1.12 or higher for a better, fully supported experience.\n`
           )
         );
+        // 1.11 had an issue with webpack-dev-middleware, so better not use PnP with it (never reached stable, but still)
+        usePnp = false;
       }
-      // 1.11 had an issue with webpack-dev-middleware, so better not use PnP with it (never reached stable, but still)
-      usePnp = false;
+      if (!yarnInfo.hasMaxYarnPnp) {
+        console.log(
+          chalk.yellow(
+            'The --use-pnp flag is no longer necessary with yarn 2 and will be deprecated and removed in a future release.\n'
+          )
+        );
+        // 2 supports PnP by default and breaks when trying to use the flag
+        usePnp = false;
+      }
     }
   }
 
@@ -516,7 +517,7 @@ function run(
           console.log(
             chalk.yellow(
               `\nNote: the project was bootstrapped with an old unsupported version of tools.\n` +
-                `Please update to Node >=8.10 and npm >=5 to get supported tools in new projects.\n`
+                `Please update to Node >=10 and npm >=6 to get supported tools in new projects.\n`
             )
           );
         }
@@ -771,7 +772,7 @@ function checkNpmVersion() {
     npmVersion = execSync('npm --version')
       .toString()
       .trim();
-    hasMinNpm = semver.gte(npmVersion, '5.0.0');
+    hasMinNpm = semver.gte(npmVersion, '6.0.0');
   } catch (err) {
     // ignore
   }
@@ -783,7 +784,9 @@ function checkNpmVersion() {
 
 function checkYarnVersion() {
   const minYarnPnp = '1.12.0';
+  const maxYarnPnp = '2.0.0';
   let hasMinYarnPnp = false;
+  let hasMaxYarnPnp = false;
   let yarnVersion = null;
   try {
     yarnVersion = execSync('yarnpkg --version')
@@ -791,6 +794,7 @@ function checkYarnVersion() {
       .trim();
     if (semver.valid(yarnVersion)) {
       hasMinYarnPnp = semver.gte(yarnVersion, minYarnPnp);
+      hasMaxYarnPnp = semver.lt(yarnVersion, maxYarnPnp);
     } else {
       // Handle non-semver compliant yarn version strings, which yarn currently
       // uses for nightly builds. The regex truncates anything after the first
@@ -799,6 +803,7 @@ function checkYarnVersion() {
       if (trimmedYarnVersionMatch) {
         const trimmedYarnVersion = trimmedYarnVersionMatch.pop();
         hasMinYarnPnp = semver.gte(trimmedYarnVersion, minYarnPnp);
+        hasMaxYarnPnp = semver.lt(trimmedYarnVersion, maxYarnPnp);
       }
     }
   } catch (err) {
@@ -806,6 +811,7 @@ function checkYarnVersion() {
   }
   return {
     hasMinYarnPnp: hasMinYarnPnp,
+    hasMaxYarnPnp: hasMaxYarnPnp,
     yarnVersion: yarnVersion,
   };
 }
