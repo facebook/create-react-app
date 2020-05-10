@@ -119,6 +119,17 @@ module.exports = function(proxy, allowedHost) {
       app.use(errorOverlayMiddleware());
 
       if (fs.existsSync(paths.proxySetup)) {
+        // Importing the proxySetup may require typescript (or other) support.
+        // @babel/register can be used to add support at runtime, so if it's
+        // listed as a dependency, then import it before importing proxySetup
+        const packageJSON = fs.readFileSync(paths.appPackageJson).toString();
+        const { dependencies, devDependencies } = JSON.parse(packageJSON);
+        if (
+          '@babel/register' in (dependencies || {}) ||
+          '@babel/register' in (devDependencies || {})
+        ) {
+          require('@babel/register');
+        }
         // This registers user provided middleware for proxy reasons
         require(paths.proxySetup)(app);
       }
