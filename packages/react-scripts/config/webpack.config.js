@@ -639,8 +639,6 @@ module.exports = function (webpackEnv) {
         new ReactRefreshWebpackPlugin({
           overlay: {
             entry: webpackDevClientEntry,
-            // TODO: This is just a stub module. Clean this up if possible.
-            module: require.resolve('./hotRefreshOverlayModuleStub'),
           },
         }),
       // Watcher doesn't work well if you mistype casing in a path so we use
