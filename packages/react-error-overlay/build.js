@@ -77,7 +77,7 @@ function setupWatch() {
     runBuildSteps();
   });
 
-  process.on('SIGINT', function() {
+  process.on('SIGINT', function () {
     watcher.close();
     process.exit(0);
   });

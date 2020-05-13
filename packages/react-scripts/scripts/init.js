@@ -81,7 +81,7 @@ function tryGitCommit(appPath) {
   }
 }
 
-module.exports = function(
+module.exports = function (
   appPath,
   appName,
   verbose,

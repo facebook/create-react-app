@@ -383,7 +383,7 @@ function launchEditor(fileName, lineNumber, colNumber) {
   } else {
     _childProcess = child_process.spawn(editor, args, { stdio: 'inherit' });
   }
-  _childProcess.on('exit', function(errorCode) {
+  _childProcess.on('exit', function (errorCode) {
     _childProcess = null;
 
     if (errorCode) {
@@ -391,7 +391,7 @@ function launchEditor(fileName, lineNumber, colNumber) {
     }
   });
 
-  _childProcess.on('error', function(error) {
+  _childProcess.on('error', function (error) {
     printInstructions(fileName, error.message);
   });
 }
