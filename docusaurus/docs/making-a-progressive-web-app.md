@@ -22,8 +22,6 @@ serviceWorker.unregister();
 As the comment states, switching `serviceWorker.unregister()` to
 `serviceWorker.register()` will opt you in to using the service worker.
 
-
-
 ## Why Opt-in?
 
 Offline-first Progressive Web Apps are faster and more reliable than traditional web pages, and provide an engaging mobile experience:
