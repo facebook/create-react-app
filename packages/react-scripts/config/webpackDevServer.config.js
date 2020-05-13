@@ -75,7 +75,7 @@ module.exports = function(proxy, allowedHost) {
     // WebpackDevServer has an option to write every build to disk. This can be
     // useful for certain use cases such as developing browser extensions where one
     // would need to otherwise do full builds.
-    writeToDisk: false || process.env.WRITE_TO_DISK === 'true',
+    writeToDisk: process.env.WRITE_TO_DISK === 'true',
     // Reportedly, this avoids CPU overload on some systems.
     // https://github.com/facebook/create-react-app/issues/293
     // src/node_modules is not ignored to support absolute imports
