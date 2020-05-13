@@ -22,6 +22,8 @@ serviceWorker.unregister();
 As the comment states, switching `serviceWorker.unregister()` to
 `serviceWorker.register()` will opt you in to using the service worker.
 
+
+
 ## Why Opt-in?
 
 Offline-first Progressive Web Apps are faster and more reliable than traditional web pages, and provide an engaging mobile experience:
@@ -54,6 +56,32 @@ following into account:
    state. This means that users will end up seeing older content until they close (reloading is not
    enough) their existing, open tabs. See [this blog post](https://jeffy.info/2018/10/10/sw-in-c-r-a.html)
    for more details about this behavior.
+   
+   To override this and *if you know what you're doing*, you can send a `'SKIP_WAITING'` message
+   to the service worker from the page so it can kick in immediately. Therefore, change the 
+   `serviceWorker.register()` call as shown below:
+   
+   ```js
+   serviceWorker.register({
+     onUpdate: registration => {
+       const waitingServiceWorker = registration.waiting;
+       if (waitingServiceWorker) {
+         waitingServiceWorker.addEventListener("statechange", event => {
+           if (event.target.state === "activated") {
+             // Reloading may be lossy, so confirm with the user first.
+             if (window.confirm("Reload now to apply the update?")) {
+               window.location.reload();
+             }
+           }
+         });
+         // You may want to confirm with the user first.
+         if (window.confirm("A new update is available. Do you want to load it?")) {
+           waitingServiceWorker.postMessage({ type: "SKIP_WAITING" });
+         }
+       }
+     }
+   });
+   ```
 
 1. Users aren't always familiar with offline-first web apps. It can be useful to
    [let the user know](https://developers.google.com/web/fundamentals/instant-and-offline/offline-ux#inform_the_user_when_the_app_is_ready_for_offline_consumption)
