@@ -16,7 +16,7 @@ To start using it, add `@import-normalize;` anywhere in your CSS file(s). You on
 /* rest of app styles */
 ```
 
-> **Tip**: If you see an "_Unknown at rule @import-normalize css(unknownAtRules)_" warning in VSCode, change the  `css.lint.unknownAtRules` setting to `ignore`.
+> **Tip**: If you see an "_Unknown at rule @import-normalize css(unknownAtRules)_" warning in VSCode, change the `css.lint.unknownAtRules` setting to `ignore`.
 
 You can control which parts of [normalize.css] to use via your project's [browserslist].
 

@@ -20,7 +20,7 @@ const validateBoolOption = (name, value, defaultValue) => {
   return value;
 };
 
-module.exports = function(api, opts) {
+module.exports = function (api, opts) {
   if (!opts) {
     opts = {};
   }

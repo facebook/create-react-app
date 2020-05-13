@@ -35,12 +35,7 @@ function namedAssetImportPlugin({ types: t }) {
 
   return {
     visitor: {
-      ExportNamedDeclaration(
-        path,
-        {
-          opts: { loaderMap },
-        }
-      ) {
+      ExportNamedDeclaration(path, { opts: { loaderMap } }) {
         if (!path.node.source) {
           return;
         }
@@ -67,12 +62,7 @@ function namedAssetImportPlugin({ types: t }) {
           );
         });
       },
-      ImportDeclaration(
-        path,
-        {
-          opts: { loaderMap },
-        }
-      ) {
+      ImportDeclaration(path, { opts: { loaderMap } }) {
         replaceMatchingSpecifiers(path, loaderMap, (specifier, sourcePath) => {
           if (t.isImportDefaultSpecifier(specifier)) {
             return t.importDeclaration(
