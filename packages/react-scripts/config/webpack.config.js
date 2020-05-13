@@ -622,6 +622,10 @@ module.exports = function(webpackEnv) {
         new WatchMissingNodeModulesPlugin(paths.appNodeModules),
       isEnvProduction &&
         new MiniCssExtractPlugin({
+          // patches an issue causing CI builds to fail because of an inconsitent import order
+          // of CSS modules
+          // see https://github.com/facebook/create-react-app/issues/5372#issuecomment-579619820
+          ignoreOrder: true,
           // Options similar to the same options in webpackOptions.output
           // both options are optional
           filename: 'static/css/[name].[contenthash:8].css',
