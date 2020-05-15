@@ -438,9 +438,9 @@ To support `pushState`, make sure to create a `public/_redirects` file with the 
 
 When you build the project, Create React App will place the `public` folder contents into the build output.
 
-## [ZEIT Now](https://zeit.co)
+## [Vercel](https://vercel.com)
 
-[ZEIT Now](https://zeit.co) is a cloud platform for websites and serverless APIs, that you can use to deploy your Create React App projects to your personal domain (or a free `.now.sh` suffixed URL).
+[Vercel](https://vercel.com) is a cloud platform for websites and serverless APIs, that you can use to deploy your Create React App projects to your personal domain (or a free `.now.sh` suffixed URL).
 
 This guide will show you how to get started in a few quick steps:
 
@@ -460,13 +460,13 @@ You can deploy your application by running the following command in the root of 
 now
 ```
 
-**Alternatively**, you can also use their integration for [GitHub](https://zeit.co/github) or [GitLab](https://zeit.co/gitlab).
+**Alternatively**, you can also use their integration for [GitHub](https://vercel.com/github) or [GitLab](https://vercel.com/gitlab).
 
 That’s all!
 
 Your site will now deploy, and you will receive a link similar to the following: https://react.now-examples.now.sh
 
-Out of the box, you are preconfigured for client-side routing compatibility and appropriate default caching headers. This behaviour can be overwritten [like this](https://zeit.co/docs/v2/advanced/routes/).
+Out of the box, you are preconfigured for client-side routing compatibility and appropriate default caching headers. This behaviour can be overwritten [like this](https://vercel.com/docs/v2/advanced/routes/).
 
 ## [Render](https://render.com)
 
