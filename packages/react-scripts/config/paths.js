@@ -43,13 +43,9 @@ const moduleFileExtensions = [
   'jsx',
 ];
 
-const typeDeclarationFileExtensions = ['d.ts', 'd.tsx'];
-
 // Resolve file paths in the same order as webpack
-const resolveModule = (resolveFn, filePath, kind = 'module') => {
-  const possibleExtensions =
-    kind === 'module' ? moduleFileExtensions : typeDeclarationFileExtensions;
-  const extension = possibleExtensions.find(extension =>
+const resolveModule = (resolveFn, filePath) => {
+  const extension = moduleFileExtensions.find(extension =>
     fs.existsSync(resolveFn(`${filePath}.${extension}`))
   );
 
@@ -102,8 +98,8 @@ module.exports = {
   // These properties only exist before ejecting:
   ownPath: resolveOwn('.'),
   ownNodeModules: resolveOwn('node_modules'), // This is empty on npm 3
-  appTypeDeclarations: resolveModule(resolveApp, 'src/react-app-env', 'types'),
-  ownTypeDeclarations: resolveModule(resolveOwn, 'lib/react-app', 'types'),
+  appTypeDeclarations: resolveApp('src/react-app-env.d.ts'),
+  ownTypeDeclarations: resolveOwn('lib/react-app.d.ts'),
 };
 
 const ownPackageJson = require('../package.json');
@@ -137,12 +133,8 @@ if (
     // These properties only exist before ejecting:
     ownPath: resolveOwn('.'),
     ownNodeModules: resolveOwn('node_modules'),
-    appTypeDeclarations: resolveModule(
-      resolveOwn,
-      `${templatePath}/src/react-app-env`,
-      'types'
-    ),
-    ownTypeDeclarations: resolveModule(resolveOwn, 'lib/react-app', 'types'),
+    appTypeDeclarations: resolveOwn(`${templatePath}/src/react-app-env.d.ts`),
+    ownTypeDeclarations: resolveOwn('lib/react-app.d.ts'),
   };
 }
 // @remove-on-eject-end
