@@ -609,7 +609,10 @@ module.exports = function (webpackEnv) {
               exclude: [/\.(js|mjs|jsx|ts|tsx)$/, /\.html$/, /\.json$/],
               options: {
                 name: 'static/media/[name].[hash:8].[ext]',
+                /* webpack-5-react-scripts start */
+                // https://stackoverflow.com/questions/59070216/webpack-file-loader-outputs-object-module
                 esModule: false,
+                /* webpack-5-react-scripts end */
               },
             },
             // ** STOP ** Are you adding a new loader?

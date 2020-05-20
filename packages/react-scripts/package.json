@@ -1,6 +1,6 @@
 {
   "name": "webpack-5-react-scripts",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "Configuration and scripts for Create React App using Webpack 5.",
   "repository": {
     "type": "git",
