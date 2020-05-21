@@ -174,13 +174,13 @@ If the build succeeds, the app is deployed and hosted on a global CDN with an am
 
 ## [Azure](https://azure.microsoft.com/)
 
-Azure Static Web Apps creates an automated build and deploy pipeline for your React app powered by Github Actions. Applications are geo-distributed by default with multiple points of presence. PR's are built automatically for staging environment previews.
+Azure Static Web Apps creates an automated build and deploy pipeline for your React app powered by GitHub Actions. Applications are geo-distributed by default with multiple points of presence. PR's are built automatically for staging environment previews.
 
 1. Create a new Static Web App [here](https://ms.portal.azure.com/#create/Microsoft.StaticApp).
 1. Add in the details and connect to your Github repo.
-1. Make sure the "build" folder is set correctly on the "build" tab and create the resource.
+1. Make sure the build folder is set correctly on the "build" tab and create the resource.
 
-Azure Static Web Apps will automatically configure a Github Action in your repo and begin the deployment.
+Azure Static Web Apps will automatically configure a GitHub Action in your repo and begin the deployment.
 
 See the [Azure Static Web Apps documentation](https://aka.ms/swadocs) for more information on routing, API's, authentication and authorization, custom domains and more.
 
