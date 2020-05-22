@@ -203,7 +203,7 @@ module.exports = function (
     appPackage.scripts = Object.entries(appPackage.scripts).reduce(
       (acc, [key, value]) => ({
         ...acc,
-        [key]: value.replace(/(npm run |npm )/, 'yarn '),
+        [key]: value.replace(/(npm run |npm )/g, 'yarn '),
       }),
       {}
     );
