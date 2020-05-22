@@ -1,3 +1,9 @@
+**DEPRECATED**
+
+This package has no purpose anymore. Please use the official CRA typescript template: https://www.npmjs.com/package/cra-template-typescript.
+
+---------------
+
 # cra-template-typescript
 
 This is the official TypeScript template for [Create React App](https://github.com/facebook/create-react-app).
