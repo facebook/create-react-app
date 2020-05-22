@@ -1,6 +1,6 @@
 {
-  "name": "cra-template-typescript",
-  "version": "1.0.3",
+  "name": "cra-template-webpack-5-typescript",
+  "version": "0.2.0",
   "keywords": [
     "react",
     "create-react-app",
