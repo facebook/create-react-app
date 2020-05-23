@@ -22,6 +22,7 @@ const spawn = require('react-dev-utils/crossSpawn');
 const { defaultBrowsers } = require('react-dev-utils/browsersHelper');
 const os = require('os');
 const verifyTypeScriptSetup = require('./utils/verifyTypeScriptSetup');
+const replaceNpmScriptsWithYarn = require('./utils/replaceNpmScriptsWithYarn');
 
 function isInGitRepository() {
   try {
@@ -200,13 +201,7 @@ module.exports = function (
 
   // Update scripts for Yarn users
   if (useYarn) {
-    appPackage.scripts = Object.entries(appPackage.scripts).reduce(
-      (acc, [key, value]) => ({
-        ...acc,
-        [key]: value.replace(/(npm run |npm )/g, 'yarn '),
-      }),
-      {}
-    );
+    appPackage.scripts = replaceNpmScriptsWithYarn(appPackage.scripts);
   }
 
   // Setup the eslint config
