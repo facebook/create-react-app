@@ -426,7 +426,6 @@ module.exports = function(webpackEnv) {
                 // Do not remove the filter since the transform react qa is optional
                 plugins: [
                   !isEnvTest &&
-                    !isEnvProduction &&
                     !isClusterProduction &&
                     require.resolve('babel-plugin-transform-react-qa-classes'),
 

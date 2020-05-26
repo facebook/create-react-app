@@ -1,3 +1,7 @@
+## 5.1.9
+
+- updated `babel-plugin-transform-react-qa-classes` to be added when ! cluster prod and !test env
+
 ## 5.1.8
 
 - updated `babel-plugin-transform-react-qa-classes` to 1.6.0
