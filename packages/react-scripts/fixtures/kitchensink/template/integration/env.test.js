@@ -38,7 +38,7 @@ describe('Integration', () => {
           'development'
         );
         expect(doc.getElementById('feature-file-env-x').textContent).toBe(
-          'x-from-development-env'
+          'x-from-original-local-env'
         );
       }
     });
