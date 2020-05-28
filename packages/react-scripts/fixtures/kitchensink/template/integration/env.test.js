@@ -31,7 +31,7 @@ describe('Integration', () => {
           'production'
         );
         expect(doc.getElementById('feature-file-env-x').textContent).toBe(
-          'x-from-production-env'
+          'x-from-original-local-env'
         );
       } else {
         expect(doc.getElementById('feature-file-env').textContent).toBe(
