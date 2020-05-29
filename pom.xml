@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one
+  or more contributor license agreements.  See the NOTICE file
+  distributed with this work for additional information
+  regarding copyright ownership.  The ASF licenses this file
+  to you under the Apache License, Version 2.0 (the
+  "License"); you may not use this file except in compliance
+  with the License.  You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing,
+  software distributed under the License is distributed on an
+  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  KIND, either express or implied.  See the License for the
+  specific language governing permissions and limitations
+  under the License.
+  
+  $Id: pom.xml 774158 2009-05-13 00:42:04Z ate $
+-->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <parent>
+    <groupId>org.apache.portals</groupId>
+    <artifactId>portals-pom</artifactId>
+    <version>1.4</version>
+  </parent>
+
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>portlet-api_2.1.0_spec</artifactId>
+  <version>1.0</version>
+  <packaging>bundle</packaging>
+  <name>Java Portlet Specification V2.1.0</name>
+  <description>The Java Portlet API version 2.1.0 developed by the Java Community Process JSR-286 Expert Group.</description>
+
+  <url>http://portals.apache.org/portlet-spec/portlet-api-2.1.0</url>
+
+  <dependencies>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>servlet-api</artifactId>
+      <version>2.4</version>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
+
+  <scm>
+    <connection>scm:svn:http://svn.apache.org/repos/asf/portals/portlet-spec/tags/portlet-api_2.1.0_spec-1.0</connection>
+    <developerConnection>scm:svn:https://svn.apache.org/repos/asf/portals/portlet-spec/tags/portlet-api_2.1.0_spec-1.0</developerConnection>
+    <url>http://svn.apache.org/viewvc/portals/portlet-spec/tags/portlet-api_2.1.0_spec-1.0</url>
+  </scm>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <configuration>
+            <source>1.5</source>
+            <target>1.5</target>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.felix</groupId>
+          <artifactId>maven-bundle-plugin</artifactId>
+          <version>2.0.0</version>
+          <extensions>true</extensions>
+          <configuration>
+            <instructions>
+              <Export-Package>javax.portlet.filter;version=2.1.0,
+                javax.portlet;version=2.1.0
+              </Export-Package>
+              <Import-Package>
+                javax.servlet.http;version=2.4,*
+              </Import-Package>
+              <Implementation-Title>${project.name}</Implementation-Title>
+              <Implementation-Version>${project.version}</Implementation-Version>
+              <Bundle-DocURL>${project.url}</Bundle-DocURL>
+            </instructions>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+
+    <plugins>
+      <plugin>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>maven-bundle-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </build>
+
+  <profiles>
+    <profile>
+      <id>apache-release</id>
+      <build>
+        <plugins>
+          <plugin>
+            <!-- only include this in top level project poms -->
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-assembly-plugin</artifactId>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+  
+</project>
+
+
