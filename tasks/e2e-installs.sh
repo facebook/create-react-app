@@ -147,11 +147,11 @@ grep '"version": "1.0.17"' node_modules/react-scripts/package.json
 checkDependencies
 
 # ******************************************************************************
-# Test --typescript flag
+# Test typescript setup
 # ******************************************************************************
 
 cd "$temp_app_path"
-npx create-react-app test-app-typescript --typescript
+npx create-react-app test-app-typescript --template typescript
 cd test-app-typescript
 
 # Check corresponding template is installed.

@@ -74,11 +74,6 @@ const program = new commander.Command(packageJson.name)
   )
   .option('--use-npm')
   .option('--use-pnp')
-  // TODO: Remove this in next major release.
-  .option(
-    '--typescript',
-    '(this option will be removed in favour of templates in the next major release of create-react-app)'
-  )
   .allowUnknownOption()
   .on('--help', () => {
     console.log(`    Only ${chalk.green('<project-directory>')} is required.`);
@@ -114,7 +109,7 @@ const program = new commander.Command(packageJson.name)
     console.log();
     console.log(`    A custom ${chalk.cyan('--template')} can be one of:`);
     console.log(
-      `      - a custom fork published on npm: ${chalk.green(
+      `      - a custom template published on npm: ${chalk.green(
         'cra-template-typescript'
       )}`
     );
@@ -190,19 +185,10 @@ createApp(
   program.scriptsVersion,
   program.template,
   program.useNpm,
-  program.usePnp,
-  program.typescript
+  program.usePnp
 );
 
-function createApp(
-  name,
-  verbose,
-  version,
-  template,
-  useNpm,
-  usePnp,
-  useTypeScript
-) {
+function createApp(name, verbose, version, template, useNpm, usePnp) {
   const unsupportedNodeVersion = !semver.satisfies(process.version, '>=10');
   if (unsupportedNodeVersion) {
     console.log(
@@ -281,23 +267,6 @@ function createApp(
         // 2 supports PnP by default and breaks when trying to use the flag
         usePnp = false;
       }
-    }
-  }
-
-  if (useTypeScript) {
-    console.log(
-      chalk.yellow(
-        'The --typescript option has been deprecated and will be removed in a future release.'
-      )
-    );
-    console.log(
-      chalk.yellow(
-        `In future, please use ${chalk.cyan('--template typescript')}.`
-      )
-    );
-    console.log();
-    if (!template) {
-      template = 'typescript';
     }
   }
 
@@ -455,17 +424,6 @@ function run(
             } compatible with the ${chalk.cyan('--template')} option.`
           );
           console.log('');
-        }
-
-        // TODO: Remove with next major release.
-        if (!supportsTemplates && (template || '').includes('typescript')) {
-          allDependencies.push(
-            '@types/node',
-            '@types/react',
-            '@types/react-dom',
-            '@types/jest',
-            'typescript'
-          );
         }
 
         console.log(
