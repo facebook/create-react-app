@@ -90,7 +90,6 @@ module.exports = function (webpackEnv) {
     const loaders = [
       isEnvDevelopment && {
         loader: require.resolve('style-loader'),
-        options: {},
       },
       isEnvProduction && {
         loader: MiniCssExtractPlugin.loader,
