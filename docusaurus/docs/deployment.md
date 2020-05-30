@@ -8,14 +8,14 @@ sidebar_label: Deployment
 
 ## Static Server
 
-For environments using [Node](https://nodejs.org/), the easiest way to handle this would be to install [serve](https://github.com/zeit/serve) and let it handle the rest:
+For environments using [Node](https://nodejs.org/), the easiest way to handle this would be to install [serve](https://github.com/vercel/serve) and let it handle the rest:
 
 ```sh
 npm install -g serve
 serve -s build
 ```
 
-The last command shown above will serve your static site on the port **5000**. Like many of [serve](https://github.com/zeit/serve)’s internal settings, the port can be adjusted using the `-l` or `--listen` flags:
+The last command shown above will serve your static site on the port **5000**. Like many of [serve](https://github.com/vercel/serve)’s internal settings, the port can be adjusted using the `-l` or `--listen` flags:
 
 ```sh
 serve -s build -l 4000
@@ -440,16 +440,16 @@ When you build the project, Create React App will place the `public` folder cont
 
 ## [Vercel](https://vercel.com)
 
-[Vercel](https://vercel.com) is a cloud platform for websites and serverless APIs, that you can use to deploy your Create React App projects to your personal domain (or a free `.now.sh` suffixed URL).
+[Vercel](https://vercel.com) is a cloud platform for websites and serverless APIs, that you can use to deploy your Create React App projects to your personal domain (or a free `.vercel.app` suffixed URL).
 
 This guide will show you how to get started in a few quick steps:
 
-### Step 1: Installing Now CLI
+### Step 1: Installing Vercel CLI
 
-To install their command-line interface with [npm](https://www.npmjs.com/package/now), run the following command:
+To install their command-line interface with [npm](https://www.npmjs.com/package/vercel), run the following command:
 
 ```shell
-npm i -g now
+npm i -g vercel
 ```
 
 ### Step 2: Deploying
@@ -457,14 +457,14 @@ npm i -g now
 You can deploy your application by running the following command in the root of the project directory:
 
 ```shell
-now
+vercel
 ```
 
 **Alternatively**, you can also use their integration for [GitHub](https://vercel.com/github) or [GitLab](https://vercel.com/gitlab).
 
 That’s all!
 
-Your site will now deploy, and you will receive a link similar to the following: https://react.now-examples.now.sh
+Your site will now deploy, and you will receive a link similar to the following: https://create-react-app.now-examples.now.sh/
 
 Out of the box, you are preconfigured for client-side routing compatibility and appropriate default caching headers. This behaviour can be overwritten [like this](https://vercel.com/docs/configuration#routes).
 
