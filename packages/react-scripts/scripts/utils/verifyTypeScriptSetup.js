@@ -59,9 +59,17 @@ function verifyTypeScriptSetup() {
   // Ensure typescript is installed
   let ts;
   try {
+    // TODO: Remove this hack once `globalThis` issue is resolved
+    // https://github.com/jsdom/jsdom/issues/2961
+    const globalThisWasDefined = !!global.globalThis;
+
     ts = require(resolve.sync('typescript', {
       basedir: paths.appNodeModules,
     }));
+
+    if (!globalThisWasDefined && !!global.globalThis) {
+      delete global.globalThis;
+    }
   } catch (_) {
     console.error(
       chalk.bold.red(

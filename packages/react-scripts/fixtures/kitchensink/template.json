@@ -2,7 +2,7 @@
   "package": {
     "dependencies": {
       "bootstrap": "4.3.1",
-      "jest": "25.5.4",
+      "jest": "26.0.1",
       "node-sass": "4.x",
       "normalize.css": "7.0.0",
       "prop-types": "15.7.2",
