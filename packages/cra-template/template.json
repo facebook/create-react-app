@@ -3,7 +3,8 @@
     "dependencies": {
       "@testing-library/jest-dom": "^5.5.0",
       "@testing-library/react": "^10.0.4",
-      "@testing-library/user-event": "^10.1.0"
+      "@testing-library/user-event": "^10.1.0",
+      "web-vitals": "^0.2.2"
     }
   }
 }
