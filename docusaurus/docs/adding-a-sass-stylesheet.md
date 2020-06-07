@@ -12,10 +12,8 @@ Following this rule often makes CSS preprocessors less useful, as features like 
 
 To use Sass, first install `node-sass`:
 
-```sh
+```bash npm2yarn
 $ npm install node-sass --save
-$ # or
-$ yarn add node-sass
 ```
 
 Now you can rename `src/App.css` to `src/App.scss` and update `src/App.js` to import `src/App.scss`.

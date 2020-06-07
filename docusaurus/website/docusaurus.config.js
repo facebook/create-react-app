@@ -24,6 +24,7 @@ const siteConfig = {
             'https://github.com/facebook/create-react-app/edit/master/docusaurus/website',
           showLastUpdateAuthor: true,
           showLastUpdateTime: true,
+          remarkPlugins: [require('./src/plugins/remark-npm2yarn')],
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),

@@ -142,10 +142,8 @@ For example, to create a build environment for a staging environment:
 1. Create a file called `.env.staging`
 1. Set environment variables as you would any other `.env` file (e.g. `REACT_APP_API_URL=http://api-staging.example.com`)
 1. Install [env-cmd](https://www.npmjs.com/package/env-cmd)
-   ```sh
-   $ npm install env-cmd --save
-   $ # or
-   $ yarn add env-cmd
+   ```bash npm2yarn
+   npm install env-cmd --save
    ```
 1. Add a new script to your `package.json`, building with your new environment:
    ```json
@@ -287,14 +285,8 @@ Now, whenever you run `npm run build`, you will see a cheat sheet with instructi
 
 To publish it at [https://myusername.github.io/my-app](https://myusername.github.io/my-app), run:
 
-```sh
+```bash npm2yarn
 npm install --save gh-pages
-```
-
-Alternatively you may use `yarn`:
-
-```sh
-yarn add gh-pages
 ```
 
 Add the following scripts in your `package.json`:

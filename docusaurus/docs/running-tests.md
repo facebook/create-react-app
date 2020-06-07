@@ -89,14 +89,8 @@ When you encounter bugs caused by changing components, you will gain a deeper in
 
 If you’d like to test components in isolation from the child components they render, we recommend using [`shallow()` rendering API](https://airbnb.io/enzyme/docs/api/shallow.html) from [Enzyme](https://airbnb.io/enzyme/). To install it, run:
 
-```sh
+```bash npm2yarn
 npm install --save enzyme enzyme-adapter-react-16 react-test-renderer
-```
-
-Alternatively you may use `yarn`:
-
-```sh
-yarn add enzyme enzyme-adapter-react-16 react-test-renderer
 ```
 
 As of Enzyme 3, you will need to install Enzyme along with an Adapter corresponding to the version of React you are using. (The examples above use the adapter for React 16.)
@@ -157,14 +151,8 @@ expect(wrapper).toContainReact(welcome);
 
 To enable this, install `jest-enzyme`:
 
-```sh
+```bash npm2yarn
 npm install --save jest-enzyme
-```
-
-Alternatively you may use `yarn`:
-
-```sh
-yarn add jest-enzyme
 ```
 
 Import it in [`src/setupTests.js`](#initializing-test-environment) to make its matchers available in every test:
@@ -179,14 +167,8 @@ As an alternative or companion to `enzyme`, you may consider using `react-testin
 
 To install `react-testing-library` and `jest-dom`, you can run:
 
-```sh
+```bash npm2yarn
 npm install --save @testing-library/react @testing-library/jest-dom
-```
-
-Alternatively you may use `yarn`:
-
-```sh
-yarn add @testing-library/react @testing-library/jest-dom
 ```
 
 Similar to `enzyme` you can create a `src/setupTests.js` file to avoid boilerplate in your test files:

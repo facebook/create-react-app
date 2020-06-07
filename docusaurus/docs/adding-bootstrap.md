@@ -7,14 +7,8 @@ While you don’t have to use any specific library to integrate Bootstrap with R
 
 Each project's respective documentation site has detailed instructions for installing and using them. Both depend on the Bootstrap css file so install that as well:
 
-```sh
+```bash npm2yarn
 npm install --save bootstrap
-```
-
-Alternatively you may use `yarn`:
-
-```sh
-yarn add bootstrap
 ```
 
 Import Bootstrap CSS and optionally Bootstrap theme CSS in the beginning of your `src/index.js` file:
@@ -35,14 +29,8 @@ As of `react-scripts@2.0.0` you can import `.scss` files. This makes it possible
 
 To enable `scss` in Create React App you will need to install `node-sass`.
 
-```sh
+```bash npm2yarn
 npm install --save node-sass
-```
-
-Alternatively you may use `yarn`:
-
-```sh
-yarn add node-sass
 ```
 
 To customize Bootstrap, create a file called `src/custom.scss` (or similar) and import the Bootstrap source stylesheet. Add any overrides _before_ the imported file(s). You can reference [Bootstrap's documentation](https://getbootstrap.com/docs/4.1/getting-started/theming/#css-variables) for the names of the available variables.
