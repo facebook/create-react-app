@@ -70,7 +70,7 @@ module.exports = {
   appJsConfig: resolveApp('jsconfig.json'),
   yarnLockFile: resolveApp('yarn.lock'),
   testsSetup: resolveModule(resolveApp, 'src/setupTests'),
-  proxySetup: resolveApp('src/setupProxy.js'),
+  proxySetup: resolveModule(resolveApp, 'src/setupProxy'),
   appNodeModules: resolveApp('node_modules'),
   publicUrlOrPath,
 };
@@ -92,7 +92,7 @@ module.exports = {
   appJsConfig: resolveApp('jsconfig.json'),
   yarnLockFile: resolveApp('yarn.lock'),
   testsSetup: resolveModule(resolveApp, 'src/setupTests'),
-  proxySetup: resolveApp('src/setupProxy.js'),
+  proxySetup: resolveModule(resolveApp, 'src/setupProxy'),
   appNodeModules: resolveApp('node_modules'),
   publicUrlOrPath,
   // These properties only exist before ejecting:
@@ -127,7 +127,7 @@ if (
     appJsConfig: resolveOwn(`${templatePath}/jsconfig.json`),
     yarnLockFile: resolveOwn(`${templatePath}/yarn.lock`),
     testsSetup: resolveModule(resolveOwn, `${templatePath}/src/setupTests`),
-    proxySetup: resolveOwn(`${templatePath}/src/setupProxy.js`),
+    proxySetup: resolveModule(resolveOwn, `${templatePath}/src/setupProxy`),
     appNodeModules: resolveOwn('node_modules'),
     publicUrlOrPath,
     // These properties only exist before ejecting:
