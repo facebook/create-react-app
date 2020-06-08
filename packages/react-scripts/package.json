@@ -1,10 +1,10 @@
 {
-  "name": "react-scripts",
+  "name": "@3marketers/react-scripts",
   "version": "3.4.1",
   "description": "Configuration and scripts for Create React App.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/facebook/create-react-app.git",
+    "url": "https://github.com/LMLab/create-react-app.git",
     "directory": "packages/react-scripts"
   },
   "license": "MIT",
@@ -12,7 +12,7 @@
     "node": ">=10"
   },
   "bugs": {
-    "url": "https://github.com/facebook/create-react-app/issues"
+    "url": "https://github.com/LMLab/create-react-app/issues"
   },
   "files": [
     "bin",
@@ -85,6 +85,8 @@
     "workbox-webpack-plugin": "4.3.1"
   },
   "devDependencies": {
+    "@babel/plugin-proposal-optional-chaining": "^7.10.1",
+    "babel-plugin-styled-components": "^1.10.7",
     "react": "^16.12.0",
     "react-dom": "^16.12.0"
   },

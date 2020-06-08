@@ -56,6 +56,16 @@ const resolveModule = (resolveFn, filePath) => {
   return resolveFn(`${filePath}.js`);
 };
 
+const getWidgetsPaths = () => {
+  const widgets = fs.readdirSync(
+    path.join(appDirectory, './src/web-widgets/widgets')
+  );
+
+  return widgets.map(widget =>
+    path.join(appDirectory, './src/web-widgets/widgets', widget)
+  );
+};
+
 // config after eject: we're in ./config/
 module.exports = {
   dotenv: resolveApp('.env'),
@@ -85,6 +95,7 @@ module.exports = {
   appBuild: resolveApp('build'),
   appPublic: resolveApp('public'),
   appHtml: resolveApp('public/index.html'),
+  widgets: getWidgetsPaths(),
   appIndexJs: resolveModule(resolveApp, 'src/index'),
   appPackageJson: resolveApp('package.json'),
   appSrc: resolveApp('src'),
