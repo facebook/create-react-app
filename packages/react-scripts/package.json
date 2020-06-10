@@ -1,18 +1,15 @@
 {
-  "name": "react-scripts",
-  "version": "5.0.0",
-  "description": "Configuration and scripts for Create React App.",
+  "name": "@skyscanner/backpack-react-scripts",
+  "version": "9.0.3",
+  "description": "Backpack configuration and scripts for Create React App.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/facebook/create-react-app.git",
+    "url": "https://github.com/Skyscanner/backpack-react-scripts.git",
     "directory": "packages/react-scripts"
   },
   "license": "MIT",
   "engines": {
     "node": ">=14.0.0"
-  },
-  "bugs": {
-    "url": "https://github.com/facebook/create-react-app/issues"
   },
   "files": [
     "bin",
@@ -36,6 +33,7 @@
     "babel-plugin-named-asset-import": "^0.3.8",
     "babel-preset-react-app": "^10.0.1",
     "bfj": "^7.0.2",
+    "bpk-mixins": "^20.1.7",
     "browserslist": "^4.18.1",
     "camelcase": "^6.2.1",
     "case-sensitive-paths-webpack-plugin": "^2.4.0",
@@ -53,7 +51,9 @@
     "jest": "^27.4.3",
     "jest-resolve": "^27.4.2",
     "jest-watch-typeahead": "^1.0.0",
+    "lodash": "^4.17.20",
     "mini-css-extract-plugin": "^2.4.5",
+    "node-sass": "^4.12.0",
     "postcss": "^8.4.4",
     "postcss-flexbugs-fixes": "^5.0.2",
     "postcss-loader": "^6.2.1",
@@ -103,5 +103,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "gitHead": "fb27e351ae2e450ddc5ff72008ea7d3559a261c4"
 }

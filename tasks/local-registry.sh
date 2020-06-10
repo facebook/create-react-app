@@ -26,5 +26,5 @@ function stopLocalRegistry {
 
 function publishToLocalRegistry {
   git clean -df
-  ./tasks/publish.sh prerelease --yes --force-publish=* --no-git-tag-version --no-commit-hooks --no-push --exact --dist-tag=latest
+  ./tasks/publish.sh --force-publish=* --no-git-tag-version --no-commit-hooks --no-push --exact --dist-tag=latest
 }

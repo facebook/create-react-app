@@ -26,6 +26,11 @@ set -x
 cd ..
 root_path=$PWD
 
+# As we don't use yarn we ignore this as it otherwise causes issues with the release
+# if [ -z $CI ]; then
+#   yarn compile:lockfile
+# fi
+
 if [ -n "$(git status --porcelain)" ]; then
   echo "Your git status is not clean. Aborting.";
   exit 1;
@@ -42,4 +47,4 @@ if [ -z $CI ]; then
 fi
 
 # Go!
-NPM_CONFIG_OTP="$otp" ./node_modules/.bin/lerna publish "$@"
+NPM_CONFIG_OTP="$otp" ./node_modules/.bin/lerna publish from-package "$@"
