@@ -35,7 +35,7 @@
   ],
   "devDependencies": {
     "@babel/code-frame": "7.10.1",
-    "@babel/core": "7.10.1",
+    "@babel/core": "7.10.2",
     "anser": "1.4.9",
     "babel-eslint": "10.1.0",
     "babel-jest": "^26.0.1",
@@ -63,7 +63,7 @@
     "rimraf": "^3.0.0",
     "settle-promise": "1.0.0",
     "source-map": "0.5.6",
-    "terser-webpack-plugin": "3.0.2",
+    "terser-webpack-plugin": "3.0.3",
     "webpack": "^4.35.0"
   },
   "jest": {

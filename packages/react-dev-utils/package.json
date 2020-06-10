@@ -63,7 +63,7 @@
     "find-up": "4.1.0",
     "fork-ts-checker-webpack-plugin": "4.1.6",
     "global-modules": "2.0.0",
-    "globby": "11.0.0",
+    "globby": "11.0.1",
     "gzip-size": "5.1.1",
     "immer": "1.10.0",
     "inquirer": "7.1.0",
