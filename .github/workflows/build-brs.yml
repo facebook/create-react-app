@@ -1,0 +1,50 @@
+name: Build BRS
+
+on:
+  push:
+    branches: [fork]
+  pull_request:
+    branches: [fork]
+
+defaults:
+  run:
+    shell: bash -l {0}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: nvm install
+        run: nvm install lts/erbium
+
+      - name: Run simple
+        run: |
+          nvm use lts/erbium
+          tasks/e2e-simple.sh
+
+      - name: Run Installs
+        run: |
+          nvm use lts/erbium
+          tasks/e2e-installs.sh
+
+      ## For now we don't need to worry about Kitchensink as this is also failing upstream and the functions is executes are not relevant
+
+      # - name: Run Kitchensink
+      #   shell: bash -l {0}
+      #   run: |
+      #     nvm use lts/erbium
+      #     tasks/e2e-kitchensink.sh
+
+      # - name: Run Kitchensink Eject
+      #   shell: bash -l {0}
+      #   run: |
+      #     nvm use lts/erbium
+      #     tasks/e2e-kitchensink-eject.sh
+
+      # - name: Run Behaviour
+      #   shell: bash -l {0}
+      #   run: |
+      #     nvm use lts/erbium
+      #     tasks/e2e-behavior.sh

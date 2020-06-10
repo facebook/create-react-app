@@ -12,6 +12,17 @@ const chalk = require('react-dev-utils/chalk');
 const paths = require('../../config/paths');
 const modules = require('../../config/modules');
 
+const pkgJson = require(paths.appPackageJson);
+const bpkReactScriptsConfig = pkgJson['backpack-react-scripts'] || {};
+
+const includePrefixes = bpkReactScriptsConfig.babelIncludePrefixes || [];
+includePrefixes.unshift('bpk-');
+includePrefixes.unshift('saddlebag-');
+
+const transformIgnorePattern = `[/\\\\]node_modules[/\\\\](?!${includePrefixes.join(
+  '|'
+)}).+\\.(js|jsx|mjs)$`;
+
 module.exports = (resolve, rootDir, isEjecting) => {
   // Use this instead of `paths.testsSetup` to avoid putting
   // an absolute filename into configuration after ejecting.
@@ -41,22 +52,24 @@ module.exports = (resolve, rootDir, isEjecting) => {
     testEnvironment: 'jsdom',
     testRunner: require.resolve('jest-circus/runner'),
     transform: {
-      '^.+\\.(js|jsx|mjs|cjs|ts|tsx)$': resolve(
-        'config/jest/babelTransform.js'
-      ),
-      '^.+\\.css$': resolve('config/jest/cssTransform.js'),
-      '^(?!.*\\.(js|jsx|mjs|cjs|ts|tsx|css|json)$)': resolve(
+      '^.+\\.(js|jsx|mjs|cjs|ts|tsx)$': resolve('config/jest/babelTransform.js'),
+      // '^.+\\.css$': resolve('config/jest/cssTransform.js'),
+      // '^(?!.*\\.(js|jsx|mjs|cjs|ts|tsx|css|json)$)': resolve(
+      '^(?!.*\\.(js|jsx|ts|tsx|json)$)': resolve(
         'config/jest/fileTransform.js'
       ),
     },
     transformIgnorePatterns: [
-      '[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs|cjs|ts|tsx)$',
-      '^.+\\.module\\.(css|sass|scss)$',
+      // '[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs|cjs|ts|tsx)$',
+      // '^.+\\.module\\.(css|sass|scss)$',
+      transformIgnorePattern,
+      '^.+\\.(css|sass|scss)$',
     ],
     modulePaths: modules.additionalModulePaths || [],
     moduleNameMapper: {
       '^react-native$': 'react-native-web',
-      '^.+\\.module\\.(css|sass|scss)$': 'identity-obj-proxy',
+      // '^.+\\.module\\.(css|sass|scss)$': 'identity-obj-proxy',
+      '^.+\\.(css|sass|scss)$': 'identity-obj-proxy',
       ...(modules.jestAliases || {}),
     },
     moduleFileExtensions: [...paths.moduleFileExtensions, 'node'].filter(
