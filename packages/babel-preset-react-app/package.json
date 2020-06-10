@@ -21,7 +21,7 @@
     "test.js"
   ],
   "dependencies": {
-    "@babel/core": "7.10.1",
+    "@babel/core": "7.10.2",
     "@babel/plugin-proposal-class-properties": "7.10.1",
     "@babel/plugin-proposal-decorators": "7.10.1",
     "@babel/plugin-proposal-nullish-coalescing-operator": "7.10.1",
@@ -30,10 +30,10 @@
     "@babel/plugin-transform-flow-strip-types": "7.10.1",
     "@babel/plugin-transform-react-display-name": "7.10.1",
     "@babel/plugin-transform-runtime": "7.10.1",
-    "@babel/preset-env": "7.10.1",
+    "@babel/preset-env": "7.10.2",
     "@babel/preset-react": "7.10.1",
     "@babel/preset-typescript": "7.10.1",
-    "@babel/runtime": "7.10.1",
+    "@babel/runtime": "7.10.2",
     "babel-plugin-macros": "2.8.0",
     "babel-plugin-transform-react-remove-prop-types": "0.4.24"
   }
