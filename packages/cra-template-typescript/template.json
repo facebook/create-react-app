@@ -8,7 +8,8 @@
       "@types/react": "^16.9.0",
       "@types/react-dom": "^16.9.0",
       "@types/jest": "^25.0.0",
-      "typescript": "^3.8.0"
+      "typescript": "^3.8.0",
+      "web-vitals": "^0.2.2"
     }
   }
 }
