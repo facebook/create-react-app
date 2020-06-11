@@ -8,7 +8,7 @@ clientsClaim();
 
 precacheAndRoute(self.__WB_MANIFEST);
 
-const handler = createHandlerBoundToURL('index.html');
+const handler = createHandlerBoundToURL(process.env.PUBLIC_URL + '/index.html');
 const navigationRoute = new NavigationRoute(handler, {
   denylist: [
     // Exclude URLs starting with /_, as they're likely an API call
