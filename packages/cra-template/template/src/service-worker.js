@@ -4,7 +4,8 @@ import {registerRoute, NavigationRoute} from 'workbox-routing';
 
 clientsClaim();
 
-precacheAndRoute(self.__WB_MANIFEST);
+// eslint-disable-next-line no-restricted-globals
+precacheAndRoute(self.__WB_MANIFEST); 
 
 const handler = createHandlerBoundToURL(process.env.PUBLIC_URL + '/index.html');
 const navigationRoute = new NavigationRoute(handler, {
