@@ -174,9 +174,15 @@ If the build succeeds, the app is deployed and hosted on a global CDN with an am
 
 ## [Azure](https://azure.microsoft.com/)
 
-See [this](https://medium.com/@to_pe/deploying-create-react-app-on-microsoft-azure-c0f6686a4321) blog post on how to deploy your React app to Microsoft Azure.
+Azure Static Web Apps creates an automated build and deploy pipeline for your React app powered by GitHub Actions. Applications are geo-distributed by default with multiple points of presence. PR's are built automatically for staging environment previews.
 
-See [this](https://medium.com/@strid/host-create-react-app-on-azure-986bc40d5bf2#.pycfnafbg) blog post or [this](https://github.com/ulrikaugustsson/azure-appservice-static) repo for a way to use automatic deployment to Azure App Service.
+1. Create a new Static Web App [here](https://ms.portal.azure.com/#create/Microsoft.StaticApp).
+1. Add in the details and connect to your GitHub repo.
+1. Make sure the build folder is set correctly on the "build" tab and create the resource.
+
+Azure Static Web Apps will automatically configure a GitHub Action in your repo and begin the deployment.
+
+See the [Azure Static Web Apps documentation](https://aka.ms/swadocs) for more information on routing, APIs, authentication and authorization, custom domains and more.
 
 ## [Firebase](https://firebase.google.com/)
 
