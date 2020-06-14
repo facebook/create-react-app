@@ -1,3 +1,4 @@
+[![Board Status](https://dev.azure.com/bddsl/5141809d-fb3a-484e-a987-05bc80c5f881/ea60368d-3261-410e-ac57-c8555e6853b6/_apis/work/boardbadge/45b12664-2bfe-4e9e-b093-78d689f84471)](https://dev.azure.com/bddsl/5141809d-fb3a-484e-a987-05bc80c5f881/_boards/board/t/ea60368d-3261-410e-ac57-c8555e6853b6/Microsoft.RequirementCategory)
 # Create React App [![Build Status](https://dev.azure.com/facebook/create-react-app/_apis/build/status/facebook.create-react-app?branchName=master)](https://dev.azure.com/facebook/create-react-app/_build/latest?definitionId=1&branchName=master) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-green.svg)](https://github.com/facebook/create-react-app/blob/master/CONTRIBUTING.md)
 
 Create React apps with no build configuration.
