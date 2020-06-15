@@ -484,7 +484,16 @@ Use invite code `cra` to sign up or use [this link](https://render.com/i/cra).
 
 ## [S3](https://aws.amazon.com/s3) and [CloudFront](https://aws.amazon.com/cloudfront/)
 
-See this [blog post](https://medium.com/@omgwtfmarc/deploying-create-react-app-to-s3-or-cloudfront-48dae4ce0af) on how to deploy your React app to Amazon Web Services S3 and CloudFront. If you are looking to add a custom domain, HTTPS and continuous deployment see this [blog post](https://medium.com/dailyjs/a-guide-to-deploying-your-react-app-with-aws-s3-including-https-a-custom-domain-a-cdn-and-58245251f081).
+[aws-spa](https://www.npmjs.com/package/aws-spa) offers a simple, single-command deployment. You can use `aws-spa` to deploy your app on AWS using [S3](https://aws.amazon.com/s3), [CloudFront](https://aws.amazon.com/cloudfront/), [Route53](https://aws.amazon.com/route53/) and [ACM](https://aws.amazon.com/acm/).
+
+
+1. Install `aws-spa` as a dev dependency: `npm install --dev aws-spa`.
+
+2. Build your app: `npm run build`.
+
+3. Deploy: `npx aws-spa deploy hello.example.com --directory build`.
+
+If you prefer to create the AWS resources by yourself, you can read this [blog post](https://medium.com/@omgwtfmarc/deploying-create-react-app-to-s3-or-cloudfront-48dae4ce0af) explaining how to deploy your React app to Amazon Web Services S3 and CloudFront.
 
 ## [Surge](https://surge.sh/)
 
