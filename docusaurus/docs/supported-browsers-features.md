@@ -43,6 +43,7 @@ Here is an example `browserslist` that is specified in `package.json`:
     "not op_mini all"
   ],
   "development": [
+    "ie 11",
     "last 1 chrome version",
     "last 1 firefox version",
     "last 1 safari version"
