@@ -32,7 +32,7 @@ const matchCSS = (doc, regexes) => {
 };
 
 describe('Integration', () => {
-  describe('Webpack plugins', () => {
+  describe('webpack plugins', () => {
     let doc;
 
     afterEach(() => {

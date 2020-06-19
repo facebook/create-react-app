@@ -51,3 +51,13 @@ Make sure you have a `tsconfig.json` file at the root directory. You can also us
   "presets": [["react-app", { "flow": false, "typescript": true }]]
 }
 ```
+
+## Absolute Runtime Paths
+
+Absolute paths are enabled by default for imports. To use relative paths instead, set the `absoluteRuntime` option in `.babelrc` to `false`:
+
+```
+{
+  "presets": [["react-app", { "absoluteRuntime": false }]]
+}
+```

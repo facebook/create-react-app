@@ -8,7 +8,7 @@
 // resources are updated in the background.
 
 // To learn more about the benefits of this model and instructions on how to
-// opt-in, read https://bit.ly/CRA-PWA
+// opt-in, read https://cra.link/PWA
 
 const isLocalhost = Boolean(
   window.location.hostname === 'localhost' ||
@@ -43,7 +43,7 @@ export function register(config) {
         navigator.serviceWorker.ready.then(() => {
           console.log(
             'This web app is being served cache-first by a service ' +
-              'worker. To learn more, visit https://bit.ly/CRA-PWA'
+              'worker. To learn more, visit https://cra.link/PWA'
           );
         });
       } else {
@@ -71,7 +71,7 @@ function registerValidSW(swUrl, config) {
               // content until all client tabs are closed.
               console.log(
                 'New content is available and will be used when all ' +
-                  'tabs for this page are closed. See https://bit.ly/CRA-PWA.'
+                  'tabs for this page are closed. See https://cra.link/PWA.'
               );
 
               // Execute callback
@@ -101,7 +101,7 @@ function registerValidSW(swUrl, config) {
 function checkValidServiceWorker(swUrl, config) {
   // Check if the service worker can be found. If it can't reload the page.
   fetch(swUrl, {
-    headers: { 'Service-Worker': 'script' }
+    headers: { 'Service-Worker': 'script' },
   })
     .then(response => {
       // Ensure service worker exists, and that we really are getting a JS file.
@@ -130,8 +130,12 @@ function checkValidServiceWorker(swUrl, config) {
 
 export function unregister() {
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.ready.then(registration => {
-      registration.unregister();
-    });
+    navigator.serviceWorker.ready
+      .then(registration => {
+        registration.unregister();
+      })
+      .catch(error => {
+        console.error(error.message);
+      });
   }
 }

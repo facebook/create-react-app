@@ -53,14 +53,6 @@ const validateProjectName = require('validate-npm-package-name');
 
 const packageJson = require('./package.json');
 
-// These files should be allowed to remain on a failed install,
-// but then silently removed during the next create.
-const errorLogFilePatterns = [
-  'npm-debug.log',
-  'yarn-error.log',
-  'yarn-debug.log',
-];
-
 let projectName;
 
 const program = new commander.Command(packageJson.name)
@@ -82,11 +74,6 @@ const program = new commander.Command(packageJson.name)
   )
   .option('--use-npm')
   .option('--use-pnp')
-  // TODO: Remove this in next major release.
-  .option(
-    '--typescript',
-    '(this option will be removed in favour of templates in the next major release of create-react-app)'
-  )
   .allowUnknownOption()
   .on('--help', () => {
     console.log(`    Only ${chalk.green('<project-directory>')} is required.`);
@@ -122,7 +109,7 @@ const program = new commander.Command(packageJson.name)
     console.log();
     console.log(`    A custom ${chalk.cyan('--template')} can be one of:`);
     console.log(
-      `      - a custom fork published on npm: ${chalk.green(
+      `      - a custom template published on npm: ${chalk.green(
         'cra-template-typescript'
       )}`
     );
@@ -156,6 +143,10 @@ const program = new commander.Command(packageJson.name)
 
 if (program.info) {
   console.log(chalk.bold('\nEnvironment Info:'));
+  console.log(
+    `\n  current version of ${packageJson.name}: ${packageJson.version}`
+  );
+  console.log(`  running from ${__dirname}`);
   return envinfo
     .run(
       {
@@ -188,47 +179,22 @@ if (typeof projectName === 'undefined') {
   process.exit(1);
 }
 
-function printValidationResults(results) {
-  if (typeof results !== 'undefined') {
-    results.forEach(error => {
-      console.error(chalk.red(`  *  ${error}`));
-    });
-  }
-}
-
 createApp(
   projectName,
   program.verbose,
   program.scriptsVersion,
   program.template,
   program.useNpm,
-  program.usePnp,
-  program.typescript
+  program.usePnp
 );
 
-function createApp(
-  name,
-  verbose,
-  version,
-  template,
-  useNpm,
-  usePnp,
-  useTypeScript
-) {
-  const unsupportedNodeVersion = !semver.satisfies(process.version, '>=8.10.0');
-  if (unsupportedNodeVersion && useTypeScript) {
-    console.error(
-      chalk.red(
-        `You are using Node ${process.version} with the TypeScript template. Node 8.10 or higher is required to use TypeScript.\n`
-      )
-    );
-
-    process.exit(1);
-  } else if (unsupportedNodeVersion) {
+function createApp(name, verbose, version, template, useNpm, usePnp) {
+  const unsupportedNodeVersion = !semver.satisfies(process.version, '>=10');
+  if (unsupportedNodeVersion) {
     console.log(
       chalk.yellow(
         `You are using Node ${process.version} so the project will be bootstrapped with an old unsupported version of tools.\n\n` +
-          `Please update to Node 8.10 or higher for a better, fully supported experience.\n`
+          `Please update to Node 10 or higher for a better, fully supported experience.\n`
       )
     );
     // Fall back to latest supported react-scripts on Node 4
@@ -243,6 +209,7 @@ function createApp(
   if (!isSafeToCreateProjectIn(root, name)) {
     process.exit(1);
   }
+  console.log();
 
   console.log(`Creating a new React app in ${chalk.green(root)}.`);
   console.log();
@@ -271,7 +238,7 @@ function createApp(
         console.log(
           chalk.yellow(
             `You are using npm ${npmInfo.npmVersion} so the project will be bootstrapped with an old unsupported version of tools.\n\n` +
-              `Please update to npm 5 or higher for a better, fully supported experience.\n`
+              `Please update to npm 6 or higher for a better, fully supported experience.\n`
           )
         );
       }
@@ -280,34 +247,26 @@ function createApp(
     }
   } else if (usePnp) {
     const yarnInfo = checkYarnVersion();
-    if (!yarnInfo.hasMinYarnPnp) {
-      if (yarnInfo.yarnVersion) {
+    if (yarnInfo.yarnVersion) {
+      if (!yarnInfo.hasMinYarnPnp) {
         console.log(
           chalk.yellow(
             `You are using Yarn ${yarnInfo.yarnVersion} together with the --use-pnp flag, but Plug'n'Play is only supported starting from the 1.12 release.\n\n` +
               `Please update to Yarn 1.12 or higher for a better, fully supported experience.\n`
           )
         );
+        // 1.11 had an issue with webpack-dev-middleware, so better not use PnP with it (never reached stable, but still)
+        usePnp = false;
       }
-      // 1.11 had an issue with webpack-dev-middleware, so better not use PnP with it (never reached stable, but still)
-      usePnp = false;
-    }
-  }
-
-  if (useTypeScript) {
-    console.log(
-      chalk.yellow(
-        'The --typescript option has been deprecated and will be removed in a future release.'
-      )
-    );
-    console.log(
-      chalk.yellow(
-        `In future, please use ${chalk.cyan('--template typescript')}.`
-      )
-    );
-    console.log();
-    if (!template) {
-      template = 'typescript';
+      if (!yarnInfo.hasMaxYarnPnp) {
+        console.log(
+          chalk.yellow(
+            'The --use-pnp flag is no longer necessary with yarn 2 and will be deprecated and removed in a future release.\n'
+          )
+        );
+        // 2 supports PnP by default and breaks when trying to use the flag
+        usePnp = false;
+      }
     }
   }
 
@@ -315,9 +274,8 @@ function createApp(
     let yarnUsesDefaultRegistry = true;
     try {
       yarnUsesDefaultRegistry =
-        execSync('yarnpkg config get registry')
-          .toString()
-          .trim() === 'https://registry.yarnpkg.com';
+        execSync('yarnpkg config get registry').toString().trim() ===
+        'https://registry.yarnpkg.com';
     } catch (e) {
       // ignore
     }
@@ -444,10 +402,7 @@ function run(
       .then(({ isOnline, packageInfo, templateInfo }) => {
         let packageVersion = semver.coerce(packageInfo.version);
 
-        // This environment variable can be removed post-release.
-        const templatesVersionMinimum = process.env.CRA_INTERNAL_TEST
-          ? '3.2.0'
-          : '3.3.0';
+        const templatesVersionMinimum = '3.3.0';
 
         // Assume compatibility if we can't test the version.
         if (!semver.valid(packageVersion)) {
@@ -469,17 +424,6 @@ function run(
             } compatible with the ${chalk.cyan('--template')} option.`
           );
           console.log('');
-        }
-
-        // TODO: Remove with next major release.
-        if (!supportsTemplates && (template || '').includes('typescript')) {
-          allDependencies.push(
-            '@types/node',
-            '@types/react',
-            '@types/react-dom',
-            '@types/jest',
-            'typescript'
-          );
         }
 
         console.log(
@@ -530,7 +474,7 @@ function run(
           console.log(
             chalk.yellow(
               `\nNote: the project was bootstrapped with an old unsupported version of tools.\n` +
-                `Please update to Node >=8.10 and npm >=5 to get supported tools in new projects.\n`
+                `Please update to Node >=10 and npm >=6 to get supported tools in new projects.\n`
             )
           );
         }
@@ -587,7 +531,7 @@ function getInstallPackage(version, originalDirectory) {
   if (validSemver) {
     packageToInstall += `@${validSemver}`;
   } else if (version) {
-    if (version[0] === '@' && version.indexOf('/') === -1) {
+    if (version[0] === '@' && !version.includes('/')) {
       packageToInstall += version;
     } else if (version.match(/^file:/)) {
       packageToInstall = `file:${path.resolve(
@@ -654,10 +598,25 @@ function getTemplateInstallPackage(template, originalDirectory) {
       const scope = packageMatch[1] || '';
       const templateName = packageMatch[2];
 
-      const name = templateName.startsWith(templateToInstall)
-        ? templateName
-        : `${templateToInstall}-${templateName}`;
-      templateToInstall = `${scope}${name}`;
+      if (
+        templateName === templateToInstall ||
+        templateName.startsWith(`${templateToInstall}-`)
+      ) {
+        // Covers:
+        // - cra-template
+        // - @SCOPE/cra-template
+        // - cra-template-NAME
+        // - @SCOPE/cra-template-NAME
+        templateToInstall = `${scope}${templateName}`;
+      } else if (templateName.startsWith('@')) {
+        // Covers using @SCOPE only
+        templateToInstall = `${templateName}/${templateToInstall}`;
+      } else {
+        // Covers templates without the `cra-template` prefix:
+        // - NAME
+        // - @SCOPE/NAME
+        templateToInstall = `${scope}${templateToInstall}-${templateName}`;
+      }
     }
   }
 
@@ -739,7 +698,7 @@ function getPackageInfo(installPackage) {
         );
         return Promise.resolve({ name: assumedProjectName });
       });
-  } else if (installPackage.indexOf('git+') === 0) {
+  } else if (installPackage.startsWith('git+')) {
     // Pull package name out of git urls e.g:
     // git+https://github.com/mycompany/react-scripts.git
     // git+ssh://github.com/mycompany/react-scripts.git#v1.2.3
@@ -767,10 +726,8 @@ function checkNpmVersion() {
   let hasMinNpm = false;
   let npmVersion = null;
   try {
-    npmVersion = execSync('npm --version')
-      .toString()
-      .trim();
-    hasMinNpm = semver.gte(npmVersion, '5.0.0');
+    npmVersion = execSync('npm --version').toString().trim();
+    hasMinNpm = semver.gte(npmVersion, '6.0.0');
   } catch (err) {
     // ignore
   }
@@ -781,22 +738,33 @@ function checkNpmVersion() {
 }
 
 function checkYarnVersion() {
+  const minYarnPnp = '1.12.0';
+  const maxYarnPnp = '2.0.0';
   let hasMinYarnPnp = false;
+  let hasMaxYarnPnp = false;
   let yarnVersion = null;
   try {
-    yarnVersion = execSync('yarnpkg --version')
-      .toString()
-      .trim();
-    let trimmedYarnVersion = /^(.+?)[-+].+$/.exec(yarnVersion);
-    if (trimmedYarnVersion) {
-      trimmedYarnVersion = trimmedYarnVersion.pop();
+    yarnVersion = execSync('yarnpkg --version').toString().trim();
+    if (semver.valid(yarnVersion)) {
+      hasMinYarnPnp = semver.gte(yarnVersion, minYarnPnp);
+      hasMaxYarnPnp = semver.lt(yarnVersion, maxYarnPnp);
+    } else {
+      // Handle non-semver compliant yarn version strings, which yarn currently
+      // uses for nightly builds. The regex truncates anything after the first
+      // dash. See #5362.
+      const trimmedYarnVersionMatch = /^(.+?)[-+].+$/.exec(yarnVersion);
+      if (trimmedYarnVersionMatch) {
+        const trimmedYarnVersion = trimmedYarnVersionMatch.pop();
+        hasMinYarnPnp = semver.gte(trimmedYarnVersion, minYarnPnp);
+        hasMaxYarnPnp = semver.lt(trimmedYarnVersion, maxYarnPnp);
+      }
     }
-    hasMinYarnPnp = semver.gte(trimmedYarnVersion || yarnVersion, '1.12.0');
   } catch (err) {
     // ignore
   }
   return {
     hasMinYarnPnp: hasMinYarnPnp,
+    hasMaxYarnPnp: hasMaxYarnPnp,
     yarnVersion: yarnVersion,
   };
 }
@@ -836,22 +804,29 @@ function checkAppName(appName) {
   const validationResult = validateProjectName(appName);
   if (!validationResult.validForNewPackages) {
     console.error(
-      `Could not create a project called ${chalk.red(
-        `"${appName}"`
-      )} because of npm naming restrictions:`
+      chalk.red(
+        `Cannot create a project named ${chalk.green(
+          `"${appName}"`
+        )} because of npm naming restrictions:\n`
+      )
     );
-    printValidationResults(validationResult.errors);
-    printValidationResults(validationResult.warnings);
+    [
+      ...(validationResult.errors || []),
+      ...(validationResult.warnings || []),
+    ].forEach(error => {
+      console.error(chalk.red(`  * ${error}`));
+    });
+    console.error(chalk.red('\nPlease choose a different project name.'));
     process.exit(1);
   }
 
   // TODO: there should be a single place that holds the dependencies
   const dependencies = ['react', 'react-dom', 'react-scripts'].sort();
-  if (dependencies.indexOf(appName) >= 0) {
+  if (dependencies.includes(appName)) {
     console.error(
       chalk.red(
-        `We cannot create a project called ${chalk.green(
-          appName
+        `Cannot create a project named ${chalk.green(
+          `"${appName}"`
         )} because a dependency with the same name exists.\n` +
           `Due to the way npm works, the following names are not allowed:\n\n`
       ) +
@@ -913,23 +888,32 @@ function setCaretRangeForRuntimeDeps(packageName) {
 function isSafeToCreateProjectIn(root, name) {
   const validFiles = [
     '.DS_Store',
-    'Thumbs.db',
     '.git',
-    '.gitignore',
-    '.idea',
-    'README.md',
-    'LICENSE',
-    '.hg',
-    '.hgignore',
-    '.hgcheck',
-    '.npmignore',
-    'mkdocs.yml',
-    'docs',
-    '.travis.yml',
-    '.gitlab-ci.yml',
     '.gitattributes',
+    '.gitignore',
+    '.gitlab-ci.yml',
+    '.hg',
+    '.hgcheck',
+    '.hgignore',
+    '.idea',
+    '.npmignore',
+    '.travis.yml',
+    'docs',
+    'LICENSE',
+    'README.md',
+    'mkdocs.yml',
+    'Thumbs.db',
   ];
-  console.log();
+  // These files should be allowed to remain on a failed install, but then
+  // silently removed during the next create.
+  const errorLogFilePatterns = [
+    'npm-debug.log',
+    'yarn-error.log',
+    'yarn-debug.log',
+  ];
+  const isErrorLog = file => {
+    return errorLogFilePatterns.some(pattern => file.startsWith(pattern));
+  };
 
   const conflicts = fs
     .readdirSync(root)
@@ -937,9 +921,7 @@ function isSafeToCreateProjectIn(root, name) {
     // IntelliJ IDEA creates module files before CRA is launched
     .filter(file => !/\.iml$/.test(file))
     // Don't treat log files from previous installation as conflicts
-    .filter(
-      file => !errorLogFilePatterns.some(pattern => file.indexOf(pattern) === 0)
-    );
+    .filter(file => !isErrorLog(file));
 
   if (conflicts.length > 0) {
     console.log(
@@ -947,7 +929,16 @@ function isSafeToCreateProjectIn(root, name) {
     );
     console.log();
     for (const file of conflicts) {
-      console.log(`  ${file}`);
+      try {
+        const stats = fs.lstatSync(path.join(root, file));
+        if (stats.isDirectory()) {
+          console.log(`  ${chalk.blue(`${file}/`)}`);
+        } else {
+          console.log(`  ${file}`);
+        }
+      } catch (e) {
+        console.log(`  ${file}`);
+      }
     }
     console.log();
     console.log(
@@ -957,15 +948,11 @@ function isSafeToCreateProjectIn(root, name) {
     return false;
   }
 
-  // Remove any remnant files from a previous installation
-  const currentFiles = fs.readdirSync(path.join(root));
-  currentFiles.forEach(file => {
-    errorLogFilePatterns.forEach(errorLogFilePattern => {
-      // This will catch `(npm-debug|yarn-error|yarn-debug).log*` files
-      if (file.indexOf(errorLogFilePattern) === 0) {
-        fs.removeSync(path.join(root, file));
-      }
-    });
+  // Remove any log files from a previous installation.
+  fs.readdirSync(root).forEach(file => {
+    if (isErrorLog(file)) {
+      fs.removeSync(path.join(root, file));
+    }
   });
   return true;
 }
@@ -976,15 +963,15 @@ function getProxy() {
   } else {
     try {
       // Trying to read https-proxy from .npmrc
-      let httpsProxy = execSync('npm config get https-proxy')
-        .toString()
-        .trim();
+      let httpsProxy = execSync('npm config get https-proxy').toString().trim();
       return httpsProxy !== 'null' ? httpsProxy : undefined;
     } catch (e) {
       return;
     }
   }
 }
+
+// See https://github.com/facebook/create-react-app/pull/3355
 function checkThatNpmCanReadCwd() {
   const cwd = process.cwd();
   let childOutput = null;
@@ -1009,7 +996,7 @@ function checkThatNpmCanReadCwd() {
   // "; cwd = C:\path\to\current\dir" (unquoted)
   // I couldn't find an easier way to get it.
   const prefix = '; cwd = ';
-  const line = lines.find(line => line.indexOf(prefix) === 0);
+  const line = lines.find(line => line.startsWith(prefix));
   if (typeof line !== 'string') {
     // Fail gracefully. They could remove it.
     return true;

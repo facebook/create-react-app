@@ -8,7 +8,7 @@
 
 const create = require('./create');
 
-module.exports = function(api, opts) {
+module.exports = function (api, opts) {
   // This is similar to how `env` works in Babel:
   // https://babeljs.io/docs/usage/babelrc/#env-option
   // We are not using `env` because it’s ignored in versions > babel-core@6.10.4:
