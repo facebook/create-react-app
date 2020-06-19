@@ -210,7 +210,7 @@ module.exports = function (
 
   // Setup the prettier config
   appPackage.prettier = {
-    trailingComma: 'es5',
+    arrowParens: 'avoid',
     singleQuote: true,
   };
 
