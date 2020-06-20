@@ -7,7 +7,7 @@ Create React apps with no build configuration.
 
 Create React App works on macOS, Windows, and Linux.<br>
 If something doesn’t work, please [file an issue](https://github.com/facebook/create-react-app/issues/new).<br>
-If you have questions or need help, please ask in our [Spectrum](https://spectrum.chat/create-react-app) community.
+If you have questions or need help, please ask in [GitHub Discussions](https://github.com/facebook/create-react-app/discussions).
 
 ## Quick Overview
 
@@ -86,6 +86,7 @@ my-app
     ├── index.js
     ├── logo.svg
     └── serviceWorker.js
+    └── setupTests.js
 ```
 
 No configuration or complicated folder structures, only the files you need to build your app.<br>

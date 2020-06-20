@@ -17,7 +17,7 @@ function load() {
   ]);
 }
 
-export default class extends Component {
+export default class Promises extends Component {
   static propTypes = {
     onReady: PropTypes.func.isRequired,
   };

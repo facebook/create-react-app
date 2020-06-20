@@ -97,7 +97,11 @@ test('helps when users tries to use sass', async () => {
   );
 
   const { stdout, stderr } = await testSetup.scripts.build();
-  expect({ stdout, stderr }).toMatchSnapshot();
+  expect(stdout).toBeFalsy();
+  // TODO: Snapshots differ between Node 10/12 as the call stack log output has changed.
+  expect(stderr).toContain(
+    'To import Sass files, you first need to install node-sass.'
+  );
 });
 
 test('formats file not found error', async () => {
