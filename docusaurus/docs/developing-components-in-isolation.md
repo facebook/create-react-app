@@ -43,14 +43,8 @@ Styleguidist combines a style guide, where all your components are presented on 
 
 First, install Styleguidist:
 
-```sh
+```bash npm2yarn
 npm install --save react-styleguidist
-```
-
-Alternatively you may use `yarn`:
-
-```sh
-yarn add react-styleguidist
 ```
 
 Then, add these scripts to your `package.json`:
@@ -64,7 +58,7 @@ Then, add these scripts to your `package.json`:
 
 Then, run the following command inside your app’s directory:
 
-```sh
+```bash npm2yarn
 npm run styleguide
 ```
 

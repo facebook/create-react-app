@@ -10,14 +10,8 @@ bloat is coming from.
 
 To add Source map explorer to a Create React App project, follow these steps:
 
-```sh
+```bash npm2yarn
 npm install --save source-map-explorer
-```
-
-Alternatively you may use `yarn`:
-
-```sh
-yarn add source-map-explorer
 ```
 
 Then in `package.json`, add the following line to `scripts`:
