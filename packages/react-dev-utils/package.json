@@ -52,7 +52,7 @@
     "webpackHotDevClient.js"
   ],
   "dependencies": {
-    "@babel/code-frame": "7.10.1",
+    "@babel/code-frame": "7.10.3",
     "address": "1.1.2",
     "browserslist": "4.12.0",
     "chalk": "2.4.2",
@@ -66,7 +66,7 @@
     "globby": "11.0.1",
     "gzip-size": "5.1.1",
     "immer": "1.10.0",
-    "inquirer": "7.1.0",
+    "inquirer": "7.2.0",
     "is-root": "2.1.0",
     "loader-utils": "2.0.0",
     "open": "^7.0.2",
