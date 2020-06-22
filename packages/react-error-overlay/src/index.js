@@ -138,7 +138,7 @@ function update() {
   isLoadingIframe = true;
   const loadingIframe = window.document.createElement('iframe');
   applyStyles(loadingIframe, iframeStyle);
-  loadingIframe.onload = function() {
+  loadingIframe.onload = function () {
     const iframeDocument = loadingIframe.contentDocument;
     if (iframeDocument != null && iframeDocument.body != null) {
       iframe = loadingIframe;

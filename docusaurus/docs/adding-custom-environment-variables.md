@@ -132,8 +132,8 @@ REACT_APP_NOT_SECRET_CODE=abcdef
 
 Files on the left have more priority than files on the right:
 
-- `npm start`: `.env.development.local`, `.env.development`, `.env.local`, `.env`
-- `npm run build`: `.env.production.local`, `.env.production`, `.env.local`, `.env`
+- `npm start`: `.env.development.local`, `.env.local`, `.env.development`, `.env`
+- `npm run build`: `.env.production.local`, `.env.local`, `.env.production`, `.env`
 - `npm test`: `.env.test.local`, `.env.test`, `.env` (note `.env.local` is missing)
 
 These variables will act as the defaults if the machine does not explicitly set them.
