@@ -15,17 +15,20 @@
     "index.js"
   ],
   "peerDependencies": {
-    "@typescript-eslint/eslint-plugin": "2.x",
-    "@typescript-eslint/parser": "2.x",
-    "babel-eslint": "10.x",
-    "eslint": "6.x",
-    "eslint-plugin-flowtype": "3.x || 4.x",
-    "eslint-plugin-import": "2.x",
-    "eslint-plugin-jsx-a11y": "6.x",
-    "eslint-plugin-react": "7.x",
-    "eslint-plugin-react-hooks": "1.x || 2.x || 3.x || 4.x"
+    "@typescript-eslint/eslint-plugin": "^3.0.0",
+    "@typescript-eslint/parser": "^3.0.0",
+    "babel-eslint": "^10.0.0",
+    "eslint": "^7.0.0",
+    "eslint-plugin-flowtype": "^5.0.0",
+    "eslint-plugin-import": "^2.21.1",
+    "eslint-plugin-jsx-a11y": "^6.3.0",
+    "eslint-plugin-react": "^7.20.0",
+    "eslint-plugin-react-hooks": "^4.0.1"
   },
   "dependencies": {
     "confusing-browser-globals": "^1.0.9"
+  },
+  "engines": {
+    "node": "^10.12.0 || >=12.0.0"
   }
 }
