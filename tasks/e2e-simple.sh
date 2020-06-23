@@ -147,7 +147,7 @@ publishToLocalRegistry
 
 # Install the app in a temporary location
 cd $temp_app_path
-npx create-react-app test-app
+npm init react-app test-app
 
 # TODO: verify we installed prerelease
 

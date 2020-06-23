@@ -281,7 +281,7 @@ We've published our existing templates as [`cra-template`](https://github.com/fa
 The below command shows how you can create a new app with `cra-template-typescript`.
 
 ```sh
-npx create-react-app my-app --template typescript
+npm init react-app my-app --template typescript
 ```
 
 Note that you can omit the prefix `cra-template-` when specifying which template you would like. For TypeScript users, we're deprecating `--typescript` in favour of `--template typescript`.

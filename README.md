@@ -12,14 +12,14 @@ If you have questions or need help, please ask in [GitHub Discussions](https://g
 ## Quick Overview
 
 ```sh
-npx create-react-app my-app
+npm init react-app my-app
 cd my-app
 npm start
 ```
 
-If you've previously installed `create-react-app` globally via `npm install -g create-react-app`, we recommend you uninstall the package using `npm uninstall -g create-react-app` to ensure that npx always uses the latest version.
+If you've previously installed `create-react-app` globally via `npm install -g create-react-app`, we recommend you uninstall the package using `npm uninstall -g create-react-app` to ensure that npm always uses the latest version.
 
-_([npx](https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7d4bd282b) comes with npm 5.2+ and higher, see [instructions for older npm versions](https://gist.github.com/gaearon/4064d3c23a77c74a3614c498a8bb1c5f))_
+_`npm init <initializer>` is available in npm 6+, see [instructions for older npm versions](https://gist.github.com/gaearon/4064d3c23a77c74a3614c498a8bb1c5f)_
 
 Then open [http://localhost:3000/](http://localhost:3000/) to see your app.<br>
 When you’re ready to deploy to production, create a minified bundle with `npm run build`.
@@ -41,21 +41,13 @@ Create a project, and you’re good to go.
 
 To create a new app, you may choose one of the following methods:
 
-### npx
-
-```sh
-npx create-react-app my-app
-```
-
-_([npx](https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7d4bd282b) is a package runner tool that comes with npm 5.2+ and higher, see [instructions for older npm versions](https://gist.github.com/gaearon/4064d3c23a77c74a3614c498a8bb1c5f))_
-
 ### npm
 
 ```sh
 npm init react-app my-app
 ```
 
-_`npm init <initializer>` is available in npm 6+_
+_`npm init <initializer>` is available in npm 6+, see [instructions for older npm versions](https://gist.github.com/gaearon/4064d3c23a77c74a3614c498a8bb1c5f)_
 
 ### Yarn
 

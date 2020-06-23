@@ -506,7 +506,7 @@ Create React App 2.1 adds support for TypeScript! Read [the documentation](https
 New applications can be created using TypeScript by running:
 
 ```sh
-$ npx create-react-app my-app --typescript
+$ npm init react-app my-app --typescript
 ```
 
 #### :rocket: New Feature
