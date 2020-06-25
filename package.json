@@ -20,17 +20,17 @@
     "compile:lockfile": "node tasks/compile-lockfile.js"
   },
   "devDependencies": {
-    "@testing-library/jest-dom": "^5.5.0",
-    "@testing-library/react": "^10.0.4",
-    "@testing-library/user-event": "^10.1.0",
+    "@testing-library/jest-dom": "^5.9.0",
+    "@testing-library/react": "^10.2.1",
+    "@testing-library/user-event": "^12.0.2",
     "alex": "^8.0.0",
-    "eslint": "^6.1.0",
+    "eslint": "^7.3.0",
     "execa": "1.0.0",
     "fs-extra": "^9.0.0",
     "get-port": "^5.1.1",
     "globby": "^11.0.0",
     "husky": "^4.2.5",
-    "jest": "25.5.4",
+    "jest": "26.0.1",
     "lerna": "3.20.2",
     "lerna-changelog": "~0.8.2",
     "lint-staged": "^10.2.2",
@@ -41,7 +41,8 @@
     "strip-ansi": "^6.0.0",
     "svg-term-cli": "^2.1.1",
     "tempy": "^0.2.1",
-    "wait-for-localhost": "^3.1.0"
+    "wait-for-localhost": "^3.1.0",
+    "web-vitals": "^0.2.2"
   },
   "husky": {
     "hooks": {

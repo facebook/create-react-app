@@ -120,7 +120,8 @@ my-app
     ├── index.css
     ├── index.js
     ├── logo.svg
-    └── serviceWorker.js
+    ├── serviceWorker.js
+    └── setupTests.js
 ```
 
 No configuration or complicated folder structures, only the files you need to build your app. Once the installation is done, you can open your project folder:
