@@ -28,7 +28,9 @@ if (process.env.SKIP_PREFLIGHT_CHECK !== 'true') {
   verifyPackageTree();
 }
 const verifyTypeScriptSetup = require('./utils/verifyTypeScriptSetup');
-verifyTypeScriptSetup();
+if (process.env.SKIP_PREFLIGHT_CHECK !== 'true') { 
+  verifyTypeScriptSetup();
+}
 // @remove-on-eject-end
 
 const fs = require('fs');
