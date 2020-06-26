@@ -50,7 +50,7 @@ or unreliable network.
 
 ## Customization
 
-Starting with Create React App 3, you have full control over customizing the
+Starting with Create React App 4, you have full control over customizing the
 logic in this service worker, by making changes to
 [`src/service-worker.js`](https://github.com/facebook/create-react-app/blob/master/packages/cra-template/template/src/service-worker.js).
 You can use
@@ -116,7 +116,7 @@ following into account:
 1. By default, the generated service worker file will not intercept or cache any
    cross-origin traffic, like HTTP [API requests](integrating-with-an-api-backend.md),
    images, or embeds loaded from a different domain. Starting with Create
-   React App 3, this can be customized, as explained above.
+   React App 4, this can be customized, as explained above.
 
 ## Progressive Web App Metadata
 
