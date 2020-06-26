@@ -12,8 +12,6 @@ variables:
   NPM_CONFIG_CACHE: $(Build.SourcesDirectory)/../npm-cache
   # Sets TEMP to be on the same drive as the cloned source on Windows. This avoids test scripts that "cd" into a directory under TEMP from failing because this directory is on a different drive from the current directory.
   VSTS_OVERWRITE_TEMP: True
-  # Override Verdaccio package to use. This is temporary and is needed to avoid socket timeouts on hosted Windows agent (on Azure). This also changes Verdaccio to return a 503 (service unavailable) instead of a 404 (not found) when the connection to the uplink timesout.
-  VERDACCIO_PACKAGE: https://github.com/willsmythe/verdaccio/releases/download/create-react-app/verdaccio-4.0.0-alpha.8.tgz
   CRA_INTERNAL_TEST: true
 
 # ******************************************************************************
@@ -59,10 +57,10 @@ jobs:
       configurations:
         LinuxNode10: { vmImage: 'ubuntu-16.04', nodeVersion: 10.x }
         LinuxNode12: { vmImage: 'ubuntu-16.04', nodeVersion: 12.x }
-        # WindowsNode10: { vmImage: 'windows-latest', nodeVersion: 10.x }
-        # WindowsNode12: { vmImage: 'windows-latest', nodeVersion: 12.x }
-        MacNode10: { vmImage: 'macOS-latest', nodeVersion: 10.x }
-        MacNode12: { vmImage: 'macOS-latest', nodeVersion: 12.x }
+        WindowsNode10: { vmImage: 'windows-2019', nodeVersion: 10.x }
+        WindowsNode12: { vmImage: 'windows-2019', nodeVersion: 12.x }
+        MacNode10: { vmImage: 'macOS-10.15', nodeVersion: 10.x }
+        MacNode12: { vmImage: 'macOS-10.15', nodeVersion: 12.x }
 
   # ******************************************************************************
   # Old Node test suite
