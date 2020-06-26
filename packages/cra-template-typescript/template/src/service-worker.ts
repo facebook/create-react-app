@@ -7,11 +7,11 @@
 // You can also remove this file if you'd prefer not to use a
 // service worker, and the Workbox build step will be skipped.
 
-declare const self: ServiceWorkerGlobalScope;
-
 import { clientsClaim } from 'workbox-core';
 import { precacheAndRoute, createHandlerBoundToURL } from 'workbox-precaching';
 import { registerRoute } from 'workbox-routing';
+
+declare const self: ServiceWorkerGlobalScope;
 
 clientsClaim();
 
@@ -19,7 +19,6 @@ clientsClaim();
 // Their URLs are injected into the manifest variable below.
 // This variable must be present somewhere in your service worker file,
 // even if you decide not to use precaching. See https://cra.link/PWA
-// eslint-disable-next-line no-restricted-globals
 precacheAndRoute(self.__WB_MANIFEST);
 
 // Set up App Shell-style routing, so that all navigation requests
@@ -53,7 +52,7 @@ registerRoute(
 
 // This allows the web app to trigger skipWaiting via
 // registration.waiting.postMessage({type: 'SKIP_WAITING'})
-self.addEventListener('message', (event: MessageEvent) => {
+self.addEventListener('message', event => {
   if (event.data && event.data.type === 'SKIP_WAITING') {
     self.skipWaiting();
   }
