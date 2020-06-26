@@ -1,3 +1,5 @@
+/// <reference lib="webworker" />
+
 // This service worker can be customized!
 // See https://developers.google.com/web/tools/workbox/modules
 // for the list of available Workbox modules, or add any other
@@ -7,9 +9,9 @@
 
 declare const self: ServiceWorkerGlobalScope;
 
-import {clientsClaim} from 'workbox-core';
-import {precacheAndRoute, createHandlerBoundToURL} from 'workbox-precaching';
-import {registerRoute} from 'workbox-routing';
+import { clientsClaim } from 'workbox-core';
+import { precacheAndRoute, createHandlerBoundToURL } from 'workbox-precaching';
+import { registerRoute } from 'workbox-routing';
 
 clientsClaim();
 
@@ -18,7 +20,7 @@ clientsClaim();
 // This variable must be present somewhere in your service worker file,
 // even if you decide not to use precaching. See https://cra.link/PWA
 // eslint-disable-next-line no-restricted-globals
-precacheAndRoute(self.__WB_MANIFEST); 
+precacheAndRoute(self.__WB_MANIFEST);
 
 // Set up App Shell-style routing, so that all navigation requests
 // are fulfilled with your index.html shell. Learn more at
@@ -26,7 +28,7 @@ precacheAndRoute(self.__WB_MANIFEST);
 const fileExtensionRegexp = new RegExp('/[^/?]+\\.[^/]+$');
 registerRoute(
   // Return false to exempt requests from being fulfilled by index.html.
-  ({request, url}: {request: Request, url: URL}) => {
+  ({ request, url }: { request: Request; url: URL }) => {
     // If this isn't a navigation, skip.
     if (request.mode !== 'navigate') {
       return false;
@@ -46,7 +48,7 @@ registerRoute(
     // Return true to signal that we want to use the handler.
     return true;
   },
-  createHandlerBoundToURL(process.env.PUBLIC_URL + '/index.html'),
+  createHandlerBoundToURL(process.env.PUBLIC_URL + '/index.html')
 );
 
 // This allows the web app to trigger skipWaiting via
