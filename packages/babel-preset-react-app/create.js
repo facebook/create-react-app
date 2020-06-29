@@ -100,7 +100,6 @@ module.exports = function (api, opts, env) {
           useBuiltIns: true,
         },
       ],
-      isTypeScriptEnabled && [require('@babel/preset-typescript').default],
     ].filter(Boolean),
     plugins: [
       // Strip flow types before any other transform, emulating the behavior
@@ -116,6 +115,10 @@ module.exports = function (api, opts, env) {
       // Experimental macros support. Will be documented after it's had some time
       // in the wild.
       require('babel-plugin-macros'),
+      isTypeScriptEnabled && [
+        require('@babel/plugin-transform-typescript').default,
+        { allowDeclareFields: true },
+      ],
       // Disabled as it's handled automatically by preset-env, and `selectiveLoose` isn't
       // yet merged into babel: https://github.com/babel/babel/pull/9486
       // Related: https://github.com/facebook/create-react-app/pull/8215

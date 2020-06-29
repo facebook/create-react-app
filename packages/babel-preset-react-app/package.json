@@ -30,9 +30,9 @@
     "@babel/plugin-transform-flow-strip-types": "7.10.1",
     "@babel/plugin-transform-react-display-name": "7.10.3",
     "@babel/plugin-transform-runtime": "7.10.3",
+    "@babel/plugin-transform-typescript": "^7.10.3",
     "@babel/preset-env": "7.10.3",
     "@babel/preset-react": "7.10.1",
-    "@babel/preset-typescript": "7.10.1",
     "@babel/runtime": "7.10.3",
     "babel-plugin-macros": "2.8.0",
     "babel-plugin-transform-react-remove-prop-types": "0.4.24"
