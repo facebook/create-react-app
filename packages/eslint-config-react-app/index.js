@@ -52,74 +52,74 @@ module.exports = {
     },
   },
 
-  overrides: [
-    {
-      files: ['**/*.ts?(x)'],
-      parser: '@typescript-eslint/parser',
-      parserOptions: {
-        ecmaVersion: 2018,
-        sourceType: 'module',
-        ecmaFeatures: {
-          jsx: true,
-        },
-
-        // typescript-eslint specific options
-        warnOnUnsupportedTypeScriptVersion: true,
+  overrides: [{
+    files: ['**/*.ts?(x)'],
+    parser: '@typescript-eslint/parser',
+    parserOptions: {
+      ecmaVersion: 2018,
+      sourceType: 'module',
+      ecmaFeatures: {
+        jsx: true,
       },
-      plugins: ['@typescript-eslint'],
-      // If adding a typescript-eslint version of an existing ESLint rule,
-      // make sure to disable the ESLint rule here.
-      rules: {
-        // TypeScript's `noFallthroughCasesInSwitch` option is more robust (#6906)
-        'default-case': 'off',
-        // 'tsc' already handles this (https://github.com/typescript-eslint/typescript-eslint/issues/291)
-        'no-dupe-class-members': 'off',
-        // 'tsc' already handles this (https://github.com/typescript-eslint/typescript-eslint/issues/477)
-        'no-undef': 'off',
 
-        // Add TypeScript specific rules (and turn off ESLint equivalents)
-        '@typescript-eslint/consistent-type-assertions': 'warn',
-        'no-array-constructor': 'off',
-        '@typescript-eslint/no-array-constructor': 'warn',
-        'no-use-before-define': 'off',
-        '@typescript-eslint/no-use-before-define': [
-          'warn',
-          {
-            functions: false,
-            classes: false,
-            variables: false,
-            typedefs: false,
-          },
-        ],
-        'no-unused-expressions': 'off',
-        '@typescript-eslint/no-unused-expressions': [
-          'error',
-          {
-            allowShortCircuit: true,
-            allowTernary: true,
-            allowTaggedTemplates: true,
-          },
-        ],
-        'no-unused-vars': 'off',
-        '@typescript-eslint/no-unused-vars': [
-          'warn',
-          {
-            args: 'none',
-            ignoreRestSiblings: true,
-          },
-        ],
-        'no-useless-constructor': 'off',
-        '@typescript-eslint/no-useless-constructor': 'warn',
-      },
+      // typescript-eslint specific options
+      warnOnUnsupportedTypeScriptVersion: true,
     },
-  ],
+    plugins: ['@typescript-eslint'],
+    // If adding a typescript-eslint version of an existing ESLint rule,
+    // make sure to disable the ESLint rule here.
+    rules: {
+      // TypeScript's `noFallthroughCasesInSwitch` option is more robust (#6906)
+      'default-case': 'off',
+      // 'tsc' already handles this (https://github.com/typescript-eslint/typescript-eslint/issues/291)
+      'no-dupe-class-members': 'off',
+      // 'tsc' already handles this (https://github.com/typescript-eslint/typescript-eslint/issues/477)
+      'no-undef': 'off',
+
+      // Add TypeScript specific rules (and turn off ESLint equivalents)
+      '@typescript-eslint/consistent-type-assertions': 'warn',
+      'no-array-constructor': 'off',
+      '@typescript-eslint/no-array-constructor': 'warn',
+      'no-use-before-define': 'off',
+      '@typescript-eslint/no-use-before-define': [
+        'warn',
+        {
+          functions: false,
+          classes: false,
+          variables: false,
+          typedefs: false,
+        },
+      ],
+      'no-unused-expressions': 'off',
+      '@typescript-eslint/no-unused-expressions': [
+        'error',
+        {
+          allowShortCircuit: true,
+          allowTernary: true,
+          allowTaggedTemplates: true,
+        },
+      ],
+      'no-unused-vars': 'off',
+      '@typescript-eslint/no-unused-vars': [
+        'warn',
+        {
+          args: 'none',
+          ignoreRestSiblings: true,
+        },
+      ],
+      'no-useless-constructor': 'off',
+      '@typescript-eslint/no-useless-constructor': 'warn',
+    },
+  }, ],
 
   // NOTE: When adding rules here, you need to make sure they are compatible with
   // `typescript-eslint`, as some rules such as `no-array-constructor` aren't compatible.
   rules: {
     // http://eslint.org/docs/rules/
     'array-callback-return': 'warn',
-    'default-case': ['warn', { commentPattern: '^no default$' }],
+    'default-case': ['warn', {
+      commentPattern: '^no default$'
+    }],
     'dot-location': ['warn', 'property'],
     eqeqeq: ['warn', 'smart'],
     'new-parens': 'warn',
@@ -146,7 +146,10 @@ module.exports = {
     'no-invalid-regexp': 'warn',
     'no-iterator': 'warn',
     'no-label-var': 'warn',
-    'no-labels': ['warn', { allowLoop: true, allowSwitch: false }],
+    'no-labels': ['warn', {
+      allowLoop: true,
+      allowSwitch: false
+    }],
     'no-lone-blocks': 'warn',
     'no-loop-func': 'warn',
     'no-mixed-operators': [
@@ -173,7 +176,9 @@ module.exports = {
     'no-octal-escape': 'warn',
     // TODO: Remove this option in the next major release of CRA.
     // https://eslint.org/docs/user-guide/migrating-to-6.0.0#-the-no-redeclare-rule-is-now-more-strict-by-default
-    'no-redeclare': ['warn', { builtinGlobals: false }],
+    'no-redeclare': ['warn', {
+      builtinGlobals: false
+    }],
     'no-regex-spaces': 'warn',
     'no-restricted-syntax': ['warn', 'WithStatement'],
     'no-script-url': 'warn',
@@ -238,14 +243,12 @@ module.exports = {
       {
         object: 'require',
         property: 'ensure',
-        message:
-          'Please use import() instead. More info: https://facebook.github.io/create-react-app/docs/code-splitting',
+        message: 'Please use import() instead. More info: https://facebook.github.io/create-react-app/docs/code-splitting',
       },
       {
         object: 'System',
         property: 'import',
-        message:
-          'Please use import() instead. More info: https://facebook.github.io/create-react-app/docs/code-splitting',
+        message: 'Please use import() instead. More info: https://facebook.github.io/create-react-app/docs/code-splitting',
       },
     ],
     'getter-return': 'warn',
@@ -257,7 +260,9 @@ module.exports = {
     'import/no-webpack-loader-syntax': 'error',
 
     // https://github.com/yannickcr/eslint-plugin-react/tree/master/docs/rules
-    'react/forbid-foreign-prop-types': ['warn', { allowInPropTypes: true }],
+    'react/forbid-foreign-prop-types': ['warn', {
+      allowInPropTypes: true
+    }],
     'react/jsx-no-comment-textnodes': 'warn',
     'react/jsx-no-duplicate-props': 'warn',
     'react/jsx-no-target-blank': 'warn',
@@ -284,7 +289,6 @@ module.exports = {
     'react/style-prop-object': 'warn',
 
     // https://github.com/evcohen/eslint-plugin-jsx-a11y/tree/master/docs/rules
-    'jsx-a11y/accessible-emoji': 'warn',
     'jsx-a11y/alt-text': 'warn',
     'jsx-a11y/anchor-has-content': 'warn',
     'jsx-a11y/anchor-is-valid': [
@@ -296,7 +300,9 @@ module.exports = {
     'jsx-a11y/aria-activedescendant-has-tabindex': 'warn',
     'jsx-a11y/aria-props': 'warn',
     'jsx-a11y/aria-proptypes': 'warn',
-    'jsx-a11y/aria-role': ['warn', { ignoreNonDOM: true }],
+    'jsx-a11y/aria-role': ['warn', {
+      ignoreNonDOM: true
+    }],
     'jsx-a11y/aria-unsupported-elements': 'warn',
     'jsx-a11y/heading-has-content': 'warn',
     'jsx-a11y/iframe-has-title': 'warn',
