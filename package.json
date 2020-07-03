@@ -16,7 +16,7 @@
     "screencast:error": "svg-term --cast jyu19xGl88FQ3poMY8Hbmfw8y --out screencast-error.svg --window --at 12000 --no-cursor",
     "alex": "alex .",
     "test": "cd packages/react-scripts && node bin/react-scripts.js test",
-    "format": "prettier --trailing-comma es5 --single-quote --write 'packages/*/*.js' 'packages/*/!(node_modules)/**/*.js'",
+    "format": "prettier --write 'packages/*/*.js' 'packages/*/!(node_modules)/**/*.js'",
     "compile:lockfile": "node tasks/compile-lockfile.js"
   },
   "devDependencies": {
@@ -50,8 +50,8 @@
     }
   },
   "lint-staged": {
-    "*.{js,md,css,html}": [
-      "prettier --trailing-comma es5 --single-quote --write"
+    "*.{js,json,yml,yaml,css,scss,ts,tsx,md}": [
+      "prettier --write"
     ]
   }
 }
