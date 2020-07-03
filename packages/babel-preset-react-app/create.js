@@ -20,7 +20,7 @@ const validateBoolOption = (name, value, defaultValue) => {
   return value;
 };
 
-module.exports = function(api, opts, env) {
+module.exports = function (api, opts, env) {
   if (!opts) {
     opts = {};
   }
@@ -82,7 +82,6 @@ module.exports = function(api, opts, env) {
           // Allow importing core-js in entrypoint and use browserlist to select polyfills
           useBuiltIns: 'entry',
           // Set the corejs version we are using to avoid warnings in console
-          // This will need to change once we upgrade to corejs@3
           corejs: 3,
           // Do not transform modules to CJS
           modules: false,
