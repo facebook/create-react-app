@@ -4,6 +4,8 @@ title: Importing a Component
 ---
 
 This project setup supports ES6 modules thanks to webpack.
+[Webpack](https://webpack.js.org/) supports the imports and exports syntax(of ES6) in sub modules by making a bundle of all files required in a single file, bundle.js.
+And, you don't need to worry for the webpack setup. create-react-app will set up webpack for you. Awesome isn't it?
 
 While you can still use `require()` and `module.exports`, we encourage you to use [`import` and `export`](http://exploringjs.com/es6/ch_modules.html) instead.
 
