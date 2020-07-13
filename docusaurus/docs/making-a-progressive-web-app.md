@@ -5,18 +5,15 @@ title: Making a Progressive Web App
 
 The production build has all the tools necessary to generate a first-class
 [Progressive Web App](https://developers.google.com/web/progressive-web-apps/),
-but **the offline/cache-first behavior is opt-in only**. By default,
-the build process will compile a service worker file, but it will not be
-registered, so it will not take control of your production web app.
+but **the offline/cache-first behavior is opt-in only**.
 
-If you know that you won't be using service workers, you can speed up the build
-process by removing the
-[`src/service-worker.js`](https://github.com/facebook/create-react-app/blob/master/packages/cra-template/template/src/service-worker.js)
-file from your local project. This will skip the step that compiles your
-service worker at build time.
+Starting with Create React App 4, you can add a `src/service-worker.js` file to your project to use the built-in support for [Workbox](https://developers.google.com/web/tools/workbox/)'s [`InjectManifest`](https://developers.google.com/web/tools/workbox/reference-docs/latest/module-workbox-webpack-plugin.InjectManifest) plugin, which will [compile](https://developers.google.com/web/tools/workbox/guides/using-bundlers) your service worker and inject into it a list of URLs to [precache](https://developers.google.com/web/tools/workbox/guides/precache-files).
 
-In order to opt-in to the offline-first behavior, developers should look for the
-following in their [`src/index.js`](https://github.com/facebook/create-react-app/blob/master/packages/cra-template/template/src/index.js) file:
+There a
+
+If you know that you won't be using service workers, or if you'd prefer to use a different approach to creating your service worker, don't create a `src/service-worker.js` file. The `InjectManifest` plugin won't be run in that case.
+
+In addition to creating your local `src/service-worker.js` file, it needs to be registered before it will be used. In order to opt-in to the offline-first behavior, developers should look for the following in their [`src/index.js`](https://github.com/facebook/create-react-app/blob/master/packages/cra-template/template/src/index.js) file:
 
 ```js
 // If you want your app to work offline and load faster, you can change
@@ -32,11 +29,11 @@ As the comment states, switching `serviceWorker.unregister()` to
 
 Offline-first Progressive Web Apps are faster and more reliable than traditional web pages, and provide an engaging mobile experience:
 
-- All static site assets are cached so that your page loads fast on subsequent visits, regardless of network connectivity (such as 2G or 3G). Updates are downloaded in the background.
+- All static site assets that are a part of your `webpack` build are cached so that your page loads fast on subsequent visits, regardless of network connectivity (such as 2G or 3G). Updates are downloaded in the background.
 - Your app will work regardless of network state, even if offline. This means your users will be able to use your app at 10,000 feet and on the subway.
 - On mobile devices, your app can be added directly to the user's home screen, app icon and all. This eliminates the need for the app store.
 
-However, they [can make debugging deployments more challenging](https://github.com/facebook/create-react-app/issues/2398) so, starting with Create React App 2, service workers are opt-in.
+However, they [can make debugging deployments more challenging](https://github.com/facebook/create-react-app/issues/2398).
 
 The [`workbox-webpack-plugin`](https://developers.google.com/web/tools/workbox/modules/workbox-webpack-plugin)
 is integrated into production configuration,
@@ -59,10 +56,8 @@ to apply the runtime caching strategy of your choice to those resources.
 ## Customization
 
 Starting with Create React App 4, you have full control over customizing the
-logic in this service worker, by making changes to
-[`src/service-worker.js`](https://github.com/facebook/create-react-app/blob/master/packages/cra-template/template/src/service-worker.js).
-You can use
-[additional modules](https://developers.google.com/web/tools/workbox/modules)
+logic in this service worker, by creating a `src/service-worker.js` file.
+You can use [additional modules](https://developers.google.com/web/tools/workbox/modules)
 from the Workbox project, add in a push notification library, or remove some of
 the default caching logic. The one requirement is that you keep
 `self.__WB_MANIFEST` somewhere in your file, as the Workbox compilation plugin
