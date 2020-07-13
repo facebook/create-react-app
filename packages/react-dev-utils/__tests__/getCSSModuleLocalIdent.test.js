@@ -30,6 +30,10 @@ const tests = [
     resourcePath: '/path/to/file.name.module.css',
     expected: 'file_name_class__1OzEh',
   },
+  {
+    resourcePath: '/path/to/file.name.module.less',
+    expected: 'file_name_class__R06Gd',
+  },
 ];
 
 describe('getCSSModuleLocalIdent', () => {

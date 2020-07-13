@@ -8392,7 +8392,7 @@ module.exports = URL;
 /* unknown exports provided */
 /* all exports used */
 /*!*****************************************************************************************************************************************************************************!*\
-  !*** ./packages/react-scripts/~/css-loader?{"importLoaders":1}!./packages/react-scripts/~/postcss-loader?{"ident":"postcss"}!./packages/react-scripts/template/src/App.css ***!
+  !*** ./packages/react-scripts/~/css-loader?{"importLoaders":1}!./packages/react-scripts/~/postcss-loader?{"ident":"postcss"}!./packages/react-scripts/template/src/App.less ***!
   \*****************************************************************************************************************************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -17457,9 +17457,9 @@ function formatMessage(message) {
 
   // Remove webpack-specific loader notation from filename.
   // Before:
-  // ./~/css-loader!./~/postcss-loader!./src/App.css
+  // ./~/css-loader!./~/postcss-loader!./src/App.less
   // After:
-  // ./src/App.css
+  // ./src/App.less
   if (lines[0].lastIndexOf('!') !== -1) {
     lines[0] = lines[0].substr(lines[0].lastIndexOf('!') + 1);
   }
@@ -25980,7 +25980,7 @@ var _logo = __webpack_require__(/*! ./logo.svg */ 211);
 
 var _logo2 = _interopRequireDefault(_logo);
 
-__webpack_require__(/*! ./App.css */ 302);
+__webpack_require__(/*! ./App.less */ 302);
 
 var _A = __webpack_require__(/*! ./A */ 309);
 
@@ -40018,14 +40018,14 @@ module.exports = traverseAllChildren;
 /* unknown exports provided */
 /* all exports used */
 /*!*****************************************************!*\
-  !*** ./packages/react-scripts/template/src/App.css ***!
+  !*** ./packages/react-scripts/template/src/App.less ***!
   \*****************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(/*! !../../~/css-loader??ref--5-1!../../~/postcss-loader??postcss!./App.css */ 53);
+var content = __webpack_require__(/*! !../../~/css-loader??ref--5-1!../../~/postcss-loader??postcss!./App.less */ 53);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // add the styles to the DOM
 var update = __webpack_require__(/*! ../../~/style-loader/addStyles.js */ 129)(content, {});
@@ -40034,8 +40034,8 @@ if(content.locals) module.exports = content.locals;
 if(true) {
 	// When the styles change, update the <style> tags
 	if(!content.locals) {
-		module.hot.accept(/*! !../../~/css-loader??ref--5-1!../../~/postcss-loader??postcss!./App.css */ 53, function() {
-			var newContent = __webpack_require__(/*! !../../~/css-loader??ref--5-1!../../~/postcss-loader??postcss!./App.css */ 53);
+		module.hot.accept(/*! !../../~/css-loader??ref--5-1!../../~/postcss-loader??postcss!./App.less */ 53, function() {
+			var newContent = __webpack_require__(/*! !../../~/css-loader??ref--5-1!../../~/postcss-loader??postcss!./App.less */ 53);
 			if(typeof newContent === 'string') newContent = [[module.i, newContent, '']];
 			update(newContent);
 		});
