@@ -32,7 +32,7 @@ const tests = [
   },
   {
     resourcePath: '/path/to/file.name.module.less',
-    expected: 'file_name_class__R06Gd',
+    expected: 'file_name_class__bdoxE',
   },
 ];
 
