@@ -15,15 +15,15 @@
     "index.js"
   ],
   "peerDependencies": {
-    "@typescript-eslint/eslint-plugin": "^3.0.0",
-    "@typescript-eslint/parser": "^3.0.0",
-    "babel-eslint": "^10.0.0",
-    "eslint": "^7.0.0",
-    "eslint-plugin-flowtype": "^5.0.0",
-    "eslint-plugin-import": "^2.21.1",
-    "eslint-plugin-jsx-a11y": "^6.3.0",
-    "eslint-plugin-react": "^7.20.0",
-    "eslint-plugin-react-hooks": "^4.0.1"
+    "@typescript-eslint/eslint-plugin": ">=3.0.0",
+    "@typescript-eslint/parser": ">=3.0.0",
+    "babel-eslint": ">=10.0.0",
+    "eslint": ">=7.0.0",
+    "eslint-plugin-flowtype": ">=5.0.0",
+    "eslint-plugin-import": ">=2.21.1",
+    "eslint-plugin-jsx-a11y": ">=6.3.0",
+    "eslint-plugin-react": ">=7.20.0",
+    "eslint-plugin-react-hooks": ">=4.0.1"
   },
   "dependencies": {
     "confusing-browser-globals": "^1.0.9"
