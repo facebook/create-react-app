@@ -120,7 +120,7 @@ module.exports = function (proxy, allowedHost) {
 
       if (fs.existsSync(paths.proxySetup)) {
         // This registers user provided middleware for proxy reasons
-        require(paths.proxySetup)(app);
+        require(paths.proxySetup)(app, server);
       }
     },
     after(app) {

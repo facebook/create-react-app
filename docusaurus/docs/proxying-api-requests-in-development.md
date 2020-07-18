@@ -108,6 +108,22 @@ module.exports = function(app) {
 };
 ```
 
+Example proxy configuration for target service exposing websocket connections:
+
+```js
+const { createProxyMiddleware } = require('http-proxy-middleware');
+
+module.exports = function(app, server) {
+  const proxy = createProxyMiddleware({
+    target: 'http://localhost:5000',
+    changeOrigin: true,
+    ws: true
+  })
+  app.use('/api', proxy);
+  server.on('upgrade', proxy.upgrade);
+};
+```
+
 > **Note:** You do not need to import this file anywhere. It is automatically registered when you start the development server.
 
 > **Note:** This file only supports Node's JavaScript syntax. Be sure to only use supported language features (i.e. no support for Flow, ES Modules, etc).
