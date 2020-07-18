@@ -456,7 +456,7 @@ yarn add --exact react-scripts@1.0.16
   - [#3303](https://github.com/facebook/create-react-app/pull/3303) Update link to Jest Expect docs. ([@jbranchaud](https://github.com/jbranchaud))
   - [#3289](https://github.com/facebook/create-react-app/pull/3289) Fix dead link to Jest "expect" docs. ([@alexkrolick](https://github.com/alexkrolick))
   - [#3265](https://github.com/facebook/create-react-app/pull/3265) Add external links to deployment services. ([@aericson](https://github.com/aericson))
-  - [#3075](https://github.com/facebook/create-react-app/pull/3075) Minor docs change to highlight dev proxy behaviour. ([@davidjb](https://github.com/davidjb))
+  - [#3075](https://github.com/facebook/create-react-app/pull/3075) Minor docs change to highlight dev proxy behavior. ([@davidjb](https://github.com/davidjb))
   - [#3185](https://github.com/facebook/create-react-app/pull/3185) Correct manual proxy documentation. ([@robertpanzer](https://github.com/robertpanzer))
 
 - README

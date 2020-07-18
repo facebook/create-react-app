@@ -5,7 +5,7 @@ v3.4.1 is a maintenance release that includes minor bug fixes and documentation 
 #### :bug: Bug Fix
 
 - `react-scripts`
-  - [#8276](https://github.com/facebook/create-react-app/pull/8276) Use native ESLint behaviour when extending ([@mrmckeb](https://github.com/mrmckeb))
+  - [#8276](https://github.com/facebook/create-react-app/pull/8276) Use native ESLint behavior when extending ([@mrmckeb](https://github.com/mrmckeb))
   - [#7203](https://github.com/facebook/create-react-app/pull/7203) Closes webpack dev server and exits process on "end" stdin ([@kelseyleftwich](https://github.com/kelseyleftwich))
 - `babel-preset-react-app`
   - [#8526](https://github.com/facebook/create-react-app/pull/8526) Fix optional chaining and nullish coalescing support ([@ianschmitz](https://github.com/ianschmitz))
@@ -25,7 +25,7 @@ v3.4.1 is a maintenance release that includes minor bug fixes and documentation 
   - [#8515](https://github.com/facebook/create-react-app/pull/8515) Fix proxying API request docs ([@hjr3](https://github.com/hjr3))
   - [#8561](https://github.com/facebook/create-react-app/pull/8561) Indicate that the file structure is the template's ([@Vinnl](https://github.com/Vinnl))
 - `react-scripts`
-  - [#8276](https://github.com/facebook/create-react-app/pull/8276) Use native ESLint behaviour when extending ([@mrmckeb](https://github.com/mrmckeb))
+  - [#8276](https://github.com/facebook/create-react-app/pull/8276) Use native ESLint behavior when extending ([@mrmckeb](https://github.com/mrmckeb))
 
 #### :hammer: Underlying Tools
 
@@ -109,7 +109,7 @@ v3.4.0 is a minor release that adds new features, including support for SSL and 
 - `react-scripts`
   - [#8282](https://github.com/facebook/create-react-app/pull/8282) Run git init before template dependencies are installed ([@lukaszfiszer](https://github.com/lukaszfiszer))
 - Other
-  - [#8402](https://github.com/facebook/create-react-app/pull/8402) fix(test): force install npm in e2e-behaviour ([@iamandrewluca](https://github.com/iamandrewluca))
+  - [#8402](https://github.com/facebook/create-react-app/pull/8402) fix(test): force install npm in e2e-behavior ([@iamandrewluca](https://github.com/iamandrewluca))
 
 #### Committers: 18
 
@@ -284,7 +284,7 @@ The below command shows how you can create a new app with `cra-template-typescri
 npx create-react-app my-app --template typescript
 ```
 
-Note that you can omit the prefix `cra-template-` when specifying which template you would like. For TypeScript users, we're deprecating `--typescript` in favour of `--template typescript`.
+Note that you can omit the prefix `cra-template-` when specifying which template you would like. For TypeScript users, we're deprecating `--typescript` in favor of `--template typescript`.
 
 If you don't set a template, we'll create your new app with `cra-template` - which is just a new name for our base template.
 
@@ -555,7 +555,7 @@ v3.2.0 is a minor release that adds support for production profiling and ignorin
 #### :memo: Documentation
 
 - [#7302](https://github.com/facebook/create-react-app/pull/7302) docs: note that 2 to 3 migration may require deletion of node_modules ([@kimpers](https://github.com/kimpers))
-- [#7757](https://github.com/facebook/create-react-app/pull/7757) Documentation typo fix: accessbile→accessible ([@tomer](https://github.com/tomer))
+- [#7757](https://github.com/facebook/create-react-app/pull/7757) Documentation typo fix: accessible→accessible ([@tomer](https://github.com/tomer))
 - [#7601](https://github.com/facebook/create-react-app/pull/7601) [Documentation] Updated list of supported Jest config overrides ([@neilbryson](https://github.com/neilbryson))
 - [#7705](https://github.com/facebook/create-react-app/pull/7705) Update runtime chunk name separator in docs ([@samuelmeuli](https://github.com/samuelmeuli))
 
@@ -811,7 +811,7 @@ v3.1.0 is a minor release that adds ESLint 6 support as well as experimental sup
   - [#7317](https://github.com/facebook/create-react-app/pull/7317) Fix typo ([@mvasin](https://github.com/mvasin))
   - [#7262](https://github.com/facebook/create-react-app/pull/7262) Docs: replace the command line to install relay/macro ([@soufDev](https://github.com/soufDev))
   - [#7170](https://github.com/facebook/create-react-app/pull/7170) Update deprecated package reference ([@bnewcomb](https://github.com/bnewcomb))
-  - [#7133](https://github.com/facebook/create-react-app/pull/7133) Make the OOM abreviation more clear ([@tlehtimaki](https://github.com/tlehtimaki))
+  - [#7133](https://github.com/facebook/create-react-app/pull/7133) Make the OOM abbreviation more clear ([@tlehtimaki](https://github.com/tlehtimaki))
   - [#7086](https://github.com/facebook/create-react-app/pull/7086) Improve breaking changes info for CRA 3.0.0 ([@falldowngoboone](https://github.com/falldowngoboone))
   - [#7059](https://github.com/facebook/create-react-app/pull/7059) Correct spelling of browserslist ([@amyrlam](https://github.com/amyrlam))
   - [#7039](https://github.com/facebook/create-react-app/pull/7039) docs: fix env-cmd example in deployment section ([@VMois](https://github.com/VMois))

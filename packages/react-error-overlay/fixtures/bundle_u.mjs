@@ -3337,7 +3337,7 @@ function defaultClearTimeout () {
 } ())
 function runTimeout(fun) {
     if (cachedSetTimeout === setTimeout) {
-        //normal enviroments in sane situations
+        //normal environments in sane situations
         return setTimeout(fun, 0);
     }
     // if setTimeout wasn't available but was latter defined
@@ -3362,7 +3362,7 @@ function runTimeout(fun) {
 }
 function runClearTimeout(marker) {
     if (cachedClearTimeout === clearTimeout) {
-        //normal enviroments in sane situations
+        //normal environments in sane situations
         return clearTimeout(marker);
     }
     // if clearTimeout wasn't available but was latter defined
@@ -3444,7 +3444,7 @@ process.nextTick = function (fun) {
     }
 };
 
-// v8 likes predictible objects
+// v8 likes predictable objects
 function Item(fun, array) {
     this.fun = fun;
     this.array = array;
@@ -3622,7 +3622,7 @@ _assign(SyntheticEvent.prototype, {
     } else if (typeof event.cancelBubble !== 'unknown') {
       // eslint-disable-line valid-typeof
       // The ChangeEventPlugin registers a "propertychange" event for
-      // IE. This event does not support bubbling or cancelling, and
+      // IE. This event does not support bubbling or canceling, and
       // any references to cancelBubble throw "Member not found".  A
       // typeof check of "unknown" circumvents this issue (and is also
       // IE specific).
@@ -12418,7 +12418,7 @@ SourceMapGenerator.prototype.setSourceContent =
  * Applies the mappings of a sub-source-map for a specific source file to the
  * source map being generated. Each mapping to the supplied source file is
  * rewritten using the supplied source map. Note: The resolution for the
- * resulting mappings is the minimium of this map and the supplied map.
+ * resulting mappings is the minimum of this map and the supplied map.
  *
  * @param aSourceMapConsumer The source map to be applied.
  * @param aSourceFile Optional. The filename of the source file.
@@ -22780,7 +22780,7 @@ WebSocketTransport.transportName = 'websocket';
 // In theory, ws should require 1 round trip. But in chrome, this is
 // not very stable over SSL. Most likely a ws connection requires a
 // separate SSL connection, in which case 2 round trips are an
-// absolute minumum.
+// absolute minimum.
 WebSocketTransport.roundTrips = 2;
 
 module.exports = WebSocketTransport;
@@ -22867,7 +22867,7 @@ XhrStreamingTransport.transportName = 'xhr-streaming';
 XhrStreamingTransport.roundTrips = 2; // preflight, ajax
 
 // Safari gets confused when a streaming ajax request is started
-// before onload. This causes the load indicator to spin indefinetely.
+// before onload. This causes the load indicator to spin indefinitely.
 // Only require body when used in a browser
 XhrStreamingTransport.needBody = !!global.document;
 
@@ -25921,7 +25921,7 @@ function makeRequestCallFromTimer(callback) {
     return function requestCall() {
         // We dispatch a timeout with a specified delay of 0 for engines that
         // can reliably accommodate that request. This will usually be snapped
-        // to a 4 milisecond delay, but once we're flushing, there's no delay
+        // to a 4 millisecond delay, but once we're flushing, there's no delay
         // between events.
         var timeoutHandle = setTimeout(handleTimer, 0);
         // However, since this timer gets frequently dropped in Firefox
@@ -25990,7 +25990,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialized - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
@@ -28413,7 +28413,7 @@ function isFallbackCompositionEnd(topLevelType, nativeEvent) {
     case 'topKeyPress':
     case 'topMouseDown':
     case 'topBlur':
-      // Events are not possible without cancelling IME.
+      // Events are not possible without canceling IME.
       return true;
     default:
       return false;
@@ -31483,7 +31483,7 @@ ReactDOMComponent.Mixin = {
         } else if (props.is) {
           el = ownerDocument.createElement(this._currentElement.type, props.is);
         } else {
-          // Separate else branch instead of using `props.is || undefined` above becuase of a Firefox bug.
+          // Separate else branch instead of using `props.is || undefined` above because of a Firefox bug.
           // See discussion in https://github.com/facebook/react/pull/6896
           // and discussion in https://bugzilla.mozilla.org/show_bug.cgi?id=1276240
           el = ownerDocument.createElement(this._currentElement.type);
@@ -41376,7 +41376,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialized - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
@@ -41434,7 +41434,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialized - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
