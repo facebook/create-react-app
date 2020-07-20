@@ -51,7 +51,7 @@ The choice of your server software isn’t important either. Since Create React 
 
 The `build` folder with static assets is the only output produced by Create React App.
 
-However this is not quite enough if you use client-side routing. Read the next section if you want to support URLs like `/todos/42` in your single-page app.
+However, this is not quite enough if you use client-side routing. Read the next section if you want to support URLs like `/todos/42` in your single-page app.
 
 ## Serving Apps with Client-Side Routing
 

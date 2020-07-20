@@ -53,4 +53,4 @@ You can also use it with `async` / `await` syntax if you prefer it.
 
 If you are using React Router check out [this tutorial](https://reactjs.org/docs/code-splitting.html#route-based-code-splitting)
 
-Also check out the [Code Splitting](https://reactjs.org/docs/code-splitting.html) section in React documentation.
+Also, check out the [Code Splitting](https://reactjs.org/docs/code-splitting.html) section in React documentation.

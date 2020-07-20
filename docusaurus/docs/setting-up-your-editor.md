@@ -4,7 +4,7 @@ title: Setting Up Your Editor
 sidebar_label: Editor Setup
 ---
 
-Create React App comes with a bunch of tools that improve the editing experience - if configured correctly. Here's a few tips to maximize your productivity:
+Create React App comes with a bunch of tools that improve the editing experience - if configured correctly. Here are a few tips to maximize your productivity:
 
 ## Syntax highlighting
 
@@ -142,7 +142,7 @@ Add the following field to the `package.json` section:
 +  }
 ```
 
-Next we add a 'lint-staged' field to the `package.json`, for example:
+Next, we add a 'lint-staged' field to the `package.json`, for example:
 
 ```diff
   "dependencies": {
@@ -158,4 +158,4 @@ Next we add a 'lint-staged' field to the `package.json`, for example:
 
 Now, whenever you make a commit, Prettier will format the changed files automatically. You can also run `./node_modules/.bin/prettier --write "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}"` to format your entire project for the first time.
 
-Next you might want to integrate Prettier in your favorite editor. Read the section on [Editor Integration](https://prettier.io/docs/en/editors.html) on the Prettier GitHub page.
+Next, you might want to integrate Prettier in your favorite editor. Read the section on [Editor Integration](https://prettier.io/docs/en/editors.html) on the Prettier GitHub page.

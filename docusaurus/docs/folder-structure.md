@@ -31,7 +31,7 @@ You can delete or rename the other files.
 
 You may create subdirectories inside `src`. For faster rebuilds, only files inside `src` are processed by webpack. You need to **put any JS and CSS files inside `src`**, otherwise webpack won’t see them.
 
-Only files inside `public` can be used from `public/index.html`. Read instructions below for using assets from JavaScript and HTML.
+Only files inside `public` can be used from `public/index.html`. Read the instructions below for using assets from JavaScript and HTML.
 
 You can, however, create more top-level directories. They will not be included in the production build so you can use them for things like documentation.
 

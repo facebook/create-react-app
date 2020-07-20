@@ -20,7 +20,7 @@ serviceWorker.unregister();
 ```
 
 As the comment states, switching `serviceWorker.unregister()` to
-`serviceWorker.register()` will opt you in to using the service worker.
+`serviceWorker.register()` will opt you into using the service worker.
 
 ## Why Opt-in?
 
@@ -40,7 +40,7 @@ The service worker will use a [cache-first strategy](https://developers.google.c
 for handling all requests for local assets, including
 [navigation requests](https://developers.google.com/web/fundamentals/primers/service-workers/high-performance-loading#first_what_are_navigation_requests)
 for your HTML, ensuring that your web app is consistently fast, even on a slow
-or unreliable network.
+or an unreliable network.
 
 ## Offline-First Considerations
 
@@ -51,8 +51,7 @@ following into account:
    controls when updated content ends up being shown to users. In order to guard against
    [race conditions with lazy-loaded content](https://github.com/facebook/create-react-app/issues/3613#issuecomment-353467430),
    the default behavior is to conservatively keep the updated service worker in the "[waiting](https://developers.google.com/web/fundamentals/primers/service-workers/lifecycle#waiting)"
-   state. This means that users will end up seeing older content until they close (reloading is not
-   enough) their existing, open tabs. See [this blog post](https://jeffy.info/2018/10/10/sw-in-c-r-a.html)
+   state. This means that users will end up seeing older content until they close (reloading is not enough) their existing, open tabs. See [this blog post](https://jeffy.info/2018/10/10/sw-in-c-r-a.html)
    for more details about this behavior.
 
 1. Users aren't always familiar with offline-first web apps. It can be useful to
@@ -61,8 +60,7 @@ following into account:
    app works offline!" message) and also let them know when the service worker has
    fetched the latest updates that will be available the next time they load the
    page (showing a "New content is available once existing tabs are closed." message). Showing
-   these messages is currently left as an exercise to the developer, but as a
-   starting point, you can make use of the logic included in [`src/serviceWorker.js`](https://github.com/facebook/create-react-app/blob/master/packages/cra-template/template/src/serviceWorker.js), which
+   these messages are currently left as an exercise to the developer, but as a starting point, you can make use of the logic included in [`src/serviceWorker.js`](https://github.com/facebook/create-react-app/blob/master/packages/cra-template/template/src/serviceWorker.js), which
    demonstrates which service worker lifecycle events to listen for to detect each
    scenario, and which as a default, only logs appropriate messages to the
    JavaScript console.

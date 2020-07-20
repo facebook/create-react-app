@@ -14,7 +14,7 @@ reportWebVitals(console.log);
 ```
 
 This function is fired when the final values for any of the metrics have finished calculating on the
-page. You can use it to log any of the results to the console or send to a particular endpoint.
+page. You can use it to log any of the results to the console or send them to a particular endpoint.
 
 ## Web Vitals
 

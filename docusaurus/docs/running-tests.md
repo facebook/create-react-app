@@ -147,7 +147,7 @@ it('renders welcome message', () => {
 
 All Jest matchers are [extensively documented here](https://jestjs.io/docs/en/expect.html).
 
-Nevertheless you can use a third-party assertion library like [Chai](https://www.chaijs.com/) if you want to, as described below.
+Nevertheless, you can use a third-party assertion library like [Chai](https://www.chaijs.com/) if you want to, as described below.
 
 Additionally, you might find [jest-enzyme](https://github.com/blainekasten/enzyme-matchers) helpful to improve your tests with readable matchers. The above `contains` code can be written more concisely with jest-enzyme.
 
