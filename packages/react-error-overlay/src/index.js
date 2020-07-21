@@ -137,6 +137,7 @@ function update() {
   // We need to schedule the first render.
   isLoadingIframe = true;
   const loadingIframe = window.document.createElement('iframe');
+  loadingIframe.id = 'react-error-overlay';
   applyStyles(loadingIframe, iframeStyle);
   loadingIframe.onload = function () {
     const iframeDocument = loadingIframe.contentDocument;
