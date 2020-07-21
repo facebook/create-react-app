@@ -11,10 +11,16 @@ To add it, run:
 npm install --save react-router-dom
 ```
 
-Alternatively you may use `yarn`:
+Alternatively, you may use `yarn`:
 
 ```sh
 yarn add react-router-dom
+```
+
+With TypeScript you will need to additionally install @types package:
+
+```sh
+npm install --save @types/react-router-dom
 ```
 
 To try it, delete all the code in `src/App.js` and replace it with any of the examples on its website. The [Basic Example](https://reacttraining.com/react-router/web/example/basic) is a good place to get started.
