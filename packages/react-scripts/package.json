@@ -29,7 +29,7 @@
   "types": "./lib/react-app.d.ts",
   "dependencies": {
     "@babel/core": "7.10.5",
-    "@pmmmwh/react-refresh-webpack-plugin": "0.3.3",
+    "@pmmmwh/react-refresh-webpack-plugin": "0.4.0-beta.8",
     "@svgr/webpack": "5.4.0",
     "@typescript-eslint/eslint-plugin": "^3.3.0",
     "@typescript-eslint/parser": "^3.3.0",
