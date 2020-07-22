@@ -47,7 +47,11 @@ const openBrowser = require('react-dev-utils/openBrowser');
 const paths = require('../config/paths');
 const configFactory = require('../config/webpack.config');
 const createDevServerConfig = require('../config/webpackDevServer.config');
+const getClientEnvironment = require('../config/env');
+const react = require('react');
+const semver = require('semver');
 
+const env = getClientEnvironment(paths.publicUrlOrPath.slice(0, -1));
 const useYarn = fs.existsSync(paths.yarnLockFile);
 const isInteractive = process.stdout.isTTY;
 
@@ -95,6 +99,7 @@ checkBrowsers(paths.appPath, isInteractive)
     const config = configFactory('development');
     const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
     const appName = require(paths.appPackageJson).name;
+
     const useTypeScript = fs.existsSync(paths.appTsConfig);
     const tscCompileOnError = process.env.TSC_COMPILE_ON_ERROR === 'true';
     const urls = prepareUrls(
@@ -140,6 +145,17 @@ checkBrowsers(paths.appPath, isInteractive)
       }
       if (isInteractive) {
         clearConsole();
+      }
+
+      if (
+        env.raw.FAST_REFRES !== 'false' &&
+        semver.lt(react.version, '16.10.0')
+      ) {
+        console.log(
+          chalk.yellow(
+            `Fast Refresh requires React 16.10 or higher. You are using React ${react.version}.`
+          )
+        );
       }
 
       console.log(chalk.cyan('Starting the development server...\n'));
