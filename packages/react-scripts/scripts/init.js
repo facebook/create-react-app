@@ -81,7 +81,7 @@ function tryGitCommit(appPath) {
   }
 }
 
-module.exports = function(
+module.exports = function (
   appPath,
   appName,
   verbose,
@@ -103,6 +103,13 @@ module.exports = function(
         'create-react-app'
       )} are no longer supported.`
     );
+    console.error(
+      `You can fix this by running ${chalk.cyan(
+        'npm uninstall -g create-react-app'
+      )} or ${chalk.cyan(
+        'yarn global remove create-react-app'
+      )} before using ${chalk.cyan('create-react-app')} again.`
+    );
     return;
   }
 
@@ -110,13 +117,7 @@ module.exports = function(
     require.resolve(`${templateName}/package.json`, { paths: [appPath] })
   );
 
-  let templateJsonPath;
-  if (templateName) {
-    templateJsonPath = path.join(templatePath, 'template.json');
-  } else {
-    // TODO: Remove support for this in v4.
-    templateJsonPath = path.join(appPath, '.template.dependencies.json');
-  }
+  const templateJsonPath = path.join(templatePath, 'template.json');
 
   let templateJson = {};
   if (fs.existsSync(templateJsonPath)) {
@@ -124,6 +125,25 @@ module.exports = function(
   }
 
   const templatePackage = templateJson.package || {};
+
+  // TODO: Deprecate support for root-level `dependencies` and `scripts` in v5.
+  // These should now be set under the `package` key.
+  if (templateJson.dependencies || templateJson.scripts) {
+    console.log();
+    console.log(
+      chalk.yellow(
+        'Root-level `dependencies` and `scripts` keys in `template.json` are deprecated.\n' +
+          'This template should be updated to use the new `package` key.'
+      )
+    );
+    console.log('For more information, visit https://cra.link/templates');
+  }
+  if (templateJson.dependencies) {
+    templatePackage.dependencies = templateJson.dependencies;
+  }
+  if (templateJson.scripts) {
+    templatePackage.scripts = templateJson.scripts;
+  }
 
   // Keys to ignore in templatePackage
   const templatePackageBlacklist = [
@@ -141,7 +161,6 @@ module.exports = function(
     'man',
     'directories',
     'repository',
-    'devDependencies',
     'peerDependencies',
     'bundledDependencies',
     'optionalDependencies',
@@ -169,8 +188,7 @@ module.exports = function(
   appPackage.dependencies = appPackage.dependencies || {};
 
   // Setup the script rules
-  // TODO: deprecate 'scripts' key directly on templateJson
-  const templateScripts = templatePackage.scripts || templateJson.scripts || {};
+  const templateScripts = templatePackage.scripts || {};
   appPackage.scripts = Object.assign(
     {
       start: 'react-scripts start',
@@ -282,14 +300,15 @@ module.exports = function(
     args = ['install', '--save', verbose && '--verbose'].filter(e => e);
   }
 
-  // Install additional template dependencies, if present
-  // TODO: deprecate 'dependencies' key directly on templateJson
-  const templateDependencies =
-    templatePackage.dependencies || templateJson.dependencies;
-  if (templateDependencies) {
+  // Install additional template dependencies, if present.
+  const dependenciesToInstall = Object.entries({
+    ...templatePackage.dependencies,
+    ...templatePackage.devDependencies,
+  });
+  if (dependenciesToInstall.length) {
     args = args.concat(
-      Object.keys(templateDependencies).map(key => {
-        return `${key}@${templateDependencies[key]}`;
+      dependenciesToInstall.map(([dependency, version]) => {
+        return `${dependency}@${version}`;
       })
     );
   }

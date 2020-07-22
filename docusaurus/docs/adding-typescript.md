@@ -19,7 +19,7 @@ npx create-react-app my-app --template typescript
 yarn create react-app my-app --template typescript
 ```
 
-> If you've previously installed `create-react-app` globally via `npm install -g create-react-app`, we recommend you uninstall the package using `npm uninstall -g create-react-app` to ensure that `npx` always uses the latest version.
+> If you've previously installed `create-react-app` globally via `npm install -g create-react-app`, we recommend you uninstall the package using `npm uninstall -g create-react-app` or `yarn global remove create-react-app` to ensure that `npx` always uses the latest version.
 >
 > Global installs of `create-react-app` are no longer supported.
 
@@ -47,7 +47,7 @@ You are not required to make a [`tsconfig.json` file](https://www.typescriptlang
 
 ## Troubleshooting
 
-If your project is not created with TypeScript enabled, npx may be using a cached version of `create-react-app`. Remove previously installed versions with `npm uninstall -g create-react-app` (see [#6119](https://github.com/facebook/create-react-app/issues/6119#issuecomment-451614035)).
+If your project is not created with TypeScript enabled, npx may be using a cached version of `create-react-app`. Remove previously installed versions with `npm uninstall -g create-react-app` or `yarn global remove create-react-app` (see [#6119](https://github.com/facebook/create-react-app/issues/6119#issuecomment-451614035)).
 
 If you are currently using [create-react-app-typescript](https://github.com/wmonk/create-react-app-typescript/), see [this blog post](https://vincenttunru.com/migrate-create-react-app-typescript-to-create-react-app/) for instructions on how to migrate to Create React App.
 

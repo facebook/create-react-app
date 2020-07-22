@@ -60,6 +60,9 @@ const imageInlineSizeLimit = parseInt(
 // Check if TypeScript is setup
 const useTypeScript = fs.existsSync(paths.appTsConfig);
 
+// Get the path to the uncompiled service worker (if it exists).
+const swSrc = paths.swSrc;
+
 // style files regexes
 const cssRegex = /\.css$/;
 const cssModuleRegex = /\.module\.css$/;
@@ -68,7 +71,7 @@ const sassModuleRegex = /\.module\.(scss|sass)$/;
 
 // This is the production and development configuration.
 // It is focused on developer experience, fast rebuilds, and a minimal bundle.
-module.exports = function(webpackEnv) {
+module.exports = function (webpackEnv) {
   const isEnvDevelopment = webpackEnv === 'development';
   const isEnvProduction = webpackEnv === 'production';
 
@@ -133,6 +136,7 @@ module.exports = function(webpackEnv) {
           loader: require.resolve('resolve-url-loader'),
           options: {
             sourceMap: isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
+            root: paths.appSrc,
           },
         },
         {
@@ -433,11 +437,11 @@ module.exports = function(webpackEnv) {
                         },
                       },
                     },
-                    isEnvDevelopment &&
-                      shouldUseReactRefresh &&
-                      require.resolve('react-refresh/babel'),
-                  ].filter(Boolean),
-                ],
+                  ],
+                  isEnvDevelopment &&
+                    shouldUseReactRefresh &&
+                    require.resolve('react-refresh/babel'),
+                ].filter(Boolean),
                 // This is a feature of `babel-loader` for webpack (not Babel itself).
                 // It enables caching results in ./node_modules/.cache/babel-loader/
                 // directory for faster rebuilds.
@@ -498,7 +502,9 @@ module.exports = function(webpackEnv) {
               exclude: cssModuleRegex,
               use: getStyleLoaders({
                 importLoaders: 1,
-                sourceMap: isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
+                sourceMap: isEnvProduction
+                  ? shouldUseSourceMap
+                  : isEnvDevelopment,
               }),
               // Don't consider CSS imports dead code even if the
               // containing package claims to have no side effects.
@@ -512,7 +518,9 @@ module.exports = function(webpackEnv) {
               test: cssModuleRegex,
               use: getStyleLoaders({
                 importLoaders: 1,
-                sourceMap: isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
+                sourceMap: isEnvProduction
+                  ? shouldUseSourceMap
+                  : isEnvDevelopment,
                 modules: {
                   getLocalIdent: getCSSModuleLocalIdent,
                 },
@@ -527,7 +535,9 @@ module.exports = function(webpackEnv) {
               use: getStyleLoaders(
                 {
                   importLoaders: 3,
-                  sourceMap: isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
+                  sourceMap: isEnvProduction
+                    ? shouldUseSourceMap
+                    : isEnvDevelopment,
                 },
                 'sass-loader'
               ),
@@ -544,7 +554,9 @@ module.exports = function(webpackEnv) {
               use: getStyleLoaders(
                 {
                   importLoaders: 3,
-                  sourceMap: isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
+                  sourceMap: isEnvProduction
+                    ? shouldUseSourceMap
+                    : isEnvDevelopment,
                   modules: {
                     getLocalIdent: getCSSModuleLocalIdent,
                   },
@@ -631,8 +643,6 @@ module.exports = function(webpackEnv) {
         new ReactRefreshWebpackPlugin({
           overlay: {
             entry: webpackDevClientEntry,
-            // TODO: This is just a stub module. Clean this up if possible.
-            module: require.resolve('./hotRefreshOverlayModuleStub'),
           },
         }),
       // Watcher doesn't work well if you mistype casing in a path so we use
@@ -685,20 +695,11 @@ module.exports = function(webpackEnv) {
       // Generate a service worker script that will precache, and keep up to date,
       // the HTML & assets that are part of the webpack build.
       isEnvProduction &&
-        new WorkboxWebpackPlugin.GenerateSW({
-          clientsClaim: true,
-          exclude: [/\.map$/, /asset-manifest\.json$/],
-          importWorkboxFrom: 'cdn',
-          navigateFallback: paths.publicUrlOrPath + 'index.html',
-          navigateFallbackBlacklist: [
-            // Exclude URLs starting with /_, as they're likely an API call
-            new RegExp('^/_'),
-            // Exclude any URLs whose last part seems to be a file extension
-            // as they're likely a resource and not a SPA route.
-            // URLs containing a "?" character won't be blacklisted as they're likely
-            // a route with query params (e.g. auth callbacks).
-            new RegExp('/[^/?]+\\.[^/]+$'),
-          ],
+        fs.existsSync(swSrc) &&
+        new WorkboxWebpackPlugin.InjectManifest({
+          swSrc,
+          dontCacheBustURLsMatching: /\.[0-9a-f]{8}\./,
+          exclude: [/\.map$/, /asset-manifest\.json$/, /LICENSE/],
         }),
       // TypeScript type checking
       useTypeScript &&
@@ -707,7 +708,6 @@ module.exports = function(webpackEnv) {
             basedir: paths.appNodeModules,
           }),
           async: isEnvDevelopment,
-          useTypescriptIncrementalApi: true,
           checkSyntacticErrors: true,
           resolveModuleNameModule: process.versions.pnp
             ? `${__dirname}/pnpTs.js`
@@ -717,9 +717,14 @@ module.exports = function(webpackEnv) {
             : undefined,
           tsconfig: paths.appTsConfig,
           reportFiles: [
-            '**',
-            '!**/__tests__/**',
-            '!**/?(*.)(spec|test).*',
+            // This one is specifically to match during CI tests,
+            // as micromatch doesn't match
+            // '../cra-template-typescript/template/src/App.tsx'
+            // otherwise.
+            '../**/src/**/*.{ts,tsx}',
+            '**/src/**/*.{ts,tsx}',
+            '!**/src/**/__tests__/**',
+            '!**/src/**/?(*.)(spec|test).*',
             '!**/src/setupProxy.*',
             '!**/src/setupTests.*',
           ],

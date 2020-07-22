@@ -147,7 +147,7 @@ it('renders welcome message', () => {
 
 All Jest matchers are [extensively documented here](https://jestjs.io/docs/en/expect.html).
 
-Nevertheless you can use a third-party assertion library like [Chai](https://chaijs.com/) if you want to, as described below.
+Nevertheless you can use a third-party assertion library like [Chai](https://www.chaijs.com/) if you want to, as described below.
 
 Additionally, you might find [jest-enzyme](https://github.com/blainekasten/enzyme-matchers) helpful to improve your tests with readable matchers. The above `contains` code can be written more concisely with jest-enzyme.
 
@@ -216,7 +216,7 @@ Learn more about the utilities provided by `react-testing-library` to facilitate
 
 We recommend that you use `expect()` for assertions and `jest.fn()` for spies. If you are having issues with them please [file those against Jest](https://github.com/facebook/jest/issues/new), and we’ll fix them. We intend to keep making them better for React, supporting, for example, [pretty-printing React elements as JSX](https://github.com/facebook/jest/pull/1566).
 
-However, if you are used to other libraries, such as [Chai](https://chaijs.com/) and [Sinon](https://sinonjs.org/), or if you have existing code using them that you’d like to port over, you can import them normally like this:
+However, if you are used to other libraries, such as [Chai](https://www.chaijs.com/) and [Sinon](https://sinonjs.org/), or if you have existing code using them that you’d like to port over, you can import them normally like this:
 
 ```js
 import sinon from 'sinon';
