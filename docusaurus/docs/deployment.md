@@ -466,6 +466,12 @@ You can deploy your application by running the following command in the root of 
 vc
 ```
 
+or 
+
+```shell
+vercel
+```
+
 **Alternatively**, you can also use their integration for [GitHub](https://vercel.com/github), [GitLab](https://vercel.com/gitlab) or [Bitbucket](https://vercel.com/bitbucket)
 
 That’s all!
