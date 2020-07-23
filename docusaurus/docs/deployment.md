@@ -432,8 +432,11 @@ With this setup Netlify will build and deploy when you push to git or open a pul
 
 1. [Start a new netlify project](https://app.netlify.com/signup)
 2. Pick your Git hosting service and select your repository
-3. Click `Build your site`
+    > Ensure you pic a repository with your react application. Netlify will automatically detect and set the `Basic Build Settings` to `Build command: npm run build` and `Publish directory: build/`
+3. Click `Deploy site`
+    > After a successful deployment, Netlify will give you a url to access your site. The url will be similar to this, `https://<unique id>.netlify.app/`
 
+    
 **Support for client-side routing:**
 
 To support `pushState`, make sure to create a `public/_redirects` file with the following rewrite rules:
