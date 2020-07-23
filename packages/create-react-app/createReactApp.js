@@ -9,11 +9,6 @@
 //   /!\ DO NOT MODIFY THIS FILE /!\
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //
-// create-react-app is installed globally on people's computers. This means
-// that it is extremely difficult to have them upgrade the version and
-// because there's only one global version installed, it is very prone to
-// breaking changes.
-//
 // The only job of create-react-app is to init the repository and then
 // forward all the commands to the local version of create-react-app.
 //
@@ -26,7 +21,7 @@
 // tell people to update their global version of create-react-app.
 //
 // Also be careful with new language features.
-// This file must work on Node 6+.
+// This file must work on Node 10+.
 //
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //   /!\ DO NOT MODIFY THIS FILE /!\
@@ -34,6 +29,7 @@
 
 'use strict';
 
+const https = require('https');
 const chalk = require('chalk');
 const commander = require('commander');
 const dns = require('dns');
@@ -179,14 +175,53 @@ if (typeof projectName === 'undefined') {
   process.exit(1);
 }
 
-createApp(
-  projectName,
-  program.verbose,
-  program.scriptsVersion,
-  program.template,
-  program.useNpm,
-  program.usePnp
-);
+// We first check the registry directly via the API, and if that fails, we try
+// the slower `npm view [package] version` command.
+//
+// This is important for users in environments where direct access to npm is
+// blocked by a firewall, and packages are provided exclusively via a private
+// registry.
+checkForLatestVersion()
+  .catch(() => {
+    try {
+      return execSync('npm view create-react-app version').toString().trim();
+    } catch (e) {
+      return null;
+    }
+  })
+  .then(latest => {
+    if (latest && semver.lt(packageJson.version, latest)) {
+      console.log();
+      console.error(
+        chalk.yellow(
+          `You are running \`create-react-app\` ${packageJson.version}, which is behind the latest release (${latest}).\n\n` +
+            'We no longer support global installation of Create React App.'
+        )
+      );
+      console.log();
+      console.log(
+        'Please remove any global installs with one of the following commands:\n' +
+          '- npm uninstall -g create-react-app\n' +
+          '- yarn global remove create-react-app'
+      );
+      console.log();
+      console.log(
+        'The latest instructions for creating a new app can be found here:\n' +
+          'https://create-react-app.dev/docs/getting-started/'
+      );
+      console.log();
+      process.exit(1);
+    } else {
+      createApp(
+        projectName,
+        program.verbose,
+        program.scriptsVersion,
+        program.template,
+        program.useNpm,
+        program.usePnp
+      );
+    }
+  });
 
 function createApp(name, verbose, version, template, useNpm, usePnp) {
   const unsupportedNodeVersion = !semver.satisfies(process.version, '>=10');
@@ -1073,5 +1108,28 @@ function executeNodeScript({ cwd, args }, data, source) {
       }
       resolve();
     });
+  });
+}
+
+function checkForLatestVersion() {
+  return new Promise((resolve, reject) => {
+    https
+      .get(
+        'https://registry.npmjs.org/-/package/create-react-app/dist-tags',
+        res => {
+          if (res.statusCode === 200) {
+            let body = '';
+            res.on('data', data => (body += data));
+            res.on('end', () => {
+              resolve(JSON.parse(body).latest);
+            });
+          } else {
+            reject();
+          }
+        }
+      )
+      .on('error', () => {
+        reject();
+      });
   });
 }
