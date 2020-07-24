@@ -1,5 +1,7 @@
 # Create React App [![Build Status](https://dev.azure.com/facebook/create-react-app/_apis/build/status/facebook.create-react-app?branchName=master)](https://dev.azure.com/facebook/create-react-app/_build/latest?definitionId=1&branchName=master) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-green.svg)](https://github.com/facebook/create-react-app/blob/master/CONTRIBUTING.md)
 
+<img alt="Logo React" align="right" src="https://reactnative.dev/img/header_logo.svg" width="20%" />
+
 Create React apps with no build configuration.
 
 - [Creating an App](#creating-an-app) – How to create a new app.
