@@ -44,12 +44,12 @@ const {
   prepareUrls,
 } = require('react-dev-utils/WebpackDevServerUtils');
 const openBrowser = require('react-dev-utils/openBrowser');
+const semver = require('semver');
 const paths = require('../config/paths');
 const configFactory = require('../config/webpack.config');
 const createDevServerConfig = require('../config/webpackDevServer.config');
 const getClientEnvironment = require('../config/env');
-const react = require('react');
-const semver = require('semver');
+const react = require(require.resolve('react', { paths: [paths.appPath] }));
 
 const env = getClientEnvironment(paths.publicUrlOrPath.slice(0, -1));
 const useYarn = fs.existsSync(paths.yarnLockFile);
@@ -147,10 +147,7 @@ checkBrowsers(paths.appPath, isInteractive)
         clearConsole();
       }
 
-      if (
-        env.raw.FAST_REFRES !== 'false' &&
-        semver.lt(react.version, '16.10.0')
-      ) {
+      if (env.raw.FAST_REFRESH && semver.lt(react.version, '16.10.0')) {
         console.log(
           chalk.yellow(
             `Fast Refresh requires React 16.10 or higher. You are using React ${react.version}.`
