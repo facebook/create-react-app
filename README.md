@@ -117,7 +117,7 @@ By default, runs tests related to files changed since the last commit.
 
 [Read more about testing.](https://facebook.github.io/create-react-app/docs/running-tests)
 
-### `npm run build` or `yarn build`
+## `npm run build` or `yarn build`
 
 Builds the app for production to the `build` folder.<br>
 It correctly bundles React in production mode and optimizes the build for the best performance.
