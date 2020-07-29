@@ -1,4 +1,4 @@
-## 5.1.10
+## 5.1.11
 
 - Fixed .gitignore not being a part of the project's initial commit
 
