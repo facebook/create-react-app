@@ -10,7 +10,7 @@
 // Makes the script crash on unhandled rejections instead of silently
 // ignoring them. In the future, promise rejections that are not handled will
 // terminate the Node.js process with a non-zero exit code.
-process.on('unhandledRejection', err => {
+process.on('unhandledRejection', (err) => {
   throw err;
 });
 
@@ -75,7 +75,7 @@ function tryGitInit(appPath) {
   }
 }
 
-module.exports = function(
+module.exports = function (
   appPath,
   appName,
   verbose,
@@ -136,29 +136,24 @@ module.exports = function(
 
   // NOTE - GUESTY - Commented since .gitignore is added to project template.
   // See: https://github.com/npm/npm/issues/1862
-  // try {
-  //   console.log('fs output is', fs.moveSync(
-  //       path.join(appPath, 'gitignore'),
-  //       path.join(appPath, '.gitignore'),
-  //       []
-  //   ));
-  //   fs.moveSync(
-  //     path.join(appPath, 'gitignore'),
-  //     path.join(appPath, '.gitignore'),
-  //     []
-  //   );
-  // } catch (err) {
-  //   // Append if there's already a `.gitignore` file there
-  //   console.log('there is a .gitignore');
-  //   if (err.code === 'EEXIST') {
-  //     const data = fs.readFileSync(path.join(appPath, 'gitignore'));
-  //     fs.appendFileSync(path.join(appPath, '.gitignore'), data);
-  //     fs.unlinkSync(path.join(appPath, 'gitignore'));
-  //   } else {
-  //     console.log('code was not EEXIST', err);
-  //     throw err;
-  //   }
-  // }
+  try {
+    fs.moveSync(
+      path.join(appPath, 'gitignore'),
+      path.join(appPath, '.gitignore'),
+      []
+    );
+  } catch (err) {
+    // Append if there's already a `.gitignore` file there
+    console.log('there is a .gitignore');
+    if (err.code === 'EEXIST') {
+      const data = fs.readFileSync(path.join(appPath, 'gitignore'));
+      fs.appendFileSync(path.join(appPath, '.gitignore'), data);
+      fs.unlinkSync(path.join(appPath, 'gitignore'));
+    } else {
+      console.log('code was not EEXIST', err);
+      throw err;
+    }
+  }
 
   let command;
   let args;
@@ -168,7 +163,7 @@ module.exports = function(
     args = ['add'];
   } else {
     command = 'npm';
-    args = ['install', '--save', verbose && '--verbose'].filter(e => e);
+    args = ['install', '--save', verbose && '--verbose'].filter((e) => e);
   }
   args.push('react', 'react-dom');
 
@@ -180,7 +175,7 @@ module.exports = function(
   if (fs.existsSync(templateDependenciesPath)) {
     const templateDependencies = require(templateDependenciesPath).dependencies;
     args = args.concat(
-      Object.keys(templateDependencies).map(key => {
+      Object.keys(templateDependencies).map((key) => {
         return `${key}@${templateDependencies[key]}`;
       })
     );
