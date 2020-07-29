@@ -1,3 +1,7 @@
+## 5.1.10
+
+- Fixed .gitignore not being a part of the project's initial commit
+
 ## 5.1.9
 
 - updated `babel-plugin-transform-react-qa-classes` to be added when ! cluster prod and !test env
