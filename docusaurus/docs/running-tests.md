@@ -197,7 +197,7 @@ Similar to `enzyme` you can create a `src/setupTests.js` file to avoid boilerpla
 import '@testing-library/jest-dom';
 ```
 
-Here's an example of using `react-testing-library` and `jest-dom` for testing that the `<App />` component renders "Welcome to React".
+Here's an example of using `react-testing-library` and `jest-dom` for testing that the `<App />` component renders "Learn React".
 
 ```js
 import React from 'react';
