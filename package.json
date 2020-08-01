@@ -37,7 +37,7 @@
     "meow": "^6.1.1",
     "multimatch": "^4.0.0",
     "prettier": "2.0.5",
-    "puppeteer": "^3.0.2",
+    "puppeteer": "^5.2.1",
     "strip-ansi": "^6.0.0",
     "svg-term-cli": "^2.1.1",
     "tempy": "^0.2.1",
