@@ -20,7 +20,7 @@
   },
   "devDependencies": {
     "babel-plugin-tester": "^9.2.0",
-    "jest": "26.1.0"
+    "jest": "26.2.2"
   },
   "scripts": {
     "test": "jest"
