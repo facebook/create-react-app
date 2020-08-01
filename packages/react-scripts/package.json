@@ -57,7 +57,7 @@
     "html-webpack-plugin": "4.3.0",
     "identity-obj-proxy": "3.0.0",
     "jest-environment-jsdom-fourteen": "0.1.0",
-    "lighthouse": "^5.6.0",
+    "lighthouse": "^6.1.1",
     "jest": "26.2.2",
     "jest-resolve": "26.2.2",
     "jest-circus": "26.2.2",
