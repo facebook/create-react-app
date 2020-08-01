@@ -58,7 +58,7 @@
     "chalk": "2.4.2",
     "cross-spawn": "7.0.3",
     "detect-port-alt": "1.1.6",
-    "escape-string-regexp": "2.0.0",
+    "escape-string-regexp": "4.0.0",
     "filesize": "6.1.0",
     "find-up": "4.1.0",
     "fork-ts-checker-webpack-plugin": "4.1.6",
