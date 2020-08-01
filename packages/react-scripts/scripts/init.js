@@ -41,8 +41,7 @@ function isInMercurialRepository() {
   }
 }
 
-function tryGitInit(appPath) {
-  let didInit = false;
+function tryGitInit() {
   try {
     execSync('git --version', { stdio: 'ignore' });
     if (isInGitRepository() || isInMercurialRepository()) {
@@ -50,32 +49,39 @@ function tryGitInit(appPath) {
     }
 
     execSync('git init', { stdio: 'ignore' });
-    didInit = true;
+    return true;
+  } catch (e) {
+    console.warn('Git repo not initialized', e);
+    return false;
+  }
+}
 
+function tryGitCommit(appPath) {
+  try {
     execSync('git add -A', { stdio: 'ignore' });
-    execSync('git commit -m "Initial commit from Create React App"', {
+    execSync('git commit -m "Initialize project using Create React App"', {
       stdio: 'ignore',
     });
     return true;
   } catch (e) {
-    if (didInit) {
-      // If we successfully initialized but couldn't commit,
-      // maybe the commit author config is not set.
-      // In the future, we might supply our own committer
-      // like Ember CLI does, but for now, let's just
-      // remove the Git files to avoid a half-done state.
-      try {
-        // unlinkSync() doesn't work on directories.
-        fs.removeSync(path.join(appPath, '.git'));
-      } catch (removeErr) {
-        // Ignore.
-      }
+    // We couldn't commit in already initialized git repo,
+    // maybe the commit author config is not set.
+    // In the future, we might supply our own committer
+    // like Ember CLI does, but for now, let's just
+    // remove the Git files to avoid a half-done state.
+    console.warn('Git commit not created', e);
+    console.warn('Removing .git directory...');
+    try {
+      // unlinkSync() doesn't work on directories.
+      fs.removeSync(path.join(appPath, '.git'));
+    } catch (removeErr) {
+      // Ignore.
     }
     return false;
   }
 }
 
-module.exports = function(
+module.exports = function (
   appPath,
   appName,
   verbose,
@@ -97,18 +103,92 @@ module.exports = function(
         'create-react-app'
       )} are no longer supported.`
     );
+    console.error(
+      `You can fix this by running ${chalk.cyan(
+        'npm uninstall -g create-react-app'
+      )} or ${chalk.cyan(
+        'yarn global remove create-react-app'
+      )} before using ${chalk.cyan('create-react-app')} again.`
+    );
     return;
   }
 
-  const templatePath = path.join(
-    require.resolve(templateName, { paths: [appPath] }),
-    '..'
+  const templatePath = path.dirname(
+    require.resolve(`${templateName}/package.json`, { paths: [appPath] })
   );
+
+  const templateJsonPath = path.join(templatePath, 'template.json');
+
+  let templateJson = {};
+  if (fs.existsSync(templateJsonPath)) {
+    templateJson = require(templateJsonPath);
+  }
+
+  const templatePackage = templateJson.package || {};
+
+  // TODO: Deprecate support for root-level `dependencies` and `scripts` in v5.
+  // These should now be set under the `package` key.
+  if (templateJson.dependencies || templateJson.scripts) {
+    console.log();
+    console.log(
+      chalk.yellow(
+        'Root-level `dependencies` and `scripts` keys in `template.json` are deprecated.\n' +
+          'This template should be updated to use the new `package` key.'
+      )
+    );
+    console.log('For more information, visit https://cra.link/templates');
+  }
+  if (templateJson.dependencies) {
+    templatePackage.dependencies = templateJson.dependencies;
+  }
+  if (templateJson.scripts) {
+    templatePackage.scripts = templateJson.scripts;
+  }
+
+  // Keys to ignore in templatePackage
+  const templatePackageBlacklist = [
+    'name',
+    'version',
+    'description',
+    'keywords',
+    'bugs',
+    'license',
+    'author',
+    'contributors',
+    'files',
+    'browser',
+    'bin',
+    'man',
+    'directories',
+    'repository',
+    'peerDependencies',
+    'bundledDependencies',
+    'optionalDependencies',
+    'engineStrict',
+    'os',
+    'cpu',
+    'preferGlobal',
+    'private',
+    'publishConfig',
+  ];
+
+  // Keys from templatePackage that will be merged with appPackage
+  const templatePackageToMerge = ['dependencies', 'scripts'];
+
+  // Keys from templatePackage that will be added to appPackage,
+  // replacing any existing entries.
+  const templatePackageToReplace = Object.keys(templatePackage).filter(key => {
+    return (
+      !templatePackageBlacklist.includes(key) &&
+      !templatePackageToMerge.includes(key)
+    );
+  });
 
   // Copy over some of the devDependencies
   appPackage.dependencies = appPackage.dependencies || {};
 
   // Setup the script rules
+
   appPackage.scripts = {
     start: 'react-scripts start',
     build: 'react-scripts build',
@@ -116,6 +196,17 @@ module.exports = function(
     eject: 'react-scripts eject',
     lighthouse: 'react-scripts audit',
   };
+  
+  // Update scripts for Yarn users
+  if (useYarn) {
+    appPackage.scripts = Object.entries(appPackage.scripts).reduce(
+      (acc, [key, value]) => ({
+        ...acc,
+        [key]: value.replace(/(npm run |npm )/, 'yarn '),
+      }),
+      {}
+    );
+  }
 
   // Setup the eslint config
   appPackage.eslintConfig = {
@@ -124,6 +215,11 @@ module.exports = function(
 
   // Setup the browsers list
   appPackage.browserslist = defaultBrowsers;
+
+  // Add templatePackage keys/values to appPackage, replacing existing entries
+  templatePackageToReplace.forEach(key => {
+    appPackage[key] = templatePackage[key];
+  });
 
   fs.writeFileSync(
     path.join(appPath, 'package.json'),
@@ -163,23 +259,29 @@ module.exports = function(
     }
   }
 
-  // Rename gitignore after the fact to prevent npm from renaming it to .npmignore
-  // See: https://github.com/npm/npm/issues/1862
-  try {
+  const gitignoreExists = fs.existsSync(path.join(appPath, '.gitignore'));
+  if (gitignoreExists) {
+    // Append if there's already a `.gitignore` file there
+    const data = fs.readFileSync(path.join(appPath, 'gitignore'));
+    fs.appendFileSync(path.join(appPath, '.gitignore'), data);
+    fs.unlinkSync(path.join(appPath, 'gitignore'));
+  } else {
+    // Rename gitignore after the fact to prevent npm from renaming it to .npmignore
+    // See: https://github.com/npm/npm/issues/1862
     fs.moveSync(
       path.join(appPath, 'gitignore'),
       path.join(appPath, '.gitignore'),
       []
     );
-  } catch (err) {
-    // Append if there's already a `.gitignore` file there
-    if (err.code === 'EEXIST') {
-      const data = fs.readFileSync(path.join(appPath, 'gitignore'));
-      fs.appendFileSync(path.join(appPath, '.gitignore'), data);
-      fs.unlinkSync(path.join(appPath, 'gitignore'));
-    } else {
-      throw err;
-    }
+  }
+
+  // Initialize git repo
+  let initializedGit = false;
+
+  if (tryGitInit()) {
+    initializedGit = true;
+    console.log();
+    console.log('Initialized a git repository.');
   }
 
   let command;
@@ -196,22 +298,17 @@ module.exports = function(
     args = ['install', '--save', verbose && '--verbose'].filter(e => e);
   }
 
-  // Install additional template dependencies, if present
-  let templateJsonPath;
-  if (templateName) {
-    templateJsonPath = path.join(templatePath, 'template.json');
-  } else {
-    templateJsonPath = path.join(appPath, '.template.dependencies.json');
-  }
-
-  if (fs.existsSync(templateJsonPath)) {
-    const templateDependencies = require(templateJsonPath).dependencies;
+  // Install additional template dependencies, if present.
+  const dependenciesToInstall = Object.entries({
+    ...templatePackage.dependencies,
+    ...templatePackage.devDependencies,
+  });
+  if (dependenciesToInstall.length) {
     args = args.concat(
-      Object.keys(templateDependencies).map(key => {
-        return `${key}@${templateDependencies[key]}`;
+      dependenciesToInstall.map(([dependency, version]) => {
+        return `${dependency}@${version}`;
       })
     );
-    fs.unlinkSync(templateJsonPath);
   }
 
   // Install react and react-dom for backward compatibility with old CRA cli
@@ -249,9 +346,10 @@ module.exports = function(
     return;
   }
 
-  if (tryGitInit(appPath)) {
+  // Create git commit if git repo was initialized
+  if (initializedGit && tryGitCommit(appPath)) {
     console.log();
-    console.log('Initialized a git repository.');
+    console.log('Created git commit.');
   }
 
   // Display the most elegant way to cd.

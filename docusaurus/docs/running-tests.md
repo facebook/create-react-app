@@ -147,7 +147,7 @@ it('renders welcome message', () => {
 
 All Jest matchers are [extensively documented here](https://jestjs.io/docs/en/expect.html).
 
-Nevertheless you can use a third-party assertion library like [Chai](https://chaijs.com/) if you want to, as described below.
+Nevertheless you can use a third-party assertion library like [Chai](https://www.chaijs.com/) if you want to, as described below.
 
 Additionally, you might find [jest-enzyme](https://github.com/blainekasten/enzyme-matchers) helpful to improve your tests with readable matchers. The above `contains` code can be written more concisely with jest-enzyme.
 
@@ -194,7 +194,7 @@ Similar to `enzyme` you can create a `src/setupTests.js` file to avoid boilerpla
 ```js
 // react-testing-library renders your components to document.body,
 // this adds jest-dom's custom assertions
-import '@testing-library/jest-dom/extend-expect';
+import '@testing-library/jest-dom';
 ```
 
 Here's an example of using `react-testing-library` and `jest-dom` for testing that the `<App />` component renders "Welcome to React".
@@ -216,7 +216,7 @@ Learn more about the utilities provided by `react-testing-library` to facilitate
 
 We recommend that you use `expect()` for assertions and `jest.fn()` for spies. If you are having issues with them please [file those against Jest](https://github.com/facebook/jest/issues/new), and we’ll fix them. We intend to keep making them better for React, supporting, for example, [pretty-printing React elements as JSX](https://github.com/facebook/jest/pull/1566).
 
-However, if you are used to other libraries, such as [Chai](https://chaijs.com/) and [Sinon](https://sinonjs.org/), or if you have existing code using them that you’d like to port over, you can import them normally like this:
+However, if you are used to other libraries, such as [Chai](https://www.chaijs.com/) and [Sinon](https://sinonjs.org/), or if you have existing code using them that you’d like to port over, you can import them normally like this:
 
 ```js
 import sinon from 'sinon';
@@ -245,12 +245,12 @@ const localStorageMock = {
 global.localStorage = localStorageMock;
 ```
 
-> Note: Keep in mind that if you decide to "eject" before creating `src/setupTests.js`, the resulting `package.json` file won't contain any reference to it, so you should manually create the property `setupTestFrameworkScriptFile` in the configuration for Jest, something like the following:
+> Note: Keep in mind that if you decide to "eject" before creating `src/setupTests.js`, the resulting `package.json` file won't contain any reference to it, so you should manually create the property `setupFilesAfterEnv` in the configuration for Jest, something like the following:
 
 > ```js
 > "jest": {
 >   // ...
->   "setupTestFrameworkScriptFile": "<rootDir>/src/setupTests.js"
+>   "setupFilesAfterEnv": ["<rootDir>/src/setupTests.js"]
 >  }
 > ```
 

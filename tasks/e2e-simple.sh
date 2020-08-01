@@ -98,7 +98,7 @@ startLocalRegistry "$root_path"/tasks/verdaccio.yaml
 
 cd packages/react-error-overlay/
 yarn test
-if [ $AGENT_OS != 'Windows_NT' ]; then
+if [ "$AGENT_OS" != 'Windows_NT' ]; then
   # Flow started hanging on Windows build agents
   yarn flow
 fi
