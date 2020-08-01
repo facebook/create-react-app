@@ -1,0 +1,20 @@
+name: Cumprimentar a Todos
+# Este fluxo de trabalho é acionado em pushes para o repositório.
+on: [push]
+
+jobs:
+  build:
+    # o nome do trabalho é greeting (cumprimentar)
+    name: Greeting
+    # Este trabalho executa no Linux
+    runs-on: ubuntu-latest
+    steps:
+      # Esta etapa usa hello-world-javascript-action do GitHub: https://github.com/actions/hello-world-javascript-action
+      - name: Hello world
+        uses: actions/hello-world-javascript-action@v1
+        with:
+          who-to-greet: 'Mona the Octocat'
+        id: hello
+      # Esta etapa imprime uma saída (tempo) da ação da etapa anterior.
+      - name: Echo the greeting's time
+        run: echo 'The time was ${{ steps.hello.outputs.time }}.
