@@ -201,12 +201,12 @@ Here's an example of using `react-testing-library` and `jest-dom` for testing th
 
 ```js
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import App from './App';
 
 it('renders welcome message', () => {
-  const { getByText } = render(<App />);
-  expect(getByText('Learn React')).toBeInTheDocument();
+  render(<App />);
+  expect(screen.getByText('Learn React')).toBeInTheDocument();
 });
 ```
 
