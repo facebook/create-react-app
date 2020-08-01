@@ -188,17 +188,15 @@ module.exports = function (
   appPackage.dependencies = appPackage.dependencies || {};
 
   // Setup the script rules
-  const templateScripts = templatePackage.scripts || {};
-  appPackage.scripts = Object.assign(
-    {
-      start: 'react-scripts start',
-      build: 'react-scripts build',
-      test: 'react-scripts test',
-      eject: 'react-scripts eject',
-    },
-    templateScripts
-  );
 
+  appPackage.scripts = {
+    start: 'react-scripts start',
+    build: 'react-scripts build',
+    test: 'react-scripts test',
+    eject: 'react-scripts eject',
+    lighthouse: 'react-scripts audit',
+  };
+  
   // Update scripts for Yarn users
   if (useYarn) {
     appPackage.scripts = Object.entries(appPackage.scripts).reduce(
