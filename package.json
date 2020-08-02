@@ -34,7 +34,7 @@
     "lerna": "3.22.1",
     "lerna-changelog": "~0.8.2",
     "lint-staged": "^10.2.2",
-    "meow": "^6.1.1",
+    "meow": "^7.0.1",
     "multimatch": "^4.0.0",
     "prettier": "2.0.5",
     "puppeteer": "^5.2.1",
