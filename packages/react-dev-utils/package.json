@@ -46,6 +46,7 @@
     "printBuildError.js",
     "printHostingInstructions.js",
     "redirectServedPathMiddleware.js",
+    "refreshOverlayInterop.js",
     "typescriptFormatter.js",
     "WatchMissingNodeModulesPlugin.js",
     "WebpackDevServerUtils.js",
