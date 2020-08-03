@@ -32,7 +32,7 @@
     "husky": "^4.2.5",
     "jest": "26.2.2",
     "lerna": "3.22.1",
-    "lerna-changelog": "~0.8.2",
+    "lerna-changelog": "~1.0.1",
     "lint-staged": "^10.2.2",
     "meow": "^7.0.1",
     "multimatch": "^4.0.0",
