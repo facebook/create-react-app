@@ -25,7 +25,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
       - name: Configure git
-      - script: |
+      - run: |
           git config --global core.autocrlf false
           git config --global user.name "Create React App"
           git config --global user.email "cra@example.com"
