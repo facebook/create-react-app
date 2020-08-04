@@ -3,7 +3,7 @@ name: Old Node
 on: [push, pull_request]
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
