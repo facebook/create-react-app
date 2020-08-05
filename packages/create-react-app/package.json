@@ -25,6 +25,9 @@
   "bin": {
     "create-react-app": "./index.js"
   },
+  "scripts": {
+    "test": "cross-env FORCE_COLOR=true jest"
+  },
   "dependencies": {
     "chalk": "4.1.0",
     "commander": "4.1.0",
@@ -37,5 +40,9 @@
     "tar-pack": "3.4.1",
     "tmp": "0.2.1",
     "validate-npm-package-name": "3.0.0"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.2",
+    "jest": "26.1.0"
   }
 }
