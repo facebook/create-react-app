@@ -27,7 +27,7 @@ const x = async (
 };
 /* eslint-enable */
 
-export default class extends Component {
+export default class AsyncAwait extends Component {
   static propTypes = {
     onReady: PropTypes.func.isRequired,
   };

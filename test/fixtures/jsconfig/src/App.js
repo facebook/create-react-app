@@ -10,7 +10,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import load from 'absoluteLoad';
 
-export default class extends Component {
+export default class App extends Component {
   static propTypes = {
     onReady: PropTypes.func.isRequired,
   };

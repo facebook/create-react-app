@@ -1,3 +1,66 @@
+## 3.4.1 (2020-03-20)
+
+v3.4.1 is a maintenance release that includes minor bug fixes and documentation updates including upgrading Babel to fix a bug in the 7.8 release line. This release also brings support for TypeScript 3.8.
+
+#### :bug: Bug Fix
+
+- `react-scripts`
+  - [#8276](https://github.com/facebook/create-react-app/pull/8276) Use native ESLint behaviour when extending ([@mrmckeb](https://github.com/mrmckeb))
+  - [#7203](https://github.com/facebook/create-react-app/pull/7203) Closes webpack dev server and exits process on "end" stdin ([@kelseyleftwich](https://github.com/kelseyleftwich))
+- `babel-preset-react-app`
+  - [#8526](https://github.com/facebook/create-react-app/pull/8526) Fix optional chaining and nullish coalescing support ([@ianschmitz](https://github.com/ianschmitz))
+- `cra-template`, `eslint-config-react-app`, `react-scripts`
+  - [#7790](https://github.com/facebook/create-react-app/pull/7790) Widen eslint-config-react-app peer dependency versions ([@lukyth](https://github.com/lukyth))
+
+#### :nail_care: Enhancement
+
+- `cra-template-typescript`, `cra-template`
+  - [#8558](https://github.com/facebook/create-react-app/pull/8558) Add React.StrictMode to default templates ([@connkat](https://github.com/connkat))
+- `react-scripts`
+  - [#8539](https://github.com/facebook/create-react-app/pull/8539) allow specification of package.main in template.json ([@EvanBoyle](https://github.com/EvanBoyle))
+
+#### :memo: Documentation
+
+- Other
+  - [#8515](https://github.com/facebook/create-react-app/pull/8515) Fix proxying API request docs ([@hjr3](https://github.com/hjr3))
+  - [#8561](https://github.com/facebook/create-react-app/pull/8561) Indicate that the file structure is the template's ([@Vinnl](https://github.com/Vinnl))
+- `react-scripts`
+  - [#8276](https://github.com/facebook/create-react-app/pull/8276) Use native ESLint behaviour when extending ([@mrmckeb](https://github.com/mrmckeb))
+
+#### :hammer: Underlying Tools
+
+- `babel-preset-react-app`, `create-react-app`, `react-dev-utils`, `react-error-overlay`, `react-scripts`
+  - [#8681](https://github.com/facebook/create-react-app/pull/8681) Update to Babel 7.9 ([@ianschmitz](https://github.com/ianschmitz))
+  - [#8620](https://github.com/facebook/create-react-app/pull/8620) Bump dependencies ([@ianschmitz](https://github.com/ianschmitz))
+- `react-scripts`
+  - [#8509](https://github.com/facebook/create-react-app/pull/8509) Bumps pnp-webpack-plugin ([@arcanis](https://github.com/arcanis))
+
+#### Committers: 9
+
+- Brody McKee ([@mrmckeb](https://github.com/mrmckeb))
+- Evan Boyle ([@EvanBoyle](https://github.com/EvanBoyle))
+- Herman J. Radtke III ([@hjr3](https://github.com/hjr3))
+- Ian Schmitz ([@ianschmitz](https://github.com/ianschmitz))
+- Kanitkorn Sujautra ([@lukyth](https://github.com/lukyth))
+- KatCon ([@connkat](https://github.com/connkat))
+- Kelsey Leftwich ([@kelseyleftwich](https://github.com/kelseyleftwich))
+- Maël Nison ([@arcanis](https://github.com/arcanis))
+- Vincent ([@Vinnl](https://github.com/Vinnl))
+
+### Migrating from 3.4.0 to 3.4.1
+
+Inside any created project that has not been ejected, run:
+
+```sh
+npm install --save --save-exact react-scripts@3.4.1
+```
+
+or
+
+```sh
+yarn add --exact react-scripts@3.4.1
+```
+
 ## 3.4.0 (2020-02-14)
 
 v3.4.0 is a minor release that adds new features, including support for SSL and setting `PUBLIC_URL` in development. It also includes a fix for Hot Module Reloading with CSS Modules as well as other bug fixes.
