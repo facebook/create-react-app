@@ -14,7 +14,8 @@ To start a new Create React App project with [TypeScript](https://www.typescript
 ```sh
 npx create-react-app my-app --template typescript
 ```
-or
+Alternatively you may use yarn:
+
 ```
 yarn create react-app my-app --template typescript
 ```
@@ -28,7 +29,8 @@ To add [TypeScript](https://www.typescriptlang.org/) to an existing Create React
 ```sh
 npm install --save typescript @types/node @types/react @types/react-dom @types/jest
 ```
-or
+Alternatively you may use yarn:
+
 ```
 yarn add typescript @types/node @types/react @types/react-dom @types/jest
 ```
