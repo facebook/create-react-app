@@ -30,7 +30,7 @@
     "get-port": "^5.1.1",
     "globby": "^11.0.0",
     "husky": "^4.2.5",
-    "jest": "26.1.0",
+    "jest": "26.3.0",
     "lerna": "3.20.2",
     "lerna-changelog": "~0.8.2",
     "lint-staged": "^10.2.2",
