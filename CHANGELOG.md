@@ -1,3 +1,21 @@
+## 3.4.2 (2020-08-11)
+
+v3.4.2 release bumps `webpack-dev-server` to a version for which `npm audit` does not report a vulnerability. Note that **this vulnerability did not affect Create React App projects**, so this change is only necessary to satisfy auditing tools.
+
+### Migrating from 3.4.1 to 3.4.2
+
+Inside any created project that has not been ejected, run:
+
+```sh
+npm install --save --save-exact react-scripts@3.4.2
+```
+
+or
+
+```sh
+yarn add --exact react-scripts@3.4.2
+```
+
 ## 3.4.1 (2020-03-20)
 
 v3.4.1 is a maintenance release that includes minor bug fixes and documentation updates including upgrading Babel to fix a bug in the 7.8 release line. This release also brings support for TypeScript 3.8.
