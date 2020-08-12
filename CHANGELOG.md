@@ -1,3 +1,21 @@
+## 3.4.3 (2020-08-12)
+
+v3.4.2 release bumps `terser-webpack-plugin` to a version for which `npm audit` does not report a vulnerability. Note that **this vulnerability did not affect Create React App projects**, so this change is only necessary to satisfy auditing tools.
+
+### Migrating from 3.4.2 to 3.4.3
+
+Inside any created project that has not been ejected, run:
+
+```sh
+npm install --save --save-exact react-scripts@3.4.3
+```
+
+or
+
+```sh
+yarn add --exact react-scripts@3.4.3
+```
+
 ## 3.4.2 (2020-08-11)
 
 v3.4.2 release bumps `webpack-dev-server` to a version for which `npm audit` does not report a vulnerability. Note that **this vulnerability did not affect Create React App projects**, so this change is only necessary to satisfy auditing tools.
