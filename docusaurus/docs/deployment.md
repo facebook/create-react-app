@@ -444,18 +444,18 @@ To support `pushState`, make sure to create a `public/_redirects` file with the 
 
 When you build the project, Create React App will place the `public` folder contents into the build output.
 
-## [ZEIT Now](https://zeit.co)
+## [Vercel](https://vercel.com)
 
-[ZEIT Now](https://zeit.co) is a cloud platform for websites and serverless APIs, that you can use to deploy your Create React App projects to your personal domain (or a free `.now.sh` suffixed URL).
+[Vercel](https://vercel.com) is a cloud platform for websites and serverless APIs, that you can use to deploy your Create React App projects to your personal domain (or a free `.vercel.app` suffixed URL).
 
 This guide will show you how to get started in a few quick steps:
 
 ### Step 1: Installing Now CLI
 
-To install their command-line interface with [npm](https://www.npmjs.com/package/now), run the following command:
+To install their command-line interface with [npm](https://vercel.com/download), run the following command:
 
 ```shell
-npm i -g now
+npm i -g vercel
 ```
 
 ### Step 2: Deploying
@@ -463,16 +463,16 @@ npm i -g now
 You can deploy your application by running the following command in the root of the project directory:
 
 ```shell
-now
+vercel
 ```
 
-**Alternatively**, you can also use their integration for [GitHub](https://zeit.co/github) or [GitLab](https://zeit.co/gitlab).
+**Alternatively**, you can also use their integration for [GitHub](https://vercel.com/docs/git-integrations/vercel-for-github), [GitLab](https://vercel.com/docs/git-integrations/vercel-for-gitlab) or [Bitbucket](https://vercel.com/docs/git-integrations/vercel-for-bitbucket).
 
 That’s all!
 
-Your site will now deploy, and you will receive a link similar to the following: https://react.now-examples.now.sh
+Your site will now deploy, and you will receive a link similar to the following: https://react.now-examples.vercel.app
 
-Out of the box, you are preconfigured for client-side routing compatibility and appropriate default caching headers. This behaviour can be overwritten [like this](https://zeit.co/docs/v2/advanced/routes/).
+Out of the box, you are preconfigured for client-side routing compatibility and appropriate default caching headers.
 
 ## [Render](https://render.com)
 
