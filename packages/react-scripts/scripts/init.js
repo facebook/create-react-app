@@ -213,6 +213,7 @@ module.exports = function (
   // Setup the eslint config
   appPackage.eslintConfig = {
     extends: 'react-app',
+    emitWarning: true,
   };
 
   // Setup the browsers list
