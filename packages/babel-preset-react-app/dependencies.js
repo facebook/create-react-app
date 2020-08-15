@@ -93,6 +93,7 @@ module.exports = function (api, opts) {
       ],
     ].filter(Boolean),
     plugins: [
+      require('babel-plugin-macros'),
       // Disabled as it's handled automatically by preset-env, and `selectiveLoose` isn't
       // yet merged into babel: https://github.com/babel/babel/pull/9486
       // Related: https://github.com/facebook/create-react-app/pull/8215
