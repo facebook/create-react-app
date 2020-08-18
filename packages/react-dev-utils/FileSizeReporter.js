@@ -92,12 +92,12 @@ function printFileSizesAfterBuild(
     );
     console.log(
       chalk.yellow(
-        'Consider reducing it with code splitting: https://create-react-app.dev/docs/code-splitting/'
+        'Consider reducing it with code splitting: https://cra.link/code-splitting'
       )
     );
     console.log(
       chalk.yellow(
-        'You can also analyze the project dependencies: https://create-react-app.dev/docs/analyzing-the-bundle-size/'
+        'You can also analyze the project dependencies: https://cra.link/analyzing-bundle-size'
       )
     );
   }
