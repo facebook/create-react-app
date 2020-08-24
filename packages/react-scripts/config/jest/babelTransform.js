@@ -15,5 +15,9 @@ module.exports = babelJest.createTransformer({
   configFile: false,
   // With the added support for svg-sprites using the resource query '?sprite', this
   // plugin is needed to remove the query for imports during tests.
-  plugins: ['babel-plugin-import-remove-resource-query'],
+  // Adding the second plugin so tests don't break if some package decides to use raw-loader
+  plugins: [
+    'babel-plugin-import-remove-resource-query',
+    ['strip-requirejs-plugin-prefix', { plugin: 'raw-loader' }],
+  ],
 });

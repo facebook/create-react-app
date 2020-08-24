@@ -1,6 +1,6 @@
 {
   "name": "@bentley/react-scripts",
-  "version": "3.4.3",
+  "version": "3.4.3-dev.0",
   "description": "iModel.js configuration and scripts for Create React App.",
   "repository": {
     "type": "git",
@@ -38,6 +38,7 @@
     "babel-loader": "8.1.0",
     "babel-plugin-import-remove-resource-query": "^1.0.0",
     "babel-plugin-named-asset-import": "^0.3.6",
+    "babel-plugin-strip-requirejs-plugin-prefix": "1.0.0",
     "babel-preset-react-app": "^9.1.2",
     "camelcase": "^5.3.1",
     "case-sensitive-paths-webpack-plugin": "2.3.0",
