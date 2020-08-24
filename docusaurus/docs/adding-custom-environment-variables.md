@@ -119,7 +119,7 @@ REACT_APP_NOT_SECRET_CODE=abcdef
 
 > Note: You need to restart the development server after changing `.env` files.
 
-`.env` files **should be** checked into source control (with the exclusion of `.env*.local`).
+`.env` files **should not be** checked into source control (with the exclusion of `.env*.local`).
 
 ### What other `.env` files can be used?
 
