@@ -165,7 +165,7 @@ module.exports = function (webpackEnv) {
     return loaders;
   };
 
-  return {
+  const config = {
     mode: isEnvProduction ? 'production' : isEnvDevelopment && 'development',
     // Stop compilation early in production
     bail: isEnvProduction,
@@ -790,4 +790,12 @@ module.exports = function (webpackEnv) {
     // our own hints via the FileSizeReporter
     performance: false,
   };
+
+  if (appPackageJson.adjustWebpackConfig) {
+    const adjustWebpackConfigPath = path.join(path.dirname(paths.appPackageJson), appPackageJson.adjustWebpackConfig)
+    const adjustWebpackConfig = require(adjustWebpackConfigPath);
+    return adjustWebpackConfig(config);
+  }
+
+  return config;
 };
