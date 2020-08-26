@@ -174,3 +174,56 @@ Progressive web apps that have been added to the homescreen will load faster and
 work offline when there's an active service worker. That being said, the
 metadata from the web app manifest will still be used regardless of whether or
 not you opt-in to service worker registration.
+
+## Custom Service Worker
+
+The default Service Worker generated allows for **Offline-first** cache strategy. Well, you may need to have different Cache Strategies for different pages or routes in your Progressive Web App. To achieve this, do the following;
+
+### Setting up
+
+ - Create a new empty js file, **sw.js** in the **public** folder.
+ 
+ - Copy the code snippet below (as in [in this repository](https://github.com/mayeedwin/custom-service-worker-react-app/blob/master/src/sw.js)) to it.
+ 
+ ```js
+ /* eslint-disable no-undef */
+importScripts(
+    "https://storage.googleapis.com/workbox-cdn/releases/5.0.0/workbox-sw.js"
+  );
+  if (workbox) {
+    try {
+      console.log("[ PWA Fire Bundle ] Hello from Workbox");
+      workbox.routing.registerRoute(
+        new RegExp("/"),
+        new workbox.strategies.NetworkFirst({
+          cacheName: "App",
+          plugins: [
+            new workbox.expiration.ExpirationPlugin({
+              maxAgeSeconds: 60 * 60 * 1 * 1,
+            }),
+          ],
+        })
+      );
+      workbox.core.skipWaiting();
+      workbox.core.clientsClaim();
+    } catch (error) {
+      console.log(error);
+    }
+  } else {
+    console.log("Boo! Workbox failed to load 😬");
+  }
+ ```
+ 
+ - Replace the code snippet in **serviceWorker.js** with the code snippet in the new [serviceWorker.js here](https://github.com/mayeedwin/custom-service-worker-react-app/blob/master/src/config/serviceWorker.js)
+ 
+ ### Build your React PWA
+ 
+ - On running `npm build`, **sw.js** will be copied into the build folder with the 
+ new custom [Workbox](https://developers.google.com/web/tools/workbox) config for cache strategies.
+ 
+ - Use this [this VS Code Extension](https://marketplace.visualstudio.com/items?itemName=mayeedwin.vscode-pwa) to easily get the Workbox Code Snippets
+ for use in your Workbox Service Workers.
+ 
+ - Learn more about Workbox [here](https://developers.google.com/web/tools/workbox).
+ 
+ Enjoy!
