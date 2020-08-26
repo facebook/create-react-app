@@ -218,12 +218,8 @@ importScripts(
  
  ### Build your React PWA
  
- - On running `npm build`, **sw.js** will be copied into the build folder with the 
+ - On running `npm build`, **sw.js** will be copied into the **build** folder with the 
  new custom [Workbox](https://developers.google.com/web/tools/workbox) config for cache strategies.
  
  - Use this [this VS Code Extension](https://marketplace.visualstudio.com/items?itemName=mayeedwin.vscode-pwa) to easily get the Workbox Code Snippets
  for use in your Workbox Service Workers.
- 
- - Learn more about Workbox [here](https://developers.google.com/web/tools/workbox).
- 
- Enjoy!
