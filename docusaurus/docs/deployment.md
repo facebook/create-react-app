@@ -472,10 +472,10 @@ You can deploy a fresh React project, with a Git repository set up for you, with
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/import/git?s=https%3A%2F%2Fgithub.com%2Fvercel%2Fvercel%2Ftree%2Fmaster%2Fexamples%2Fcreate-react-app)
 
-## References:
+### Vercel References:
 
-- [Example Source](https://github.com/vercel/vercel/tree/master/examples/gatsby)
-- [Official Vercel Guide](https://vercel.com/guides/deploying-gatsby-with-vercel)
+- [Example Source](https://github.com/vercel/vercel/tree/master/examples/create-react-app)
+- [Official Vercel Guide](https://vercel.com/guides/deploying-react-with-vercel-cra)
 - [Vercel Deployment Docs](https://vercel.com/docs)
 - [Vercel Custom Domain Docs](https://vercel.com/docs/custom-domains)
 
