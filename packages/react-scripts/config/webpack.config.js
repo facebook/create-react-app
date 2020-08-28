@@ -51,7 +51,9 @@ const webpackDevClientEntry = require.resolve(
 // makes for a smoother build process.
 const shouldInlineRuntimeChunk = process.env.INLINE_RUNTIME_CHUNK !== 'false';
 
+// @remove-on-eject-begin
 const isExtendingEslintConfig = process.env.EXTEND_ESLINT === 'true';
+// @remove-on-eject-end
 
 const imageInlineSizeLimit = parseInt(
   process.env.IMAGE_INLINE_SIZE_LIMIT || '10000'
