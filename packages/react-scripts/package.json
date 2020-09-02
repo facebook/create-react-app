@@ -1,10 +1,10 @@
 {
-  "name": "react-scripts",
-  "version": "3.4.1",
+  "name": "shopmonkey-react-scripts",
+  "version": "3.4.4",
   "description": "Configuration and scripts for Create React App.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/facebook/create-react-app.git",
+    "url": "https://github.com/gothy/create-react-app.git",
     "directory": "packages/react-scripts"
   },
   "license": "MIT",
@@ -12,7 +12,7 @@
     "node": ">=8.10"
   },
   "bugs": {
-    "url": "https://github.com/facebook/create-react-app/issues"
+    "url": "https://github.com/gothy/create-react-app/issues"
   },
   "files": [
     "bin",
@@ -29,16 +29,19 @@
   "types": "./lib/react-app.d.ts",
   "dependencies": {
     "@babel/core": "7.9.0",
+    "@hot-loader/react-dom": "^16.13.0",
     "@svgr/webpack": "4.3.3",
     "@typescript-eslint/eslint-plugin": "^2.10.0",
     "@typescript-eslint/parser": "^2.10.0",
     "babel-eslint": "10.1.0",
     "babel-jest": "^24.9.0",
     "babel-loader": "8.1.0",
+    "babel-plugin-jsx-conditional-component": "^0.1.5",
     "babel-plugin-named-asset-import": "^0.3.6",
     "babel-preset-react-app": "^9.1.2",
     "camelcase": "^5.3.1",
     "case-sensitive-paths-webpack-plugin": "2.3.0",
+    "copy-webpack-plugin": "^6.1.0",
     "css-loader": "3.4.2",
     "dotenv": "8.2.0",
     "dotenv-expand": "5.1.0",
@@ -61,13 +64,18 @@
     "mini-css-extract-plugin": "0.9.0",
     "optimize-css-assets-webpack-plugin": "5.0.3",
     "pnp-webpack-plugin": "1.6.4",
+    "postcss-calc": "^7.0.3",
     "postcss-flexbugs-fixes": "4.1.0",
+    "postcss-import": "^12.0.1",
     "postcss-loader": "3.0.0",
+    "postcss-mixins": "^6.2.3",
     "postcss-normalize": "8.0.1",
     "postcss-preset-env": "6.7.0",
     "postcss-safe-parser": "4.0.1",
+    "precss": "^4.0.0",
     "react-app-polyfill": "^1.0.6",
     "react-dev-utils": "^10.2.1",
+    "react-hot-loader": "^4.12.21",
     "resolve": "1.15.0",
     "resolve-url-loader": "3.1.1",
     "sass-loader": "8.0.2",

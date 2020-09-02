@@ -24,7 +24,8 @@ const ManifestPlugin = require('webpack-manifest-plugin');
 const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 const WorkboxWebpackPlugin = require('workbox-webpack-plugin');
 const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
-const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
+// const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const getCSSModuleLocalIdent = require('react-dev-utils/getCSSModuleLocalIdent');
 const paths = require('./paths');
 const modules = require('./modules');
@@ -56,7 +57,7 @@ const useTypeScript = fs.existsSync(paths.appTsConfig);
 
 // style files regexes
 const cssRegex = /\.css$/;
-const cssModuleRegex = /\.module\.css$/;
+// const cssModuleRegex = /\.module\.css$/;
 const sassRegex = /\.(scss|sass)$/;
 const sassModuleRegex = /\.module\.(scss|sass)$/;
 
@@ -103,6 +104,18 @@ module.exports = function(webpackEnv) {
           // https://github.com/facebook/create-react-app/issues/2677
           ident: 'postcss',
           plugins: () => [
+            // our custom PostCSS setup ->
+            require('postcss-import')({
+              // addDependencyTo: webpack,
+              addModulesDirectories: ['global-style'],
+            }),
+            require('postcss-mixins')(),
+            /* Stage 2 for "postcss-preset-env" */
+            require('precss')({ stage: 2 }),
+            /* "postcss-calc" can't recognize Sass-like variables in "calc"
+            function so it should be applised after "precss" */
+            require('postcss-calc')(),
+            // <- of our custom PostCSS setup
             require('postcss-flexbugs-fixes'),
             require('postcss-preset-env')({
               autoprefixer: {
@@ -150,6 +163,8 @@ module.exports = function(webpackEnv) {
     // These are the "entry points" to our application.
     // This means they will be the "root" imports that are included in JS bundle.
     entry: [
+      // Enable HMR for react components
+      'react-hot-loader/patch',
       // Include an alternative client for WebpackDevServer. A client's job is to
       // connect to WebpackDevServer by a socket and get notified about changes.
       // When you save a file, the client will either apply hot updates (in case
@@ -308,6 +323,12 @@ module.exports = function(webpackEnv) {
           'scheduler/tracing': 'scheduler/tracing-profiling',
         }),
         ...(modules.webpackAliases || {}),
+        // resolve for react-dom to enable HMR for react comps
+        'react-dom': '@hot-loader/react-dom',
+        // our custom resolvers ->
+        assets: path.resolve(paths.appSrc, '../assets/'),
+        shared: path.resolve(paths.appSrc, '../../common/shared/'),
+        // <- our custom resolvers
       },
       plugins: [
         // Adds support for installing with Plug'n'Play, leading to faster installs and adding
@@ -318,7 +339,8 @@ module.exports = function(webpackEnv) {
         // To fix this, we prevent you from importing files out of src/ -- if you'd like to,
         // please link the files into your node_modules/ and let module-resolution kick in.
         // Make sure your source files are compiled, as they will not be processed in any way.
-        new ModuleScopePlugin(paths.appSrc, [paths.appPackageJson]),
+        // TODO: link?
+        // new ModuleScopePlugin(paths.appSrc, [paths.appPackageJson]),
       ],
     },
     resolveLoader: {
@@ -366,6 +388,67 @@ module.exports = function(webpackEnv) {
           // match the requirements. When no loader matches it will fall
           // back to the "file" loader at the end of the loader list.
           oneOf: [
+            // our custom svgr handling of images and stuff ->
+            {
+              test: /\.svg$/,
+              include: path.resolve(paths.appSrc, '..', 'assets/svg/icons/'),
+              use: {
+                loader: '@svgr/webpack',
+                options: {
+                  ref: true,
+                  svgo: true,
+                  svgoConfig: {
+                    plugins: [
+                      {
+                        removeDimensions: true,
+                        removeViewbox: false,
+                        removeUselessStrokeAndFill: {
+                          fill: false,
+                        },
+                      },
+                    ],
+                  },
+                  replaceAttrValues: {
+                    '#7B848F': 'currentColor',
+                  },
+                },
+              },
+            },
+            {
+              test: /\.svg$/,
+              include: path.resolve(paths.appSrc, '..', 'assets/svg/'),
+              exclude: path.resolve(paths.appSrc, '..', 'assets/svg/icons/'),
+              use: {
+                loader: '@svgr/webpack',
+                options: {
+                  ref: true,
+                  svgo: true,
+                  svgoConfig: {
+                    plugins: [
+                      {
+                        removeDimensions: false,
+                        removeViewbox: false,
+                        removeUselessStrokeAndFill: {
+                          fill: false,
+                        },
+                      },
+                    ],
+                  },
+                },
+              },
+            },
+            {
+              test: /\.(svg|ttf|eot|woff|woff2).*$/,
+              exclude: path.resolve(paths.appSrc, '..', 'assets/svg/'),
+              use: {
+                loader: 'file-loader',
+                options: {
+                  // name: 'assets/[name]-[hash:5].[ext]',
+                  name: 'static/media/[name].[hash:8].[ext]',
+                },
+              },
+            },
+            // <- our custom svgr handling of images and stuff
             // "url" loader works like "file" loader except that it embeds assets
             // smaller than specified limit in bytes as data URLs to avoid requests.
             // A missing `test` is equivalent to a match.
@@ -409,17 +492,21 @@ module.exports = function(webpackEnv) {
                 ),
                 // @remove-on-eject-end
                 plugins: [
-                  [
-                    require.resolve('babel-plugin-named-asset-import'),
-                    {
-                      loaderMap: {
-                        svg: {
-                          ReactComponent:
-                            '@svgr/webpack?-svgo,+titleProp,+ref![path]',
-                        },
-                      },
-                    },
-                  ],
+                  // react HMR babel plugin
+                  'react-hot-loader/babel',
+                  // <Base /> component support via a forked version
+                  ['jsx-conditional-component'],
+                  // [
+                  //   require.resolve('babel-plugin-named-asset-import'),
+                  //   {
+                  //     loaderMap: {
+                  //       svg: {
+                  //         ReactComponent:
+                  //           '@svgr/webpack?-svgo,+titleProp,+ref![path]',
+                  //       },
+                  //     },
+                  //   },
+                  // ],
                 ],
                 // This is a feature of `babel-loader` for webpack (not Babel itself).
                 // It enables caching results in ./node_modules/.cache/babel-loader/
@@ -476,23 +563,24 @@ module.exports = function(webpackEnv) {
             // to a file, but in development "style" loader enables hot editing
             // of CSS.
             // By default we support CSS Modules with the extension .module.css
-            {
-              test: cssRegex,
-              exclude: cssModuleRegex,
-              use: getStyleLoaders({
-                importLoaders: 1,
-                sourceMap: isEnvProduction && shouldUseSourceMap,
-              }),
-              // Don't consider CSS imports dead code even if the
-              // containing package claims to have no side effects.
-              // Remove this when webpack adds a warning or an error for this.
-              // See https://github.com/webpack/webpack/issues/6571
-              sideEffects: true,
-            },
+            // {
+            //   test: cssRegex,
+            //   exclude: cssModuleRegex,
+            //   use: getStyleLoaders({
+            //     importLoaders: 1,
+            //     sourceMap: isEnvProduction && shouldUseSourceMap,
+            //   }),
+            //   // Don't consider CSS imports dead code even if the
+            //   // containing package claims to have no side effects.
+            //   // Remove this when webpack adds a warning or an error for this.
+            //   // See https://github.com/webpack/webpack/issues/6571
+            //   sideEffects: true,
+            // },
             // Adds support for CSS Modules (https://github.com/css-modules/css-modules)
             // using the extension .module.css
             {
-              test: cssModuleRegex,
+              // test: cssModuleRegex,
+              test: cssRegex,
               use: getStyleLoaders({
                 importLoaders: 1,
                 sourceMap: isEnvProduction && shouldUseSourceMap,
@@ -599,12 +687,49 @@ module.exports = function(webpackEnv) {
       // This gives some necessary context to module not found errors, such as
       // the requesting resource.
       new ModuleNotFoundPlugin(paths.appPath),
+      // inject React via webpack
+      new webpack.ProvidePlugin({
+        React: 'react',
+      }),
+      new CopyWebpackPlugin({
+        patterns: [
+          {
+            from: path.resolve(paths.appPath, 'assets'),
+            to: 'public/assets/',
+          },
+          {
+            from: path.resolve(paths.appPath, 'fonts'),
+            to: 'public/fonts/',
+          },
+          {
+            from: path.resolve(paths.appPath, 'manifest.json'),
+            to: 'public/',
+          },
+          {
+            from: path.resolve(paths.appPath, 'browserconfig.xml'),
+            to: '',
+          },
+          {
+            from: path.resolve(paths.appPath, 'favicon.ico'),
+            to: '',
+          },
+        ],
+      }),
       // Makes some environment variables available to the JS code, for example:
       // if (process.env.NODE_ENV === 'production') { ... }. See `./env.js`.
       // It is absolutely essential that NODE_ENV is set to production
       // during a production build.
       // Otherwise React will be compiled in the very slow development mode.
-      new webpack.DefinePlugin(env.stringified),
+      new webpack.DefinePlugin({
+        // default CRA defines
+        ...env.stringified,
+
+        // our custom defines
+        __DEVELOPMENT__: isEnvDevelopment,
+        __DEVTOOLS__: true && isEnvDevelopment,
+        __REDUX_LOGGER__: true && isEnvDevelopment,
+        __WHY_COMPONENT_UPDATE__: false && isEnvDevelopment,
+      }),
       // This is necessary to emit hot updates (currently CSS only):
       isEnvDevelopment && new webpack.HotModuleReplacementPlugin(),
       // Watcher doesn't work well if you mistype casing in a path so we use
