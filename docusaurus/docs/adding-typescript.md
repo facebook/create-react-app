@@ -9,13 +9,15 @@ title: Adding TypeScript
 
 ## Installation
 
-To start a new Create React App project with [TypeScript](https://www.typescriptlang.org/), you can run:
+To start a new Create React App project with [TypeScript](https://www.typescriptlang.org/), you can run using `npx`:
 
 ```sh
 npx create-react-app my-app --template typescript
+```
 
-# or
+Alternatively you may use `yarn`:
 
+```sh
 yarn create react-app my-app --template typescript
 ```
 
@@ -23,13 +25,15 @@ yarn create react-app my-app --template typescript
 >
 > Global installs of `create-react-app` are no longer supported.
 
-To add [TypeScript](https://www.typescriptlang.org/) to an existing Create React App project, first install it:
+To add [TypeScript](https://www.typescriptlang.org/) to an existing Create React App project, first install it using `npm`:
 
 ```sh
 npm install --save typescript @types/node @types/react @types/react-dom @types/jest
+```
 
-# or
+Alternatively you may use `yarn`:
 
+```sh
 yarn add typescript @types/node @types/react @types/react-dom @types/jest
 ```
 

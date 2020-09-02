@@ -141,10 +141,12 @@ For example, to create a build environment for a staging environment:
 
 1. Create a file called `.env.staging`
 1. Set environment variables as you would any other `.env` file (e.g. `REACT_APP_API_URL=http://api-staging.example.com`)
-1. Install [env-cmd](https://www.npmjs.com/package/env-cmd)
+1. Install [env-cmd](https://www.npmjs.com/package/env-cmd) using `npm`
    ```sh
    $ npm install env-cmd --save
-   $ # or
+   ```
+   Alternatively you may use `yarn`:
+   ```sh
    $ yarn add env-cmd
    ```
 1. Add a new script to your `package.json`, building with your new environment:

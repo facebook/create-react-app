@@ -4,13 +4,15 @@ This is the official TypeScript template for [Create React App](https://github.c
 
 To use this template, add `--template typescript` when creating a new app.
 
-For example:
+For example, using `npx`:
 
 ```sh
 npx create-react-app my-app --template typescript
+```
 
-# or
+Alternatively you may use `yarn`:
 
+```sh
 yarn create react-app my-app --template typescript
 ```
 
