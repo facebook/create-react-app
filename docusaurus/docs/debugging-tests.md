@@ -21,7 +21,7 @@ Add the following to the `scripts` section in your project's `package.json`
 Place `debugger;` statements in any test and run:
 
 ```sh
-$ npm run test:debug
+npm run test:debug
 ```
 
 This will start running your Jest tests, but pause before executing to allow a debugger to attach to the process.
