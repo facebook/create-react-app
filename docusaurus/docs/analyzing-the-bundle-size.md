@@ -33,7 +33,16 @@ Then in `package.json`, add the following line to `scripts`:
 Then to analyze the bundle run the production build then run the analyze
 script.
 
+Using `npm`:
+
 ```sh
 npm run build
 npm run analyze
+```
+
+Alternatively you may use `yarn`:
+
+```sh
+npm build
+npm analyze
 ```
