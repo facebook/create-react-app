@@ -10,8 +10,8 @@
 // Inspired by https://github.com/airbnb/javascript but less opinionated.
 
 // We use eslint-loader so even warnings are very visible.
-// This is why we only use "WARNING" level for potential errors,
-// and we don't use "ERROR" level at all.
+// This is why we prefer to use "WARNING" level for potential errors,
+// and we try not to use "ERROR" level at all.
 
 // In the future, we might create a separate list of rules for production.
 // It would probably be more strict.
