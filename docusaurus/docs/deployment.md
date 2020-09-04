@@ -184,6 +184,8 @@ Azure Static Web Apps will automatically configure a GitHub Action in your repo 
 
 See the [Azure Static Web Apps documentation](https://aka.ms/swadocs) for more information on routing, APIs, authentication and authorization, custom domains and more.
 
+See [this](https://www.pluralsight.com/guides/deploy-a-react-app-to-azure) blog on how to deploy React app to Microsoft Azure App Service and streamline CI/CD using Azure DevOps. 
+ 
 ## [Firebase](https://firebase.google.com/)
 
 Install the Firebase CLI if you haven’t already by running `npm install -g firebase-tools`. Sign up for a [Firebase account](https://console.firebase.google.com/) and create a new project. Run `firebase login` and login with your previous created Firebase account.
