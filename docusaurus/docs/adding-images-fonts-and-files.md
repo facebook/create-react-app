@@ -62,6 +62,6 @@ function App() {
 }
 ```
 
-This is handy if you don't want to load SVG as a separate file. Don't forget the curly braces in the import! The `ReactComponent` import name is significant and tells Create React App that you want a React component that renders an SVG, rather than its filename.
+This is handy if you don't want to load SVG as a separate file. Don't forget the curly braces in the import! The `ReactComponent` import name is significant and tells Create React App that you want a React component that renders an SVG, rather than its filename. Ensure PascalCasing of the component name (`Logo` in the above example).
 
 > **Tip:** The imported SVG React Component accepts a `title` prop along with other props that a `svg` element accepts. Use this prop to add an accessible title to your svg component.
