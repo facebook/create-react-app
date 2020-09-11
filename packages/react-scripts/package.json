@@ -1,10 +1,10 @@
 {
-  "name": "react-scripts",
-  "version": "3.4.1",
+  "name": "anjan-react-scripts",
+  "version": "2.1.20",
   "description": "Configuration and scripts for Create React App.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/facebook/create-react-app.git",
+    "url": "https://github.com/Anjan-Shomodder/create-react-app.git",
     "directory": "packages/react-scripts"
   },
   "license": "MIT",
@@ -12,7 +12,7 @@
     "node": "^10.12.0 || >=12.0.0"
   },
   "bugs": {
-    "url": "https://github.com/facebook/create-react-app/issues"
+    "url": "https://github.com/Anjan-Shomodder/create-react-app/issues"
   },
   "files": [
     "bin",
@@ -34,7 +34,7 @@
     "@typescript-eslint/eslint-plugin": "^3.3.0",
     "@typescript-eslint/parser": "^3.3.0",
     "babel-eslint": "^10.1.0",
-    "babel-jest": "^26.3.0",
+    "babel-jest": "^26.0.1",
     "babel-loader": "8.1.0",
     "babel-plugin-named-asset-import": "^0.3.6",
     "babel-preset-react-app": "^9.1.2",
@@ -56,9 +56,9 @@
     "fs-extra": "^9.0.0",
     "html-webpack-plugin": "4.3.0",
     "identity-obj-proxy": "3.0.0",
-    "jest": "26.3.0",
-    "jest-circus": "26.3.0",
-    "jest-resolve": "26.3.0",
+    "jest": "26.1.0",
+    "jest-circus": "26.1.0",
+    "jest-resolve": "26.1.0",
     "jest-watch-typeahead": "0.6.0",
     "mini-css-extract-plugin": "0.9.0",
     "optimize-css-assets-webpack-plugin": "5.0.3",
@@ -70,6 +70,7 @@
     "postcss-safe-parser": "4.0.2",
     "react-app-polyfill": "^1.0.6",
     "react-dev-utils": "^10.2.1",
+    "anjan-react-dev-utils": "0.0.1",
     "react-refresh": "^0.8.3",
     "resolve": "1.17.0",
     "resolve-url-loader": "3.1.1",
@@ -82,7 +83,17 @@
     "webpack": "4.43.0",
     "webpack-dev-server": "3.11.0",
     "webpack-manifest-plugin": "2.2.0",
-    "workbox-webpack-plugin": "5.1.3"
+    "workbox-webpack-plugin": "5.1.3",
+    "styled-components": "^5.1.1",
+    "babel-plugin-styled-components": "^1.11.1",
+    "stylus": "^0.54.8",
+    "stylus-loader": "^3.0.2",
+    "eslint-config-prettier": "^6.11.0",
+    "sugarss": "2.0.0",
+    "postcss-exclude-files": "^1.0.15",
+    "react-router-dom": "^5.2.0",
+    "prettier": "^2.1.1",
+    "react-loadable": "^5.5.0"
   },
   "devDependencies": {
     "react": "^16.12.0",

@@ -369,7 +369,10 @@ module.exports = function (webpackEnv) {
                 baseConfig: isExtendingEslintConfig
                   ? undefined
                   : {
-                      extends: [require.resolve('eslint-config-react-app')],
+                      extends: [
+                        require.resolve('eslint-config-react-app'),
+                        require.resolve('eslint-config-prettier'),
+                      ],
                     },
                 useEslintrc: isExtendingEslintConfig,
                 // @remove-on-eject-end
@@ -406,8 +409,8 @@ module.exports = function (webpackEnv) {
                   'babel-preset-react-app/webpack-overrides'
                 ),
                 // @remove-on-eject-begin
-                babelrc: false,
-                configFile: false,
+                babelrc: true,
+                configFile: true,
                 presets: [require.resolve('babel-preset-react-app')],
                 // Make sure we have a unique cache identifier, erring on the
                 // side of caution.
@@ -438,6 +441,7 @@ module.exports = function (webpackEnv) {
                       },
                     },
                   ],
+                  'babel-plugin-styled-components',
                   isEnvDevelopment &&
                     shouldUseReactRefresh &&
                     require.resolve('react-refresh/babel'),
@@ -547,6 +551,7 @@ module.exports = function (webpackEnv) {
               // See https://github.com/webpack/webpack/issues/6571
               sideEffects: true,
             },
+
             // Adds support for CSS Modules, but using SASS
             // using the extension .module.scss or .module.sass
             {
@@ -645,7 +650,9 @@ module.exports = function (webpackEnv) {
             entry: webpackDevClientEntry,
             // The expected exports are slightly different from what the overlay exports,
             // so an interop is included here to enable feedback on module-level errors.
-            module: require.resolve('react-dev-utils/refreshOverlayInterop'),
+            module: require.resolve(
+              'anjan-react-dev-utils/refreshOverlayInterop'
+            ),
             // Since we ship a custom dev client and overlay integration,
             // the bundled socket handling logic can be eliminated.
             sockIntegration: false,
