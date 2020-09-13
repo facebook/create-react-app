@@ -26,16 +26,15 @@ Note that even if you customise your ESLint config, these changes will **only af
 
 If you want to enforce a coding style for your project, consider using [Prettier](https://github.com/jlongster/prettier) instead of ESLint style rules.
 
-### Experimental: Extending the ESLint config
+### Extending or replacing the default ESLint config
 
-We recognise that in some cases, further customisation is required. It is now possible to extend the base ESLint config by setting the `EXTEND_ESLINT` environment variable to `true`. See [advanced configuration](advanced-configuration.md) for more information on available environment variables.
-
-Note that any rules set to `"error"` will stop the project from building.
+You can extend our base ESLint config, or replace it completely if you need.
 
 There are a few things to remember:
 
 1. We highly recommend extending the base config, as removing it could introduce hard-to-find issues.
 1. When working with TypeScript, you'll need to provide an `overrides` object for rules that should _only_ target TypeScript files.
+1. It's important to note that any rules that are set to `"error"` will stop the project from building.
 
 In the below example:
 

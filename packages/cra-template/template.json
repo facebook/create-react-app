@@ -5,6 +5,9 @@
       "@testing-library/react": "^10.4.3",
       "@testing-library/user-event": "^12.0.11",
       "web-vitals": "^0.2.2"
+    },
+    "eslintConfig": {
+      "extends": ["react-app", "react-app/jest"]
     }
   }
 }
