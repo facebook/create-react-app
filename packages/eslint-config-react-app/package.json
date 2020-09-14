@@ -12,7 +12,8 @@
     "url": "https://github.com/facebook/create-react-app/issues"
   },
   "files": [
-    "index.js"
+    "index.js",
+    "jest.js"
   ],
   "peerDependencies": {
     "@typescript-eslint/eslint-plugin": "^3.0.0",
