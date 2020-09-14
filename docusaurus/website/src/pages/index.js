@@ -48,6 +48,7 @@ function Home() {
         <div className="container">
           <img
             className={classnames(styles.heroBannerLogo, 'margin-vert--md')}
+            alt="Create React App logo"
             src={useBaseUrl('img/logo.svg')}
           />
           <h1 className="hero__title">{siteConfig.title}</h1>
@@ -99,7 +100,7 @@ function Home() {
             <div className="col col--5 col--offset-1">
               <img
                 className={styles.featureImage}
-                alt={'Easy to get started in seconds'}
+                alt="Easy to get started in seconds"
                 src={
                   'https://camo.githubusercontent.com/29765c4a32f03bd01d44edef1cd674225e3c906b/68747470733a2f2f63646e2e7261776769742e636f6d2f66616365626f6f6b2f6372656174652d72656163742d6170702f323762343261632f73637265656e636173742e737667'
                 }
@@ -114,7 +115,7 @@ function Home() {
             <div className="col col--4 col--offset-1">
               <img
                 className={styles.featureImage}
-                alt={'Easy to update'}
+                alt="Easy to update"
                 src={useBaseUrl('img/update.png')}
               />
             </div>
