@@ -1,5 +1,6 @@
 {
   "name": "cra-template-typescript",
+  "private": true,
   "version": "1.0.3",
   "keywords": [
     "react",

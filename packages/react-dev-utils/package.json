@@ -1,5 +1,6 @@
 {
   "name": "react-dev-utils",
+  "private": true,
   "version": "10.2.1",
   "description": "webpack utilities used by Create React App",
   "repository": {

@@ -1,5 +1,6 @@
 {
   "name": "eslint-config-react-app",
+  "private": true,
   "version": "5.2.1",
   "description": "ESLint configuration used by Create React App",
   "repository": {
