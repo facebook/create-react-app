@@ -1,5 +1,11 @@
 # @foreachbe/react-scripts
 
+## 6.2.0-beta.1
+
+### Patch Changes
+
+- Fix NPM publish
+
 ## 6.2.0-beta.0
 
 ### Minor Changes

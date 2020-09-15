@@ -15,5 +15,5 @@
     "@foreachbe/react-scripts": "6.1.0",
     "@foreachbe/stylelint-config-react-app": "4.0.0"
   },
-  "changesets": ["quick-rabbits-wash"]
+  "changesets": ["quick-rabbits-wash", "rotten-guests-deliver"]
 }
