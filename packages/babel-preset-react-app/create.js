@@ -20,10 +20,21 @@ const validateBoolOption = (name, value, defaultValue) => {
   return value;
 };
 
+const hasDependency = dependency => {
+  try {
+    require.resolve(dependency);
+    return true;
+  } catch (err) {
+    return false;
+  }
+};
+
 module.exports = function (api, opts, env) {
   if (!opts) {
     opts = {};
   }
+
+  var hasEmotionDependency = hasDependency('@emotion/core');
 
   var isEnvDevelopment = env === 'development';
   var isEnvProduction = env === 'production';
@@ -99,6 +110,10 @@ module.exports = function (api, opts, env) {
         },
       ],
       isTypeScriptEnabled && [require('@babel/preset-typescript').default],
+      // Emotion CSS in JS optimization
+      hasEmotionDependency && [
+        require('@emotion/babel-preset-css-prop').default,
+      ],
     ].filter(Boolean),
     plugins: [
       // Strip flow types before any other transform, emulating the behavior

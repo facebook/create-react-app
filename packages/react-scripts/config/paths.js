@@ -11,11 +11,34 @@
 const path = require('path');
 const fs = require('fs');
 const getPublicUrlOrPath = require('react-dev-utils/getPublicUrlOrPath');
+const findUp = require('find-up');
 
 // Make sure any symlinks in the project folder are resolved:
 // https://github.com/facebook/create-react-app/issues/637
 const appDirectory = fs.realpathSync(process.cwd());
 const resolveApp = relativePath => path.resolve(appDirectory, relativePath);
+
+function getAppPages() {
+  const appPages = require(resolveApp('package.json')).appPages || [];
+  // checks if there is at least one entry point specified
+
+  if (appPages.length === 0) {
+    appPages.push({
+      name: 'index',
+      title: 'index',
+      appHtml: 'public/index.html',
+      appIndexJs: 'src/index',
+    });
+  }
+
+  return appPages.map(p => ({
+    ...p,
+    appHtml: p.appHtml && resolveApp(p.appHtml),
+    appIndexJs: resolveModule(resolveApp, p.appIndexJs),
+  }));
+}
+
+const appPages = getAppPages();
 
 // We use `PUBLIC_URL` environment variable or "homepage" field to infer
 // "public path" at which the app is served.
@@ -56,12 +79,18 @@ const resolveModule = (resolveFn, filePath) => {
   return resolveFn(`${filePath}.js`);
 };
 
+const outputPath = process.env.OUTPUT || 'build';
+
+//TODO add appStylelintConfig
+
 // config after eject: we're in ./config/
 module.exports = {
   dotenv: resolveApp('.env'),
   appPath: resolveApp('.'),
-  appBuild: resolveApp('build'),
+  appBuild: resolveApp(outputPath),
   appPublic: resolveApp('public'),
+  appPages,
+  appStylelintConfig: resolveApp('.stylelintrc'),
   appHtml: resolveApp('public/index.html'),
   appIndexJs: resolveModule(resolveApp, 'src/index'),
   appPackageJson: resolveApp('package.json'),
@@ -73,6 +102,7 @@ module.exports = {
   proxySetup: resolveApp('src/setupProxy.js'),
   appNodeModules: resolveApp('node_modules'),
   swSrc: resolveModule(resolveApp, 'src/service-worker'),
+  resolveApp,
   publicUrlOrPath,
 };
 
@@ -83,8 +113,10 @@ const resolveOwn = relativePath => path.resolve(__dirname, '..', relativePath);
 module.exports = {
   dotenv: resolveApp('.env'),
   appPath: resolveApp('.'),
-  appBuild: resolveApp('build'),
+  appBuild: resolveApp(outputPath),
+  appStylelintConfig: resolveApp('.stylelintrc'),
   appPublic: resolveApp('public'),
+  appPages,
   appHtml: resolveApp('public/index.html'),
   appIndexJs: resolveModule(resolveApp, 'src/index'),
   appPackageJson: resolveApp('package.json'),
@@ -97,6 +129,7 @@ module.exports = {
   appNodeModules: resolveApp('node_modules'),
   swSrc: resolveModule(resolveApp, 'src/service-worker'),
   publicUrlOrPath,
+  resolveApp,
   // These properties only exist before ejecting:
   ownPath: resolveOwn('.'),
   ownNodeModules: resolveOwn('node_modules'), // This is empty on npm 3
@@ -105,7 +138,9 @@ module.exports = {
 };
 
 const ownPackageJson = require('../package.json');
-const reactScriptsPath = resolveApp(`node_modules/${ownPackageJson.name}`);
+const reactScriptsPath = findUp.sync(`node_modules/${ownPackageJson.name}`, {
+  cwd: resolveApp('.'),
+});
 const reactScriptsLinked =
   fs.existsSync(reactScriptsPath) &&
   fs.lstatSync(reactScriptsPath).isSymbolicLink();
@@ -116,6 +151,16 @@ if (
   __dirname.indexOf(path.join('packages', 'react-scripts', 'config')) !== -1
 ) {
   const templatePath = '../cra-template/template';
+
+  const appPages = [
+    {
+      name: 'index',
+      title: 'index',
+      appHtml: resolveOwn(`${templatePath}/public/index.html`),
+      appIndexJs: resolveModule(resolveOwn, `${templatePath}/src/index`),
+    },
+  ];
+
   module.exports = {
     dotenv: resolveOwn(`${templatePath}/.env`),
     appPath: resolveApp('.'),
@@ -123,6 +168,8 @@ if (
     appPublic: resolveOwn(`${templatePath}/public`),
     appHtml: resolveOwn(`${templatePath}/public/index.html`),
     appIndexJs: resolveModule(resolveOwn, `${templatePath}/src/index`),
+    appPages,
+    appStylelintConfig: resolveOwn(`${templatePath}/.stylelintrc`),
     appPackageJson: resolveOwn('package.json'),
     appSrc: resolveOwn(`${templatePath}/src`),
     appTsConfig: resolveOwn(`${templatePath}/tsconfig.json`),
@@ -133,6 +180,7 @@ if (
     appNodeModules: resolveOwn('node_modules'),
     swSrc: resolveModule(resolveOwn, `${templatePath}/src/service-worker`),
     publicUrlOrPath,
+    resolveApp,
     // These properties only exist before ejecting:
     ownPath: resolveOwn('.'),
     ownNodeModules: resolveOwn('node_modules'),

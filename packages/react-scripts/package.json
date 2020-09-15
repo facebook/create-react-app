@@ -1,10 +1,10 @@
 {
-  "name": "react-scripts",
-  "version": "3.4.1",
+  "name": "@foreachbe/react-scripts",
+  "version": "6.1.0",
   "description": "Configuration and scripts for Create React App.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/facebook/create-react-app.git",
+    "url": "https://github.com/foreachos/create-react-app.git",
     "directory": "packages/react-scripts"
   },
   "license": "MIT",
@@ -12,7 +12,7 @@
     "node": "^10.12.0 || >=12.0.0"
   },
   "bugs": {
-    "url": "https://github.com/facebook/create-react-app/issues"
+    "url": "https://github.com/foreachos/create-react-app/issues"
   },
   "files": [
     "bin",
@@ -29,6 +29,8 @@
   "types": "./lib/react-app.d.ts",
   "dependencies": {
     "@babel/core": "7.10.5",
+    "@foreachbe/babel-preset-react-app": "^5.0.0",
+    "@foreachbe/stylelint-config-react-app": "^4.0.0",
     "@pmmmwh/react-refresh-webpack-plugin": "0.4.1",
     "@svgr/webpack": "5.4.0",
     "@typescript-eslint/eslint-plugin": "^4.1.0",
@@ -39,6 +41,7 @@
     "babel-plugin-named-asset-import": "^0.3.6",
     "babel-preset-react-app": "^9.1.2",
     "bfj": "^7.0.2",
+    "browser-sync": "2.26.12",
     "camelcase": "^6.0.0",
     "case-sensitive-paths-webpack-plugin": "2.3.0",
     "css-loader": "3.6.0",
@@ -54,10 +57,12 @@
     "eslint-plugin-react": "^7.20.6",
     "eslint-plugin-react-hooks": "^4.1.2",
     "file-loader": "6.0.0",
+    "find-up": "5.0.0",
     "fs-extra": "^9.0.0",
     "html-webpack-plugin": "4.3.0",
     "identity-obj-proxy": "3.0.0",
     "jest": "26.3.0",
+    "jest-bamboo-reporter": "^1.2.1",
     "jest-circus": "26.3.0",
     "jest-resolve": "26.3.0",
     "jest-watch-typeahead": "0.6.0",
@@ -77,10 +82,13 @@
     "sass-loader": "8.0.2",
     "semver": "7.3.2",
     "style-loader": "1.2.1",
+    "stylelint": "^13.7.1",
+    "stylelint-webpack-plugin": "^2.1.0",
     "terser-webpack-plugin": "3.0.7",
     "ts-pnp": "1.2.0",
     "url-loader": "4.1.0",
     "webpack": "4.43.0",
+    "webpack-bundle-analyzer": "3.8.0",
     "webpack-dev-server": "3.11.0",
     "webpack-manifest-plugin": "2.2.0",
     "workbox-webpack-plugin": "5.1.3"

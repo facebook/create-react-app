@@ -56,9 +56,14 @@ const WARN_AFTER_CHUNK_GZIP_SIZE = 1024 * 1024;
 const isInteractive = process.stdout.isTTY;
 
 // Warn and crash if required files are missing
-if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
-  process.exit(1);
-}
+
+paths.appPages.forEach(appPage => {
+  if (
+    !checkRequiredFiles([appPage.appHtml, appPage.appIndexJs].filter(Boolean))
+  ) {
+    process.exit(1);
+  }
+});
 
 const argv = process.argv.slice(2);
 const writeStatsJson = argv.indexOf('--stats') !== -1;
@@ -221,8 +226,10 @@ function build(previousFileSizes) {
 }
 
 function copyPublicFolder() {
+  const htmlPages = paths.appPages.map(a => a.appHtml);
+
   fs.copySync(paths.appPublic, paths.appBuild, {
     dereference: true,
-    filter: file => file !== paths.appHtml,
+    filter: file => !htmlPages.includes(file),
   });
 }

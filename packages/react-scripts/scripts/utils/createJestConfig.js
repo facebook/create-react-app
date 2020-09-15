@@ -53,6 +53,7 @@ module.exports = (resolve, rootDir, isEjecting) => {
       '[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs|cjs|ts|tsx)$',
       '^.+\\.module\\.(css|sass|scss)$',
     ],
+    testResultsProcessor: require.resolve('jest-bamboo-reporter'),
     modulePaths: modules.additionalModulePaths || [],
     moduleNameMapper: {
       '^react-native$': 'react-native-web',
@@ -65,6 +66,10 @@ module.exports = (resolve, rootDir, isEjecting) => {
     watchPlugins: [
       'jest-watch-typeahead/filename',
       'jest-watch-typeahead/testname',
+    ],
+    watchPathIgnorePatterns: [
+      '<rootDir>/test-report.json',
+      '<rootDir>/test-output/test-report.json',
     ],
     resetMocks: true,
   };
@@ -91,6 +96,8 @@ module.exports = (resolve, rootDir, isEjecting) => {
     'transform',
     'transformIgnorePatterns',
     'watchPathIgnorePatterns',
+    'testResultsProcessor',
+    'roots',
   ];
   if (overrides) {
     supportedKeys.forEach(key => {

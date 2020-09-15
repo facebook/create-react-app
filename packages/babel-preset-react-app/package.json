@@ -1,15 +1,19 @@
 {
-  "name": "babel-preset-react-app",
-  "version": "9.1.2",
+  "name": "@foreachbe/babel-preset-react-app",
+  "version": "5.0.0",
   "description": "Babel preset used by Create React App",
   "repository": {
     "type": "git",
-    "url": "https://github.com/facebook/create-react-app.git",
+    "url": "https://github.com/foreachbe/create-react-app.git",
     "directory": "packages/babel-preset-react-app"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/facebook/create-react-app/issues"
+    "url": "https://github.com/foreachbe/create-react-app/issues"
   },
   "files": [
     "create.js",
@@ -21,6 +25,7 @@
     "test.js"
   ],
   "dependencies": {
+    "@emotion/babel-preset-css-prop": "10.0.27",
     "@babel/core": "7.10.5",
     "@babel/plugin-proposal-class-properties": "7.10.4",
     "@babel/plugin-proposal-decorators": "7.10.5",
@@ -36,5 +41,13 @@
     "@babel/runtime": "7.10.5",
     "babel-plugin-macros": "2.8.0",
     "babel-plugin-transform-react-remove-prop-types": "0.4.24"
+  },
+  "peerDependencies": {
+    "@emotion/core": "^10.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@emotion/core": {
+      "optional": true
+    }
   }
 }

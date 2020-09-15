@@ -3,7 +3,8 @@
     "start": "docusaurus start",
     "build": "docusaurus build",
     "swizzle": "docusaurus swizzle",
-    "deploy": "docusaurus deploy"
+    "deploy": "docusaurus deploy",
+    "deploy:gh": "GIT_USER=jarrku USE_SSH=true yarn deploy"
   },
   "dependencies": {
     "@docusaurus/core": "^2.0.0-alpha.39",

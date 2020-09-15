@@ -20,10 +20,21 @@ const validateBoolOption = (name, value, defaultValue) => {
   return value;
 };
 
+const hasDependency = dependency => {
+  try {
+    require.resolve(dependency);
+    return true;
+  } catch (err) {
+    return false;
+  }
+};
+
 module.exports = function (api, opts) {
   if (!opts) {
     opts = {};
   }
+
+  var hasEmotionDependency = hasDependency('@emotion/core');
 
   // This is similar to how `env` works in Babel:
   // https://babeljs.io/docs/usage/babelrc/#env-option
@@ -90,6 +101,10 @@ module.exports = function (api, opts) {
           // Exclude transforms that make all code slower
           exclude: ['transform-typeof-symbol'],
         },
+      ],
+      // Emotion CSS in JS optimization
+      hasEmotionDependency && [
+        require('@emotion/babel-preset-css-prop').default,
       ],
     ].filter(Boolean),
     plugins: [

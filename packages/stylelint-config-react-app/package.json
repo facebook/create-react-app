@@ -1,0 +1,26 @@
+{
+  "name": "@foreachbe/stylelint-config-react-app",
+  "version": "4.0.0",
+  "description": "Stylint configuration used by Foreach",
+  "main": "index.js",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  },
+  "files": [
+    "index.js"
+  ],
+  "dependencies": {
+    "stylelint-config-prettier": "^8.0.2",
+    "stylelint-config-recommended-scss": "4.2.0",
+    "stylelint-scss": "^3.18.0"
+  },
+  "peerDependencies": {
+    "stylelint": "13.x"
+  },
+  "devDependencies": {
+    "stylelint": "13.7.1"
+  },
+  "author": "Simon Van den Broeck",
+  "license": "MIT"
+}

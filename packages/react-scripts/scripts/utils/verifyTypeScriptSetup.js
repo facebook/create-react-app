@@ -103,6 +103,7 @@ function verifyTypeScriptSetup() {
     // These are suggested values and will be set when not present in the
     // tsconfig.json
     // 'parsedValue' matches the output value from ts.parseJsonConfigFileContent()
+    baseUrl: { suggested: 'src' },
     target: {
       parsedValue: ts.ScriptTarget.ES5,
       suggested: 'es5',
@@ -130,12 +131,12 @@ function verifyTypeScriptSetup() {
     },
     resolveJsonModule: { value: true, reason: 'to match webpack loader' },
     isolatedModules: { value: true, reason: 'implementation limitation' },
-    noEmit: { value: true },
+    // noEmit: { value: true },
     jsx: {
       parsedValue: ts.JsxEmit.React,
       suggested: 'react',
     },
-    paths: { value: undefined, reason: 'aliased imports are not supported' },
+    // paths: { value: undefined, reason: 'aliased imports are not supported' },
   };
 
   const formatDiagnosticHost = {
@@ -263,7 +264,7 @@ function verifyTypeScriptSetup() {
   if (!fs.existsSync(paths.appTypeDeclarations)) {
     fs.writeFileSync(
       paths.appTypeDeclarations,
-      `/// <reference types="react-scripts" />${os.EOL}`
+      `/// <reference types="@foreachbe/react-scripts" />${os.EOL}`
     );
   }
 }

@@ -1,3 +1,4 @@
+'use strict';
 /**
  * Copyright (c) 2017-present, Facebook, Inc.
  *
@@ -8,10 +9,10 @@
 const siteConfig = {
   title: 'Create React App',
   tagline: 'Set up a modern web app by running one command.',
-  url: 'https://create-react-app.dev',
-  baseUrl: '/',
+  url: 'https://foreachos.github.io',
+  baseUrl: '/create-react-app/',
   projectName: 'create-react-app',
-  organizationName: 'facebook',
+  organizationName: 'foreachos',
   favicon: 'img/favicon/favicon.ico',
   presets: [
     [
@@ -21,7 +22,7 @@ const siteConfig = {
           path: '../docs',
           sidebarPath: require.resolve('./sidebars.json'),
           editUrl:
-            'https://github.com/facebook/create-react-app/edit/master/docusaurus/website',
+            'https://github.com/foreachos/create-react-app/edit/master/docusaurus/docs/',
           showLastUpdateAuthor: true,
           showLastUpdateTime: true,
         },
@@ -51,7 +52,7 @@ const siteConfig = {
           position: 'right',
         },
         {
-          href: 'https://www.github.com/facebook/create-react-app',
+          href: 'https://www.github.com/foreachos/create-react-app',
           label: 'GitHub',
           position: 'right',
         },

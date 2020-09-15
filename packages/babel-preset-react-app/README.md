@@ -1,4 +1,4 @@
-# babel-preset-react-app
+# @foreachbe/eslint-config-react-app
 
 This package includes the Babel preset used by [Create React App](https://github.com/facebook/create-react-app).<br>
 Please refer to its documentation:
