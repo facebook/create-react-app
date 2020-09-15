@@ -27,6 +27,7 @@ cd ..
 root_path=$PWD
 
 if [ -z $CI ]; then
+  yarn changeset version
   yarn compile:lockfile
 fi
 
@@ -48,4 +49,4 @@ if [ -z $CI ]; then
 fi
 
 # Go!
-NPM_CONFIG_OTP="$otp" ./node_modules/.bin/lerna publish "$@"
+NPM_CONFIG_OTP="$otp" yarn changeset publish "$@"

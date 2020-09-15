@@ -5,7 +5,6 @@
   ],
   "scripts": {
     "build": "cd packages/react-scripts && node bin/react-scripts.js build",
-    "changelog": "lerna-changelog",
     "create-react-app": "node tasks/cra.js",
     "e2e": "tasks/e2e-simple.sh",
     "e2e:docker": "tasks/local-test.sh",
@@ -19,6 +18,9 @@
     "format": "prettier --write 'packages/*/*.js' 'packages/*/!(node_modules)/**/*.js'",
     "compile:lockfile": "node tasks/compile-lockfile.js"
   },
+  "dependencies": {
+    "@changesets/cli": "^2.10.2"
+  },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.11.0",
     "@testing-library/react": "^10.4.3",
@@ -31,8 +33,6 @@
     "globby": "^11.0.0",
     "husky": "^4.2.5",
     "jest": "26.3.0",
-    "lerna": "3.20.2",
-    "lerna-changelog": "~0.8.2",
     "lint-staged": "^10.2.2",
     "meow": "^6.1.1",
     "multimatch": "^4.0.0",
