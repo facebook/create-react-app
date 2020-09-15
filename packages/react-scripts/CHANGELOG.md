@@ -1,5 +1,11 @@
 # @foreachbe/react-scripts
 
+## 6.2.0-beta.3
+
+### Patch Changes
+
+- afef45e2: Fix build error in react-scripts
+
 ## 6.2.0-beta.2
 
 ### Patch Changes
