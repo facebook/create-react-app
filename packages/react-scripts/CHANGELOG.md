@@ -1,5 +1,14 @@
 # @foreachbe/react-scripts
 
+## 6.2.0-beta.2
+
+### Patch Changes
+
+- reuse custom eslint config
+- Updated dependencies [undefined]
+  - @foreachbe/babel-preset-react-app@5.1.0-beta.1
+  - @foreachbe/eslint-config-react-app@6.0.1-beta.0
+
 ## 6.2.0-beta.1
 
 ### Patch Changes

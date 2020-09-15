@@ -13,7 +13,12 @@
     "react-dev-utils": "10.2.1",
     "react-error-overlay": "6.0.7",
     "@foreachbe/react-scripts": "6.1.0",
-    "@foreachbe/stylelint-config-react-app": "4.0.0"
+    "@foreachbe/stylelint-config-react-app": "4.0.0",
+    "@foreachbe/eslint-config-react-app": "6.0.0"
   },
-  "changesets": ["quick-rabbits-wash", "rotten-guests-deliver"]
+  "changesets": [
+    "great-dolphins-enjoy",
+    "quick-rabbits-wash",
+    "rotten-guests-deliver"
+  ]
 }

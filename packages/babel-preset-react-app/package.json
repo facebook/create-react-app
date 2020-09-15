@@ -1,6 +1,6 @@
 {
   "name": "@foreachbe/babel-preset-react-app",
-  "version": "5.1.0-beta.0",
+  "version": "5.1.0-beta.1",
   "description": "Babel preset used by Create React App",
   "repository": {
     "type": "git",
