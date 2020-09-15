@@ -106,6 +106,7 @@ module.exports = {
           {
             args: 'none',
             ignoreRestSiblings: true,
+            varsIgnorePattern: '(jsx|_)',
           },
         ],
         'no-useless-constructor': 'off',
@@ -255,7 +256,20 @@ module.exports = {
     'import/no-amd': 'error',
     'import/no-anonymous-default-export': 'warn',
     'import/no-webpack-loader-syntax': 'error',
-
+    'import/no-extraneous-dependencies': [
+      'error',
+      {
+        devDependencies: [
+          '**/*.test.ts',
+          '**/*.spec.ts',
+          '**/*.test.tsx',
+          '**/*.spec.tsx',
+          '**/setupTests.ts',
+          '**/setupTests.tsx',
+        ],
+        optionalDependencies: false,
+      },
+    ],
     // https://github.com/yannickcr/eslint-plugin-react/tree/master/docs/rules
     'react/forbid-foreign-prop-types': ['warn', { allowInPropTypes: true }],
     'react/jsx-no-comment-textnodes': 'warn',

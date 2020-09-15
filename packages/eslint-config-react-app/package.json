@@ -1,16 +1,19 @@
 {
-  "name": "eslint-config-react-app",
-  "private": true,
-  "version": "5.2.1",
+  "name": "@foreachbe/eslint-config-react-app",
+  "version": "6.0.0",
   "description": "ESLint configuration used by Create React App",
   "repository": {
     "type": "git",
-    "url": "https://github.com/facebook/create-react-app.git",
+    "url": "https://github.com/foreachos/create-react-app.git",
     "directory": "packages/eslint-config-react-app"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/facebook/create-react-app/issues"
+    "url": "https://github.com/foreachos/create-react-app/issues"
   },
   "files": [
     "index.js"
