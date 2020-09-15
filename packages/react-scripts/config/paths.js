@@ -18,28 +18,6 @@ const findUp = require('find-up');
 const appDirectory = fs.realpathSync(process.cwd());
 const resolveApp = relativePath => path.resolve(appDirectory, relativePath);
 
-function getAppPages() {
-  const appPages = require(resolveApp('package.json')).appPages || [];
-  // checks if there is at least one entry point specified
-
-  if (appPages.length === 0) {
-    appPages.push({
-      name: 'index',
-      title: 'index',
-      appHtml: 'public/index.html',
-      appIndexJs: 'src/index',
-    });
-  }
-
-  return appPages.map(p => ({
-    ...p,
-    appHtml: p.appHtml && resolveApp(p.appHtml),
-    appIndexJs: resolveModule(resolveApp, p.appIndexJs),
-  }));
-}
-
-const appPages = getAppPages();
-
 // We use `PUBLIC_URL` environment variable or "homepage" field to infer
 // "public path" at which the app is served.
 // webpack needs to know it to put the right <script> hrefs into HTML even in
@@ -81,7 +59,27 @@ const resolveModule = (resolveFn, filePath) => {
 
 const outputPath = process.env.OUTPUT || 'build';
 
-//TODO add appStylelintConfig
+function getAppPages() {
+  const appPages = require(resolveApp('package.json')).appPages || [];
+  // checks if there is at least one entry point specified
+
+  if (appPages.length === 0) {
+    appPages.push({
+      name: 'index',
+      title: 'index',
+      appHtml: 'public/index.html',
+      appIndexJs: 'src/index',
+    });
+  }
+
+  return appPages.map(p => ({
+    ...p,
+    appHtml: p.appHtml && resolveApp(p.appHtml),
+    appIndexJs: resolveModule(resolveApp, p.appIndexJs),
+  }));
+}
+
+const appPages = getAppPages();
 
 // config after eject: we're in ./config/
 module.exports = {
