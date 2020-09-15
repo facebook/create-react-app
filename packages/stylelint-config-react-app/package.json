@@ -1,6 +1,6 @@
 {
   "name": "@foreachbe/stylelint-config-react-app",
-  "version": "4.0.0",
+  "version": "4.1.0-beta.0",
   "description": "Stylint configuration used by Foreach",
   "main": "index.js",
   "publishConfig": {

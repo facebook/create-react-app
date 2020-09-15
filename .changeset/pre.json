@@ -1,0 +1,19 @@
+{
+  "mode": "pre",
+  "tag": "beta",
+  "initialVersions": {
+    "babel-plugin-named-asset-import": "0.3.6",
+    "@foreachbe/babel-preset-react-app": "5.0.0",
+    "confusing-browser-globals": "1.0.9",
+    "cra-template": "1.0.3",
+    "cra-template-typescript": "1.0.3",
+    "create-react-app": "3.4.1",
+    "eslint-config-react-app": "5.2.1",
+    "react-app-polyfill": "1.0.6",
+    "react-dev-utils": "10.2.1",
+    "react-error-overlay": "6.0.7",
+    "@foreachbe/react-scripts": "6.1.0",
+    "@foreachbe/stylelint-config-react-app": "4.0.0"
+  },
+  "changesets": ["quick-rabbits-wash"]
+}
