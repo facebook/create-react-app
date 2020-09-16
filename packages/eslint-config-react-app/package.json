@@ -12,6 +12,7 @@
     "url": "https://github.com/facebook/create-react-app/issues"
   },
   "files": [
+    "base.js",
     "index.js",
     "jest.js"
   ],

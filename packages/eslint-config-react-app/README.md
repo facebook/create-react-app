@@ -36,10 +36,10 @@ That's it! You can override the settings from `eslint-config-react-app` by editi
 
 This config also ships with optional Jest rules for ESLint (based on [`eslint-plugin-jest`](https://github.com/jest-community/eslint-plugin-jest)).
 
-You'll first need to add the plugin.
+You'll first need to add the ESLint plugin for Jest (if you don't already have it installed).
 
 ```sh
-npm install --save-dev  eslint-plugin-jest@24.x
+npm install --save-dev eslint-plugin-jest@^24.0.0
 ```
 
 You can then enable these rules by adding the Jest config to the `extends` array in your ESLint config.
