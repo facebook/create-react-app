@@ -407,8 +407,8 @@ module.exports = function (webpackEnv) {
                     require.resolve('babel-preset-react-app'),
                     {
                       runtime: semver.gte(react.version, '17.0.0-alpha.0')
-                      ? 'automatic'
-                      : 'classic',
+                        ? 'automatic'
+                        : 'classic',
                     },
                   ],
                 ],
