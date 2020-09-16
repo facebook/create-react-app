@@ -24,33 +24,9 @@
 const restrictedGlobals = require('confusing-browser-globals');
 
 module.exports = {
-  root: true,
+  extends: [require.resolve('./base')],
 
-  parser: 'babel-eslint',
-
-  plugins: ['import', 'flowtype', 'jsx-a11y', 'react', 'react-hooks'],
-
-  env: {
-    browser: true,
-    commonjs: true,
-    es6: true,
-    jest: true,
-    node: true,
-  },
-
-  parserOptions: {
-    ecmaVersion: 2018,
-    sourceType: 'module',
-    ecmaFeatures: {
-      jsx: true,
-    },
-  },
-
-  settings: {
-    react: {
-      version: 'detect',
-    },
-  },
+  plugins: ['import', 'flowtype', 'jsx-a11y', 'react-hooks'],
 
   overrides: [
     {
@@ -269,8 +245,6 @@ module.exports = {
         ignore: [],
       },
     ],
-    'react/jsx-uses-react': 'warn',
-    'react/jsx-uses-vars': 'warn',
     'react/no-danger-with-children': 'warn',
     // Disabled because of undesirable warnings
     // See https://github.com/facebook/create-react-app/issues/5204 for
