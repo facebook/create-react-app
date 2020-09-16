@@ -54,7 +54,7 @@ module.exports = function (api, opts, env) {
     );
   }
 
-  const hasJsxRuntime = Boolean(
+  var hasJsxRuntime = Boolean(
     api.caller(caller => !!caller && caller.hasJsxRuntime)
   );
 
