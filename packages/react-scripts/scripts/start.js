@@ -15,7 +15,7 @@ process.env.NODE_ENV = 'development';
 // Makes the script crash on unhandled rejections instead of silently
 // ignoring them. In the future, promise rejections that are not handled will
 // terminate the Node.js process with a non-zero exit code.
-process.on('unhandledRejection', err => {
+process.on('unhandledRejection', (err) => {
   throw err;
 });
 
@@ -86,7 +86,7 @@ checkBrowsers(paths.appPath, isInteractive)
     // run on a different port. `choosePort()` Promise resolves to the next free port.
     return choosePort(HOST, DEFAULT_PORT);
   })
-  .then(port => {
+  .then((port) => {
     if (port == null) {
       // We have not found a port.
       return;
@@ -104,9 +104,9 @@ checkBrowsers(paths.appPath, isInteractive)
       paths.publicUrlOrPath.slice(0, -1)
     );
     const devSocket = {
-      warnings: warnings =>
+      warnings: (warnings) =>
         devServer.sockWrite(devServer.sockets, 'warnings', warnings),
-      errors: errors =>
+      errors: (errors) =>
         devServer.sockWrite(devServer.sockets, 'errors', errors),
     };
     // Create a webpack compiler that is configured with custom messages.
@@ -134,7 +134,7 @@ checkBrowsers(paths.appPath, isInteractive)
     );
     const devServer = new WebpackDevServer(compiler, serverConfig);
     // Launch WebpackDevServer.
-    devServer.listen(port, HOST, err => {
+    devServer.listen(port, HOST, (err) => {
       if (err) {
         return console.log(err);
       }
@@ -158,8 +158,8 @@ checkBrowsers(paths.appPath, isInteractive)
       openBrowser(urls.localUrlForBrowser);
     });
 
-    ['SIGINT', 'SIGTERM'].forEach(function(sig) {
-      process.on(sig, function() {
+    ['SIGINT', 'SIGTERM'].forEach(function (sig) {
+      process.on(sig, function () {
         devServer.close();
         process.exit();
       });
@@ -167,14 +167,14 @@ checkBrowsers(paths.appPath, isInteractive)
 
     if (isInteractive || process.env.CI !== 'true') {
       // Gracefully exit when stdin ends
-      process.stdin.on('end', function() {
+      process.stdin.on('end', function () {
         devServer.close();
         process.exit();
       });
       process.stdin.resume();
     }
   })
-  .catch(err => {
+  .catch((err) => {
     if (err && err.message) {
       console.log(err.message);
     }
