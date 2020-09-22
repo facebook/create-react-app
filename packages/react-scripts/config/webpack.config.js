@@ -692,7 +692,7 @@ module.exports = function(webpackEnv) {
       new CopyBentleyStaticResourcesPlugin(['public'], true),
 
       // NOTE: FilterWarningsPlugin is used to ignore warning coming from sourcemaps
-      new FilterWarningsPlugin({ exclude: /Cannot find source file/ }),
+      new FilterWarningsPlugin({ exclude: /Failed to parse source map/ }),
 
       // NOTE: HtmlWebpackPlugin, and InterpolateHtmlPlugin are injected here
       // after SpeedMeasureWebpackPlugin makes a wrapper, so SMWP won't track them
