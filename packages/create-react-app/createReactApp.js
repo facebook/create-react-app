@@ -641,7 +641,7 @@ function getTemplateInstallPackage(template, originalDirectory) {
     } else {
       // Add prefix 'cra-template-' to non-prefixed templates, leaving any
       // @scope/ and @version intact.
-      const packageMatch = template.match(/^(@[^/]+\/)?([^@]+)?(@.+)?$/);
+      const packageMatch = template.match(/^(@?[^/]+\/)?([^@]+)?(@.+)?$/);
       const scope = packageMatch[1] || '';
       const templateName = packageMatch[2] || '';
       const version = packageMatch[3] || '';

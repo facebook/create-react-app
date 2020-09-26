@@ -113,6 +113,10 @@ module.exports = function (
     return;
   }
 
+  if (!templateName.startsWith('@') && templateName.includes('/')) {
+    templateName = templateName.slice(templateName.indexOf('/') + 1);
+  }
+
   const templatePath = path.dirname(
     require.resolve(`${templateName}/package.json`, { paths: [appPath] })
   );
