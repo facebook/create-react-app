@@ -70,7 +70,7 @@
     "inquirer": "7.3.3",
     "is-root": "2.1.0",
     "loader-utils": "2.0.0",
-    "open": "^7.0.2",
+    "open": "^7.3.0",
     "pkg-up": "3.1.0",
     "react-error-overlay": "^6.0.7",
     "recursive-readdir": "2.2.2",
