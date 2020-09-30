@@ -253,7 +253,6 @@ module.exports = {
     'react/no-direct-mutation-state': 'warn',
     'react/no-is-mounted': 'warn',
     'react/no-typos': 'error',
-    'react/react-in-jsx-scope': 'error',
     'react/require-render-return': 'error',
     'react/style-prop-object': 'warn',
 
