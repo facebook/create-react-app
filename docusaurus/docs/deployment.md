@@ -11,7 +11,7 @@ sidebar_label: Deployment
 For environments using [Node](https://nodejs.org/), the easiest way to handle this would be to install [serve](https://github.com/zeit/serve) and let it handle the rest:
 
 ```sh
-npm install -g serve
+npm install -g serve or yarn global add serve
 serve -s build
 ```
 
@@ -289,7 +289,7 @@ Create React App uses the `homepage` field to determine the root URL in the buil
 
 ### Step 2: Install `gh-pages` and add `deploy` to `scripts` in `package.json`
 
-Now, whenever you run `npm run build`, you will see a cheat sheet with instructions on how to deploy to GitHub Pages.
+Now, whenever you run `npm run build` or `yarn build` , you will see a cheat sheet with instructions on how to deploy to GitHub Pages.
 
 To publish it at [https://myusername.github.io/my-app](https://myusername.github.io/my-app), run:
 
