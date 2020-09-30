@@ -14,6 +14,7 @@ const resolve = require('resolve');
 const path = require('path');
 const paths = require('../../config/paths');
 const os = require('os');
+const semver = require('semver');
 const immer = require('react-dev-utils/immer').produce;
 const globby = require('react-dev-utils/globby').sync;
 
@@ -133,7 +134,8 @@ function verifyTypeScriptSetup() {
     noEmit: { value: true },
     jsx: {
       parsedValue: ts.JsxEmit.React,
-      suggested: 'react',
+      value: semver.gte(ts.version, '4.1.0-beta') ? 'react-jsx' : 'react',
+      reason: 'to support the new JSX transform in React 17'
     },
     paths: { value: undefined, reason: 'aliased imports are not supported' },
   };
