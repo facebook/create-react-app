@@ -34,6 +34,6 @@ Then to analyze the bundle run the production build then run the analyze
 script.
 
 ```sh
-npm run build
+npm run build or yarn build
 npm run analyze
 ```
