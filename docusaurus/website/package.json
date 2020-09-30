@@ -6,9 +6,9 @@
     "deploy": "docusaurus deploy"
   },
   "dependencies": {
-    "@docusaurus/core": "^2.0.0-alpha.39",
-    "@docusaurus/preset-classic": "^2.0.0-alpha.39",
-    "classnames": "^2.2.6",
+    "@docusaurus/core": "^2.0.0-alpha.64",
+    "@docusaurus/preset-classic": "^2.0.0-alpha.64",
+    "clsx": "^1.1.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0"
   },
