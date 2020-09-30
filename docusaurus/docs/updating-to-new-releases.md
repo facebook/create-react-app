@@ -9,7 +9,7 @@ Create React App is divided into two packages:
 - `react-scripts` is a development dependency in the generated projects (including this one).
 
 When you run `npx create-react-app my-app` it automatically installs the latest version of Create React App.  
-> If you've previously installed `create-react-app` globally via `npm install -g create-react-app`, please visit [Getting Started](getting-started.md) to learn about current installation steps. 
+> If you've previously installed `create-react-app` globally via `npm install -g create-react-app` or `yarn add create-react-app`, please visit [Getting Started](getting-started.md) to learn about current installation steps. 
 
 Create React App creates the project with the latest version of `react-scripts` so you’ll get all the new features and improvements in newly created apps automatically.
 
