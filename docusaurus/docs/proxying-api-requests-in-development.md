@@ -16,13 +16,13 @@ For example, a production setup might look like this after the app is deployed:
 
 Such setup is **not** required. However, if you **do** have a setup like this, it is convenient to write requests like `fetch('/api/todos')` without worrying about redirecting them to another host or port during development.
 
-To tell the development server to proxy any unknown requests to your API server in development, add a `proxy` field to your `package.json`, for example:
+To tell the development server to proxy any unknown requests to your API server in development, either add a `proxy` field to your `package.json` or add en environment variable called `PROXY`, for example:
 
 ```json
   "proxy": "http://localhost:4000",
 ```
 
-This way, when you `fetch('/api/todos')` in development, the development server will recognize that it’s not a static asset, and will proxy your request to `http://localhost:4000/api/todos` as a fallback. The development server will **only** attempt to send requests without `text/html` in its `Accept` header to the proxy.
+This way, when you `fetch('/api/todos')` in development, the development server will recognize that it’s not a static asset, and will proxy your request to `http://localhost:4000/api/todos` as a fallback. The development server will **only** attempt to send requests without `text/html` in its `Accept` header to the proxy. If both the environment variable and `package.json` settings are set, the environment variable will be used.
 
 Conveniently, this avoids [CORS issues](https://stackoverflow.com/questions/21854516/understanding-ajax-cors-and-security-considerations) and error messages like this in development:
 
@@ -87,7 +87,7 @@ Next, create `src/setupProxy.js` and place the following contents in it:
 ```js
 const { createProxyMiddleware } = require('http-proxy-middleware');
 
-module.exports = function(app) {
+module.exports = function (app) {
   // ...
 };
 ```
@@ -97,7 +97,7 @@ You can now register proxies as you wish! Here's an example using the above `htt
 ```js
 const { createProxyMiddleware } = require('http-proxy-middleware');
 
-module.exports = function(app) {
+module.exports = function (app) {
   app.use(
     '/api',
     createProxyMiddleware({
