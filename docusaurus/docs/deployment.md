@@ -444,35 +444,40 @@ To support `pushState`, make sure to create a `public/_redirects` file with the 
 
 When you build the project, Create React App will place the `public` folder contents into the build output.
 
-## [ZEIT Now](https://zeit.co)
+## [Vercel](https://vercel.com)
 
-[ZEIT Now](https://zeit.co) is a cloud platform for websites and serverless APIs, that you can use to deploy your Create React App projects to your personal domain (or a free `.now.sh` suffixed URL).
+[Vercel](https://vercel.com/home) is a cloud platform that enables developers to host Jamstack websites and web services that deploy instantly, scale automatically, and requires no supervision, all with zero configuration. They provide a global edge network, SSL encryption, asset compression, cache invalidation, and more.
 
-This guide will show you how to get started in a few quick steps:
+### Step 1: Deploying your React project to Vercel
 
-### Step 1: Installing Now CLI
+To deploy your React project with a [Vercel for Git Integration](https://vercel.com/docs/git-integrations), make sure it has been pushed to a Git repository.
 
-To install their command-line interface with [npm](https://www.npmjs.com/package/now), run the following command:
+Import the project into Vercel using the [Import Flow](https://vercel.com/import/git). During the import, you will find all relevant [options](https://vercel.com/docs/build-step#build-&-development-settings) preconfigured for you with the ability to change as needed.
 
-```shell
-npm i -g now
-```
+After your project has been imported, all subsequent pushes to branches will generate [Preview Deployments](https://vercel.com/docs/platform/deployments#preview), and all changes made to the [Production Branch](https://vercel.com/docs/git-integrations#production-branch) (commonly "master" or "main") will result in a [Production Deployment](https://vercel.com/docs/platform/deployments#production).
 
-### Step 2: Deploying
+Once deployed, you will get a URL to see your app live, such as the following: https://create-react-app-example.vercel.app/.
 
-You can deploy your application by running the following command in the root of the project directory:
+### Step 2 (optional): Using a Custom Domain
 
-```shell
-now
-```
+If you want to use a Custom Domain with your Vercel deployment, you can **Add** or **Transfer in** your domain via your Vercel [account Domain settings.](https://vercel.com/dashboard/domains)
 
-**Alternatively**, you can also use their integration for [GitHub](https://zeit.co/github) or [GitLab](https://zeit.co/gitlab).
+To add your domain to your project, navigate to your [Project](https://vercel.com/docs/platform/projects) from the Vercel Dashboard. Once you have selected your project, click on the "Settings" tab, then select the **Domains** menu item. From your projects **Domain** page, enter the domain you wish to add to your project.
 
-That’s all!
+Once the domain as been added, you will be presented with different methods for configuring it.
 
-Your site will now deploy, and you will receive a link similar to the following: https://react.now-examples.now.sh
+### Deploying a fresh React project
 
-Out of the box, you are preconfigured for client-side routing compatibility and appropriate default caching headers. This behaviour can be overwritten [like this](https://zeit.co/docs/v2/advanced/routes/).
+You can deploy a fresh React project, with a Git repository set up for you, with the following Deploy Button:
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/import/git?s=https%3A%2F%2Fgithub.com%2Fvercel%2Fvercel%2Ftree%2Fmaster%2Fexamples%2Fcreate-react-app)
+
+### Vercel References:
+
+- [Example Source](https://github.com/vercel/vercel/tree/master/examples/create-react-app)
+- [Official Vercel Guide](https://vercel.com/guides/deploying-react-with-vercel-cra)
+- [Vercel Deployment Docs](https://vercel.com/docs)
+- [Vercel Custom Domain Docs](https://vercel.com/docs/custom-domains)
 
 ## [Render](https://render.com)
 

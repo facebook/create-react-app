@@ -98,7 +98,7 @@ Workbox project, add in a push notification library, or remove some of the
 default caching logic. The one requirement is that you keep `self.__WB_MANIFEST`
 somewhere in your file, as the Workbox compilation plugin checks for this value
 when generating a manifest of URLs to precache. If you would prefer not to use
-precaching, you can just assign `self.__WB_MANIFEST` to a variable that will be
+precaching, you can assign `self.__WB_MANIFEST` to a variable that will be
 ignored, like:
 
 ```js
