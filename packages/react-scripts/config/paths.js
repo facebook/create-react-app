@@ -56,14 +56,29 @@ const resolveModule = (resolveFn, filePath) => {
   return resolveFn(`${filePath}.js`);
 };
 
+const magicConfig = require(resolveApp('magic.config.js'));
+console.log("magicConfig.entry", magicConfig.entry);
+
+const appEntries = Object.keys(magicConfig.entry).reduce((prevValue, currentValue) => {
+  return {
+    ...prevValue,
+    [currentValue]: [
+      resolveApp(`resources/${magicConfig.entry[currentValue]}`)
+    ],
+  };
+}, {});
+
+console.log("appEntries", appEntries);
+
 // config after eject: we're in ./config/
 module.exports = {
   dotenv: resolveApp('.env'),
   appPath: resolveApp('.'),
-  appBuild: resolveApp('build'),
+  appBuild: resolveApp('public/resources'),
   appPublic: resolveApp('public'),
-  appHtml: resolveApp('public/index.html'),
-  appIndexJs: resolveModule(resolveApp, 'src/index'),
+  // appHtml: resolveApp('public/index.html'),
+  // appIndexJs: resolveModule(resolveApp, 'src/index'),
+  appEntries: appEntries,
   appPackageJson: resolveApp('package.json'),
   appSrc: resolveApp('src'),
   appTsConfig: resolveApp('tsconfig.json'),
@@ -85,8 +100,9 @@ module.exports = {
   appPath: resolveApp('.'),
   appBuild: resolveApp('build'),
   appPublic: resolveApp('public'),
-  appHtml: resolveApp('public/index.html'),
-  appIndexJs: resolveModule(resolveApp, 'src/index'),
+  // appHtml: resolveApp('public/index.html'),
+  // appIndexJs: resolveModule(resolveApp, 'src/index'),
+  appEntries: appEntries,
   appPackageJson: resolveApp('package.json'),
   appSrc: resolveApp('src'),
   appTsConfig: resolveApp('tsconfig.json'),

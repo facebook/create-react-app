@@ -1,10 +1,10 @@
 {
-  "name": "react-scripts",
-  "version": "3.4.1",
-  "description": "Configuration and scripts for Create React App.",
+  "name": "@wieni/magic",
+  "version": "2.0.0",
+  "description": "Magic for Drupal themes, by Wieni.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/facebook/create-react-app.git",
+    "url": "https://github.com/wieni/magic.git",
     "directory": "packages/react-scripts"
   },
   "license": "MIT",
@@ -12,7 +12,7 @@
     "node": "^10.12.0 || >=12.0.0"
   },
   "bugs": {
-    "url": "https://github.com/facebook/create-react-app/issues"
+    "url": "https://github.com/wieni/magic/issues"
   },
   "files": [
     "bin",
@@ -24,7 +24,7 @@
     "utils"
   ],
   "bin": {
-    "react-scripts": "./bin/react-scripts.js"
+    "magic": "./bin/react-scripts.js"
   },
   "types": "./lib/react-app.d.ts",
   "dependencies": {
