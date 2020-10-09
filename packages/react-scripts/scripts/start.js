@@ -56,7 +56,8 @@ const useYarn = fs.existsSync(paths.yarnLockFile);
 const isInteractive = process.stdout.isTTY;
 
 // Warn and crash if required files are missing
-if (!checkRequiredFiles([paths.appIndexJs])) {
+// TODO: Check for magic resources
+if (!checkRequiredFiles([])) {
   process.exit(1);
 }
 
@@ -97,7 +98,7 @@ checkBrowsers(paths.appPath, isInteractive)
     }
 
     const config = configFactory('development');
-    const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
+    const protocol = "https";
     const appName = require(paths.appPackageJson).name;
 
     const useTypeScript = fs.existsSync(paths.appTsConfig);
@@ -106,7 +107,7 @@ checkBrowsers(paths.appPath, isInteractive)
       protocol,
       HOST,
       port,
-      paths.publicUrlOrPath.slice(0, -1)
+      "/"
     );
     const devSocket = {
       warnings: warnings =>

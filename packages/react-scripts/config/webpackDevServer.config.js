@@ -62,7 +62,7 @@ module.exports = function (proxy, allowedHost) {
     // for some reason broken when imported through webpack. If you just want to
     // use an image, put it in `src` and `import` it from JavaScript instead.
     contentBase: paths.appPublic,
-    contentBasePublicPath: paths.publicUrlOrPath,
+    // contentBasePublicPath: paths.publicUrlOrPath,
     // By default files from `contentBase` will not trigger a page reload.
     watchContentBase: true,
     // Enable hot reloading server. It will provide WDS_SOCKET_PATH endpoint
@@ -98,18 +98,27 @@ module.exports = function (proxy, allowedHost) {
     watchOptions: {
       ignored: ignoredFiles(paths.appSrc),
     },
-    https: getHttpsConfig(),
+    https: true,
+    // https: getHttpsConfig(),
     host,
     overlay: false,
     historyApiFallback: {
       // Paths with dots should still use the history fallback.
       // See https://github.com/facebook/create-react-app/issues/387.
       disableDotRule: true,
-      index: paths.publicUrlOrPath,
     },
     public: allowedHost,
     // `proxy` is run between `before` and `after` `webpack-dev-server` hooks
-    proxy,
+    proxy: {
+      "*": {
+        secure: false,
+        target: "https://uzleuven.sander.wieni.dev",
+        changeOrigin: true,
+        onProxyReq(proxyReq) {
+          proxyReq.setHeader("host", "uzleuven.sander.wieni.dev");
+        },
+      },
+    },
     before(app, server) {
       // Keep `evalSourceMapMiddleware` and `errorOverlayMiddleware`
       // middlewares before `redirectServedPath` otherwise will not have any effect
@@ -117,11 +126,6 @@ module.exports = function (proxy, allowedHost) {
       app.use(evalSourceMapMiddleware(server));
       // This lets us open files from the runtime error overlay.
       app.use(errorOverlayMiddleware());
-
-      if (fs.existsSync(paths.proxySetup)) {
-        // This registers user provided middleware for proxy reasons
-        require(paths.proxySetup)(app);
-      }
     },
     after(app) {
       // Redirect to `PUBLIC_URL` or `homepage` from `package.json` if url not match
