@@ -176,6 +176,7 @@ module.exports = function (webpackEnv) {
             // the webpack plugin takes care of injecting the dev client for us.
             webpackDevClientEntry,
             // Finally, this is your app's code:
+            // TODO: We need to support multiple entries, bro.
             paths.appEntries.global,
             // We include the app code last so that if there is a runtime error during
             // initialization, it doesn't blow up the WebpackDevServer client, and
@@ -607,7 +608,8 @@ module.exports = function (webpackEnv) {
             entry: webpackDevClientEntry,
             // The expected exports are slightly different from what the overlay exports,
             // so an interop is included here to enable feedback on module-level errors.
-            module: require.resolve('react-dev-utils/refreshOverlayInterop'),
+            // TODO: Fix this import?
+            // module: require.resolve('react-dev-utils/refreshOverlayInterop'),
             // Since we ship a custom dev client and overlay integration,
             // the bundled socket handling logic can be eliminated.
             sockIntegration: false,

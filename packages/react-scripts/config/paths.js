@@ -72,7 +72,7 @@ const theme = path.basename(appDirectory);
 // config before eject: we're in ./node_modules/react-scripts/config/
 module.exports = {
   dotenv: resolveApp('.env'),
-  appPath: resolveApp('.'),
+  appPath: resolveApp('resources'),
   appBuild: resolveApp('public/resources'),
   appPublic: resolveApp('public/resources'),
   appEntries: appEntries,
