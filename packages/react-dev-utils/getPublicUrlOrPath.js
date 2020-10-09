@@ -49,16 +49,14 @@ function getPublicUrlOrPath(isEnvDevelopment, homepage, envPublicUrl) {
     homepage = homepage.endsWith('/') ? homepage : homepage + '/';
 
     // validate if `homepage` is a URL or path like and use just pathname
-    const validHomepagePathname = new URL(homepage, stubDomain).pathname;
+    const validHomepage = new URL(homepage, stubDomain);
     return isEnvDevelopment
       ? homepage.startsWith('.')
         ? '/'
-        : validHomepagePathname
+        : validHomepage.pathname
       : // Some apps do not use client-side routing with pushState.
-      // For these, "homepage" can be set to "." to enable relative asset paths.
-      homepage.startsWith('.')
-      ? homepage
-      : validHomepagePathname;
+        // For these, "homepage" can be set to "." to enable relative asset paths.
+        homepage;
   }
 
   return '/';
