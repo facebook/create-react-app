@@ -1,6 +1,6 @@
 ---
 id: getting-started
-title: Getting Started
+title: Learn React
 ---
 
 Create React App is an officially supported way to create single-page React
