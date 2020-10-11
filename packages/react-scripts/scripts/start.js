@@ -32,6 +32,8 @@ verifyTypeScriptSetup();
 // @remove-on-eject-end
 
 const fs = require('fs');
+const path = require('path');
+const { argv } = require('yargs');
 const chalk = require('react-dev-utils/chalk');
 const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
@@ -46,7 +48,7 @@ const {
 const openBrowser = require('react-dev-utils/openBrowser');
 const semver = require('semver');
 const paths = require('../config/paths');
-const configFactory = require('../config/webpack.config');
+let configFactory = require('../config/webpack.config');
 const createDevServerConfig = require('../config/webpackDevServer.config');
 const getClientEnvironment = require('../config/env');
 const react = require(require.resolve('react', { paths: [paths.appPath] }));
@@ -79,6 +81,22 @@ if (process.env.HOST) {
     `Learn more here: ${chalk.yellow('https://cra.link/advanced-config')}`
   );
   console.log();
+}
+
+const webpackOverride = argv['webpack-override'];
+if (webpackOverride) {
+  const configOverride = require(path.resolve(paths.appPath, webpackOverride));
+  if (typeof configOverride === 'function') {
+    const defaultConfigFactory = configFactory;
+    configFactory = webpackEnv => {
+      const defaultConfig = defaultConfigFactory(webpackEnv);
+      return configOverride(defaultConfig);
+    };
+  } else {
+    console.warn(
+      `'${webpackOverride}' module must return a function to override webpack config`
+    );
+  }
 }
 
 // We require that you explicitly set browsers and do not fall back to
