@@ -79,7 +79,7 @@ module.exports = function (webpackEnv) {
   // Get environment variables to inject into our app.
   const env = getClientEnvironment(paths.publicUrlOrPath.slice(0, -1));
 
-  const shouldUseReactRefresh = env.raw.FAST_REFRESH;
+  const shouldUseReactRefresh = true;
 
   // common function to get style loaders
   const getStyleLoaders = (cssOptions, preProcessor) => {
@@ -92,6 +92,7 @@ module.exports = function (webpackEnv) {
         options: paths.publicUrlOrPath.startsWith('.')
           ? { publicPath: '../../' }
           : {},
+        hmr: isEnvDevelopment,
       },
       {
         loader: require.resolve('css-loader'),
@@ -166,8 +167,8 @@ module.exports = function (webpackEnv) {
             // to bring better experience for Create React App users. You can replace
             // the line below with these two lines if you prefer the stock client:
             //
-            // require.resolve('webpack-dev-server/client') + '?/',
-            // require.resolve('webpack/hot/dev-server'),
+            require.resolve('webpack-dev-server/client') + '?/',
+            require.resolve('webpack/hot/dev-server'),
             //
             // When using the experimental react-refresh integration,
             // the webpack plugin takes care of injecting the dev client for us.
