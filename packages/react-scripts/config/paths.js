@@ -10,8 +10,6 @@
 
 const path = require('path');
 const fs = require('fs');
-const getPublicUrlOrPath = require('react-dev-utils/getPublicUrlOrPath');
-
 const chalk = require("chalk");
 const error = console.error;
 
@@ -57,12 +55,20 @@ const magicConfig = (() => {
   }
 })();
 
+const magicDevConfig = (() => {
+  try {
+    return require(resolveApp('magic.dev.config.js'));
+  }
+  catch (e) {
+    error(chalk.red(`Magic requires a development config file ${chalk.bgRed.white.underline('(magic.dev.config.js)')} in order to work.`));
+    process.exit(0);
+  }
+})();
+
 const appEntries = Object.keys(magicConfig.entry).reduce((prevValue, currentValue) => {
   return {
     ...prevValue,
-    [currentValue]: [
-      resolveApp(`resources/${magicConfig.entry[currentValue]}`)
-    ],
+    [currentValue]: resolveApp(`resources/${magicConfig.entry[currentValue]}`),
   };
 }, {});
 
@@ -95,3 +101,4 @@ const reactScriptsPath = resolveApp(`node_modules/${ownPackageJson.name}`);
 
 module.exports.moduleFileExtensions = moduleFileExtensions;
 module.exports.magicConfig = magicConfig;
+module.exports.magicDevConfig = magicDevConfig;

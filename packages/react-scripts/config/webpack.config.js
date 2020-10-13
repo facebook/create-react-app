@@ -79,7 +79,7 @@ module.exports = function (webpackEnv) {
   // Get environment variables to inject into our app.
   const env = getClientEnvironment(paths.publicUrlOrPath.slice(0, -1));
 
-  const shouldUseReactRefresh = true;
+  const shouldUseReactRefresh = semver.gt(react.version, '16.10.0');
 
   // common function to get style loaders
   const getStyleLoaders = (cssOptions, preProcessor) => {
@@ -89,10 +89,9 @@ module.exports = function (webpackEnv) {
         loader: MiniCssExtractPlugin.loader,
         // css is located in `css`, use '../../' to locate index.html folder
         // in production `paths.publicUrlOrPath` can be a relative path
-        options: paths.publicUrlOrPath.startsWith('.')
-          ? { publicPath: '../../' }
-          : {},
-        hmr: isEnvDevelopment,
+        options: {
+          hmr: isEnvDevelopment
+        }
       },
       {
         loader: require.resolve('css-loader'),
@@ -174,13 +173,12 @@ module.exports = function (webpackEnv) {
             // the webpack plugin takes care of injecting the dev client for us.
             webpackDevClientEntry,
             // Finally, this is your app's code:
-            // TODO: We need to support multiple entries, bro.
-            paths.appEntries.global,
+            Object.values(paths.appEntries),
             // We include the app code last so that if there is a runtime error during
             // initialization, it doesn't blow up the WebpackDevServer client, and
             // changing JS code would still trigger a refresh.
           ]
-        : paths.appEntries.global,
+        : Object.values(paths.appEntries),
     output: {
       // The build folder.
       path: isEnvProduction ? paths.appBuild : undefined,
@@ -604,10 +602,6 @@ module.exports = function (webpackEnv) {
         new ReactRefreshWebpackPlugin({
           overlay: {
             entry: webpackDevClientEntry,
-            // The expected exports are slightly different from what the overlay exports,
-            // so an interop is included here to enable feedback on module-level errors.
-            // TODO: Fix this import?
-            // module: require.resolve('react-dev-utils/refreshOverlayInterop'),
             // Since we ship a custom dev client and overlay integration,
             // the bundled socket handling logic can be eliminated.
             sockIntegration: false,

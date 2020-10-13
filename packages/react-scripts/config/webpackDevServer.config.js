@@ -22,7 +22,7 @@ const sockHost = process.env.WDS_SOCKET_HOST;
 const sockPath = process.env.WDS_SOCKET_PATH; // default: '/sockjs-node'
 const sockPort = process.env.WDS_SOCKET_PORT;
 
-module.exports = function (proxy, allowedHost) {
+module.exports = function (magicConfig) {
   return {
     // WebpackDevServer 2.4.3 introduced a security fix that prevents remote
     // websites from potentially accessing local content through DNS rebinding:
@@ -106,20 +106,18 @@ module.exports = function (proxy, allowedHost) {
       // See https://github.com/facebook/create-react-app/issues/387.
       disableDotRule: true,
     },
-    public: allowedHost,
     // `proxy` is run between `before` and `after` `webpack-dev-server` hooks
     proxy: {
-      ...proxy,
       "*": {
         secure: false,
-        target: "https://uzleuven.sander.wieni.dev",
+        target: magicConfig.proxyTarget,
         changeOrigin: true,
         onProxyReq(proxyReq) {
-          proxyReq.setHeader("host", "uzleuven.sander.wieni.dev");
+          proxyReq.setHeader("host", magicConfig.proxyHost);
         },
       },
     },
-    before(app, server, compiler) {
+    before(app, server) {
       // Keep `evalSourceMapMiddleware` and `errorOverlayMiddleware`
       // middlewares before `redirectServedPath` otherwise will not have any effect
       // This lets us fetch source contents from webpack for the error overlay
