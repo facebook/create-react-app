@@ -305,15 +305,17 @@ module.exports = function (webpackEnv) {
         .filter(ext => useTypeScript || !ext.includes('ts')),
       alias: {
         // Magic alias support
-        ...Object.keys(paths.magicConfig.alias).reduce((prevValue, currentValue) => {
-          return {
-            ...prevValue,
-            [currentValue]: path.resolve(
-              paths.appPath,
-              paths.magicConfig.alias[currentValue]
-            ),
-          };
-        }, {}),
+        ...(paths.magicConfig?.alias && {
+          ...Object.keys(paths.magicConfig.alias).reduce((prevValue, currentValue) => {
+            return {
+              ...prevValue,
+              [currentValue]: path.resolve(
+                paths.appPath,
+                paths.magicConfig.alias[currentValue]
+              ),
+            };
+          }, {})
+        }),
         // Support React Native Web
         // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
         'react-native': 'react-native-web',
