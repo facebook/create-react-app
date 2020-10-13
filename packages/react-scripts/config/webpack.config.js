@@ -305,7 +305,7 @@ module.exports = function (webpackEnv) {
         .filter(ext => useTypeScript || !ext.includes('ts')),
       alias: {
         // Magic alias support
-        ...(paths.magicConfig?.alias && {
+        ...(paths.magicConfig.alias && {
           ...Object.keys(paths.magicConfig.alias).reduce((prevValue, currentValue) => {
             return {
               ...prevValue,
