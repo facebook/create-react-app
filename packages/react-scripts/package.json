@@ -4,15 +4,12 @@
   "description": "Magic for Drupal themes, by Wieni.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/wieni/magic.git",
+    "url": "https://github.com/wieni/create-react-app.git",
     "directory": "packages/react-scripts"
   },
   "license": "MIT",
   "engines": {
     "node": "^10.12.0 || >=12.0.0"
-  },
-  "bugs": {
-    "url": "https://github.com/wieni/magic/issues"
   },
   "files": [
     "bin",
