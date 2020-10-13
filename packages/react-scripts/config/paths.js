@@ -55,16 +55,6 @@ const magicConfig = (() => {
   }
 })();
 
-const magicDevConfig = (() => {
-  try {
-    return require(resolveApp('magic.dev.config.js'));
-  }
-  catch (e) {
-    error(chalk.red(`Magic requires a development config file ${chalk.bgRed.white.underline('(magic.dev.config.js)')} in order to work.`));
-    process.exit(0);
-  }
-})();
-
 const appEntries = Object.keys(magicConfig.entry).reduce((prevValue, currentValue) => {
   return {
     ...prevValue,
@@ -97,8 +87,7 @@ module.exports = {
 };
 
 const ownPackageJson = require('../package.json');
-const reactScriptsPath = resolveApp(`node_modules/${ownPackageJson.name}`);
 
 module.exports.moduleFileExtensions = moduleFileExtensions;
 module.exports.magicConfig = magicConfig;
-module.exports.magicDevConfig = magicDevConfig;
+module.exports.resolveApp = resolveApp;
