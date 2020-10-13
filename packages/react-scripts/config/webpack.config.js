@@ -126,7 +126,7 @@ module.exports = function (webpackEnv) {
             // which in turn let's users customize the target behavior as per their needs.
             postcssNormalize(),
           ],
-          sourceMap: isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
+          sourceMap: shouldUseSourceMap || isEnvDevelopment,
         },
       },
     ].filter(Boolean);
@@ -135,7 +135,7 @@ module.exports = function (webpackEnv) {
         {
           loader: require.resolve('resolve-url-loader'),
           options: {
-            sourceMap: isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
+            sourceMap: shouldUseSourceMap || isEnvDevelopment,
             root: paths.appSrc,
           },
         },
@@ -598,23 +598,19 @@ module.exports = function (webpackEnv) {
           {
             inject: true,
             template: paths.appHtml,
+            minify: {
+              removeComments: isEnvProduction,
+              collapseWhitespace: isEnvProduction,
+              removeRedundantAttributes: isEnvProduction,
+              useShortDoctype: isEnvProduction,
+              removeEmptyAttributes: isEnvProduction,
+              removeStyleLinkTypeAttributes: isEnvProduction,
+              keepClosingSlash: isEnvProduction,
+              minifyJS: isEnvProduction,
+              minifyCSS: isEnvProduction,
+              minifyURLs: isEnvProduction,
+            },
           },
-          isEnvProduction
-            ? {
-                minify: {
-                  removeComments: true,
-                  collapseWhitespace: true,
-                  removeRedundantAttributes: true,
-                  useShortDoctype: true,
-                  removeEmptyAttributes: true,
-                  removeStyleLinkTypeAttributes: true,
-                  keepClosingSlash: true,
-                  minifyJS: true,
-                  minifyCSS: true,
-                  minifyURLs: true,
-                },
-              }
-            : undefined
         )
       ),
       // Inlines the webpack runtime script. This script is too small to warrant
