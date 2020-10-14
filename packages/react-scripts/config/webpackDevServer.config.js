@@ -98,7 +98,6 @@ module.exports = function (magicConfig) {
       ignored: ignoredFiles(paths.appSrc),
     },
     https: true,
-    // https: getHttpsConfig(),
     host,
     overlay: false,
     historyApiFallback: {
