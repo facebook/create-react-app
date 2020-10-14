@@ -90,3 +90,34 @@ module.exports = {
 ⛔️ You're calling a global variable, like `history` or `location`.
 
 ✅ `/*eslint-disable no-restricted-globals*/`
+
+### My life sucks. I have to support IE11.
+
+ℹ️ Well, might not be too hard …
+
+✅ `npm install react-app-polyfill`
+
+In your main bundle, add the following:
+
+```js
+import 'react-app-polyfill/ie11';
+import 'react-app-polyfill/stable';
+```
+
+Add `IE 11` to the browserlist in your `package.json`:
+
+```json
+  "browserslist": {
+    "production": [
+      "IE 11",
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+```
