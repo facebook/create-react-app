@@ -80,3 +80,13 @@ module.exports = {
 ⛔️ The sass file contains an import `background-image: url("images/icon-triangle.svg");`.
 
 ✅ Change this import to `background-image: url("~images/icon-triangle.svg");`
+
+### `Unexpected use of 'x'  no-restricted-globals`
+
+`Line 47:9:  Unexpected use of 'history'  no-restricted-globals`
+
+ℹ️ Compilation fails, because ESLint throws an error.
+
+⛔️ You're calling a global variable, like `history` or `location`.
+
+✅ `/*eslint-disable no-restricted-globals*/`
