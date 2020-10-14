@@ -137,6 +137,8 @@ module.exports = function (webpackEnv) {
     return loaders;
   };
 
+  const magicEntries = paths.appEntries;
+
   return {
     mode: isEnvProduction ? 'production' : isEnvDevelopment && 'development',
     // Stop compilation early in production
@@ -167,12 +169,12 @@ module.exports = function (webpackEnv) {
             // the webpack plugin takes care of injecting the dev client for us.
             webpackDevClientEntry,
             // Finally, this is your app's code:
-            Object.values(paths.appEntries),
+            Object.values(),
             // We include the app code last so that if there is a runtime error during
             // initialization, it doesn't blow up the WebpackDevServer client, and
             // changing JS code would still trigger a refresh.
           ]
-        : Object.values(paths.appEntries),
+        : magicEntries,
     output: {
       // The build folder.
       path: isEnvProduction ? paths.appBuild : paths.appBuild,
@@ -650,9 +652,12 @@ module.exports = function (webpackEnv) {
             manifest[file.name] = file.path;
             return manifest;
           }, seed);
-          const entrypointFiles = entrypoints.main.filter(
-            fileName => !fileName.endsWith('.map')
-          );
+
+          const entrypointFiles = Object.keys(entrypoints).map(entry => ({
+            [entry]: entrypoints[entry].filter(
+              fileName => !fileName.endsWith('.map')
+            ),
+          }));
 
           return {
             files: manifestFiles,
