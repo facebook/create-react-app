@@ -104,7 +104,7 @@ module.exports = {
     'no-array-constructor': 'warn',
     'no-caller': 'warn',
     'no-cond-assign': ['warn', 'except-parens'],
-    'no-const-assign': 'warn',
+    'no-const-assign': 'error',
     'no-control-regex': 'warn',
     'no-delete-var': 'warn',
     'no-dupe-args': 'warn',
