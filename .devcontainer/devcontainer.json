@@ -1,0 +1,14 @@
+{
+  "name": "Create React App Development",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "args": { "VARIANT": "12" }
+  },
+  "settings": {
+    "terminal.integrated.shell.linux": "/bin/bash"
+  },
+  "extensions": ["dbaeumer.vscode-eslint", "esbenp.prettier-vscode"],
+  "forwardPorts": [],
+  "postCreateCommand": "yarn install",
+  "remoteUser": "node"
+}

@@ -91,9 +91,6 @@ if [ ${git_branch} != ${current_git_branch} ]; then
 fi
 
 read -r -d '' command <<- CMD
-echo "prefix=~/.npm" > ~/.npmrc
-mkdir ~/.npm
-export PATH=\$PATH:~/.npm/bin
 set -x
 git clone /var/create-react-app create-react-app --branch ${git_branch}
 cd create-react-app
@@ -112,15 +109,25 @@ $([[ ${interactive} == 'true' ]] && echo 'bash')
 exit \$result_code
 CMD
 
+if $(git diff-index --quiet HEAD --); then
+  echo "Git working tree clean, ready to begin testing"
+else
+  echo "Cannot run tests with untracked changes, please commit and try again"
+  exit 1
+fi
+
+echo "Building local test image based on node:${node_version}"
+docker build -t create-react-app-local-test -f ../.devcontainer/Dockerfile --build-arg VARIANT=${node_version} .
+
+echo "Current folder: ${PWD}"
+
 docker run \
   --env CI=true \
-  --env NPM_CONFIG_PREFIX=/home/node/.npm \
-  --env NPM_CONFIG_QUIET=true \
   --tty \
   --rm \
   --user node \
   --volume ${PWD}/..:/var/create-react-app \
   --workdir /home/node \
   $([[ ${interactive} == 'true' ]] && echo '--interactive') \
-  node:${node_version} \
+  create-react-app-local-test \
   bash -c "${command}"
