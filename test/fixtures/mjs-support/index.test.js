@@ -5,7 +5,10 @@ const puppeteer = require('puppeteer');
 test('can use mjs library in development', async () => {
   const { port, done } = await testSetup.scripts.start();
 
-  const browser = await puppeteer.launch({ headless: true });
+  const browser = await puppeteer.launch({
+    headless: true,
+    args: ['--no-sandbox'],
+  });
   try {
     const page = await browser.newPage();
     await page.goto(`http://localhost:${port}/`);
@@ -24,7 +27,10 @@ test('can use mjs library in production', async () => {
   await testSetup.scripts.build();
   const { port, done } = await testSetup.scripts.serve();
 
-  const browser = await puppeteer.launch({ headless: true });
+  const browser = await puppeteer.launch({
+    headless: true,
+    args: ['--no-sandbox'],
+  });
   try {
     const page = await browser.newPage();
     await page.goto(`http://localhost:${port}/`);

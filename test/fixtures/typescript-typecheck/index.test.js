@@ -6,7 +6,10 @@ const expectedErrorMsg = `Argument of type '123' is not assignable to parameter 
 test('shows error overlay in browser', async () => {
   const { port, done } = await testSetup.scripts.start();
 
-  const browser = await puppeteer.launch({ headless: true });
+  const browser = await puppeteer.launch({
+    headless: true,
+    args: ['--no-sandbox'],
+  });
   try {
     const page = await browser.newPage();
     await page.goto(`http://localhost:${port}/`);
