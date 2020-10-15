@@ -4,3 +4,4 @@ my-app*
 packages/react-scripts/template
 packages/react-scripts/fixtures
 fixtures/
+default/
