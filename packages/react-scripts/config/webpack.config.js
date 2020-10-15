@@ -137,7 +137,15 @@ module.exports = function (webpackEnv) {
     return loaders;
   };
 
+  // Get the config from Magic.
+  const { magicConfig } = paths;
+
+  // These are the entries, as configured in the configuration.
   const magicEntries = paths.appEntries;
+
+  // Some Drupal projects require files outside the source folder. This is common when
+  // using subthemes. We allow a user to add there paths to the build.
+  const includePaths = magicConfig.includePaths ? [...magicConfig.includePaths] : false;
 
   return {
     mode: isEnvProduction ? 'production' : isEnvDevelopment && 'development',
@@ -307,13 +315,13 @@ module.exports = function (webpackEnv) {
         .filter(ext => useTypeScript || !ext.includes('ts')),
       alias: {
         // Magic alias support
-        ...(paths.magicConfig.alias && {
-          ...Object.keys(paths.magicConfig.alias).reduce((prevValue, currentValue) => {
+        ...(magicConfig.alias && {
+          ...Object.keys(magicConfig.alias).reduce((prevValue, currentValue) => {
             return {
               ...prevValue,
               [currentValue]: path.resolve(
                 paths.appPath,
-                paths.magicConfig.alias[currentValue]
+                magicConfig.alias[currentValue]
               ),
             };
           }, {})
@@ -337,7 +345,8 @@ module.exports = function (webpackEnv) {
         // To fix this, we prevent you from importing files out of src/ -- if you'd like to,
         // please link the files into your node_modules/ and let module-resolution kick in.
         // Make sure your source files are compiled, as they will not be processed in any way.
-        new ModuleScopePlugin(paths.appSrc, [paths.appPackageJson]),
+        // TODO: Figure out why this is not working. Meanwhile, disable it.
+        // new ModuleScopePlugin(paths.appSrc, [paths.appPackageJson, ...includePaths].filter(Boolean)),
       ],
     },
     resolveLoader: {
@@ -378,7 +387,7 @@ module.exports = function (webpackEnv) {
               loader: require.resolve('eslint-loader'),
             },
           ],
-          include: paths.appSrc,
+          include: [paths.appSrc, includePaths].filter(Boolean),
         },
         {
           // "oneOf" will traverse all following loaders until one will
@@ -400,7 +409,7 @@ module.exports = function (webpackEnv) {
             // The preset includes JSX, Flow, TypeScript, and some ESnext features.
             {
               test: /\.(js|mjs|jsx|ts|tsx)$/,
-              include: paths.appSrc,
+              include: [paths.appSrc, includePaths].filter(Boolean),
               loader: require.resolve('babel-loader'),
               options: {
                 customize: require.resolve(

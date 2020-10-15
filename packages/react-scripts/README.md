@@ -64,6 +64,11 @@ module.exports = {
 };
 ```
 
+### Gitignore
+
+Make sure to add `magic.dev.config.js` to your `.gitignore` file. This file is unique for
+every developer. You can add a `magic.dev.config.example.js`, to provide a sample configuration.
+
 ## Usage
 
 - `magic build`: Build the frontend.
@@ -90,6 +95,8 @@ module.exports = {
 ⛔️ You're calling a global variable, like `history` or `location`.
 
 ✅ `/*eslint-disable no-restricted-globals*/`
+
+##
 
 ### My life sucks. I have to support IE11.
 
