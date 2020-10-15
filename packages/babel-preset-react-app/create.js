@@ -8,6 +8,15 @@
 
 const path = require('path');
 
+const hasJsxRuntime = (() => {
+  try {
+    require.resolve('react/jsx-runtime.js');
+    return true;
+  } catch (e) {
+    return false;
+  }
+})();
+
 const validateBoolOption = (name, value, defaultValue) => {
   if (typeof value === 'undefined') {
     value = defaultValue;
@@ -54,10 +63,6 @@ module.exports = function (api, opts, env) {
     );
   }
 
-  var hasJsxRuntime = Boolean(
-    api.caller(caller => !!caller && caller.hasJsxRuntime)
-  );
-
   if (!isEnvDevelopment && !isEnvProduction && !isEnvTest) {
     throw new Error(
       'Using `babel-preset-react-app` requires that you specify `NODE_ENV` or ' +
@@ -100,7 +105,7 @@ module.exports = function (api, opts, env) {
           // Will use the native built-in instead of trying to polyfill
           // behavior for any plugins that require one.
           ...(!hasJsxRuntime ? { useBuiltIns: true } : {}),
-          runtime: opts.runtime || 'classic',
+          runtime: hasJsxRuntime ? 'automatic' : 'classic',
         },
       ],
       isTypeScriptEnabled && [require('@babel/preset-typescript').default],
