@@ -6,6 +6,8 @@ original_yarn_registry_url=`yarn config get registry`
 default_verdaccio_package=verdaccio@^4.5.1
 
 function startLocalRegistry {
+  clearLocalPackagesFromLocalRegistryStorage
+
   # Start local registry
   tmp_registry_log=`mktemp`
   echo "Registry output file: $tmp_registry_log"
@@ -27,4 +29,10 @@ function stopLocalRegistry {
 function publishToLocalRegistry {
   git clean -df
   ./tasks/publish.sh prerelease --yes --force-publish=* --no-git-tag-version --no-commit-hooks --no-push --exact --dist-tag=latest
+}
+
+function clearLocalPackagesFromLocalRegistryStorage {
+  for f in ./packages/*; do
+    [ -d $f ] && [[ "$f" =~ ^\./packages/(.*) ]] && rm -rf ./tasks/storage/${BASH_REMATCH[1]};
+  done;
 }
