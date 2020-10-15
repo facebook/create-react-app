@@ -25,7 +25,7 @@ Storybook is a development environment for React UI components. It allows you to
 Run the following command inside your app’s directory:
 
 ```sh
-npx -p @storybook/cli sb init
+npx sb init
 ```
 
 After that, follow the instructions on the screen.
