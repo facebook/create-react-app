@@ -8,6 +8,15 @@
 
 const path = require('path');
 
+const hasJsxRuntime = (() => {
+  try {
+    require.resolve('react/jsx-runtime.js');
+    return true;
+  } catch (e) {
+    return false;
+  }
+})();
+
 const validateBoolOption = (name, value, defaultValue) => {
   if (typeof value === 'undefined') {
     value = defaultValue;
@@ -83,8 +92,6 @@ module.exports = function (api, opts, env) {
           useBuiltIns: 'entry',
           // Set the corejs version we are using to avoid warnings in console
           corejs: 3,
-          // Do not transform modules to CJS
-          modules: false,
           // Exclude transforms that make all code slower
           exclude: ['transform-typeof-symbol'],
         },
@@ -97,7 +104,8 @@ module.exports = function (api, opts, env) {
           development: isEnvDevelopment || isEnvTest,
           // Will use the native built-in instead of trying to polyfill
           // behavior for any plugins that require one.
-          useBuiltIns: true,
+          ...(!hasJsxRuntime ? { useBuiltIns: true } : {}),
+          runtime: hasJsxRuntime ? 'automatic' : 'classic',
         },
       ],
       isTypeScriptEnabled && [require('@babel/preset-typescript').default],

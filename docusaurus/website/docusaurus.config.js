@@ -43,7 +43,7 @@ const siteConfig = {
         alt: 'Create React App Logo',
         src: 'img/logo.svg',
       },
-      links: [
+      items: [
         { to: 'docs/getting-started', label: 'Docs', position: 'right' },
         {
           href: 'https://reactjs.org/community/support.html',
@@ -82,8 +82,8 @@ const siteConfig = {
                 'https://stackoverflow.com/questions/tagged/create-react-app',
             },
             {
-              label: 'Spectrum',
-              href: 'https://spectrum.chat/create-react-app',
+              label: 'GitHub Discussions',
+              href: 'https://github.com/facebook/create-react-app/discussions',
             },
             {
               label: 'Twitter',

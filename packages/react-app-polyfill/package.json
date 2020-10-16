@@ -26,6 +26,6 @@
     "promise": "^8.0.3",
     "raf": "^3.4.1",
     "regenerator-runtime": "^0.13.3",
-    "whatwg-fetch": "^3.0.0"
+    "whatwg-fetch": "^3.3.1"
   }
 }
