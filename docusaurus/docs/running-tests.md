@@ -64,6 +64,8 @@ All `expect()` matchers supported by Jest are [extensively documented here](http
 
 You can also use [`jest.fn()` and `expect(fn).toBeCalled()`](https://jestjs.io/docs/en/expect.html#tohavebeencalled) to create “spies” or mock functions.
 
+Note: Different from Jest documentation, the manual mocks folder `__mocks__` should be put in `src` (`src/__mocks__/`) instead of next to `node_modules` due to [PR#7480](https://github.com/facebook/create-react-app/pull/7480). This issue is raised at [issue#7539](https://github.com/facebook/create-react-app/issues/7539).
+
 ## Testing Components
 
 There is a broad spectrum of component testing techniques. They range from a “smoke test” verifying that a component renders without throwing, to shallow rendering and testing some of the output, to full rendering and testing component lifecycle and state changes.
