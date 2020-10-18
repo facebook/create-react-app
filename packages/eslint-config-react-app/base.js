@@ -51,8 +51,8 @@ module.exports = {
 
   rules: {
     'react/jsx-uses-vars': 'warn',
+    'react/jsx-uses-react': 'warn',
     ...(!hasJsxRuntime && {
-      'react/jsx-uses-react': 'warn',
       'react/react-in-jsx-scope': 'error',
     }),
   },
