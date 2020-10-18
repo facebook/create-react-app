@@ -1,15 +1,15 @@
 {
   "name": "wbpk-5-cra-utils",
-  "version": "1.0.1",
+  "version": "1.0.6",
   "description": "Webpack 5 utilities used by Create React App",
   "repository": {
     "type": "git",
-    "url": "https://github.com/facebook/create-react-app.git",
+    "url": "https://github.com/blackarctic/create-react-app.git",
     "directory": "packages/react-dev-utils"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/facebook/create-react-app/issues"
+    "url": "https://github.com/blackarctic/create-react-app/issues"
   },
   "engines": {
     "node": ">=10"

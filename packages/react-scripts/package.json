@@ -1,10 +1,10 @@
 {
   "name": "webpack-5-react-scripts",
-  "version": "0.4.3",
+  "version": "0.7.3",
   "description": "Configuration and scripts for Create React App using Webpack 5.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/facebook/create-react-app.git",
+    "url": "https://github.com/blackarctic/create-react-app.git",
     "directory": "packages/react-scripts"
   },
   "license": "MIT",
@@ -12,7 +12,7 @@
     "node": "^10.12.0 || >=12.0.0"
   },
   "bugs": {
-    "url": "https://github.com/facebook/create-react-app/issues"
+    "url": "https://github.com/blackarctic/create-react-app/issues"
   },
   "files": [
     "bin",
@@ -82,7 +82,7 @@
     "terser-webpack-plugin": "4.2.3",
     "ts-pnp": "1.2.0",
     "url-loader": "4.1.1",
-    "wbpk-5-cra-utils": "^1.0.1",
+    "wbpk-5-cra-utils": "^1.0.6",
     "webpack": "5.0.0-beta.16",
     "webpack-dev-server": "3.11.0",
     "webpack-manifest-plugin": "2.2.0",

@@ -1,24 +1,24 @@
 {
   "name": "cra-template-webpack-5-typescript",
-  "version": "0.2.2",
+  "version": "0.4.3",
   "keywords": [
     "react",
     "create-react-app",
     "template",
     "typescript"
   ],
-  "description": "The base TypeScript template for Create React App.",
+  "description": "The base Webpack 5 TypeScript template for Create React App.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/facebook/create-react-app.git",
-    "directory": "packages/cra-template-typescript"
+    "url": "https://github.com/blackarctic/create-react-app.git",
+    "directory": "packages/cra-template-webpack-5-typescript"
   },
   "license": "MIT",
   "engines": {
     "node": ">=10"
   },
   "bugs": {
-    "url": "https://github.com/facebook/create-react-app/issues"
+    "url": "https://github.com/blackarctic/create-react-app/issues"
   },
   "files": [
     "template",
