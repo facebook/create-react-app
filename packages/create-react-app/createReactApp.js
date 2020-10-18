@@ -158,7 +158,7 @@ function init() {
             'Firefox',
             'Safari',
           ],
-          npmPackages: ['react', 'react-dom', 'react-scripts'],
+          npmPackages: ['react', 'react-dom', 'react-refresh', 'react-scripts'],
           npmGlobalPackages: ['create-react-app'],
         },
         {
@@ -431,7 +431,12 @@ function run(
     getInstallPackage(version, originalDirectory),
     getTemplateInstallPackage(template, originalDirectory),
   ]).then(([packageToInstall, templateToInstall]) => {
-    const allDependencies = ['react', 'react-dom', packageToInstall];
+    const allDependencies = [
+      'react',
+      'react-dom',
+      'react-refresh',
+      packageToInstall,
+    ];
 
     console.log('Installing packages. This might take a couple of minutes.');
 
@@ -476,7 +481,9 @@ function run(
         console.log(
           `Installing ${chalk.cyan('react')}, ${chalk.cyan(
             'react-dom'
-          )}, and ${chalk.cyan(packageInfo.name)}${
+          )}, ${chalk.cyan('react-refresh')}, and ${chalk.cyan(
+            packageInfo.name
+          )}${
             supportsTemplates ? ` with ${chalk.cyan(templateInfo.name)}` : ''
           }...`
         );
@@ -869,7 +876,12 @@ function checkAppName(appName) {
   }
 
   // TODO: there should be a single place that holds the dependencies
-  const dependencies = ['react', 'react-dom', 'react-scripts'].sort();
+  const dependencies = [
+    'react',
+    'react-dom',
+    'react-refresh',
+    'react-scripts',
+  ].sort();
   if (dependencies.includes(appName)) {
     console.error(
       chalk.red(
@@ -924,6 +936,7 @@ function setCaretRangeForRuntimeDeps(packageName) {
 
   makeCaretRange(packageJson.dependencies, 'react');
   makeCaretRange(packageJson.dependencies, 'react-dom');
+  makeCaretRange(packageJson.devDependencies, 'react-refresh');
 
   fs.writeFileSync(packagePath, JSON.stringify(packageJson, null, 2) + os.EOL);
 }
