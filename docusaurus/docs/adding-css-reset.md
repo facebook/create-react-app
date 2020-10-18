@@ -8,6 +8,15 @@ This project setup uses [PostCSS Normalize] for adding a [CSS Reset].
 
 To start using it, add `@import-normalize;` anywhere in your CSS file(s). You only need to include it once and duplicate imports are automatically removed. Since you only need to include it once, a good place to add it is `index.css` or `App.css`.
 
+
+## `index.js`
+
+```js
+import 'normalize.css'; /*import into index.js first before importing in css or scss file */
+
+/* rest of your react-js code */
+```
+
 ## `index.css`
 
 ```css
