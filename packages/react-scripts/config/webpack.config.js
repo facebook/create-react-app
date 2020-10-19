@@ -30,7 +30,6 @@ const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
 const ForkTsCheckerWebpackPlugin = require('react-dev-utils/ForkTsCheckerWebpackPlugin');
 const typescriptFormatter = require('react-dev-utils/typescriptFormatter');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
-const react = require(require.resolve('react', { paths: [paths.appPath] }));
 const getCacheIdentifier = require('react-dev-utils/getCacheIdentifier');
 const postcssNormalize = require('postcss-normalize');
 
@@ -62,6 +61,16 @@ module.exports = function (webpackEnv) {
   const isEnvDevelopment = webpackEnv === 'development';
   const isEnvProduction = webpackEnv === 'production';
 
+  // Check if React is used.
+  let reactVersion = "0.0.0";
+
+  try {
+    const react = require(require.resolve('react', { paths: [paths.appPath] }));
+    reactVersion = react.version;
+  } catch (e) {
+    //
+  }
+
   // Variable used for enabling profiling in Production
   // passed into alias object. Uses a flag if passed into the build command
   const isEnvProductionProfile =
@@ -73,7 +82,7 @@ module.exports = function (webpackEnv) {
   // Get environment variables to inject into our app.
   const env = getClientEnvironment(paths.publicUrlOrPath.slice(0, -1));
 
-  const shouldUseReactRefresh = semver.gt(react.version, '16.10.0');
+  const shouldUseReactRefresh = semver.gt(reactVersion, '16.10.0');
 
   // common function to get style loaders
   const getStyleLoaders = (cssOptions, preProcessor) => {
@@ -422,7 +431,7 @@ module.exports = function (webpackEnv) {
                   [
                     require.resolve('babel-preset-react-app'),
                     {
-                      runtime: semver.gte(react.version, '17.0.0-alpha.0')
+                      runtime: semver.gte(reactVersion, '17.0.0-alpha.0')
                         ? 'automatic'
                         : 'classic',
                     },
