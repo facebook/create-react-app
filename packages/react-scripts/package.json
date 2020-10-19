@@ -1,6 +1,6 @@
 {
   "name": "shopmonkey-react-scripts",
-  "version": "3.4.8",
+  "version": "3.4.13",
   "description": "Configuration and scripts for Create React App.",
   "repository": {
     "type": "git",
@@ -37,6 +37,7 @@
     "babel-jest": "^24.9.0",
     "babel-loader": "8.1.0",
     "babel-plugin-jsx-conditional-component": "^0.1.5",
+    "babel-plugin-lodash": "^3.3.4",
     "babel-plugin-named-asset-import": "^0.3.6",
     "babel-preset-react-app": "^9.1.2",
     "camelcase": "^5.3.1",
@@ -90,8 +91,8 @@
     "workbox-webpack-plugin": "4.3.1"
   },
   "devDependencies": {
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0"
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0"
   },
   "optionalDependencies": {
     "fsevents": "2.1.2"

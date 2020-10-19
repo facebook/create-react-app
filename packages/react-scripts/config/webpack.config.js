@@ -494,6 +494,7 @@ module.exports = function(webpackEnv) {
                 plugins: [
                   // react HMR babel plugin
                   'react-hot-loader/babel',
+                  'lodash',
                   // <Base /> component support via a forked version
                   ['jsx-conditional-component'],
                   // [
