@@ -1,6 +1,6 @@
 {
   "name": "react-scripts",
-  "version": "3.4.3",
+  "version": "3.4.4",
   "description": "Configuration and scripts for Create React App.",
   "repository": {
     "type": "git",
@@ -69,7 +69,7 @@
     "react-app-polyfill": "^1.0.6",
     "react-dev-utils": "^10.2.1",
     "resolve": "1.15.0",
-    "resolve-url-loader": "3.1.1",
+    "resolve-url-loader": "3.1.2",
     "sass-loader": "8.0.2",
     "semver": "6.3.0",
     "style-loader": "0.23.1",
