@@ -12,7 +12,6 @@ const fs = require('fs');
 const path = require('path');
 const webpack = require('webpack');
 const resolve = require('resolve');
-const semver = require('semver');
 const PnpWebpackPlugin = require('pnp-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
@@ -27,6 +26,7 @@ const WorkboxWebpackPlugin = require('workbox-webpack-plugin');
 const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const getCSSModuleLocalIdent = require('react-dev-utils/getCSSModuleLocalIdent');
+const ESLintPlugin = require('eslint-webpack-plugin');
 const paths = require('./paths');
 const modules = require('./modules');
 const getClientEnvironment = require('./env');
@@ -34,7 +34,6 @@ const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
 const ForkTsCheckerWebpackPlugin = require('react-dev-utils/ForkTsCheckerWebpackPlugin');
 const typescriptFormatter = require('react-dev-utils/typescriptFormatter');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
-const react = require(require.resolve('react', { paths: [paths.appPath] }));
 // @remove-on-eject-begin
 const getCacheIdentifier = require('react-dev-utils/getCacheIdentifier');
 // @remove-on-eject-end
@@ -351,34 +350,22 @@ module.exports = function (webpackEnv) {
       rules: [
         // Disable require.ensure as it's not a standard language feature.
         { parser: { requireEnsure: false } },
-
-        // First, run the linter.
-        // It's important to do this before Babel processes the JS.
-        {
-          test: /\.(js|mjs|jsx|ts|tsx)$/,
-          enforce: 'pre',
-          use: [
-            {
-              options: {
-                cache: true,
-                cwd: paths.appPath,
-                formatter: require.resolve('react-dev-utils/eslintFormatter'),
-                eslintPath: require.resolve('eslint'),
-                resolvePluginsRelativeTo: __dirname,
-                baseConfig: {
-                  extends: [require.resolve('eslint-config-react-app/base')],
-                },
-              },
-              loader: require.resolve('eslint-loader'),
-            },
-          ],
-          include: paths.appSrc,
-        },
         {
           // "oneOf" will traverse all following loaders until one will
           // match the requirements. When no loader matches it will fall
           // back to the "file" loader at the end of the loader list.
           oneOf: [
+            // TODO: Merge this config once `image/avif` is in the mime-db
+            // https://github.com/jshttp/mime-db
+            {
+              test: [/\.avif$/],
+              loader: require.resolve('url-loader'),
+              options: {
+                limit: imageInlineSizeLimit,
+                mimetype: 'image/avif',
+                name: 'static/media/[name].[hash:8].[ext]',
+              },
+            },
             // "url" loader works like "file" loader except that it embeds assets
             // smaller than specified limit in bytes as data URLs to avoid requests.
             // A missing `test` is equivalent to a match.
@@ -403,16 +390,7 @@ module.exports = function (webpackEnv) {
                 // @remove-on-eject-begin
                 babelrc: false,
                 configFile: false,
-                presets: [
-                  [
-                    require.resolve('babel-preset-react-app'),
-                    {
-                      runtime: semver.gte(react.version, '17.0.0-alpha.0')
-                        ? 'automatic'
-                        : 'classic',
-                    },
-                  ],
-                ],
+                presets: [require.resolve('babel-preset-react-app')],
                 // Make sure we have a unique cache identifier, erring on the
                 // side of caution.
                 // We remove this when the user ejects because the default
@@ -742,6 +720,19 @@ module.exports = function (webpackEnv) {
           // The formatter is invoked directly in WebpackDevServerUtils during development
           formatter: isEnvProduction ? typescriptFormatter : undefined,
         }),
+      new ESLintPlugin({
+        // Plugin options
+        extensions: ['js', 'mjs', 'jsx', 'ts', 'tsx'],
+        formatter: require.resolve('react-dev-utils/eslintFormatter'),
+        eslintPath: require.resolve('eslint'),
+        context: paths.appSrc,
+        // ESLint class options
+        cwd: paths.appPath,
+        resolvePluginsRelativeTo: __dirname,
+        baseConfig: {
+          extends: [require.resolve('eslint-config-react-app/base')],
+        },
+      }),
     ].filter(Boolean),
     // Some libraries import Node modules but don't use them in the browser.
     // Tell webpack to provide empty mocks for them so importing them works.
