@@ -1,6 +1,24 @@
+## 3.4.4 (2020-10-20)
+
+v3.4.4 release bumps `resolve-url-loader` to a version for which `npm audit` does not report a vulnerability. Note that **this vulnerability did not affect Create React App projects**, so this change is only necessary to satisfy auditing tools.
+
+### Migrating from 3.4.3 to 3.4.4
+
+Inside any created project that has not been ejected, run:
+
+```sh
+npm install --save --save-exact react-scripts@3.4.4
+```
+
+or
+
+```sh
+yarn add --exact react-scripts@3.4.4
+```
+
 ## 3.4.3 (2020-08-12)
 
-v3.4.2 release bumps `terser-webpack-plugin` to a version for which `npm audit` does not report a vulnerability. Note that **this vulnerability did not affect Create React App projects**, so this change is only necessary to satisfy auditing tools.
+v3.4.3 release bumps `terser-webpack-plugin` to a version for which `npm audit` does not report a vulnerability. Note that **this vulnerability did not affect Create React App projects**, so this change is only necessary to satisfy auditing tools.
 
 ### Migrating from 3.4.2 to 3.4.3
 
