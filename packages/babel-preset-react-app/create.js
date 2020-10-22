@@ -8,14 +8,7 @@
 
 const path = require('path');
 
-const hasJsxRuntime = (() => {
-  try {
-    require.resolve('react/jsx-runtime.js');
-    return true;
-  } catch (e) {
-    return false;
-  }
-})();
+const useJsxRuntime = process.env.DISABLE_NEW_JSX_TRANSFORM !== 'true';
 
 const validateBoolOption = (name, value, defaultValue) => {
   if (typeof value === 'undefined') {
@@ -104,8 +97,8 @@ module.exports = function (api, opts, env) {
           development: isEnvDevelopment || isEnvTest,
           // Will use the native built-in instead of trying to polyfill
           // behavior for any plugins that require one.
-          ...(!hasJsxRuntime ? { useBuiltIns: true } : {}),
-          runtime: hasJsxRuntime ? 'automatic' : 'classic',
+          ...(!useJsxRuntime ? { useBuiltIns: true } : {}),
+          runtime: useJsxRuntime ? 'automatic' : 'classic',
         },
       ],
       isTypeScriptEnabled && [require('@babel/preset-typescript').default],
