@@ -11,7 +11,7 @@
 // React App support, and is used as the `baseConfig` for `eslint-loader`
 // to ensure that user-provided configs don't need this boilerplate.
 
-const useJsxRuntime = process.env.DISABLE_NEW_JSX_RUNTIME !== 'true';
+const useJsxTransform = process.env.DISABLE_NEW_JSX_TRANSFORM !== 'true';
 
 module.exports = {
   root: true,
@@ -45,7 +45,7 @@ module.exports = {
   rules: {
     'react/jsx-uses-vars': 'warn',
     'react/jsx-uses-react': 'warn',
-    ...(!useJsxRuntime && {
+    ...(!useJsxTransform && {
       'react/react-in-jsx-scope': 'error',
     }),
   },

@@ -8,7 +8,7 @@
 
 const path = require('path');
 
-const useJsxRuntime = process.env.DISABLE_NEW_JSX_TRANSFORM !== 'true';
+const useJsxTransform = process.env.DISABLE_NEW_JSX_TRANSFORM !== 'true';
 
 const validateBoolOption = (name, value, defaultValue) => {
   if (typeof value === 'undefined') {
@@ -97,8 +97,8 @@ module.exports = function (api, opts, env) {
           development: isEnvDevelopment || isEnvTest,
           // Will use the native built-in instead of trying to polyfill
           // behavior for any plugins that require one.
-          ...(!useJsxRuntime ? { useBuiltIns: true } : {}),
-          runtime: useJsxRuntime ? 'automatic' : 'classic',
+          ...(!useJsxTransform ? { useBuiltIns: true } : {}),
+          runtime: useJsxTransform ? 'automatic' : 'classic',
         },
       ],
       isTypeScriptEnabled && [require('@babel/preset-typescript').default],
