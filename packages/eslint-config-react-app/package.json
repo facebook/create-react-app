@@ -37,11 +37,6 @@
       "optional": true
     }
   },
-  "peerDependenciesMeta": {
-    "eslint-plugin-jest": {
-      "optional": true
-    }
-  },
   "dependencies": {
     "confusing-browser-globals": "^1.0.9"
   },
