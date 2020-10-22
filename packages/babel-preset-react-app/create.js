@@ -8,8 +8,6 @@
 
 const path = require('path');
 
-const useJsxTransform = process.env.DISABLE_NEW_JSX_TRANSFORM !== 'true';
-
 const validateBoolOption = (name, value, defaultValue) => {
   if (typeof value === 'undefined') {
     value = defaultValue;
@@ -56,6 +54,10 @@ module.exports = function (api, opts, env) {
     );
   }
 
+  var hasJsxRuntime = Boolean(
+    api.caller(caller => !!caller && caller.hasJsxRuntime)
+  );
+
   if (!isEnvDevelopment && !isEnvProduction && !isEnvTest) {
     throw new Error(
       'Using `babel-preset-react-app` requires that you specify `NODE_ENV` or ' +
@@ -97,8 +99,8 @@ module.exports = function (api, opts, env) {
           development: isEnvDevelopment || isEnvTest,
           // Will use the native built-in instead of trying to polyfill
           // behavior for any plugins that require one.
-          ...(!useJsxTransform ? { useBuiltIns: true } : {}),
-          runtime: useJsxTransform ? 'automatic' : 'classic',
+          ...(!hasJsxRuntime ? { useBuiltIns: true } : {}),
+          runtime: hasJsxRuntime ? 'automatic' : 'classic',
         },
       ],
       isTypeScriptEnabled && [require('@babel/preset-typescript').default],
