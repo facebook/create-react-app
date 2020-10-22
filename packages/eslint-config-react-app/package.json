@@ -28,6 +28,11 @@
     "eslint-plugin-react": "^7.20.3",
     "eslint-plugin-react-hooks": "^4.0.8"
   },
+  "peerDependenciesMeta": {
+    "eslint-plugin-jest": {
+      "optional": true
+    }
+  },
   "dependencies": {
     "confusing-browser-globals": "^1.0.9"
   },
