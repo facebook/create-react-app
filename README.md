@@ -196,6 +196,10 @@ Check out [Expo CLI](https://github.com/expo/expo-cli).
 
 We'd love to have your helping hand on `create-react-app`! See [CONTRIBUTING.md](CONTRIBUTING.md) for more information on what we're looking for and how to get started.
 
+## Supporting Create React App
+
+Create React App is a community maintained project and all contributors are volunteers. If you'd like to support the future development of Create React App then please consider donating to our [Open Collective](https://opencollective.com/create-react-app).
+
 ## Credits
 
 This project exists thanks to all the people who [contribute](CONTRIBUTING.md).<br>
