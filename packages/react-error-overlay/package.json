@@ -62,7 +62,7 @@
     "raw-loader": "^4.0.2",
     "react": "^17.0.1",
     "react-app-polyfill": "^1.0.6",
-    "react-dom": "^16.14.0",
+    "react-dom": "^17.0.1",
     "rimraf": "^3.0.2",
     "settle-promise": "1.0.0",
     "source-map": "0.5.7",
