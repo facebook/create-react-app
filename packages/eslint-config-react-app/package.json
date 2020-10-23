@@ -1,6 +1,6 @@
 {
   "name": "eslint-config-react-app",
-  "version": "5.2.1",
+  "version": "6.0.0",
   "description": "ESLint configuration used by Create React App",
   "repository": {
     "type": "git",
@@ -38,7 +38,7 @@
     }
   },
   "dependencies": {
-    "confusing-browser-globals": "^1.0.9"
+    "confusing-browser-globals": "^1.0.10"
   },
   "engines": {
     "node": "^10.12.0 || >=12.0.0"
