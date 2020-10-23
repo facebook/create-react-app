@@ -18,6 +18,19 @@ const semver = require('semver');
 const immer = require('react-dev-utils/immer').produce;
 const globby = require('react-dev-utils/globby').sync;
 
+const hasJsxRuntime = (() => {
+  if (process.env.DISABLE_NEW_JSX_TRANSFORM === 'true') {
+    return false;
+  }
+
+  try {
+    require.resolve('react/jsx-runtime', { paths: [paths.appPath] });
+    return true;
+  } catch (e) {
+    return false;
+  }
+})();
+
 function writeJson(fileName, object) {
   fs.writeFileSync(
     fileName,
@@ -134,8 +147,11 @@ function verifyTypeScriptSetup() {
     noEmit: { value: true },
     jsx: {
       parsedValue: ts.JsxEmit.React,
-      value: semver.gte(ts.version, '4.1.0-beta') ? 'react-jsx' : 'react',
-      reason: 'to support the new JSX transform in React 17'
+      value:
+        hasJsxRuntime && semver.gte(ts.version, '4.1.0-beta')
+          ? 'react-jsx'
+          : 'react',
+      reason: 'to support the new JSX transform in React 17',
     },
     paths: { value: undefined, reason: 'aliased imports are not supported' },
   };
