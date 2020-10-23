@@ -146,7 +146,10 @@ function verifyTypeScriptSetup() {
     isolatedModules: { value: true, reason: 'implementation limitation' },
     noEmit: { value: true },
     jsx: {
-      parsedValue: ts.JsxEmit.React,
+      parsedValue:
+        hasJsxRuntime && semver.gte(ts.version, '4.1.0-beta')
+          ? ts.JsxEmit.ReactJsx
+          : ts.JsxEmit.React,
       value:
         hasJsxRuntime && semver.gte(ts.version, '4.1.0-beta')
           ? 'react-jsx'
