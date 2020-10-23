@@ -60,7 +60,7 @@
     "object-assign": "4.1.1",
     "promise": "8.1.0",
     "raw-loader": "^4.0.2",
-    "react": "^16.14.0",
+    "react": "^17.0.1",
     "react-app-polyfill": "^1.0.6",
     "react-dom": "^16.14.0",
     "rimraf": "^3.0.2",
