@@ -87,8 +87,8 @@
     "workbox-webpack-plugin": "5.1.4"
   },
   "devDependencies": {
-    "react": "^16.14.0",
-    "react-dom": "^16.14.0"
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
   },
   "optionalDependencies": {
     "fsevents": "^2.1.3"
