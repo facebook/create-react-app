@@ -54,10 +54,6 @@ module.exports = function (api, opts, env) {
     );
   }
 
-  var hasJsxRuntime = Boolean(
-    api.caller(caller => !!caller && caller.hasJsxRuntime)
-  );
-
   if (!isEnvDevelopment && !isEnvProduction && !isEnvTest) {
     throw new Error(
       'Using `babel-preset-react-app` requires that you specify `NODE_ENV` or ' +
@@ -99,8 +95,8 @@ module.exports = function (api, opts, env) {
           development: isEnvDevelopment || isEnvTest,
           // Will use the native built-in instead of trying to polyfill
           // behavior for any plugins that require one.
-          ...(!hasJsxRuntime ? { useBuiltIns: true } : {}),
-          runtime: hasJsxRuntime ? 'automatic' : 'classic',
+          ...(opts.runtime !== 'automatic' ? { useBuiltIns: true } : {}),
+          runtime: opts.runtime || 'classic',
         },
       ],
       isTypeScriptEnabled && [require('@babel/preset-typescript').default],
