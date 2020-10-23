@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/"
+                       xmlns:moz="http://www.mozilla.org/2006/browser/search/">
+  <ShortName>Create React App</ShortName>
+  <Description>Search Create React App</Description>
+  <InputEncoding>UTF-8</InputEncoding>
+  <Image width="16" height="16" type="image/x-icon">https://create-react-app.dev/img/favicon/favicon.ico</Image>
+  <Url type="text/html" method="get" template="https://create-react-app.dev/search?q={searchTerms}"/>
+  <Url type="application/opensearchdescription+xml" rel="self" template="https://create-react-app.dev/opensearch.xml" />
+  <moz:SearchForm>https://create-react-app.dev</moz:SearchForm>
+</OpenSearchDescription>
