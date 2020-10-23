@@ -83,6 +83,7 @@ module.exports = (resolve, rootDir, isEjecting) => {
     'globalSetup',
     'globalTeardown',
     'moduleNameMapper',
+    'reporters',
     'resetMocks',
     'resetModules',
     'restoreMocks',
