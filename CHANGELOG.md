@@ -6,17 +6,17 @@ Thanks to all the maintainers and contributors who worked so hard on this releas
 
 # Highlights
 
-- Fast Refresh #8582
+- Fast Refresh [#8582](https://github.com/facebook/create-react-app/pull/8582)
 - React 17 support
-  - New JSX transform #9645
-- TypeScript 4 support #9734
-- ESLint 7 #8978
-  - New Jest and React Testing Library rules #8963
-- Jest 26 #8955
+  - New JSX transform [#9645](https://github.com/facebook/create-react-app/pull/9645)
+- TypeScript 4 support [#9734](https://github.com/facebook/create-react-app/pull/9734)
+- ESLint 7 [#8978](https://github.com/facebook/create-react-app/pull/8978)
+  - New Jest and React Testing Library rules [#8963](https://github.com/facebook/create-react-app/pull/8963)
+- Jest 26 [#8955](https://github.com/facebook/create-react-app/pull/8955)
 - PWA/workbox improvements
-  - Switch to the Workbox InjectManifest plugin #9205
+  - Switch to the Workbox InjectManifest plugin [#9205](https://github.com/facebook/create-react-app/pull/9205)
   - Now its own template so it can be released independently
-- Web Vitals support #9116
+- Web Vitals support [#9116](https://github.com/facebook/create-react-app/pull/9116)
 
 # Migrating from 3.4.x to 4.0.0
 
