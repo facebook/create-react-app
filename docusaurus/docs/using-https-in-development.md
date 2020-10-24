@@ -13,7 +13,7 @@ To do this, set the `HTTPS` environment variable to `true`, then start the dev s
 ### Windows (cmd.exe)
 
 ```cmd
-set HTTPS=true&&npm start
+set HTTPS=true && npm start
 ```
 
 (Note: the lack of whitespace is intentional.)
