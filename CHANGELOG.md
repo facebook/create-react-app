@@ -58,7 +58,7 @@ We've removed the deprecated `typescript` flag when creating a new app. Use `--t
 
 ### Fix dotenv file loading order
 
-We've changed the loading order of env files to match the `dotenv` specification. See #9037 for more details.
+We've changed the loading order of env files to match the `dotenv` specification. See [#9037](https://github.com/facebook/create-react-app/pull/9037) for more details.
 
 ### Dropped Node 8 support
 
