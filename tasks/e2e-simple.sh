@@ -263,6 +263,7 @@ echo yes | npm run eject
 test -n "$(git diff --staged --name-only)"
 
 # Test the build
+yarn add @babel/plugin-syntax-jsx
 yarn build
 # Check for expected output
 exists build/*.html
