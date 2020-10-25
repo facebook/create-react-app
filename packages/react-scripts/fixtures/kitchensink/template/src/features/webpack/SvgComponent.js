@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { ReactComponent as Logo } from './assets/logo.svg';
+import React, { ReactComponent as Logo } from './assets/logo.svg';
 
 const SvgComponent = () => {
   return <Logo id="feature-svg-component" />;
