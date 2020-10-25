@@ -6,7 +6,7 @@
  */
 
 /* @flow */
-import React, { useContext, useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import { ThemeContext } from '../iframeScript';
 
 import type { Node as ReactNode } from 'react';

@@ -17,7 +17,7 @@ This project setup uses [webpack](https://webpack.js.org/) for handling all asse
 ## `Button.js`
 
 ```js
-import React, { Component } from 'react';
+import { Component } from 'react';
 import './Button.css'; // Tell webpack that Button.js uses these styles
 
 class Button extends Component {
