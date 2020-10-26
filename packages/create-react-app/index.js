@@ -51,4 +51,6 @@ if (major < 10) {
   process.exit(1);
 }
 
-require('./createReactApp');
+const { init } = require('./createReactApp');
+
+init();
