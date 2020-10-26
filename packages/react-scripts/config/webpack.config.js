@@ -412,11 +412,11 @@ module.exports = function (webpackEnv) {
                 presets: [
                   [
                     require.resolve('babel-preset-react-app'),
-                    require.resolve('@emotion/babel-preset-css-prop'),
                     {
                       runtime: hasJsxRuntime ? 'automatic' : 'classic',
                     },
                   ],
+                  require.resolve('@emotion/babel-preset-css-prop'),
                 ],
                 // Make sure we have a unique cache identifier, erring on the
                 // side of caution.
@@ -446,7 +446,6 @@ module.exports = function (webpackEnv) {
                         },
                       },
                     },
-
                   ],
                   isEnvDevelopment &&
                     shouldUseReactRefresh &&
