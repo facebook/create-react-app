@@ -27,7 +27,7 @@ const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeM
 // const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const getCSSModuleLocalIdent = require('react-dev-utils/getCSSModuleLocalIdent');
-const ESLintPlugin = require('eslint-webpack-plugin');
+// const ESLintPlugin = require('eslint-webpack-plugin');
 const paths = require('./paths');
 const modules = require('./modules');
 const getClientEnvironment = require('./env');
@@ -609,6 +609,7 @@ module.exports = function(webpackEnv) {
               // test: cssModuleRegex,
               test: cssRegex,
               use: getStyleLoaders({
+                url: false,
                 importLoaders: 1,
                 sourceMap: isEnvProduction
                   ? shouldUseSourceMap
