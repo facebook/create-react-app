@@ -68,10 +68,7 @@ function Home() {
           <div className="container">
             <div className="row">
               {features.map(({ title, content }, idx) => (
-                <div
-                  key={idx}
-                  className={clsx('col col--4', styles.feature)}
-                >
+                <div key={idx} className={clsx('col col--4', styles.feature)}>
                   <h2>{title}</h2>
                   <p>{content}</p>
                 </div>
