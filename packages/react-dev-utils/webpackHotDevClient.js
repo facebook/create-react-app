@@ -243,7 +243,8 @@ function tryApplyUpdates(onHotUpdateSuccess) {
   }
 
   function handleApplyUpdates(err, updatedModules) {
-    const hasReactRefresh = process.env.FAST_REFRESH !== 'false';
+    // NOTE: This var is injected by Webpack's DefinePlugin, and is a boolean instead of string.
+    const hasReactRefresh = process.env.FAST_REFRESH;
     const wantsForcedReload = err || !updatedModules || hadRuntimeError;
     // React refresh can handle hot-reloading over errors.
     if (!hasReactRefresh && wantsForcedReload) {
