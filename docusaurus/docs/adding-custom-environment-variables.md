@@ -164,3 +164,4 @@ DOMAIN=www.example.com
 REACT_APP_FOO=$DOMAIN/foo
 REACT_APP_BAR=$DOMAIN/bar
 ```
+Note: for the moment this option of exapanding is not working (https://github.com/facebook/create-react-app/issues/8538) 
