@@ -8,15 +8,6 @@
 
 const path = require('path');
 
-const hasJsxRuntime = (() => {
-  try {
-    require.resolve('react/jsx-runtime.js');
-    return true;
-  } catch (e) {
-    return false;
-  }
-})();
-
 const validateBoolOption = (name, value, defaultValue) => {
   if (typeof value === 'undefined') {
     value = defaultValue;
