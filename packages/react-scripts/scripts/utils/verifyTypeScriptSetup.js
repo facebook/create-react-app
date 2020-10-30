@@ -218,6 +218,14 @@ function verifyTypeScriptSetup() {
   if (appTsConfig.compilerOptions == null) {
     appTsConfig.compilerOptions = {};
     firstTimeSetup = true;
+  } else {
+    // This is bug fix code of https://github.com/facebook/create-react-app/issues/9868
+    // Bellow code release variable from non-extensible and freeze status.
+    appTsConfig.compilerOptions = JSON.parse(JSON.stringify(appTsConfig.compilerOptions));
+
+    // Original appTsConfig.compilerOptions status
+    // Object.isExtensible(appTsConfig.compilerOptions) output: false
+    // Object.isFrozen(appTsConfig.compilerOptions) output: true
   }
 
   for (const option of Object.keys(compilerOptions)) {
