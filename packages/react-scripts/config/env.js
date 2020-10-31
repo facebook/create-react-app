@@ -11,6 +11,8 @@
 const fs = require('fs');
 const path = require('path');
 const paths = require('./paths');
+const semver = require('semver');
+const react = require(require.resolve('react', { paths: [paths.appPath] }));
 
 // Make sure that including paths.js after env.js will read .env variables.
 delete require.cache[require.resolve('./paths')];
@@ -94,10 +96,12 @@ function getClientEnvironment(publicUrl) {
         WDS_SOCKET_PATH: process.env.WDS_SOCKET_PATH,
         WDS_SOCKET_PORT: process.env.WDS_SOCKET_PORT,
         // Whether or not react-refresh is enabled.
-        // react-refresh is not 100% stable at this time,
-        // which is why it's disabled by default.
         // It is defined here so it is available in the webpackHotDevClient.
-        FAST_REFRESH: process.env.FAST_REFRESH !== 'false',
+        // Fast Refresh is available in React 16.10.0 or greater
+        // For older versions will fallback to full reload
+        FAST_REFRESH:
+          semver.gte(react.version, '16.10.0') &&
+          process.env.FAST_REFRESH !== 'false',
       }
     );
   // Stringify all values so we can feed into webpack DefinePlugin
