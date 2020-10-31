@@ -197,6 +197,7 @@ connection.onmessage = function (e) {
   switch (message.type) {
     case 'hash':
       handleAvailableHash(message.data);
+      handleSuccess();
       break;
     case 'still-ok':
     case 'ok':
@@ -243,7 +244,6 @@ function tryApplyUpdates(onHotUpdateSuccess) {
   }
 
   function handleApplyUpdates(err, updatedModules) {
-    // NOTE: This var is injected by Webpack's DefinePlugin, and is a boolean instead of string.
     const hasReactRefresh = process.env.FAST_REFRESH;
     const wantsForcedReload = err || !updatedModules || hadRuntimeError;
     // React refresh can handle hot-reloading over errors.
@@ -263,10 +263,10 @@ function tryApplyUpdates(onHotUpdateSuccess) {
     }
   }
 
-  // https://webpack.github.io/docs/hot-module-replacement.html#check
+  // https://webpack.js.org/api/hot-module-replacement/#check
   var result = module.hot.check(/* autoApply */ true, handleApplyUpdates);
 
-  // // webpack 2 returns a Promise instead of invoking a callback
+  // webpack 2 returns a Promise instead of invoking a callback
   if (result && result.then) {
     result.then(
       function (updatedModules) {
