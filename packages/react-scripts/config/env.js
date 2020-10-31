@@ -97,10 +97,12 @@ function getClientEnvironment(publicUrl) {
         WDS_SOCKET_PORT: process.env.WDS_SOCKET_PORT,
         // Whether or not react-refresh is enabled.
         // It is defined here so it is available in the webpackHotDevClient.
-        // Fast Refresh is available in React 16.10.0 or greater
-        // For older versions will fallback to full reload
+        //
+        // We use `react-refresh-webpack-plugin` for Fast Refresh
+        // which requries React version 16.9.0 or greater.
+        // For older versions, we will fallback to full reload
         FAST_REFRESH:
-          semver.gte(react.version, '16.10.0') &&
+          semver.gte(react.version, '16.9.0') &&
           process.env.FAST_REFRESH !== 'false',
       }
     );
