@@ -102,8 +102,11 @@ module.exports = function (webpackEnv) {
   // Omit trailing slash as %PUBLIC_URL%/xyz looks better than %PUBLIC_URL%xyz.
   // Get environment variables to inject into our app.
   const env = getClientEnvironment(paths.publicUrlOrPath.slice(0, -1));
-
-  const shouldUseReactRefresh = env.raw.FAST_REFRESH;
+  
+  /* webpack-5-react-scripts start */
+  // const shouldUseReactRefresh = env.raw.FAST_REFRESH;
+  const shouldUseReactRefresh = false;
+  /* webpack-5-react-scripts end */
 
   // common function to get style loaders
   const getStyleLoaders = (cssOptions, preProcessor) => {
