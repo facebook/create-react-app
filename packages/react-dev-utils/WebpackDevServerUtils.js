@@ -148,7 +148,7 @@ function createCompiler({
 
     forkTsCheckerWebpackPlugin
       .getCompilerHooks(compiler)
-      .receive.tap('afterTypeScriptCheck', (diagnostics, lints) => {
+      .issues.tap('afterTypeScriptCheck', (diagnostics, lints) => {
         const allMsgs = [...diagnostics, ...lints];
         const format = message =>
           `${message.file}\n${typescriptFormatter(message, true)}`;
