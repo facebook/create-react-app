@@ -7,7 +7,7 @@
 
 const siteConfig = {
   title: 'Create React App',
-  tagline: 'Set up a modern web app by running one command.',
+  tagline: 'Set up a modern web application by running one command.',
   url: 'https://create-react-app.dev',
   baseUrl: '/',
   projectName: 'create-react-app',
