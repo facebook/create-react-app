@@ -63,19 +63,34 @@ function getAdditionalModulePaths(options = {}) {
  * @param {*} options
  */
 function getWebpackAliases(options = {}) {
-  const baseUrl = options.baseUrl;
+  const { baseUrl, paths: configPaths } = options;
 
   if (!baseUrl) {
     return {};
   }
 
+  const aliases = {};
   const baseUrlResolved = path.resolve(paths.appPath, baseUrl);
 
   if (path.relative(paths.appPath, baseUrlResolved) === '') {
-    return {
-      src: paths.appSrc,
-    };
+    aliases.src = paths.appSrc;
   }
+
+  if (configPaths != null) {
+    Object.entries(configPaths).forEach(([key, [value]]) => {
+      aliases[replaceGlobs(key)] = path.resolve(
+        paths.appPath,
+        baseUrl,
+        replaceGlobs(value)
+      );
+    });
+  }
+
+  return aliases;
+}
+
+function replaceGlobs(path) {
+  return path.replace(/(\/\*\*)*\/\*$/, '');
 }
 
 /**
@@ -84,19 +99,31 @@ function getWebpackAliases(options = {}) {
  * @param {*} options
  */
 function getJestAliases(options = {}) {
-  const baseUrl = options.baseUrl;
+  const { baseUrl, paths: configPaths } = options;
 
   if (!baseUrl) {
     return {};
   }
 
+  const aliases = {};
   const baseUrlResolved = path.resolve(paths.appPath, baseUrl);
 
   if (path.relative(paths.appPath, baseUrlResolved) === '') {
-    return {
-      '^src/(.*)$': '<rootDir>/src/$1',
-    };
+    aliases['^src/(.*)$'] = '<rootDir>/src/$1';
   }
+
+  if (configPaths != null) {
+    const prefix = `<rootDir>/${baseUrl.replace(/^\.\//, '')}`;
+
+    Object.entries(configPaths).forEach(([key, [value]]) => {
+      aliases[`^${key.replace(/\*/, '(.*)')}`] = `${prefix}/${value.replace(
+        /\*/,
+        '$1'
+      )}`;
+    });
+  }
+
+  return aliases;
 }
 
 function getModules() {
