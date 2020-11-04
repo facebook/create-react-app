@@ -44,6 +44,8 @@ const appPackageJson = require(paths.appPackageJson);
 // Source maps are resource heavy and can cause out of memory issue for large source files.
 const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false';
 
+const shouldTypeCheck = process.env.DISABLE_TYPE_CHECKING !== 'true';
+
 const webpackDevClientEntry = require.resolve(
   'react-dev-utils/webpackHotDevClient'
 );
@@ -716,7 +718,7 @@ module.exports = function (webpackEnv) {
           exclude: [/\.map$/, /asset-manifest\.json$/, /LICENSE/],
         }),
       // TypeScript type checking
-      useTypeScript &&
+      useTypeScript && shouldTypeCheck &&
         new ForkTsCheckerWebpackPlugin({
           typescript: resolve.sync('typescript', {
             basedir: paths.appNodeModules,
