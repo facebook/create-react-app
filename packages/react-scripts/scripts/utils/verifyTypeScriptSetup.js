@@ -259,6 +259,12 @@ function verifyTypeScriptSetup() {
     );
   }
 
+  if (parsedTsConfig.paths != null && parsedTsConfig.baseUrl == null) {
+    messages.push(
+      `${chalk.cyan('paths')} requires ${chalk.cyan('baseUrl')} to be set`
+    );
+  }
+
   if (messages.length > 0) {
     if (firstTimeSetup) {
       console.log(
