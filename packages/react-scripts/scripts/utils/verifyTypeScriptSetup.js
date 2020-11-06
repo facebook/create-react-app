@@ -236,7 +236,9 @@ function verifyTypeScriptSetup() {
 
     if (suggested != null) {
       if (parsedCompilerOptions[option] === undefined) {
-        appTsConfig.compilerOptions[option] = suggested;
+        appTsConfig = immer(appTsConfig, config => {
+          config.compilerOptions[option] = suggested;
+        });
         messages.push(
           `${coloredOption} to be ${chalk.bold(
             'suggested'
@@ -244,7 +246,9 @@ function verifyTypeScriptSetup() {
         );
       }
     } else if (parsedCompilerOptions[option] !== valueToCheck) {
-      appTsConfig.compilerOptions[option] = value;
+      appTsConfig = immer(appTsConfig, config => {
+        config.compilerOptions[option] = value;
+      });
       messages.push(
         `${coloredOption} ${chalk.bold(
           valueToCheck == null ? 'must not' : 'must'
@@ -256,7 +260,9 @@ function verifyTypeScriptSetup() {
 
   // tsconfig will have the merged "include" and "exclude" by this point
   if (parsedTsConfig.include == null) {
-    appTsConfig.include = ['src'];
+    appTsConfig = immer(appTsConfig, config => {
+      config.include = ['src'];
+    });
     messages.push(
       `${chalk.cyan('include')} should be ${chalk.cyan.bold('src')}`
     );
