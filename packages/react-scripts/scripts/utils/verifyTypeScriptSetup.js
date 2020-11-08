@@ -259,10 +259,12 @@ function verifyTypeScriptSetup() {
     );
   }
 
-  if (parsedTsConfig.paths != null && parsedTsConfig.baseUrl == null) {
-    messages.push(
-      `${chalk.cyan('paths')} requires ${chalk.cyan('baseUrl')} to be set`
-    );
+  if (parsedTsConfig.paths != null) {
+    if (semver.lt(ts.version, '4.1.0') && parsedTsConfig.baseUrl == null) {
+      messages.push(
+        `${chalk.cyan('paths')} requires ${chalk.cyan('baseUrl')} to be set`
+      );
+    }
   }
 
   if (messages.length > 0) {
