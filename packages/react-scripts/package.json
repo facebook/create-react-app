@@ -1,6 +1,6 @@
 {
   "name": "webpack-5-react-scripts",
-  "version": "0.8.0-next.3",
+  "version": "0.8.0",
   "description": "Configuration and scripts for Create React App using Webpack 5.",
   "repository": {
     "type": "git",
@@ -82,7 +82,7 @@
     "terser-webpack-plugin": "3.0.1",
     "ts-pnp": "1.2.0",
     "url-loader": "4.1.1",
-    "wbpk-5-cra-utils": "1.1.0-next.1",
+    "wbpk-5-cra-utils": "1.1.0",
     "webpack": "5.0.0-beta.16",
     "webpack-dev-server": "3.11.0",
     "webpack-manifest-plugin": "2.2.0",
