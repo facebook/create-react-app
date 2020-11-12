@@ -62,7 +62,14 @@ if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
 
 // Tools like Cloud9 rely on this.
 const DEFAULT_PORT = parseInt(process.env.PORT, 10) || 3000;
-const HOST = process.env.HOST || '0.0.0.0';
+let HOST = process.env.HOST || '0.0.0.0';
+// Convert hosts ending with ".localhost" so that resolution works internally,
+// while keeping the full host to be printed in the terminal and used to open
+// the browser.
+const fullHost = HOST;
+if (HOST.endsWith('.localhost')) {
+  HOST = 'localhost';
+}
 
 if (process.env.HOST) {
   console.log(
@@ -104,7 +111,7 @@ checkBrowsers(paths.appPath, isInteractive)
     const tscCompileOnError = process.env.TSC_COMPILE_ON_ERROR === 'true';
     const urls = prepareUrls(
       protocol,
-      HOST,
+      fullHost,
       port,
       paths.publicUrlOrPath.slice(0, -1)
     );
