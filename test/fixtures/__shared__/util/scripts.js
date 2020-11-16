@@ -30,7 +30,14 @@ function execaSafe(...args) {
       rejected: true,
       reason: err,
       stdout: '',
-      stderr: stripYarn(stripAnsi(err.message.split('\n').slice(2).join('\n'))),
+      stderr: stripYarn(
+        stripAnsi(
+          err.message
+            .split('\n')
+            .slice(2)
+            .join('\n')
+        )
+      ),
     }));
 }
 

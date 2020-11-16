@@ -87,7 +87,7 @@ Next, create `src/setupProxy.js` and place the following contents in it:
 ```js
 const { createProxyMiddleware } = require('http-proxy-middleware');
 
-module.exports = function (app) {
+module.exports = function(app) {
   // ...
 };
 ```
@@ -97,7 +97,7 @@ You can now register proxies as you wish! Here's an example using the above `htt
 ```js
 const { createProxyMiddleware } = require('http-proxy-middleware');
 
-module.exports = function (app) {
+module.exports = function(app) {
   app.use(
     '/api',
     createProxyMiddleware({

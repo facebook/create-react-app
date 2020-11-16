@@ -57,7 +57,7 @@ You can also use the `gql` template tag the same way you would use the non-macro
 
 ```js
 import { gql } from 'graphql.macro';
-
+ 
 const query = gql`
   query User {
     user(id: 5) {

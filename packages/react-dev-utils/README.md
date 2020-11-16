@@ -231,11 +231,11 @@ var formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
 
 var compiler = webpack(config);
 
-compiler.hooks.invalid.tap('invalid', function () {
+compiler.hooks.invalid.tap('invalid', function() {
   console.log('Compiling...');
 });
 
-compiler.hooks.done.tap('done', function (stats) {
+compiler.hooks.done.tap('done', function(stats) {
   var rawMessages = stats.toJson({}, true);
   var messages = formatWebpackMessages(rawMessages);
   if (!messages.errors.length && !messages.warnings.length) {

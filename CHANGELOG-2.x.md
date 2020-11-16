@@ -845,7 +845,7 @@ We previously allowed code splitting with a webpack-specific directive, `require
 **Single Module**
 
 ```js
-require.ensure(['module-a'], function () {
+require.ensure(['module-a'], function() {
   var a = require('module-a');
   // ...
 });
@@ -859,7 +859,7 @@ import('module-a').then(a => {
 **Multiple Module**
 
 ```js
-require.ensure(['module-a', 'module-b'], function () {
+require.ensure(['module-a', 'module-b'], function() {
   var a = require('module-a');
   var b = require('module-b');
   // ...
@@ -913,7 +913,7 @@ Next, create `src/setupProxy.js` and place the following contents in it:
 ```js
 const proxy = require('http-proxy-middleware');
 
-module.exports = function (app) {
+module.exports = function(app) {
   // ...
 };
 ```
@@ -936,7 +936,7 @@ Place entries into `src/setupProxy.js` like so:
 ```js
 const proxy = require('http-proxy-middleware');
 
-module.exports = function (app) {
+module.exports = function(app) {
   app.use(proxy('/api', { target: 'http://localhost:5000/' }));
   app.use(proxy('/*.svg', { target: 'http://localhost:5000/' }));
 };

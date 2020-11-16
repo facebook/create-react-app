@@ -1588,7 +1588,9 @@ After the regular update procedure above, add these line to `<head>` in `public/
 Add `<noscript>` to `<body>` in `public/index.html`:
 
 ```html
-<noscript> You need to enable JavaScript to run this app. </noscript>
+<noscript>
+  You need to enable JavaScript to run this app.
+</noscript>
 ```
 
 Then create a file called `public/manifest.json` that looks like this:
