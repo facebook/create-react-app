@@ -3,7 +3,7 @@ id: adding-bootstrap
 title: Adding Bootstrap
 ---
 
-While you don’t have to use any specific library to integrate Bootstrap with React apps, it's often easier than trying to wrap the Bootstrap jQuery plugins. [React Bootstrap](https://react-bootstrap.netlify.com/) is the most popular option, that strives for complete parity with bootstrap. [reactstrap](https://reactstrap.github.io/) is also a good choice for projects looking for smaller builds at the expense of some features.
+While you don’t have to use any specific library to integrate Bootstrap with React apps, it's often easier than trying to wrap the Bootstrap jQuery plugins. [React Bootstrap](https://react-bootstrap.netlify.com/) is the most popular option that strives for complete parity with Bootstrap. [reactstrap](https://reactstrap.github.io/) is also a good choice for projects looking for smaller builds at the expense of some features.
 
 Each project's respective documentation site has detailed instructions for installing and using them. Both depend on the Bootstrap css file so install that as well:
 
@@ -29,8 +29,21 @@ import 'bootstrap/dist/css/bootstrap.css';
 
 > Note: this feature is available with `react-scripts@2.0.0` and higher.
 
-Sometimes you might need to tweak the visual styles of Bootstrap (or equivalent package).<br>
+Sometimes you might need to tweak the visual styles of Bootstrap (or equivalent package).
+
 As of `react-scripts@2.0.0` you can import `.scss` files. This makes it possible to use a package's built-in Sass variables for global style preferences.
+
+To enable `scss` in Create React App you will need to install `node-sass`.
+
+```sh
+npm install --save node-sass
+```
+
+Alternatively you may use `yarn`:
+
+```sh
+yarn add node-sass
+```
 
 To customize Bootstrap, create a file called `src/custom.scss` (or similar) and import the Bootstrap source stylesheet. Add any overrides _before_ the imported file(s). You can reference [Bootstrap's documentation](https://getbootstrap.com/docs/4.1/getting-started/theming/#css-variables) for the names of the available variables.
 

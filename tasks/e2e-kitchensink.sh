@@ -16,20 +16,19 @@ cd "$(dirname "$0")"
 # http://unix.stackexchange.com/a/84980
 temp_app_path=`mktemp -d 2>/dev/null || mktemp -d -t 'temp_app_path'`
 temp_module_path=`mktemp -d 2>/dev/null || mktemp -d -t 'temp_module_path'`
-custom_registry_url=http://localhost:4873
-original_npm_registry_url=`npm get registry`
-original_yarn_registry_url=`yarn config get registry`
+
+# Load functions for working with local NPM registry (Verdaccio)
+source local-registry.sh
 
 function cleanup {
   echo 'Cleaning up.'
   unset BROWSERSLIST
-  ps -ef | grep 'verdaccio' | grep -v grep | awk '{print $2}' | xargs kill -9
   ps -ef | grep 'react-scripts' | grep -v grep | awk '{print $2}' | xargs kill -9
   cd "$root_path"
   # TODO: fix "Device or resource busy" and remove ``|| $CI`
   rm -rf "$temp_app_path" "$temp_module_path" || $CI
-  npm set registry "$original_npm_registry_url"
-  yarn config set registry "$original_yarn_registry_url"
+  # Restore the original NPM and Yarn registry URLs and stop Verdaccio
+  stopLocalRegistry
 }
 
 # Error messages are redirected to stderr
@@ -65,6 +64,10 @@ set -x
 # Go to root
 cd ..
 root_path=$PWD
+# Set a Windows path for GitBash on Windows
+if [ "$AGENT_OS" == 'Windows_NT' ]; then
+  root_path=$(cmd //c cd)
+fi
 
 if hash npm 2>/dev/null
 then
@@ -78,22 +81,11 @@ yarn
 # First, publish the monorepo.
 # ******************************************************************************
 
-# Start local registry
-tmp_registry_log=`mktemp`
-(cd && nohup npx verdaccio@3.8.2 -c "$root_path"/tasks/verdaccio.yaml &>$tmp_registry_log &)
-# Wait for `verdaccio` to boot
-grep -q 'http address' <(tail -f $tmp_registry_log)
-
-# Set registry to local registry
-npm set registry "$custom_registry_url"
-yarn config set registry "$custom_registry_url"
-
-# Login so we can publish packages
-(cd && npx npm-auth-to-token@1.0.0 -u user -p password -e user@example.com -r "$custom_registry_url")
+# Start the local NPM registry
+startLocalRegistry "$root_path"/tasks/verdaccio.yaml
 
 # Publish the monorepo
-git clean -df
-./tasks/publish.sh --yes --force-publish=* --skip-git --cd-version=prerelease --exact --npm-tag=latest
+publishToLocalRegistry
 
 # ******************************************************************************
 # Now that we have published them, create a clean app folder and install them.
@@ -101,7 +93,7 @@ git clean -df
 
 # Install the app in a temporary location
 cd $temp_app_path
-npx create-react-app test-kitchensink --internal-testing-template="$root_path"/packages/react-scripts/fixtures/kitchensink
+npx create-react-app test-kitchensink --template=file:"$root_path"/packages/react-scripts/fixtures/kitchensink
 
 # Install the test module
 cd "$temp_module_path"
@@ -123,7 +115,6 @@ npm link "$temp_module_path/node_modules/test-integrity"
 
 # Test the build
 REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
-  NODE_PATH=src \
   PUBLIC_URL=http://www.example.org/spa/ \
   yarn build
 
@@ -135,7 +126,6 @@ exists build/static/js/main.*.js
 # https://facebook.github.io/jest/docs/en/troubleshooting.html#tests-are-extremely-slow-on-docker-and-or-continuous-integration-ci-server
 REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
   CI=true \
-  NODE_PATH=src \
   NODE_ENV=test \
   yarn test --no-cache --runInBand --testPathPattern=src
 

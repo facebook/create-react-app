@@ -10,7 +10,7 @@ const crypto = require('crypto');
 
 const macroCheck = new RegExp('[./]macro');
 
-module.exports = function() {
+module.exports = function () {
   return {
     // This function transforms the Babel configuration on a per-file basis
     config(config, { source }) {

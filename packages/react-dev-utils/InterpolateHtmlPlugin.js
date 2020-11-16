@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-// This Webpack plugin lets us interpolate custom variables into `index.html`.
+// This webpack plugin lets us interpolate custom variables into `index.html`.
 // Usage: `new InterpolateHtmlPlugin(HtmlWebpackPlugin, { 'MY_VARIABLE': 42 })`
 // Then, you can use %MY_VARIABLE% in your `index.html`.
 
@@ -26,7 +26,7 @@ class InterpolateHtmlPlugin {
     compiler.hooks.compilation.tap('InterpolateHtmlPlugin', compilation => {
       this.htmlWebpackPlugin
         .getHooks(compilation)
-        .beforeEmit.tap('InterpolateHtmlPlugin', data => {
+        .afterTemplateExecution.tap('InterpolateHtmlPlugin', data => {
           // Run HTML through a series of user-specified string replacements.
           Object.keys(this.replacements).forEach(key => {
             const value = this.replacements[key];

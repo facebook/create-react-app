@@ -10,17 +10,21 @@ import StackFrame from './stack-frame';
 
 const regexExtractLocation = /\(?(.+?)(?::(\d+))?(?::(\d+))?\)?$/;
 
+// $FlowFixMe
 function extractLocation(token: string): [string, number, number] {
-  return regexExtractLocation
-    .exec(token)
-    .slice(1)
-    .map(v => {
-      const p = Number(v);
-      if (!isNaN(p)) {
-        return p;
-      }
-      return v;
-    });
+  return (
+    regexExtractLocation
+      .exec(token)
+      // $FlowFixMe
+      .slice(1)
+      .map(v => {
+        const p = Number(v);
+        if (!isNaN(p)) {
+          return p;
+        }
+        return v;
+      })
+  );
 }
 
 const regexValidFrame_Chrome = /^\s*(at|in)\s.+(:\d+)/;
@@ -56,10 +60,7 @@ function parseStack(stack: string[]): StackFrame[] {
         if (e.indexOf('(at ') !== -1) {
           e = e.replace(/\(at /, '(');
         }
-        const data = e
-          .trim()
-          .split(/\s+/g)
-          .slice(1);
+        const data = e.trim().split(/\s+/g).slice(1);
         const last = data.pop();
         return new StackFrame(data.join(' ') || null, ...extractLocation(last));
       }

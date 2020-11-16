@@ -8,6 +8,7 @@
 'use strict';
 
 const loaderUtils = require('loader-utils');
+const path = require('path');
 
 module.exports = function getLocalIdent(
   context,
@@ -23,7 +24,7 @@ module.exports = function getLocalIdent(
     : '[name]';
   // Create a hash based on a the file location and class name. Will be unique across a project, and close to globally unique.
   const hash = loaderUtils.getHashDigest(
-    context.resourcePath + localName,
+    path.posix.relative(context.rootContext, context.resourcePath) + localName,
     'md5',
     'base64',
     5
@@ -34,6 +35,6 @@ module.exports = function getLocalIdent(
     fileNameOrFolder + '_' + localName + '__' + hash,
     options
   );
-  // remove the .module that appears in every classname when based on the file.
-  return className.replace('.module_', '_');
+  // Remove the .module that appears in every classname when based on the file and replace all "." with "_".
+  return className.replace('.module_', '_').replace(/\./g, '_');
 };

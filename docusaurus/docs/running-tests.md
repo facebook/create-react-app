@@ -3,7 +3,7 @@ id: running-tests
 title: Running Tests
 ---
 
-> Note: this feature is available with `react-scripts@0.3.0` and higher.<br>
+> Note: this feature is available with `react-scripts@0.3.0` and higher.
 
 > [Read the migration guide to learn how to enable it in older projects!](https://github.com/facebook/create-react-app/blob/master/CHANGELOG-0.x.md#migrating-from-023-to-030)
 
@@ -25,17 +25,17 @@ Jest will look for test files with any of the following popular naming conventio
 
 The `.test.js` / `.spec.js` files (or the `__tests__` folders) can be located at any depth under the `src` top level folder.
 
-We recommend to put the test files (or `__tests__` folders) next to the code they are testing so that relative imports appear shorter. For example, if `App.test.js` and `App.js` are in the same folder, the test just needs to `import App from './App'` instead of a long relative path. Collocation also helps find tests more quickly in larger projects.
+We recommend to put the test files (or `__tests__` folders) next to the code they are testing so that relative imports appear shorter. For example, if `App.test.js` and `App.js` are in the same folder, the test only needs to `import App from './App'` instead of a long relative path. Collocation also helps find tests more quickly in larger projects.
 
 ## Command Line Interface
 
-When you run `npm test`, Jest will launch in watch mode<sup>\*</sup>. Every time you save a file, it will re-run the tests, just like `npm start` recompiles the code.
+When you run `npm test`, Jest will launch in watch mode<sup>\*</sup>. Every time you save a file, it will re-run the tests, like how `npm start` recompiles the code.
 
 The watcher includes an interactive command-line interface with the ability to run all tests, or focus on a search pattern. It is designed this way so that you can keep it open and enjoy fast re-runs. You can learn the commands from the “Watch Usage” note that the watcher prints after every run:
 
 ![Jest watch mode](https://jestjs.io/img/blog/15-watch.gif)
 
-> \*Although we recommend running your tests in watch mode during development, you can disable this behavior by passing in the `--no-watch` flag. In most CI environments, this is handled for you (see [On CI servers](#on-ci-servers)).
+> \*Although we recommend running your tests in watch mode during development, you can disable this behavior by passing in the `--watchAll=false` flag. In most CI environments, this is handled for you (see [On CI servers](#on-ci-servers)).
 
 ## Version Control Integration
 
@@ -60,14 +60,15 @@ it('sums numbers', () => {
 });
 ```
 
-All `expect()` matchers supported by Jest are [extensively documented here](https://jestjs.io/docs/en/expect.html#content).<br>
+All `expect()` matchers supported by Jest are [extensively documented here](https://jestjs.io/docs/en/expect.html#content).
+
 You can also use [`jest.fn()` and `expect(fn).toBeCalled()`](https://jestjs.io/docs/en/expect.html#tohavebeencalled) to create “spies” or mock functions.
 
 ## Testing Components
 
 There is a broad spectrum of component testing techniques. They range from a “smoke test” verifying that a component renders without throwing, to shallow rendering and testing some of the output, to full rendering and testing component lifecycle and state changes.
 
-Different projects choose different testing tradeoffs based on how often components change, and how much logic they contain. If you haven’t decided on a testing strategy yet, we recommend that you start with creating simple smoke tests for your components:
+Different projects choose different testing tradeoffs based on how often components change, and how much logic they contain. If you haven’t decided on a testing strategy yet, we recommend that you start with creating basic smoke tests for your components:
 
 ```js
 import React from 'react';
@@ -84,141 +85,50 @@ This test mounts a component and makes sure that it didn’t throw during render
 
 When you encounter bugs caused by changing components, you will gain a deeper insight into which parts of them are worth testing in your application. This might be a good time to introduce more specific tests asserting specific expected output or behavior.
 
-### Option 1: Shallow Rendering
+### React Testing Library
 
-If you’d like to test components in isolation from the child components they render, we recommend using [`shallow()` rendering API](https://airbnb.io/enzyme/docs/api/shallow.html) from [Enzyme](https://airbnb.io/enzyme/). To install it, run:
-
-```sh
-npm install --save enzyme enzyme-adapter-react-16 react-test-renderer
-```
-
-Alternatively you may use `yarn`:
-
-```sh
-yarn add enzyme enzyme-adapter-react-16 react-test-renderer
-```
-
-As of Enzyme 3, you will need to install Enzyme along with an Adapter corresponding to the version of React you are using. (The examples above use the adapter for React 16.)
-
-The adapter will also need to be configured in your [global setup file](#initializing-test-environment):
-
-### `src/setupTests.js`
-
-```js
-import { configure } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
-
-configure({ adapter: new Adapter() });
-```
-
-> Note: When using TypeScript with Babel, all your files need to have at least one export, otherwise you will get the error `Cannot compile namespaces when the '--isolatedModules' flag is provided.`. To fix this, you can add `export default undefined` to `src/setupTests.ts`.
-
-> Note: Keep in mind that if you decide to "eject" before creating `src/setupTests.js`, the resulting `package.json` file won't contain any reference to it. [Read here](#initializing-test-environment) to learn how to add this after ejecting.
-
-Now you can write a smoke test with it:
-
-```js
-import React from 'react';
-import { shallow } from 'enzyme';
-import App from './App';
-
-it('renders without crashing', () => {
-  shallow(<App />);
-});
-```
-
-Unlike the previous smoke test using `ReactDOM.render()`, this test only renders `<App>` and doesn’t go deeper. For example, even if `<App>` itself renders a `<Button>` that throws, this test will pass. Shallow rendering is great for isolated unit tests, but you may still want to create some full rendering tests to ensure the components integrate correctly. Enzyme supports [full rendering with `mount()`](https://airbnb.io/enzyme/docs/api/mount.html), and you can also use it for testing state changes and component lifecycle.
-
-You can read the [Enzyme documentation](https://airbnb.io/enzyme/) for more testing techniques. Enzyme documentation uses Chai and Sinon for assertions but you don’t have to use them because Jest provides built-in `expect()` and `jest.fn()` for spies.
-
-Here is an example from Enzyme documentation that asserts specific output, rewritten to use Jest matchers:
-
-```js
-import React from 'react';
-import { shallow } from 'enzyme';
-import App from './App';
-
-it('renders welcome message', () => {
-  const wrapper = shallow(<App />);
-  const welcome = <h2>Welcome to React</h2>;
-  // expect(wrapper.contains(welcome)).toBe(true);
-  expect(wrapper.contains(welcome)).toEqual(true);
-});
-```
-
-All Jest matchers are [extensively documented here](https://jestjs.io/docs/en/expect.html).<br>
-Nevertheless you can use a third-party assertion library like [Chai](https://chaijs.com/) if you want to, as described below.
-
-Additionally, you might find [jest-enzyme](https://github.com/blainekasten/enzyme-matchers) helpful to simplify your tests with readable matchers. The above `contains` code can be written more simply with jest-enzyme.
-
-```js
-expect(wrapper).toContainReact(welcome);
-```
-
-To enable this, install `jest-enzyme`:
-
-```sh
-npm install --save jest-enzyme
-```
-
-Alternatively you may use `yarn`:
-
-```sh
-yarn add jest-enzyme
-```
-
-Import it in [`src/setupTests.js`](#initializing-test-environment) to make its matchers available in every test:
-
-```js
-import 'jest-enzyme';
-```
-
-### Option 2: React Testing Library
-
-As an alternative or companion to `enzyme`, you may consider using `react-testing-library`. [`react-testing-library`](https://github.com/kentcdodds/react-testing-library) is a library for testing React components in a way that resembles the way the components are used by end users. It is well suited for unit, integration, and end-to-end testing of React components and applications. It works more directly with DOM nodes, and therefore it's recommended to use with [`jest-dom`](https://github.com/gnapse/jest-dom) for improved assertions.
+If you’d like to test components in isolation from the child components they render, we recommend using `react-testing-library`. [`react-testing-library`](https://github.com/testing-library/react-testing-library) is a library for testing React components in a way that resembles the way the components are used by end users. It is well suited for unit, integration, and end-to-end testing of React components and applications. It works more directly with DOM nodes, and therefore it's recommended to use with [`jest-dom`](https://github.com/testing-library/jest-dom) for improved assertions.
 
 To install `react-testing-library` and `jest-dom`, you can run:
 
 ```sh
-npm install --save react-testing-library jest-dom
+npm install --save @testing-library/react @testing-library/jest-dom
 ```
 
 Alternatively you may use `yarn`:
 
 ```sh
-yarn add react-testing-library jest-dom
+yarn add @testing-library/react @testing-library/jest-dom
 ```
 
-Similar to `enzyme` you can create a `src/setupTests.js` file to avoid boilerplate in your test files:
+If you want to avoid boilerplate in your test files, you can create a [`src/setupTests.js`](#initializing-test-environment) file:
 
 ```js
 // react-testing-library renders your components to document.body,
-// this will ensure they're removed after each test.
-import 'react-testing-library/cleanup-after-each';
 // this adds jest-dom's custom assertions
-import 'jest-dom/extend-expect';
+import '@testing-library/jest-dom';
 ```
 
-Here's an example of using `react-testing-library` and `jest-dom` for testing that the `<App />` component renders "Welcome to React".
+Here's an example of using `react-testing-library` and `jest-dom` for testing that the `<App />` component renders "Learn React".
 
 ```js
 import React from 'react';
-import { render } from 'react-testing-library';
+import { render, screen } from '@testing-library/react';
 import App from './App';
 
 it('renders welcome message', () => {
-  const { getByText } = render(<App />);
-  expect(getByText('Welcome to React')).toBeInTheDocument();
+  render(<App />);
+  expect(screen.getByText('Learn React')).toBeInTheDocument();
 });
 ```
 
-Learn more about the utilities provided by `react-testing-library` to facilitate testing asynchronous interactions as well as selecting form elements from [the `react-testing-library` documentation](https://testing-library.com/react) and [examples](https://codesandbox.io/s/github/kentcdodds/react-testing-library-examples).
+Learn more about the utilities provided by `react-testing-library` to facilitate testing asynchronous interactions as well as selecting form elements from the [`react-testing-library` documentation](https://testing-library.com/react) and [examples](https://codesandbox.io/s/github/kentcdodds/react-testing-library-examples).
 
 ## Using Third Party Assertion Libraries
 
 We recommend that you use `expect()` for assertions and `jest.fn()` for spies. If you are having issues with them please [file those against Jest](https://github.com/facebook/jest/issues/new), and we’ll fix them. We intend to keep making them better for React, supporting, for example, [pretty-printing React elements as JSX](https://github.com/facebook/jest/pull/1566).
 
-However, if you are used to other libraries, such as [Chai](https://chaijs.com/) and [Sinon](https://sinonjs.org/), or if you have existing code using them that you’d like to port over, you can import them normally like this:
+However, if you are used to other libraries, such as [Chai](https://www.chaijs.com/) and [Sinon](https://sinonjs.org/), or if you have existing code using them that you’d like to port over, you can import them normally like this:
 
 ```js
 import sinon from 'sinon';
@@ -231,7 +141,7 @@ and then use them in your tests like you normally do.
 
 > Note: this feature is available with `react-scripts@0.4.0` and higher.
 
-If your app uses a browser API that you need to mock in your tests or if you just need a global setup before running your tests, add a `src/setupTests.js` to your project. It will be automatically executed before running your tests.
+If your app uses a browser API that you need to mock in your tests or if you need a global setup before running your tests, add a `src/setupTests.js` to your project. It will be automatically executed before running your tests.
 
 For example:
 
@@ -247,23 +157,25 @@ const localStorageMock = {
 global.localStorage = localStorageMock;
 ```
 
-> Note: Keep in mind that if you decide to "eject" before creating `src/setupTests.js`, the resulting `package.json` file won't contain any reference to it, so you should manually create the property `setupTestFrameworkScriptFile` in the configuration for Jest, something like the following:
+> Note: Keep in mind that if you decide to "eject" before creating `src/setupTests.js`, the resulting `package.json` file won't contain any reference to it, so you should manually create the property `setupFilesAfterEnv` in the configuration for Jest, something like the following:
 
 > ```js
 > "jest": {
 >   // ...
->   "setupTestFrameworkScriptFile": "<rootDir>/src/setupTests.js"
+>   "setupFilesAfterEnv": ["<rootDir>/src/setupTests.js"]
 >  }
 > ```
 
 ## Focusing and Excluding Tests
 
-You can replace `it()` with `xit()` to temporarily exclude a test from being executed.<br>
+You can replace `it()` with `xit()` to temporarily exclude a test from being executed.
+
 Similarly, `fit()` lets you focus on a specific test without running any other tests.
 
 ## Coverage Reporting
 
-Jest has an integrated coverage reporter that works well with ES6 and requires no configuration.<br>
+Jest has an integrated coverage reporter that works well with ES6 and requires no configuration.
+
 Run `npm test -- --coverage` (note extra `--` in the middle) to include a coverage report like this:
 
 ![coverage report](https://i.imgur.com/5bFhnTS.png)
@@ -276,10 +188,21 @@ The default Jest coverage configuration can be overridden by adding any of the f
 
 Supported overrides:
 
+- [`clearMocks`](https://jestjs.io/docs/en/configuration.html#clearmocks-boolean)
 - [`collectCoverageFrom`](https://jestjs.io/docs/en/configuration.html#collectcoveragefrom-array)
 - [`coverageReporters`](https://jestjs.io/docs/en/configuration.html#coveragereporters-array-string)
 - [`coverageThreshold`](https://jestjs.io/docs/en/configuration.html#coveragethreshold-object)
+- [`displayName`](https://jestjs.io/docs/en/configuration.html#displayname-string-object)
+- [`extraGlobals`](https://jestjs.io/docs/en/configuration.html#extraglobals-array-string)
+- [`globalSetup`](https://jestjs.io/docs/en/configuration.html#globalsetup-string)
+- [`globalTeardown`](https://jestjs.io/docs/en/configuration.html#globalteardown-string)
+- [`moduleNameMapper`](https://jestjs.io/docs/en/configuration.html#modulenamemapper-object-string-string)
+- [`resetMocks`](https://jestjs.io/docs/en/configuration.html#resetmocks-boolean)
+- [`resetModules`](https://jestjs.io/docs/en/configuration.html#resetmodules-boolean)
 - [`snapshotSerializers`](https://jestjs.io/docs/en/configuration.html#snapshotserializers-array-string)
+- [`transform`](https://jestjs.io/docs/en/configuration.html#transform-object-string-pathtotransformer-pathtotransformer-object)
+- [`transformIgnorePatterns`](https://jestjs.io/docs/en/configuration.html#transformignorepatterns-array-string)
+- [`watchPathIgnorePatterns`](https://jestjs.io/docs/en/configuration.html#watchpathignorepatterns-array-string)
 
 Example package.json:
 
@@ -376,7 +299,7 @@ CI=true npm run build
 
 The test command will force Jest to run in CI-mode, and tests will only run once instead of launching the watcher.
 
-For non-CI environments, you can simply pass the `--no-watch` flag to disable test-watching.
+For non-CI environments, you can pass the `--watchAll=false` flag to disable test-watching.
 
 The build command will check for linter warnings and fail if any are found.
 
@@ -398,6 +321,7 @@ To help you make up your mind, here is a list of APIs that **need jsdom**:
 - [`ReactDOM.render()`](https://facebook.github.io/react/docs/top-level-api.html#reactdom.render)
 - [`TestUtils.renderIntoDocument()`](https://facebook.github.io/react/docs/test-utils.html#renderintodocument) ([a shortcut](https://github.com/facebook/react/blob/34761cf9a252964abfaab6faf74d473ad95d1f21/src/test/ReactTestUtils.js#L83-L91) for the above)
 - [`mount()`](https://airbnb.io/enzyme/docs/api/mount.html) in [Enzyme](https://airbnb.io/enzyme/index.html)
+- [`render()`](https://testing-library.com/docs/react-testing-library/api/#render) in [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/)
 
 In contrast, **jsdom is not needed** for the following APIs:
 

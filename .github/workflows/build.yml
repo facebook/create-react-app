@@ -1,0 +1,13 @@
+name: Build
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Install
+        run: yarn --no-progress --non-interactive --no-lockfile
+      - name: Build
+        run: yarn build

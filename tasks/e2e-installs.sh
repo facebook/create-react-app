@@ -15,17 +15,16 @@ cd "$(dirname "$0")"
 # CLI and app temporary locations
 # http://unix.stackexchange.com/a/84980
 temp_app_path=`mktemp -d 2>/dev/null || mktemp -d -t 'temp_app_path'`
-custom_registry_url=http://localhost:4873
-original_npm_registry_url=`npm get registry`
-original_yarn_registry_url=`yarn config get registry`
+
+# Load functions for working with local NPM registry (Verdaccio)
+source local-registry.sh
 
 function cleanup {
   echo 'Cleaning up.'
-  ps -ef | grep 'verdaccio' | grep -v grep | awk '{print $2}' | xargs kill -9
   cd "$root_path"
   rm -rf "$temp_app_path"
-  npm set registry "$original_npm_registry_url"
-  yarn config set registry "$original_yarn_registry_url"
+  # Restore the original NPM and Yarn registry URLs and stop Verdaccio
+  stopLocalRegistry
 }
 
 # Error messages are redirected to stderr
@@ -52,7 +51,7 @@ function exists {
 # Check for accidental dependencies in package.json
 function checkDependencies {
   if ! awk '/"dependencies": {/{y=1;next}/},/{y=0; next}y' package.json | \
-  grep -v -q -E '^\s*"react(-dom|-scripts)?"'; then
+  grep -v -q -E '^\s*"(@testing-library\/.+)|web-vitals|(react(-dom|-scripts)?)"'; then
    echo "Dependencies are correct"
   else
    echo "There are extraneous dependencies in package.json"
@@ -63,7 +62,7 @@ function checkDependencies {
 # Check for accidental dependencies in package.json
 function checkTypeScriptDependencies {
   if ! awk '/"dependencies": {/{y=1;next}/},/{y=0; next}y' package.json | \
-  grep -v -q -E '^\s*"(@types\/.+)|typescript|(react(-dom|-scripts)?)"'; then
+  grep -v -q -E '^\s*"(@testing-library\/.+)|web-vitals|(@types\/.+)|typescript|(react(-dom|-scripts)?)"'; then
    echo "Dependencies are correct"
   else
    echo "There are extraneous dependencies in package.json"
@@ -96,22 +95,11 @@ yarn
 # First, publish the monorepo.
 # ******************************************************************************
 
-# Start local registry
-tmp_registry_log=`mktemp`
-(cd && nohup npx verdaccio@3.8.2 -c "$root_path"/tasks/verdaccio.yaml &>$tmp_registry_log &)
-# Wait for `verdaccio` to boot
-grep -q 'http address' <(tail -f $tmp_registry_log)
-
-# Set registry to local registry
-npm set registry "$custom_registry_url"
-yarn config set registry "$custom_registry_url"
-
-# Login so we can publish packages
-(cd && npx npm-auth-to-token@1.0.0 -u user -p password -e user@example.com -r "$custom_registry_url")
+# Start the local NPM registry
+startLocalRegistry "$root_path"/tasks/verdaccio.yaml
 
 # Publish the monorepo
-git clean -df
-./tasks/publish.sh --yes --force-publish=* --skip-git --cd-version=prerelease --exact --npm-tag=latest
+publishToLocalRegistry
 
 echo "Create React App Version: "
 npx create-react-app --version
@@ -159,11 +147,11 @@ grep '"version": "1.0.17"' node_modules/react-scripts/package.json
 checkDependencies
 
 # ******************************************************************************
-# Test --typescript flag
+# Test typescript setup
 # ******************************************************************************
 
 cd "$temp_app_path"
-npx create-react-app test-app-typescript --typescript
+npx create-react-app test-app-typescript --template typescript
 cd test-app-typescript
 
 # Check corresponding template is installed.
@@ -225,7 +213,7 @@ exists node_modules/react-scripts-fork
 # ******************************************************************************
 
 cd "$temp_app_path"
-# we will install a non-existing package to simulate a failed installataion.
+# we will install a non-existing package to simulate a failed installation.
 npx create-react-app test-app-should-not-exist --scripts-version=`date +%s` || true
 # confirm that the project files were deleted
 test ! -e test-app-should-not-exist/package.json
@@ -238,7 +226,7 @@ test ! -d test-app-should-not-exist/node_modules
 cd "$temp_app_path"
 mkdir test-app-should-remain
 echo '## Hello' > ./test-app-should-remain/README.md
-# we will install a non-existing package to simulate a failed installataion.
+# we will install a non-existing package to simulate a failed installation.
 npx create-react-app test-app-should-remain --scripts-version=`date +%s` || true
 # confirm the file exist
 test -e test-app-should-remain/README.md

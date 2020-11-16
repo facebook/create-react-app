@@ -14,11 +14,28 @@ const resolve = require('resolve');
 const path = require('path');
 const paths = require('../../config/paths');
 const os = require('os');
+const semver = require('semver');
 const immer = require('react-dev-utils/immer').produce;
 const globby = require('react-dev-utils/globby').sync;
 
+const hasJsxRuntime = (() => {
+  if (process.env.DISABLE_NEW_JSX_TRANSFORM === 'true') {
+    return false;
+  }
+
+  try {
+    require.resolve('react/jsx-runtime', { paths: [paths.appPath] });
+    return true;
+  } catch (e) {
+    return false;
+  }
+})();
+
 function writeJson(fileName, object) {
-  fs.writeFileSync(fileName, JSON.stringify(object, null, 2).replace(/\n/g, os.EOL) + os.EOL);
+  fs.writeFileSync(
+    fileName,
+    JSON.stringify(object, null, 2).replace(/\n/g, os.EOL) + os.EOL
+  );
 }
 
 function verifyNoTypeScript() {
@@ -56,9 +73,17 @@ function verifyTypeScriptSetup() {
   // Ensure typescript is installed
   let ts;
   try {
+    // TODO: Remove this hack once `globalThis` issue is resolved
+    // https://github.com/jsdom/jsdom/issues/2961
+    const globalThisWasDefined = !!global.globalThis;
+
     ts = require(resolve.sync('typescript', {
       basedir: paths.appNodeModules,
     }));
+
+    if (!globalThisWasDefined && !!global.globalThis) {
+      delete global.globalThis;
+    }
   } catch (_) {
     console.error(
       chalk.bold.red(
@@ -103,6 +128,7 @@ function verifyTypeScriptSetup() {
     allowSyntheticDefaultImports: { suggested: true },
     strict: { suggested: true },
     forceConsistentCasingInFileNames: { suggested: true },
+    noFallthroughCasesInSwitch: { suggested: true },
 
     // These values are required and cannot be changed by the user
     // Keep this in sync with the webpack config
@@ -120,15 +146,15 @@ function verifyTypeScriptSetup() {
     isolatedModules: { value: true, reason: 'implementation limitation' },
     noEmit: { value: true },
     jsx: {
-      parsedValue: ts.JsxEmit.Preserve,
-      value: 'preserve',
-      reason: 'JSX is compiled by Babel',
-    },
-    // We do not support absolute imports, though this may come as a future
-    // enhancement
-    baseUrl: {
-      value: undefined,
-      reason: 'absolute imports are not supported (yet)',
+      parsedValue:
+        hasJsxRuntime && semver.gte(ts.version, '4.1.0-beta')
+          ? ts.JsxEmit.ReactJSX
+          : ts.JsxEmit.React,
+      value:
+        hasJsxRuntime && semver.gte(ts.version, '4.1.0-beta')
+          ? 'react-jsx'
+          : 'react',
+      reason: 'to support the new JSX transform in React 17',
     },
     paths: { value: undefined, reason: 'aliased imports are not supported' },
   };
@@ -184,7 +210,7 @@ function verifyTypeScriptSetup() {
         )
       );
     }
-    
+
     console.log(e && e.message ? `${e.message}` : '');
     process.exit(1);
   }
@@ -192,6 +218,16 @@ function verifyTypeScriptSetup() {
   if (appTsConfig.compilerOptions == null) {
     appTsConfig.compilerOptions = {};
     firstTimeSetup = true;
+  } else {
+    // This is bug fix code of https://github.com/facebook/create-react-app/issues/9868
+    // Bellow code release variable from non-extensible and freeze status.
+    appTsConfig.compilerOptions = JSON.parse(
+      JSON.stringify(appTsConfig.compilerOptions)
+    );
+
+    // Original appTsConfig.compilerOptions status
+    // Object.isExtensible(appTsConfig.compilerOptions) output: false
+    // Object.isFrozen(appTsConfig.compilerOptions) output: true
   }
 
   for (const option of Object.keys(compilerOptions)) {

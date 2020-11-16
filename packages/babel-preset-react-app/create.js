@@ -20,7 +20,7 @@ const validateBoolOption = (name, value, defaultValue) => {
   return value;
 };
 
-module.exports = function(api, opts, env) {
+module.exports = function (api, opts, env) {
   if (!opts) {
     opts = {};
   }
@@ -79,13 +79,10 @@ module.exports = function(api, opts, env) {
         // Latest stable ECMAScript features
         require('@babel/preset-env').default,
         {
-          // Allow importing @babel/polyfill in entrypoint and use browserlist to select polyfills
+          // Allow importing core-js in entrypoint and use browserlist to select polyfills
           useBuiltIns: 'entry',
           // Set the corejs version we are using to avoid warnings in console
-          // This will need to change once we upgrade to corejs@3
-          corejs: 2,
-          // Do not transform modules to CJS
-          modules: false,
+          corejs: 3,
           // Exclude transforms that make all code slower
           exclude: ['transform-typeof-symbol'],
         },
@@ -98,7 +95,8 @@ module.exports = function(api, opts, env) {
           development: isEnvDevelopment || isEnvTest,
           // Will use the native built-in instead of trying to polyfill
           // behavior for any plugins that require one.
-          useBuiltIns: true,
+          ...(opts.runtime !== 'automatic' ? { useBuiltIns: true } : {}),
+          runtime: opts.runtime || 'classic',
         },
       ],
       isTypeScriptEnabled && [require('@babel/preset-typescript').default],
@@ -117,29 +115,29 @@ module.exports = function(api, opts, env) {
       // Experimental macros support. Will be documented after it's had some time
       // in the wild.
       require('babel-plugin-macros'),
-      // Necessary to include regardless of the environment because
-      // in practice some other transforms (such as object-rest-spread)
-      // don't work without it: https://github.com/babel/babel/issues/7215
-      [
-        require('@babel/plugin-transform-destructuring').default,
-        {
-          // Use loose mode for performance:
-          // https://github.com/facebook/create-react-app/issues/5602
-          loose: false,
-          selectiveLoose: [
-            'useState',
-            'useEffect',
-            'useContext',
-            'useReducer',
-            'useCallback',
-            'useMemo',
-            'useRef',
-            'useImperativeHandle',
-            'useLayoutEffect',
-            'useDebugValue',
-          ],
-        },
-      ],
+      // Disabled as it's handled automatically by preset-env, and `selectiveLoose` isn't
+      // yet merged into babel: https://github.com/babel/babel/pull/9486
+      // Related: https://github.com/facebook/create-react-app/pull/8215
+      // [
+      //   require('@babel/plugin-transform-destructuring').default,
+      //   {
+      //     // Use loose mode for performance:
+      //     // https://github.com/facebook/create-react-app/issues/5602
+      //     loose: false,
+      //     selectiveLoose: [
+      //       'useState',
+      //       'useEffect',
+      //       'useContext',
+      //       'useReducer',
+      //       'useCallback',
+      //       'useMemo',
+      //       'useRef',
+      //       'useImperativeHandle',
+      //       'useLayoutEffect',
+      //       'useDebugValue',
+      //     ],
+      //   },
+      // ],
       // Turn on legacy decorators for TypeScript files
       isTypeScriptEnabled && [
         require('@babel/plugin-proposal-decorators').default,
@@ -154,15 +152,8 @@ module.exports = function(api, opts, env) {
           loose: true,
         },
       ],
-      // The following two plugins use Object.assign directly, instead of Babel's
-      // extends helper. Note that this assumes `Object.assign` is available.
-      // { ...todo, completed: true }
-      [
-        require('@babel/plugin-proposal-object-rest-spread').default,
-        {
-          useBuiltIns: true,
-        },
-      ],
+      // Adds Numeric Separators
+      require('@babel/plugin-proposal-numeric-separator').default,
       // Polyfills the runtime needed for async/await, generators, and friends
       // https://babeljs.io/docs/en/babel-plugin-transform-runtime
       [
@@ -170,6 +161,10 @@ module.exports = function(api, opts, env) {
         {
           corejs: false,
           helpers: areHelpersEnabled,
+          // By default, babel assumes babel/runtime version 7.0.0-beta.0,
+          // explicitly resolving to match the provided helper functions.
+          // https://github.com/babel/babel/issues/10261
+          version: require('@babel/runtime/package.json').version,
           regenerator: true,
           // https://babeljs.io/docs/en/babel-plugin-transform-runtime#useesmodules
           // We should turn this on once the lowest version of Node LTS
@@ -188,11 +183,12 @@ module.exports = function(api, opts, env) {
           removeImport: true,
         },
       ],
-      // Adds syntax support for import()
-      require('@babel/plugin-syntax-dynamic-import').default,
-      isEnvTest &&
-        // Transform dynamic import to require
-        require('babel-plugin-dynamic-import-node'),
+      // Optional chaining and nullish coalescing are supported in @babel/preset-env,
+      // but not yet supported in webpack due to support missing from acorn.
+      // These can be removed once webpack has support.
+      // See https://github.com/facebook/create-react-app/issues/8445#issuecomment-588512250
+      require('@babel/plugin-proposal-optional-chaining').default,
+      require('@babel/plugin-proposal-nullish-coalescing-operator').default,
     ].filter(Boolean),
     overrides: [
       isFlowEnabled && {

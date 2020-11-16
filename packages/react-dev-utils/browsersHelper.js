@@ -42,7 +42,7 @@ function shouldSetBrowsers(isInteractive) {
 }
 
 function checkBrowsers(dir, isInteractive, retry = true) {
-  const current = browserslist.findConfig(dir);
+  const current = browserslist.loadConfig({ path: dir });
   if (current != null) {
     return Promise.resolve(current);
   }
@@ -67,7 +67,7 @@ function checkBrowsers(dir, isInteractive, retry = true) {
     }
 
     return (
-      pkgUp(dir)
+      pkgUp({ cwd: dir })
         .then(filePath => {
           if (filePath == null) {
             return Promise.reject();

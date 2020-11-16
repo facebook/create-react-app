@@ -16,6 +16,7 @@ test('Ignores node_modules when detecting TypeScript', async () => {
     'package',
     'index.ts',
   ];
+  const dtsSrcPath = [testSetup.testDirectory, 'src', 'types', 'index.d.ts'];
   const tsSrcPath = path.join(testSetup.testDirectory, 'src', 'index.ts');
 
   // Step 1.
@@ -25,6 +26,13 @@ test('Ignores node_modules when detecting TypeScript', async () => {
   fs.mkdirSync(path.join(...tsPackagePath.slice(0, 3)));
   fs.mkdirSync(path.join(...tsPackagePath.slice(0, 4)));
   fs.writeFileSync(path.join(...tsPackagePath));
+  await testSetup.scripts.build();
+  expect(fs.existsSync(tsConfigPath)).toBe(false);
+
+  // Step 1b.
+  // See if src/types/index.d.ts is treated as a JS project
+  fs.mkdirSync(path.join(...dtsSrcPath.slice(0, 3)));
+  fs.writeFileSync(path.join(...dtsSrcPath));
   await testSetup.scripts.build();
   expect(fs.existsSync(tsConfigPath)).toBe(false);
 
