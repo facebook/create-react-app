@@ -13,7 +13,7 @@ const url = require('url');
 const chalk = require('chalk');
 const detect = require('detect-port-alt');
 const isRoot = require('is-root');
-const inquirer = require('inquirer');
+const prompts = require('prompts');
 const clearConsole = require('./clearConsole');
 const formatWebpackMessages = require('./formatWebpackMessages');
 const getProcessForPort = require('./getProcessForPort');
@@ -467,9 +467,9 @@ function choosePort(host, defaultPort) {
                 message +
                   `${existingProcess ? ` Probably:\n  ${existingProcess}` : ''}`
               ) + '\n\nWould you like to run the app on another port instead?',
-            default: true,
+            initial: true,
           };
-          inquirer.prompt(question).then(answer => {
+          prompts(question).then(answer => {
             if (answer.shouldChangePort) {
               resolve(port);
             } else {
