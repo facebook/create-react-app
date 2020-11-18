@@ -1,6 +1,6 @@
 {
   "name": "cra-template-typescript",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "keywords": [
     "react",
     "create-react-app",
@@ -8,7 +8,6 @@
     "typescript"
   ],
   "description": "The base TypeScript template for Create React App.",
-  "main": "template.json",
   "repository": {
     "type": "git",
     "url": "https://github.com/facebook/create-react-app.git",
@@ -16,7 +15,7 @@
   },
   "license": "MIT",
   "engines": {
-    "node": ">=8.10"
+    "node": ">=10"
   },
   "bugs": {
     "url": "https://github.com/facebook/create-react-app/issues"

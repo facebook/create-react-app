@@ -17,7 +17,7 @@ function load(id = 0) {
   ];
 }
 
-export default class extends Component {
+export default class DefaultParameters extends Component {
   static propTypes = {
     onReady: PropTypes.func.isRequired,
   };
