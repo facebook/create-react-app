@@ -1,4 +1,3 @@
-// @remove-file-on-eject
 /**
  * Copyright (c) 2014-present, Facebook, Inc.
  *
