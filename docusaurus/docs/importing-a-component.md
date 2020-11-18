@@ -73,4 +73,34 @@ Now that you've configured your project to support absolute imports, if you want
 import Button from 'components/Button';
 ```
 
+### Path Mapping
+
+If you require more fine-grained import paths you can set up extra path mappings. This enables you to create shorter import paths to file locations that may normally require long paths. Below is an example `jsconfig.json` showing how you could do this:
+
+```json
+{
+  "compilerOptions": {
+    "baseUrl": "src",
+    "paths": {
+      "base/*": ["./components/base/*"],
+      "pages/*": ["./components/pages/*"],
+      "actions/*": ["./state/actions/*"]
+    }
+  },
+  "include": ["src"]
+}
+```
+
+> Even though `jsconfig.json` and `tsconfig.json` allow using multiple locations as "fallbacks", this feature is not currently available in `create-react-app`.
+
+Setting up your `jsconfig.json` or `tsconfig.json` as above enables you to do imports like this:
+
+```js
+import Button from 'components/Button';
+import MainPage from 'pages/Main';
+import addUser from 'actions/addUser';
+```
+
+The import for `Button` still works as the `baseUrl` is still set as `src`. However, we now have more paths available to reach modules that may be quite a few folders deep in our project. This may be useful for larger projects that have more elaborate filesystem layouts.
+
 For more information on these configuration files, see the [jsconfig.json reference](https://code.visualstudio.com/docs/languages/jsconfig) and [tsconfig.json reference](https://www.typescriptlang.org/docs/handbook/tsconfig-json.html) documentation.
