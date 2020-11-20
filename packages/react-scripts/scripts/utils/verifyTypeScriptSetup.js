@@ -243,7 +243,8 @@ function verifyTypeScriptSetup() {
           )} value: ${chalk.cyan.bold(suggested)} (this can be changed)`
         );
       }
-    } else if (parsedCompilerOptions[option] !== valueToCheck) {
+    } else if (parsedCompilerOptions[option] !== valueToCheck && 
+               appTsConfig.compilerOptions[option] !== value) {
       appTsConfig.compilerOptions[option] = value;
       messages.push(
         `${coloredOption} ${chalk.bold(
