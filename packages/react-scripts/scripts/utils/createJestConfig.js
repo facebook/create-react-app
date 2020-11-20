@@ -39,7 +39,9 @@ module.exports = (resolve, rootDir, isEjecting) => {
       '<rootDir>/src/**/*.{spec,test}.{js,jsx,ts,tsx}',
     ],
     testEnvironment: 'jsdom',
-    testRunner: require.resolve('jest-circus/runner'),
+    // START: EVERLONG CHANGES
+    // testRunner: require.resolve('jest-circus/runner'),
+    // END: EVERLONG CHANGES
     transform: {
       '^.+\\.(js|jsx|mjs|cjs|ts|tsx)$': isEjecting
         ? '<rootDir>/node_modules/babel-jest'
@@ -66,7 +68,9 @@ module.exports = (resolve, rootDir, isEjecting) => {
       'jest-watch-typeahead/filename',
       'jest-watch-typeahead/testname',
     ],
-    resetMocks: true,
+    // START: EVERLONG CHANGES
+    // resetMocks: true,
+    // END: EVERLONG CHANGES
   };
   if (rootDir) {
     config.rootDir = rootDir;
