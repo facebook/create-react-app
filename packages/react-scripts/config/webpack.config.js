@@ -134,7 +134,7 @@ module.exports = function (webpackEnv) {
               autoprefixer: {
                 flexbox: 'no-2009',
               },
-              stage: 3,
+              stage: 4,
             }),
             // Adds PostCSS Normalize as the reset css with default options,
             // so that it honors browserslist config in package.json
