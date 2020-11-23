@@ -36,26 +36,30 @@ module.exports = (resolve, rootDir, isEjecting) => {
     setupFilesAfterEnv: setupTestsFile ? [setupTestsFile] : [],
     testMatch: [
       '<rootDir>/src/**/__tests__/**/*.{js,jsx,ts,tsx}',
-      '<rootDir>/src/**/*.{spec,test}.{js,jsx,ts,tsx}',
+      '<rootDir>/src/**/?(*.){spec,test,stories}.{js,jsx,ts,tsx}', // @joor - remove optional dot
     ],
     testEnvironment: 'jsdom',
-    testRunner: require.resolve('jest-circus/runner'),
+    // @joor - fix ReferenceError: jasmine is not defined in .storybook/__mocks__/facade.js
+    // testRunner: require.resolve('jest-circus/runner'),
     transform: {
       '^.+\\.(js|jsx|mjs|cjs|ts|tsx)$': isEjecting
         ? '<rootDir>/node_modules/babel-jest'
         : resolve('config/jest/babelTransform.js'),
-      '^.+\\.css$': resolve('config/jest/cssTransform.js'),
-      '^(?!.*\\.(js|jsx|mjs|cjs|ts|tsx|css|json)$)': resolve(
+      '^.+\\.(css|less)$': resolve('config/jest/cssTransform.js'),
+      '^(?!.*\\.(js|jsx|mjs|cjs|ts|tsx|css|less|json)$)': resolve(
         'config/jest/fileTransform.js'
       ),
     },
     transformIgnorePatterns: [
-      '[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs|cjs|ts|tsx)$',
+      // @joor - excluding promise-polyfill for flatfile-csv-importer
+      '[/\\\\]node_modules[/\\\\](?!promise-polyfill).+\\.(js|jsx|mjs|cjs|ts|tsx)$',
       '^.+\\.module\\.(css|sass|scss)$',
     ],
+    moduleDirectories: ['node_modules', '.storybook'], // @joor - added .storybook
     modulePaths: modules.additionalModulePaths || [],
     moduleNameMapper: {
       '^react-native$': 'react-native-web',
+      '^.+\\.less$': 'identity-obj-proxy',
       '^.+\\.module\\.(css|sass|scss)$': 'identity-obj-proxy',
       ...(modules.jestAliases || {}),
     },
@@ -66,7 +70,7 @@ module.exports = (resolve, rootDir, isEjecting) => {
       'jest-watch-typeahead/filename',
       'jest-watch-typeahead/testname',
     ],
-    resetMocks: true,
+    resetMocks: false, // @joor - enable
   };
   if (rootDir) {
     config.rootDir = rootDir;

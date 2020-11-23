@@ -1,10 +1,10 @@
 {
-  "name": "react-scripts",
-  "version": "4.0.1",
-  "description": "Configuration and scripts for Create React App.",
+  "name": "@joor/react-scripts",
+  "version": "4.0.1-4",
+  "description": "Joor Configuration and scripts for Create React App.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/facebook/create-react-app.git",
+    "url": "https://github.com/joor/create-react-app.git",
     "directory": "packages/react-scripts"
   },
   "license": "MIT",
@@ -62,6 +62,8 @@
     "jest-circus": "26.6.0",
     "jest-resolve": "26.6.0",
     "jest-watch-typeahead": "0.6.1",
+    "less": "^3.10.3",
+    "less-loader": "^4.0.5",
     "mini-css-extract-plugin": "0.11.3",
     "optimize-css-assets-webpack-plugin": "5.0.4",
     "pnp-webpack-plugin": "1.6.4",
@@ -71,6 +73,7 @@
     "postcss-preset-env": "6.7.0",
     "postcss-safe-parser": "5.0.2",
     "prompts": "2.4.0",
+    "raw-loader": "^0.5.1",
     "react-app-polyfill": "^2.0.0",
     "react-dev-utils": "^11.0.1",
     "react-refresh": "^0.8.3",

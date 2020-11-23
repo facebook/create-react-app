@@ -134,5 +134,12 @@ module.exports = function (proxy, allowedHost) {
       // https://github.com/facebook/create-react-app/issues/2272#issuecomment-302832432
       app.use(noopServiceWorkerMiddleware(paths.publicUrlOrPath));
     },
+    headers: {
+      // @joor fixes cors issue with HMR
+      // https://github.com/webpack/webpack-dev-server/issues/1787#issuecomment-481634858
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
+      'Access-Control-Allow-Headers': 'X-Requested-With, content-type, Authorization',
+    },
   };
 };

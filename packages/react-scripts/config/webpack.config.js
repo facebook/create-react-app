@@ -208,9 +208,13 @@ module.exports = function (webpackEnv) {
       pathinfo: isEnvDevelopment,
       // There will be one main bundle, and one file per asynchronous chunk.
       // In development, it does not produce real files.
+      // @joor we do not support chunks yet
       filename: isEnvProduction
-        ? 'static/js/[name].[contenthash:8].js'
+        ? 'static/js/bundle.min.js'
         : isEnvDevelopment && 'static/js/bundle.js',
+      // filename: isEnvProduction
+      //   ? 'static/js/[name].[contenthash:8].js'
+      //   : isEnvDevelopment && 'static/js/bundle.js',
       // TODO: remove this when upgrading to webpack 5
       futureEmitAssets: true,
       // There are also additional JS chunk files if you use code splitting.
@@ -220,7 +224,11 @@ module.exports = function (webpackEnv) {
       // webpack uses `publicPath` to determine where the app is being served from.
       // It requires a trailing slash, or the file assets will get an incorrect path.
       // We inferred the "public path" (such as / or /my-project) from homepage.
-      publicPath: paths.publicUrlOrPath,
+      // @joor URL is for HMR requests `...hot-update.json` to work
+      // https://github.com/webpack/webpack-dev-server/issues/1385#issuecomment-502758062
+      publicPath: process.env.JOOR_DEV
+        ? 'https://react.joor.local/'
+        : paths.publicUrlOrPath,
       // Point sourcemap entries to original disk location (format as URL on Windows)
       devtoolModuleFilenameTemplate: isEnvProduction
         ? info =>
@@ -236,84 +244,85 @@ module.exports = function (webpackEnv) {
       // module chunks which are built will work in web workers as well.
       globalObject: 'this',
     },
-    optimization: {
-      minimize: isEnvProduction,
-      minimizer: [
-        // This is only used in production mode
-        new TerserPlugin({
-          terserOptions: {
-            parse: {
-              // We want terser to parse ecma 8 code. However, we don't want it
-              // to apply any minification steps that turns valid ecma 5 code
-              // into invalid ecma 5 code. This is why the 'compress' and 'output'
-              // sections only apply transformations that are ecma 5 safe
-              // https://github.com/facebook/create-react-app/pull/4234
-              ecma: 8,
-            },
-            compress: {
-              ecma: 5,
-              warnings: false,
-              // Disabled because of an issue with Uglify breaking seemingly valid code:
-              // https://github.com/facebook/create-react-app/issues/2376
-              // Pending further investigation:
-              // https://github.com/mishoo/UglifyJS2/issues/2011
-              comparisons: false,
-              // Disabled because of an issue with Terser breaking valid code:
-              // https://github.com/facebook/create-react-app/issues/5250
-              // Pending further investigation:
-              // https://github.com/terser-js/terser/issues/120
-              inline: 2,
-            },
-            mangle: {
-              safari10: true,
-            },
-            // Added for profiling in devtools
-            keep_classnames: isEnvProductionProfile,
-            keep_fnames: isEnvProductionProfile,
-            output: {
-              ecma: 5,
-              comments: false,
-              // Turned on because emoji and regex is not minified properly using default
-              // https://github.com/facebook/create-react-app/issues/2488
-              ascii_only: true,
-            },
-          },
-          sourceMap: shouldUseSourceMap,
-        }),
-        // This is only used in production mode
-        new OptimizeCSSAssetsPlugin({
-          cssProcessorOptions: {
-            parser: safePostCssParser,
-            map: shouldUseSourceMap
-              ? {
-                  // `inline: false` forces the sourcemap to be output into a
-                  // separate file
-                  inline: false,
-                  // `annotation: true` appends the sourceMappingURL to the end of
-                  // the css file, helping the browser find the sourcemap
-                  annotation: true,
-                }
-              : false,
-          },
-          cssProcessorPluginOptions: {
-            preset: ['default', { minifyFontValues: { removeQuotes: false } }],
-          },
-        }),
-      ],
-      // Automatically split vendor and commons
-      // https://twitter.com/wSokra/status/969633336732905474
-      // https://medium.com/webpack/webpack-4-code-splitting-chunk-graph-and-the-splitchunks-optimization-be739a861366
-      splitChunks: {
-        chunks: 'all',
-        name: false,
-      },
-      // Keep the runtime chunk separated to enable long term caching
-      // https://twitter.com/wSokra/status/969679223278505985
-      // https://github.com/facebook/create-react-app/issues/5358
-      runtimeChunk: {
-        name: entrypoint => `runtime-${entrypoint.name}`,
-      },
-    },
+    // @joor we do not support chunks yet
+    // optimization: {
+    //   minimize: isEnvProduction,
+    //   minimizer: [
+    //     // This is only used in production mode
+    //     new TerserPlugin({
+    //       terserOptions: {
+    //         parse: {
+    //           // We want terser to parse ecma 8 code. However, we don't want it
+    //           // to apply any minification steps that turns valid ecma 5 code
+    //           // into invalid ecma 5 code. This is why the 'compress' and 'output'
+    //           // sections only apply transformations that are ecma 5 safe
+    //           // https://github.com/facebook/create-react-app/pull/4234
+    //           ecma: 8,
+    //         },
+    //         compress: {
+    //           ecma: 5,
+    //           warnings: false,
+    //           // Disabled because of an issue with Uglify breaking seemingly valid code:
+    //           // https://github.com/facebook/create-react-app/issues/2376
+    //           // Pending further investigation:
+    //           // https://github.com/mishoo/UglifyJS2/issues/2011
+    //           comparisons: false,
+    //           // Disabled because of an issue with Terser breaking valid code:
+    //           // https://github.com/facebook/create-react-app/issues/5250
+    //           // Pending further investigation:
+    //           // https://github.com/terser-js/terser/issues/120
+    //           inline: 2,
+    //         },
+    //         mangle: {
+    //           safari10: true,
+    //         },
+    //         // Added for profiling in devtools
+    //         keep_classnames: isEnvProductionProfile,
+    //         keep_fnames: isEnvProductionProfile,
+    //         output: {
+    //           ecma: 5,
+    //           comments: false,
+    //           // Turned on because emoji and regex is not minified properly using default
+    //           // https://github.com/facebook/create-react-app/issues/2488
+    //           ascii_only: true,
+    //         },
+    //       },
+    //       sourceMap: shouldUseSourceMap,
+    //     }),
+    //     // This is only used in production mode
+    //     new OptimizeCSSAssetsPlugin({
+    //       cssProcessorOptions: {
+    //         parser: safePostCssParser,
+    //         map: shouldUseSourceMap
+    //           ? {
+    //               // `inline: false` forces the sourcemap to be output into a
+    //               // separate file
+    //               inline: false,
+    //               // `annotation: true` appends the sourceMappingURL to the end of
+    //               // the css file, helping the browser find the sourcemap
+    //               annotation: true,
+    //             }
+    //           : false,
+    //       },
+    //       cssProcessorPluginOptions: {
+    //         preset: ['default', { minifyFontValues: { removeQuotes: false } }],
+    //       },
+    //     }),
+    //   ],
+    //   // Automatically split vendor and commons
+    //   // https://twitter.com/wSokra/status/969633336732905474
+    //   // https://medium.com/webpack/webpack-4-code-splitting-chunk-graph-and-the-splitchunks-optimization-be739a861366
+    //   splitChunks: {
+    //     chunks: 'all',
+    //     name: false,
+    //   },
+    //   // Keep the runtime chunk separated to enable long term caching
+    //   // https://twitter.com/wSokra/status/969679223278505985
+    //   // https://github.com/facebook/create-react-app/issues/5358
+    //   runtimeChunk: {
+    //     name: entrypoint => `runtime-${entrypoint.name}`,
+    //   },
+    // },
     resolve: {
       // This allows you to set a fallback for where webpack should look for modules.
       // We placed these paths second because we want `node_modules` to "win"
@@ -395,6 +404,11 @@ module.exports = function (webpackEnv) {
                 limit: imageInlineSizeLimit,
                 name: 'static/media/[name].[hash:8].[ext]',
               },
+            },
+            {
+              // @joor - TODO: remove config, `raw-loader` and `react-svg-inline` from joor-react
+              test: /\.svg$/,
+              loader: 'raw-loader',
             },
             // Process application JS with Babel.
             // The preset includes JSX, Flow, TypeScript, and some ESnext features.
@@ -572,6 +586,45 @@ module.exports = function (webpackEnv) {
                 'sass-loader'
               ),
             },
+            {
+              // @joor
+              test: /\.less$/,
+              use: [
+                require.resolve('style-loader'),
+                {
+                  loader: require.resolve('css-loader'),
+                  options: {
+                    importLoaders: 1,
+                    modules: {
+                      getLocalIdent: getCSSModuleLocalIdent,
+                    },
+                  },
+                },
+                {
+                  loader: require.resolve('postcss-loader'),
+                  options: {
+                    // Necessary for external CSS imports to work
+                    // https://github.com/facebookincubator/create-react-app/issues/2677
+                    ident: 'postcss',
+                    plugins: () => [
+                      require('postcss-flexbugs-fixes'),
+                      require('postcss-preset-env')({
+                        autoprefixer: {
+                          flexbox: 'no-2009',
+                        },
+                        stage: 3,
+                      }),
+                    ],
+                  },
+                },
+                {
+                  loader: require.resolve('less-loader'),
+                  options: {
+                    paths: [paths.appSrc],
+                  },
+                },
+              ],
+            },
             // "file" loader makes sure those assets get served by WebpackDevServer.
             // When you `import` an asset, you get its (virtual) filename.
             // In production, they would get copied to the `build` folder.
@@ -673,7 +726,9 @@ module.exports = function (webpackEnv) {
         new MiniCssExtractPlugin({
           // Options similar to the same options in webpackOptions.output
           // both options are optional
-          filename: 'static/css/[name].[contenthash:8].css',
+          // @joor we do not support chunks yet
+          filename: 'static/css/styles.min.css',
+          // filename: 'static/css/[name].[contenthash:8].css',
           chunkFilename: 'static/css/[name].[contenthash:8].chunk.css',
         }),
       // Generate an asset manifest file with the following content:
@@ -750,24 +805,30 @@ module.exports = function (webpackEnv) {
           // The formatter is invoked directly in WebpackDevServerUtils during development
           formatter: isEnvProduction ? typescriptFormatter : undefined,
         }),
-      new ESLintPlugin({
-        // Plugin options
-        extensions: ['js', 'mjs', 'jsx', 'ts', 'tsx'],
-        formatter: require.resolve('react-dev-utils/eslintFormatter'),
-        eslintPath: require.resolve('eslint'),
-        context: paths.appSrc,
-        cache: true,
-        // ESLint class options
-        cwd: paths.appPath,
-        resolvePluginsRelativeTo: __dirname,
-        baseConfig: {
-          extends: [require.resolve('eslint-config-react-app/base')],
-          rules: {
-            ...(!hasJsxRuntime && {
-              'react/react-in-jsx-scope': 'error',
-            }),
-          },
-        },
+      // @joor disabled ESLint
+      // new ESLintPlugin({
+      //   // Plugin options
+      //   extensions: ['js', 'mjs', 'jsx', 'ts', 'tsx'],
+      //   formatter: require.resolve('react-dev-utils/eslintFormatter'),
+      //   eslintPath: require.resolve('eslint'),
+      //   context: paths.appSrc,
+      //   cache: true,
+      //   // ESLint class options
+      //   cwd: paths.appPath,
+      //   resolvePluginsRelativeTo: __dirname,
+      //   baseConfig: {
+      //     extends: [require.resolve('eslint-config-react-app/base')],
+      //     rules: {
+      //       ...(!hasJsxRuntime && {
+      //         'react/react-in-jsx-scope': 'error',
+      //       }),
+      //     },
+      //   },
+      // }),
+
+      // @joor Provides the commit hash for use with sentry.
+      new webpack.DefinePlugin({
+        __COMMIT_HASH__: JSON.stringify(process.env.VERSION_ID),
       }),
     ].filter(Boolean),
     // Some libraries import Node modules but don't use them in the browser.
