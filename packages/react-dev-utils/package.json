@@ -1,6 +1,6 @@
 {
   "name": "react-dev-utils",
-  "version": "11.0.0",
+  "version": "11.0.1",
   "description": "webpack utilities used by Create React App",
   "repository": {
     "type": "git",
@@ -66,11 +66,11 @@
     "globby": "11.0.1",
     "gzip-size": "5.1.1",
     "immer": "7.0.9",
-    "prompts": "2.4.0",
     "is-root": "2.1.0",
     "loader-utils": "2.0.0",
     "open": "^7.0.2",
     "pkg-up": "3.1.0",
+    "prompts": "2.4.0",
     "react-error-overlay": "^6.0.8",
     "recursive-readdir": "2.2.2",
     "shell-quote": "1.7.2",
