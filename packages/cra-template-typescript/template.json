@@ -9,7 +9,7 @@
       "@types/react-dom": "^16.9.8",
       "@types/jest": "^26.0.15",
       "typescript": "^4.0.3",
-      "web-vitals": "^0.2.4"
+      "web-vitals": "^1.0.1"
     },
     "eslintConfig": {
       "extends": ["react-app", "react-app/jest"]
