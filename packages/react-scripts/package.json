@@ -95,7 +95,7 @@
     "fsevents": "^2.1.3"
   },
   "peerDependencies": {
-    "typescript": "^3.2.1"
+    "typescript": "^3.2.1 || ^4"
   },
   "peerDependenciesMeta": {
     "typescript": {
