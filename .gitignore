@@ -13,3 +13,6 @@ yarn-error.log*
 /.changelog
 .npm/
 yarn.lock
+.eslintcache
+packages/cra-template-typescript/template/src/react-app-env.d.ts
+packages/cra-template-typescript/template/tsconfig.json

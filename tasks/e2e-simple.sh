@@ -138,6 +138,25 @@ CI=true yarn test
 # Test local start command
 yarn start --smoke-test
 
+# Run the same tests against  with cra-template-typescript
+# Test local build command
+rm -rf build
+CRA_TEMPLATE_TS_LOCAL=true yarn build
+# Check for expected output
+exists build/*.html
+exists build/static/js/*.js
+exists build/static/css/*.css
+exists build/static/media/*.svg
+exists build/favicon.ico
+
+# Run tests with CI flag
+CI=true CRA_TEMPLATE_TS_LOCAL=true yarn test
+# Uncomment when snapshot testing is enabled by default:
+# exists template/src/__snapshots__/App.test.js.snap
+
+# Test local start command
+CRA_TEMPLATE_TS_LOCAL=true yarn start --smoke-test
+
 # Publish the monorepo
 publishToLocalRegistry
 
