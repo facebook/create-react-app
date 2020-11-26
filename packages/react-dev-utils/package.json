@@ -1,6 +1,6 @@
 {
   "name": "react-dev-utils",
-  "version": "10.2.1",
+  "version": "11.0.0",
   "description": "webpack utilities used by Create React App",
   "repository": {
     "type": "git",
@@ -12,7 +12,7 @@
     "url": "https://github.com/facebook/create-react-app/issues"
   },
   "engines": {
-    "node": ">=8.10"
+    "node": ">=10"
   },
   "files": [
     "browsersHelper.js",
@@ -46,40 +46,41 @@
     "printBuildError.js",
     "printHostingInstructions.js",
     "redirectServedPathMiddleware.js",
+    "refreshOverlayInterop.js",
     "typescriptFormatter.js",
     "WatchMissingNodeModulesPlugin.js",
     "WebpackDevServerUtils.js",
     "webpackHotDevClient.js"
   ],
   "dependencies": {
-    "@babel/code-frame": "7.8.3",
+    "@babel/code-frame": "7.10.4",
     "address": "1.1.2",
-    "browserslist": "4.10.0",
+    "browserslist": "4.14.2",
     "chalk": "2.4.2",
-    "cross-spawn": "7.0.1",
+    "cross-spawn": "7.0.3",
     "detect-port-alt": "1.1.6",
     "escape-string-regexp": "2.0.0",
-    "filesize": "6.0.1",
+    "filesize": "6.1.0",
     "find-up": "4.1.0",
-    "fork-ts-checker-webpack-plugin": "3.1.1",
+    "fork-ts-checker-webpack-plugin": "4.1.6",
     "global-modules": "2.0.0",
-    "globby": "8.0.2",
+    "globby": "11.0.1",
     "gzip-size": "5.1.1",
-    "immer": "1.10.0",
-    "inquirer": "7.0.4",
+    "immer": "7.0.9",
+    "inquirer": "7.3.3",
     "is-root": "2.1.0",
-    "loader-utils": "1.2.3",
+    "loader-utils": "2.0.0",
     "open": "^7.0.2",
     "pkg-up": "3.1.0",
-    "react-error-overlay": "^6.0.7",
+    "react-error-overlay": "^6.0.8",
     "recursive-readdir": "2.2.2",
     "shell-quote": "1.7.2",
     "strip-ansi": "6.0.0",
     "text-table": "0.2.0"
   },
   "devDependencies": {
-    "cross-env": "^6.0.3",
-    "jest": "24.9.0"
+    "cross-env": "^7.0.2",
+    "jest": "26.4.2"
   },
   "scripts": {
     "test": "cross-env FORCE_COLOR=true jest"

@@ -17,7 +17,7 @@ function load(users) {
   ];
 }
 
-export default class extends Component {
+export default class ArraySpread extends Component {
   static propTypes = {
     onReady: PropTypes.func.isRequired,
   };

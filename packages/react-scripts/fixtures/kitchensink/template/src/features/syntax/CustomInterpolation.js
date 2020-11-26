@@ -24,7 +24,7 @@ function load() {
   ];
 }
 
-export default class extends Component {
+export default class CustomInterpolation extends Component {
   static propTypes = {
     onReady: PropTypes.func.isRequired,
   };

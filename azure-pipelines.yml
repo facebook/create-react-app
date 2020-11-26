@@ -12,8 +12,6 @@ variables:
   NPM_CONFIG_CACHE: $(Build.SourcesDirectory)/../npm-cache
   # Sets TEMP to be on the same drive as the cloned source on Windows. This avoids test scripts that "cd" into a directory under TEMP from failing because this directory is on a different drive from the current directory.
   VSTS_OVERWRITE_TEMP: True
-  # Override Verdaccio package to use. This is temporary and is needed to avoid socket timeouts on hosted Windows agent (on Azure). This also changes Verdaccio to return a 503 (service unavailable) instead of a 404 (not found) when the connection to the uplink timesout.
-  VERDACCIO_PACKAGE: https://github.com/willsmythe/verdaccio/releases/download/create-react-app/verdaccio-4.0.0-alpha.8.tgz
   CRA_INTERNAL_TEST: true
 
 # ******************************************************************************
@@ -57,36 +55,23 @@ jobs:
       name: Behavior
       testScript: tasks/e2e-behavior.sh
       configurations:
-        LinuxNode8: { vmImage: 'ubuntu-18.04', nodeVersion: 8.x }
-        LinuxNode10: { vmImage: 'ubuntu-18.04', nodeVersion: 10.x }
-        # WindowsNode8:  { vmImage: 'vs2017-win2016', nodeVersion: 8.x  }
-        # WindowsNode10: { vmImage: 'vs2017-win2016', nodeVersion: 10.x }
-        MacNode8: { vmImage: 'macOS-10.15', nodeVersion: 8.x }
+        LinuxNode10: { vmImage: 'ubuntu-16.04', nodeVersion: 10.x }
+        LinuxNode12: { vmImage: 'ubuntu-16.04', nodeVersion: 12.x }
+        WindowsNode10: { vmImage: 'windows-2019', nodeVersion: 10.x }
+        WindowsNode12: { vmImage: 'windows-2019', nodeVersion: 12.x }
         MacNode10: { vmImage: 'macOS-10.15', nodeVersion: 10.x }
+        MacNode12: { vmImage: 'macOS-10.15', nodeVersion: 12.x }
 
   # ******************************************************************************
   # Old Node test suite
   # ******************************************************************************
   - job: OldNode
     pool:
-      vmImage: ubuntu-16.04
+      vmImage: ubuntu-latest
     steps:
       - task: NodeTool@0
         inputs:
-          versionSpec: 6.x
-        displayName: 'Install Node.js 6.x'
+          versionSpec: 8.x
+        displayName: 'Install Node.js 8.x'
       - bash: tasks/e2e-old-node.sh
         displayName: 'Run tests'
-  # ******************************************************************************
-  # Unsupported Node with TypeScript flag
-  # ******************************************************************************
-  - job: UnsupportedNodeWithTypeScript
-    pool:
-      vmImage: ubuntu-16.04
-    steps:
-      - task: NodeTool@0
-        inputs:
-          versionSpec: 8.9.x
-        displayName: 'Install Node.js 8.9.x'
-      - bash: tasks/e2e-typescript-unsupported-node.sh
-        displayName: 'Run unsupported TypeScript test'

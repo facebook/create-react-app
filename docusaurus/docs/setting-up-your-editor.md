@@ -26,16 +26,15 @@ Note that even if you customise your ESLint config, these changes will **only af
 
 If you want to enforce a coding style for your project, consider using [Prettier](https://github.com/jlongster/prettier) instead of ESLint style rules.
 
-### Experimental: Extending the ESLint config
+### Extending or replacing the default ESLint config
 
-We recognise that in some cases, further customisation is required. It is now possible to extend the base ESLint config by setting the `EXTEND_ESLINT` environment variable to `true`. See [advanced configuration](advanced-configuration.md) for more information on available environment variables.
-
-Note that any rules set to `"error"` will stop the project from building.
+You can extend our base ESLint config, or replace it completely if you need.
 
 There are a few things to remember:
 
 1. We highly recommend extending the base config, as removing it could introduce hard-to-find issues.
 1. When working with TypeScript, you'll need to provide an `overrides` object for rules that should _only_ target TypeScript files.
+1. It's important to note that any rules that are set to `"error"` will stop the project from building.
 
 In the below example:
 
@@ -70,7 +69,7 @@ Visual Studio Code and WebStorm support debugging out of the box with Create Rea
 
 ### Visual Studio Code
 
-You would need to have the latest version of [VS Code](https://code.visualstudio.com) and VS Code [Chrome Debugger Extension](https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome) installed.
+You need to have the latest version of [VS Code](https://code.visualstudio.com) and VS Code [Chrome Debugger Extension](https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome) installed.
 
 Then add the block below to your `launch.json` file and put it inside the `.vscode` folder in your app’s root directory.
 
@@ -100,7 +99,7 @@ Having problems with VS Code Debugging? Please see their [troubleshooting guide]
 
 ### WebStorm
 
-You would need to have [WebStorm](https://www.jetbrains.com/webstorm/) and [JetBrains IDE Support](https://chrome.google.com/webstore/detail/jetbrains-ide-support/hmhgeddbohgjknpmjagkdomcpobmllji) Chrome extension installed.
+You need to have [WebStorm](https://www.jetbrains.com/webstorm/) and [JetBrains IDE Support](https://chrome.google.com/webstore/detail/jetbrains-ide-support/hmhgeddbohgjknpmjagkdomcpobmllji) Chrome extension installed.
 
 In the WebStorm menu `Run` select `Edit Configurations...`. Then click `+` and select `JavaScript Debug`. Paste `http://localhost:3000` into the URL field and save the configuration.
 
@@ -112,7 +111,7 @@ The same way you can debug your application in IntelliJ IDEA Ultimate, PhpStorm,
 
 ## Formatting Code Automatically
 
-Prettier is an opinionated code formatter with support for JavaScript, CSS and JSON. With Prettier you can format the code you write automatically to ensure a code style within your project. See the [Prettier's GitHub page](https://github.com/prettier/prettier) for more information, and look at this [page to see it in action](https://prettier.github.io/prettier/).
+Prettier is an opinionated code formatter with support for JavaScript, CSS and JSON. With Prettier you can format the code you write automatically to ensure a code style within your project. See [Prettier's GitHub page](https://github.com/prettier/prettier) for more information, and look at this [page to see it in action](https://prettier.io/playground/).
 
 To format our code whenever we make a commit in git, we need to install the following dependencies:
 

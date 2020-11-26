@@ -26,7 +26,7 @@ const nodeArgs = scriptIndex > 0 ? args.slice(0, scriptIndex) : [];
 
 if (['build', 'eject', 'start', 'test'].includes(script)) {
   const result = spawn.sync(
-    'node',
+    process.execPath,
     nodeArgs
       .concat(require.resolve('../scripts/' + script))
       .concat(args.slice(scriptIndex + 1)),
