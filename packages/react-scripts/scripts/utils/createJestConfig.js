@@ -36,7 +36,7 @@ module.exports = (resolve, rootDir, isEjecting) => {
     setupFilesAfterEnv: setupTestsFile ? [setupTestsFile] : [],
     testMatch: [
       '<rootDir>/src/**/__tests__/**/*.{js,jsx,ts,tsx}',
-      '<rootDir>/src/**/?(*.){spec,test,stories}.{js,jsx,ts,tsx}', // @joor - remove optional dot
+      '<rootDir>/src/**/*.{spec,test}.{js,jsx,ts,tsx}',
     ],
     testEnvironment: 'jsdom',
     testRunner: require.resolve('jest-circus/runner'),
@@ -50,11 +50,9 @@ module.exports = (resolve, rootDir, isEjecting) => {
       ),
     },
     transformIgnorePatterns: [
-      // @joor - excluding promise-polyfill for flatfile-csv-importer
-      '[/\\\\]node_modules[/\\\\](?!promise-polyfill).+\\.(js|jsx|mjs|cjs|ts|tsx)$',
+      '[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs|cjs|ts|tsx)$',
       '^.+\\.module\\.(css|sass|scss)$',
     ],
-    moduleDirectories: ['node_modules', '.storybook'], // @joor - added .storybook
     modulePaths: modules.additionalModulePaths || [],
     moduleNameMapper: {
       '^react-native$': 'react-native-web',
