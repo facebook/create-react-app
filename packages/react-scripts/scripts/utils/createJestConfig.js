@@ -39,8 +39,7 @@ module.exports = (resolve, rootDir, isEjecting) => {
       '<rootDir>/src/**/?(*.){spec,test,stories}.{js,jsx,ts,tsx}', // @joor - remove optional dot
     ],
     testEnvironment: 'jsdom',
-    // @joor - fix ReferenceError: jasmine is not defined in .storybook/__mocks__/facade.js
-    // testRunner: require.resolve('jest-circus/runner'),
+    testRunner: require.resolve('jest-circus/runner'),
     transform: {
       '^.+\\.(js|jsx|mjs|cjs|ts|tsx)$': isEjecting
         ? '<rootDir>/node_modules/babel-jest'
