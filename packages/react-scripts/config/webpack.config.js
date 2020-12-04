@@ -415,6 +415,18 @@ module.exports = function (webpackEnv) {
                   ],
                   require.resolve('@emotion/babel-preset-css-prop'),
                 ],
+                env: {
+                  test: {
+                    plugins: [
+                      ["istanbul", {
+                        exclude: [
+                          "**/__tests__/*",
+                          "**/*.test.*"
+                        ]
+                      }]
+                    ]
+                  }
+                },
                 // @remove-on-eject-begin
                 babelrc: false,
                 configFile: false,
