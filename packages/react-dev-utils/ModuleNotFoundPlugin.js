@@ -100,8 +100,13 @@ class ModuleNotFoundPlugin {
     const { prettierError } = this;
     compiler.hooks.make.intercept({
       register(tap) {
+        // "SingleEntryPlugin" can be removed when Webpack 4 no longer have to be supported
         if (
-          !(tap.name === 'MultiEntryPlugin' || tap.name === 'SingleEntryPlugin')
+          !(
+            tap.name === 'MultiEntryPlugin' ||
+            tap.name === 'SingleEntryPlugin' ||
+            tap.name === 'EntryPlugin'
+          )
         ) {
           return tap;
         }
