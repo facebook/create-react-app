@@ -41,13 +41,27 @@ function isInMercurialRepository() {
   }
 }
 
-function tryGitInit() {
+function tryGitInit(branchName) {
   try {
     execSync('git --version', { stdio: 'ignore' });
     if (isInGitRepository() || isInMercurialRepository()) {
       return false;
     }
+  } catch (e) {
+    console.warn('Git repo not initialized', e);
+    return false;
+  }
 
+  if(branchName) {
+    try {
+      execSync(`git init --initial-branch=${branchName}`, { stdio: 'ignore' });
+      return true;
+    } catch (e) {
+    console.warn(`Error while trying to initialize git repo with a custom branch name (${branchName})`, e);
+    }
+  }
+
+  try {
     execSync('git init', { stdio: 'ignore' });
     return true;
   } catch (e) {
@@ -86,7 +100,8 @@ module.exports = function (
   appName,
   verbose,
   originalDirectory,
-  templateName
+  templateName,
+  branchName
 ) {
   const appPackage = require(path.join(appPath, 'package.json'));
   const useYarn = fs.existsSync(path.join(appPath, 'yarn.lock'));
@@ -280,7 +295,7 @@ module.exports = function (
   // Initialize git repo
   let initializedGit = false;
 
-  if (tryGitInit()) {
+  if (tryGitInit(branchName)) {
     initializedGit = true;
     console.log();
     console.log('Initialized a git repository.');

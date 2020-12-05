@@ -71,6 +71,7 @@ function init() {
     )
     .option('--use-npm')
     .option('--use-pnp')
+    .option('--branch-name <type>')
     .allowUnknownOption()
     .on('--help', () => {
       console.log(
@@ -229,13 +230,14 @@ function init() {
           program.scriptsVersion,
           program.template,
           program.useNpm,
-          program.usePnp
+          program.usePnp,
+          program.branchName
         );
       }
     });
 }
 
-function createApp(name, verbose, version, template, useNpm, usePnp) {
+function createApp(name, verbose, version, template, useNpm, usePnp, branchName) {
   const unsupportedNodeVersion = !semver.satisfies(process.version, '>=10');
   if (unsupportedNodeVersion) {
     console.log(
@@ -342,7 +344,8 @@ function createApp(name, verbose, version, template, useNpm, usePnp) {
     originalDirectory,
     template,
     useYarn,
-    usePnp
+    usePnp,
+    branchName
   );
 }
 
@@ -425,7 +428,8 @@ function run(
   originalDirectory,
   template,
   useYarn,
-  usePnp
+  usePnp,
+  branchName
 ) {
   Promise.all([
     getInstallPackage(version, originalDirectory),
@@ -510,7 +514,7 @@ function run(
             cwd: process.cwd(),
             args: nodeArgs,
           },
-          [root, appName, verbose, originalDirectory, templateName],
+          [root, appName, verbose, originalDirectory, templateName, branchName],
           `
         var init = require('${packageName}/scripts/init.js');
         init.apply(null, JSON.parse(process.argv[1]));
