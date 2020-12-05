@@ -32,7 +32,6 @@ const modules = require('./modules');
 const getClientEnvironment = require('./env');
 const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
 const ForkTsCheckerWebpackPlugin = require('react-dev-utils/ForkTsCheckerWebpackPlugin');
-const typescriptFormatter = require('react-dev-utils/typescriptFormatter');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 // @remove-on-eject-begin
 const getCacheIdentifier = require('react-dev-utils/getCacheIdentifier');
@@ -754,19 +753,20 @@ module.exports = function (webpackEnv) {
             // as micromatch doesn't match
             // '../cra-template-typescript/template/src/App.tsx'
             // otherwise.
-            include: ['../**/src/**/*.{ts,tsx}', '**/src/**/*.{ts,tsx}'],
+            include: [
+              '../**/src/**/*.{ts,tsx}',
+              '**/src/**/*.{ts,tsx}',
+            ].map(file => ({ file })),
             exclude: [
               '**/src/**/__tests__/**',
               '**/src/**/?(*.)(spec|test).*',
               '**/src/setupProxy.*',
               '**/src/setupTests.*',
-            ],
+            ].map(file => ({ file })),
           },
           logger: {
             infrastructure: 'silent',
           },
-          // The formatter is invoked directly in WebpackDevServerUtils during development
-          formatter: isEnvProduction ? typescriptFormatter : undefined,
         }),
       !disableESLintPlugin &&
         new ESLintPlugin({
