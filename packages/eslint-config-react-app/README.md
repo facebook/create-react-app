@@ -19,7 +19,7 @@ If you want to use this ESLint configuration in a project not built with Create 
 First, install this package, ESLint and the necessary plugins.
 
 ```sh
-npm install --save-dev eslint-config-react-app @typescript-eslint/eslint-plugin@^4.0.0 @typescript-eslint/parser@^4.0.0 babel-eslint@^10.0.0 eslint@^7.5.0 eslint-plugin-flowtype@^5.2.0 eslint-plugin-import@^2.22.0 eslint-plugin-jest@^24.0.0 eslint-plugin-jsx-a11y@^6.3.1 eslint-plugin-react@^7.20.3 eslint-plugin-react-hooks@^4.0.8
+npm install --save-dev eslint-config-react-app @typescript-eslint/eslint-plugin@^4.0.0 @typescript-eslint/parser@^4.0.0 babel-eslint@^10.0.0 eslint@^7.5.0 eslint-plugin-flowtype@^5.2.0 eslint-plugin-import@^2.22.0 eslint-plugin-jsx-a11y@^6.3.1 eslint-plugin-react@^7.20.3 eslint-plugin-react-hooks@^4.0.8
 ```
 
 Then create a file named `.eslintrc.json` with following contents in the root folder of your project:
@@ -39,7 +39,7 @@ This config also ships with optional Jest rules for ESLint (based on [`eslint-pl
 You'll first need to add the ESLint plugin for Jest (if you don't already have it installed).
 
 ```sh
-npm install --save-dev eslint-plugin-jest@^24.0.0
+npm install --save-dev eslint-plugin-jest@^24.0.0 eslint-plugin-testing-library&^3.9.0
 ```
 
 You can then enable these rules by adding the Jest config to the `extends` array in your ESLint config.

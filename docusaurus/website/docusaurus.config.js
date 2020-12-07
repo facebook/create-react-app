@@ -43,7 +43,7 @@ const siteConfig = {
         alt: 'Create React App Logo',
         src: 'img/logo.svg',
       },
-      links: [
+      items: [
         { to: 'docs/getting-started', label: 'Docs', position: 'right' },
         {
           href: 'https://reactjs.org/community/support.html',
