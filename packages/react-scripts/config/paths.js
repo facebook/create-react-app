@@ -10,7 +10,6 @@
 
 const path = require('path');
 const fs = require('fs');
-const os = require('os');
 const getPublicUrlOrPath = require('react-dev-utils/getPublicUrlOrPath');
 
 // Make sure any symlinks in the project folder are resolved:
@@ -57,13 +56,6 @@ const resolveModule = (resolveFn, filePath) => {
   return resolveFn(`${filePath}.js`);
 };
 
-let cachePath = resolveApp('node_modules/.cache');
-try {
-  fs.accessSync(cachePath, fs.constants.W_OK | fs.constants.R_OK);
-} catch (_) {
-  cachePath = os.tmpdir();
-}
-
 // config after eject: we're in ./config/
 module.exports = {
   dotenv: resolveApp('.env'),
@@ -81,7 +73,6 @@ module.exports = {
   proxySetup: resolveApp('src/setupProxy.js'),
   appNodeModules: resolveApp('node_modules'),
   swSrc: resolveModule(resolveApp, 'src/service-worker'),
-  cachePath,
   publicUrlOrPath,
 };
 
@@ -105,7 +96,6 @@ module.exports = {
   proxySetup: resolveApp('src/setupProxy.js'),
   appNodeModules: resolveApp('node_modules'),
   swSrc: resolveModule(resolveApp, 'src/service-worker'),
-  cachePath,
   publicUrlOrPath,
   // These properties only exist before ejecting:
   ownPath: resolveOwn('.'),
@@ -142,7 +132,6 @@ if (
     proxySetup: resolveOwn(`${templatePath}/src/setupProxy.js`),
     appNodeModules: resolveOwn('node_modules'),
     swSrc: resolveModule(resolveOwn, `${templatePath}/src/service-worker`),
-    cachePath,
     publicUrlOrPath,
     // These properties only exist before ejecting:
     ownPath: resolveOwn('.'),
