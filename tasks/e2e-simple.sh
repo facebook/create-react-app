@@ -259,6 +259,10 @@ verify_module_scope
 # Eject...
 echo yes | npm run eject
 
+# Temporary workaround for https://github.com/facebook/create-react-app/issues/6099
+rm yarn.lock
+yarn add @babel/plugin-transform-react-jsx-source @babel/plugin-syntax-jsx @babel/plugin-transform-react-jsx @babel/plugin-transform-react-jsx-self
+
 # Test ejected files were staged
 test -n "$(git diff --staged --name-only)"
 
