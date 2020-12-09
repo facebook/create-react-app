@@ -1,6 +1,6 @@
 {
   "name": "wbpk-5-cra-utils",
-  "version": "1.1.1",
+  "version": "11.0.1",
   "description": "Webpack 5 utilities used by Create React App",
   "repository": {
     "type": "git",
