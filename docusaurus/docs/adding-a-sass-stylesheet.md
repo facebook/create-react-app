@@ -10,12 +10,12 @@ Generally, we recommend that you don’t reuse the same CSS classes across diffe
 
 Following this rule often makes CSS preprocessors less useful, as features like mixins and nesting are replaced by component composition. You can, however, integrate a CSS preprocessor if you find it valuable.
 
-To use Sass, first install `node-sass`:
+To use Sass, first install `sass`:
 
 ```sh
-$ npm install node-sass --save
+$ npm install sass --save
 $ # or
-$ yarn add node-sass
+$ yarn add sass
 ```
 
 Now you can rename `src/App.css` to `src/App.scss` and update `src/App.js` to import `src/App.scss`.
