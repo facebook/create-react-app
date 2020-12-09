@@ -55,6 +55,9 @@ const reactRefreshOverlayEntry = require.resolve(
 // makes for a smoother build process.
 const shouldInlineRuntimeChunk = process.env.INLINE_RUNTIME_CHUNK !== 'false';
 
+const localIdentName = process.env.LOCAL_IDENT_NAME;
+const getLocalIdent = localIdentName ? function () { } : getCSSModuleLocalIdent;
+
 const imageInlineSizeLimit = parseInt(
   process.env.IMAGE_INLINE_SIZE_LIMIT || '10000'
 );
@@ -530,7 +533,8 @@ module.exports = function (webpackEnv) {
                   ? shouldUseSourceMap
                   : isEnvDevelopment,
                 modules: {
-                  getLocalIdent: getCSSModuleLocalIdent,
+                  localIdentName,
+                  getLocalIdent,
                 },
               }),
             },
@@ -566,7 +570,8 @@ module.exports = function (webpackEnv) {
                     ? shouldUseSourceMap
                     : isEnvDevelopment,
                   modules: {
-                    getLocalIdent: getCSSModuleLocalIdent,
+                    localIdentName,
+                    getLocalIdent,
                   },
                 },
                 'sass-loader'
