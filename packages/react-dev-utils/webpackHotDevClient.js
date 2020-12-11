@@ -191,6 +191,24 @@ function handleAvailableHash(hash) {
   mostRecentCompilationHash = hash;
 }
 
+function loadingDOMElement() {
+  return document.getElementById('__cra-loading-icon');
+}
+
+function hideLoadingIcon() {
+  var elem = loadingDOMElement();
+  if(elem) {
+    elem.classList.remove("visible");
+  }
+}
+
+function displayLoadingIcon() {
+  var elem = loadingDOMElement();
+  if(elem) {
+    elem.classList.add("visible");
+  }
+}
+
 // Handle messages from the server.
 connection.onmessage = function (e) {
   var message = JSON.parse(e.data);
@@ -201,6 +219,7 @@ connection.onmessage = function (e) {
     case 'still-ok':
     case 'ok':
       handleSuccess();
+      hideLoadingIcon();
       break;
     case 'content-changed':
       // Triggered when a file from `contentBase` changed.
@@ -210,7 +229,11 @@ connection.onmessage = function (e) {
       handleWarnings(message.data);
       break;
     case 'errors':
+      hideLoadingIcon()
       handleErrors(message.data);
+      break;
+    case 'invalid':
+      displayLoadingIcon();
       break;
     default:
     // Do nothing.

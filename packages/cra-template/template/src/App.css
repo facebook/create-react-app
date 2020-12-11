@@ -7,12 +7,23 @@
   pointer-events: none;
 }
 
+#__cra-loading-icon {
+  height: 8vmin;
+  pointer-events: none;
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  display: none;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
   }
+  #__cra-loading-icon {
+      animation: __cra-loading-icon-spin infinite 2s linear;
+  }
 }
-
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -29,6 +40,19 @@
 }
 
 @keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+#__cra-loading-icon.visible {
+  display: block;
+}
+
+@keyframes __cra-loading-icon-spin {
   from {
     transform: rotate(0deg);
   }
