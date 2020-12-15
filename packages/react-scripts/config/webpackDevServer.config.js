@@ -119,8 +119,24 @@ module.exports = function (proxy, allowedHost) {
       app.use(errorOverlayMiddleware());
 
       if (fs.existsSync(paths.proxySetup)) {
-        // This registers user provided middleware for proxy reasons
-        require(paths.proxySetup)(app);
+        // This registers user provided middleware for proxy reasons.
+        // @babel/register is used to add support for the types of code that work in the frontend
+        require('@babel/register')({
+          presets: [require.resolve('babel-preset-react-app')],
+          ignore: [/node_modules/],
+          extensions: paths.moduleFileExtensions.map(ext => `.${ext}`),
+        });
+        const middleware = require(paths.proxySetup);
+        // Provide the app to the middleware.
+        // If there's a default export from ESM code, use it.
+        if (
+          typeof middleware === 'object' &&
+          typeof middleware.default === 'function'
+        ) {
+          middleware.default(app);
+        } else {
+          middleware(app);
+        }
       }
     },
     after(app) {
