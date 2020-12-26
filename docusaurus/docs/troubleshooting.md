@@ -40,7 +40,7 @@ Then paste it in your terminal and press on enter to run it. You could find more
 
 ## `npm test` hangs or crashes on macOS Sierra
 
-If you run `npm test` and the console gets stuck after printing `react-scripts test` to the console there might be a problem with your [Watchman](https://facebook.github.io/watchman/) installation as described in [facebook/create-react-app#713](https://github.com/facebook/create-react-app/issues/713).
+If you run `npm test` and the console gets stuck after printing `react-scripts test` to the console there might be a problem with your [Watchman](https://facebook.github.io/watchman/) installation as described on [facebook/create-react-app#713](https://github.com/facebook/create-react-app/issues/713).
 
 We recommend deleting `node_modules` in your project and running `npm install` (or `yarn` if you use it) first. If it doesn't help, you can try one of the numerous workarounds mentioned in these issues:
 
@@ -72,7 +72,7 @@ If you are completely sure that you didn't terminate the process, consider [addi
 
 ## `npm run build` fails on Heroku
 
-This may be a problem with case sensitive filenames.
+This may be a problem with case-sensitive filenames.
 Please refer to [this section](deployment.md#resolving-heroku-deployment-errors).
 
 ## Moment.js locales are missing
