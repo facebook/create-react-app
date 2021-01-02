@@ -51,7 +51,7 @@ export function reportBuildError(error: string) {
 
 export function reportRuntimeError(
   error: Error,
-  options?: RuntimeReportingOption = {}
+  options: RuntimeReportingOptions = {}
 ) {
   currentRuntimeErrorOptions = options;
   crashWithFrames(handleRuntimeError(options))(error);

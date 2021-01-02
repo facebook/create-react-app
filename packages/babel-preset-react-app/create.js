@@ -83,8 +83,6 @@ module.exports = function (api, opts, env) {
           useBuiltIns: 'entry',
           // Set the corejs version we are using to avoid warnings in console
           corejs: '3.5',
-          // Do not transform modules to CJS
-          modules: false,
           // Exclude transforms that make all code slower
           exclude: ['transform-typeof-symbol'],
         },
@@ -97,7 +95,8 @@ module.exports = function (api, opts, env) {
           development: isEnvDevelopment || isEnvTest,
           // Will use the native built-in instead of trying to polyfill
           // behavior for any plugins that require one.
-          useBuiltIns: true,
+          ...(opts.runtime !== 'automatic' ? { useBuiltIns: true } : {}),
+          runtime: opts.runtime || 'classic',
         },
       ],
       isTypeScriptEnabled && [require('@babel/preset-typescript').default],

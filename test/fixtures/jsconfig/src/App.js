@@ -32,7 +32,7 @@ export default class App extends Component {
   render() {
     return (
       <div>
-        {this.state.users.map((user) => (
+        {this.state.users.map(user => (
           <div key={user.id}>{user.name}</div>
         ))}
       </div>

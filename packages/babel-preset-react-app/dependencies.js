@@ -74,8 +74,6 @@ module.exports = function (api, opts) {
           targets: {
             node: 'current',
           },
-          // Do not transform modules to CJS
-          modules: false,
           // Exclude transforms that make all code slower
           exclude: ['transform-typeof-symbol'],
         },
@@ -88,8 +86,6 @@ module.exports = function (api, opts) {
           useBuiltIns: 'entry',
           // Set the corejs version we are using to avoid warnings in console
           corejs: '3.5',
-          // Do not transform modules to CJS
-          modules: false,
           // Exclude transforms that make all code slower
           exclude: ['transform-typeof-symbol'],
         },
