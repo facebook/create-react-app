@@ -30,7 +30,9 @@ const publicUrlOrPath = getPublicUrlOrPath(
 );
 
 const moduleFileExtensions = [
+  `${process.env.REACT_APP_THEME}.js`,
   'js',
+  `${process.env.REACT_APP_THEME}.json`,
   'json'
 ];
 
