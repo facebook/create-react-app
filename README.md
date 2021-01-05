@@ -5,6 +5,7 @@
 Create React apps with no build configuration.
 
 - [Creating an App](#creating-an-app) – How to create a new app.
+- if your app is not starting its development server, make a file name of <h5>.env</h5> on root and paste this code <code>SKIP_PREFIX_LIGHT=true</code> and   then   you are good to go.
 - [User Guide](https://facebook.github.io/create-react-app/) – How to develop apps bootstrapped with Create React App.
 
 Create React App works on macOS, Windows, and Linux.<br>
