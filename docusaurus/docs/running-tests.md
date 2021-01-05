@@ -124,6 +124,12 @@ it('renders welcome message', () => {
 
 Learn more about the utilities provided by `react-testing-library` to facilitate testing asynchronous interactions as well as selecting form elements from the [`react-testing-library` documentation](https://testing-library.com/react) and [examples](https://codesandbox.io/s/github/kentcdodds/react-testing-library-examples).
 
+### Testing Component CSS and Styles
+
+jsdom can be used to test inline styles and for the existence of class selectors, but it isn't ideal for testing computed styles without some additional setup. Stylesheets are imported as empty objects by default, so no styles are loaded into jsdom, therefore assertion methods like `toBeVisible` and `toHaveStyle` likely will not work in most cases if your component is using external stylesheets. If you wish to have CSS styles added for testing, this must be implemented on your own.
+
+If possible, consider a different tool for testing styles or an approach that uses classes only, as jsdom [doesn't handle have layouts implemented](https://github.com/jsdom/jsdom#unimplemented-parts-of-the-web-platform). You may want to use something that utilizes a browser.
+
 ## Using Third Party Assertion Libraries
 
 We recommend that you use `expect()` for assertions and `jest.fn()` for spies. If you are having issues with them please [file those against Jest](https://github.com/facebook/jest/issues/new), and we’ll fix them. We intend to keep making them better for React, supporting, for example, [pretty-printing React elements as JSX](https://github.com/facebook/jest/pull/1566).
