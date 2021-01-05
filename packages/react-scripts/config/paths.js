@@ -29,12 +29,20 @@ const publicUrlOrPath = getPublicUrlOrPath(
   process.env.PUBLIC_URL
 );
 
-const moduleFileExtensions = [
-  `${process.env.REACT_APP_THEME}.js`,
-  'js',
-  `${process.env.REACT_APP_THEME}.json`,
-  'json'
-];
+const theme = process.env.REACT_APP_THEME;
+
+const moduleFileExtensions = ['js', 'json'].reduce(
+  (array, extension) => {
+    if (theme) {
+      array.push(`${theme}.${extension}`);
+    }
+
+    array.push(extension);
+
+    return array;
+  },
+  []
+);
 
 // Resolve file paths in the same order as webpack
 const resolveModule = (resolveFn, filePath) => {
