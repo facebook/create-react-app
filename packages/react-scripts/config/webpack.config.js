@@ -62,6 +62,9 @@ const imageInlineSizeLimit = parseInt(
 // Check if TypeScript is setup
 const useTypeScript = fs.existsSync(paths.appTsConfig);
 
+// Check disable incremental build in fork-ts-checker-webpack-plugin
+const useTypeScriptIncrementalBuild = !process.env.DISABLE_TS_INCREMENTAL_BUILD || true;
+
 // Get the path to the uncompiled service worker (if it exists).
 const swSrc = paths.swSrc;
 
@@ -734,6 +737,7 @@ module.exports = function (webpackEnv) {
             ? `${__dirname}/pnpTs.js`
             : undefined,
           tsconfig: paths.appTsConfig,
+          useTypescriptIncrementalApi: useTypeScriptIncrementalBuild,
           reportFiles: [
             // This one is specifically to match during CI tests,
             // as micromatch doesn't match
