@@ -57,8 +57,6 @@ _([npx](https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7
 npm init react-app my-app
 ```
 
-_`npm init <initializer>` is available in npm 6+_
-
 ### Yarn
 
 ```sh
