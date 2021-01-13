@@ -18,7 +18,12 @@ process.on('unhandledRejection', err => {
 const spawn = require('react-dev-utils/crossSpawn');
 const args = process.argv.slice(2);
 
+const port = args.findIndex(x => x === '--port');
 const theme = args.findIndex(x => x === '--theme');
+
+if (args[port] && args[port + 1]) {
+  process.env.PORT = args[port + 1];
+}
 
 if (args[theme] && args[theme + 1]) {
   process.env.REACT_APP_THEME = args[theme + 1];
