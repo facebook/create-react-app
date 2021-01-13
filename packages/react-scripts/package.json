@@ -29,7 +29,7 @@
   "types": "./lib/react-app.d.ts",
   "dependencies": {
     "@babel/core": "7.12.3",
-    "@pmmmwh/react-refresh-webpack-plugin": "0.4.2",
+    "@pmmmwh/react-refresh-webpack-plugin": "0.4.3",
     "@svgr/webpack": "5.5.0",
     "@typescript-eslint/eslint-plugin": "^4.5.0",
     "@typescript-eslint/parser": "^4.5.0",
@@ -95,6 +95,7 @@
     "fsevents": "^2.1.3"
   },
   "peerDependencies": {
+    "react": ">= 16",
     "typescript": "^3.2.1 || ^4"
   },
   "peerDependenciesMeta": {
