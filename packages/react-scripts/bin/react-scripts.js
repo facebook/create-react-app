@@ -18,6 +18,12 @@ process.on('unhandledRejection', err => {
 const spawn = require('react-dev-utils/crossSpawn');
 const args = process.argv.slice(2);
 
+const theme = args.findIndex(x => x === '--theme');
+
+if (args[theme] && args[theme + 1]) {
+  process.env.REACT_APP_THEME = args[theme + 1];
+}
+
 const scriptIndex = args.findIndex(
   x => x === 'build' || x === 'eject' || x === 'start' || x === 'test'
 );
