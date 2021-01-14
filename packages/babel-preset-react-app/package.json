@@ -1,15 +1,15 @@
 {
-  "name": "babel-preset-react-app",
-  "version": "10.0.0",
-  "description": "Babel preset used by Create React App",
+  "name": "babel-preset-react-app-webpack-5",
+  "version": "10.0.0-next.4",
+  "description": "Babel preset used by Create React App for Webpack 5",
   "repository": {
     "type": "git",
-    "url": "https://github.com/facebook/create-react-app.git",
-    "directory": "packages/babel-preset-react-app"
+    "url": "https://github.com/blackarctic/create-react-app.git",
+    "directory": "packages/babel-preset-react-app-webpack-5"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/facebook/create-react-app/issues"
+    "url": "https://github.com/blackarctic/create-react-app/issues"
   },
   "files": [
     "create.js",

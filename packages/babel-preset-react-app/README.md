@@ -1,4 +1,8 @@
-# babel-preset-react-app
+# babel-preset-react-app-webpack-5
+
+A fork of `babel-preset-react-app` for Webpack 5 compatibility.
+
+---
 
 This package includes the Babel preset used by [Create React App](https://github.com/facebook/create-react-app).<br>
 Please refer to its documentation:

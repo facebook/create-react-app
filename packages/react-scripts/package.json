@@ -1,6 +1,6 @@
 {
   "name": "webpack-5-react-scripts",
-  "version": "4.0.1",
+  "version": "4.0.1-next.2",
   "description": "Configuration and scripts for Create React App using Webpack 5.",
   "repository": {
     "type": "git",
@@ -37,7 +37,7 @@
     "babel-jest": "^26.6.0",
     "babel-loader": "8.1.0",
     "babel-plugin-named-asset-import": "^0.3.7",
-    "babel-preset-react-app": "^10.0.0",
+    "babel-preset-react-app-webpack-5": "10.0.0-next.4",
     "bfj": "^7.0.2",
     "camelcase": "^6.1.0",
     "case-sensitive-paths-webpack-plugin": "2.3.0",
@@ -83,7 +83,7 @@
     "ts-pnp": "1.2.0",
     "url-loader": "4.1.1",
     "wbpk-5-cra-utils": "1.1.0",
-    "webpack": "5.0.0-beta.16",
+    "webpack": "5.10.0",
     "webpack-dev-server": "3.11.0",
     "webpack-manifest-plugin": "2.2.0",
     "workbox-webpack-plugin": "5.1.4"

@@ -1,4 +1,8 @@
-# react-scripts
+# webpack-5-react-scripts
+
+This is a fork of `react-scripts` that uses Webpack 5.
+
+---
 
 This package includes scripts and configuration used by [Create React App](https://github.com/facebook/create-react-app).<br>
 Please refer to its documentation:

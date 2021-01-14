@@ -246,7 +246,11 @@ module.exports = function (webpackEnv) {
           (info => path.resolve(info.absoluteResourcePath).replace(/\\/g, '/')),
       // Prevents conflicts when multiple webpack runtimes (from different apps)
       // are used on the same page.
-      jsonpFunction: `webpackJsonp${appPackageJson.name}`,
+      /* webpack-5-react-scripts start */
+      // This is no longer needed in Webpack 5:
+      // https://webpack.js.org/blog/2020-10-10-webpack-5-release/#automatic-unique-naming
+      // jsonpFunction: `webpackJsonp${appPackageJson.name}`,
+      /* webpack-5-react-scripts end */
       // this defaults to 'window', but by setting it to 'this' then
       // module chunks which are built will work in web workers as well.
       globalObject: 'this',
@@ -426,11 +430,15 @@ module.exports = function (webpackEnv) {
               loader: require.resolve('babel-loader'),
               options: {
                 customize: require.resolve(
-                  'babel-preset-react-app/webpack-overrides'
+                  /* webpack-5-react-scripts start */
+                  'babel-preset-react-app-webpack-5/webpack-overrides'
+                  /* webpack-5-react-scripts end */
                 ),
                 presets: [
                   [
-                    require.resolve('babel-preset-react-app'),
+                    /* webpack-5-react-scripts start */
+                    require.resolve('babel-preset-react-app-webpack-5'),
+                    /* webpack-5-react-scripts end */
                     {
                       runtime: hasJsxRuntime ? 'automatic' : 'classic',
                     },
@@ -450,7 +458,9 @@ module.exports = function (webpackEnv) {
                     : isEnvDevelopment && 'development',
                   [
                     'babel-plugin-named-asset-import',
-                    'babel-preset-react-app',
+                    /* webpack-5-react-scripts start */
+                    'babel-preset-react-app-webpack-5',
+                    /* webpack-5-react-scripts end */
                     'react-dev-utils',
                     'react-scripts',
                   ]
@@ -493,7 +503,9 @@ module.exports = function (webpackEnv) {
                 compact: false,
                 presets: [
                   [
-                    require.resolve('babel-preset-react-app/dependencies'),
+                    /* webpack-5-react-scripts start */
+                    require.resolve('babel-preset-react-app-webpack-5/dependencies'),
+                    /* webpack-5-react-scripts end */
                     { helpers: true },
                   ],
                 ],
@@ -507,7 +519,9 @@ module.exports = function (webpackEnv) {
                     : isEnvDevelopment && 'development',
                   [
                     'babel-plugin-named-asset-import',
-                    'babel-preset-react-app',
+                    /* webpack-5-react-scripts start */
+                    'babel-preset-react-app-webpack-5',
+                    /* webpack-5-react-scripts end */
                     'react-dev-utils',
                     'react-scripts',
                   ]
