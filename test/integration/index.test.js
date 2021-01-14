@@ -64,7 +64,6 @@ describe('create-react-app', () => {
   it('uses npm as the package manager', async () => {
     await run([projectName, '--use-npm'], {
       cwd: __dirname,
-      stdio: 'inherit',
     });
 
     // Assert for the generated files
@@ -81,7 +80,6 @@ describe('create-react-app', () => {
   it('creates a project in the current based on the typescript template', async () => {
     await run([projectName, '--template', 'typescript'], {
       cwd: __dirname,
-      stdio: 'inherit',
     });
 
     // Assert for the generated files
