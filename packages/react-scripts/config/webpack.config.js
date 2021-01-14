@@ -757,6 +757,7 @@ module.exports = function (webpackEnv) {
         eslintPath: require.resolve('eslint'),
         context: paths.appSrc,
         cache: true,
+        treads: true,
         cacheLocation: path.resolve(
           paths.appNodeModules,
           '.cache/.eslintcache'
