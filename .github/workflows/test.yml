@@ -21,7 +21,16 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node }}
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            node_modules
+            */*/node_modules
+          key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock', './yarn.lock') }}
       - name: Install packages
-        run: yarn --no-progress --non-interactive --no-lockfile
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: yarn --frozen-lockfile --prefer-offline
       - name: Run integration tests
         run: yarn test:integration
