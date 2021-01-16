@@ -36,13 +36,13 @@ As of `react-scripts@2.0.0` you can import `.scss` files. This makes it possible
 To enable `scss` in Create React App you will need to install `node-sass`.
 
 ```sh
-npm install --save node-sass
+npm install --save node-sass@4
 ```
 
 Alternatively you may use `yarn`:
 
 ```sh
-yarn add node-sass
+yarn add node-sass@4
 ```
 
 To customize Bootstrap, create a file called `src/custom.scss` (or similar) and import the Bootstrap source stylesheet. Add any overrides _before_ the imported file(s). You can reference [Bootstrap's documentation](https://getbootstrap.com/docs/4.1/getting-started/theming/#css-variables) for the names of the available variables.
