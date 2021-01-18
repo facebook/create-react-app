@@ -63,7 +63,7 @@ const imageInlineSizeLimit = parseInt(
 const useTypeScript = fs.existsSync(paths.appTsConfig);
 
 // Check disable incremental build in fork-ts-checker-webpack-plugin
-const useTypeScriptIncrementalBuild = !process.env.DISABLE_TS_INCREMENTAL_BUILD || true;
+const useTypeScriptIncrementalBuild = process.env.DISABLE_TS_INCREMENTAL_BUILD !== 'false';
 
 // Get the path to the uncompiled service worker (if it exists).
 const swSrc = paths.swSrc;
