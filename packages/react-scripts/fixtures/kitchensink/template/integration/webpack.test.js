@@ -32,7 +32,7 @@ const matchCSS = (doc, regexes) => {
 };
 
 describe('Integration', () => {
-  describe('Webpack plugins', () => {
+  describe('webpack plugins', () => {
     let doc;
 
     afterEach(() => {
@@ -86,7 +86,7 @@ describe('Integration', () => {
       doc = await initDOM('image-inclusion');
 
       expect(doc.getElementById('feature-image-inclusion').src).toMatch(
-        /^data:image\/jpeg;base64.+==$/
+        /^data:image\/jpeg;base64.+=$/
       );
     });
 

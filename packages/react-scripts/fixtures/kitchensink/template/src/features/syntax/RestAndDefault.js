@@ -17,7 +17,7 @@ function load({ id, ...rest } = { id: 0, user: { id: 42, name: '42' } }) {
   ];
 }
 
-export default class extends Component {
+export default class RestAndDefault extends Component {
   static propTypes = {
     onReady: PropTypes.func.isRequired,
   };

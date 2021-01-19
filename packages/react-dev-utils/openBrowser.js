@@ -45,7 +45,7 @@ function getBrowserEnv() {
 
 function executeNodeScript(scriptPath, url) {
   const extraArgs = process.argv.slice(2);
-  const child = spawn('node', [scriptPath, ...extraArgs, url], {
+  const child = spawn(process.execPath, [scriptPath, ...extraArgs, url], {
     stdio: 'inherit',
   });
   child.on('close', code => {
@@ -69,22 +69,41 @@ function startBrowserProcess(browser, url, args) {
   // requested a different browser, we can try opening
   // Chrome with AppleScript. This lets us reuse an
   // existing tab when possible instead of creating a new one.
-  const shouldTryOpenChromeWithAppleScript =
+  const shouldTryOpenChromiumWithAppleScript =
     process.platform === 'darwin' &&
     (typeof browser !== 'string' || browser === OSX_CHROME);
 
-  if (shouldTryOpenChromeWithAppleScript) {
-    try {
-      // Try our best to reuse existing tab
-      // on OS X Google Chrome with AppleScript
-      execSync('ps cax | grep "Google Chrome"');
-      execSync('osascript openChrome.applescript "' + encodeURI(url) + '"', {
-        cwd: __dirname,
-        stdio: 'ignore',
-      });
-      return true;
-    } catch (err) {
-      // Ignore errors.
+  if (shouldTryOpenChromiumWithAppleScript) {
+    // Will use the first open browser found from list
+    const supportedChromiumBrowsers = [
+      'Google Chrome Canary',
+      'Google Chrome',
+      'Microsoft Edge',
+      'Brave Browser',
+      'Vivaldi',
+      'Chromium',
+    ];
+
+    for (let chromiumBrowser of supportedChromiumBrowsers) {
+      try {
+        // Try our best to reuse existing tab
+        // on OSX Chromium-based browser with AppleScript
+        execSync('ps cax | grep "' + chromiumBrowser + '"');
+        execSync(
+          'osascript openChrome.applescript "' +
+            encodeURI(url) +
+            '" "' +
+            chromiumBrowser +
+            '"',
+          {
+            cwd: __dirname,
+            stdio: 'ignore',
+          }
+        );
+        return true;
+      } catch (err) {
+        // Ignore errors.
+      }
     }
   }
 

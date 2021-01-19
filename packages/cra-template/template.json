@@ -1,7 +1,13 @@
 {
-  "dependencies": {
-    "@testing-library/react": "^9.3.0",
-    "@testing-library/jest-dom": "^4.2.0",
-    "@testing-library/user-event": "^7.1.2"
+  "package": {
+    "dependencies": {
+      "@testing-library/jest-dom": "^5.11.4",
+      "@testing-library/react": "^11.1.0",
+      "@testing-library/user-event": "^12.1.10",
+      "web-vitals": "^1.0.1"
+    },
+    "eslintConfig": {
+      "extends": ["react-app", "react-app/jest"]
+    }
   }
 }
