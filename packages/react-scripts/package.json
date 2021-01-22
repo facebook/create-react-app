@@ -1,6 +1,6 @@
 {
   "name": "@pointpack/react-scripts",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Configuration and scripts for Create React App.",
   "repository": {
     "type": "git",
