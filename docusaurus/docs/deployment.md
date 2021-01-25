@@ -318,13 +318,13 @@ The `predeploy` script will run automatically before `deploy` is run.
 If you are deploying to a GitHub user page instead of a project page you'll need to make one
 additional modification:
 
-1. Tweak your `package.json` scripts to push deployments to **master**:
+1. Tweak your `package.json` scripts to push deployments to **main**:
 
 ```diff
   "scripts": {
     "predeploy": "npm run build",
 -   "deploy": "gh-pages -d build",
-+   "deploy": "gh-pages -b master -d build",
++   "deploy": "gh-pages -b main -d build",
 ```
 
 ### Step 3: Deploy the site by running `npm run deploy`
