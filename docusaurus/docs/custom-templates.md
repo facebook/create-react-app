@@ -49,7 +49,7 @@ cra-template-[template-name]/
 To test a template locally, pass the file path to the directory of your template source using the `file:` prefix.
 
 ```sh
-npx create-react-app my-app --template file:../path/to/your/template/cra-template-[template-name]
+npx create-react-app my-app --template file:'../path/to/your/template/cra-template-[template-name]'
 ```
 
 ### The `template` folder
