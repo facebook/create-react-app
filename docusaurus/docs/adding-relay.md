@@ -17,6 +17,12 @@ Alternatively you may use `yarn`:
 yarn add babel-plugin-relay
 ```
 
+Alternatively you may use `bower`:
+
+```sh
+bower install --save babel-plugin-relay
+```
+
 Then, wherever you use the `graphql` template tag, import the macro:
 
 ```js
