@@ -17,6 +17,12 @@ Alternatively you may use `yarn`:
 yarn add bootstrap
 ```
 
+Alternatively you may use `bower`:
+
+```sh
+bower install --save bootstrap
+```
+
 Import Bootstrap CSS and optionally Bootstrap theme CSS in the beginning of your `src/index.js` file:
 
 ```js
@@ -43,6 +49,12 @@ Alternatively you may use `yarn`:
 
 ```sh
 yarn add node-sass
+```
+
+Alternatively you may use `bower`:
+
+```sh
+bower install --save node-sass
 ```
 
 To customize Bootstrap, create a file called `src/custom.scss` (or similar) and import the Bootstrap source stylesheet. Add any overrides _before_ the imported file(s). You can reference [Bootstrap's documentation](https://getbootstrap.com/docs/4.1/getting-started/theming/#css-variables) for the names of the available variables.
