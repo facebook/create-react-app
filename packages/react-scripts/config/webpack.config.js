@@ -125,8 +125,8 @@ module.exports = function (webpackEnv) {
         // package.json
         loader: require.resolve('postcss-loader'),
         options: {
-          postcssOptions: {
-            plugins: () => [
+          postcssOptions: () => ({
+            plugins: [
               require('postcss-flexbugs-fixes'),
               require('postcss-preset-env')({
                 autoprefixer: {
@@ -139,7 +139,7 @@ module.exports = function (webpackEnv) {
               // which in turn let's users customize the target behavior as per their needs.
               postcssNormalize(),
             ],
-          },
+          }),
           sourceMap: isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
         },
       },
