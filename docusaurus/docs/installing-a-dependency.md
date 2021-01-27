@@ -15,4 +15,10 @@ Alternatively you may use `yarn`:
 yarn add react-router-dom
 ```
 
+Alternatively you may use `bower`:
+
+```sh
+bower install --save react-router-dom
+```
+
 This works for any library, not only `react-router-dom`.
