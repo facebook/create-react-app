@@ -77,7 +77,9 @@ const lessRegex = /\.less$/;
 const lessModuleRegex = /\.module\.less$/;
 
 // style loaders options
-const lessLoaderOptions = JSON.parse(process.env.LESS_LOADER_OPTIONS || null);
+const lessLoaderOptions = fs.existsSync(paths.lessLoaderOptions)
+  ? require(paths.lessLoaderOptions)
+  : null;
 
 const hasJsxRuntime = (() => {
   if (process.env.DISABLE_NEW_JSX_TRANSFORM === 'true') {
