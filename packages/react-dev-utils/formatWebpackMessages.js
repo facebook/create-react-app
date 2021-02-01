@@ -91,6 +91,13 @@ function formatMessage(message) {
       'Run `npm install sass` or `yarn add sass` inside your workspace.';
   }
 
+  // Add helpful message for users trying to use Less for the first time
+  if (lines[1] && lines[1].match(/Cannot find module.+less/)) {
+    lines[1] = 'To import Less files, you first need to install less.\n';
+    lines[1] +=
+      'Run `npm install less` or `yarn add less` inside your workspace.';
+  }
+
   message = lines.join('\n');
   // Internal stacks are generally useless so we strip them... with the
   // exception of stacks containing `webpack:` because they're normally
