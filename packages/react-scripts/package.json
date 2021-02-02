@@ -1,6 +1,6 @@
 {
   "name": "@bentley/react-scripts",
-  "version": "3.4.6",
+  "version": "3.4.7",
   "description": "iModel.js configuration and scripts for Create React App.",
   "repository": {
     "type": "git",
@@ -31,8 +31,8 @@
     "@babel/core": "7.9.0",
     "@bentley/webpack-tools-core": "^2.0.0",
     "@svgr/webpack": "4.3.3",
-    "@typescript-eslint/eslint-plugin": "^2.10.0",
-    "@typescript-eslint/parser": "^2.10.0",
+    "@typescript-eslint/eslint-plugin": "^4.1.1",
+    "@typescript-eslint/parser": "^4.1.1",
     "babel-eslint": "10.1.0",
     "babel-jest": "^24.9.0",
     "babel-loader": "8.1.0",
