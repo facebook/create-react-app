@@ -62,6 +62,9 @@ const imageInlineSizeLimit = parseInt(
 // Check if TypeScript is setup
 const useTypeScript = fs.existsSync(paths.appTsConfig);
 
+// Check if eslint is enabled, default to true
+const isEslintEnabled = !process.env.DISABLED_ESLINT || !process.argv.includes('-disable_eslint');
+
 // Get the path to the uncompiled service worker (if it exists).
 const swSrc = paths.swSrc;
 
@@ -750,13 +753,14 @@ module.exports = function (webpackEnv) {
           // The formatter is invoked directly in WebpackDevServerUtils during development
           formatter: isEnvProduction ? typescriptFormatter : undefined,
         }),
-      new ESLintPlugin({
+        isEslintEnabled && new ESLintPlugin({
         // Plugin options
         extensions: ['js', 'mjs', 'jsx', 'ts', 'tsx'],
         formatter: require.resolve('react-dev-utils/eslintFormatter'),
         eslintPath: require.resolve('eslint'),
         context: paths.appSrc,
         cache: true,
+        threads: true,
         cacheLocation: path.resolve(
           paths.appNodeModules,
           '.cache/.eslintcache'
