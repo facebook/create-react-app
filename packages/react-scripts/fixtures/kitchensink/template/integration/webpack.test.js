@@ -82,6 +82,19 @@ describe('Integration', () => {
       ]);
     });
 
+    it('less inclusion', async () => {
+      doc = await initDOM('less-inclusion');
+      matchCSS(doc, [/#feature-less-inclusion\{background:.+;color:.+}/]);
+    });
+
+    it('less modules inclusion', async () => {
+      doc = await initDOM('less-modules-inclusion');
+      matchCSS(doc, [
+        /.+less-styles_lessModulesInclusion.+\{background:.+;color:.+}/,
+        /.+assets_lessModulesIndexInclusion.+\{background:.+;color:.+}/,
+      ]);
+    });
+
     it('image inclusion', async () => {
       doc = await initDOM('image-inclusion');
 

@@ -126,6 +126,16 @@ class App extends Component {
           this.setFeature(f.default)
         );
         break;
+      case 'less-inclusion':
+        import('./features/webpack/LessInclusion').then(f =>
+          this.setFeature(f.default)
+        );
+        break;
+      case 'less-modules-inclusion':
+        import('./features/webpack/LessModulesInclusion').then(f =>
+          this.setFeature(f.default)
+        );
+        break;
       case 'custom-interpolation':
         import('./features/syntax/CustomInterpolation').then(f =>
           this.setFeature(f.default)
