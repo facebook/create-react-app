@@ -218,15 +218,7 @@ function verifyTypeScriptSetup() {
   if (appTsConfig.compilerOptions == null) {
     appTsConfig.compilerOptions = {};
     firstTimeSetup = true;
-  } else {
-    // This is bug fix code of https://github.com/facebook/create-react-app/issues/9868
-    // Bellow code release variable from non-extensible and freeze status.
-    appTsConfig.compilerOptions = JSON.parse(JSON.stringify(appTsConfig.compilerOptions));
-
-    // Original appTsConfig.compilerOptions status
-    // Object.isExtensible(appTsConfig.compilerOptions) output: false
-    // Object.isFrozen(appTsConfig.compilerOptions) output: true
-  }
+  } 
 
   for (const option of Object.keys(compilerOptions)) {
     const { parsedValue, value, suggested, reason } = compilerOptions[option];
@@ -236,7 +228,9 @@ function verifyTypeScriptSetup() {
 
     if (suggested != null) {
       if (parsedCompilerOptions[option] === undefined) {
-        appTsConfig.compilerOptions[option] = suggested;
+        appTsConfig = immer(appTsConfig, config => {
+          config.compilerOptions[option] = suggested;
+        });
         messages.push(
           `${coloredOption} to be ${chalk.bold(
             'suggested'
@@ -244,7 +238,9 @@ function verifyTypeScriptSetup() {
         );
       }
     } else if (parsedCompilerOptions[option] !== valueToCheck) {
-      appTsConfig.compilerOptions[option] = value;
+      appTsConfig = immer(appTsConfig, config => {
+        config.compilerOptions[option] = value;
+      });
       messages.push(
         `${coloredOption} ${chalk.bold(
           valueToCheck == null ? 'must not' : 'must'
@@ -256,7 +252,9 @@ function verifyTypeScriptSetup() {
 
   // tsconfig will have the merged "include" and "exclude" by this point
   if (parsedTsConfig.include == null) {
-    appTsConfig.include = ['src'];
+    appTsConfig = immer(appTsConfig, config => {
+      config.include = ['src'];
+    });
     messages.push(
       `${chalk.cyan('include')} should be ${chalk.cyan.bold('src')}`
     );
