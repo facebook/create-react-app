@@ -32,7 +32,7 @@ With the `reportWebVitals` function, you can send any of results to an analytics
 
 ```js
 function sendToAnalytics(metric) {
-  const body = JSON.stringify(metric);
+  const body = JSON.stringify({[metric.name]: metric.value});
   const url = 'https://example.com/analytics';
 
   // Use `navigator.sendBeacon()` if available, falling back to `fetch()`
