@@ -44,7 +44,7 @@ function getPublicUrlOrPath(isEnvDevelopment, homepage, envPublicUrl) {
   }
 
   if (homepage) {
-    // strip last slash if exists
+    // ensure last slash exists
     homepage = homepage.endsWith('/') ? homepage : homepage + '/';
 
     // Some apps do not use client-side routing with pushState.
