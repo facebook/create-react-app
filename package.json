@@ -29,7 +29,7 @@
     "fs-extra": "^9.0.1",
     "get-port": "^5.1.1",
     "globby": "^11.0.1",
-    "husky": "^4.3.0",
+    "husky": "^5.0.8",
     "jest": "26.6.0",
     "lerna": "3.22.1",
     "lerna-changelog": "~0.8.2",
