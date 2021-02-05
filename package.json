@@ -44,11 +44,6 @@
     "wait-for-localhost": "^3.3.0",
     "web-vitals": "^1.0.1"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
   "lint-staged": {
     "*.{js,json,yml,yaml,css,scss,ts,tsx,md}": [
       "prettier --write"
