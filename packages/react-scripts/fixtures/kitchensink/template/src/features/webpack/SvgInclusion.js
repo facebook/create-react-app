@@ -7,9 +7,13 @@
 
 import React from 'react';
 import logo from './assets/logo.svg';
+import logo2 from './assets/logo@2x.svg';
 
 const SvgInclusion = () => (
-  <img id="feature-svg-inclusion" src={logo} alt="logo" />
+  <>
+    <img id="feature-svg-inclusion" src={logo} alt="logo" />
+    <img src={logo2} alt="logo" />
+  </>
 );
 
 export default SvgInclusion;

@@ -16,6 +16,7 @@ module.exports = {
       const pascalCaseFilename = camelcase(path.parse(filename).name, {
         pascalCase: true,
       });
+      // Convert invalid character to ASCII number
       const pascalCaseValidFilename = pascalCaseFilename
         .split('')
         .map(char => (/[a-zA-Z0-9_]/.test(char) ? char : char.codePointAt(0)))
