@@ -11,13 +11,13 @@ bloat is coming from.
 To add Source map explorer to a Create React App project, follow these steps:
 
 ```sh
-npm install --save source-map-explorer
+npm install --save-dev source-map-explorer
 ```
 
 Alternatively you may use `yarn`:
 
 ```sh
-yarn add source-map-explorer
+yarn add --dev source-map-explorer
 ```
 
 Then in `package.json`, add the following line to `scripts`:
