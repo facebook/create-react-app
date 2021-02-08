@@ -61,6 +61,6 @@ The `public` folder is useful as a workaround for a number of less common cases:
 - You need a file with a specific name in the build output, such as [`manifest.webmanifest`](https://developer.mozilla.org/en-US/docs/Web/Manifest).
 - You have thousands of images and need to dynamically reference their paths.
 - You want to include a small script like [`pace.js`](https://github.hubspot.com/pace/docs/welcome/) outside of the bundled code.
-- Some library may be incompatible with webpack and you have no other option but to include it as a `<script>` tag.
+- Some libraries may be incompatible with webpack and you have no other option but to include it as a `<script>` tag.
 
 Note that if you add a `<script>` that declares global variables, you should read the topic [Using Global Variables](using-global-variables.md) in the next section which explains how to reference them.
