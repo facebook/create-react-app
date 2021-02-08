@@ -1,10 +1,10 @@
 {
-  "name": "react-scripts",
+  "name": "amd-react-scripts",
   "version": "4.0.2",
-  "description": "Configuration and scripts for Create React App.",
+  "description": "Custom amd flag added to web pack configuration and scripts for Create React App.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/facebook/create-react-app.git",
+    "url": "https://github.com/premputtegowda/create-react-app.git",
     "directory": "packages/react-scripts"
   },
   "license": "MIT",
