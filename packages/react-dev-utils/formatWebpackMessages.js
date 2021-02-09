@@ -20,7 +20,7 @@ function formatMessage(message) {
 
   if (typeof message === 'string' || message instanceof String) {
     lines = message.split('\n');
-  } else if ('message' in Object.keys(message)) {
+  } else if ('message' in message) {
     lines = message['message'].split('\n');
   }
   
