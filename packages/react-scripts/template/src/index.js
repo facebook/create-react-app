@@ -8,6 +8,7 @@ import { Router } from 'react-router-dom';
 import '@guestyci/foundation/style/styles.css';
 import App from './app/App';
 import configureStore from './store';
+import bootstrap from './bootstrap';
 import * as serviceWorker from './serviceWorker';
 
 //This is your main project entry
@@ -20,6 +21,11 @@ const { api } = Resource.create();
 //Store is configured with thunk as its default middleware
 const history = createHistory({ baseUrl: '/' });
 const store = configureStore({}, api);
+
+//Required by Guesty's infrastructure
+//DO NOT REMOVE!!!
+bootstrap();
+
 ReactDOM.render(
   <Provider store={store}>
     <Router history={history}>

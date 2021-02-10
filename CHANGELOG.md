@@ -1,3 +1,7 @@
+## 5.1.12
+
+- Addition to the template - post a message to the parent (layout page) once the app is loaded. That, so the layout page will monitor its accessibility. 
+
 ## 5.1.11
 
 - Fixed .gitignore not being a part of the project's initial commit
