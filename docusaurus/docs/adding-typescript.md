@@ -32,7 +32,15 @@ npm install --save typescript @types/node @types/react @types/react-dom @types/j
 
 yarn add typescript @types/node @types/react @types/react-dom @types/jest
 ```
-
+Next, add the following to `package.json` :
+```json
+"eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  }
+```
 Next, rename any file to be a TypeScript file (e.g. `src/index.js` to `src/index.tsx`) and **restart your development server**!
 
 Type errors will show up in the same console as the build one. You'll have to fix these type errors before you continue development or build your project. For advanced configuration, [see here](advanced-configuration.md).
