@@ -69,7 +69,7 @@ const theme = path.basename(appDirectory);
 module.exports = {
   dotenv: resolveApp('.env'),
   appPath: resolveApp('resources'),
-  appBuild: resolveApp('public/resources'),
+  appBuild: magicConfig.outputPath ? resolveApp(magicConfig.outputPath) : resolveApp('public/resources'),
   appPublic: resolveApp('public/resources'),
   appEntries: appEntries,
   appPackageJson: resolveApp('package.json'),
