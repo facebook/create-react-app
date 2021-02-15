@@ -1,6 +1,6 @@
 {
   "name": "@wieni/magic",
-  "version": "2.0.0-beta.8",
+  "version": "2.0.0-beta.9",
   "description": "Magic for Drupal themes, by Wieni.",
   "repository": {
     "type": "git",
@@ -21,7 +21,7 @@
     "utils"
   ],
   "bin": {
-    "magic": "./bin/react-scripts.js"
+    "magic": "bin/react-scripts.js"
   },
   "types": "./lib/react-app.d.ts",
   "dependencies": {
