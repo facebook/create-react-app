@@ -52,17 +52,6 @@ module.exports = {
 
 > In this example, `@dashboard` will resolves files from `resources/dashboard`.
 
-`outputPath`
-
-💡 Change the output path. This is used when you need the files to be moved someplace else. **Warning:** Only use this when you know what you're doing, since using this feature is discouraged.
-
-```
-module.exports = {
-  ...,
-  outputPath: "public/resources-temp"
-};
-```
-
 ## Development config
 
 Development configuration is done in the `magic.dev.config.js` file.
@@ -97,9 +86,9 @@ every developer. You can add a `magic.dev.config.example.js`, to provide a sampl
 
 ✅ Change this import to `background-image: url("~images/icon-triangle.svg");`
 
-### `Unexpected use of 'x' no-restricted-globals`
+### `Unexpected use of 'x'  no-restricted-globals`
 
-`Line 47:9: Unexpected use of 'history' no-restricted-globals`
+`Line 47:9:  Unexpected use of 'history'  no-restricted-globals`
 
 ℹ️ Compilation fails, because ESLint throws an error.
 
