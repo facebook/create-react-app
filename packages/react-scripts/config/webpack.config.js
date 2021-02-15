@@ -194,7 +194,7 @@ module.exports = function (webpackEnv) {
         : magicEntries,
     output: {
       // The build folder.
-      path: isEnvProduction ? paths.appBuild : paths.appBuild,
+      path: paths.appBuild,
       // Add /* filename */ comments to generated require()s in the output.
       pathinfo: isEnvDevelopment,
       filename: isEnvProduction
