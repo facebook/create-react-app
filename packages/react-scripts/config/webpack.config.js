@@ -735,15 +735,15 @@ module.exports = function(webpackEnv) {
         patterns: [
           {
             from: path.resolve(paths.appPath, 'assets'),
-            to: 'public/assets/',
+            to: 'assets/',
           },
           {
             from: path.resolve(paths.appPath, 'fonts'),
-            to: 'public/fonts/',
+            to: 'fonts/',
           },
           {
             from: path.resolve(paths.appPath, 'manifest.json'),
-            to: 'public/',
+            to: '',
           },
           {
             from: path.resolve(paths.appPath, 'browserconfig.xml'),
