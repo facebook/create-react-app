@@ -8,7 +8,6 @@ test('optimizes in production', async () => {
   const { fulfilled } = await testSetup.scripts.build();
   expect(fulfilled).toBe(true);
 
-  console.log(testSetup.testDirectory, testSetup);
   const buildDir = path.join(testSetup.testDirectory, 'build');
   const builtImageFile = path.join(
     buildDir,
