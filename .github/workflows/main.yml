@@ -29,7 +29,7 @@ jobs:
       - name: Synopsys Detect
         uses: blackducksoftware/github-action@2.0.0
         with:
-          args: '--blackduck.url="${{ secrets.BLACKDUCK_URL}}" --blackduck.api.token="${{ secrets.BLACKDUCK_API_TOKEN}}" --detect.risk.report.pdf=true --detect.yarn.prod.only=false --detect.npm.include.dev.dependencies=true --detect.npm.arguments="npm install"'
+          args: '--blackduck.url="${{ secrets.BLACKDUCK_URL}}" --blackduck.api.token="${{ secrets.BLACKDUCK_API_TOKEN}}" --detect.project.name="${{ secrets.PRODUCT}}" --detect.project.version.name="${{ secrets.VERSION}}" --detect.risk.report.pdf=true --detect.yarn.prod.only=false --detect.npm.include.dev.dependencies=true --detect.npm.arguments="npm install"'
       
       # Runs a set of commands using the runners shell
       - name: End of Scan
