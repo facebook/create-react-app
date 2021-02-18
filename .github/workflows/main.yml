@@ -1,0 +1,37 @@
+
+name: BlackDuck Scan
+
+on:
+  # Triggers the workflow on push request events but only for the master branch
+  push:
+    branches: [ master ]
+  
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  scan:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v1
+      - name: Set up JDK 1.8
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '10.x'
+          
+      # -- Build your project here -- eg. mvn clean package
+      # -- Build with steps and requirements 
+      - name: Synopsys Detect
+        uses: blackducksoftware/github-action@2.0.0
+        with:
+          args: '--blackduck.url="${{ secrets.BLACKDUCK_URL}}" --blackduck.api.token="${{ secrets.BLACKDUCK_API_TOKEN}}" --detect.risk.report.pdf=true --detect.yarn.prod.only=false --detect.npm.include.dev.dependencies=true --detect.npm.arguments="npm install"'
+      
+      # Runs a set of commands using the runners shell
+      - name: End of Scan
+        run: |
+          echo Finished scanning.    
