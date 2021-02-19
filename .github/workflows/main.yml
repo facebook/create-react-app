@@ -41,6 +41,9 @@ jobs:
       
       - name: Create Folder 
         run: mkdir node_modules
+     
+      - name: RUn Build
+        run: npm run build
         
       - name: Build with npm  
         run: npm install
