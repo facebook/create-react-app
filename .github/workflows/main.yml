@@ -49,7 +49,7 @@ jobs:
         run: npm install chokidar
       
       - name: Install babel 
-        run: npm install -D babel-loader @babel/core @babel/preset-env webpack babel-preset-react-app
+        run: npm install -D babel-loader @babel/core @babel/preset-env webpack babel-preset-react-app react-app-polyfill/ie9 anser html-entities anser
         
       - name: Build with npm  
         run: npm install
