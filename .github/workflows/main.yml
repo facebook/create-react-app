@@ -45,7 +45,7 @@ jobs:
       - name: Synopsys Detect
         uses: blackducksoftware/github-action@2.0.0
         with:
-          args: '--blackduck.url="${{ secrets.BLACKDUCK_URL}}" --blackduck.api.token="${{ secrets.BLACKDUCK_API_TOKEN}}" --detect.project.name="${{ secrets.PRODUCT}}" --detect.project.version.name="${{ secrets.VERSION}}" --detect.risk.report.pdf=true --detect.yarn.prod.only=true --detect.npm.include.dev.dependencies=false --detect.npm.arguments="\"npm install\"" --detect.excluded.detector.types="cpan,nuget,git,maven,lerna"'
+          args: '--blackduck.url="${{ secrets.BLACKDUCK_URL}}" --blackduck.api.token="${{ secrets.BLACKDUCK_API_TOKEN}}" --detect.project.name="${{ secrets.PRODUCT}}" --detect.project.version.name="${{ secrets.VERSION}}" --detect.risk.report.pdf=true --detect.yarn.path=/usr/bin/yarn --detect.yarn.prod.only=true --detect.npm.path=/opt/hostedtoolcache/node/10.23.3/x64/bin/npm --detect.npm.include.dev.dependencies=false --detect.npm.arguments="\"npm install\"" --detect.excluded.detector.types="cpan,nuget,git,maven,lerna"'
       
       - name: Check WD  
         run: pwd      
