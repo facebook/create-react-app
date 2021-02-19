@@ -41,6 +41,9 @@ jobs:
         
       - name: Install cross-env  
         run: npm install cross-env
+      
+      - name: Install webpack
+        run: npm install webpack
         
       - name: Build with npm  
         run: npm install
