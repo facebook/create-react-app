@@ -128,7 +128,7 @@ following into account:
    fetched the latest updates that will be available the next time they load the
    page (showing a "New content is available once existing tabs are closed." message). Showing
    these messages is currently left as an exercise to the developer, but as a
-   starting point, you can make use of the logic included in [`src/serviceWorker.js`](https://github.com/facebook/create-react-app/blob/master/packages/cra-template/template/src/serviceWorker.js), which
+   starting point, you can make use of the logic included in [`src/serviceWorker.js`](https://github.com/cra-template/pwa/blob/master/packages/cra-template-pwa-typescript/template/src/service-worker.ts), which
    demonstrates which service worker lifecycle events to listen for to detect each
    scenario, and which as a default, only logs appropriate messages to the
    JavaScript console.
