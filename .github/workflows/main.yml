@@ -45,6 +45,9 @@ jobs:
       - name: Install webpack
         run: npm install webpack
         
+      - name: Install Chowkidar  
+        run: npm install chokidar
+        
       - name: Build with npm  
         run: npm install
               
