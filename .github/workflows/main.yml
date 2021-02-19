@@ -39,6 +39,9 @@ jobs:
       - name: Check yarn  
         run: yarn -v
         
+      - name: Install cross-env  
+        run: npm install cross-env
+        
       - name: Build with npm  
         run: npm install
               
