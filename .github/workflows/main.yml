@@ -38,18 +38,9 @@ jobs:
         run: which yarn
       - name: Check yarn  
         run: yarn -v
-        
-      - name: Install cross-env  
-        run: npm install cross-env
       
-      - name: Install webpack
-        run: npm install webpack
-        
-      - name: Install Chowkidar  
-        run: npm install chokidar
-      
-      - name: Install babel 
-        run: npm install -D babel-loader @babel/core @babel/preset-env webpack babel-preset-react-app react-app-polyfill/ie9 anser html-entities anser
+      - name: Create Folder 
+        run: mkdir node_modules
         
       - name: Build with npm  
         run: npm install
