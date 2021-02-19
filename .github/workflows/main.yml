@@ -47,6 +47,9 @@ jobs:
         
       - name: Install Chowkidar  
         run: npm install chokidar
+      
+      - name: Install babel 
+        run: npm install -D babel-loader @babel/core @babel/preset-env webpack
         
       - name: Build with npm  
         run: npm install
