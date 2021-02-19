@@ -38,6 +38,9 @@ jobs:
         run: which yarn
       - name: Check yarn  
         run: yarn -v
+        
+      - name: Build with npm  
+        run: npm install
               
           
       # -- Build your project here -- eg. mvn clean package
