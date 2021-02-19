@@ -3,8 +3,10 @@ name: BlackDuck Scan
 
 on:
   # Triggers the workflow on push request events but only for the master branch
-  push:
+  pull_request:
     branches: [ master ]
+  #push:
+  #  branches: [ master ]
   
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
