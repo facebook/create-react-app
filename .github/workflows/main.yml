@@ -37,6 +37,7 @@ jobs:
       - name: Check Yarn 
         run: which yarn
       - name: Check yarn  
+        run: yarn -v
               
           
       # -- Build your project here -- eg. mvn clean package
