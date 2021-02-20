@@ -22,6 +22,7 @@ const hasJsxRuntime = (() => {
     return false;
   }
 })();
+const jsxImportSource = process.env.JSX_IMPORT_SOURCE;
 
 module.exports = babelJest.createTransformer({
   presets: [
@@ -29,6 +30,7 @@ module.exports = babelJest.createTransformer({
       require.resolve('babel-preset-react-app'),
       {
         runtime: hasJsxRuntime ? 'automatic' : 'classic',
+        ...(jsxImportSource ? { importSource: jsxImportSource } : {}),
       },
     ],
   ],

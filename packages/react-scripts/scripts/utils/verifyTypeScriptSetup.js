@@ -250,6 +250,14 @@ function verifyTypeScriptSetup() {
     }
   }
 
+  if (parsedCompilerOptions.jsxImportSource != null) {
+    if (hasJsxRuntime && semver.gte(ts.version, '4.1.0-beta')) {
+      if (process.env.JSX_IMPORT_SOURCE == null) {
+        process.env.JSX_IMPORT_SOURCE = parsedCompilerOptions.jsxImportSource;
+      }
+    }
+  }
+
   // tsconfig will have the merged "include" and "exclude" by this point
   if (parsedTsConfig.include == null) {
     appTsConfig = immer(appTsConfig, config => {

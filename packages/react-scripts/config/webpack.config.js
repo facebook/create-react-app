@@ -86,6 +86,7 @@ const hasJsxRuntime = (() => {
     return false;
   }
 })();
+const jsxImportSource = process.env.JSX_IMPORT_SOURCE;
 
 // This is the production and development configuration.
 // It is focused on developer experience, fast rebuilds, and a minimal bundle.
@@ -414,6 +415,9 @@ module.exports = function (webpackEnv) {
                     require.resolve('babel-preset-react-app'),
                     {
                       runtime: hasJsxRuntime ? 'automatic' : 'classic',
+                      ...(jsxImportSource
+                        ? { importSource: jsxImportSource }
+                        : {}),
                     },
                   ],
                 ],
