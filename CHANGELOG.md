@@ -1,5 +1,7 @@
 ## 4.0.3 (2021-02-22)
 
+v4.0.3 is a maintenance release that includes minor bug fixes and dependency updates.
+
 #### :bug: Bug Fix
 
 - `react-scripts`
