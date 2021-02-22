@@ -1,3 +1,38 @@
+## 4.0.3 (2021-02-22)
+
+#### :bug: Bug Fix
+
+- `react-scripts`
+  - [#10590](https://github.com/facebook/create-react-app/pull/10590) Upgrade eslint-webpack-plugin to fix opt-out flag ([@mrmckeb](https://github.com/mrmckeb))
+
+#### :house: Internal
+
+- `react-dev-utils`
+  - [#10412](https://github.com/facebook/create-react-app/pull/10412) update immer to 8.0.1 to address vulnerability ([@wclem4](https://github.com/wclem4))
+- `create-react-app`
+  - [#10384](https://github.com/facebook/create-react-app/pull/10384) tests: update test case to match the description ([@jamesgeorge007](https://github.com/jamesgeorge007))
+
+#### Committers: 4
+
+- Brody McKee ([@mrmckeb](https://github.com/mrmckeb))
+- Dion Woolley ([@Awarua-](https://github.com/Awarua-))
+- James George ([@jamesgeorge007](https://github.com/jamesgeorge007))
+- Walker Clem ([@wclem4](https://github.com/wclem4))
+
+# Migrating from 4.0.2 to 4.0.3
+
+Inside any created project that has not been ejected, run:
+
+```bash
+npm install --save --save-exact react-scripts@4.0.3
+```
+
+or
+
+```
+yarn add --exact react-scripts@4.0.3
+```
+
 ## 4.0.2 (2021-02-03)
 
 v4.0.2 is a maintenance release that includes minor bug fixes and documentation updates.
