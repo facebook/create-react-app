@@ -45,6 +45,7 @@ const SpeedMeasureWebpackPlugin = require('speed-measure-webpack-plugin');
 const FilterWarningsPlugin = require('webpack-filter-warnings-plugin');
 
 const {
+  BanBackendImportsPlugin,
   IModeljsLibraryExportsPlugin,
   CopyBentleyStaticResourcesPlugin,
 } = require('@bentley/webpack-tools-core');
@@ -404,6 +405,8 @@ module.exports = function(webpackEnv) {
         ...(modules.webpackAliases || {}),
       },
       plugins: [
+        // Throw an error if @bentley/imodeljs-backend or src/backend/... files are imported.
+        new BanBackendImportsPlugin(path.join(paths.appSrc, "backend")),
         // Adds support for installing with Plug'n'Play, leading to faster installs and adding
         // guards against forgotten dependencies and such.
         PnpWebpackPlugin,
