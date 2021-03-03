@@ -60,6 +60,12 @@ const shouldDebugBuildPerformance =
 
 const shouldUseProdSourceMap = process.env.USE_FULL_SOURCEMAP === 'true';
 
+const shouldLint = process.env.DISABLE_ESLINT !== 'true';
+
+const shouldTranspileDeps = process.env.TRANSPILE_DEPS !== 'false';
+
+const shouldMinify = process.env.DISABLE_TERSER !== 'true';
+
 // End iModel.js Changes block
 
 // Source maps are resource heavy and can cause out of memory issue for large source files.
@@ -292,7 +298,7 @@ module.exports = function(webpackEnv) {
       globalObject: 'this',
     },
     optimization: {
-      minimize: isEnvProduction,
+      minimize: isEnvProduction && shouldMinify,
       minimizer: [
         // This is only used in production mode
         new TerserPlugin({
@@ -433,7 +439,7 @@ module.exports = function(webpackEnv) {
 
         // First, run the linter.
         // It's important to do this before Babel processes the JS.
-        {
+        shouldLint && {
           test: /\.(js|mjs|jsx|ts|tsx)$/,
           enforce: 'pre',
           use: [
@@ -546,7 +552,7 @@ module.exports = function(webpackEnv) {
             },
             // Process any JS outside of the app with Babel.
             // Unlike the application JS, we only compile the standard ES features.
-            {
+            shouldTranspileDeps && {
               test: /\.(js|mjs)$/,
               exclude: /@babel(?:\/|\\{1,2})runtime/,
               loader: require.resolve('babel-loader'),
@@ -680,9 +686,9 @@ module.exports = function(webpackEnv) {
             },
             // ** STOP ** Are you adding a new loader?
             // Make sure to add the new loader(s) before the "file" loader.
-          ],
+          ].filter(Boolean),
         },
-      ],
+      ].filter(Boolean),
     },
     plugins: [
       // NOTE: iModel.js specific plugin to allow exposing iModel.js shared libraries
