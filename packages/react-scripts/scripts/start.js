@@ -175,7 +175,9 @@ checkBrowsers(paths.appPath, isInteractive)
     }
   })
   .catch(err => {
-    if (err && err.message) {
+    if (err && err.stack) {
+      console.log(err.stack);
+    } else if (err && err.message) {
       console.log(err.message);
     }
     process.exit(1);
