@@ -45,6 +45,10 @@ const webpackDevClientEntry = require.resolve(
 const reactRefreshOverlayEntry = require.resolve(
   'react-dev-utils/refreshOverlayInterop'
 );
+const reactRefreshRuntimeEntry = require.resolve('react-refresh/runtime');
+const reactRefreshWebpackPluginRuntimeEntry = require.resolve(
+  '@pmmmwh/react-refresh-webpack-plugin/lib/runtime/RefreshUtils'
+);
 
 // Some apps do not need the benefits of saving a web request, so not inlining the chunk
 // makes for a smoother build process.
@@ -334,6 +338,8 @@ module.exports = function (webpackEnv) {
         // Make sure your source files are compiled, as they will not be processed in any way.
         new ModuleScopePlugin(paths.appSrc, [
           paths.appPackageJson,
+          reactRefreshRuntimeEntry,
+          reactRefreshWebpackPluginRuntimeEntry,
           reactRefreshOverlayEntry,
         ]),
       ],
