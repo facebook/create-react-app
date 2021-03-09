@@ -13,7 +13,7 @@ const url = require('url');
 const chalk = require('chalk');
 const detect = require('detect-port-alt');
 const isRoot = require('is-root');
-const inquirer = require('inquirer');
+const prompts = require('prompts');
 const clearConsole = require('./clearConsole');
 const formatWebpackMessages = require('./formatWebpackMessages');
 const getProcessForPort = require('./getProcessForPort');
@@ -420,7 +420,7 @@ function prepareProxy(proxy, appPublicFolder, servedPathname) {
       // Modern browsers include text/html into `accept` header when navigating.
       // However API calls like `fetch()` won’t generally accept text/html.
       // If this heuristic doesn’t work well for you, use `src/setupProxy.js`.
-      context: function(pathname, req) {
+      context: function (pathname, req) {
         return (
           req.method !== 'GET' ||
           (mayProxy(pathname) &&
@@ -467,9 +467,9 @@ function choosePort(host, defaultPort) {
                 message +
                   `${existingProcess ? ` Probably:\n  ${existingProcess}` : ''}`
               ) + '\n\nWould you like to run the app on another port instead?',
-            default: true,
+            initial: true,
           };
-          inquirer.prompt(question).then(answer => {
+          prompts(question).then(answer => {
             if (answer.shouldChangePort) {
               resolve(port);
             } else {

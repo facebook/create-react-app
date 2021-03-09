@@ -86,7 +86,7 @@ describe('Integration', () => {
       doc = await initDOM('image-inclusion');
 
       expect(doc.getElementById('feature-image-inclusion').src).toMatch(
-        /^data:image\/jpeg;base64.+==$/
+        /^data:image\/jpeg;base64.+=$/
       );
     });
 

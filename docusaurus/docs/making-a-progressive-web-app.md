@@ -5,17 +5,47 @@ title: Making a Progressive Web App
 
 The production build has all the tools necessary to generate a first-class
 [Progressive Web App](https://developers.google.com/web/progressive-web-apps/),
-but **the offline/cache-first behavior is opt-in only**. By default,
-the build process will generate a service worker file, but it will not be
-registered, so it will not take control of your production web app.
+but **the offline/cache-first behavior is opt-in only**.
 
-In order to opt-in to the offline-first behavior, developers should look for the
-following in their [`src/index.js`](https://github.com/facebook/create-react-app/blob/master/packages/cra-template/template/src/index.js) file:
+Starting with Create React App 4, you can add a `src/service-worker.js` file to
+your project to use the built-in support for
+[Workbox](https://developers.google.com/web/tools/workbox/)'s
+[`InjectManifest`](https://developers.google.com/web/tools/workbox/reference-docs/latest/module-workbox-webpack-plugin.InjectManifest)
+plugin, which will
+[compile](https://developers.google.com/web/tools/workbox/guides/using-bundlers)
+your service worker and inject into it a list of URLs to
+[precache](https://developers.google.com/web/tools/workbox/guides/precache-files).
+
+If you start a new project using one of the PWA [custom
+templates](https://create-react-app.dev/docs/custom-templates/), you'll get a
+`src/service-worker.js` file that serves as a good starting point for an
+offline-first service worker:
+
+```sh
+npx create-react-app my-app --template cra-template-pwa
+```
+
+The TypeScript equivalent is:
+
+```sh
+npx create-react-app my-app --template cra-template-pwa-typescript
+```
+
+If you know that you won't be using service workers, or if you'd prefer to use a
+different approach to creating your service worker, don't create a
+`src/service-worker.js` file. The `InjectManifest` plugin won't be run in that
+case.
+
+In addition to creating your local `src/service-worker.js` file, it needs to be
+registered before it will be used. In order to opt-in to the offline-first
+behavior, developers should look for the following in their
+[`src/index.js`](https://github.com/facebook/create-react-app/blob/master/packages/cra-template/template/src/index.js)
+file:
 
 ```js
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
+// Learn more about service workers: https://cra.link/PWA
 serviceWorker.unregister();
 ```
 
@@ -24,23 +54,59 @@ As the comment states, switching `serviceWorker.unregister()` to
 
 ## Why Opt-in?
 
-Offline-first Progressive Web Apps are faster and more reliable than traditional web pages, and provide an engaging mobile experience:
+Offline-first Progressive Web Apps are faster and more reliable than traditional
+web pages, and provide an engaging mobile experience:
 
-- All static site assets are cached so that your page loads fast on subsequent visits, regardless of network connectivity (such as 2G or 3G). Updates are downloaded in the background.
-- Your app will work regardless of network state, even if offline. This means your users will be able to use your app at 10,000 feet and on the subway.
-- On mobile devices, your app can be added directly to the user's home screen, app icon and all. This eliminates the need for the app store.
+- All static site assets that are a part of your `webpack` build are cached so
+  that your page loads fast on subsequent visits, regardless of network
+  connectivity (such as 2G or 3G). Updates are downloaded in the background.
+- Your app will work regardless of network state, even if offline. This means
+  your users will be able to use your app at 10,000 feet and on the subway.
+- On mobile devices, your app can be added directly to the user's home screen,
+  app icon and all. This eliminates the need for the app store.
 
-However, they [can make debugging deployments more challenging](https://github.com/facebook/create-react-app/issues/2398) so, starting with Create React App 2, service workers are opt-in.
+However, they [can make debugging deployments more
+challenging](https://github.com/facebook/create-react-app/issues/2398).
 
-The [`workbox-webpack-plugin`](https://developers.google.com/web/tools/workbox/modules/workbox-webpack-plugin)
-is integrated into production configuration,
-and it will take care of generating a service worker file that will automatically
-precache all of your local assets and keep them up to date as you deploy updates.
-The service worker will use a [cache-first strategy](https://developers.google.com/web/fundamentals/instant-and-offline/offline-cookbook/#cache-falling-back-to-network)
-for handling all requests for local assets, including
-[navigation requests](https://developers.google.com/web/fundamentals/primers/service-workers/high-performance-loading#first_what_are_navigation_requests)
+The
+[`workbox-webpack-plugin`](https://developers.google.com/web/tools/workbox/modules/workbox-webpack-plugin)
+is integrated into production configuration, and it will take care of compiling
+a service worker file that will automatically precache all of your
+`webpack`-generated assets and keep them up to date as you deploy updates. The
+service worker will use a [cache-first
+strategy](https://developers.google.com/web/fundamentals/instant-and-offline/offline-cookbook/#cache-falling-back-to-network)
+for handling all requests for `webpack`-generated assets, including [navigation
+requests](https://developers.google.com/web/fundamentals/primers/service-workers/high-performance-loading#first_what_are_navigation_requests)
 for your HTML, ensuring that your web app is consistently fast, even on a slow
 or unreliable network.
+
+Note: Resources that are not generated by `webpack`, such as static files that are
+copied over from your local
+[`public/` directory](https://github.com/facebook/create-react-app/blob/master/packages/cra-template/template/public/)
+or third-party resources, will not be precached. You can optionally set up Workbox
+[routes](https://developers.google.com/web/tools/workbox/guides/route-requests)
+to apply the runtime caching strategy of your choice to those resources.
+
+## Customization
+
+Starting with Create React App 4, you have full control over customizing the
+logic in this service worker, by creating your own `src/service-worker.js` file,
+or customizing the one added by the `cra-template-pwa` (or
+`cra-template-pwa-typescript`) template. You can use [additional
+modules](https://developers.google.com/web/tools/workbox/modules) from the
+Workbox project, add in a push notification library, or remove some of the
+default caching logic. The one requirement is that you keep `self.__WB_MANIFEST`
+somewhere in your file, as the Workbox compilation plugin checks for this value
+when generating a manifest of URLs to precache. If you would prefer not to use
+precaching, you can assign `self.__WB_MANIFEST` to a variable that will be
+ignored, like:
+
+```js
+// eslint-disable-next-line no-restricted-globals
+const ignored = self.__WB_MANIFEST;
+
+// Your custom service worker code goes here.
+```
 
 ## Offline-First Considerations
 
@@ -88,7 +154,8 @@ following into account:
 
 1. By default, the generated service worker file will not intercept or cache any
    cross-origin traffic, like HTTP [API requests](integrating-with-an-api-backend.md),
-   images, or embeds loaded from a different domain.
+   images, or embeds loaded from a different domain. Starting with Create
+   React App 4, this can be customized, as explained above.
 
 ## Progressive Web App Metadata
 
