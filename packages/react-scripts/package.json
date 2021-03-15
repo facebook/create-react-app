@@ -80,6 +80,7 @@
     "react-refresh": "^0.8.3",
     "resolve": "1.18.1",
     "resolve-url-loader": "^3.1.2",
+    "sass": "^1.32.8",
     "sass-loader": "^10.0.5",
     "semver": "7.3.2",
     "source-map-loader": "^1.0.0",
