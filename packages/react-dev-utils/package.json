@@ -52,9 +52,9 @@
     "webpackHotDevClient.js"
   ],
   "dependencies": {
-    "@babel/code-frame": "7.10.4",
+    "@babel/code-frame": "^7.10.4",
     "address": "1.1.2",
-    "browserslist": "4.14.2",
+    "browserslist": "^4.14.2",
     "chalk": "2.4.2",
     "cross-spawn": "7.0.3",
     "detect-port-alt": "1.1.6",
