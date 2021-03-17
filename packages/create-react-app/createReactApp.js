@@ -37,7 +37,7 @@ const envinfo = require('envinfo');
 const execSync = require('child_process').execSync;
 const fs = require('fs-extra');
 const hyperquest = require('hyperquest');
-const inquirer = require('inquirer');
+const prompts = require('prompts');
 const os = require('os');
 const path = require('path');
 const semver = require('semver');
@@ -604,20 +604,18 @@ function getInstallPackage(version, originalDirectory) {
 
   for (const script of scriptsToWarn) {
     if (packageToInstall.startsWith(script.name)) {
-      return inquirer
-        .prompt({
-          type: 'confirm',
-          name: 'useScript',
-          message: script.message,
-          default: false,
-        })
-        .then(answer => {
-          if (!answer.useScript) {
-            process.exit(0);
-          }
+      return prompts({
+        type: 'confirm',
+        name: 'useScript',
+        message: script.message,
+        initial: false,
+      }).then(answer => {
+        if (!answer.useScript) {
+          process.exit(0);
+        }
 
-          return packageToInstall;
-        });
+        return packageToInstall;
+      });
     }
   }
 
