@@ -26,6 +26,7 @@ if (args[port] && args[port + 1]) {
 }
 
 if (args[theme] && args[theme + 1]) {
+  process.env.BUILD_PATH = `build/${args[theme + 1]}`
   process.env.REACT_APP_THEME = args[theme + 1];
 }
 

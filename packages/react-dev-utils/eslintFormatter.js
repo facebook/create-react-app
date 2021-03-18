@@ -14,6 +14,10 @@ const table = require('text-table');
 
 const cwd = process.cwd();
 
+const emitErrorsAsWarnings =
+  process.env.NODE_ENV === 'development' &&
+  process.env.ESLINT_NO_DEV_ERRORS === 'true';
+
 function isError(message) {
   if (message.fatal || message.severity === 2) {
     return true;
@@ -38,7 +42,7 @@ function formatter(results) {
 
     messages = messages.map(message => {
       let messageType;
-      if (isError(message)) {
+      if (isError(message) && !emitErrorsAsWarnings) {
         messageType = 'error';
         hasErrors = true;
         if (message.ruleId) {
