@@ -146,7 +146,7 @@ The page will automatically reload if you make changes to the code. You will see
 
 ### `npm test` or `yarn test`
 
-Runs the test watcher in an interactive mode. By default, runs tests related to files changed since the last commit.
+Runs the test watcher in an interactive mode. By default, it runs tests related to files changed since the last commit.
 
 [Read more about testing](running-tests.md).
 
