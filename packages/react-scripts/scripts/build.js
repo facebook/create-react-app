@@ -149,10 +149,9 @@ checkBrowsers(paths.appPath, isInteractive)
   });
 
 // Create the production build and print the deployment instructions.
-function build(previousFileSizes) {
+function build(previousFileSizes, compiler = webpack(config)) {
   console.log('Creating an optimized production build...');
 
-  const compiler = webpack(config);
   return new Promise((resolve, reject) => {
     compiler.run((err, stats) => {
       let messages;
@@ -219,6 +218,8 @@ function build(previousFileSizes) {
     });
   });
 }
+
+module.exports = build;
 
 function copyPublicFolder() {
   fs.copySync(paths.appPublic, paths.appBuild, {
