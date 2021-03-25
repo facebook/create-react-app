@@ -39,7 +39,8 @@
     "semver": "7.3.2",
     "tar-pack": "3.4.1",
     "tmp": "0.2.1",
-    "validate-npm-package-name": "3.0.0"
+    "validate-npm-package-name": "3.0.0",
+    "https-proxy-agent": "5.0.0"
   },
   "devDependencies": {
     "cross-env": "^7.0.2",
