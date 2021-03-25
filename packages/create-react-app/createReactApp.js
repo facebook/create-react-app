@@ -1126,7 +1126,6 @@ function executeNodeScript({ cwd, args }, data, source) {
 function checkForLatestVersion() {
   return new Promise((resolve, reject) => {
     let proxy = getProxy();
-    console.log(proxy);
     let agent = proxy ? new httpsProxyAgent(proxy) : https.globalAgent;
     https
       .get(
