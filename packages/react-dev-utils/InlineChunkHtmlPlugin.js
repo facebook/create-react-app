@@ -27,7 +27,11 @@ class InlineChunkHtmlPlugin {
     if (asset == null) {
       return tag;
     }
-    return { tagName: 'script', innerHTML: asset.source(), closeTag: true };
+    let source = asset.source();
+    if (tag.attributes.defer) {
+      source = `window.addEventListener('DOMContentLoaded', function () { ${source} })`;
+    }
+    return { tagName: 'script', innerHTML: source, closeTag: true };
   }
 
   apply(compiler) {
