@@ -43,7 +43,7 @@ class InlineChunkHtmlPlugin {
         const tagFunction = tag => {
           const result = this.getInlinedTag(publicPath, compilation.assets, tag);
 
-          if (tag.tagName !== 'script' || !(tag.attributes && tag.attributes.defer)) {
+          if (result === tag || tag.tagName !== 'script' || !(tag.attributes && tag.attributes.defer)) {
             return result;
           }
 
