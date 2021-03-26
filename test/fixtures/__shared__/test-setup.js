@@ -16,6 +16,6 @@ afterAll(async () => {
   await testSetup.teardown();
 });
 
-beforeEach(() => jest.setTimeout(1000 * 60 * 5));
+jest.setTimeout(1000 * 60 * 5);
 
 module.exports = testSetup;
