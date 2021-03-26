@@ -59,7 +59,6 @@
     "html-webpack-plugin": "4.5.0",
     "identity-obj-proxy": "3.0.0",
     "jest": "27.0.0-next.6",
-    "jest-circus": "27.0.0-next.6",
     "jest-resolve": "27.0.0-next.6",
     "jest-watch-typeahead": "0.6.1",
     "mini-css-extract-plugin": "0.11.3",
