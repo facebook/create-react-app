@@ -32,7 +32,14 @@ module.exports = {
     requireConfigFile: false,
     babelOptions: {
       parserOpts: {
-        plugins: ['jsx'],
+        plugins: [
+          ['flow', { all: true, enums: true }],
+          'jsx',
+          // proposals shipped in major browsers
+          'classProperties',
+          'classPrivateProperties',
+          'classPrivateMethods',
+        ],
       },
     },
   },
