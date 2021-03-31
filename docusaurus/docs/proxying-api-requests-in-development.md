@@ -36,7 +36,7 @@ The `proxy` option supports HTTP, HTTPS and WebSocket connections.
 
 The `proxy` option only accepts a simple string as a value. If this is **not** flexible enough for you, alternatively you can:
 
-- [Configure the proxy yourself](#configuring-the-proxy-manually)
+- [Configure the proxy yourself](#configuring-the-proxy)
 - Enable CORS on your server ([here’s how to do it for Express](https://enable-cors.org/server_expressjs.html)).
 - Use [environment variables](adding-custom-environment-variables.md) to inject the right server host and port into your app.
 
@@ -66,7 +66,7 @@ DANGEROUSLY_DISABLE_HOST_CHECK=true
 
 We don’t recommend this approach.
 
-## Configuring the Proxy Manually
+## Configuring the Proxy
 
 > Note: this feature is available with `react-scripts@2.0.0` and higher.
 
