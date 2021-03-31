@@ -74,12 +74,12 @@ If the `proxy` option is **not** flexible enough for you, you can get direct acc
 
 You can use this feature in conjunction with the `proxy` property in `package.json`, but it is recommended you consolidate all of your logic into `src/setupProxy.js`.
 
-First, install `http-proxy-middleware` using npm or Yarn:
+First, install `http-proxy-middleware` as a development dependency using npm or Yarn:
 
 ```sh
-$ npm install http-proxy-middleware --save
+$ npm install http-proxy-middleware --save-dev
 $ # or
-$ yarn add http-proxy-middleware
+$ yarn add http-proxy-middleware --dev
 ```
 
 Next, create `src/setupProxy.js` and place the following contents in it:
