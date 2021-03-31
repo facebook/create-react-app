@@ -16,7 +16,7 @@ For example, a production setup might look like this after the app is deployed:
 
 Such setup is **not** required. However, if you **do** have a setup like this, it is convenient to write requests like `fetch('/api/todos')` without worrying about redirecting them to another host or port during development.
 
-To tell the development server to proxy any unknown requests to your API server in development, add a `proxy` field to your `package.json`, for example:
+To tell the development server to proxy any unknown requests to your API server in development, add a `proxy` field with a **string** value to your `package.json`, for example:
 
 ```json
   "proxy": "http://localhost:4000",
@@ -34,7 +34,7 @@ Keep in mind that `proxy` only has effect in development (with `npm start`), and
 
 The `proxy` option supports HTTP, HTTPS and WebSocket connections.
 
-If the `proxy` option is **not** flexible enough for you, alternatively you can:
+If the `proxy` option only accepts a simple string as a value. If this is **not** flexible enough for you, alternatively you can:
 
 - [Configure the proxy yourself](#configuring-the-proxy-manually)
 - Enable CORS on your server ([here’s how to do it for Express](https://enable-cors.org/server_expressjs.html)).
@@ -70,7 +70,7 @@ We don’t recommend this approach.
 
 > Note: this feature is available with `react-scripts@2.0.0` and higher.
 
-If the `proxy` option is **not** flexible enough for you, you can get direct access to the Express app instance and hook up your own proxy middleware.
+If the simple string value of the `proxy` option is **not** flexible enough for you, you can get direct access to the Express app instance and hook up your own proxy middleware.
 
 You can use this feature in conjunction with the `proxy` property in `package.json`, but it is recommended you consolidate all of your logic into `src/setupProxy.js`.
 
