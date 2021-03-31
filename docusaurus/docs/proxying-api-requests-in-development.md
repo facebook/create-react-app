@@ -34,7 +34,7 @@ Keep in mind that `proxy` only has effect in development (with `npm start`), and
 
 The `proxy` option supports HTTP, HTTPS and WebSocket connections.
 
-If the `proxy` option only accepts a simple string as a value. If this is **not** flexible enough for you, alternatively you can:
+The `proxy` option only accepts a simple string as a value. If this is **not** flexible enough for you, alternatively you can:
 
 - [Configure the proxy yourself](#configuring-the-proxy-manually)
 - Enable CORS on your server ([here’s how to do it for Express](https://enable-cors.org/server_expressjs.html)).
