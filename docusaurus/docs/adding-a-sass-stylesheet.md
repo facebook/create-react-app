@@ -61,3 +61,11 @@ If you set `SASS_PATH=node_modules:src`, this will allow you to do imports like
 > module.file_ext=.sass
 > module.file_ext=.scss
 > ```
+
+## Using Dart SASS
+
+`sass-loader` has its own heuristics to figure out if it should use Dart Sass or Node Sass depending on which one is installed. In the particular edge case where both are installed, and you cannot uninstall one of them, you can use `USE_DART_SASS=true` environment variable to force Dart Sass use.
+
+```
+USE_DART_SASS=true yarn start
+```
