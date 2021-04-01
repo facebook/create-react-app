@@ -163,14 +163,14 @@ The default configuration includes a web app manifest located at
 [`public/manifest.json`](https://github.com/facebook/create-react-app/blob/master/packages/cra-template/template/public/manifest.json), that you can customize with
 details specific to your web application.
 
-When a user adds a web app to their homescreen using Chrome or Firefox on
+When a user adds a web app to their home screen using Chrome or Firefox on
 Android, the metadata in [`manifest.json`](https://github.com/facebook/create-react-app/blob/master/packages/cra-template/template/public/manifest.json) determines what
 icons, names, and branding colors to use when the web app is displayed.
 [The Web App Manifest guide](https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/)
 provides more context about what each field means, and how your customizations
 will affect your users' experience.
 
-Progressive web apps that have been added to the homescreen will load faster and
+Progressive web apps that have been added to the home screen will load faster and
 work offline when there's an active service worker. That being said, the
 metadata from the web app manifest will still be used regardless of whether or
 not you opt-in to service worker registration.
