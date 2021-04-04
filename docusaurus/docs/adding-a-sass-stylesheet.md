@@ -10,12 +10,12 @@ Generally, we recommend that you don’t reuse the same CSS classes across diffe
 
 Following this rule often makes CSS preprocessors less useful, as features like mixins and nesting are replaced by component composition. You can, however, integrate a CSS preprocessor if you find it valuable.
 
-To use Sass, first install `node-sass`:
+To use Sass, first install `sass`:
 
 ```sh
-$ npm install node-sass --save
-$ # or
-$ yarn add node-sass
+$ npm install sass
+# or
+$ yarn add sass
 ```
 
 Now you can rename `src/App.css` to `src/App.scss` and update `src/App.js` to import `src/App.scss`.
@@ -32,7 +32,7 @@ This will allow you to do imports like
 
 > **Note:** You must prefix imports from `node_modules` with `~` as displayed above.
 
-`node-sass` also supports the `SASS_PATH` variable.
+`sass` also supports the `SASS_PATH` variable.
 
 To use imports relative to a path you specify, and from `node_modules` without adding the `~` prefix, you can add a [`.env` file](https://github.com/facebook/create-react-app/blob/master/docusaurus/docs/adding-custom-environment-variables.md#adding-development-environment-variables-in-env) at the project root with the variable `SASS_PATH=node_modules:src`. To specify more directories you can add them to `SASS_PATH` separated by a `:` like `path1:path2:path3`.
 
@@ -60,4 +60,15 @@ If you set `SASS_PATH=node_modules:src`, this will allow you to do imports like
 > module.file_ext=.json
 > module.file_ext=.sass
 > module.file_ext=.scss
+> ```
+
+> **Note:** LibSass and the packages built on top of it, including Node Sass, are [deprecated](https://sass-lang.com/blog/libsass-is-deprecated).
+> If you're a user of Node Sass, you can migrate to Dart Sass by replacing `node-sass` in your `package.json` file with `sass` or by running the following commands:
+>
+> ```sh
+> $ npm uninstall node-sass
+> $ npm install sass
+> # or
+> $ yarn remove node-sass
+> $ yarn add sass
 > ```
