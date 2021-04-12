@@ -518,6 +518,9 @@ module.exports = function (webpackEnv) {
                 sourceMap: isEnvProduction
                   ? shouldUseSourceMap
                   : isEnvDevelopment,
+                modules: {
+                  compileType: 'icss',
+                },
               }),
               // Don't consider CSS imports dead code even if the
               // containing package claims to have no side effects.
@@ -535,6 +538,7 @@ module.exports = function (webpackEnv) {
                   ? shouldUseSourceMap
                   : isEnvDevelopment,
                 modules: {
+                  compileType: 'module',
                   getLocalIdent: getCSSModuleLocalIdent,
                 },
               }),
@@ -551,6 +555,9 @@ module.exports = function (webpackEnv) {
                   sourceMap: isEnvProduction
                     ? shouldUseSourceMap
                     : isEnvDevelopment,
+                  modules: {
+                    compileType: 'icss',
+                  },
                 },
                 'sass-loader'
               ),
@@ -571,6 +578,7 @@ module.exports = function (webpackEnv) {
                     ? shouldUseSourceMap
                     : isEnvDevelopment,
                   modules: {
+                    compileType: 'module',
                     getLocalIdent: getCSSModuleLocalIdent,
                   },
                 },
