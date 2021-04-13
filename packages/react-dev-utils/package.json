@@ -1,6 +1,6 @@
 {
   "name": "react-dev-utils",
-  "version": "10.2.1",
+  "version": "11.0.4",
   "description": "webpack utilities used by Create React App",
   "repository": {
     "type": "git",
@@ -34,7 +34,6 @@
     "ignoredFiles.js",
     "immer.js",
     "InlineChunkHtmlPlugin.js",
-    "inquirer.js",
     "InterpolateHtmlPlugin.js",
     "launchEditor.js",
     "launchEditorEndpoint.js",
@@ -46,15 +45,16 @@
     "printBuildError.js",
     "printHostingInstructions.js",
     "redirectServedPathMiddleware.js",
+    "refreshOverlayInterop.js",
     "typescriptFormatter.js",
     "WatchMissingNodeModulesPlugin.js",
     "WebpackDevServerUtils.js",
     "webpackHotDevClient.js"
   ],
   "dependencies": {
-    "@babel/code-frame": "7.10.3",
+    "@babel/code-frame": "7.10.4",
     "address": "1.1.2",
-    "browserslist": "4.12.0",
+    "browserslist": "4.14.2",
     "chalk": "2.4.2",
     "cross-spawn": "7.0.3",
     "detect-port-alt": "1.1.6",
@@ -65,13 +65,13 @@
     "global-modules": "2.0.0",
     "globby": "11.0.1",
     "gzip-size": "5.1.1",
-    "immer": "1.10.0",
-    "inquirer": "7.2.0",
+    "immer": "8.0.1",
     "is-root": "2.1.0",
     "loader-utils": "2.0.0",
     "open": "^7.0.2",
     "pkg-up": "3.1.0",
-    "react-error-overlay": "^6.0.7",
+    "prompts": "2.4.0",
+    "react-error-overlay": "^6.0.9",
     "recursive-readdir": "2.2.2",
     "shell-quote": "1.7.2",
     "strip-ansi": "6.0.0",
@@ -79,7 +79,7 @@
   },
   "devDependencies": {
     "cross-env": "^7.0.2",
-    "jest": "26.0.1"
+    "jest": "26.6.0"
   },
   "scripts": {
     "test": "cross-env FORCE_COLOR=true jest"

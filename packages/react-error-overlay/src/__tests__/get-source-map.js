@@ -52,12 +52,14 @@ test('error on a source map with unsupported encoding', async () => {
   const file = fs
     .readFileSync(resolve(__dirname, '../../fixtures/junk-inline.mjs'))
     .toString('utf8');
+  let error;
   try {
     await getSourceMap('/', file);
   } catch (e) {
-    expect(e instanceof Error).toBe(true);
-    expect(e.message).toBe(
-      'Sorry, non-base64 inline source-map encoding is not supported.'
-    );
+    error = e;
   }
+  expect(error instanceof Error).toBe(true);
+  expect(error.message).toBe(
+    'Sorry, non-base64 inline source-map encoding is not supported.'
+  );
 });

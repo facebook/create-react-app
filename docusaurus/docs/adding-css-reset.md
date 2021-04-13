@@ -66,7 +66,7 @@ Browser support is dictated by what normalize.css [supports]. As of this writing
 - iOS Safari (last 2)
 - Internet Explorer 9+
 
-[browserslist]: http://browserl.ist/
+[browserslist]: https://browserl.ist/
 [css reset]: https://cssreset.com/what-is-a-css-reset/
 [normalize.css]: https://github.com/csstools/normalize.css
 [supports]: https://github.com/csstools/normalize.css#browser-support
