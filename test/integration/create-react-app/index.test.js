@@ -14,7 +14,7 @@ const genPath = join(__dirname, projectName);
 const generatedFiles = ['.gitignore', 'package.json', 'src', 'yarn.lock'];
 
 beforeEach(() => remove(genPath));
-afterEach(() => remove(genPath));
+afterAll(() => remove(genPath));
 
 const run = (args, options) => execa('node', [cli].concat(args), options);
 
@@ -77,7 +77,7 @@ describe('create-react-app', () => {
     );
   });
 
-  it('creates a project in the current based on the typescript template', async () => {
+  it('creates a project based on the typescript template', async () => {
     await run([projectName, '--template', 'typescript'], {
       cwd: __dirname,
     });
