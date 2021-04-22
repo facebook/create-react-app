@@ -184,12 +184,13 @@ Note that tests run much slower with coverage so it is recommended to run it sep
 
 ### Configuration
 
-The default Jest coverage configuration can be overridden by adding any of the following supported keys to a Jest config in your package.json.
+The [default configuration](https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/scripts/utils/createJestConfig.js) that Create React App uses for Jest can be overridden by adding any of the following supported keys to a Jest config in your package.json.
 
 Supported overrides:
 
 - [`clearMocks`](https://jestjs.io/docs/en/configuration.html#clearmocks-boolean)
 - [`collectCoverageFrom`](https://jestjs.io/docs/en/configuration.html#collectcoveragefrom-array)
+- [`coveragePathIgnorePatterns`](https://jestjs.io/docs/en/configuration#coveragepathignorepatterns-arraystring)
 - [`coverageReporters`](https://jestjs.io/docs/en/configuration.html#coveragereporters-array-string)
 - [`coverageThreshold`](https://jestjs.io/docs/en/configuration.html#coveragethreshold-object)
 - [`displayName`](https://jestjs.io/docs/en/configuration.html#displayname-string-object)
@@ -199,7 +200,9 @@ Supported overrides:
 - [`moduleNameMapper`](https://jestjs.io/docs/en/configuration.html#modulenamemapper-object-string-string)
 - [`resetMocks`](https://jestjs.io/docs/en/configuration.html#resetmocks-boolean)
 - [`resetModules`](https://jestjs.io/docs/en/configuration.html#resetmodules-boolean)
+- [`restoreMocks`](https://jestjs.io/docs/en/configuration#restoremocks-boolean)
 - [`snapshotSerializers`](https://jestjs.io/docs/en/configuration.html#snapshotserializers-array-string)
+- [`testMatch`](https://jestjs.io/docs/en/configuration#testmatch-arraystring)
 - [`transform`](https://jestjs.io/docs/en/configuration.html#transform-object-string-pathtotransformer-pathtotransformer-object)
 - [`transformIgnorePatterns`](https://jestjs.io/docs/en/configuration.html#transformignorepatterns-array-string)
 - [`watchPathIgnorePatterns`](https://jestjs.io/docs/en/configuration.html#watchpathignorepatterns-array-string)
@@ -321,6 +324,7 @@ To help you make up your mind, here is a list of APIs that **need jsdom**:
 - [`ReactDOM.render()`](https://facebook.github.io/react/docs/top-level-api.html#reactdom.render)
 - [`TestUtils.renderIntoDocument()`](https://facebook.github.io/react/docs/test-utils.html#renderintodocument) ([a shortcut](https://github.com/facebook/react/blob/34761cf9a252964abfaab6faf74d473ad95d1f21/src/test/ReactTestUtils.js#L83-L91) for the above)
 - [`mount()`](https://airbnb.io/enzyme/docs/api/mount.html) in [Enzyme](https://airbnb.io/enzyme/index.html)
+- [`render()`](https://testing-library.com/docs/react-testing-library/api/#render) in [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/)
 
 In contrast, **jsdom is not needed** for the following APIs:
 
