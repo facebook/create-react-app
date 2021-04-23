@@ -6,8 +6,6 @@ sidebar_label: Debugging Tests
 
 There are various ways to setup a debugger for your Jest tests. We cover debugging in Chrome and [Visual Studio Code](https://code.visualstudio.com/).
 
-> Note: debugging tests requires Node 8 or higher.
-
 ## Debugging Tests in Chrome
 
 Add the following to the `scripts` section in your project's `package.json`
