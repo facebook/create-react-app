@@ -223,6 +223,13 @@ Like any major release, `react-scripts@4.0.0` contains a number of breaking chan
 
 We've upgraded to ESLint 7 and added many new rules including some for Jest and React Testing Library as well as the `import/no-anonymous-default-export` rule. We've also upgraded `eslint-plugin-hooks` to version 4.0.0 and removed the `EXTEND_ESLINT` flag as it is no longer required to customize the ESLint config.
 
+In particular, you'll need to add the following to `package.json` for ESLint to continue to work:
+```js
+"eslintConfig": {
+  "extends": ["react-app", "react-app/jest"]
+},
+```
+
 ### Jest
 
 We've upgraded to Jest 26 and now set `resetMocks` to `true` by default in the Jest config.
