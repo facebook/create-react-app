@@ -141,9 +141,13 @@ function createCompiler({
 
   if (useTypeScript) {
     compiler.hooks.beforeCompile.tap('beforeCompile', () => {
-      tsMessagesPromise = new Promise(resolve => {
-        tsMessagesResolver = msgs => resolve(msgs);
-      });
+      // Make sure promise is only created once. Multiple 'beforeCompile' calls are possible
+      // with custom loaders.
+      if (tsMessagesPromise == null) {
+        tsMessagesPromise = new Promise(resolve => {
+          tsMessagesResolver = msgs => resolve(msgs);
+        });
+      }
     });
 
     forkTsCheckerWebpackPlugin
@@ -190,6 +194,8 @@ function createCompiler({
       }, 100);
 
       const messages = await tsMessagesPromise;
+      tsMessagesPromise = null; // release promise to allow for subsequent 'beforeCompile' calls
+
       clearTimeout(delayedMsg);
       if (tscCompileOnError) {
         statsData.warnings.push(...messages.errors);
