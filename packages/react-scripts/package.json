@@ -24,9 +24,6 @@
     "template-typescript",
     "utils"
   ],
-  "scripts": {
-    "publish-package": "yarn publish"
-  },
   "bin": {
     "react-scripts": "./bin/react-scripts.js"
   },

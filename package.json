@@ -17,8 +17,7 @@
     "alex": "alex .",
     "test": "cd packages/react-scripts && node bin/react-scripts.js test",
     "format": "prettier --write 'packages/*/*.js' 'packages/*/!(node_modules)/**/*.js'",
-    "compile:lockfile": "node tasks/compile-lockfile.js",
-    "publish-package": "yarn workspace @everlong/league-react-scripts publish-package"
+    "compile:lockfile": "node tasks/compile-lockfile.js"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.11.4",
