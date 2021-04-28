@@ -73,4 +73,20 @@ Now that you've configured your project to support absolute imports, if you want
 import Button from 'components/Button';
 ```
 
+## You don't have to write 'export default ComponentName' explicitly at the end of your code if you can write it at the beginning while making a component.
+
+For example:
+
+## `Button.js`
+
+```js
+import React, { Component } from 'react';
+
+export default class Button extends Component {
+  render() {
+    // ...
+  }
+}
+```
+
 For more information on these configuration files, see the [jsconfig.json reference](https://code.visualstudio.com/docs/languages/jsconfig) and [tsconfig.json reference](https://www.typescriptlang.org/docs/handbook/tsconfig-json.html) documentation.
