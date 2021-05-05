@@ -144,7 +144,6 @@ function verifyTypeScriptSetup() {
     },
     resolveJsonModule: { value: true, reason: 'to match webpack loader' },
     isolatedModules: { value: true, reason: 'implementation limitation' },
-    noEmit: { value: true },
     jsx: {
       parsedValue:
         hasJsxRuntime && semver.gte(ts.version, '4.1.0-beta')
@@ -220,6 +219,11 @@ function verifyTypeScriptSetup() {
     firstTimeSetup = true;
   }
 
+  if (parsedCompilerOptions['emitDeclarationOnly'] != null) {
+    compilerOptions['emitDeclarationOnly'] = { value: true };
+  } else {
+    compilerOptions['noEmit'] = { value: true };
+  }
   for (const option of Object.keys(compilerOptions)) {
     const { parsedValue, value, suggested, reason } = compilerOptions[option];
 
