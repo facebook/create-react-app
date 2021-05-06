@@ -236,7 +236,7 @@ function init() {
 }
 
 function createApp(name, verbose, version, template, useNpm, usePnp) {
-  const unsupportedNodeVersion = !semver.satisfies(process.version, '>=10');
+  const unsupportedNodeVersion = !semver.satisfies(process.version, packageJson.engines.node);
   if (unsupportedNodeVersion) {
     console.log(
       chalk.yellow(
@@ -261,14 +261,14 @@ function createApp(name, verbose, version, template, useNpm, usePnp) {
   console.log(`Creating a new React app in ${chalk.green(root)}.`);
   console.log();
 
-  const packageJson = {
+  const newPackageJson= {
     name: appName,
     version: '0.1.0',
     private: true,
   };
   fs.writeFileSync(
     path.join(root, 'package.json'),
-    JSON.stringify(packageJson, null, 2) + os.EOL
+    JSON.stringify(newPackageJson, null, 2) + os.EOL
   );
 
   const useYarn = useNpm ? false : shouldUseYarn();
