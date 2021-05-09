@@ -1,17 +1,17 @@
-# Create React App [![Build Status](https://dev.azure.com/facebook/create-react-app/_apis/build/status/facebook.create-react-app?branchName=master)](https://dev.azure.com/facebook/create-react-app/_build/latest?definitionId=1&branchName=master) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-green.svg)](https://github.com/facebook/create-react-app/blob/master/CONTRIBUTING.md)
+# Custom React App 만들기[![Build Status](https://dev.azure.com/facebook/create-react-app/_apis/build/status/facebook.create-react-app?branchName=master)](https://dev.azure.com/facebook/create-react-app/_build/latest?definitionId=1&branchName=master) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-green.svg)](https://github.com/facebook/create-react-app/blob/master/CONTRIBUTING.md)
 
 <img alt="Logo" align="right" src="https://create-react-app.dev/img/logo.svg" width="20%" />
 
-Create React apps with no build configuration.
+빌드를 위한 구성 없이 Custom React App 을 만듭니다.
 
-- [Creating an App](#creating-an-app) – How to create a new app.
-- [User Guide](https://facebook.github.io/create-react-app/) – How to develop apps bootstrapped with Create React App.
+- [App 만들기](#creating-an-app) – 새 앱을 만드는 방법.
+- [사용자 가이드](https://facebook.github.io/create-react-app/) – How to develop apps bootstrapped with Create React App.
 
-Create React App works on macOS, Windows, and Linux.<br>
-If something doesn’t work, please [file an issue](https://github.com/facebook/create-react-app/issues/new).<br>
-If you have questions or need help, please ask in [GitHub Discussions](https://github.com/facebook/create-react-app/discussions).
+Create React App은 macOS, Windows 및 Linux에서 작동합니다.<br>
+작동에 문제가 있다면 [이슈를 등록해 주세요](https://github.com/comnori/create-react-app/issues).<br>
+질문이 있거나 도움이 필요하면 [GitHub Discussions](https://github.com/comnori/create-react-app/discussions) 에 질문하세요.
 
-## Quick Overview
+## 빠른 개요
 
 ```sh
 npx create-react-app my-app
