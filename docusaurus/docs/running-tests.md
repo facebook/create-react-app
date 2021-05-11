@@ -206,6 +206,7 @@ Supported overrides:
 - [`transform`](https://jestjs.io/docs/en/configuration.html#transform-object-string-pathtotransformer-pathtotransformer-object)
 - [`transformIgnorePatterns`](https://jestjs.io/docs/en/configuration.html#transformignorepatterns-array-string)
 - [`watchPathIgnorePatterns`](https://jestjs.io/docs/en/configuration.html#watchpathignorepatterns-array-string)
+- [`testResultsProcessor`](https://jestjs.io/docs/en/configuration#testresultsprocessor-string)
 
 Example package.json:
 
