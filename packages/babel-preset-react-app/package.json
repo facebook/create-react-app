@@ -35,6 +35,7 @@
     "@babel/preset-typescript": "7.12.1",
     "@babel/runtime": "7.12.1",
     "babel-plugin-macros": "2.8.0",
+    "babel-plugin-transform-react-create-element": "^0.2.0",
     "babel-plugin-transform-react-remove-prop-types": "0.4.24"
   }
 }
