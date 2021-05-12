@@ -88,6 +88,14 @@ describe('Integration', () => {
       );
     });
 
+    it('logical assignment', async () => {
+      doc = await initDOM('logical-assignment');
+
+      expect(
+        doc.getElementById('feature-logical-assignment').childElementCount
+      ).toBe(4);
+    });
+
     it('object destructuring', async () => {
       doc = await initDOM('object-destructuring');
 

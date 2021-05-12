@@ -166,6 +166,11 @@ class App extends Component {
           this.setFeature(f.default)
         );
         break;
+      case 'logical-assignment':
+        import('./features/syntax/LogicalAssignment').then(f =>
+          this.setFeature(f.default)
+        );
+        break;
       case 'no-ext-inclusion':
         import('./features/webpack/NoExtInclusion').then(f =>
           this.setFeature(f.default)
