@@ -36,5 +36,8 @@
     "@babel/runtime": "7.12.1",
     "babel-plugin-macros": "2.8.0",
     "babel-plugin-transform-react-remove-prop-types": "0.4.24"
+  },
+  "peerDependencies": {
+    "core-js": "^3.5.0"
   }
 }
