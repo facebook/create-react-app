@@ -16,13 +16,12 @@ module.exports = {
     filename: 'index.js',
     library: 'ReactErrorOverlay',
     libraryTarget: 'umd',
-    assetModuleFilename: 'assets/[hash][ext][query]',
   },
   module: {
     rules: [
       {
         test: /iframe-bundle\.js$/,
-        type: 'asset/source',
+        use: 'raw-loader',
       },
       {
         test: /\.js$/,
