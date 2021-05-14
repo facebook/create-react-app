@@ -39,6 +39,8 @@ const getCacheIdentifier = require('react-dev-utils/getCacheIdentifier');
 // @remove-on-eject-end
 const createEnvironmentHash = require('./webpack/persistentCache/createEnvironmentHash');
 
+const appPackageJson = require(paths.appPackageJson);
+
 const sassFunctions = require('bpk-mixins/sass-functions');
 const camelCase = require('lodash/camelCase');
 const bpkReactScriptsConfig = appPackageJson['backpack-react-scripts'] || {};
@@ -546,6 +548,10 @@ module.exports = function (webpackEnv) {
               test: /\.(js|mjs)$/,
               exclude: /@babel(?:\/|\\{1,2})runtime/,
               use: [
+                {
+                  loader: require.resolve('thread-loader'),
+                  options: jsWorkerPool,
+                },
                 isEnvDevelopment && {
                   loader: require.resolve('cache-loader'),
                   options: {
