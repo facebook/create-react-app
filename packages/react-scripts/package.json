@@ -71,6 +71,7 @@
     "semver": "7.3.2",
     "style-loader": "1.3.0",
     "terser-webpack-plugin": "4.2.3",
+    "thread-loader": "^3.0.3",
     "ts-pnp": "1.2.0",
     "url-loader": "4.1.1",
     "webpack": "4.44.2",
