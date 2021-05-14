@@ -224,6 +224,7 @@ module.exports = function (webpackEnv) {
       chunkFilename: isEnvProduction
         ? 'static/js/[name].[contenthash:8].chunk.js'
         : isEnvDevelopment && 'static/js/[name].chunk.js',
+      assetModuleFilename: 'static/media/[name].[hash][ext]',
       // webpack uses `publicPath` to determine where the app is being served from.
       // It requires a trailing slash, or the file assets will get an incorrect path.
       // We inferred the "public path" (such as / or /my-project) from homepage.
@@ -360,9 +361,6 @@ module.exports = function (webpackEnv) {
               test: [/\.avif$/],
               type: 'asset',
               mimetype: 'image/avif',
-              generator: {
-                filename: 'static/media/[name].[hash].[ext]',
-              },
               parser: {
                 dataUrlCondition: {
                   maxSize: imageInlineSizeLimit,
@@ -375,9 +373,6 @@ module.exports = function (webpackEnv) {
             {
               test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
               type: 'asset',
-              generator: {
-                filename: 'static/media/[name].[hash].[ext]',
-              },
               parser: {
                 dataUrlCondition: {
                   maxSize: imageInlineSizeLimit,
@@ -595,9 +590,6 @@ module.exports = function (webpackEnv) {
               // by webpacks internal loaders.
               exclude: [/\.(js|mjs|jsx|ts|tsx)$/, /\.html$/, /\.json$/],
               type: 'asset/resource',
-              generator: {
-                filename: 'static/media/[name].[hash].[ext]',
-              },
             },
             // ** STOP ** Are you adding a new loader?
             // Make sure to add the new loader(s) before the "file" loader.
