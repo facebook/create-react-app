@@ -46,7 +46,9 @@ const reactRefreshOverlayEntry = require.resolve(
   'react-dev-utils/refreshOverlayInterop'
 );
 const reactRefreshRuntimeEntry = require.resolve('react-refresh/runtime');
-const reactRefreshWebpackPluginRuntimeEntry = require.resolve('@pmmmwh/react-refresh-webpack-plugin');
+const reactRefreshWebpackPluginRuntimeEntry = require.resolve(
+  '@pmmmwh/react-refresh-webpack-plugin'
+);
 const babelRuntimeEntry = require.resolve('babel-preset-react-app');
 
 // Some apps do not need the benefits of saving a web request, so not inlining the chunk
@@ -359,7 +361,7 @@ module.exports = function (webpackEnv) {
               type: 'asset',
               mimetype: 'image/avif',
               generator: {
-                filename: 'static/media/[hash][ext][query]',
+                filename: 'static/media/[name].[hash][ext][query]',
               },
               parser: {
                 dataUrlCondition: {
@@ -374,7 +376,7 @@ module.exports = function (webpackEnv) {
               test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
               type: 'asset',
               generator: {
-                filename: 'static/media/[hash][ext][query]',
+                filename: 'static/media/[name].[hash][ext][query]',
               },
               parser: {
                 dataUrlCondition: {
@@ -391,13 +393,18 @@ module.exports = function (webpackEnv) {
                     prettier: false,
                     svgo: false,
                     svgoConfig: {
-                      plugins: [{removeViewBox: false}],
+                      plugins: [{ removeViewBox: false }],
                     },
                     titleProp: true,
                     ref: true,
                   },
                 },
-                'file-loader'
+                {
+                  loader: 'file-loader',
+                  options: {
+                    name: 'static/media/[name].[hash][ext][query]',
+                  },
+                },
               ],
               issuer: {
                 and: [/\.(ts|tsx|js|jsx|md|mdx)$/],
@@ -589,7 +596,7 @@ module.exports = function (webpackEnv) {
               exclude: [/\.(js|mjs|jsx|ts|tsx)$/, /\.html$/, /\.json$/],
               type: 'asset/resource',
               generator: {
-                filename: 'static/media/[hash][ext][query]',
+                filename: 'static/media/[name].[hash][ext][query]',
               },
             },
             // ** STOP ** Are you adding a new loader?
