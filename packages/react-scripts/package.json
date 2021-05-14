@@ -78,6 +78,7 @@
     "semver": "7.3.4",
     "style-loader": "2.0.0",
     "ts-pnp": "1.2.0",
+    "url-loader": "^4.1.1",
     "webpack": "5.24.3",
     "webpack-dev-server": "4.0.0-beta.0",
     "webpack-manifest-plugin": "3.0.0",
