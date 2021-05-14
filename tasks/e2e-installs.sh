@@ -130,13 +130,13 @@ checkDependencies
 # ******************************************************************************
 
 cd "$temp_app_path"
-npx create-react-app test-use-npm-flag --use-npm --scripts-version=@skyscanner/backpack-react-scripts --template @skyscanner/backpack
+npx create-react-app test-use-npm-flag --use-npm --scripts-version=@skyscanner/backpack-react-scripts@9.1.0 --template @skyscanner/backpack
 cd test-use-npm-flag
 
 # Check corresponding scripts version is installed.
 exists node_modules/@skyscanner/backpack-react-scripts
 [ ! -e "yarn.lock" ] && echo "yarn.lock correctly does not exist"
-grep '"version": "9.0.3"' node_modules/@skyscanner/backpack-react-scripts/package.json
+grep '"version": "9.1.0"' node_modules/@skyscanner/backpack-react-scripts/package.json
 checkDependencies
 
 # ******************************************************************************
