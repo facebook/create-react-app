@@ -46,9 +46,8 @@ const reactRefreshOverlayEntry = require.resolve(
   'react-dev-utils/refreshOverlayInterop'
 );
 const reactRefreshRuntimeEntry = require.resolve('react-refresh/runtime');
-const reactRefreshWebpackPluginRuntimeEntry = require.resolve(
-  '@pmmmwh/react-refresh-webpack-plugin/lib/runtime/RefreshUtils'
-);
+const reactRefreshWebpackPluginRuntimeEntry = require.resolve('@pmmmwh/react-refresh-webpack-plugin');
+const babelRuntimeEntry = require.resolve('babel-preset-react-app');
 
 // Some apps do not need the benefits of saving a web request, so not inlining the chunk
 // makes for a smoother build process.
@@ -341,6 +340,7 @@ module.exports = function (webpackEnv) {
           reactRefreshRuntimeEntry,
           reactRefreshWebpackPluginRuntimeEntry,
           reactRefreshOverlayEntry,
+          babelRuntimeEntry,
         ]),
       ],
     },
