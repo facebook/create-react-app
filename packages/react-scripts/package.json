@@ -67,7 +67,7 @@
     "postcss": "8.2.7",
     "postcss-flexbugs-fixes": "5.0.2",
     "postcss-loader": "5.1.0",
-    "postcss-normalize": "9.0.0",
+    "postcss-normalize": "10.0.0",
     "postcss-preset-env": "6.7.0",
     "prompts": "2.4.0",
     "react-app-polyfill": "^2.0.0",
