@@ -51,6 +51,17 @@ const jsWorkerPool = {
   workerParallelJobs: 50,
 };
 
+const threadLoader = require('thread-loader');
+
+// This boots the max number of workers in the pool and loads specified modules into the node.js module cache.
+const jsWorkerPool = {
+  // can be set to Infinity for watching builds to keep workers alive
+  poolTimeout: 2000,
+};
+
+// To prevent the high delay when booting workers it possible to warmup the worker pool.
+threadLoader.warmup(jsWorkerPool, ['babel-loader']);
+
 const appPackageJson = require(paths.appPackageJson);
 
 const getCSSModuleLocalIdent = require('../utils/getCSSModuleLocalIdentWithProjectName')(
@@ -527,6 +538,10 @@ module.exports = function (webpackEnv) {
                 ...customModuleRegexes,
               ],
               use: [
+                {
+                  loader: require.resolve('thread-loader'),
+                  options: jsWorkerPool,
+                },
                 isEnvDevelopment && {
                   loader: require.resolve('cache-loader'),
                   options: {
@@ -656,6 +671,10 @@ module.exports = function (webpackEnv) {
               test: /\.(js|mjs)$/,
               exclude: /@babel(?:\/|\\{1,2})runtime/,
               use: [
+                {
+                  loader: require.resolve('thread-loader'),
+                  options: jsWorkerPool,
+                },
                 isEnvDevelopment && {
                   loader: require.resolve('cache-loader'),
                   options: {
