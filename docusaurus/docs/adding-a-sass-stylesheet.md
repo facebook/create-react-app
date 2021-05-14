@@ -10,42 +10,36 @@ Generally, we recommend that you don’t reuse the same CSS classes across diffe
 
 Following this rule often makes CSS preprocessors less useful, as features like mixins and nesting are replaced by component composition. You can, however, integrate a CSS preprocessor if you find it valuable.
 
-To use Sass, first install `node-sass`:
+To use Sass, first install `sass`:
 
 ```sh
-$ npm install node-sass --save
-$ # or
-$ yarn add node-sass
+$ npm install sass
+# or
+$ yarn add sass
 ```
 
 Now you can rename `src/App.css` to `src/App.scss` and update `src/App.js` to import `src/App.scss`.
 This file and any other file will be automatically compiled if imported with the extension `.scss` or `.sass`.
 
-To share variables between Sass files, you can use Sass imports. For example, `src/App.scss` and other component style files could include `@import "./shared.scss";` with variable definitions.
+To share variables between Sass files, you can use Sass's [`@use` rule](https://sass-lang.com/documentation/at-rules/use). For example, `src/App.scss` and other component style files could include `@use "./shared.scss";` with variable definitions.
 
 This will allow you to do imports like
 
 ```scss
-@import 'styles/_colors.scss'; // assuming a styles directory under src/
-@import '~nprogress/nprogress'; // importing a css file from the nprogress node module
+@use 'styles/_colors.scss'; // assuming a styles directory under src/
+@use '~nprogress/nprogress'; // loading a css file from the nprogress node module
 ```
 
-> **Note:** You must prefix imports from `node_modules` with `~` as displayed above.
+> **Note:** You can prefix paths with `~`, as displayed above, to resolve modules from `node_modules`.
 
-`node-sass` also supports the `SASS_PATH` variable.
+`sass` also supports the `SASS_PATH` variable.
 
-To use imports relative to a path you specify, and from `node_modules` without adding the `~` prefix, you can add a [`.env` file](https://github.com/facebook/create-react-app/blob/master/docusaurus/docs/adding-custom-environment-variables.md#adding-development-environment-variables-in-env) at the project root with the variable `SASS_PATH=node_modules:src`. To specify more directories you can add them to `SASS_PATH` separated by a `:` like `path1:path2:path3`.
+To use imports relative to a path you specify, you can add a [`.env` file](https://github.com/facebook/create-react-app/blob/master/docusaurus/docs/adding-custom-environment-variables.md#adding-development-environment-variables-in-env) at the project root with the path specified in the `SASS_PATH` environment variable. To specify more directories you can add them to `SASS_PATH` separated by a `:` like `path1:path2:path3`.
 
-If you set `SASS_PATH=node_modules:src`, this will allow you to do imports like
-```scss
-@import 'styles/colors'; // assuming a styles directory under src/, where _colors.scss partial file exists.
-@import 'nprogress/nprogress'; // importing a css file from the nprogress node module
-```
-
-> **Note:** For windows operating system, use below syntax
+> **Note:** For the Windows operating system, separate your paths by semicolons.
 >
 > ```
-> SASS_PATH=./node_modules;./src
+> SASS_PATH=path1;path2;path3
 > ```
 
 > **Tip:** You can opt into using this feature with [CSS modules](adding-a-css-modules-stylesheet.md) too!
@@ -60,4 +54,15 @@ If you set `SASS_PATH=node_modules:src`, this will allow you to do imports like
 > module.file_ext=.json
 > module.file_ext=.sass
 > module.file_ext=.scss
+> ```
+
+> **Note:** LibSass and the packages built on top of it, including Node Sass, are [deprecated](https://sass-lang.com/blog/libsass-is-deprecated).
+> If you're a user of Node Sass, you can migrate to Dart Sass by replacing `node-sass` in your `package.json` file with `sass` or by running the following commands:
+>
+> ```sh
+> $ npm uninstall node-sass
+> $ npm install sass
+> # or
+> $ yarn remove node-sass
+> $ yarn add sass
 > ```
