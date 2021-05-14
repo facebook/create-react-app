@@ -397,7 +397,7 @@ module.exports = function (webpackEnv) {
                     ref: true,
                   },
                 },
-                'url-loader'
+                'file-loader'
               ],
               issuer: {
                 and: [/\.(ts|tsx|js|jsx|md|mdx)$/],
