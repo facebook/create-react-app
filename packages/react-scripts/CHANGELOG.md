@@ -1,5 +1,9 @@
 # `backpack-react-scripts` Change Log
 
+## 9.1.0 - UNRELEASED
+
+Add `cache-loader` to speed up local development
+
 ## 9.0.3
 
 - Rebased onto `upstream/master` v4.0.3 (f92c37a6e6636ed1650ffd976c6881f59b1be803)
