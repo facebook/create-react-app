@@ -361,7 +361,7 @@ module.exports = function (webpackEnv) {
               type: 'asset',
               mimetype: 'image/avif',
               generator: {
-                filename: 'static/media/[name].[hash][ext][query]',
+                filename: 'static/media/[name].[hash].[ext]',
               },
               parser: {
                 dataUrlCondition: {
@@ -376,7 +376,7 @@ module.exports = function (webpackEnv) {
               test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
               type: 'asset',
               generator: {
-                filename: 'static/media/[name].[hash][ext][query]',
+                filename: 'static/media/[name].[hash].[ext]',
               },
               parser: {
                 dataUrlCondition: {
@@ -402,7 +402,7 @@ module.exports = function (webpackEnv) {
                 {
                   loader: 'file-loader',
                   options: {
-                    name: 'static/media/[name].[hash][ext][query]',
+                    name: 'static/media/[name].[hash].[ext]',
                   },
                 },
               ],
@@ -596,7 +596,7 @@ module.exports = function (webpackEnv) {
               exclude: [/\.(js|mjs|jsx|ts|tsx)$/, /\.html$/, /\.json$/],
               type: 'asset/resource',
               generator: {
-                filename: 'static/media/[name].[hash][ext][query]',
+                filename: 'static/media/[name].[hash].[ext]',
               },
             },
             // ** STOP ** Are you adding a new loader?
