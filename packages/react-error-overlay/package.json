@@ -65,7 +65,7 @@
     "react-dom": "^17.0.1",
     "rimraf": "^3.0.2",
     "settle-promise": "1.0.0",
-    "source-map": "0.7.3",
+    "source-map": "0.5.7",
     "webpack": "^5.24.3"
   },
   "jest": {
