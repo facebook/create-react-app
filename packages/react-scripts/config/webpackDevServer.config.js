@@ -84,7 +84,7 @@ module.exports = function (proxy, allowedHost) {
       needClientEntry: false,
       // Prevent a WS client from getting injected as we're already including
       // `webpackHotDevClient`.
-      needHotEntry: false
+      needHotEntry: false,
     },
     devMiddleware: {
       // It is important to tell WebpackDevServer to use the same "publicPath" path as
