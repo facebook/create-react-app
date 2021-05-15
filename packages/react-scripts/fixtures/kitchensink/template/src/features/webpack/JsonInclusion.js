@@ -5,14 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
- import React from 'react';
- import abstractJson from './assets/abstract.json';
- 
- const { abstract } = abstractJson;
- 
- const JsonInclusion = () => (
-   <summary id="feature-json-inclusion">{abstract}</summary>
- );
- 
- export default JsonInclusion;
- 
+import React from 'react';
+import abstractJson from './assets/abstract.json';
+
+const { abstract } = abstractJson;
+
+const JsonInclusion = () => (
+  <summary id="feature-json-inclusion">{abstract}</summary>
+);
+
+export default JsonInclusion;
