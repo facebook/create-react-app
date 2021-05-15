@@ -65,7 +65,7 @@
     "global-modules": "2.0.0",
     "globby": "11.0.1",
     "gzip-size": "5.1.1",
-    "immer": "8.0.1",
+    "immer": "8.0.4",
     "is-root": "2.1.0",
     "loader-utils": "2.0.0",
     "open": "^7.0.2",
