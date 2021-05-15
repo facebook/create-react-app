@@ -63,7 +63,7 @@ var connection = new WebSocket(
     hostname: process.env.WDS_SOCKET_HOST || window.location.hostname,
     port: process.env.WDS_SOCKET_PORT || window.location.port,
     // Hardcoded in WebpackDevServer
-    pathname: process.env.WDS_SOCKET_PATH || '/sockjs-node',
+    pathname: process.env.WDS_SOCKET_PATH || '/ws',
     slashes: true,
   })
 );

@@ -19,7 +19,7 @@ const getHttpsConfig = require('./getHttpsConfig');
 
 const host = process.env.HOST || '0.0.0.0';
 const sockHost = process.env.WDS_SOCKET_HOST;
-const sockPath = process.env.WDS_SOCKET_PATH; // default: '/sockjs-node'
+const sockPath = process.env.WDS_SOCKET_PATH; // default: '/ws'
 const sockPort = process.env.WDS_SOCKET_PORT;
 
 module.exports = function (proxy, allowedHost) {
@@ -73,9 +73,6 @@ module.exports = function (proxy, allowedHost) {
         ignored: ignoredFiles(paths.appSrc),
       },
     },
-    // Prevent a WS client from getting injected as we're already including
-    // `webpackHotDevClient`.
-    injectClient: false,
     client: {
       // Enable custom sockjs pathname for websocket connection to hot reloading server.
       // Enable custom sockjs hostname, pathname and port for websocket connection
@@ -83,8 +80,13 @@ module.exports = function (proxy, allowedHost) {
       host: sockHost,
       path: sockPath,
       port: sockPort,
+      overlay: false,
+      needClientEntry: false,
+      // Prevent a WS client from getting injected as we're already including
+      // `webpackHotDevClient`.
+      needHotEntry: false
     },
-    dev: {
+    devMiddleware: {
       // It is important to tell WebpackDevServer to use the same "publicPath" path as
       // we specified in the webpack config. When homepage is '.', default to serving
       // from the root.
@@ -94,7 +96,6 @@ module.exports = function (proxy, allowedHost) {
 
     https: getHttpsConfig(),
     host,
-    overlay: false,
     historyApiFallback: {
       // Paths with dots should still use the history fallback.
       // See https://github.com/facebook/create-react-app/issues/387.
