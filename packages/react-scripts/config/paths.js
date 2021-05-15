@@ -45,6 +45,8 @@ const moduleFileExtensions = [
   'jsx',
 ];
 
+const moduleFederationConfigFiles = ['.modulefederationrc.json', '.modulefederationrc.js'];
+
 // Resolve file paths in the same order as webpack
 const resolveModule = (resolveFn, filePath) => {
   const extension = moduleFileExtensions.find(extension =>
@@ -76,6 +78,10 @@ module.exports = {
   appNodeModules: resolveApp('node_modules'),
   appWebpackCache: resolveApp('node_modules/.cache'),
   appTsBuildInfoFile: resolveApp('node_modules/.cache/tsconfig.tsbuildinfo'),
+  appMFConfigFile: moduleFederationConfigFiles
+    .map(resolveApp)
+    .filter(fs.existsSync)
+    .shift(),
   swSrc: resolveModule(resolveApp, 'src/service-worker'),
   publicUrlOrPath,
 };
@@ -101,6 +107,10 @@ module.exports = {
   appNodeModules: resolveApp('node_modules'),
   appWebpackCache: resolveApp('node_modules/.cache'),
   appTsBuildInfoFile: resolveApp('node_modules/.cache/tsconfig.tsbuildinfo'),
+  appMFConfigFile: moduleFederationConfigFiles
+    .map(resolveApp)
+    .filter(fs.existsSync)
+    .shift(),
   swSrc: resolveModule(resolveApp, 'src/service-worker'),
   publicUrlOrPath,
   // These properties only exist before ejecting:
@@ -139,6 +149,11 @@ if (
     appNodeModules: resolveOwn('node_modules'),
     appWebpackCache: resolveOwn('node_modules/.cache'),
     appTsBuildInfoFile: resolveOwn('node_modules/.cache/tsconfig.tsbuildinfo'),
+    appMFConfigFile: moduleFederationConfigFiles
+      .map(p => `${templatePath}/${p}`)
+      .map(resolveOwn)
+      .filter(fs.existsSync)
+      .shift(),
     swSrc: resolveModule(resolveOwn, `${templatePath}/src/service-worker`),
     publicUrlOrPath,
     // These properties only exist before ejecting:

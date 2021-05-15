@@ -795,6 +795,10 @@ module.exports = function (webpackEnv) {
             },
           },
         }),
+      paths.appMFConfigFile &&
+        new webpack.container.ModuleFederationPlugin(
+          require(paths.appMFConfigFile)
+        ),
     ].filter(Boolean),
     // Turn off performance processing because we utilize
     // our own hints via the FileSizeReporter
