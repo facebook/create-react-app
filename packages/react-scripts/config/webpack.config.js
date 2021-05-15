@@ -740,6 +740,7 @@ module.exports = function (webpackEnv) {
                 declarationMap: false,
                 noEmit: true,
                 incremental: true,
+                tsBuildInfoFile: paths.appTsBuildInfoFile,
               },
             },
             context: paths.appPath,
