@@ -82,6 +82,7 @@
     "style-loader": "1.3.0",
     "terser-webpack-plugin": "4.2.3",
     "ts-pnp": "1.2.0",
+    "tsconfig-paths-webpack-plugin": "^3.5.1",
     "url-loader": "4.1.1",
     "webpack": "4.44.2",
     "webpack-dev-server": "3.11.1",

@@ -40,6 +40,7 @@ const getCacheIdentifier = require('react-dev-utils/getCacheIdentifier');
 const postcssNormalize = require('postcss-normalize');
 
 const appPackageJson = require(paths.appPackageJson);
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
 // Source maps are resource heavy and can cause out of memory issue for large source files.
 const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false';
@@ -348,6 +349,8 @@ module.exports = function (webpackEnv) {
         ...(modules.webpackAliases || {}),
       },
       plugins: [
+        useTypeScript && new TsconfigPathsPlugin({ configFile: paths.appTsConfig }),
+
         // Adds support for installing with Plug'n'Play, leading to faster installs and adding
         // guards against forgotten dependencies and such.
         PnpWebpackPlugin,
