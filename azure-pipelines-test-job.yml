@@ -6,7 +6,6 @@ parameters:
   name: ''
   testScript: ''
   configurations:
-    LinuxNode10: { vmImage: 'ubuntu-16.04', nodeVersion: 10.x }
     LinuxNode12: { vmImage: 'ubuntu-16.04', nodeVersion: 12.x }
 
 jobs:
