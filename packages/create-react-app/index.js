@@ -28,29 +28,27 @@
 // tell people to update their global version of create-react-app.
 //
 // Also be careful with new language features.
-// This file must work on Node 0.10+.
+// This file must work on Node 10+.
 //
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //   /!\ DO NOT MODIFY THIS FILE /!\
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-'use strict';
+"use strict";
 
 var currentNodeVersion = process.versions.node;
-var semver = currentNodeVersion.split('.');
+var semver = currentNodeVersion.split(".");
 var major = semver[0];
 
 if (major < 10) {
   console.error(
-    'You are running Node ' +
+    "You are running Node " +
       currentNodeVersion +
-      '.\n' +
-      'Create React App requires Node 10 or higher. \n' +
-      'Please update your version of Node.'
+      ".\n" +
+      "Create React App requires Node 10+ or higher. \n" +
+      "Please update your version of Node."
   );
   process.exit(1);
 }
 
-const { init } = require('./createReactApp');
-
-init();
+require("./createReactApp").init();
