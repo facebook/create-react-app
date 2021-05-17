@@ -1,18 +1,15 @@
 {
-  "name": "react-scripts",
-  "version": "4.0.3",
+  "name": "@crucible-risk/react-scripts",
+  "version": "4.0.3-v1",
   "description": "Configuration and scripts for Create React App.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/facebook/create-react-app.git",
+    "url": "git@github.com:crucible-risk/create-react-app.git",
     "directory": "packages/react-scripts"
   },
   "license": "MIT",
   "engines": {
     "node": "^10.12.0 || >=12.0.0"
-  },
-  "bugs": {
-    "url": "https://github.com/facebook/create-react-app/issues"
   },
   "files": [
     "bin",
@@ -115,5 +112,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
   }
 }
