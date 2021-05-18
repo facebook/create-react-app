@@ -14,11 +14,11 @@ class InlineChunkHtmlPlugin {
   }
 
   getInlinedTag(publicPath, assets, tag) {
-    const { srcAttr, ...otherAttrs } = tag.attributes;
-    if (tag.tagName !== 'script' || !(tag.attributes && srcAttr)) {
+    const { src, ...otherAttrs } = tag.attributes;
+    if (tag.tagName !== 'script' || !(tag.attributes && src)) {
       return tag;
     }
-    const scriptName = publicPath ? srcAttr.replace(publicPath, '') : srcAttr;
+    const scriptName = publicPath ? src.replace(publicPath, '') : src;
     if (!this.tests.some(test => scriptName.match(test))) {
       return tag;
     }
