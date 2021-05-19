@@ -23,14 +23,14 @@ yarn create react-app my-app --template typescript
 >
 > Global installs of `create-react-app` are no longer supported.
 
-To add [TypeScript](https://www.typescriptlang.org/) to an existing Create React App project, first install it:
+To add [TypeScript](https://www.typescriptlang.org/) to an existing Create React App project, first install the following dev dependencies:
 
 ```sh
-npm install --save typescript @types/node @types/react @types/react-dom @types/jest
+npm install --save-dev typescript @types/node @types/react @types/react-dom @types/jest
 
 # or
 
-yarn add typescript @types/node @types/react @types/react-dom @types/jest
+yarn add -D typescript @types/node @types/react @types/react-dom @types/jest
 ```
 
 Next, rename any file to be a TypeScript file (e.g. `src/index.js` to `src/index.tsx`) and **restart your development server**!
