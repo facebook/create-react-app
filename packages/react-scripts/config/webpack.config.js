@@ -747,10 +747,14 @@ module.exports = function (webpackEnv) {
           }),
           async: isEnvDevelopment,
           checkSyntacticErrors: true,
-          resolveModuleNameModule: process.versions.pnp
-            ? `${__dirname}/pnpTs.js`
-            : undefined,
-          resolveTypeReferenceDirectiveModule: process.versions.pnp
+          // Needed to support Yarn PnP for Yarn 1, Yarn >= 2 adds PnP support
+          // to TypeScript automatically
+          resolveModuleNameModule: process.versions.pnp === '1'
+          ? `${__dirname}/pnpTs.js`
+          : undefined,
+          // Needed to support Yarn PnP for Yarn 1, Yarn >= 2 adds PnP support
+          // to TypeScript automatically
+          resolveTypeReferenceDirectiveModule: process.versions.pnp === '1'
             ? `${__dirname}/pnpTs.js`
             : undefined,
           tsconfig: paths.appTsConfig,
