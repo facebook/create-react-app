@@ -1,5 +1,9 @@
 # `backpack-react-scripts` Change Log
 
+## 9.1.1
+
+- Optimize the usage of `thread-loader` to fix `build:storybook` running failed
+
 ## 9.1.0
 
 - Add `thread-loader` to speed up webpack workflow by bundling in parallels
