@@ -9,6 +9,7 @@
 'use strict';
 
 const fs = require('fs');
+const os = require('os');
 const path = require('path');
 const webpack = require('webpack');
 const resolve = require('resolve');
@@ -92,6 +93,7 @@ const hasJsxRuntime = (() => {
 module.exports = function (webpackEnv) {
   const isEnvDevelopment = webpackEnv === 'development';
   const isEnvProduction = webpackEnv === 'production';
+  const isWindows = os.platform() === 'win32';
 
   // Variable used for enabling profiling in Production
   // passed into alias object. Uses a flag if passed into the build command
@@ -157,6 +159,7 @@ module.exports = function (webpackEnv) {
           options: {
             sourceMap: isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
             root: paths.appSrc,
+            removeCR: isWindows,
           },
         },
         {
