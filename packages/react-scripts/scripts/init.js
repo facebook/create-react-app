@@ -133,7 +133,7 @@ module.exports = function (
     console.log(
       chalk.yellow(
         'Root-level `dependencies` and `scripts` keys in `template.json` are deprecated.\n' +
-          'This template should be updated to use the new `package` key.'
+        'This template should be updated to use the new `package` key.'
       )
     );
     console.log('For more information, visit https://cra.link/templates');
@@ -405,7 +405,7 @@ module.exports = function (
     );
   }
   console.log();
-  console.log('Happy hacking!');
+  console.log('Happy Hacking!');
 };
 
 function isReactInstalled(appPackage) {
