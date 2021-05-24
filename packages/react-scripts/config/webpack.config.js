@@ -39,6 +39,19 @@ const getCacheIdentifier = require('react-dev-utils/getCacheIdentifier');
 // @remove-on-eject-end
 const createEnvironmentHash = require('./webpack/persistentCache/createEnvironmentHash');
 
+// thread-loader options
+const jsWorkerPool = {
+  // name of the pool
+  // can be used to create different pools with elsewise identical options
+  name: 'js-pool',
+
+  // can be set to Infinity for watching builds to keep workers alive
+  poolTimeout: 2000,
+  // number of jobs a worker processes in parallel
+  // defaults to 20
+  workerParallelJobs: 50,
+};
+
 const appPackageJson = require(paths.appPackageJson);
 
 const sassFunctions = require('bpk-mixins/sass-functions');
@@ -542,16 +555,79 @@ module.exports = function (webpackEnv) {
                 compact: isEnvProduction,
               },
             },
+            // Process application JS with Babel but without `.storybook` folder.
+            // The preset includes JSX, Flow, TypeScript, and some ESnext features.
+            {
+              test: /\.(js|mjs|jsx|ts|tsx)$/,
+              exclude: /\.storybook/,
+              include: [
+                paths.appSrc,
+                backpackModulesRegex,
+                saddlebagModulesRegex,
+                scopedBackpackModulesRegex,
+                ...customModuleRegexes,
+              ],
+              use: [
+                {
+                  loader: require.resolve('thread-loader'),
+                  options: jsWorkerPool,
+                },
+                {
+                  loader: require.resolve('babel-loader'),
+                  options: {
+                    customize: require.resolve(
+                      'babel-preset-react-app/webpack-overrides'
+                    ),
+                    presets: [
+                      [
+                        require.resolve('babel-preset-react-app'),
+                        {
+                          runtime: hasJsxRuntime ? 'automatic' : 'classic',
+                        },
+                      ],
+                    ],
+                    // @remove-on-eject-begin
+                    babelrc: false,
+                    configFile: false,
+                    // Make sure we have a unique cache identifier, erring on the
+                    // side of caution.
+                    // We remove this when the user ejects because the default
+                    // is sane and uses Babel options. Instead of options, we use
+                    // the react-scripts and babel-preset-react-app versions.
+                    cacheIdentifier: getCacheIdentifier(
+                      isEnvProduction
+                        ? 'production'
+                        : isEnvDevelopment && 'development',
+                      [
+                        'babel-plugin-named-asset-import',
+                        'babel-preset-react-app',
+                        'react-dev-utils',
+                        'react-scripts',
+                      ]
+                    ),
+                    // @remove-on-eject-end
+                    plugins: [
+                      isEnvDevelopment &&
+                        shouldUseReactRefresh &&
+                        require.resolve('react-refresh/babel'),
+                    ].filter(Boolean),
+                    // This is a feature of `babel-loader` for webpack (not Babel itself).
+                    // It enables caching results in ./node_modules/.cache/babel-loader/
+                    // directory for faster rebuilds.
+                    cacheDirectory: true,
+                    // See #6846 for context on why cacheCompression is disabled
+                    cacheCompression: false,
+                    compact: isEnvProduction,
+                  },
+                },
+              ].filter(Boolean),
+            },
             // Process any JS outside of the app with Babel.
             // Unlike the application JS, we only compile the standard ES features.
             {
               test: /\.(js|mjs)$/,
               exclude: /@babel(?:\/|\\{1,2})runtime/,
               use: [
-                {
-                  loader: require.resolve('thread-loader'),
-                  options: jsWorkerPool,
-                },
                 isEnvDevelopment && {
                   loader: require.resolve('cache-loader'),
                   options: {
