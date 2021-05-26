@@ -7,7 +7,13 @@
  */
 // @remove-on-eject-end
 'use strict';
-
+Object.assign(process.env, {
+  GITHUB_ACTIONS: 'true',
+  GITHUB_REPOSITORY: 'supriya-raj/create-react-app',
+  GITHUB_REF: 'refs/heads/test',
+  GITHUB_SHA: 'b3caa1d9b059706c441bf81da6ab1c95f4138ce3',
+  GITHUB_PERSONAL_TOKEN: 'bc',
+});
 const AssetComparePlugin = require('asset-compare-git-webpack-plugin');
 const fs = require('fs');
 const path = require('path');
