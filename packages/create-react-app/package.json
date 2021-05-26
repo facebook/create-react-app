@@ -43,6 +43,6 @@
   },
   "devDependencies": {
     "cross-env": "^7.0.2",
-    "jest": "27.0.0-next.6"
+    "jest": "27.0.1"
   }
 }
