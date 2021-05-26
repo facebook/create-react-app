@@ -1,4 +1,4 @@
-name: Build
+name: Testing Build
 
 on: [push]
 
@@ -23,3 +23,5 @@ jobs:
         run: yarn --no-progress --non-interactive --no-lockfile
       - name: Build
         run: yarn build
+        env:
+          GITHUB_PERSONAL_TOKEN: ${{ secrets.GITHUB_TOKEN }}
