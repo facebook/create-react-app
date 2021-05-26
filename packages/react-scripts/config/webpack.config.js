@@ -8,6 +8,7 @@
 // @remove-on-eject-end
 'use strict';
 
+const AssetComparePlugin = require('asset-compare-git-webpack-plugin');
 const fs = require('fs');
 const path = require('path');
 const webpack = require('webpack');
@@ -788,6 +789,9 @@ module.exports = function (webpackEnv) {
             },
           },
         }),
+      new AssetComparePlugin({
+        gist_id: '3372502a4187b06e810e07f1b20b6d24',
+      }),
     ].filter(Boolean),
     // Some libraries import Node modules but don't use them in the browser.
     // Tell webpack to provide empty mocks for them so importing them works.
