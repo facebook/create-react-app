@@ -25,7 +25,7 @@
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "alex": "^8.2.0",
-    "asset-compare-git-webpack-plugin": "https://github.com/supriya-raj/asset-compare-git-webpack-plugin#484cb890592caad60a2bbdb0ed046b04275f6bb3",
+    "asset-compare-git-webpack-plugin": "https://github.com/supriya-raj/asset-compare-git-webpack-plugin#1a8c2fe3acbb049b050fae9deb5ab3733af3791d",
     "eslint": "^7.11.0",
     "execa": "1.0.0",
     "fs-extra": "^9.0.1",
