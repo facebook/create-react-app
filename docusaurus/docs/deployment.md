@@ -503,6 +503,18 @@ When asked about the project path, make sure to specify the `build` folder, for 
 
 Note that in order to support routers that use HTML5 `pushState` API, you may want to rename the `index.html` in your build folder to `200.html` before deploying to Surge. This [ensures that every URL falls back to that file](https://surge.sh/help/adding-a-200-page-for-client-side-routing).
 
+## [Layer0](https://layer0.co)
+
+[Layer0](https://layer0.co) is an all-in-one platform to develop, deploy, preview, experiment on, monitor, and run your headless frontend. It is focused on large, dynamic websites and best-in-class performance through EdgeJS (a JavaScript-based Content Delivery Network), predictive prefetching, and performance monitoring. 
+
+See the official guide on [how to serve a React application on Layer0](https://docs.layer0.co/guides/react).
+
+### Deploying a fresh React project on Layer0
+
+You can deploy a fresh Vue project on Layer0 with the following Deploy Button:
+
+[![Deploy on Layer0](https://vercel.com/button)](https://app.layer0.co/deploy?repo=https%3A%2F%2Fgithub.com%2Flayer0-docs%2Fstatic-react-example&sgId=6c115aae-357d-4e3d-bd88-0222a93bb83e)
+
 ## Publishing Components To npm
 
 Create React App doesn't provide any built-in functionality to publish a component to npm. If you're ready to extract a component from your project so other people can use it, we recommend moving it to a separate directory outside of your project and then using a tool like [nwb](https://github.com/insin/nwb#react-components-and-libraries) to prepare it for publishing.
