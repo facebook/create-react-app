@@ -45,11 +45,24 @@ Use the following [`launch.json`](https://code.visualstudio.com/docs/editor/debu
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Debug CRA Tests",
+      "name": "Debug All CRA Tests",
       "type": "node",
       "request": "launch",
       "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/react-scripts",
       "args": ["test", "--runInBand", "--no-cache", "--watchAll=false"],
+      "cwd": "${workspaceRoot}",
+      "protocol": "inspector",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "env": { "CI": "true" },
+      "disableOptimisticBPs": true
+    },
+    {
+      "name": "Debug Open CRA Test Spec",
+      "type": "node",
+      "request": "launch",
+      "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/react-scripts",
+      "args": ["test", "--runInBand", "--no-cache", "--watchAll=false", "${relativeFile}"],
       "cwd": "${workspaceRoot}",
       "protocol": "inspector",
       "console": "integratedTerminal",
