@@ -46,8 +46,8 @@ const FilterWarningsPlugin = require('webpack-filter-warnings-plugin');
 
 const {
   BanBackendImportsPlugin,
+  CopyStaticAssetsPlugin,
   IModeljsLibraryExportsPlugin,
-  CopyBentleyStaticResourcesPlugin,
 } = require('@bentley/webpack-tools-core');
 
 // iModel.js change to support using the fast-sass-loader instead of sass-loader.
@@ -412,7 +412,7 @@ module.exports = function(webpackEnv) {
       },
       plugins: [
         // Throw an error if @bentley/imodeljs-backend or src/backend/... files are imported.
-        new BanBackendImportsPlugin(path.join(paths.appSrc, "backend")),
+        new BanBackendImportsPlugin(path.join(paths.appSrc, 'backend')),
         // Adds support for installing with Plug'n'Play, leading to faster installs and adding
         // guards against forgotten dependencies and such.
         PnpWebpackPlugin,
@@ -696,9 +696,9 @@ module.exports = function(webpackEnv) {
       new IModeljsLibraryExportsPlugin(),
 
       // NOTE: iModel.js specific plugin to copy a set of static resources from the node_modules
-      // directory of each dependent package into the  'lib/public' directory.
+      // directory of each dependent package into the 'build/public' directory.
       // Used for resources such as locales, which are defined by each consuming package.
-      new CopyBentleyStaticResourcesPlugin(['public'], true),
+      new CopyStaticAssetsPlugin({}),
 
       // NOTE: FilterWarningsPlugin is used to ignore warning coming from sourcemaps
       new FilterWarningsPlugin({ exclude: /Failed to parse source map/ }),
