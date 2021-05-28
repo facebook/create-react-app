@@ -445,7 +445,7 @@ module.exports = function (webpackEnv) {
       },
       plugins: [
         // Throw an error if @bentley/imodeljs-backend or src/backend/... files are imported.
-        new BanBackendImportsPlugin(path.join(paths.appSrc, "backend")),
+        new BanBackendImportsPlugin(path.join(paths.appSrc, 'backend')),
         // Adds support for installing with Plug'n'Play, leading to faster installs and adding
         // guards against forgotten dependencies and such.
         PnpWebpackPlugin,
