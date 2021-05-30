@@ -1,3 +1,182 @@
+## 4.0.3 (2021-02-22)
+
+v4.0.3 is a maintenance release that includes minor bug fixes and dependency updates.
+
+#### :bug: Bug Fix
+
+- `react-scripts`
+  - [#10590](https://github.com/facebook/create-react-app/pull/10590) Upgrade eslint-webpack-plugin to fix opt-out flag ([@mrmckeb](https://github.com/mrmckeb))
+
+#### :house: Internal
+
+- `react-dev-utils`
+  - [#10412](https://github.com/facebook/create-react-app/pull/10412) update immer to 8.0.1 to address vulnerability ([@wclem4](https://github.com/wclem4))
+- `create-react-app`
+  - [#10384](https://github.com/facebook/create-react-app/pull/10384) tests: update test case to match the description ([@jamesgeorge007](https://github.com/jamesgeorge007))
+
+#### Committers: 4
+
+- Brody McKee ([@mrmckeb](https://github.com/mrmckeb))
+- Dion Woolley ([@Awarua-](https://github.com/Awarua-))
+- James George ([@jamesgeorge007](https://github.com/jamesgeorge007))
+- Walker Clem ([@wclem4](https://github.com/wclem4))
+
+# Migrating from 4.0.2 to 4.0.3
+
+Inside any created project that has not been ejected, run:
+
+```bash
+npm install --save --save-exact react-scripts@4.0.3
+```
+
+or
+
+```
+yarn add --exact react-scripts@4.0.3
+```
+
+## 4.0.2 (2021-02-03)
+
+v4.0.2 is a maintenance release that includes minor bug fixes and documentation updates.
+
+#### :rocket: New Feature
+
+- `react-scripts`
+  - [#8986](https://github.com/facebook/create-react-app/pull/8986) Add support for new BUILD_PATH advanced configuration variable ([@ajhyndman](https://github.com/ajhyndman))
+
+#### :bug: Bug Fix
+
+- `react-scripts`
+  - [#10170](https://github.com/facebook/create-react-app/pull/10170) Add opt-out for eslint-webpack-plugin ([@mrmckeb](https://github.com/mrmckeb))
+  - [#9872](https://github.com/facebook/create-react-app/pull/9872) fix(react-scripts): add missing peer dependency react and update react-refresh-webpack-plugin ([@merceyz](https://github.com/merceyz))
+  - [#9964](https://github.com/facebook/create-react-app/pull/9964) Add TypeScript 4.x as peerDependency to react-scripts ([@sheepsteak](https://github.com/sheepsteak))
+
+#### :nail_care: Enhancement
+
+- `react-scripts`
+  - [#9977](https://github.com/facebook/create-react-app/pull/9977) Move ESLint cache file into node_modules ([@ehsankhfr](https://github.com/ehsankhfr))
+  - [#9569](https://github.com/facebook/create-react-app/pull/9569) Improve vendor chunk names in development ([@jrr](https://github.com/jrr))
+
+#### :memo: Documentation
+
+- [#9473](https://github.com/facebook/create-react-app/pull/9473) docs: add missing override options for Jest config ([@tobiasbueschel](https://github.com/tobiasbueschel))
+- [#10314](https://github.com/facebook/create-react-app/pull/10314) Update using-the-public-folder.md ([@Avivhdr](https://github.com/Avivhdr))
+- [#10214](https://github.com/facebook/create-react-app/pull/10214) Remove references to Node 8 ([@ianschmitz](https://github.com/ianschmitz))
+
+#### :house: Internal
+
+- `react-scripts`
+  - [#10027](https://github.com/facebook/create-react-app/pull/10027) appTsConfig immutability handling by immer ([@josezone](https://github.com/josezone))
+- `create-react-app`
+  - [#10217](https://github.com/facebook/create-react-app/pull/10217) Fix CI tests ([@ianschmitz](https://github.com/ianschmitz))
+- `react-dev-utils`, `react-error-overlay`, `react-scripts`
+  - [#10091](https://github.com/facebook/create-react-app/pull/10091) Recovered some integration tests ([@maxsbelt](https://github.com/maxsbelt))
+
+#### :hammer: Underlying Tools
+
+- `react-scripts`
+  - [#10216](https://github.com/facebook/create-react-app/pull/10216) Revert "Update postcss packages" ([@ianschmitz](https://github.com/ianschmitz))
+  - [#9988](https://github.com/facebook/create-react-app/pull/9988) Upgrade sass-loader ([@ehsankhfr](https://github.com/ehsankhfr))
+  - [#10003](https://github.com/facebook/create-react-app/pull/10003) Update postcss packages ([@raix](https://github.com/raix))
+  - [#10213](https://github.com/facebook/create-react-app/pull/10213) Upgrade @svgr/webpack to fix build error ([@jabranr](https://github.com/jabranr))
+- `react-dev-utils`
+  - [#10198](https://github.com/facebook/create-react-app/pull/10198) remove chalk from formatWebpackMessages ([@jasonwilliams](https://github.com/jasonwilliams))
+- `cra-template-typescript`
+  - [#10141](https://github.com/facebook/create-react-app/pull/10141) chore: bump typescript version ([@trainto](https://github.com/trainto))
+- `cra-template-typescript`, `cra-template`
+  - [#10143](https://github.com/facebook/create-react-app/pull/10143) chore: bump web-vital dependency version ([@sahilpurav](https://github.com/sahilpurav))
+
+#### Committers: 15
+
+- Andrew Hyndman ([@ajhyndman](https://github.com/ajhyndman))
+- Aviv Hadar ([@Avivhdr](https://github.com/Avivhdr))
+- Brody McKee ([@mrmckeb](https://github.com/mrmckeb))
+- Chris Shepherd ([@sheepsteak](https://github.com/sheepsteak))
+- EhsanKhaki ([@ehsankhfr](https://github.com/ehsankhfr))
+- Hakjoon Sim ([@trainto](https://github.com/trainto))
+- Ian Schmitz ([@ianschmitz](https://github.com/ianschmitz))
+- Jabran Rafique⚡️ ([@jabranr](https://github.com/jabranr))
+- Jason Williams ([@jasonwilliams](https://github.com/jasonwilliams))
+- John Ruble ([@jrr](https://github.com/jrr))
+- Kristoffer K. ([@merceyz](https://github.com/merceyz))
+- Morten N.O. Nørgaard Henriksen ([@raix](https://github.com/raix))
+- Sahil Purav ([@sahilpurav](https://github.com/sahilpurav))
+- Sergey Makarov ([@maxsbelt](https://github.com/maxsbelt))
+- Tobias Büschel ([@tobiasbueschel](https://github.com/tobiasbueschel))
+- mad-jose ([@josezone](https://github.com/josezone))
+
+# Migrating from 4.0.1 to 4.0.2
+
+Inside any created project that has not been ejected, run:
+
+```bash
+npm install --save --save-exact react-scripts@4.0.2
+```
+
+or
+
+```
+yarn add --exact react-scripts@4.0.2
+```
+
+## 4.0.1 (2020-11-23)
+
+v4.0.1 is a maintenance release that includes minor bug fixes and documentation updates.
+
+#### :bug: Bug Fix
+
+- `react-scripts`
+  - [#9921](https://github.com/facebook/create-react-app/pull/9921) Fix noFallthroughCasesInSwitch/jsx object is not extensible ([@ryota-murakami](https://github.com/ryota-murakami))
+  - [#9869](https://github.com/facebook/create-react-app/pull/9869) Fix react-jsx error ([@benneq](https://github.com/benneq))
+  - [#9885](https://github.com/facebook/create-react-app/pull/9885) fix: `React is not defined` compilation error after ejected ([@n3tr](https://github.com/n3tr))
+  - [#9911](https://github.com/facebook/create-react-app/pull/9911) fix: slow recompile time ([@FezVrasta](https://github.com/FezVrasta))
+- `react-dev-utils`
+  - [#9884](https://github.com/facebook/create-react-app/pull/9884) fix: page doesn't get refreshed when FAST_REFRESH=false ([@n3tr](https://github.com/n3tr))
+
+#### :nail_care: Enhancement
+
+- `react-scripts`
+  - [#10048](https://github.com/facebook/create-react-app/pull/10048) Increase Workbox's maximumFileSizeToCacheInBytes ([@jeffposnick](https://github.com/jeffposnick))
+
+#### :memo: Documentation
+
+- [#10052](https://github.com/facebook/create-react-app/pull/10052) docs: add React Testing Library as a library requiring jsdom ([@anyulled](https://github.com/anyulled))
+
+#### :house: Internal
+
+- `create-react-app`, `react-dev-utils`, `react-scripts`
+  - [#10083](https://github.com/facebook/create-react-app/pull/10083) replace inquirer with prompts ([@EvanBacon](https://github.com/EvanBacon))
+- `cra-template-typescript`, `cra-template`, `react-scripts`
+  - [#9516](https://github.com/facebook/create-react-app/pull/9516) [ImgBot] Optimize images ([@MichaelDeBoey](https://github.com/MichaelDeBoey))
+- Other
+  - [#9860](https://github.com/facebook/create-react-app/pull/9860) chore: Update .prettierrc ([@MichaelDeBoey](https://github.com/MichaelDeBoey))
+
+#### Committers: 9
+
+- Anyul Rivas ([@anyulled](https://github.com/anyulled))
+- Ben M ([@benneq](https://github.com/benneq))
+- Evan Bacon ([@EvanBacon](https://github.com/EvanBacon))
+- Federico Zivolo ([@FezVrasta](https://github.com/FezVrasta))
+- Jeffrey Posnick ([@jeffposnick](https://github.com/jeffposnick))
+- Jirat Ki. ([@n3tr](https://github.com/n3tr))
+- Michaël De Boey ([@MichaelDeBoey](https://github.com/MichaelDeBoey))
+- Ryota Murakami ([@ryota-murakami](https://github.com/ryota-murakami))
+- sho90 ([@sho-t](https://github.com/sho-t))
+
+# Migrating from 4.0.0 to 4.0.1
+
+Inside any created project that has not been ejected, run:
+
+```bash
+npm install --save --save-exact react-scripts@4.0.1
+```
+
+or
+
+```
+yarn add --exact react-scripts@4.0.1
+```
+
 ## 4.0.0 (2020-10-23)
 
 Create React App 4.0 is a major release with several new features, including support for Fast Refresh!

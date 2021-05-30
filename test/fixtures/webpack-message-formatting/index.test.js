@@ -100,7 +100,7 @@ test('helps when users tries to use sass', async () => {
   expect(stdout).toBeFalsy();
   // TODO: Snapshots differ between Node 10/12 as the call stack log output has changed.
   expect(stderr).toContain(
-    'To import Sass files, you first need to install node-sass.'
+    'To import Sass files, you first need to install sass.'
   );
 });
 

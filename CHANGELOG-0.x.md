@@ -156,7 +156,7 @@ npm install -g create-react-app@1.3.0
 
   If you are using Yarn, and you have created at least one app previously, Create React App now works offline.
 
-  <img src="http://i.imgur.com/1FLa9Tg.gif" width="500" alt="Yarn offline installation demo">
+  <img src="https://i.imgur.com/1FLa9Tg.gif" width="500" alt="Yarn offline installation demo">
 
 #### :bug: Bug Fix
 
@@ -515,7 +515,7 @@ Inside any created project that has not been ejected, run:
 npm install --save-dev --save-exact react-scripts@0.9.0
 ```
 
-Then, run your tests. If you are affected by breaking changes from Jest 18, consult [blog post](https://facebook.github.io/jest/blog/2016/12/15/2016-in-jest.html), [changelog](https://github.com/facebook/jest/blob/master/CHANGELOG.md#jest-1800), and [documentation](http://facebook.github.io/jest/docs/getting-started.html). You might need to update any snapshots since their format might have changed.
+Then, run your tests. If you are affected by breaking changes from Jest 18, consult [blog post](https://facebook.github.io/jest/blog/2016/12/15/2016-in-jest.html), [changelog](https://github.com/facebook/jest/blob/master/CHANGELOG.md#jest-1800), and [documentation](https://facebook.github.io/jest/docs/getting-started.html). You might need to update any snapshots since their format might have changed.
 
 If you relied on the browser not starting in non-interactive terminals, you now need to explicitly specify `BROWSER=none` as an environment variable to disable it.
 
@@ -993,7 +993,7 @@ Thanks to [@fson](https://github.com/fson) for cutting this release.
 
 ### Build Dependency (`react-scripts`)
 
-- Updates Jest to [version 16.0](http://facebook.github.io/jest/blog/2016/10/03/jest-16.html), with an upgraded CLI, improved snapshot testing, new matchers and more. ([@chase](https://github.com/chase) in [#858](https://github.com/facebook/create-react-app/pull/858))
+- Updates Jest to [version 16.0](https://facebook.github.io/jest/blog/2016/10/03/jest-16.html), with an upgraded CLI, improved snapshot testing, new matchers and more. ([@chase](https://github.com/chase) in [#858](https://github.com/facebook/create-react-app/pull/858))
 - Test setup file `src/setupTests.js` is now called after test framework initialization to support loading custom matchers. ([@just-boris](https://github.com/just-boris) in [#846](https://github.com/facebook/create-react-app/pull/846))
 - Build command shows better instructions for deploying the app to GitHub Pages ([@Janpot](https://github.com/Janpot) in [#841](https://github.com/facebook/create-react-app/pull/841))
 - Build command now generates an asset manifest with mappings from each filename to its final output filename. ([@lukyth](https://github.com/lukyth) in [#891](https://github.com/facebook/create-react-app/pull/891))
@@ -1394,7 +1394,7 @@ Newly created projects will use `0.2.1` automatically. You **don’t** need to u
 
 - You can now enable deployment to GitHub Pages by adding `homepage` field to `package.json` ([@dhruska](https://github.com/dhruska) in [#94](https://github.com/facebook/create-react-app/pull/94))
 - Development server now runs on `0.0.0.0` and works with VirtualBox ([@JWo1F](https://github.com/JWo1F) in [#128](https://github.com/facebook/create-react-app/pull/128))
-- Cloud9 and Nitrous online IDEs are now supported ([@gaearon](http://github.com/gaearon) in [2fe84e](https://github.com/facebook/create-react-app/commit/2fe84ecded55f1d5258d91f9c2c07698ae0d2fb4))
+- Cloud9 and Nitrous online IDEs are now supported ([@gaearon](https://github.com/gaearon) in [2fe84e](https://github.com/facebook/create-react-app/commit/2fe84ecded55f1d5258d91f9c2c07698ae0d2fb4))
 - When `3000` port is taken, we offer to use another port ([@chocnut](https://github.com/chocnut) in [#101](https://github.com/facebook/create-react-app/pull/101), [2edf21](https://github.com/facebook/create-react-app/commit/2edf2180f2aa6bf647807d0b1fcd95f4cfe4a558))
 - You can now `import` CSS files from npm modules ([@glennreyes](https://github.com/glennreyes) in [#105](https://github.com/facebook/create-react-app/pull/105), [@breaddevil](https://github.com/breaddevil) in [#178](https://github.com/facebook/create-react-app/pull/178))
 - `fetch` and `Promise` polyfills are now always included ([@gaearon](https://github.com/gaearon) in [#235](https://github.com/facebook/create-react-app/pull/235))
