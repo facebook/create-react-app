@@ -32,7 +32,7 @@ labels: 'issue: bug report, needs triage'
     * yarn.lock
 
   Then you need to decide which package manager you prefer to use.
-  We support both npm (https://npmjs.com) and yarn (http://yarnpkg.com/).
+  We support both npm (https://npmjs.com) and yarn (https://yarnpkg.com/).
   However, **they can't be used together in one project** so you need to pick one.
 
   If you decided to use npm, run this in your project directory:

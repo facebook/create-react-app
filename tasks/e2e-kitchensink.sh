@@ -64,6 +64,10 @@ set -x
 # Go to root
 cd ..
 root_path=$PWD
+# Set a Windows path for GitBash on Windows
+if [ "$AGENT_OS" == 'Windows_NT' ]; then
+  root_path=$(cmd //c cd)
+fi
 
 if hash npm 2>/dev/null
 then
@@ -89,7 +93,7 @@ publishToLocalRegistry
 
 # Install the app in a temporary location
 cd $temp_app_path
-npx create-react-app test-kitchensink --internal-testing-template="$root_path"/packages/react-scripts/fixtures/kitchensink
+npx create-react-app test-kitchensink --template=file:"$root_path"/packages/react-scripts/fixtures/kitchensink
 
 # Install the test module
 cd "$temp_module_path"

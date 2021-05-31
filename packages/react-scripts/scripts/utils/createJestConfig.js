@@ -55,34 +55,56 @@ module.exports = (resolve, rootDir, isEjecting) => {
       '<rootDir>/src/**/*.(spec|test).ts?(x)',
       '<rootDir>/config/**/*.(spec|test).ts?(x)',
     ],
-    testResultsProcessor: 'jest-teamcity-reporter',
-    testURL: 'http://localhost',
+    testEnvironment: 'jsdom',
+    testRunner: require.resolve('jest-circus/runner'),
     transform: {
-      '^.+\\.tsx?$': 'ts-jest',
-      '^.+\\.css$': '<rootDir>/config/jest/cssTransform.js',
-      '^(?!.*\\.(js|jsx|css|json)$)': '<rootDir>/config/jest/fileTransform.js',
+      '^.+\\.(js|jsx|mjs|cjs|ts|tsx)$': resolve(
+        'config/jest/babelTransform.js'
+      ),
+      '^.+\\.css$': resolve('config/jest/cssTransform.js'),
+      '^(?!.*\\.(js|jsx|mjs|cjs|ts|tsx|css|json)$)': resolve(
+        'config/jest/fileTransform.js'
+      ),
     },
     transformIgnorePatterns: [
-      '[/\\\\]node_modules[/\\\\].+\\.(js|jsx|ts|tsx)$',
-      '^.+\\.(css|sass|scss)$',
+      '[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs|cjs|ts|tsx)$',
+      '^.+\\.module\\.(css|sass|scss)$',
     ],
+    modulePaths: modules.additionalModulePaths || [],
+    moduleNameMapper: {
+      '^react-native$': 'react-native-web',
+      '^.+\\.module\\.(css|sass|scss)$': 'identity-obj-proxy',
+      ...(modules.jestAliases || {}),
+    },
+    moduleFileExtensions: [...paths.moduleFileExtensions, 'node'].filter(
+      ext => !ext.includes('mjs')
+    ),
+    watchPlugins: [
+      'jest-watch-typeahead/filename',
+      'jest-watch-typeahead/testname',
+    ],
+    resetMocks: true,
   };
   if (rootDir) {
     config.rootDir = rootDir;
   }
   const overrides = Object.assign({}, require(paths.appPackageJson).jest);
   const supportedKeys = [
+    'clearMocks',
     'collectCoverageFrom',
+    'coveragePathIgnorePatterns',
     'coverageReporters',
     'coverageThreshold',
-    'coveragePathIgnorePatterns',
+    'displayName',
     'extraGlobals',
     'globalSetup',
     'globalTeardown',
     'moduleNameMapper',
     'resetMocks',
     'resetModules',
+    'restoreMocks',
     'snapshotSerializers',
+    'testMatch',
     'transform',
     'transformIgnorePatterns',
     'watchPathIgnorePatterns',

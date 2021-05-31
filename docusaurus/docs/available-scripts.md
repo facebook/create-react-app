@@ -20,7 +20,7 @@ Launches the test runner in the interactive watch mode. See the section about [r
 
 Builds the app for production to the `build` folder. It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes. See the [production build](production-build.md) section for more information.
+The build is minified and the filenames include the hashes. If necessary, classnames and function names can be enabled for profiling purposes. See the [production build](production-build.md) section for more information.
 
 Your app is ready to be deployed! See the section about [deployment](deployment.md) for more information about deploying your application to popular hosting providers.
 
@@ -30,7 +30,7 @@ Your app is ready to be deployed! See the section about [deployment](deployment.
 
 If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc.) into your project as dependencies in `package.json`. Technically, the distinction between dependencies and development dependencies is pretty arbitrary for front-end apps that produce static bundles.
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc.) into your project as dependencies in `package.json`. Technically, the distinction between dependencies and development dependencies is pretty arbitrary for front-end apps that produce static bundles.
 
 In addition, it used to cause problems with some hosting platforms that didn't install development dependencies (and thus weren't able to build the project on the server or test it right before deployment). You are free to rearrange your dependencies in `package.json` as you see fit.
 

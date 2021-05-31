@@ -9,7 +9,7 @@
 const browserslist = require('browserslist');
 const chalk = require('chalk');
 const os = require('os');
-const inquirer = require('inquirer');
+const prompts = require('prompts');
 const pkgUp = require('pkg-up');
 const fs = require('fs');
 
@@ -35,14 +35,14 @@ function shouldSetBrowsers(isInteractive) {
       `\n\nWould you like to add the defaults to your ${chalk.bold(
         'package.json'
       )}?`,
-    default: true,
+    initial: true,
   };
 
-  return inquirer.prompt(question).then(answer => answer.shouldSetBrowsers);
+  return prompts(question).then(answer => answer.shouldSetBrowsers);
 }
 
 function checkBrowsers(dir, isInteractive, retry = true) {
-  const current = browserslist.findConfig(dir);
+  const current = browserslist.loadConfig({ path: dir });
   if (current != null) {
     return Promise.resolve(current);
   }
@@ -67,7 +67,7 @@ function checkBrowsers(dir, isInteractive, retry = true) {
     }
 
     return (
-      pkgUp(dir)
+      pkgUp({ cwd: dir })
         .then(filePath => {
           if (filePath == null) {
             return Promise.reject();

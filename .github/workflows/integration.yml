@@ -1,0 +1,36 @@
+name: Integration Tests
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  job:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: ['ubuntu-latest', 'macos-latest', 'windows-latest']
+        node: ['10', '12', '14']
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            node_modules
+            */*/node_modules
+          key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock', './yarn.lock') }}
+      - name: Install packages
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: yarn --frozen-lockfile --prefer-offline
+      - name: Run integration tests
+        run: yarn test:integration

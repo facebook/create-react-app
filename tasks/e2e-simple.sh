@@ -93,13 +93,13 @@ startLocalRegistry "$root_path"/tasks/verdaccio.yaml
 ./node_modules/.bin/eslint --max-warnings 0 packages/create-react-app/
 ./node_modules/.bin/eslint --max-warnings 0 packages/eslint-config-react-app/
 ./node_modules/.bin/eslint --max-warnings 0 packages/react-dev-utils/
+./node_modules/.bin/eslint --max-warnings 0 packages/react-error-overlay/src/
 ./node_modules/.bin/eslint --max-warnings 0 packages/react-scripts/
 
 cd packages/react-error-overlay/
-./node_modules/.bin/eslint --max-warnings 0 src/
 yarn test
-if [ $APPVEYOR != 'True' ]; then
-  # Flow started hanging on AppVeyor after we moved to Yarn Workspaces :-(
+if [ "$AGENT_OS" != 'Windows_NT' ]; then
+  # Flow started hanging on Windows build agents
   yarn flow
 fi
 cd ../..
@@ -258,6 +258,10 @@ verify_module_scope
 
 # Eject...
 echo yes | npm run eject
+
+# Temporary workaround for https://github.com/facebook/create-react-app/issues/6099
+rm yarn.lock
+yarn add @babel/plugin-transform-react-jsx-source @babel/plugin-syntax-jsx @babel/plugin-transform-react-jsx @babel/plugin-transform-react-jsx-self
 
 # Test ejected files were staged
 test -n "$(git diff --staged --name-only)"

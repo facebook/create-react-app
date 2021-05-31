@@ -6,7 +6,8 @@ sidebar_label: Proxying in Development
 
 > Note: this feature is available with `react-scripts@0.2.3` and higher.
 
-People often serve the front-end React app from the same host and port as their backend implementation.<br>
+People often serve the front-end React app from the same host and port as their backend implementation.
+
 For example, a production setup might look like this after the app is deployed:
 
     /             - static server returns index.html with React app
@@ -31,7 +32,8 @@ Fetch API cannot load http://localhost:4000/api/todos. No 'Access-Control-Allow-
 
 Keep in mind that `proxy` only has effect in development (with `npm start`), and it is up to you to ensure that URLs like `/api/todos` point to the right thing in production. You don’t have to use the `/api` prefix. Any unrecognized request without a `text/html` accept header will be redirected to the specified `proxy`.
 
-The `proxy` option supports HTTP, HTTPS and WebSocket connections.<br>
+The `proxy` option supports HTTP, HTTPS and WebSocket connections.
+
 If the `proxy` option is **not** flexible enough for you, alternatively you can:
 
 - [Configure the proxy yourself](#configuring-the-proxy-manually)
@@ -83,7 +85,7 @@ $ yarn add http-proxy-middleware
 Next, create `src/setupProxy.js` and place the following contents in it:
 
 ```js
-const proxy = require('http-proxy-middleware');
+const { createProxyMiddleware } = require('http-proxy-middleware');
 
 module.exports = function(app) {
   // ...
@@ -93,10 +95,16 @@ module.exports = function(app) {
 You can now register proxies as you wish! Here's an example using the above `http-proxy-middleware`:
 
 ```js
-const proxy = require('http-proxy-middleware');
+const { createProxyMiddleware } = require('http-proxy-middleware');
 
 module.exports = function(app) {
-  app.use(proxy('/api', { target: 'http://localhost:5000/' }));
+  app.use(
+    '/api',
+    createProxyMiddleware({
+      target: 'http://localhost:5000',
+      changeOrigin: true,
+    })
+  );
 };
 ```
 

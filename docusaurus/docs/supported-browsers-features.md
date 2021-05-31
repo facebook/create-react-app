@@ -15,7 +15,7 @@ This project supports a superset of the latest JavaScript standard. In addition 
 - [Exponentiation Operator](https://github.com/rwaldron/exponentiation-operator) (ES2016).
 - [Async/await](https://github.com/tc39/ecmascript-asyncawait) (ES2017).
 - [Object Rest/Spread Properties](https://github.com/tc39/proposal-object-rest-spread) (ES2018).
-- [Dynamic import()](https://github.com/tc39/proposal-dynamic-import) (stage 3 proposal)
+- [Dynamic import()](https://github.com/tc39/proposal-dynamic-import) (stage 4 proposal)
 - [Class Fields and Static Properties](https://github.com/tc39/proposal-class-public-fields) (part of stage 3 proposal).
 - [JSX](https://facebook.github.io/react/docs/introducing-jsx.html), [Flow](./adding-flow) and [TypeScript](./adding-typescript).
 
@@ -50,6 +50,6 @@ Here is an example `browserslist` that is specified in `package.json`:
 }
 ```
 
-> Note that this does not include polyfills automatically for you. You will still need to polyfill language features (see above) as needed based on the browsers your are supporting.
+> Note that this does not include polyfills automatically for you. You will still need to polyfill language features (see above) as needed based on the browsers you are supporting.
 
-> When editing the `browserslist` config, you may notice that your changes don't get picked up right away. This is due to an [issue in babel-loader](https://github.com/babel/babel-loader/issues/690) not detecting the change in your `package.json`. An easy solution is to delete the `node_modules/.cache` folder and try again.
+> When editing the `browserslist` config, you may notice that your changes don't get picked up right away. This is due to an [issue in babel-loader](https://github.com/babel/babel-loader/issues/690) not detecting the change in your `package.json`. A quick solution is to delete the `node_modules/.cache` folder and try again.

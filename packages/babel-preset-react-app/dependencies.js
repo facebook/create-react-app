@@ -20,7 +20,7 @@ const validateBoolOption = (name, value, defaultValue) => {
   return value;
 };
 
-module.exports = function(api, opts) {
+module.exports = function (api, opts) {
   if (!opts) {
     opts = {};
   }
@@ -74,8 +74,6 @@ module.exports = function(api, opts) {
           targets: {
             node: 'current',
           },
-          // Do not transform modules to CJS
-          modules: false,
           // Exclude transforms that make all code slower
           exclude: ['transform-typeof-symbol'],
         },
@@ -89,37 +87,35 @@ module.exports = function(api, opts) {
           // Set the corejs version we are using to avoid warnings in console
           // This will need to change once we upgrade to corejs@3
           corejs: 3,
-          // Do not transform modules to CJS
-          modules: false,
           // Exclude transforms that make all code slower
           exclude: ['transform-typeof-symbol'],
         },
       ],
     ].filter(Boolean),
     plugins: [
-      // Necessary to include regardless of the environment because
-      // in practice some other transforms (such as object-rest-spread)
-      // don't work without it: https://github.com/babel/babel/issues/7215
-      [
-        require('@babel/plugin-transform-destructuring').default,
-        {
-          // Use loose mode for performance:
-          // https://github.com/facebook/create-react-app/issues/5602
-          loose: false,
-          selectiveLoose: [
-            'useState',
-            'useEffect',
-            'useContext',
-            'useReducer',
-            'useCallback',
-            'useMemo',
-            'useRef',
-            'useImperativeHandle',
-            'useLayoutEffect',
-            'useDebugValue',
-          ],
-        },
-      ],
+      // Disabled as it's handled automatically by preset-env, and `selectiveLoose` isn't
+      // yet merged into babel: https://github.com/babel/babel/pull/9486
+      // Related: https://github.com/facebook/create-react-app/pull/8215
+      // [
+      //   require('@babel/plugin-transform-destructuring').default,
+      //   {
+      //     // Use loose mode for performance:
+      //     // https://github.com/facebook/create-react-app/issues/5602
+      //     loose: false,
+      //     selectiveLoose: [
+      //       'useState',
+      //       'useEffect',
+      //       'useContext',
+      //       'useReducer',
+      //       'useCallback',
+      //       'useMemo',
+      //       'useRef',
+      //       'useImperativeHandle',
+      //       'useLayoutEffect',
+      //       'useDebugValue',
+      //     ],
+      //   },
+      // ],
       // Polyfills the runtime needed for async/await, generators, and friends
       // https://babeljs.io/docs/en/babel-plugin-transform-runtime
       [
@@ -127,6 +123,10 @@ module.exports = function(api, opts) {
         {
           corejs: false,
           helpers: areHelpersEnabled,
+          // By default, babel assumes babel/runtime version 7.0.0-beta.0,
+          // explicitly resolving to match the provided helper functions.
+          // https://github.com/babel/babel/issues/10261
+          version: require('@babel/runtime/package.json').version,
           regenerator: true,
           // https://babeljs.io/docs/en/babel-plugin-transform-runtime#useesmodules
           // We should turn this on once the lowest version of Node LTS
@@ -138,11 +138,6 @@ module.exports = function(api, opts) {
           absoluteRuntime: absoluteRuntimePath,
         },
       ],
-      // Adds syntax support for import()
-      require('@babel/plugin-syntax-dynamic-import').default,
-      isEnvTest &&
-        // Transform dynamic import to require
-        require('babel-plugin-dynamic-import-node'),
     ].filter(Boolean),
   };
 };
