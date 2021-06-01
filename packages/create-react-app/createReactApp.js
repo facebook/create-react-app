@@ -751,12 +751,6 @@ function getPackageInfo(installPackage) {
     return Promise.resolve({
       name: installPackage.match(/([^/]+)\.git(#.*)?$/)[1],
     });
-  } else if (installPackage.match(/.+@/)) {
-    // Do not match @scope/ when stripping off @version or @tag
-    return Promise.resolve({
-      name: installPackage.charAt(0) + installPackage.substr(1).split('@')[0],
-      version: installPackage.split('@')[1],
-    });
   } else if (installPackage.match(/^file:/)) {
     const installPackagePath = installPackage.match(/^file:(.*)?$/)[1];
     const { name, version } = require(path.join(
@@ -764,6 +758,12 @@ function getPackageInfo(installPackage) {
       'package.json'
     ));
     return Promise.resolve({ name, version });
+  } else if (installPackage.match(/.+@/)) {
+    // Do not match @scope/ when stripping off @version or @tag
+    return Promise.resolve({
+      name: installPackage.charAt(0) + installPackage.substr(1).split('@')[0],
+      version: installPackage.split('@')[1],
+    });
   }
   return Promise.resolve({ name: installPackage });
 }
