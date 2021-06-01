@@ -26,47 +26,52 @@ module.exports = (resolve, rootDir, isEjecting) => {
     roots: ['<rootDir>/src'],
 
     collectCoverageFrom: ['src/**/*.{js,jsx,ts,tsx}', '!src/**/*.d.ts'],
+    globals: {
+      'ts-jest': {
+        tsConfig: 'tsconfig.test.json',
+        astTransformers: ['ts-transform-async-to-mobx-flow']
+      }
+    },
 
     setupFiles: [
       isEjecting
         ? 'react-app-polyfill/jsdom'
-        : require.resolve('react-app-polyfill/jsdom'),
+        : require.resolve('react-app-polyfill/jsdom')
     ],
 
     setupFilesAfterEnv: setupTestsFile ? [setupTestsFile] : [],
     testMatch: [
       '<rootDir>/src/**/__tests__/**/*.{js,jsx,ts,tsx}',
-      '<rootDir>/src/**/*.{spec,test}.{js,jsx,ts,tsx}',
+      '<rootDir>/src/**/*.{spec,test}.{js,jsx,ts,tsx}'
     ],
     testEnvironment: 'jsdom',
+    testResultsProcessor: 'jest-teamcity-reporter',
     testRunner: require.resolve('jest-circus/runner'),
     transform: {
-      '^.+\\.(js|jsx|mjs|cjs|ts|tsx)$': resolve(
-        'config/jest/babelTransform.js'
-      ),
-      '^.+\\.css$': resolve('config/jest/cssTransform.js'),
-      '^(?!.*\\.(js|jsx|mjs|cjs|ts|tsx|css|json)$)': resolve(
-        'config/jest/fileTransform.js'
-      ),
+      '^.+\\.tsx?$': 'ts-jest',
+      '^.+\\.css$': '<rootDir>/config/jest/cssTransform.js',
+      '^(?!.*\\.(js|jsx|css|json)$)': '<rootDir>/config/jest/fileTransform.js'
     },
     transformIgnorePatterns: [
       '[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs|cjs|ts|tsx)$',
-      '^.+\\.module\\.(css|sass|scss)$',
+      '^.+\\.(css|sass|scss)$'
     ],
     modulePaths: modules.additionalModulePaths || [],
     moduleNameMapper: {
       '^react-native$': 'react-native-web',
       '^.+\\.module\\.(css|sass|scss)$': 'identity-obj-proxy',
-      ...(modules.jestAliases || {}),
+      '^.+\\.(css|sass|scss)$': 'identity-obj-proxy',
+      '^applicationinsights-js$': '<rootDir>/config/jest/mockAppInsights.js',
+      ...(modules.jestAliases || {})
     },
     moduleFileExtensions: [...paths.moduleFileExtensions, 'node'].filter(
       ext => !ext.includes('mjs')
     ),
     watchPlugins: [
       'jest-watch-typeahead/filename',
-      'jest-watch-typeahead/testname',
+      'jest-watch-typeahead/testname'
     ],
-    resetMocks: true,
+    resetMocks: true
   };
   if (rootDir) {
     config.rootDir = rootDir;
@@ -90,7 +95,7 @@ module.exports = (resolve, rootDir, isEjecting) => {
     'testMatch',
     'transform',
     'transformIgnorePatterns',
-    'watchPathIgnorePatterns',
+    'watchPathIgnorePatterns'
   ];
   if (overrides) {
     supportedKeys.forEach(key => {

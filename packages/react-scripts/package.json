@@ -1,5 +1,5 @@
 {
-  "name": "react-scripts",
+  "name": "aurornz-react-scripts",
   "version": "4.0.3",
   "description": "Configuration and scripts for Create React App.",
   "repository": {
@@ -86,7 +86,11 @@
     "webpack": "4.44.2",
     "webpack-dev-server": "3.11.1",
     "webpack-manifest-plugin": "3.0.0",
-    "workbox-webpack-plugin": "5.1.4"
+    "workbox-webpack-plugin": "5.1.4",
+    "svg-sprite-loader": "^4.1.6",
+    "svg-url-loader": "^3.0.1",
+    "svgo-loader": "^2.2.1",
+    "ts-transform-async-to-mobx-flow": "0.0.10"
   },
   "devDependencies": {
     "react": "^17.0.1",
