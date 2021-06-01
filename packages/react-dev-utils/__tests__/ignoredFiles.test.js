@@ -62,4 +62,25 @@ describe('ignore watch files regex', () => {
 
     expect(isIgnored).toBe(true);
   });
+
+  it('ignores emacs temporary files', () => {
+    const appSrc = '/root/src/';
+    const isIgnored = anymatch(ignoredFiles(appSrc), 'file.txt~');
+
+    expect(isIgnored).toBe(true);
+  });
+
+  it('ignores emacs lock files', () => {
+    const appSrc = '/root/src/';
+    const isIgnored = anymatch(ignoredFiles(appSrc), '.#file.txt');
+
+    expect(isIgnored).toBe(true);
+  });
+
+  it('ignores emacs backup files', () => {
+    const appSrc = '/root/src/';
+    const isIgnored = anymatch(ignoredFiles(appSrc), '.#file.txt#');
+
+    expect(isIgnored).toBe(true);
+  });
 });
