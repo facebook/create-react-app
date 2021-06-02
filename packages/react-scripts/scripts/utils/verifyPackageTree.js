@@ -13,6 +13,8 @@ const fs = require('fs');
 const semver = require('semver');
 const path = require('path');
 
+const isESLintPluginEnabled = process.env.DISABLE_ESLINT_PLUGIN !== 'true';
+
 // We assume that having wrong versions of these
 // in the tree will likely break your setup.
 // This is a relatively low-effort way to find common issues.
@@ -21,14 +23,15 @@ function verifyPackageTree() {
     // These are packages most likely to break in practice.
     // See https://github.com/facebook/create-react-app/issues/1795 for reasons why.
     // I have not included Babel here because plugins typically don't import Babel (so it's not affected).
-    'babel-eslint',
     'babel-jest',
     'babel-loader',
-    'eslint',
     'jest',
     'webpack',
     'webpack-dev-server',
-  ];
+    isESLintPluginEnabled && 'babel-eslint',
+    isESLintPluginEnabled && 'eslint',
+  ].filter(Boolean);
+
   // Inlined from semver-regex, MIT license.
   // Don't want to make this a dependency after ejecting.
   const getSemverRegex = () =>
