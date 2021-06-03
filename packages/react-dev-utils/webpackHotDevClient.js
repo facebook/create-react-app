@@ -277,7 +277,3 @@ function tryApplyUpdates(onHotUpdateSuccess) {
     );
   }
 }
-
-if (process.env.NODE_ENV === 'development') {
-  ErrorOverlay.stopReportingRuntimeErrors(); // disables error overlays
-}
