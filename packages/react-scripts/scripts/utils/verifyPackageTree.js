@@ -117,7 +117,7 @@ function verifyPackageTree() {
             `  ${chalk.cyan('2.')} Delete ${chalk.bold(
               'node_modules'
             )} in your project folder.\n` +
-            `  ${chalk.cyan('3.')} Remove "${chalk.bold(
+            `  ${chalk.cyan('3.')} Delete "${chalk.bold(
               dep
             )}" from ${chalk.bold('dependencies')} and/or ${chalk.bold(
               'devDependencies'
