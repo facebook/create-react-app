@@ -27,31 +27,10 @@ module.exports = {
   },
 
   parserOptions: {
-    ecmaVersion: 2018,
     sourceType: 'module',
     requireConfigFile: false,
     babelOptions: {
-      parserOpts: {
-        plugins: [
-          ['flow', { all: true, enums: true }],
-          'jsx',
-          // ES2022, remove these three when upgrading to Babel 7.14
-          'classProperties',
-          'classPrivateProperties',
-          'classPrivateMethods',
-          // proposals shipped in major browsers
-          'classStaticBlock',
-          'privateIn',
-          // these ES proposals are provided for backward compatibility
-          // they are enabled by default by babel-eslint@10, consider remove them in futural versions:
-          'decorators-legacy',
-          'doExpressions',
-          'exportDefaultFrom',
-          'functionBind',
-          'throwExpressions',
-          ['pipelineOperator', { proposal: 'minimal' }],
-        ],
-      },
+      presets: ['babel-preset-react-app/prod'],
     },
   },
 
