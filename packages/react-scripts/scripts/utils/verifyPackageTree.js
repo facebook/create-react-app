@@ -13,6 +13,8 @@ const fs = require('fs');
 const semver = require('semver');
 const path = require('path');
 
+const isESLintPluginEnabled = process.env.DISABLE_ESLINT_PLUGIN !== 'true';
+
 // We assume that having wrong versions of these
 // in the tree will likely break your setup.
 // This is a relatively low-effort way to find common issues.
@@ -24,11 +26,13 @@ function verifyPackageTree() {
     '@babel/eslint-parser',
     'babel-jest',
     'babel-loader',
-    'eslint',
     'jest',
     'webpack',
     'webpack-dev-server',
-  ];
+    isESLintPluginEnabled && 'babel-eslint',
+    isESLintPluginEnabled && 'eslint',
+  ].filter(Boolean);
+
   // Inlined from semver-regex, MIT license.
   // Don't want to make this a dependency after ejecting.
   const getSemverRegex = () =>
