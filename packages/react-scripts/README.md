@@ -23,7 +23,7 @@ npm start
 - **`css.html` & `js.html`**: New files in the `build/` output folder. These are html partials that include `<script />` and `<link />` references to the various static assets output by webpack. Useful if automatic chunking is turned on and you don't want to worry about order.
 - A bunch of configuration options via `"backpack-react-scripts"` field in `package.json`:
   - `crossOriginLoading`: Modify the default behaviour, see [docs](https://webpack.js.org/configuration/output/#output-crossoriginloading).
-  - `babelIncludePrefixes`: An array of module name prefixes to opt into babel compilation. Includes `["bpk-", "saddlebag-"]` by default.
+  - `babelIncludePrefixes`: An array of module name prefixes to opt into babel compilation. Includes `["@skyscanner/bpk-", "bpk-", "saddlebag-"]` by default.
   - `enableAutomaticChunking`: Boolean, opt in to automatic chunking of vendor, common and app code.
   - `vendorsChunkRegex`: String, Regex for picking what goes into the `vendors` chunk. See `cacheGroups` in webpack docs. Dependent on `enableAutomaticChunking` being enabled
   - `amdExcludes`: Array of module names to exclude from AMD parsing. Incldues `["lodash"]` by default.
