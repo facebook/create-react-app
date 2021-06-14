@@ -17,6 +17,7 @@ const bpkReactScriptsConfig = pkgJson['backpack-react-scripts'] || {};
 
 const includePrefixes = bpkReactScriptsConfig.babelIncludePrefixes || [];
 includePrefixes.unshift('bpk-');
+includePrefixes.unshift('@skyscanner/bpk-');
 includePrefixes.unshift('saddlebag-');
 
 const transformIgnorePattern = `[/\\\\]node_modules[/\\\\](?!${includePrefixes.join(
@@ -51,7 +52,9 @@ module.exports = (resolve, rootDir, isEjecting) => {
     ],
     testEnvironment: 'jsdom',
     transform: {
-      '^.+\\.(js|jsx|mjs|cjs|ts|tsx)$': resolve('config/jest/babelTransform.js'),
+      '^.+\\.(js|jsx|mjs|cjs|ts|tsx)$': resolve(
+        'config/jest/babelTransform.js'
+      ),
       // '^.+\\.css$': resolve('config/jest/cssTransform.js'),
       // '^(?!.*\\.(js|jsx|mjs|cjs|ts|tsx|css|json)$)': resolve(
       '^(?!.*\\.(js|jsx|ts|tsx|json)$)': resolve(
