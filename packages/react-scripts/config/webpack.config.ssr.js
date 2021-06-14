@@ -586,9 +586,9 @@ module.exports = function (webpackEnv) {
                     },
                   ],
                   isEnvDevelopment &&
-                  shouldUseReactRefresh &&
-                  require.resolve('react-refresh/babel'),
-              ].filter(Boolean),
+                    shouldUseReactRefresh &&
+                    require.resolve('react-refresh/babel'),
+                ].filter(Boolean),
                 // This is a feature of `babel-loader` for webpack (not Babel itself).
                 // It enables caching results in ./node_modules/.cache/babel-loader/
                 // directory for faster rebuilds.
@@ -607,6 +607,7 @@ module.exports = function (webpackEnv) {
                 paths.appSrc,
                 backpackModulesRegex,
                 saddlebagModulesRegex,
+                scopedBackpackModulesRegex,
                 ...customModuleRegexes,
               ],
               use: [

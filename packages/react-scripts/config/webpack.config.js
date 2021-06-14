@@ -542,7 +542,7 @@ module.exports = function (webpackEnv) {
               loader: require.resolve('babel-loader'),
               options: {
                 customize: require.resolve(
-                  'babel-preset-react-app/webpack-overrides',
+                  'babel-preset-react-app/webpack-overrides'
                 ),
                 presets: [
                   [
@@ -569,7 +569,7 @@ module.exports = function (webpackEnv) {
                     'babel-preset-react-app',
                     'react-dev-utils',
                     'react-scripts',
-                  ],
+                  ]
                 ),
                 // @remove-on-eject-end
                 plugins: [
@@ -606,6 +606,7 @@ module.exports = function (webpackEnv) {
                 paths.appSrc,
                 backpackModulesRegex,
                 saddlebagModulesRegex,
+                scopedBackpackModulesRegex,
                 ...customModuleRegexes,
               ],
               use: [
@@ -623,7 +624,7 @@ module.exports = function (webpackEnv) {
                   loader: require.resolve('babel-loader'),
                   options: {
                     customize: require.resolve(
-                      'babel-preset-react-app/webpack-overrides',
+                      'babel-preset-react-app/webpack-overrides'
                     ),
                     presets: [
                       [
@@ -650,7 +651,7 @@ module.exports = function (webpackEnv) {
                         'babel-preset-react-app',
                         'react-dev-utils',
                         'react-scripts',
-                      ],
+                      ]
                     ),
                     // @remove-on-eject-end
                     plugins: [
@@ -773,7 +774,7 @@ module.exports = function (webpackEnv) {
                         'babel-preset-react-app',
                         'react-dev-utils',
                         'react-scripts',
-                      ],
+                      ]
                     ),
                     // @remove-on-eject-end
                     // Babel sourcemaps are needed for debugging into node_modules

@@ -33,7 +33,7 @@
     "babel-plugin-named-asset-import": "^0.3.8",
     "babel-preset-react-app": "^10.0.1",
     "bfj": "^7.0.2",
-    "bpk-mixins": "^20.1.7",
+    "bpk-mixins": "^21.0.0",
     "cache-loader": "^4.1.0",
     "camelcase": "^6.2.1",
     "case-sensitive-paths-webpack-plugin": "^2.4.0",
