@@ -606,12 +606,7 @@ module.exports = function (webpackEnv) {
           },
           paths.appMFConfigFile
             ? {
-                hash: true,
-                //Not sure this is the safest approach,
-                //I am trying to exclude the script tag for remoteEntry.js.
-                //Is there any case where there would be other chunks
-                //that needs the relative script tag placed in index.html?
-                chunks: ['main'],
+                excludeChunks: [require(paths.appMFConfigFile).name],
               }
             : undefined,
           isEnvProduction
