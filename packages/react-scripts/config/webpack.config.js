@@ -228,7 +228,7 @@ module.exports = function (webpackEnv) {
       // webpack uses `publicPath` to determine where the app is being served from.
       // It requires a trailing slash, or the file assets will get an incorrect path.
       // We inferred the "public path" (such as / or /my-project) from homepage.
-      publicPath: paths.publicUrlOrPath,
+      publicPath: 'auto',
       // Point sourcemap entries to original disk location (format as URL on Windows)
       devtoolModuleFilenameTemplate: isEnvProduction
         ? info =>
@@ -602,7 +602,18 @@ module.exports = function (webpackEnv) {
           {
             inject: true,
             template: paths.appHtml,
+            publicPath: paths.publicUrlOrPath,
           },
+          paths.appMFConfigFile
+            ? {
+                hash: true,
+                //Not sure this is the safest approach,
+                //I am trying to exclude the script tag for remoteEntry.js.
+                //Is there any case where there would be other chunks
+                //that needs the relative script tag placed in index.html?
+                chunks: ['main'],
+              }
+            : undefined,
           isEnvProduction
             ? {
                 minify: {
@@ -795,6 +806,10 @@ module.exports = function (webpackEnv) {
             },
           },
         }),
+      paths.appMFConfigFile &&
+        new webpack.container.ModuleFederationPlugin(
+          require(paths.appMFConfigFile)
+        ),
     ].filter(Boolean),
     // Turn off performance processing because we utilize
     // our own hints via the FileSizeReporter

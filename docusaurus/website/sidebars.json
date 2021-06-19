@@ -52,6 +52,7 @@
       "can-i-use-decorators",
       "pre-rendering-into-static-html-files",
       "advanced-configuration",
+      "module-federation",
       "alternatives-to-ejecting"
     ],
     "Support": ["troubleshooting"]
