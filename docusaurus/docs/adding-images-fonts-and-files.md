@@ -41,7 +41,7 @@ Please be advised that this is also a custom feature of webpack.
 
 **It is not required for React** but many people enjoy it (and React Native uses a similar mechanism for images).
 
-An alternative way of handling static assets is described in the next section.
+An alternative way of handling static assets is described in a later section on [using the public folder](using-the-public-folder.md).
 
 ## Adding SVGs
 
