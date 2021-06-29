@@ -1016,6 +1016,7 @@ module.exports = function (webpackEnv) {
           // filename: 'static/css/[name].[contenthash:8].css',
           filename: 'ssr.css',
           // chunkFilename: 'static/css/[name].[contenthash:8].chunk.css',
+          // ignoreOrder: supressCssWarnings,
         }),
       // Generate an asset manifest file with the following content:
       // - "files" key: Mapping of all asset filenames to their corresponding
