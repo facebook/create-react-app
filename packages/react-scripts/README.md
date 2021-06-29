@@ -32,3 +32,4 @@ npm start
   - `cssModules`: Boolean, true by default.
   - `sriEnabled`: Sets if SRI is to be used during build to add integrity hash for files, see [docs](https://github.com/waysact/webpack-subresource-integrity/blob/master/README.md).
     - **Note** if this is enabled, `crossOriginLoading` value is overriden with `anonymous` in order for it to output with the integrity value.
+  - `ignoreCssWarnings`: Boolean, false by default. Allows the ability to supress CSS ordering issues when its safe to allow mixed order when it has not effect on output, see [docs](https://github.com/webpack-contrib/mini-css-extract-plugin#remove-order-warnings). False by default

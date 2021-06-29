@@ -65,6 +65,7 @@ const customModuleRegexes = bpkReactScriptsConfig.babelIncludePrefixes
 const cssModulesEnabled = bpkReactScriptsConfig.cssModules !== false;
 const crossOriginLoading = bpkReactScriptsConfig.crossOriginLoading || false;
 const sriEnabled = bpkReactScriptsConfig.sriEnabled || false;
+const supressCssWarnings = bpkReactScriptsConfig.ignoreCssWarnings || false;
 
 // Source maps are resource heavy and can cause out of memory issue for large source files.
 const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false';
@@ -895,6 +896,7 @@ module.exports = function (webpackEnv) {
           // both options are optional
           filename: 'static/css/[name].[contenthash:8].css',
           chunkFilename: 'static/css/[name].[contenthash:8].chunk.css',
+          ignoreOrder: supressCssWarnings,
         }),
       // Generate an asset manifest file with the following content:
       // - "files" key: Mapping of all asset filenames to their corresponding
