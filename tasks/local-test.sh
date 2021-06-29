@@ -49,7 +49,7 @@ while [ "$1" != "" ]; do
   shift
 done
 
-test_command="./tasks/e2e-simple.sh && ./tasks/e2e-kitchensink.sh && ./tasks/e2e-kitchensink-eject.sh && ./tasks/e2e-installs.sh"
+test_command="./tasks/e2e-simple.sh && ./tasks/e2e-kitchensink.sh && ./tasks/e2e-kitchensink-eject.sh && ./tasks/e2e-installs.sh && ./tasks/e2e-behavior.sh"
 case ${test_suite} in
   "all")
     ;;
