@@ -1,5 +1,9 @@
 # `backpack-react-scripts` Change Log
 
+## 9.2.0
+
+- Added `ignoreCssWarnings` config item to allow the ability to supress CSS ordering issues when its safe to allow mixed order when it has not effect on output. https://github.com/webpack-contrib/mini-css-extract-plugin#remove-order-warnings
+
 ## 9.1.3
 
 - Fixed an issue where webpack paths in SSR were not being utilised.
