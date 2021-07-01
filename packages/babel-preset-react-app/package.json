@@ -27,6 +27,7 @@
     "@babel/plugin-proposal-nullish-coalescing-operator": "7.14.5",
     "@babel/plugin-proposal-numeric-separator": "7.14.5",
     "@babel/plugin-proposal-optional-chaining": "7.14.5",
+    "@babel/plugin-proposal-private-methods": "7.14.5",
     "@babel/plugin-transform-flow-strip-types": "7.14.5",
     "@babel/plugin-transform-react-display-name": "7.14.5",
     "@babel/plugin-transform-runtime": "7.14.5",
