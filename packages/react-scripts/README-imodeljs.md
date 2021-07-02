@@ -14,7 +14,7 @@ Current upstream with `react-scripts@4.0.3`.
 
 - Additional configuration options
 
-  > Note: These configuration variables are an extension of the [Advanced Configurations](create-react-app.dev/docs/advanced-configuration) supported by create-react-app.
+  > Note: These configuration variables are an extension of the [Advanced Configurations](https://create-react-app.dev/docs/advanced-configuration) supported by create-react-app.
 
   | Variable                | Development | Production | Usage                                                                                                                                                                                                |
   | ----------------------- | ----------- | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
