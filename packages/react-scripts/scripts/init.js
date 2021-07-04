@@ -297,7 +297,12 @@ module.exports = function (
   } else {
     command = 'npm';
     remove = 'uninstall';
-    args = ['install', '--save', verbose && '--verbose'].filter(e => e);
+    args = [
+      'install',
+      '--no-audit', // https://github.com/facebook/create-react-app/issues/11174
+      '--save',
+      verbose && '--verbose',
+    ].filter(e => e);
   }
 
   // Install additional template dependencies, if present.

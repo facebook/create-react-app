@@ -392,6 +392,7 @@ function install(root, useYarn, usePnp, dependencies, verbose, isOnline) {
       command = 'npm';
       args = [
         'install',
+        '--no-audit', // https://github.com/facebook/create-react-app/issues/11174
         '--save',
         '--save-exact',
         '--loglevel',
