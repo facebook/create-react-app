@@ -3,7 +3,7 @@
 #
 
 trigger:
-  - master
+  - main
 
 variables:
   CI: true

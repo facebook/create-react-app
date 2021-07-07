@@ -34,7 +34,7 @@ This will allow you to do imports like
 
 `sass` also supports the `SASS_PATH` variable.
 
-To use imports relative to a path you specify, you can add a [`.env` file](https://github.com/facebook/create-react-app/blob/master/docusaurus/docs/adding-custom-environment-variables.md#adding-development-environment-variables-in-env) at the project root with the path specified in the `SASS_PATH` environment variable. To specify more directories you can add them to `SASS_PATH` separated by a `:` like `path1:path2:path3`.
+To use imports relative to a path you specify, you can add a [`.env` file](https://github.com/facebook/create-react-app/blob/main/docusaurus/docs/adding-custom-environment-variables.md#adding-development-environment-variables-in-env) at the project root with the path specified in the `SASS_PATH` environment variable. To specify more directories you can add them to `SASS_PATH` separated by a `:` like `path1:path2:path3`.
 
 > **Note:** For the Windows operating system, separate your paths by semicolons.
 >

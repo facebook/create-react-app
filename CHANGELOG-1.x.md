@@ -1365,7 +1365,7 @@ or
 yarn add --dev --exact react-scripts@1.0.2
 ```
 
-If you previously had issues with an `Invalid Host Header` error, [follow these new instructions](https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md#invalid-host-header-errors-after-configuring-proxy) to fix it.
+If you previously had issues with an `Invalid Host Header` error, [follow these new instructions](https://github.com/facebook/create-react-app/blob/main/packages/react-scripts/template/README.md#invalid-host-header-errors-after-configuring-proxy) to fix it.
 
 ## 1.0.1 (May 19, 2017)
 
@@ -1572,7 +1572,7 @@ If you still have the problem please file an issue.
 
 Unhandled Promise rejections will now crash tests. You can fix them by explicitly catching the errors you don’t care about.
 
-#### How to turn my app into a [Progressive Web App](https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md#making-a-progressive-web-app)?
+#### How to turn my app into a [Progressive Web App](https://github.com/facebook/create-react-app/blob/main/packages/react-scripts/template/README.md#making-a-progressive-web-app)?
 
 After the regular update procedure above, add these line to `<head>` in `public/index.html`:
 
@@ -1588,9 +1588,7 @@ After the regular update procedure above, add these line to `<head>` in `public/
 Add `<noscript>` to `<body>` in `public/index.html`:
 
 ```html
-<noscript>
-  You need to enable JavaScript to run this app.
-</noscript>
+<noscript> You need to enable JavaScript to run this app. </noscript>
 ```
 
 Then create a file called `public/manifest.json` that looks like this:
