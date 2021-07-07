@@ -126,23 +126,16 @@ module.exports = function (
 
   const templatePackage = templateJson.package || {};
 
-  // TODO: Deprecate support for root-level `dependencies` and `scripts` in v5.
-  // These should now be set under the `package` key.
+  // This was deprecated in CRA v5.
   if (templateJson.dependencies || templateJson.scripts) {
     console.log();
     console.log(
-      chalk.yellow(
-        'Root-level `dependencies` and `scripts` keys in `template.json` are deprecated.\n' +
-          'This template should be updated to use the new `package` key.'
+      chalk.red(
+        'Root-level `dependencies` and `scripts` keys in `template.json` were deprecated for Create React App 5.\n' +
+          'This template needs to be updated to use the new `package` key.'
       )
     );
     console.log('For more information, visit https://cra.link/templates');
-  }
-  if (templateJson.dependencies) {
-    templatePackage.dependencies = templateJson.dependencies;
-  }
-  if (templateJson.scripts) {
-    templatePackage.scripts = templateJson.scripts;
   }
 
   // Keys to ignore in templatePackage
