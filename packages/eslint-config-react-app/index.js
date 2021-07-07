@@ -42,7 +42,7 @@ module.exports = {
         // typescript-eslint specific options
         warnOnUnsupportedTypeScriptVersion: true,
       },
-      plugins: ['@typescript-eslint'],
+      plugins: ['@typescript-eslint', 'typescript-enum'],
       // If adding a typescript-eslint version of an existing ESLint rule,
       // make sure to disable the ESLint rule here.
       rules: {
@@ -88,6 +88,9 @@ module.exports = {
         ],
         'no-useless-constructor': 'off',
         '@typescript-eslint/no-useless-constructor': 'warn',
+
+        // @babel/plugin-transform-typescript does not support `const enum`s.
+        'typescript-enum/no-const-enum': 'error',
       },
     },
   ],
