@@ -14,7 +14,7 @@
 module.exports = {
   root: true,
 
-  parser: 'babel-eslint',
+  parser: '@babel/eslint-parser',
 
   plugins: ['react'],
 
@@ -27,10 +27,10 @@ module.exports = {
   },
 
   parserOptions: {
-    ecmaVersion: 2018,
     sourceType: 'module',
-    ecmaFeatures: {
-      jsx: true,
+    requireConfigFile: false,
+    babelOptions: {
+      presets: ['babel-preset-react-app/prod'],
     },
   },
 

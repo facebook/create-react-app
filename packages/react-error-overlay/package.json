@@ -34,10 +34,10 @@
     "lib/index.js"
   ],
   "devDependencies": {
-    "@babel/code-frame": "^7.10.4",
-    "@babel/core": "^7.12.3",
+    "@babel/code-frame": "7.10.4",
+    "@babel/core": "7.12.3",
+    "@babel/eslint-parser": "^7.13.14",
     "anser": "1.4.10",
-    "babel-eslint": "^10.1.0",
     "babel-jest": "^26.6.0",
     "babel-loader": "^8.1.0",
     "babel-preset-react-app": "^10.0.0",

@@ -17,9 +17,10 @@
     "jest.js"
   ],
   "peerDependencies": {
+    "@babel/eslint-parser": "^7.13.0",
     "@typescript-eslint/eslint-plugin": "^4.0.0",
     "@typescript-eslint/parser": "^4.0.0",
-    "babel-eslint": "^10.0.0",
+    "babel-preset-react-app": "^10.0.0",
     "eslint": "^7.5.0",
     "eslint-plugin-flowtype": "^5.2.0",
     "eslint-plugin-import": "^2.22.0",

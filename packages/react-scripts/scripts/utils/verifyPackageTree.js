@@ -23,6 +23,7 @@ function verifyPackageTree() {
     // These are packages most likely to break in practice.
     // See https://github.com/facebook/create-react-app/issues/1795 for reasons why.
     // I have not included Babel here because plugins typically don't import Babel (so it's not affected).
+    '@babel/eslint-parser',
     'babel-jest',
     'babel-loader',
     'jest',
