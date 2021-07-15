@@ -19,14 +19,14 @@ npx create-react-app my-app --template [template-name]
 
 We ship two templates by default:
 
-- [`cra-template`](https://github.com/facebook/create-react-app/tree/master/packages/cra-template)
-- [`cra-template-typescript`](https://github.com/facebook/create-react-app/tree/master/packages/cra-template-typescript)
+- [`cra-template`](https://github.com/facebook/create-react-app/tree/main/packages/cra-template)
+- [`cra-template-typescript`](https://github.com/facebook/create-react-app/tree/main/packages/cra-template-typescript)
 
 However, you can find many great community templates by searching for ["cra-template-\*"](https://www.npmjs.com/search?q=cra-template-*) on npm.
 
 ## Building a template
 
-If you're interested in building a custom template, first take a look at how we've built [`cra-template`](https://github.com/facebook/create-react-app/tree/master/packages/cra-template).
+If you're interested in building a custom template, first take a look at how we've built [`cra-template`](https://github.com/facebook/create-react-app/tree/main/packages/cra-template).
 
 A template must have the following structure:
 

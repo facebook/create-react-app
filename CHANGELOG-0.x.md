@@ -363,21 +363,21 @@ Thanks to [@Timer](https://github.com/timer) for cutting this release.
 
   - [#1489](https://github.com/facebook/create-react-app/pull/1489) Support setting `"homepage"` to `"."` to generate relative asset paths. ([@tibdex](https://github.com/tibdex))
 
-    Applications that don’t use the HTML5 `pushState` API can now be built to be served from any relative URL. To enable this, specify `"."` as your `homepage` setting in `package.json`. It used to be possible before with a few known bugs, but they should be fixed now. See [Serving the Same Build from Different Paths](https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md#serving-the-same-build-from-different-paths).
+    Applications that don’t use the HTML5 `pushState` API can now be built to be served from any relative URL. To enable this, specify `"."` as your `homepage` setting in `package.json`. It used to be possible before with a few known bugs, but they should be fixed now. See [Serving the Same Build from Different Paths](https://github.com/facebook/create-react-app/blob/main/packages/react-scripts/template/README.md#serving-the-same-build-from-different-paths).
 
   - [#937](https://github.com/facebook/create-react-app/pull/1504) Add `PUBLIC_URL` environment variable for advanced use. ([@EnoahNetzach](https://github.com/EnoahNetzach))
 
-    If you use a CDN to serve the app, you can now specify `PUBLIC_URL` environment variable to override the base URL (including the hostname) for resources referenced from the built code. This new variable is mentioned in the new [Advanced Configuration](https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md#advanced-configuration) section.
+    If you use a CDN to serve the app, you can now specify `PUBLIC_URL` environment variable to override the base URL (including the hostname) for resources referenced from the built code. This new variable is mentioned in the new [Advanced Configuration](https://github.com/facebook/create-react-app/blob/main/packages/react-scripts/template/README.md#advanced-configuration) section.
 
   - [#1440](https://github.com/facebook/create-react-app/pull/1440) Make all `REACT_APP_*` environment variables accessible in `index.html`. ([@jihchi](https://github.com/jihchi))
 
-    This makes all environment variables previously available in JS, also available in the HTML file, for example `%REACT_APP_MY_VARIABLE%`. See [Referencing Environment Variables in HTML](https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md#referencing-environment-variables-in-the-html).
+    This makes all environment variables previously available in JS, also available in the HTML file, for example `%REACT_APP_MY_VARIABLE%`. See [Referencing Environment Variables in HTML](https://github.com/facebook/create-react-app/blob/main/packages/react-scripts/template/README.md#referencing-environment-variables-in-the-html).
 
 - `react-dev-utils`
 
   - [#1148](https://github.com/facebook/create-react-app/pull/1148) Configure which browser to open with `npm start`. ([@GAumala](https://github.com/GAumala))
 
-    You can now disable the automatic browser launching by setting the `BROWSER` environment variable to `none`. You can also specify a different browser (or an arbitrary script) to open by default, [as supported by `opn` command](https://github.com/sindresorhus/opn#app) that we use under the hood. See [Advanced Configuration](https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md#advanced-configuration).
+    You can now disable the automatic browser launching by setting the `BROWSER` environment variable to `none`. You can also specify a different browser (or an arbitrary script) to open by default, [as supported by `opn` command](https://github.com/sindresorhus/opn#app) that we use under the hood. See [Advanced Configuration](https://github.com/facebook/create-react-app/blob/main/packages/react-scripts/template/README.md#advanced-configuration).
 
 #### :boom: Breaking Change
 
@@ -393,7 +393,7 @@ Thanks to [@Timer](https://github.com/timer) for cutting this release.
 
   - [#1264](https://github.com/facebook/create-react-app/pull/1264) Remove interactive shell check when opening browser on start. ([@CaryLandholt](https://github.com/CaryLandholt))
 
-    Non-interactive terminals no longer automatically disable launching of the browser. Instead, you need to [specify `none` as `BROWSER` environment variable](https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md#advanced-configuration) if you wish to disable it.
+    Non-interactive terminals no longer automatically disable launching of the browser. Instead, you need to [specify `none` as `BROWSER` environment variable](https://github.com/facebook/create-react-app/blob/main/packages/react-scripts/template/README.md#advanced-configuration) if you wish to disable it.
 
 #### :bug: Bug Fix
 
@@ -823,7 +823,7 @@ Thanks to [@fson](https://github.com/fson) for cutting this release.
 
   - [#944](https://github.com/facebook/create-react-app/pull/944) Crash the build during CI whenever linter warnings are encountered. ([@excitement-engineer](https://github.com/excitement-engineer))
 
-    Linter warnings and errors are now checked during a continuous integration build (set by the `CI` environment variable) and the build will fail if any issues are found. See [Continuous Integration](https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md#continuous-integration) for more information.
+    Linter warnings and errors are now checked during a continuous integration build (set by the `CI` environment variable) and the build will fail if any issues are found. See [Continuous Integration](https://github.com/facebook/create-react-app/blob/main/packages/react-scripts/template/README.md#continuous-integration) for more information.
 
   - [#1090](https://github.com/facebook/create-react-app/pull/1090) Enable proxying of WebSockets. ([@dceddia](https://github.com/dceddia))
 
@@ -1109,8 +1109,8 @@ npm install --save-dev --save-exact react-scripts@0.5.1
 
 ### Build Dependency (`react-scripts`)
 
-- Adds [support for `public` folder](https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md#using-the-public-folder) with arbitrary assets. ([@gaearon](https://github.com/gaearon) in [#703](https://github.com/facebook/create-react-app/pull/703))
-- You can now [specify defaults](https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md#adding-development-environment-variables-in-env) for environment variables with `.env` file. ([@ayrton](https://github.com/ayrton) in [#695](https://github.com/facebook/create-react-app/pull/695))
+- Adds [support for `public` folder](https://github.com/facebook/create-react-app/blob/main/packages/react-scripts/template/README.md#using-the-public-folder) with arbitrary assets. ([@gaearon](https://github.com/gaearon) in [#703](https://github.com/facebook/create-react-app/pull/703))
+- You can now [specify defaults](https://github.com/facebook/create-react-app/blob/main/packages/react-scripts/template/README.md#adding-development-environment-variables-in-env) for environment variables with `.env` file. ([@ayrton](https://github.com/ayrton) in [#695](https://github.com/facebook/create-react-app/pull/695))
 - Ejecting now generates proper `.babelrc` and `.eslintrc`. ([@fson](https://github.com/fson) in [#689](https://github.com/facebook/create-react-app/pull/689), [@gaearon](https://github.com/gaearon) in [#705](https://github.com/facebook/create-react-app/pull/705))
 - Some React warnings now [include the component stacktrace](https://twitter.com/dan_abramov/status/779308833399332864). ([@gaearon](https://github.com/gaearon) in [#716](https://github.com/facebook/create-react-app/pull/716))
 - `npm start` doesn’t fail in a composed Docker container. ([@arekkas](https://github.com/arekkas) in [#711](https://github.com/facebook/create-react-app/issues/711))
@@ -1166,7 +1166,7 @@ You would need to move both `index.html` and `src/favicon.ico` into the `public`
 <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
 ```
 
-This ensures it become a part of the build output, and resolves correctly both with client-side routing and non-root `homepage` in `package.json`. Read more about [using the `public` folder](https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md#using-the-public-folder) and [why these changes were made](https://github.com/facebook/create-react-app/pull/703).
+This ensures it become a part of the build output, and resolves correctly both with client-side routing and non-root `homepage` in `package.json`. Read more about [using the `public` folder](https://github.com/facebook/create-react-app/blob/main/packages/react-scripts/template/README.md#using-the-public-folder) and [why these changes were made](https://github.com/facebook/create-react-app/pull/703).
 
 ## 0.4.3 (September 18, 2016)
 
@@ -1260,9 +1260,9 @@ npm install --save-dev --save-exact react-scripts@0.4.0
 
 Paths like `/src/somefile.png` used to be served in development, but only by accident. They never worked in production builds. Since 0.4.0, we [don’t serve static files by default in development anymore either](https://github.com/facebook/create-react-app/pull/551). This removes a dangerous inconsistency that we never intentionally supported.
 
-If you need a static file to be part for the build, [import it from JavaScript and you will get its filename](https://github.com/facebook/create-react-app/blob/master/template/README.md#adding-images-and-fonts). This ensures it gets included into the production build as well, and its filename contains the content hash.
+If you need a static file to be part for the build, [import it from JavaScript and you will get its filename](https://github.com/facebook/create-react-app/blob/main/template/README.md#adding-images-and-fonts). This ensures it gets included into the production build as well, and its filename contains the content hash.
 
-If you used static files with `<link href>`, [read this new guide](https://github.com/facebook/create-react-app/blob/master/template/README.md#referring-to-static-assets-from-link-href) on how to make sure these files get included into the builds. For example, you can replace `<link href="/src/favicons/favicon-32.png">` with `<link href="./src/favicons/favicon-32.png">`, and then webpack will recognize it and include it into the build.
+If you used static files with `<link href>`, [read this new guide](https://github.com/facebook/create-react-app/blob/main/template/README.md#referring-to-static-assets-from-link-href) on how to make sure these files get included into the builds. For example, you can replace `<link href="/src/favicons/favicon-32.png">` with `<link href="./src/favicons/favicon-32.png">`, and then webpack will recognize it and include it into the build.
 
 If you referenced some other files from `index.html`, please file an issue to discuss your use case. In the meantime, you can serve them from a separate static server until your use case is supported.
 
@@ -1284,7 +1284,7 @@ npm install --save-dev --save-exact react-scripts@0.3.1
 
 ### Build Dependency (`react-scripts`)
 
-- Testing is [now supported](https://github.com/facebook/create-react-app/blob/master/template/README.md#running-tests)! ([Jest project contributors](https://github.com/facebook/jest/pulls?q=is%3Apr+is%3Aclosed), [@cpojer](https://github.com/cpojer) in [#250](https://github.com/facebook/create-react-app/pull/250), [@gaearon](https://github.com/gaearon) in [#378](https://github.com/facebook/create-react-app/pull/378), [#530](https://github.com/facebook/create-react-app/pull/530), [#533](https://github.com/facebook/create-react-app/pull/533))
+- Testing is [now supported](https://github.com/facebook/create-react-app/blob/main/template/README.md#running-tests)! ([Jest project contributors](https://github.com/facebook/jest/pulls?q=is%3Apr+is%3Aclosed), [@cpojer](https://github.com/cpojer) in [#250](https://github.com/facebook/create-react-app/pull/250), [@gaearon](https://github.com/gaearon) in [#378](https://github.com/facebook/create-react-app/pull/378), [#530](https://github.com/facebook/create-react-app/pull/530), [#533](https://github.com/facebook/create-react-app/pull/533))
 - Static files such as CSS, images, and fonts, can now exist outside `src` directory. ([@fson](https://github.com/fson) in [#504](https://github.com/facebook/create-react-app/pull/504))
 - **Breaking Change:** Local paths in `<link href>` in `index.html` will now be correctly resolved, so deleting `favicon.ico` is not an error anymore. ([@andreypopp](https://github.com/andreypopp) in [#428](https://github.com/facebook/create-react-app/pull/428))
 - Removed an annoying lint rule that warned for `<div ref={node => this.node = node}>`. ([@mrscobbler](https://github.com/mrscobbler) in [#529](https://github.com/facebook/create-react-app/pull/529))
@@ -1331,7 +1331,7 @@ Since 0.3.0 added a test runner, we recommend that you add it to the `scripts` s
   }
 ```
 
-[Then read the testing guide to learn more about using it!](https://github.com/facebook/create-react-app/blob/master/template/README.md#running-tests)
+[Then read the testing guide to learn more about using it!](https://github.com/facebook/create-react-app/blob/main/template/README.md#running-tests)
 
 ## 0.2.3 (August 25, 2016)
 
@@ -1406,7 +1406,7 @@ Newly created projects will use `0.2.1` automatically. You **don’t** need to u
 - A `.babelrc` in parent directory no longer causes an error ([@alexzherdev](https://github.com/alexzherdev) in [#236](https://github.com/facebook/create-react-app/pull/236))
 - Files with `.json` extension are now discovered ([@gaearon](https://github.com/gaearon) in [a11d6a](https://github.com/facebook/create-react-app/commit/a11d6a398f487f9163880dd34667b1d3e14b147a))
 - Bug fixes from transitive dependencies are included ([#126](https://github.com/facebook/create-react-app/issues/126))
-- Linting now works with IDEs if you follow [these](https://github.com/facebook/create-react-app/blob/master/template/README.md#display-lint-output-in-the-editor) instructions ([@keyanzhang](https://github.com/keyanzhang) in [#149](https://github.com/facebook/create-react-app/pull/149))
+- Linting now works with IDEs if you follow [these](https://github.com/facebook/create-react-app/blob/main/template/README.md#display-lint-output-in-the-editor) instructions ([@keyanzhang](https://github.com/keyanzhang) in [#149](https://github.com/facebook/create-react-app/pull/149))
 - After building, we now print gzipped bundle size ([@lvwrence](https://github.com/lvwrence) in [#229](https://github.com/facebook/create-react-app/pull/229))
 
 ### Global CLI (`create-react-app`)
@@ -1428,7 +1428,7 @@ Inside any created project that has not been ejected, run:
 npm install --save-dev --save-exact react-scripts@0.2.0
 ```
 
-You may need to fix a few lint warnings about missing `<img alt>` tag, but everything else should work out of the box. If you intend to deploy your site to GitHub Pages, you may now [add `homepage` field to `package.json`](https://github.com/facebook/create-react-app/blob/master/template/README.md#deploy-to-github-pages). If you had [issues with integrating editor linter plugins](https://github.com/facebook/create-react-app/issues/124), follow [these new instructions](https://github.com/facebook/create-react-app/blob/master/template/README.md#display-lint-output-in-the-editor).
+You may need to fix a few lint warnings about missing `<img alt>` tag, but everything else should work out of the box. If you intend to deploy your site to GitHub Pages, you may now [add `homepage` field to `package.json`](https://github.com/facebook/create-react-app/blob/main/template/README.md#deploy-to-github-pages). If you had [issues with integrating editor linter plugins](https://github.com/facebook/create-react-app/issues/124), follow [these new instructions](https://github.com/facebook/create-react-app/blob/main/template/README.md#display-lint-output-in-the-editor).
 
 ## 0.1.0 (July 22, 2016)
 
