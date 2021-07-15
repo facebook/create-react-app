@@ -29,7 +29,6 @@ function verifyPackageTree() {
     'jest',
     'webpack',
     'webpack-dev-server',
-    isESLintPluginEnabled && 'babel-eslint',
     isESLintPluginEnabled && 'eslint',
   ].filter(Boolean);
 
