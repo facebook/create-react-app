@@ -133,25 +133,25 @@ Now we can make sure every file is formatted correctly by adding a few lines to 
 
 Add the following field to the `package.json` section:
 
-```diff
-+  "husky": {
-+    "hooks": {
-+      "pre-commit": "lint-staged"
-+    }
-+  }
+```json
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  }
 ```
 
 Next we add a 'lint-staged' field to the `package.json`, for example:
 
-```diff
+```json
   "dependencies": {
     // ...
   },
-+ "lint-staged": {
-+   "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
-+     "prettier --write"
-+   ]
-+ },
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
+      "prettier --write"
+    ]
+  },
   "scripts": {
 ```
 
