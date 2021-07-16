@@ -1,3 +1,4 @@
+import React from 'react';
 const path = require('path');
 const fs = require('fs-extra');
 const TestSetup = require('./util/setup');
