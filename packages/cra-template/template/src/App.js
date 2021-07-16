@@ -17,6 +17,7 @@ function App() {
         >
           Learn React
         </a>
+        <img id='__cra-loading-icon' src={logo} alt="logo" />
       </header>
     </div>
   );
