@@ -21,6 +21,10 @@ Then install babel-preset-react-app.
 ```sh
 npm install babel-preset-react-app --save-dev
 ```
+or 
+```sh
+yarn add babel-preset-react-app --dev
+```
 
 Then create a file named `.babelrc` with following contents in the root folder of your project:
 

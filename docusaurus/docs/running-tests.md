@@ -255,8 +255,8 @@ cache:
   directories:
     - node_modules
 script:
-  - npm run build
-  - npm test
+  - npm run build or yarn build
+  - npm test or yarn test
 ```
 
 1. Trigger your first build with a git push.

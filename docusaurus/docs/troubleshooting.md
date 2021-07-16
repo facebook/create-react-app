@@ -4,9 +4,9 @@ title: Troubleshooting
 sidebar_label: Troubleshooting
 ---
 
-## `npm start` doesn’t detect changes
+## `npm start` or `yarn start` doesn’t detect changes
 
-When you save a file while `npm start` is running, the browser should refresh with the updated code.
+When you save a file while `npm start` or `yarn start` is running, the browser should refresh with the updated code.
 
 If this doesn’t happen, try one of the following workarounds:
 
@@ -20,7 +20,7 @@ If this doesn’t happen, try one of the following workarounds:
 
 If none of these solutions help please leave a comment [in this thread](https://github.com/facebook/create-react-app/issues/659).
 
-## `npm start` fail due to watch error
+## `npm start` or `yarn start` fail due to watch error
 
 If you are using a Linux operating system and see an error similar to: `ENOSPC: System limit for number of file watchers reached`, you can fix the issue by increasing the `fs.inotify.max_user_watches` setting of your operating system.
 
@@ -38,9 +38,9 @@ echo fs.inotify.max_user_watches=524288 | sudo tee /etc/sysctl.d/40-max-user-wat
 
 Then paste it in your terminal and press on enter to run it. You could find more information [here](https://github.com/guard/listen/wiki/Increasing-the-amount-of-inotify-watchers#the-technical-details).
 
-## `npm test` hangs or crashes on macOS Sierra
+## `npm test` or `yarn test` hangs or crashes on macOS Sierra
 
-If you run `npm test` and the console gets stuck after printing `react-scripts test` to the console there might be a problem with your [Watchman](https://facebook.github.io/watchman/) installation as described in [facebook/create-react-app#713](https://github.com/facebook/create-react-app/issues/713).
+If you run `npm test` or `yarn test` and the console gets stuck after printing `react-scripts test` to the console there might be a problem with your [Watchman](https://facebook.github.io/watchman/) installation as described in [facebook/create-react-app#713](https://github.com/facebook/create-react-app/issues/713).
 
 We recommend deleting `node_modules` in your project and running `npm install` (or `yarn` if you use it) first. If it doesn't help, you can try one of the numerous workarounds mentioned in these issues:
 
@@ -62,15 +62,15 @@ If this still doesn’t help, try running `launchctl unload -F ~/Library/LaunchA
 
 There are also reports that _uninstalling_ Watchman fixes the issue. So if nothing else helps, remove it from your system and try again.
 
-## `npm run build` exits too early
+## `npm run build` or `yarn build` exits too early
 
-It is reported that `npm run build` can fail on machines with limited memory and no swap space, which is common in cloud environments. Even with small projects this command can increase RAM usage in your system by hundreds of megabytes, so if you have less than 1 GB of available memory your build is likely to fail with the following message:
+It is reported that `npm run build` or `yarn build` can fail on machines with limited memory and no swap space, which is common in cloud environments. Even with small projects this command can increase RAM usage in your system by hundreds of megabytes, so if you have less than 1 GB of available memory your build is likely to fail with the following message:
 
 > The build failed because the process exited too early. This probably means the system ran out of memory or someone called `kill -9` on the process.
 
 If you are completely sure that you didn't terminate the process, consider [adding some swap space](https://www.digitalocean.com/community/tutorials/how-to-add-swap-on-ubuntu-14-04) to the machine you’re building on, or build the project locally.
 
-## `npm run build` fails on Heroku
+## `npm run build` or `yarn build` fails on Heroku
 
 This may be a problem with case sensitive filenames.
 Please refer to [this section](deployment.md#resolving-heroku-deployment-errors).
@@ -102,7 +102,7 @@ moment.locale('fr');
 
 This will only work for locales that have been explicitly imported before.
 
-## `npm run build` fails to minify
+## `npm run build` or `yarn build` fails to minify
 
 Before `react-scripts@2.0.0`, this problem was caused by third party `node_modules` using modern JavaScript features because the minifier couldn't handle them during the build. This has been solved by compiling standard modern JavaScript features inside `node_modules` in `react-scripts@2.0.0` and higher.
 
