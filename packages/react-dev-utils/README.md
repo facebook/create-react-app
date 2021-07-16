@@ -300,7 +300,7 @@ does not start with `servedPath`. Useful for development.
 
 Attempts to open the browser with a given URL.<br>
 On Mac OS X, attempts to reuse an existing Chrome tab via AppleScript.<br>
-Otherwise, falls back to [opn](https://github.com/sindresorhus/opn) behavior.
+Otherwise, falls back to [open](https://github.com/sindresorhus/open) behavior.
 
 ```js
 var path = require('path');
