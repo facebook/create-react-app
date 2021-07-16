@@ -285,6 +285,8 @@ function printInstructions(fileName, errorMessage) {
 
 let _childProcess = null;
 function launchEditor(fileName, lineNumber, colNumber) {
+  // supoort absolute file path
+  fileName = path.relative(process.cwd(), fileName);
   if (!fs.existsSync(fileName)) {
     return;
   }
