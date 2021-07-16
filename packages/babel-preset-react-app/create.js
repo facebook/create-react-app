@@ -97,6 +97,7 @@ module.exports = function (api, opts, env) {
           // behavior for any plugins that require one.
           ...(opts.runtime !== 'automatic' ? { useBuiltIns: true } : {}),
           runtime: opts.runtime || 'classic',
+          ...(process.env.JSX_IMPORT_SOURCE ? { importSource: process.env.JSX_IMPORT_SOURCE } : {}),
         },
       ],
       isTypeScriptEnabled && [require('@babel/preset-typescript').default],
