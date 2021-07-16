@@ -19,3 +19,5 @@ To update an existing project to a new version of `react-scripts`, [open the cha
 In most cases bumping the `react-scripts` version in `package.json` and running `npm install` (or `yarn install`) in this folder should be enough, but it’s good to consult the [changelog](https://github.com/facebook/create-react-app/blob/main/CHANGELOG.md) for potential breaking changes.
 
 We commit to keeping the breaking changes minimal so you can upgrade `react-scripts` painlessly.
+
+Over the course of development and new releases, improvements are made to the starter templates offered by `create-react-app`. These include useful utilities that many projects could benefit from. To this end, when updating the version of `react-scripts` it is also worth checking the most recent version of the template you used as a base (e.g. `cra-template`) to see if you want to include any of these changes in your existing project.
