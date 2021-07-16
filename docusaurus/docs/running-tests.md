@@ -203,6 +203,7 @@ Supported overrides:
 - [`restoreMocks`](https://jestjs.io/docs/en/configuration#restoremocks-boolean)
 - [`snapshotSerializers`](https://jestjs.io/docs/en/configuration.html#snapshotserializers-array-string)
 - [`testMatch`](https://jestjs.io/docs/en/configuration#testmatch-arraystring)
+- [`testPathIgnorePatterns`](https://jestjs.io/docs/configuration#testpathignorepatterns-arraystring)
 - [`transform`](https://jestjs.io/docs/en/configuration.html#transform-object-string-pathtotransformer-pathtotransformer-object)
 - [`transformIgnorePatterns`](https://jestjs.io/docs/en/configuration.html#transformignorepatterns-array-string)
 - [`watchPathIgnorePatterns`](https://jestjs.io/docs/en/configuration.html#watchpathignorepatterns-array-string)
