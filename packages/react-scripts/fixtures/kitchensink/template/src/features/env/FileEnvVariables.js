@@ -5,8 +5,6 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import React from 'react';
-
 const FileEnvVariables = () => (
   <span>
     <span id="feature-file-env-original-1">

@@ -6,7 +6,7 @@
  */
 
 import 'react-app-polyfill/ie9';
-import React, { createContext } from 'react';
+import { createContext } from 'react';
 import ReactDOM from 'react-dom';
 import CompileErrorContainer from './containers/CompileErrorContainer';
 import RuntimeErrorContainer from './containers/RuntimeErrorContainer';

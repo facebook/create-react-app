@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import DefaultExport from './ThisFileSouldNotExist';
 
 class App extends Component {

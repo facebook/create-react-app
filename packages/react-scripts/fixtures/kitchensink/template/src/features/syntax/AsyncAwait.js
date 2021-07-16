@@ -1,11 +1,4 @@
-/**
- * Copyright (c) 2015-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-import React, { Component } from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 
 async function load() {
@@ -17,16 +10,9 @@ async function load() {
   ];
 }
 
-/* eslint-disable */
-// Regression test for https://github.com/facebook/create-react-app/issues/3055
-const x = async (
-  /* prettier-ignore */
-  y: void
-) => {
+const x = async (y: void) => {
   const z = await y;
 };
-/* eslint-enable */
-
 export default class AsyncAwait extends Component {
   static propTypes = {
     onReady: PropTypes.func.isRequired,

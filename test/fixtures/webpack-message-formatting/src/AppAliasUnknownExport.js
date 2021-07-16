@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { bar as bar2 } from './AppUnknownExport';
 
 class App extends Component {

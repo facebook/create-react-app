@@ -6,7 +6,7 @@
  */
 
 /* @flow */
-import React, { PureComponent } from 'react';
+import { PureComponent } from 'react';
 import ErrorOverlay from '../components/ErrorOverlay';
 import CloseButton from '../components/CloseButton';
 import NavigationBar from '../components/NavigationBar';

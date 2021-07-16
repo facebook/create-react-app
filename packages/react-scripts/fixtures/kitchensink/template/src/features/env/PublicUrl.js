@@ -5,8 +5,6 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import React from 'react';
-
 const PublicUrl = () => (
   <span id="feature-public-url">{process.env.PUBLIC_URL}.</span>
 );

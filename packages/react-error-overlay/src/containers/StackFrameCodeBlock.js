@@ -6,7 +6,7 @@
  */
 
 /* @flow */
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { ThemeContext } from '../iframeScript';
 import CodeBlock from '../components/CodeBlock';
 import { absolutifyCaret } from '../utils/dom/absolutifyCaret';

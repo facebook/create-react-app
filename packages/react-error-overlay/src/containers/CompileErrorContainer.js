@@ -6,7 +6,7 @@
  */
 
 /* @flow */
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { ThemeContext } from '../iframeScript';
 import ErrorOverlay from '../components/ErrorOverlay';
 import Footer from '../components/Footer';

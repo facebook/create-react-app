@@ -5,7 +5,6 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import React from 'react';
 import ReactDOM from 'react-dom';
 import { test, version } from 'test-integrity';
 import LinkedModules from './LinkedModules';
