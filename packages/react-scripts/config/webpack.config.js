@@ -62,6 +62,8 @@ const imageInlineSizeLimit = parseInt(
   process.env.IMAGE_INLINE_SIZE_LIMIT || '10000'
 );
 
+const shouldDropConsole = process.env.DROP_CONSOLE === 'true';
+
 // Check if TypeScript is setup
 const useTypeScript = fs.existsSync(paths.appTsConfig);
 
@@ -256,6 +258,7 @@ module.exports = function (webpackEnv) {
               ecma: 8,
             },
             compress: {
+              drop_console: shouldDropConsole,
               ecma: 5,
               warnings: false,
               // Disabled because of an issue with Uglify breaking seemingly valid code:
