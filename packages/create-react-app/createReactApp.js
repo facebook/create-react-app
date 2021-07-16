@@ -1147,7 +1147,11 @@ function checkForLatestVersion() {
       )
       .on('error', () => {
         reject();
-      });
+      })
+      .on('timeout', () => {
+        reject();
+      })
+      .setTimeout(5000);
   });
 }
 
