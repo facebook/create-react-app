@@ -23,6 +23,10 @@ This package exports a list of globals that are often used by mistake. You can f
 ```sh
 npm install --save confusing-browser-globals
 ```
+or
+```sh
+yarn add confusing-browser-globals --dev
+```
 
 ## Usage
 
