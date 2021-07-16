@@ -116,7 +116,7 @@ Prettier is an opinionated code formatter with support for JavaScript, CSS and J
 To format our code whenever we make a commit in git, we need to install the following dependencies:
 
 ```sh
-npm install --save husky lint-staged prettier
+npm install --save husky@4 lint-staged prettier
 ```
 
 Alternatively you may use `yarn`:
