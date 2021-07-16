@@ -159,7 +159,7 @@ Your environment will have everything you need to build a modern single-page Rea
 
 Check out [this guide](https://github.com/nitishdayal/cra_closer_look) for an overview of how these tools fit together.
 
-The tradeoff is that **these tools are preconfigured to work in a specific way**. If your project needs more customization, you can ["eject"](https://facebook.github.io/create-react-app/docs/available-scripts#npm-run-eject) and customize it, but then you will need to maintain this configuration.
+The tradeoff is that **these tools are preconfigured to work in a specific way**. If your project needs more customization, you can ["eject"](https://facebook.github.io/create-react-app/docs/available-scripts#npm-run-eject) and customize it, but then you will need to maintain this configuration. Various community-maintained forks of react-scripts can be found here: [awesome-create-react-app#react-scripts-versions](https://github.com/tuchk4/awesome-create-react-app#react-scripts-versions)
 
 ## Popular Alternatives
 
@@ -184,6 +184,8 @@ Here are a few common cases where you might want to try something else:
 - Finally, if you need **more customization**, check out [Neutrino](https://neutrino.js.org/) and its [React preset](https://neutrino.js.org/packages/react/).
 
 All of the above tools can work with little to no configuration.
+
+A more complete list of similar/alternative tools can be found on the [awesome-create-react-app](https://github.com/tuchk4/awesome-create-react-app) readme.
 
 If you prefer configuring the build yourself, [follow this guide](https://reactjs.org/docs/add-react-to-an-existing-app.html).
 
