@@ -92,12 +92,12 @@ function printFileSizesAfterBuild(
     );
     console.log(
       chalk.yellow(
-        'Consider reducing it with code splitting: https://goo.gl/9VhYWB'
+        'Consider reducing it with code splitting: https://cra.link/code-splitting'
       )
     );
     console.log(
       chalk.yellow(
-        'You can also analyze the project dependencies: https://goo.gl/LeUzfb'
+        'You can also analyze the project dependencies: https://cra.link/analyzing-bundle-size'
       )
     );
   }
