@@ -218,7 +218,7 @@ function verifyTypeScriptSetup() {
   if (appTsConfig.compilerOptions == null) {
     appTsConfig.compilerOptions = {};
     firstTimeSetup = true;
-  } 
+  }
 
   for (const option of Object.keys(compilerOptions)) {
     const { parsedValue, value, suggested, reason } = compilerOptions[option];
