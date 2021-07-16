@@ -16,6 +16,9 @@
     "index.js",
     "jest.js"
   ],
+  "devDependencies": {
+    "@babel/eslint-parser": "^7.14.7"
+  },
   "peerDependencies": {
     "@babel/eslint-parser": "^7.14.7",
     "@typescript-eslint/eslint-plugin": "^4.0.0",
