@@ -41,6 +41,10 @@ You'll first need to add the ESLint plugin for Jest (if you don't already have i
 ```sh
 npm install --save-dev eslint-plugin-jest@^24.0.0 eslint-plugin-testing-library@^3.9.0
 ```
+or 
+```sh
+yarn add  eslint-plugin-jest@^24.0.0 --dev
+```
 
 You can then enable these rules by adding the Jest config to the `extends` array in your ESLint config.
 
