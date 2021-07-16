@@ -13,6 +13,30 @@ const os = require('os');
 const chalk = require('chalk');
 const shellQuote = require('shell-quote');
 
+const isWsl = (() => {
+  if (process.platform !== 'linux') {
+    return false;
+  }
+
+  if (
+    os
+      .release()
+      .toLowerCase()
+      .includes('microsoft')
+  ) {
+    return true;
+  }
+
+  try {
+    return fs
+      .readFileSync('/proc/version', 'utf8')
+      .toLowerCase()
+      .includes('microsoft');
+  } catch (_) {
+    return false;
+  }
+})();
+
 function isTerminalEditor(editor) {
   switch (editor) {
     case 'vim':
@@ -81,6 +105,11 @@ const COMMON_EDITORS_LINUX = {
   'webstorm.sh': 'webstorm',
   'goland.sh': 'goland',
   'rider.sh': 'rider',
+};
+
+const VSCODE_WSL_MAPPING = {
+  'Code.exe': 'code',
+  'Code - Insiders.exe': 'code-insiders',
 };
 
 const COMMON_EDITORS_WIN = [
@@ -193,58 +222,135 @@ function getArgumentsForLineNumber(
   return [fileName];
 }
 
-function guessEditor() {
+function guessEditorDarwin() {
+  const output = child_process.execSync('ps x').toString();
+  const processNames = Object.keys(COMMON_EDITORS_OSX);
+  for (let i = 0; i < processNames.length; i++) {
+    const processName = processNames[i];
+    if (output.indexOf(processName) !== -1) {
+      return [COMMON_EDITORS_OSX[processName]];
+    }
+  }
+}
+
+// When called via WSL, new lines are \r\r\n instead of just \r\n
+const wmicLineEnding = isWsl ? /\r?\r\n/g : '\r\n';
+
+const winDrivePath = /^([ABCDEFGHIJKLMNOPQRSTUVWXYZ]):\\/;
+function convertWinToWslPath(path) {
+  const match = path.match(winDrivePath);
+  if (!match) {
+    return null;
+  }
+
+  const [, driveLetter] = match;
+  return `/mnt/${driveLetter.toLowerCase()}/${path
+    .substr(3)
+    .replace(/\\/g, '/')}`;
+}
+
+function isWslVSCodeServerInstalled() {
+  const vscodeServerPath = path.join(os.homedir(), '.vscode-server');
+  return fs.existsSync(vscodeServerPath);
+}
+
+function isWslWinFilesystemPath(path) {
+  return path.startsWith('/mnt/');
+}
+
+function getWinRunningProcesses() {
+  // Some processes need elevated rights to get its executable path.
+  // Just filter them out upfront. This also saves 10-20ms on the command.
+  const output = child_process
+    .execSync(
+      'wmic.exe process where "executablepath is not null" get executablepath'
+    )
+    .toString();
+  return output.split(wmicLineEnding);
+}
+
+function guessEditorWin() {
+  const runningProcesses = getWinRunningProcesses();
+  for (let i = 0; i < runningProcesses.length; i++) {
+    const processPath = runningProcesses[i].trim();
+    const processName = path.win32.basename(processPath);
+
+    if (COMMON_EDITORS_WIN.indexOf(processName) !== -1) {
+      return [processPath];
+    }
+  }
+}
+
+function guessEditorLinux() {
+  // --no-heading No header line
+  // x List all processes owned by you
+  // -o comm Need only names column
+  const output = child_process
+    .execSync('ps x --no-heading -o comm --sort=comm')
+    .toString();
+  const processNames = Object.keys(COMMON_EDITORS_LINUX);
+  for (let i = 0; i < processNames.length; i++) {
+    const processName = processNames[i];
+    if (output.indexOf(processName) !== -1) {
+      return [COMMON_EDITORS_LINUX[processName]];
+    }
+  }
+}
+
+function guessEditorWsl(fileName) {
+  // We prefer VS Code when the remote server is installed in WSL
+  if (isWslVSCodeServerInstalled()) {
+    const runningProcesses = getWinRunningProcesses();
+    for (let i = 0; i < runningProcesses.length; i++) {
+      const processPath = runningProcesses[i].trim();
+      const processName = path.win32.basename(processPath);
+
+      if (VSCODE_WSL_MAPPING[processName]) {
+        return [VSCODE_WSL_MAPPING[processName]];
+      }
+    }
+  }
+
+  // Fall back to Windows editor guessing when trying
+  // to launch a file located in the Windows filesystem
+  if (isWslWinFilesystemPath(fileName)) {
+    const [editor, ...args] = guessEditorWin();
+    return [convertWinToWslPath(editor), ...args];
+  }
+
+  // Last resort, fall back to Linux guessing
+  return guessEditorLinux();
+}
+
+function guessEditor(fileName) {
   // Explicit config always wins
   if (process.env.REACT_EDITOR) {
     return shellQuote.parse(process.env.REACT_EDITOR);
   }
+
+  let guess;
 
   // We can find out which editor is currently running by:
   // `ps x` on macOS and Linux
   // `Get-Process` on Windows
   try {
     if (process.platform === 'darwin') {
-      const output = child_process.execSync('ps x').toString();
-      const processNames = Object.keys(COMMON_EDITORS_OSX);
-      for (let i = 0; i < processNames.length; i++) {
-        const processName = processNames[i];
-        if (output.indexOf(processName) !== -1) {
-          return [COMMON_EDITORS_OSX[processName]];
-        }
-      }
+      guess = guessEditorDarwin();
     } else if (process.platform === 'win32') {
-      // Some processes need elevated rights to get its executable path.
-      // Just filter them out upfront. This also saves 10-20ms on the command.
-      const output = child_process
-        .execSync(
-          'wmic process where "executablepath is not null" get executablepath'
-        )
-        .toString();
-      const runningProcesses = output.split('\r\n');
-      for (let i = 0; i < runningProcesses.length; i++) {
-        const processPath = runningProcesses[i].trim();
-        const processName = path.basename(processPath);
-        if (COMMON_EDITORS_WIN.indexOf(processName) !== -1) {
-          return [processPath];
-        }
-      }
+      guess = guessEditorWin();
     } else if (process.platform === 'linux') {
-      // --no-heading No header line
-      // x List all processes owned by you
-      // -o comm Need only names column
-      const output = child_process
-        .execSync('ps x --no-heading -o comm --sort=comm')
-        .toString();
-      const processNames = Object.keys(COMMON_EDITORS_LINUX);
-      for (let i = 0; i < processNames.length; i++) {
-        const processName = processNames[i];
-        if (output.indexOf(processName) !== -1) {
-          return [COMMON_EDITORS_LINUX[processName]];
-        }
+      if (isWsl) {
+        guess = guessEditorWsl(fileName);
+      } else {
+        guess = guessEditorLinux();
       }
     }
   } catch (error) {
     // Ignore...
+  }
+
+  if (guess) {
+    return guess;
   }
 
   // Last resort, use old skool env vars
@@ -302,7 +408,7 @@ function launchEditor(fileName, lineNumber, colNumber) {
     colNumber = 1;
   }
 
-  let [editor, ...args] = guessEditor();
+  let [editor, ...args] = guessEditor(fileName);
 
   if (!editor) {
     printInstructions(fileName, null);
@@ -313,15 +419,9 @@ function launchEditor(fileName, lineNumber, colNumber) {
     return;
   }
 
-  if (
-    process.platform === 'linux' &&
-    fileName.startsWith('/mnt/') &&
-    /Microsoft/i.test(os.release())
-  ) {
+  if (isWsl && isWslWinFilesystemPath(fileName)) {
     // Assume WSL / "Bash on Ubuntu on Windows" is being used, and
     // that the file exists on the Windows file system.
-    // `os.release()` is "4.4.0-43-Microsoft" in the current release
-    // build of WSL, see: https://github.com/Microsoft/BashOnWindows/issues/423#issuecomment-221627364
     // When a Windows editor is specified, interop functionality can
     // handle the path translation, but only if a relative path is used.
     fileName = path.relative('', fileName);
