@@ -46,3 +46,5 @@ Similarly to the previous section, you can leave some placeholders in the HTML t
 ```
 
 Then, on the server, you can replace `__SERVER_DATA__` with a JSON of real data right before sending the response. The client code can then read `window.SERVER_DATA` to use it. **Make sure to [sanitize the JSON before sending it to the client](https://medium.com/node-security/the-most-common-xss-vulnerability-in-react-js-applications-2bdffbcc1fa0) as it makes your app vulnerable to XSS attacks.**
+  
+You can also opt for using [`react-envs`](https://github.com/garronej/react-envs), a third party implementation of this mechanism.
