@@ -52,6 +52,7 @@ const babelRuntimeEntry = require.resolve('babel-preset-react-app');
 const babelRuntimeEntryHelpers = require.resolve(
   '@babel/runtime/helpers/esm/assertThisInitialized'
 );
+const babelRuntimeRegenerator = require.resolve('@babel/runtime/regenerator');
 
 // Some apps do not need the benefits of saving a web request, so not inlining the chunk
 // makes for a smoother build process.
@@ -344,6 +345,7 @@ module.exports = function (webpackEnv) {
           reactRefreshOverlayEntry,
           babelRuntimeEntry,
           babelRuntimeEntryHelpers,
+          babelRuntimeRegenerator,
         ]),
       ],
     },
