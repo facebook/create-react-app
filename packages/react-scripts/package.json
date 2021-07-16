@@ -46,7 +46,7 @@
     "css-minimizer-webpack-plugin": "3.0.2",
     "dotenv": "9.0.2",
     "dotenv-expand": "5.1.0",
-    "eslint": "^7.11.0",
+    "eslint": "^7.30.0",
     "eslint-config-react-app": "^6.0.0",
     "eslint-plugin-flowtype": "^5.2.0",
     "eslint-plugin-import": "^2.22.1",
