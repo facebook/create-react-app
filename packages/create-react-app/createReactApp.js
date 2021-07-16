@@ -30,6 +30,7 @@
 'use strict';
 
 const https = require('https');
+const httpsProxyAgent = require('https-proxy-agent');
 const chalk = require('chalk');
 const commander = require('commander');
 const dns = require('dns');
@@ -1130,9 +1131,14 @@ function executeNodeScript({ cwd, args }, data, source) {
 
 function checkForLatestVersion() {
   return new Promise((resolve, reject) => {
+    let proxy = getProxy();
+    let agent = proxy ? new httpsProxyAgent(proxy) : https.globalAgent;
     https
       .get(
         'https://registry.npmjs.org/-/package/create-react-app/dist-tags',
+        {
+          agent: agent
+        },
         res => {
           if (res.statusCode === 200) {
             let body = '';
