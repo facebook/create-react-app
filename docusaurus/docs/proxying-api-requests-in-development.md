@@ -85,7 +85,7 @@ $ yarn add http-proxy-middleware
 Next, create `src/setupProxy.js` and place the following contents in it:
 
 ```js
-const { createProxyMiddleware } = require('http-proxy-middleware');
+const createProxyMiddleware = require('http-proxy-middleware');
 
 module.exports = function(app) {
   // ...
@@ -95,7 +95,7 @@ module.exports = function(app) {
 You can now register proxies as you wish! Here's an example using the above `http-proxy-middleware`:
 
 ```js
-const { createProxyMiddleware } = require('http-proxy-middleware');
+const createProxyMiddleware = require('http-proxy-middleware');
 
 module.exports = function(app) {
   app.use(
