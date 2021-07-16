@@ -6,11 +6,12 @@
     "deploy": "docusaurus deploy"
   },
   "dependencies": {
-    "@docusaurus/core": "^2.0.0-alpha.64",
-    "@docusaurus/preset-classic": "^2.0.0-alpha.64",
+    "@docusaurus/core": "2.0.0-alpha.75",
+    "@docusaurus/preset-classic": "2.0.0-alpha.75",
+    "netlify-plugin-cache": "^1.0.3",
     "clsx": "^1.1.1",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0"
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
   },
   "browserslist": {
     "production": [
