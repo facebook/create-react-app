@@ -176,7 +176,7 @@ Similarly, `fit()` lets you focus on a specific test without running any other t
 
 Jest has an integrated coverage reporter that works well with ES6 and requires no configuration.
 
-Run `npm test -- --coverage` (note extra `--` in the middle) to include a coverage report like this:
+Run `npm test -- --coverage --watchAll=false` (note extra `--` in the middle) to include a coverage report like this:
 
 ![coverage report](https://i.imgur.com/5bFhnTS.png)
 
