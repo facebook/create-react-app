@@ -14,12 +14,16 @@ class InlineChunkHtmlPlugin {
   }
 
   getInlinedTag(publicPath, assets, tag) {
-    if (tag.tagName !== 'script' || !(tag.attributes && tag.attributes.src)) {
+    if (!['script','link'].includes(tag.tagName) || 
+        (tag.tagName === 'link' && tag.attributes && tag.attributes.rel !== 'stylesheet') || 
+        !(tag.attributes && (tag.attributes.src || tag.attributes.href))
+    ) {
       return tag;
     }
+    let src = tag.attributes.src || tag.attributes.href
     const scriptName = publicPath
-      ? tag.attributes.src.replace(publicPath, '')
-      : tag.attributes.src;
+      ? src.replace(publicPath, '')
+      : src;
     if (!this.tests.some(test => scriptName.match(test))) {
       return tag;
     }
@@ -27,7 +31,11 @@ class InlineChunkHtmlPlugin {
     if (asset == null) {
       return tag;
     }
-    return { tagName: 'script', innerHTML: asset.source(), closeTag: true };
+    let tagName = 'script'
+    if(tag.tagName === 'link'){
+       tagName = 'style'
+    }
+    return { tagName: tagName, innerHTML: asset.source(), closeTag: true };
   }
 
   apply(compiler) {
