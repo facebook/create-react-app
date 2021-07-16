@@ -331,7 +331,9 @@ module.exports = function (
 
   if (args.find(arg => arg.includes('typescript'))) {
     console.log();
-    verifyTypeScriptSetup();
+    if (process.env.SKIP_PREFLIGHT_CHECK !== 'true') {
+      verifyTypeScriptSetup();
+    }
   }
 
   // Remove template
