@@ -32,5 +32,5 @@ Using `Cache-Control: max-age=31536000` for your `build/static` assets, and `Cac
 ## Profiling
 
 ReactDOM automatically supports profiling in development mode for v16.5+, but since profiling adds some small
-additional overhead it is opt-in for production mode. You can opt-in by using the `--profile` flag. Use `npm run build -- --profile` or `yarn build --profile` to enable profiling in the production build. See the [React docs](https://reactjs.org/docs/optimizing-performance.html#profiling-components-with-the-devtools-profiler) for details about profiling
+additional overhead it is opt-out for production mode. You can opt-in by using the `--profile` flag. Use `npm run build -- --profile` or `yarn build --profile` to enable profiling in the production build. See the [React docs](https://reactjs.org/docs/optimizing-performance.html#profiling-components-with-the-devtools-profiler) for details about profiling
 using the React DevTools.
