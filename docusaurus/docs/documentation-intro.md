@@ -23,3 +23,7 @@ If you have ideas for more “How To” recipes that should be on this page, [le
 ## Feedback
 
 We are always open to [your feedback](https://github.com/facebook/create-react-app/issues).
+
+## Docs Translations
+
+[Portuguese](https://fernandobelotto.github.io/create-react-app)
