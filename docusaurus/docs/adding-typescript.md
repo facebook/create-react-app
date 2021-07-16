@@ -37,6 +37,8 @@ Next, rename any file to be a TypeScript file (e.g. `src/index.js` to `src/index
 
 Type errors will show up in the same console as the build one. You'll have to fix these type errors before you continue development or build your project. For advanced configuration, [see here](advanced-configuration.md).
 
+You can declare ambient modules in a `src/global.d.ts` file. That is the only `.d.ts` file recognized by the TypeScript configuration.
+
 ## Getting Started with TypeScript and React
 
 You are not required to make a [`tsconfig.json` file](https://www.typescriptlang.org/docs/handbook/tsconfig-json.html), one will be made for you. You are allowed to edit the generated TypeScript configuration.
