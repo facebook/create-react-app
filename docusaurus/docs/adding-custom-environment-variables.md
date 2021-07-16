@@ -6,9 +6,9 @@ sidebar_label: Environment Variables
 
 > Note: this feature is available with `react-scripts@0.2.3` and higher.
 
-Your project can consume variables declared in your environment as if they were declared locally in your JS files. By default you will have `NODE_ENV` defined for you, and any other environment variables starting with `REACT_APP_`.
+Your project can consume variables declared in your environment and make them available on `process.env.*`. By default you will have `NODE_ENV` defined for you, and any other environment variables from your `.env` file starting with `REACT_APP_`, such as `REACT_APP_CLIENT_ID=clientId`.
 
-> WARNING: Do not store any secrets (such as private API keys) in your React app!
+> **WARNING: Do not store any secrets (such as private API keys) in your React app!**
 >
 > Environment variables are embedded into the build, meaning anyone can view them by inspecting your app's files.
 
