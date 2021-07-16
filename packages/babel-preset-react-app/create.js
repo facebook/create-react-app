@@ -25,29 +25,29 @@ module.exports = function (api, opts, env) {
     opts = {};
   }
 
-  var isEnvDevelopment = env === 'development';
-  var isEnvProduction = env === 'production';
-  var isEnvTest = env === 'test';
+  const isEnvDevelopment = env === 'development';
+  const isEnvProduction = env === 'production';
+  const isEnvTest = env === 'test';
 
-  var useESModules = validateBoolOption(
+  const useESModules = validateBoolOption(
     'useESModules',
     opts.useESModules,
     isEnvDevelopment || isEnvProduction
   );
-  var isFlowEnabled = validateBoolOption('flow', opts.flow, true);
-  var isTypeScriptEnabled = validateBoolOption(
+  const isFlowEnabled = validateBoolOption('flow', opts.flow, true);
+  const isTypeScriptEnabled = validateBoolOption(
     'typescript',
     opts.typescript,
     true
   );
-  var areHelpersEnabled = validateBoolOption('helpers', opts.helpers, true);
-  var useAbsoluteRuntime = validateBoolOption(
+  const areHelpersEnabled = validateBoolOption('helpers', opts.helpers, true);
+  const useAbsoluteRuntime = validateBoolOption(
     'absoluteRuntime',
     opts.absoluteRuntime,
     true
   );
 
-  var absoluteRuntimePath = undefined;
+  let absoluteRuntimePath = undefined;
   if (useAbsoluteRuntime) {
     absoluteRuntimePath = path.dirname(
       require.resolve('@babel/runtime/package.json')
