@@ -7,6 +7,8 @@
 
 'use strict';
 
+require('./patch');
+
 // This file contains the minimum ESLint configuration required for Create
 // React App support, and is used as the `baseConfig` for `eslint-loader`
 // to ensure that user-provided configs don't need this boilerplate.
