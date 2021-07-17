@@ -25,6 +25,7 @@
     "evalSourceMapMiddleware.js",
     "FileSizeReporter.js",
     "ForkTsCheckerWebpackPlugin.js",
+    "ForkTsCheckerWarningWebpackPlugin.js",
     "formatWebpackMessages.js",
     "getCacheIdentifier.js",
     "getCSSModuleLocalIdent.js",
