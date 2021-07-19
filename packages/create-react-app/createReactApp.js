@@ -43,7 +43,7 @@ const path = require('path');
 const semver = require('semver');
 const spawn = require('cross-spawn');
 const tmp = require('tmp');
-const unpack = require('tar-pack').unpack;
+const unpackStream = require('unpack-stream');
 const url = require('url');
 const validateProjectName = require('validate-npm-package-name');
 
@@ -699,20 +699,6 @@ function getTemporaryDirectory() {
   });
 }
 
-function extractStream(stream, dest) {
-  return new Promise((resolve, reject) => {
-    stream.pipe(
-      unpack(dest, err => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(dest);
-        }
-      })
-    );
-  });
-}
-
 // Extract package name from tarball url or path.
 function getPackageInfo(installPackage) {
   if (installPackage.match(/^.+\.(tgz|tar\.gz)$/)) {
@@ -724,7 +710,7 @@ function getPackageInfo(installPackage) {
         } else {
           stream = fs.createReadStream(installPackage);
         }
-        return extractStream(stream, obj.tmpdir).then(() => obj);
+        return unpackStream.remote(stream, obj.tmpdir).then(() => obj);
       })
       .then(obj => {
         const { name, version } = require(path.join(
