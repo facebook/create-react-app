@@ -37,8 +37,8 @@
     "hyperquest": "2.1.3",
     "prompts": "2.4.0",
     "semver": "7.3.2",
-    "tar-pack": "3.4.1",
     "tmp": "0.2.1",
+    "unpack-stream": "^6.0.0",
     "validate-npm-package-name": "3.0.0"
   },
   "devDependencies": {
