@@ -139,6 +139,10 @@ module.exports = function (webpackEnv) {
 
   const shouldUseReactRefresh = env.raw.FAST_REFRESH;
 
+  // SHOULD_USE_CACHE_LOADER - this environment variable is not from Create React App side, it shouldn't be added to `env.js` file to get its value, and it should be deleted when cache strategy is ready for all the web teams at Skyscanner
+  // Warning: cache-loader won't be needed when webpack 5 is there
+  const shouldUseCacheLoader = process.env.SHOULD_USE_CACHE_LOADER;
+
   // common function to get style loaders
   const getStyleLoaders = (
     cssOptions,
@@ -154,12 +158,6 @@ module.exports = function (webpackEnv) {
         options: paths.publicUrlOrPath.startsWith('.')
           ? { publicPath: '../../' }
           : {},
-      },
-      isEnvDevelopment && {
-        loader: require.resolve('cache-loader'),
-        options: {
-          cacheDirectory: paths.cacheLoaderDir,
-        },
       },
       {
         loader: require.resolve('css-loader'),
@@ -193,22 +191,32 @@ module.exports = function (webpackEnv) {
     ].filter(Boolean);
     if (preProcessor) {
       loaders.push(
-        {
-          loader: require.resolve('resolve-url-loader'),
-          options: {
-            sourceMap: isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
-            root: paths.appSrc,
-          },
-        },
-        {
-          loader: require.resolve(preProcessor),
-          options: {
-            ...preProcessorOptions,
-            ...{
-              sourceMap: true,
+        ...[
+          {
+            loader: require.resolve('resolve-url-loader'),
+            options: {
+              sourceMap: isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
+              root: paths.appSrc,
             },
           },
-        }
+          // Because sass-loader is the most expensive, so put cache-loader here to only cache sass-loader
+          // Note that there is an overhead for saving the reading and saving the cache file, so only use this loader to cache expensive loaders.
+          shouldUseCacheLoader && {
+            loader: require.resolve('cache-loader'),
+            options: {
+              cacheDirectory: paths.cacheLoaderDir,
+            },
+          },
+          {
+            loader: require.resolve(preProcessor),
+            options: {
+              ...preProcessorOptions,
+              ...{
+                sourceMap: true,
+              },
+            },
+          },
+        ].filter(Boolean),
       );
     }
     return loaders;
@@ -562,12 +570,6 @@ module.exports = function (webpackEnv) {
                   loader: require.resolve('thread-loader'),
                   options: jsWorkerPool,
                 },
-                isEnvDevelopment && {
-                  loader: require.resolve('cache-loader'),
-                  options: {
-                    cacheDirectory: paths.cacheLoaderDir,
-                  },
-                },
                 {
                   loader: require.resolve('babel-loader'),
                   options: {
@@ -634,49 +636,39 @@ module.exports = function (webpackEnv) {
             {
               test: /\.(js|mjs)$/,
               exclude: /@babel(?:\/|\\{1,2})runtime/,
-              use: [
-                isEnvDevelopment && {
-                  loader: require.resolve('cache-loader'),
-                  options: {
-                    cacheDirectory: paths.cacheLoaderDir,
-                  },
-                },
-                {
-                  loader: require.resolve('babel-loader'),
-                  options: {
-                    babelrc: false,
-                    configFile: false,
-                    compact: false,
-                    presets: [
-                      [
-                        require.resolve('babel-preset-react-app/dependencies'),
-                        { helpers: true },
-                      ],
-                    ],
-                    cacheDirectory: true,
-                    // See #6846 for context on why cacheCompression is disabled
-                    cacheCompression: false,
-                    // @remove-on-eject-begin
-                    cacheIdentifier: getCacheIdentifier(
-                      isEnvProduction
-                        ? 'production'
-                        : isEnvDevelopment && 'development',
-                      [
-                        'babel-plugin-named-asset-import',
-                        'babel-preset-react-app',
-                        'react-dev-utils',
-                        'react-scripts',
-                      ]
-                    ),
-                    // @remove-on-eject-end
-                    // Babel sourcemaps are needed for debugging into node_modules
-                    // code.  Without the options below, debuggers like VSCode
-                    // show incorrect code and set breakpoints on the wrong lines.
-                    sourceMaps: shouldUseSourceMap,
-                    inputSourceMap: shouldUseSourceMap,
-                  },
-                },
-              ].filter(Boolean),
+              loader: require.resolve('babel-loader'),
+              options: {
+                babelrc: false,
+                configFile: false,
+                compact: false,
+                presets: [
+                  [
+                    require.resolve('babel-preset-react-app/dependencies'),
+                    { helpers: true },
+                  ],
+                ],
+                cacheDirectory: true,
+                // See #6846 for context on why cacheCompression is disabled
+                cacheCompression: false,
+                // @remove-on-eject-begin
+                cacheIdentifier: getCacheIdentifier(
+                  isEnvProduction
+                    ? 'production'
+                    : isEnvDevelopment && 'development',
+                  [
+                    'babel-plugin-named-asset-import',
+                    'babel-preset-react-app',
+                    'react-dev-utils',
+                    'react-scripts',
+                  ]
+                ),
+                // @remove-on-eject-end
+                // Babel sourcemaps are needed for debugging into node_modules
+                // code.  Without the options below, debuggers like VSCode
+                // show incorrect code and set breakpoints on the wrong lines.
+                sourceMaps: shouldUseSourceMap,
+                inputSourceMap: shouldUseSourceMap,
+              },
             },
             // "postcss" loader applies autoprefixer to our CSS.
             // "css" loader resolves paths in CSS and adds assets as dependencies.
@@ -740,7 +732,9 @@ module.exports = function (webpackEnv) {
               exclude: sassModuleRegex,
               use: getStyleLoaders(
                 {
-                  importLoaders: 3,
+                  // When using sass-loader, the total count of loaders is up to 4 including cache-loader below the css-loader
+                  // When not using sass-loader, the total count of loaders is 3 not including cache-loader below the css-loader
+                  importLoaders: shouldUseCacheLoader ? 4 : 3,
                   sourceMap: isEnvProduction
                     ? shouldUseSourceMap
                     : isEnvDevelopment,
@@ -774,7 +768,9 @@ module.exports = function (webpackEnv) {
               ],
               use: getStyleLoaders(
                 {
-                  importLoaders: 3,
+                  // When using sass-loader, the total count of loaders is up to 4 including cache-loader below the css-loader
+                  // When not using sass-loader, the total count of loaders is 3 not including cache-loader below the css-loader
+                  importLoaders: shouldUseCacheLoader ? 4 : 3,
                   sourceMap: isEnvProduction
                     ? shouldUseSourceMap
                     : isEnvDevelopment,

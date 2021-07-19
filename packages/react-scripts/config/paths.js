@@ -106,7 +106,8 @@ module.exports = {
   ownNodeModules: resolveOwn('node_modules'), // This is empty on npm 3
   appTypeDeclarations: resolveApp('src/react-app-env.d.ts'),
   ownTypeDeclarations: resolveOwn('lib/react-app.d.ts'),
-  cacheLoaderDir: resolveOwn('.cache/cache-loader'),
+  // Make all the caches (Babel-loader, Cache-loader & Terser-webpack-plugin) in one single folder
+  cacheLoaderDir: resolveApp('./node_modules/.cache/cache-loader'),
 };
 
 const ownPackageJson = require('../package.json');
@@ -144,7 +145,8 @@ if (
     ownNodeModules: resolveOwn('node_modules'),
     appTypeDeclarations: resolveOwn(`${templatePath}/src/react-app-env.d.ts`),
     ownTypeDeclarations: resolveOwn('lib/react-app.d.ts'),
-    cacheLoaderDir: resolveOwn('.cache/cache-loader'),
+    // Make all the caches (Babel-loader, Cache-loader & Terser-webpack-plugin) in one single folder
+    cacheLoaderDir: resolveApp('./node_modules/.cache/cache-loader'),
   };
 }
 // @remove-on-eject-end
