@@ -543,7 +543,7 @@ module.exports = function (webpackEnv) {
                   ? shouldUseSourceMap
                   : isEnvDevelopment,
                 modules: {
-                  compileType: 'module',
+                  mode: 'local',
                   getLocalIdent: getCSSModuleLocalIdent,
                 },
               }),
@@ -561,7 +561,7 @@ module.exports = function (webpackEnv) {
                     ? shouldUseSourceMap
                     : isEnvDevelopment,
                   modules: {
-                    compileType: 'icss',
+                    mode: 'icss',
                   },
                 },
                 'sass-loader'
@@ -583,7 +583,7 @@ module.exports = function (webpackEnv) {
                     ? shouldUseSourceMap
                     : isEnvDevelopment,
                   modules: {
-                    compileType: 'module',
+                    mode: 'local',
                     getLocalIdent: getCSSModuleLocalIdent,
                   },
                 },
