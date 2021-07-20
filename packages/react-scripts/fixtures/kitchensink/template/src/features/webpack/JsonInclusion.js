@@ -6,7 +6,9 @@
  */
 
 import React from 'react';
-import { abstract } from './assets/abstract.json';
+import abstractJson from './assets/abstract.json';
+
+const { abstract } = abstractJson;
 
 const JsonInclusion = () => (
   <summary id="feature-json-inclusion">{abstract}</summary>

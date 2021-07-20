@@ -19,7 +19,7 @@ If you want to use this ESLint configuration in a project not built with Create 
 First, install this package, ESLint and the necessary plugins. Note that when using npm 7 (or greater) this step is not required, as npm will automatically install peer dependencies.
 
 ```sh
-npm install --save-dev eslint-config-react-app @babel/eslint-parser@^7.13.0 @typescript-eslint/eslint-plugin@^4.0.0 @typescript-eslint/parser@^4.0.0 babel-preset-react-app@^10.0.0 eslint@^7.5.0 eslint-plugin-flowtype@^5.2.0 eslint-plugin-import@^2.22.0 eslint-plugin-jsx-a11y@^6.3.1 eslint-plugin-react@^7.20.3 eslint-plugin-react-hooks@^4.0.8
+npm install --save-dev eslint-config-react-app @babel/eslint-parser@^7.14.7 @typescript-eslint/eslint-plugin@^4.0.0 @typescript-eslint/parser@^4.0.0 babel-preset-react-app@^10.0.0 eslint@^7.5.0 eslint-plugin-flowtype@^5.2.0 eslint-plugin-import@^2.22.0 eslint-plugin-jsx-a11y@^6.3.1 eslint-plugin-react@^7.20.3 eslint-plugin-react-hooks@^4.0.8
 ```
 
 Then create a file named `.eslintrc.json` with following contents in the root folder of your project:

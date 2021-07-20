@@ -7,6 +7,8 @@
 
 'use strict';
 
+require('./patch');
+
 // We use eslint-loader so even warnings are very visible.
 // This is why we prefer to use "WARNING" level for potential errors,
 // and we try not to use "ERROR" level at all.

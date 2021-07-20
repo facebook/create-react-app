@@ -93,8 +93,9 @@ describe('Integration', () => {
     it('no ext inclusion', async () => {
       doc = await initDOM('no-ext-inclusion');
 
-      expect(doc.getElementById('feature-no-ext-inclusion').href).toMatch(
-        /\/static\/media\/aFileWithoutExt\.[a-f0-9]{8}\.bin$/
+      // Webpack 4 added a default extension ".bin" seems like webpack 5 asset modules do not
+      expect(doc.getElementById('feature-no-ext-inclusion').getAttribute('href')).toMatch(
+        /\/static\/media\/aFileWithoutExt\.[a-f0-9]+$/
       );
     });
 
@@ -135,8 +136,8 @@ describe('Integration', () => {
     it('unknown ext inclusion', async () => {
       doc = await initDOM('unknown-ext-inclusion');
 
-      expect(doc.getElementById('feature-unknown-ext-inclusion').href).toMatch(
-        /\/static\/media\/aFileWithExt\.[a-f0-9]{8}\.unknown$/
+      expect(doc.getElementById('feature-unknown-ext-inclusion').getAttribute('href')).toMatch(
+        /\/static\/media\/aFileWithExt\.[a-f0-9]+\.unknown$/
       );
     });
   });
