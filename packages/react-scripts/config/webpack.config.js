@@ -524,7 +524,7 @@ module.exports = function (webpackEnv) {
                   ? shouldUseSourceMap
                   : isEnvDevelopment,
                 modules: {
-                  compileType: 'icss',
+                  mode: 'icss',
                 },
               }),
               // Don't consider CSS imports dead code even if the
