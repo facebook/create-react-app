@@ -236,7 +236,12 @@ function init() {
 }
 
 function createApp(name, verbose, version, template, useNpm, usePnp) {
-  const unsupportedNodeVersion = !semver.satisfies(process.version, '>=10');
+  const unsupportedNodeVersion = !semver.satisfies(
+    // Coerce strings with metadata (i.e. `15.0.0-nightly`).
+    semver.coerce(process.version),
+    '>=10'
+  );
+
   if (unsupportedNodeVersion) {
     console.log(
       chalk.yellow(
@@ -387,6 +392,7 @@ function install(root, useYarn, usePnp, dependencies, verbose, isOnline) {
       command = 'npm';
       args = [
         'install',
+        '--no-audit', // https://github.com/facebook/create-react-app/issues/11174
         '--save',
         '--save-exact',
         '--loglevel',

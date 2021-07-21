@@ -25,6 +25,7 @@
     "evalSourceMapMiddleware.js",
     "FileSizeReporter.js",
     "ForkTsCheckerWebpackPlugin.js",
+    "ForkTsCheckerWarningWebpackPlugin.js",
     "formatWebpackMessages.js",
     "getCacheIdentifier.js",
     "getCSSModuleLocalIdent.js",
@@ -47,12 +48,11 @@
     "redirectServedPathMiddleware.js",
     "refreshOverlayInterop.js",
     "typescriptFormatter.js",
-    "WatchMissingNodeModulesPlugin.js",
     "WebpackDevServerUtils.js",
     "webpackHotDevClient.js"
   ],
   "dependencies": {
-    "@babel/code-frame": "7.10.4",
+    "@babel/code-frame": "^7.10.4",
     "address": "1.1.2",
     "browserslist": "4.14.2",
     "chalk": "2.4.2",

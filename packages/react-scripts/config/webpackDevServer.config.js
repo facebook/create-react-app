@@ -44,7 +44,7 @@ module.exports = function (proxy, allowedHost) {
     // really know what you're doing with a special environment variable.
     // Note: ["localhost", ".localhost"] will support subdomains - but we might
     // want to allow setting the allowedHosts manually for more complex setups
-    firewall: disableFirewall ? false : [allowedHost],
+    allowedHosts: disableFirewall ? 'all' : [allowedHost],
     // Enable gzip compression of generated files.
     compress: true,
     static: {
@@ -74,17 +74,15 @@ module.exports = function (proxy, allowedHost) {
       },
     },
     client: {
-      // Enable custom sockjs pathname for websocket connection to hot reloading server.
-      // Enable custom sockjs hostname, pathname and port for websocket connection
-      // to hot reloading server.
-      host: sockHost,
-      path: sockPath,
-      port: sockPort,
+      webSocketURL: {
+        // Enable custom sockjs pathname for websocket connection to hot reloading server.
+        // Enable custom sockjs hostname, pathname and port for websocket connection
+        // to hot reloading server.
+        hostname: sockHost,
+        pathname: sockPath,
+        port: sockPort,
+      },
       overlay: false,
-      needClientEntry: false,
-      // Prevent a WS client from getting injected as we're already including
-      // `webpackHotDevClient`.
-      needHotEntry: false,
     },
     devMiddleware: {
       // It is important to tell WebpackDevServer to use the same "publicPath" path as

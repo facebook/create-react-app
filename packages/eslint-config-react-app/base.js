@@ -7,6 +7,8 @@
 
 'use strict';
 
+require('./patch');
+
 // This file contains the minimum ESLint configuration required for Create
 // React App support, and is used as the `baseConfig` for `eslint-loader`
 // to ensure that user-provided configs don't need this boilerplate.
@@ -14,7 +16,7 @@
 module.exports = {
   root: true,
 
-  parser: 'babel-eslint',
+  parser: '@babel/eslint-parser',
 
   plugins: ['react'],
 
@@ -27,10 +29,10 @@ module.exports = {
   },
 
   parserOptions: {
-    ecmaVersion: 2018,
     sourceType: 'module',
-    ecmaFeatures: {
-      jsx: true,
+    requireConfigFile: false,
+    babelOptions: {
+      presets: ['babel-preset-react-app/prod'],
     },
   },
 
