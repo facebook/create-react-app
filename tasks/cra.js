@@ -39,7 +39,7 @@ process.on('uncaughtException', handleError);
 
 console.log();
 console.log('-------------------------------------------------------');
-console.log('Assuming you have already run `yarn` to update the deps.');
+console.log('Assuming you have already run `npm install` to update the deps.');
 console.log('If not, remember to do this before testing!');
 console.log('-------------------------------------------------------');
 console.log();
@@ -106,7 +106,7 @@ const scriptsFileName = cp
 const scriptsPath = path.join(packagesDir, 'react-scripts', scriptsFileName);
 
 // Now that we have packed them, call the global CLI.
-cp.execSync('yarn cache clean');
+cp.execSync('npm cache clean');
 
 const args = process.argv.slice(2);
 

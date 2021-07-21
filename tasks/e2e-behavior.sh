@@ -67,7 +67,7 @@ then
 fi
 
 # Bootstrap monorepo
-yarn
+npm install
 
 # ******************************************************************************
 # First, publish the monorepo.

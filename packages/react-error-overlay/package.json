@@ -8,7 +8,8 @@
     "start": "cross-env NODE_ENV=development node build.js --watch",
     "test": "cross-env NODE_ENV=test jest",
     "build": "cross-env NODE_ENV=development node build.js",
-    "build:prod": "cross-env NODE_ENV=production node build.js"
+    "build:prod": "cross-env NODE_ENV=production node build.js",
+    "flow": "flow"
   },
   "repository": {
     "type": "git",
@@ -58,7 +59,7 @@
     "rimraf": "^3.0.2",
     "settle-promise": "1.0.0",
     "source-map": "0.5.7",
-    "webpack": "^5.41.1"
+    "webpack": "5.41.1"
   },
   "jest": {
     "setupFiles": [

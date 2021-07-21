@@ -18,19 +18,13 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Setup node
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node }}
-      - name: Cache dependencies
-        id: cache
-        uses: actions/cache@v2
-        with:
-          path: |
-            node_modules
-            */*/node_modules
-          key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock', './yarn.lock') }}
+          cache: 'npm'
+      - name: Install npm@7
+        run: npm i -g npm@7
       - name: Install packages
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: yarn --frozen-lockfile --prefer-offline
+        run: npm ci --prefer-offline
       - name: Run integration tests
-        run: yarn test:integration
+        run: npm run test:integration
