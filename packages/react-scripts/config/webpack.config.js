@@ -353,6 +353,11 @@ module.exports = function (webpackEnv) {
       ],
     },
     module: {
+      generator: {
+        'asset/resource': {
+          publicPath: paths.publicUrlOrPath,
+        },
+      },
       strictExportPresence: true,
       rules: [
         // Handle node_modules packages that contain sourcemaps
