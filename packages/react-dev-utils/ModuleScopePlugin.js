@@ -35,6 +35,12 @@ class ModuleScopePlugin {
         ) {
           return callback();
         }
+        if (process.versions.pnp) {
+          const {findPackageLocator} = require('pnpapi');
+          if (findPackageLocator(request.__innerRequest_request) !== null) {
+            return callback();
+          }
+        }
         // Resolve the issuer from our appSrc and make sure it's one of our files
         // Maybe an indexOf === 0 would be better?
         if (
