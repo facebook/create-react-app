@@ -46,6 +46,7 @@
     "eslint": "^7.30.0",
     "eslint-config-react-app": "^6.0.0",
     "eslint-webpack-plugin": "^2.5.4",
+    "external-remotes-plugin": "^1.0.0",
     "file-loader": "^6.2.0",
     "fs-extra": "^10.0.0",
     "html-webpack-plugin": "5.3.2",

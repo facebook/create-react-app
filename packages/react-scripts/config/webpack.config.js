@@ -38,6 +38,8 @@ const getCacheIdentifier = require('react-dev-utils/getCacheIdentifier');
 // @remove-on-eject-end
 const createEnvironmentHash = require('./webpack/persistentCache/createEnvironmentHash');
 
+const ExternalTemplateRemotesPlugin = require('external-remotes-plugin');
+
 // Source maps are resource heavy and can cause out of memory issue for large source files.
 const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false';
 
@@ -63,6 +65,9 @@ const shouldInlineRuntimeChunk = process.env.INLINE_RUNTIME_CHUNK !== 'false';
 
 const emitErrorsAsWarnings = process.env.ESLINT_NO_DEV_ERRORS === 'true';
 const disableESLintPlugin = process.env.DISABLE_ESLINT_PLUGIN === 'true';
+
+const shouldUseExternalTemplateRemotesPlugin =
+  process.env.EXTERNAL_TEMPLATE_REMOTES === 'true';
 
 const imageInlineSizeLimit = parseInt(
   process.env.IMAGE_INLINE_SIZE_LIMIT || '10000'
@@ -231,10 +236,7 @@ module.exports = function (webpackEnv) {
         ? 'static/js/[name].[contenthash:8].chunk.js'
         : isEnvDevelopment && 'static/js/[name].chunk.js',
       assetModuleFilename: 'static/media/[name].[hash][ext]',
-      // webpack uses `publicPath` to determine where the app is being served from.
-      // It requires a trailing slash, or the file assets will get an incorrect path.
-      // We inferred the "public path" (such as / or /my-project) from homepage.
-      publicPath: paths.publicUrlOrPath,
+      publicPath: 'auto',
       // Point sourcemap entries to original disk location (format as URL on Windows)
       devtoolModuleFilenameTemplate: isEnvProduction
         ? info =>
@@ -353,6 +355,11 @@ module.exports = function (webpackEnv) {
       ],
     },
     module: {
+      generator: {
+        'asset/resource': {
+          publicPath: paths.publicUrlOrPath,
+        },
+      },
       strictExportPresence: true,
       rules: [
         // Handle node_modules packages that contain sourcemaps
@@ -617,7 +624,13 @@ module.exports = function (webpackEnv) {
           {
             inject: true,
             template: paths.appHtml,
+            publicPath: paths.publicUrlOrPath,
           },
+          paths.appMFConfigFile
+            ? {
+                excludeChunks: [require(paths.appMFConfigFile).name],
+              }
+            : undefined,
           isEnvProduction
             ? {
                 minify: {
@@ -804,6 +817,13 @@ module.exports = function (webpackEnv) {
             },
           },
         }),
+      paths.appMFConfigFile &&
+        new webpack.container.ModuleFederationPlugin(
+          require(paths.appMFConfigFile)
+        ),
+      paths.appMFConfigFile &&
+        shouldUseExternalTemplateRemotesPlugin &&
+        new ExternalTemplateRemotesPlugin(),
     ].filter(Boolean),
     // Turn off performance processing because we utilize
     // our own hints via the FileSizeReporter
