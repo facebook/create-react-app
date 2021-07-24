@@ -48,6 +48,7 @@ const moduleFileExtensions = [
 const moduleFederationConfigFiles = [
   '.modulefederationrc.json',
   '.modulefederationrc.js',
+  'modulefederation.config.js',
 ];
 
 // Resolve file paths in the same order as webpack
