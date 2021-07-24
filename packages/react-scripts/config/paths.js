@@ -46,8 +46,6 @@ const moduleFileExtensions = [
 ];
 
 const moduleFederationConfigFiles = [
-  '.modulefederationrc.json',
-  '.modulefederationrc.js',
   'modulefederation.config.js',
 ];
 
