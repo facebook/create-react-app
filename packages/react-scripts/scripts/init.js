@@ -62,6 +62,7 @@ function tryGitCommit(appPath) {
     execSync('git commit -m "Initialize project using Create React App"', {
       stdio: 'ignore',
     });
+    execSync('git branch -M main', { stdio: 'ignore' })
     return true;
   } catch (e) {
     // We couldn't commit in already initialized git repo,
