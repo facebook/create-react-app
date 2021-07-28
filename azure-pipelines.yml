@@ -55,11 +55,8 @@ jobs:
       name: Behavior
       testScript: tasks/e2e-behavior.sh
       configurations:
-        LinuxNode10: { vmImage: 'ubuntu-16.04', nodeVersion: 10.x }
         LinuxNode12: { vmImage: 'ubuntu-16.04', nodeVersion: 12.x }
-        WindowsNode10: { vmImage: 'windows-2019', nodeVersion: 10.x }
         WindowsNode12: { vmImage: 'windows-2019', nodeVersion: 12.x }
-        MacNode10: { vmImage: 'macOS-10.15', nodeVersion: 10.x }
         MacNode12: { vmImage: 'macOS-10.15', nodeVersion: 12.x }
 
   # ******************************************************************************
