@@ -27,6 +27,10 @@ const tests = [
     expected: 'file_class__2KnOB',
   },
   {
+    resourcePath: '/path/to/file.module.less',
+    expected: 'file_class__1yslt',
+  },
+  {
     resourcePath: '/path/to/file.name.module.css',
     expected: 'file_name_class__1OzEh',
   },
