@@ -42,6 +42,6 @@
     "confusing-browser-globals": "^1.0.10"
   },
   "engines": {
-    "node": "^10.12.0 || >=12.0.0"
+    "node": ">=14.0.0"
   }
 }
