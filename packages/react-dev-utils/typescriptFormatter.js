@@ -15,6 +15,7 @@ const fs = require('fs');
 const issueOrigins = {
   typescript: 'TypeScript',
   internal: 'fork-ts-checker-webpack-plugin',
+  eslint: 'ESLint', // prevents 'undefined error' message if people have enabled ESLint via fork-ts-checker-webpack-plugin
 };
 
 function formatter(issue) {
