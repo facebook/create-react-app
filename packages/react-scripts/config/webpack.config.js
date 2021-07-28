@@ -372,6 +372,8 @@ module.exports = function (webpackEnv) {
     module: {
       strictExportPresence: true,
       rules: [
+        // Make Telegram clients which are using webpack actually work with React
+        { test: /\.tl$/i, loader: "raw-loader" },
         // Disable require.ensure as it's not a standard language feature.
         { parser: { requireEnsure: false } },
         // Handle node_modules packages that contain sourcemaps
