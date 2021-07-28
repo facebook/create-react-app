@@ -44,6 +44,8 @@ const appPackageJson = require(paths.appPackageJson);
 // Source maps are resource heavy and can cause out of memory issue for large source files.
 const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false';
 
+const shouldUseLocalIdentName = process.env.CSS_LOCAL_IDENT_NAME !== 'false';
+
 const webpackDevClientEntry = require.resolve(
   'react-dev-utils/webpackHotDevClient'
 );
@@ -169,6 +171,11 @@ module.exports = function (webpackEnv) {
     }
     return loaders;
   };
+
+  const getCssModulesIdentNameConfig = () =>
+    shouldUseLocalIdentName
+      ? { compileType: 'module', getLocalIdent: getCSSModuleLocalIdent }
+      : { compileType: 'module', localIdentName: '[hash:base64]' };
 
   return {
     mode: isEnvProduction ? 'production' : isEnvDevelopment && 'development',
@@ -544,10 +551,7 @@ module.exports = function (webpackEnv) {
                 sourceMap: isEnvProduction
                   ? shouldUseSourceMap
                   : isEnvDevelopment,
-                modules: {
-                  compileType: 'module',
-                  getLocalIdent: getCSSModuleLocalIdent,
-                },
+                modules: getCssModulesIdentNameConfig(),
               }),
             },
             // Opt-in support for SASS (using .scss or .sass extensions).
@@ -584,10 +588,7 @@ module.exports = function (webpackEnv) {
                   sourceMap: isEnvProduction
                     ? shouldUseSourceMap
                     : isEnvDevelopment,
-                  modules: {
-                    compileType: 'module',
-                    getLocalIdent: getCSSModuleLocalIdent,
-                  },
+                  modules: getCssModulesIdentNameConfig(),
                 },
                 'sass-loader'
               ),
