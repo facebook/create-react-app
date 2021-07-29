@@ -7,8 +7,6 @@
 
 'use strict';
 
-require('./patch');
-
 // Inspired by https://github.com/airbnb/javascript but less opinionated.
 
 // We use eslint-loader so even warnings are very visible.

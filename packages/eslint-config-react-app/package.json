@@ -14,8 +14,7 @@
   "files": [
     "base.js",
     "index.js",
-    "jest.js",
-    "patch.js"
+    "jest.js"
   ],
   "peerDependencies": {
     "eslint": "^7.30.0"
