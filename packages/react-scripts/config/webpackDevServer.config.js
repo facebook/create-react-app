@@ -9,7 +9,6 @@
 'use strict';
 
 const fs = require('fs');
-const errorOverlayMiddleware = require('react-dev-utils/errorOverlayMiddleware');
 const evalSourceMapMiddleware = require('react-dev-utils/evalSourceMapMiddleware');
 const noopServiceWorkerMiddleware = require('react-dev-utils/noopServiceWorkerMiddleware');
 const ignoredFiles = require('react-dev-utils/ignoredFiles');
@@ -82,7 +81,7 @@ module.exports = function (proxy, allowedHost) {
         pathname: sockPath,
         port: sockPort,
       },
-      overlay: false,
+      overlay: true,
     },
     devMiddleware: {
       // It is important to tell WebpackDevServer to use the same "publicPath" path as
@@ -103,12 +102,10 @@ module.exports = function (proxy, allowedHost) {
     // `proxy` is run between `before` and `after` `webpack-dev-server` hooks
     proxy,
     onBeforeSetupMiddleware(app, server) {
-      // Keep `evalSourceMapMiddleware` and `errorOverlayMiddleware`
+      // Keep `evalSourceMapMiddleware`
       // middlewares before `redirectServedPath` otherwise will not have any effect
       // This lets us fetch source contents from webpack for the error overlay
       app.use(evalSourceMapMiddleware(server));
-      // This lets us open files from the runtime error overlay.
-      app.use(errorOverlayMiddleware());
 
       if (fs.existsSync(paths.proxySetup)) {
         // This registers user provided middleware for proxy reasons
