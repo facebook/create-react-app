@@ -7,7 +7,8 @@
 
 'use strict';
 
-require('./patch');
+// Fix eslint shareable config (https://github.com/eslint/eslint/issues/3458)
+require('@rushstack/eslint-patch/modern-module-resolution');
 
 // We use eslint-loader so even warnings are very visible.
 // This is why we prefer to use "WARNING" level for potential errors,
