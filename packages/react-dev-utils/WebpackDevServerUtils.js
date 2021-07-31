@@ -240,8 +240,7 @@ function createCompiler({
         messages.errors.length = 1;
       }
       console.log(chalk.red('Failed to compile.\n'));
-      console.log(messages.errors.join('\n\n'));
-      return;
+      console.log(messages.errors.join('\n\n'));      
     }
 
     // Show warnings if no errors were found.
