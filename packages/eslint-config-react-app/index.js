@@ -227,7 +227,6 @@ module.exports = {
     'getter-return': 'warn',
 
     // https://github.com/benmosher/eslint-plugin-import/tree/master/docs/rules
-    'import/no-unresolved': 'error',
     'import/first': 'error',
     'import/no-amd': 'error',
     'import/no-anonymous-default-export': 'warn',

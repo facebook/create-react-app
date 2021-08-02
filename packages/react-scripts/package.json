@@ -38,6 +38,7 @@
     "bfj": "^7.0.2",
     "browserslist": "^4.16.6",
     "camelcase": "^6.2.0",
+    "case-sensitive-paths-webpack-plugin": "2.4.0",
     "css-loader": "6.2.0",
     "css-minimizer-webpack-plugin": "3.0.2",
     "dotenv": "9.0.2",
