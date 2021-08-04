@@ -12,7 +12,7 @@
     "url": "https://github.com/facebook/create-react-app/issues"
   },
   "engines": {
-    "node": ">=10"
+    "node": ">=14"
   },
   "files": [
     "browsersHelper.js",
@@ -25,6 +25,7 @@
     "evalSourceMapMiddleware.js",
     "FileSizeReporter.js",
     "ForkTsCheckerWebpackPlugin.js",
+    "ForkTsCheckerWarningWebpackPlugin.js",
     "formatWebpackMessages.js",
     "getCacheIdentifier.js",
     "getCSSModuleLocalIdent.js",
@@ -47,7 +48,6 @@
     "redirectServedPathMiddleware.js",
     "refreshOverlayInterop.js",
     "typescriptFormatter.js",
-    "WatchMissingNodeModulesPlugin.js",
     "WebpackDevServerUtils.js",
     "webpackHotDevClient.js"
   ],
@@ -61,7 +61,7 @@
     "escape-string-regexp": "2.0.0",
     "filesize": "6.1.0",
     "find-up": "4.1.0",
-    "fork-ts-checker-webpack-plugin": "4.1.6",
+    "fork-ts-checker-webpack-plugin": "6.0.5",
     "global-modules": "2.0.0",
     "globby": "11.0.1",
     "gzip-size": "5.1.1",

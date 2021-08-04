@@ -12,7 +12,7 @@
     "url": "https://github.com/facebook/create-react-app/issues"
   },
   "engines": {
-    "node": ">=10"
+    "node": ">=14"
   },
   "files": [
     "ie9.js",

@@ -6,8 +6,8 @@ parameters:
   name: ''
   testScript: ''
   configurations:
-    LinuxNode10: { vmImage: 'ubuntu-16.04', nodeVersion: 10.x }
-    LinuxNode12: { vmImage: 'ubuntu-16.04', nodeVersion: 12.x }
+    LinuxNode14: { vmImage: 'ubuntu-latest', nodeVersion: 14.x }
+    LinuxNode16: { vmImage: 'ubuntu-latest', nodeVersion: 16.x }
 
 jobs:
   - job: ${{ parameters.name }}

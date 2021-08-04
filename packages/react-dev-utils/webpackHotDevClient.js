@@ -63,7 +63,7 @@ var connection = new WebSocket(
     hostname: process.env.WDS_SOCKET_HOST || window.location.hostname,
     port: process.env.WDS_SOCKET_PORT || window.location.port,
     // Hardcoded in WebpackDevServer
-    pathname: process.env.WDS_SOCKET_PATH || '/sockjs-node',
+    pathname: process.env.WDS_SOCKET_PATH || '/ws',
     slashes: true,
   })
 );
@@ -239,7 +239,7 @@ function canAcceptErrors() {
   // However, when hot-reload status is abort or fail,
   // it indicates the current update cannot be applied safely,
   // and thus we should bail out to a forced reload for consistency.
-  return hasReactRefresh && ["abort", "fail"].indexOf(status) === -1
+  return hasReactRefresh && ['abort', 'fail'].indexOf(status) === -1;
 }
 
 // Attempt to update code on the fly, fall back to a hard reload.
