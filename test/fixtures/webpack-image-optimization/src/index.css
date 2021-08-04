@@ -1,0 +1,5 @@
+#root {
+  width: 300px;
+  height: 300px;
+  background: url(./images/webpack-unoptimized.png) center/cover no-repeat;
+}
