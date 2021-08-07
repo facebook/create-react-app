@@ -329,7 +329,7 @@ module.exports = function (webpackEnv) {
           enforce: 'pre',
           exclude: /@babel(?:\/|\\{1,2})runtime/,
           test: /\.(js|mjs|jsx|ts|tsx|css)$/,
-          use: 'source-map-loader',
+          loader: require.resolve('source-map-loader'),
         },
         {
           // "oneOf" will traverse all following loaders until one will
@@ -364,7 +364,7 @@ module.exports = function (webpackEnv) {
               test: /\.svg$/,
               use: [
                 {
-                  loader: '@svgr/webpack',
+                  loader: require.resolve('@svgr/webpack'),
                   options: {
                     prettier: false,
                     svgo: false,
@@ -376,7 +376,7 @@ module.exports = function (webpackEnv) {
                   },
                 },
                 {
-                  loader: 'file-loader',
+                  loader: require.resolve('file-loader'),
                   options: {
                     name: 'static/media/[name].[hash].[ext]',
                   },
