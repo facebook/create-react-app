@@ -70,6 +70,7 @@
     "semver": "7.3.5",
     "source-map-loader": "^1.1.2",
     "style-loader": "3.0.0",
+    "terser-webpack-plugin": "^5.1.4",
     "webpack": "5.41.1",
     "webpack-dev-server": "4.0.0",
     "webpack-manifest-plugin": "3.1.1",
