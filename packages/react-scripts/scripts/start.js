@@ -44,10 +44,14 @@ const {
   prepareUrls,
 } = require('react-dev-utils/WebpackDevServerUtils');
 const openBrowser = require('react-dev-utils/openBrowser');
+const semver = require('semver');
 const paths = require('../config/paths');
 const configFactory = require('../config/webpack.config');
 const createDevServerConfig = require('../config/webpackDevServer.config');
+const getClientEnvironment = require('../config/env');
+const react = require(require.resolve('react', { paths: [paths.appPath] }));
 
+const env = getClientEnvironment(paths.publicUrlOrPath.slice(0, -1));
 const useYarn = fs.existsSync(paths.yarnLockFile);
 const isInteractive = process.stdout.isTTY;
 
@@ -95,29 +99,21 @@ checkBrowsers(paths.appPath, isInteractive)
     const config = configFactory('development');
     const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
     const appName = require(paths.appPackageJson).name;
+
     const useTypeScript = fs.existsSync(paths.appTsConfig);
-    const tscCompileOnError = process.env.TSC_COMPILE_ON_ERROR === 'true';
     const urls = prepareUrls(
       protocol,
       HOST,
       port,
       paths.publicUrlOrPath.slice(0, -1)
     );
-    const devSocket = {
-      warnings: warnings =>
-        devServer.sockWrite(devServer.sockets, 'warnings', warnings),
-      errors: errors =>
-        devServer.sockWrite(devServer.sockets, 'errors', errors),
-    };
     // Create a webpack compiler that is configured with custom messages.
     const compiler = createCompiler({
       appName,
       config,
-      devSocket,
       urls,
       useYarn,
       useTypeScript,
-      tscCompileOnError,
       webpack,
     });
     // Load proxy config
@@ -142,16 +138,12 @@ checkBrowsers(paths.appPath, isInteractive)
         clearConsole();
       }
 
-      // We used to support resolving modules according to `NODE_PATH`.
-      // This now has been deprecated in favor of jsconfig/tsconfig.json
-      // This lets you use absolute paths in imports inside large monorepos:
-      if (process.env.NODE_PATH) {
+      if (env.raw.FAST_REFRESH && semver.lt(react.version, '16.10.0')) {
         console.log(
           chalk.yellow(
-            'Setting NODE_PATH to resolve modules absolutely has been deprecated in favor of setting baseUrl in jsconfig.json (or tsconfig.json if you are using TypeScript) and will be removed in a future major release of create-react-app.'
+            `Fast Refresh requires React 16.10 or higher. You are using React ${react.version}.`
           )
         );
-        console.log();
       }
 
       console.log(chalk.cyan('Starting the development server...\n'));

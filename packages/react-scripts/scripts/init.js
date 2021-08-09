@@ -103,6 +103,13 @@ module.exports = function (
         'create-react-app'
       )} are no longer supported.`
     );
+    console.error(
+      `You can fix this by running ${chalk.cyan(
+        'npm uninstall -g create-react-app'
+      )} or ${chalk.cyan(
+        'yarn global remove create-react-app'
+      )} before using ${chalk.cyan('create-react-app')} again.`
+    );
     return;
   }
 
@@ -110,13 +117,7 @@ module.exports = function (
     require.resolve(`${templateName}/package.json`, { paths: [appPath] })
   );
 
-  let templateJsonPath;
-  if (templateName) {
-    templateJsonPath = path.join(templatePath, 'template.json');
-  } else {
-    // TODO: Remove support for this in v4.
-    templateJsonPath = path.join(appPath, '.template.dependencies.json');
-  }
+  const templateJsonPath = path.join(templatePath, 'template.json');
 
   let templateJson = {};
   if (fs.existsSync(templateJsonPath)) {
@@ -125,23 +126,16 @@ module.exports = function (
 
   const templatePackage = templateJson.package || {};
 
-  // TODO: Deprecate support for root-level `dependencies` and `scripts` in v4.
-  // These should now be set under the `package` key.
+  // This was deprecated in CRA v5.
   if (templateJson.dependencies || templateJson.scripts) {
     console.log();
     console.log(
-      chalk.yellow(
-        'Root-level `dependencies` and `scripts` keys in `template.json` are deprecated.\n' +
-          'This template should be updated to use the new `package` key.'
+      chalk.red(
+        'Root-level `dependencies` and `scripts` keys in `template.json` were deprecated for Create React App 5.\n' +
+          'This template needs to be updated to use the new `package` key.'
       )
     );
     console.log('For more information, visit https://cra.link/templates');
-  }
-  if (templateJson.dependencies) {
-    templatePackage.dependencies = templateJson.dependencies;
-  }
-  if (templateJson.scripts) {
-    templatePackage.scripts = templateJson.scripts;
   }
 
   // Keys to ignore in templatePackage
@@ -296,7 +290,12 @@ module.exports = function (
   } else {
     command = 'npm';
     remove = 'uninstall';
-    args = ['install', '--save', verbose && '--verbose'].filter(e => e);
+    args = [
+      'install',
+      '--no-audit', // https://github.com/facebook/create-react-app/issues/11174
+      '--save',
+      verbose && '--verbose',
+    ].filter(e => e);
   }
 
   // Install additional template dependencies, if present.

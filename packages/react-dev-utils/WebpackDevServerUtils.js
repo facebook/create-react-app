@@ -13,11 +13,10 @@ const url = require('url');
 const chalk = require('chalk');
 const detect = require('detect-port-alt');
 const isRoot = require('is-root');
-const inquirer = require('inquirer');
+const prompts = require('prompts');
 const clearConsole = require('./clearConsole');
 const formatWebpackMessages = require('./formatWebpackMessages');
 const getProcessForPort = require('./getProcessForPort');
-const typescriptFormatter = require('./typescriptFormatter');
 const forkTsCheckerWebpackPlugin = require('./ForkTsCheckerWebpackPlugin');
 
 const isInteractive = process.stdout.isTTY;
@@ -104,11 +103,9 @@ function printInstructions(appName, urls, useYarn) {
 function createCompiler({
   appName,
   config,
-  devSocket,
   urls,
   useYarn,
   useTypeScript,
-  tscCompileOnError,
   webpack,
 }) {
   // "Compiler" is a low-level interface to webpack.
@@ -137,28 +134,16 @@ function createCompiler({
 
   let isFirstCompile = true;
   let tsMessagesPromise;
-  let tsMessagesResolver;
 
   if (useTypeScript) {
-    compiler.hooks.beforeCompile.tap('beforeCompile', () => {
-      tsMessagesPromise = new Promise(resolve => {
-        tsMessagesResolver = msgs => resolve(msgs);
-      });
-    });
-
     forkTsCheckerWebpackPlugin
       .getCompilerHooks(compiler)
-      .receive.tap('afterTypeScriptCheck', (diagnostics, lints) => {
-        const allMsgs = [...diagnostics, ...lints];
-        const format = message =>
-          `${message.file}\n${typescriptFormatter(message, true)}`;
-
-        tsMessagesResolver({
-          errors: allMsgs.filter(msg => msg.severity === 'error').map(format),
-          warnings: allMsgs
-            .filter(msg => msg.severity === 'warning')
-            .map(format),
-        });
+      .waiting.tap('awaitingTypeScriptCheck', () => {
+        console.log(
+          chalk.yellow(
+            'Files successfully emitted, waiting for typecheck results...'
+          )
+        );
       });
   }
 
@@ -179,48 +164,6 @@ function createCompiler({
       warnings: true,
       errors: true,
     });
-
-    if (useTypeScript && statsData.errors.length === 0) {
-      const delayedMsg = setTimeout(() => {
-        console.log(
-          chalk.yellow(
-            'Files successfully emitted, waiting for typecheck results...'
-          )
-        );
-      }, 100);
-
-      const messages = await tsMessagesPromise;
-      clearTimeout(delayedMsg);
-      if (tscCompileOnError) {
-        statsData.warnings.push(...messages.errors);
-      } else {
-        statsData.errors.push(...messages.errors);
-      }
-      statsData.warnings.push(...messages.warnings);
-
-      // Push errors and warnings into compilation result
-      // to show them after page refresh triggered by user.
-      if (tscCompileOnError) {
-        stats.compilation.warnings.push(...messages.errors);
-      } else {
-        stats.compilation.errors.push(...messages.errors);
-      }
-      stats.compilation.warnings.push(...messages.warnings);
-
-      if (messages.errors.length > 0) {
-        if (tscCompileOnError) {
-          devSocket.warnings(messages.errors);
-        } else {
-          devSocket.errors(messages.errors);
-        }
-      } else if (messages.warnings.length > 0) {
-        devSocket.warnings(messages.warnings);
-      }
-
-      if (isInteractive) {
-        clearConsole();
-      }
-    }
 
     const messages = formatWebpackMessages(statsData);
     const isSuccessful = !messages.errors.length && !messages.warnings.length;
@@ -377,7 +320,7 @@ function prepareProxy(proxy, appPublicFolder, servedPathname) {
   // If proxy is specified, let it handle any request except for
   // files in the public folder and requests to the WebpackDevServer socket endpoint.
   // https://github.com/facebook/create-react-app/issues/6720
-  const sockPath = process.env.WDS_SOCKET_PATH || '/sockjs-node';
+  const sockPath = process.env.WDS_SOCKET_PATH || '/ws';
   const isDefaultSockHost = !process.env.WDS_SOCKET_HOST;
   function mayProxy(pathname) {
     const maybePublicPath = path.resolve(
@@ -467,9 +410,9 @@ function choosePort(host, defaultPort) {
                 message +
                   `${existingProcess ? ` Probably:\n  ${existingProcess}` : ''}`
               ) + '\n\nWould you like to run the app on another port instead?',
-            default: true,
+            initial: true,
           };
-          inquirer.prompt(question).then(answer => {
+          prompts(question).then(answer => {
             if (answer.shouldChangePort) {
               resolve(port);
             } else {
