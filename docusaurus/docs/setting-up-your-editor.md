@@ -78,9 +78,9 @@ Then add the block below to your `launch.json` file and put it inside the `.vsco
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Chrome",
-      "type": "chrome",
+      "name": "Attach to Chrome",
       "request": "launch",
+      "type": "pwa-chrome",
       "url": "http://localhost:3000",
       "webRoot": "${workspaceFolder}/src",
       "sourceMapPathOverrides": {
