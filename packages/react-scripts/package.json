@@ -29,7 +29,7 @@
   "types": "./lib/react-app.d.ts",
   "dependencies": {
     "@babel/core": "7.14.2",
-    "@pmmmwh/react-refresh-webpack-plugin": "0.5.0-rc.0",
+    "@pmmmwh/react-refresh-webpack-plugin": "0.5.0-rc.3",
     "@svgr/webpack": "5.5.0",
     "babel-jest": "^26.6.0",
     "babel-loader": "8.2.2",
