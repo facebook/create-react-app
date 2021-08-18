@@ -59,6 +59,7 @@ function tryGitInit() {
 function tryGitCommit(appPath) {
   try {
     execSync('git add -A', { stdio: 'ignore' });
+    execSync('git branch -M main', { stdio: 'ignore' });
     execSync('git commit -m "Initialize project using Create React App"', {
       stdio: 'ignore',
     });
