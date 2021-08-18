@@ -433,7 +433,8 @@ module.exports = function (webpackEnv) {
                 // It enables caching results in ./node_modules/.cache/babel-loader/
                 // directory for faster rebuilds.
                 cacheDirectory: true,
-                // See #6846 for context on why cacheCompression is disabled
+                // See https://github.com/facebook/create-react-app/issues/6846 
+                // for context on why cacheCompression is disabled
                 cacheCompression: false,
                 compact: isEnvProduction,
               },
@@ -455,7 +456,8 @@ module.exports = function (webpackEnv) {
                   ],
                 ],
                 cacheDirectory: true,
-                // See #6846 for context on why cacheCompression is disabled
+                // See https://github.com/facebook/create-react-app/issues/6846 
+                // for context on why cacheCompression is disabled
                 cacheCompression: false,
                 // @remove-on-eject-begin
                 cacheIdentifier: getCacheIdentifier(
