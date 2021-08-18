@@ -71,7 +71,7 @@
     "source-map-loader": "^1.1.2",
     "style-loader": "3.0.0",
     "webpack": "5.41.1",
-    "webpack-dev-server": "4.0.0-rc.0",
+    "webpack-dev-server": "4.0.0-rc.1",
     "webpack-manifest-plugin": "3.1.1",
     "workbox-webpack-plugin": "6.1.5"
   },
