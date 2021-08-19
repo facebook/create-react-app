@@ -164,6 +164,12 @@ module.exports = function (api, opts, env) {
           loose: true,
         },
       ],
+      [
+        require('@babel/plugin-proposal-private-property-in-object').default,
+        {
+          loose: true,
+        },
+      ],
       // Adds Numeric Separators
       require('@babel/plugin-proposal-numeric-separator').default,
       // Polyfills the runtime needed for async/await, generators, and friends
