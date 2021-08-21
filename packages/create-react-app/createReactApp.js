@@ -49,6 +49,10 @@ const validateProjectName = require('validate-npm-package-name');
 
 const packageJson = require('./package.json');
 
+// Environments behind corporate proxies require NO_UPDATE_NOTIFIER variable
+// for npm to work in child_process
+const npmExecOptions = { env: { ...process.env, NO_UPDATE_NOTIFIER: 'true' } };
+
 let projectName;
 
 function init() {
@@ -195,7 +199,9 @@ function init() {
   checkForLatestVersion()
     .catch(() => {
       try {
-        return execSync('npm view create-react-app version').toString().trim();
+        return execSync('npm view create-react-app version', npmExecOptions)
+          .toString()
+          .trim();
       } catch (e) {
         return null;
       }
@@ -778,7 +784,7 @@ function checkNpmVersion() {
   let hasMinNpm = false;
   let npmVersion = null;
   try {
-    npmVersion = execSync('npm --version').toString().trim();
+    npmVersion = execSync('npm --version', npmExecOptions).toString().trim();
     hasMinNpm = semver.gte(npmVersion, '6.0.0');
   } catch (err) {
     // ignore
@@ -1015,7 +1021,9 @@ function getProxy() {
   } else {
     try {
       // Trying to read https-proxy from .npmrc
-      let httpsProxy = execSync('npm config get https-proxy').toString().trim();
+      let httpsProxy = execSync('npm config get https-proxy', npmExecOptions)
+        .toString()
+        .trim();
       return httpsProxy !== 'null' ? httpsProxy : undefined;
     } catch (e) {
       return;
