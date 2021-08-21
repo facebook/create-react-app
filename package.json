@@ -24,6 +24,8 @@
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
     "alex": "^8.2.0",
     "eslint": "^7.30.0",
     "execa": "1.0.0",
@@ -42,6 +44,7 @@
     "strip-ansi": "^6.0.0",
     "svg-term-cli": "^2.1.1",
     "tempy": "^0.2.1",
+    "typescript": "^4.1.2",
     "wait-for-localhost": "^3.3.0",
     "web-vitals": "^1.0.1"
   },
