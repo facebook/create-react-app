@@ -11,7 +11,13 @@ jest.setTimeout(1000 * 60 * 5);
 const projectName = 'test-app';
 const genPath = join(__dirname, projectName);
 
-const generatedFiles = ['.gitignore', 'package.json', 'src', 'yarn.lock'];
+const generatedFiles = [
+  '.gitignore',
+  'package.json',
+  'src',
+  'yarn.lock',
+  '.editorconfig',
+];
 
 beforeEach(() => remove(genPath));
 afterAll(() => remove(genPath));
