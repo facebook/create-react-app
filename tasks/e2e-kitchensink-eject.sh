@@ -117,10 +117,6 @@ export BROWSERSLIST='ie 9'
 # Eject...
 echo yes | npm run eject
 
-# Temporary workaround for https://github.com/facebook/create-react-app/issues/6099
-rm yarn.lock
-yarn add @babel/plugin-transform-react-jsx-source @babel/plugin-syntax-jsx @babel/plugin-transform-react-jsx @babel/plugin-transform-react-jsx-self
-
 # Test the build
 REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
   NODE_PATH=src \
