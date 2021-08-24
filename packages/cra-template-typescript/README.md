@@ -7,7 +7,7 @@ To use this template, add `--template typescript` when creating a new app.
 For example:
 
 ```sh
-npx create-react-app my-app --template typescript
+npx create-react-app my-app --use-npm --template typescript
 
 # or
 
