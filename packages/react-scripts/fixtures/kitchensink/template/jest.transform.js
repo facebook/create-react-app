@@ -1,3 +1,5 @@
 const babelOptions = { presets: ['react-app'] };
 
-module.exports = require('babel-jest').createTransformer(babelOptions);
+const babelJest = require('babel-jest').default;
+
+module.exports = babelJest.createTransformer(babelOptions);
