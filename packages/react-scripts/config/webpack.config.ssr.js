@@ -188,6 +188,12 @@ module.exports = function (webpackEnv) {
     if (preProcessor) {
       loaders.push(
         ...[
+          // shouldUseCacheLoader && {
+          //   loader: require.resolve('cache-loader'),
+          //   options: {
+          //     cacheDirectory: paths.cacheLoaderDir,
+          //   },
+          // },
           {
             loader: require.resolve('resolve-url-loader'),
             options: {
@@ -195,14 +201,6 @@ module.exports = function (webpackEnv) {
               root: paths.appSrc,
             },
           },
-          // Because sass-loader is the most expensive, so put cache-loader here to only cache sass-loader
-          // Note that there is an overhead for saving the reading and saving the cache file, so only use this loader to cache expensive loaders.
-          // shouldUseCacheLoader && {
-          //   loader: require.resolve('cache-loader'),
-          //   options: {
-          //     cacheDirectory: paths.cacheLoaderDir,
-          //   },
-          // },
           {
             loader: require.resolve(preProcessor),
             options: {
@@ -734,8 +732,8 @@ module.exports = function (webpackEnv) {
               exclude: sassModuleRegex,
               use: getStyleLoaders(
                 {
-                  // When using sass-loader, the total count of loaders is up to 4 including cache-loader below the css-loader
-                  // When not using sass-loader, the total count of loaders is 3 not including cache-loader below the css-loader
+                  // When using cache-loader, the total count of loaders is up to 4 including cache-loader below the css-loader
+                  // When not using cache-loader, the total count of loaders is 3 not including cache-loader below the css-loader
                   // importLoaders: shouldUseCacheLoader ? 4 : 3,
                   importLoaders: 3,
                   sourceMap: isEnvProduction
@@ -771,8 +769,8 @@ module.exports = function (webpackEnv) {
               ],
               use: getStyleLoaders(
                 {
-                  // When using sass-loader, the total count of loaders is up to 4 including cache-loader below the css-loader
-                  // When not using sass-loader, the total count of loaders is 3 not including cache-loader below the css-loader
+                  // When using cache-loader, the total count of loaders is up to 4 including cache-loader below the css-loader
+                  // When not using cache-loader, the total count of loaders is 3 not including cache-loader below the css-loader
                   // importLoaders: shouldUseCacheLoader ? 4 : 3,
                   importLoaders: 3,
                   sourceMap: isEnvProduction
