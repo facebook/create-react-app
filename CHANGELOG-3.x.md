@@ -431,7 +431,7 @@ We've removed this rule as it is not compatible with Prettier. If you rely on th
   - [#7921](https://github.com/facebook/create-react-app/pull/7921) Add restoreMocks to supported jest config keys ([@ianschmitz](https://github.com/ianschmitz))
   - [#6352](https://github.com/facebook/create-react-app/pull/6352) Add additional information for postcss errors (#6282) ([@buildbreakdo](https://github.com/buildbreakdo))
   - [#6753](https://github.com/facebook/create-react-app/pull/6753) Add Service-Worker header to checkValidServiceWorker ([@darthmaim](https://github.com/darthmaim))
-  - [#7832](https://github.com/facebook/create-react-app/pull/7832) feat: add additional Jest keys to whitelist ([@mrmckeb](https://github.com/mrmckeb))
+  - [#7832](https://github.com/facebook/create-react-app/pull/7832) Add additional Jest keys to whitelist ([@mrmckeb](https://github.com/mrmckeb))
   - [#7022](https://github.com/facebook/create-react-app/pull/7022) Fix node_modules sourcemap config (which will fix VSCode debugging of CRA apps) ([@justingrant](https://github.com/justingrant))
 - `cra-template`
   - [#7931](https://github.com/facebook/create-react-app/pull/7931) No spinning React logo if `prefers-reduced-motion` ([@donavon](https://github.com/donavon))
@@ -462,7 +462,7 @@ We've removed this rule as it is not compatible with Prettier. If you rely on th
 - `react-dev-utils`, `react-scripts`
   - [#7972](https://github.com/facebook/create-react-app/pull/7972) Add placeholders where old template READMEs used to be ([@iansu](https://github.com/iansu))
 - `babel-preset-react-app`
-  - [#7932](https://github.com/facebook/create-react-app/pull/7932) fix seperators typo ([@donavon](https://github.com/donavon))
+  - [#7932](https://github.com/facebook/create-react-app/pull/7932) fix separators typo ([@donavon](https://github.com/donavon))
 - `react-dev-utils`
   - [#7897](https://github.com/facebook/create-react-app/pull/7897) chore: Fix broken link for CRA deployment ([@haruelrovix](https://github.com/haruelrovix))
 - `react-scripts`
