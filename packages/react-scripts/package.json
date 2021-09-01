@@ -52,7 +52,7 @@
     "identity-obj-proxy": "3.0.0",
     "jest": "27.1.0",
     "jest-resolve": "27.1.0",
-    "jest-watch-typeahead": "0.6.1",
+    "jest-watch-typeahead": "0.6.4",
     "mini-css-extract-plugin": "2.1.0",
     "postcss": "8.3.5",
     "postcss-flexbugs-fixes": "5.0.2",
