@@ -89,7 +89,7 @@ then
 fi
 
 # Bootstrap monorepo
-yarn
+npm install
 
 # ******************************************************************************
 # First, publish the monorepo.
@@ -163,9 +163,9 @@ exists src/react-app-env.d.ts
 checkTypeScriptDependencies
 
 # Check that the TypeScript template passes smoke tests, build, and normal tests
-yarn start --smoke-test
-yarn build
-CI=true yarn test
+npm start -- --smoke-test
+npm run build
+CI=true npm test
 
 # Check eject behaves and works
 
@@ -180,9 +180,9 @@ yarn add @babel/plugin-transform-react-jsx-source @babel/plugin-syntax-jsx @babe
 exists src/react-app-env.d.ts
 
 # Check that the TypeScript template passes ejected smoke tests, build, and normal tests
-yarn start --smoke-test
-yarn build
-CI=true yarn test
+npm start -- --smoke-test
+npm run build
+CI=true npm test
 
 # ******************************************************************************
 # Test --scripts-version with a tarball url
@@ -258,20 +258,20 @@ cd test-app-nested-paths-t1
 mkdir -p test-app-nested-paths-t1/aa/bb/cc/dd
 npx create-react-app test-app-nested-paths-t1/aa/bb/cc/dd
 cd test-app-nested-paths-t1/aa/bb/cc/dd
-yarn start --smoke-test
+npm start -- --smoke-test
 
 # Testing a path that does not exist
 cd "$temp_app_path"
 npx create-react-app test-app-nested-paths-t2/aa/bb/cc/dd
 cd test-app-nested-paths-t2/aa/bb/cc/dd
-yarn start --smoke-test
+npm start -- --smoke-test
 
 # Testing a path that is half exists
 cd "$temp_app_path"
 mkdir -p test-app-nested-paths-t3/aa
 npx create-react-app test-app-nested-paths-t3/aa/bb/cc/dd
 cd test-app-nested-paths-t3/aa/bb/cc/dd
-yarn start --smoke-test
+npm start -- --smoke-test
 
 # ******************************************************************************
 # Test when PnP is enabled
@@ -281,8 +281,8 @@ npx create-react-app test-app-pnp --use-pnp
 cd test-app-pnp
 ! exists node_modules
 exists .pnp.js
-yarn start --smoke-test
-yarn build
+npm start -- --smoke-test
+npm run build
 
 # Cleanup
 cleanup

@@ -6,8 +6,14 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+          cache: 'npm'
+      - name: Install npm@7
+        run: npm i -g npm@7
       - name: Install
-        run: yarn --no-progress --non-interactive --no-lockfile
+        run: npm ci --prefer-offline
       - name: Build
-        run: yarn build
+        run: npm run build
