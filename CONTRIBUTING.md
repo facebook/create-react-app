@@ -90,24 +90,26 @@ All functionality must be retained (and configuration given to the user) if they
 
 ## Setting Up a Local Copy
 
+You will need `npm@7` and `yarn@1` in order to bootstrap and test a local copy of this repo.
+
 1. Clone the repo with `git clone https://github.com/facebook/create-react-app`
 
-2. Run `yarn` in the root `create-react-app` folder.
+2. Run `npm install` in the root `create-react-app` folder.
 
-Once it is done, you can modify any file locally and run `yarn start`, `yarn test` or `yarn build` like you can in a generated project. It will serve the application from the files located in `packages/cra-template/template`.
+Once it is done, you can modify any file locally and run `npm start`, `npm test` or `npm run build` like you can in a generated project. It will serve the application from the files located in `packages/cra-template/template`.
 
 If you want to try out the end-to-end flow with the global CLI, you can do this too:
 
 ```sh
-yarn create-react-app my-app
+npx create-react-app my-app
 cd my-app
 ```
 
-and then run `yarn start` or `yarn build`.
+and then run `npm start` or `npm run build`.
 
 ## Contributing to E2E (end to end) tests
 
-**TL;DR** use the command `yarn e2e:docker` to run unit and e2e tests.
+**TL;DR** use the command `npm run e2e:docker` to run unit and e2e tests.
 
 More detailed information are in the dedicated [README](/test/README.md).
 
@@ -143,11 +145,11 @@ By default git would use `CRLF` line endings which would cause the scripts to fa
 2. Close the milestone and create a new one for the next release.
 3. In most releases, only `react-scripts` needs to be released. If you don’t have any changes to the `packages/create-react-app` folder, you don’t need to bump its version or publish it (the publish script will publish only changed packages).
 4. Note that files in `packages/create-react-app` should be modified with extreme caution. Since it’s a global CLI, any version of `create-react-app` (global CLI) including very old ones should work with the latest version of `react-scripts`.
-5. Run `yarn compile:lockfile`. The command will generate an updated lockfile in `packages/create-react-app` that should be committed.
+5. Run `npm run compile:lockfile`. The command will generate an updated lockfile in `packages/create-react-app` that should be committed.
 6. Create a change log entry for the release:
 
 - You'll need an [access token for the GitHub API](https://help.github.com/articles/creating-an-access-token-for-command-line-use/). Save it to this environment variable: `export GITHUB_AUTH="..."`
-- Run `yarn changelog`. The command will find all the labeled pull requests merged since the last release and group them by the label and affected packages, and create a change log entry with all the changes and links to PRs and their authors. Copy and paste it to `CHANGELOG.md`.
+- Run `npm run changelog`. The command will find all the labeled pull requests merged since the last release and group them by the label and affected packages, and create a change log entry with all the changes and links to PRs and their authors. Copy and paste it to `CHANGELOG.md`.
 - Add a four-space indented paragraph after each non-trivial list item, explaining what changed and why. For each breaking change also write who it affects and instructions for migrating existing code.
 - Maybe add some newlines here and there. Preview the result on GitHub to get a feel for it. Changelog generator output is a bit too terse for my taste, so try to make it visually pleasing and well grouped.
 
@@ -161,9 +163,9 @@ Make sure to test the released version! If you want to be extra careful, you can
 ## Releasing the Docs
 
 1. Go to the `docusaurus/website` directory
-2. Run `yarn build`
+2. Run `npm run build`
 3. You'll need an [access token for the GitHub API](https://help.github.com/articles/creating-an-access-token-for-command-line-use/). Save it to this environment variable: `export GITHUB_AUTH="..."`
-4. Run `GIT_USER=<GITHUB_USERNAME> CURRENT_BRANCH=main USE_SSH=true yarn deploy`
+4. Run `GIT_USER=<GITHUB_USERNAME> CURRENT_BRANCH=main USE_SSH=true npm run deploy`
 
 ---
 

@@ -5,7 +5,7 @@ const tempy = require('tempy');
 const ReactScripts = require('./scripts');
 
 module.exports = class TestSetup {
-  constructor(fixtureName, templateDirectory, { pnp = true } = {}) {
+  constructor(fixtureName, templateDirectory) {
     this.fixtureName = fixtureName;
 
     this.templateDirectory = templateDirectory;
@@ -16,7 +16,6 @@ module.exports = class TestSetup {
     this.teardown = this.teardown.bind(this);
 
     this.isLocal = !(process.env.CI && process.env.CI !== 'false');
-    this.settings = { pnp: pnp && !this.isLocal };
   }
 
   async setup() {
@@ -28,7 +27,6 @@ module.exports = class TestSetup {
     );
     await fs.copy(this.templateDirectory, this.testDirectory);
     await fs.remove(path.resolve(this.testDirectory, 'test.partial.js'));
-    await fs.remove(path.resolve(this.testDirectory, '.disable-pnp'));
 
     const packageJson = await fs.readJson(
       path.resolve(this.testDirectory, 'package.json')
@@ -51,18 +49,9 @@ module.exports = class TestSetup {
       packageJson
     );
 
-    await execa(
-      'yarnpkg',
-      [
-        'install',
-        this.settings.pnp ? '--enable-pnp' : null,
-        '--mutex',
-        'network',
-      ].filter(Boolean),
-      {
-        cwd: this.testDirectory,
-      }
-    );
+    await execa('npm', ['install'], {
+      cwd: this.testDirectory,
+    });
 
     if (!shouldInstallScripts) {
       await fs.ensureSymlink(
@@ -78,7 +67,7 @@ module.exports = class TestSetup {
         ),
         path.join(this.testDirectory, 'node_modules', '.bin', 'react-scripts')
       );
-      await execa('yarnpkg', ['link', 'react-scripts'], {
+      await execa('npm', ['link', 'react-scripts'], {
         cwd: this.testDirectory,
       });
     }
