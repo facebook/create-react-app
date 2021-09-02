@@ -145,7 +145,7 @@ By default git would use `CRLF` line endings which would cause the scripts to fa
 2. Close the milestone and create a new one for the next release.
 3. In most releases, only `react-scripts` needs to be released. If you don’t have any changes to the `packages/create-react-app` folder, you don’t need to bump its version or publish it (the publish script will publish only changed packages).
 4. Note that files in `packages/create-react-app` should be modified with extreme caution. Since it’s a global CLI, any version of `create-react-app` (global CLI) including very old ones should work with the latest version of `react-scripts`.
-5. Run `npm run compile:lockfile`. The command will generate an updated lockfile in `packages/create-react-app` that should be committed.
+5. Pull the latest changes from GitHub, run `npm ci` and then `npm run compile:lockfile`. The command will generate an updated lockfile in `packages/create-react-app` that should be committed.
 6. Create a change log entry for the release:
 
 - You'll need an [access token for the GitHub API](https://help.github.com/articles/creating-an-access-token-for-command-line-use/). Save it to this environment variable: `export GITHUB_AUTH="..."`
