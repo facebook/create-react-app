@@ -30,11 +30,11 @@
     "fs-extra": "^9.0.1",
     "get-port": "^5.1.1",
     "globby": "^11.0.1",
-    "husky": "^4.3.0",
+    "husky": "^5.0.8",
     "jest": "26.6.0",
     "lerna": "3.22.1",
     "lerna-changelog": "~0.8.2",
-    "lint-staged": "^10.4.2",
+    "lint-staged": "^10.5.3",
     "meow": "^6.1.1",
     "multimatch": "^4.0.0",
     "prettier": "2.1.2",
@@ -44,11 +44,6 @@
     "tempy": "^0.2.1",
     "wait-for-localhost": "^3.3.0",
     "web-vitals": "^1.0.1"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
   },
   "lint-staged": {
     "*.{js,json,yml,yaml,css,scss,ts,tsx,md}": [
