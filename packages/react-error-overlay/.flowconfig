@@ -2,7 +2,6 @@
 <PROJECT_ROOT>/src/**/*.js
 
 [ignore]
-.*/node_modules/.*
 .*/.git/.*
 .*/__test__/.*
 .*/fixtures/.*
