@@ -35,8 +35,8 @@
     "lib/index.js"
   ],
   "devDependencies": {
-    "@babel/code-frame": "^7.12.13",
-    "@babel/core": "^7.14.2",
+    "@babel/code-frame": "^7.16.0",
+    "@babel/core": "^7.16.0",
     "anser": "^1.4.10",
     "babel-jest": "^27.1.0",
     "babel-loader": "^8.2.2",
@@ -44,7 +44,7 @@
     "chalk": "^2.4.2",
     "chokidar": "^3.5.1",
     "cross-env": "^7.0.3",
-    "eslint": "^7.30.0",
+    "eslint": "^8.3.0",
     "eslint-config-react-app": "^6.0.0",
     "flow-bin": "^0.116.0",
     "html-entities": "^1.3.1",
