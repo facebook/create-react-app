@@ -12,6 +12,7 @@ if (typeof Promise === 'undefined') {
   // and the user has no idea what causes React's erratic future behavior.
   require('promise/lib/rejection-tracking').enable();
   self.Promise = require('promise/lib/es6-extensions.js');
+  self.Promise = require('promise/lib/finally.js');
 }
 
 // Make sure we're in a Browser-like environment before importing polyfills
