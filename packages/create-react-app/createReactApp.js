@@ -512,7 +512,7 @@ function run(
           },
           [root, appName, verbose, originalDirectory, templateName],
           `
-        var init = require('${packageName}/scripts/init.js');
+        const init = require('${packageName}/scripts/init.js');
         init.apply(null, JSON.parse(process.argv[1]));
       `
         );
