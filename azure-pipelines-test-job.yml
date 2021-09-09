@@ -31,8 +31,11 @@ jobs:
           versionSpec: $(nodeVersion)
         displayName: 'Install Node.js'
 
-      - script: yarn --frozen-lockfile
-        displayName: 'Run yarn'
+      - script: npm i -g npm@7
+        displayName: 'Update npm to v7'
+
+      - script: npm ci
+        displayName: 'Run npm ci'
 
       - bash: ${{ parameters.testScript }}
         displayName: 'Run tests'

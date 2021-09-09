@@ -49,6 +49,10 @@ const validateProjectName = require('validate-npm-package-name');
 
 const packageJson = require('./package.json');
 
+function isUsingYarn() {
+  return (process.env.npm_config_user_agent || '').indexOf('yarn') === 0;
+}
+
 let projectName;
 
 function init() {
@@ -69,7 +73,6 @@ function init() {
       '--template <path-to-template>',
       'specify a template for the created project'
     )
-    .option('--use-npm')
     .option('--use-pnp')
     .allowUnknownOption()
     .on('--help', () => {
@@ -223,19 +226,20 @@ function init() {
         console.log();
         process.exit(1);
       } else {
+        const useYarn = isUsingYarn();
         createApp(
           projectName,
           program.verbose,
           program.scriptsVersion,
           program.template,
-          program.useNpm,
+          useYarn,
           program.usePnp
         );
       }
     });
 }
 
-function createApp(name, verbose, version, template, useNpm, usePnp) {
+function createApp(name, verbose, version, template, useYarn, usePnp) {
   const unsupportedNodeVersion = !semver.satisfies(
     // Coerce strings with metadata (i.e. `15.0.0-nightly`).
     semver.coerce(process.version),
@@ -276,7 +280,6 @@ function createApp(name, verbose, version, template, useNpm, usePnp) {
     JSON.stringify(packageJson, null, 2) + os.EOL
   );
 
-  const useYarn = useNpm ? false : shouldUseYarn();
   const originalDirectory = process.cwd();
   process.chdir(root);
   if (!useYarn && !checkThatNpmCanReadCwd()) {
@@ -349,15 +352,6 @@ function createApp(name, verbose, version, template, useNpm, usePnp) {
     useYarn,
     usePnp
   );
-}
-
-function shouldUseYarn() {
-  try {
-    execSync('yarnpkg --version', { stdio: 'ignore' });
-    return true;
-  } catch (e) {
-    return false;
-  }
 }
 
 function install(root, useYarn, usePnp, dependencies, verbose, isOnline) {
