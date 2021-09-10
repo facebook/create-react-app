@@ -73,6 +73,7 @@ module.exports = (resolve, rootDir, isEjecting) => {
   }
   const overrides = Object.assign({}, require(paths.appPackageJson).jest);
   const supportedKeys = [
+    'cacheDirectory',
     'clearMocks',
     'collectCoverageFrom',
     'coveragePathIgnorePatterns',
