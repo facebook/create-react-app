@@ -112,6 +112,7 @@ module.exports = function (api, opts, env) {
         require('@babel/plugin-transform-flow-strip-types').default,
         false,
       ],
+      isFlowEnabled && require('babel-plugin-transform-flow-enums'),
       // Experimental macros support. Will be documented after it's had some time
       // in the wild.
       require('babel-plugin-macros'),
