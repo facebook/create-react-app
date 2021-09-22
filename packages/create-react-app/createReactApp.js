@@ -48,9 +48,10 @@ const url = require('url');
 const validateProjectName = require('validate-npm-package-name');
 
 const packageJson = require('./package.json');
+const pkgUserAgent = process.env.npm_config_user_agent || '';
 
 function isUsingYarn() {
-  return (process.env.npm_config_user_agent || '').indexOf('yarn') === 0;
+  return pkgUserAgent.indexOf('yarn') === 0;
 }
 
 let projectName;
@@ -189,6 +190,39 @@ function init() {
     process.exit(1);
   }
 
+  const globalInstallError = message => {
+    console.log();
+    console.error(
+      chalk.yellow(
+        `${message}\n\n` +
+          'We no longer support global installation of Create React App.'
+      )
+    );
+    console.log();
+    console.log(
+      'Please remove any global installs with one of the following commands:\n' +
+        '- npm uninstall -g create-react-app\n' +
+        '- yarn global remove create-react-app'
+    );
+    console.log();
+    console.log(
+      'The latest instructions for creating a new app can be found here:\n' +
+        'https://create-react-app.dev/docs/getting-started/'
+    );
+    console.log();
+  };
+
+  // We check if there is no package manager user agent set which means that
+  // the scripts is being run locally instead of via `npx` or `yarn create/dlx`.
+  //
+  // It is still possible for `npx` to use to a global or local install of
+  // create-react-app if one exists, but that case will be caught by the
+  // version check below.
+  if (!pkgUserAgent) {
+    globalInstallError(`You are running \`create-react-app\` globally.`);
+    process.exit(1);
+  }
+
   // We first check the registry directly via the API, and if that fails, we try
   // the slower `npm view [package] version` command.
   //
@@ -205,25 +239,9 @@ function init() {
     })
     .then(latest => {
       if (latest && semver.lt(packageJson.version, latest)) {
-        console.log();
-        console.error(
-          chalk.yellow(
-            `You are running \`create-react-app\` ${packageJson.version}, which is behind the latest release (${latest}).\n\n` +
-              'We no longer support global installation of Create React App.'
-          )
+        globalInstallError(
+          `You are running \`create-react-app\` ${packageJson.version}, which is behind the latest release (${latest}).`
         );
-        console.log();
-        console.log(
-          'Please remove any global installs with one of the following commands:\n' +
-            '- npm uninstall -g create-react-app\n' +
-            '- yarn global remove create-react-app'
-        );
-        console.log();
-        console.log(
-          'The latest instructions for creating a new app can be found here:\n' +
-            'https://create-react-app.dev/docs/getting-started/'
-        );
-        console.log();
         process.exit(1);
       } else {
         const useYarn = isUsingYarn();
