@@ -23,7 +23,6 @@ const SubresourceIntegrityPlugin = require('webpack-subresource-integrity');
 const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 const WorkboxWebpackPlugin = require('workbox-webpack-plugin');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
-const getCSSModuleLocalIdent = require('react-dev-utils/getCSSModuleLocalIdent');
 // const ESLintPlugin = require('eslint-webpack-plugin');
 const paths = require('./paths');
 const modules = require('./modules');
@@ -53,6 +52,10 @@ const jsWorkerPool = {
 };
 
 const appPackageJson = require(paths.appPackageJson);
+
+const getCSSModuleLocalIdent = require('../utils/getCSSModuleLocalIdentWithProjectName')(
+  appPackageJson.name
+);
 
 const sassFunctions = require('bpk-mixins/sass-functions');
 const camelCase = require('lodash/camelCase');

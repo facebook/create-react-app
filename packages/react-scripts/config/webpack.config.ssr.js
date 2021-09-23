@@ -26,7 +26,6 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 // const WorkboxWebpackPlugin = require('workbox-webpack-plugin');
 const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
-const getCSSModuleLocalIdent = require('react-dev-utils/getCSSModuleLocalIdent');
 // const ESLintPlugin = require('eslint-webpack-plugin');
 const paths = require('./paths');
 const modules = require('./modules');
@@ -54,6 +53,10 @@ const postcssNormalize = require('postcss-normalize');
 // };
 
 const appPackageJson = require(paths.appPackageJson);
+
+const getCSSModuleLocalIdent = require('../utils/getCSSModuleLocalIdentWithProjectName')(
+  appPackageJson.name
+);
 
 const sassFunctions = require('bpk-mixins/sass-functions');
 // const camelCase = require('lodash/camelCase');

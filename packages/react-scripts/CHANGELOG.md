@@ -1,11 +1,18 @@
 # `backpack-react-scripts` Change Log
 
+## 9.3.2
+
+### Fixed
+
+- Resolved an issue where generated CSS hashes on class names clashed when using multiple of the same CSS on the page and overriding styles on components. [#103](https://github.com/Skyscanner/backpack-react-scripts/pull/103)
+  - It solves this by overriding the `getCSSModuleLocalIdent` from `react-dev-utils/getCSSModuleLocalIdent` to provide the project name as part of the hash that is generated at build. [Issue raised](https://github.com/facebook/create-react-app/issues/10190) with upstream CRA for a integrated fix.
+
 ## 9.3.1
 
 - Move `cache-loader` above `resolve-url-loader` to get the best performance
   - Note that there is an overhead for saving the reading and saving the cache file, so only use this loader to cache expensive loaders. It is said that `cache-loader` shouldn't deal with all the loaders and only the expensive parts.
   - Moving `cache-loader` above resolve-url-loader is because cache files it generates after this operation are small and it is faster to read the cache files, and it saves more time than `cache-loader` below resolve-url-loader, we can still speed up the process of compiling sass to css since sass-loader is the most expensive
-      
+
 ## 9.3.0
 
 - Apply `cache-loader` on CI
