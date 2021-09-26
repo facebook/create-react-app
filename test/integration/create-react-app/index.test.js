@@ -1,7 +1,7 @@
 'use strict';
 
 const execa = require('execa');
-const { mkdirp, remove, writeFileSync } = require('fs-extra');
+const { mkdirp, remove, writeFileSync, existsSync } = require('fs-extra');
 const { join } = require('path');
 
 const cli = require.resolve('create-react-app/index.js');
@@ -11,12 +11,19 @@ jest.setTimeout(1000 * 60 * 5);
 const projectName = 'test-app';
 const genPath = join(__dirname, projectName);
 
-const generatedFiles = ['.gitignore', 'package.json', 'src', 'yarn.lock'];
+const generatedFiles = [
+  '.gitignore',
+  'package.json',
+  'src',
+  'package-lock.json',
+];
 
 beforeEach(() => remove(genPath));
 afterAll(() => remove(genPath));
 
 const run = (args, options) => execa('node', [cli].concat(args), options);
+
+const genFileExists = f => existsSync(join(genPath, f));
 
 describe('create-react-app', () => {
   it('asks to supply an argument if none supplied', async () => {
@@ -28,7 +35,7 @@ describe('create-react-app', () => {
     await run([projectName], { cwd: __dirname });
 
     // Assert for the generated files
-    generatedFiles.forEach(file => expect(join(genPath, file)).toBeTruthy());
+    generatedFiles.forEach(file => expect(genFileExists(file)).toBeTruthy());
   });
 
   it('warns about conflicting files in path', async () => {
@@ -58,22 +65,23 @@ describe('create-react-app', () => {
     await run(['.'], { cwd: genPath });
 
     // Assert for the generated files
-    generatedFiles.forEach(file => expect(join(genPath, file)).toBeTruthy());
+    generatedFiles.forEach(file => expect(genFileExists(file)).toBeTruthy());
   });
 
-  it('uses npm as the package manager', async () => {
-    await run([projectName, '--use-npm'], {
+  it('uses yarn as the package manager', async () => {
+    await run([projectName], {
       cwd: __dirname,
+      env: { npm_config_user_agent: 'yarn' },
     });
 
     // Assert for the generated files
-    const generatedFilesWithNpm = [
-      ...generatedFiles.filter(file => file !== 'yarn.lock'),
-      'package-lock.json',
+    const generatedFilesWithYarn = [
+      ...generatedFiles.filter(file => file !== 'package-lock.json'),
+      'yarn.lock',
     ];
 
-    generatedFilesWithNpm.forEach(file =>
-      expect(join(genPath, file)).toBeTruthy()
+    generatedFilesWithYarn.forEach(file =>
+      expect(genFileExists(file)).toBeTruthy()
     );
   });
 
@@ -84,7 +92,7 @@ describe('create-react-app', () => {
 
     // Assert for the generated files
     [...generatedFiles, 'tsconfig.json'].forEach(file =>
-      expect(join(genPath, file)).toBeTruthy()
+      expect(genFileExists(file)).toBeTruthy()
     );
   });
 });

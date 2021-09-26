@@ -49,6 +49,10 @@ const validateProjectName = require('validate-npm-package-name');
 
 const packageJson = require('./package.json');
 
+function isUsingYarn() {
+  return (process.env.npm_config_user_agent || '').indexOf('yarn') === 0;
+}
+
 let projectName;
 
 function init() {
@@ -69,7 +73,6 @@ function init() {
       '--template <path-to-template>',
       'specify a template for the created project'
     )
-    .option('--use-npm')
     .option('--use-pnp')
     .allowUnknownOption()
     .on('--help', () => {
@@ -223,30 +226,31 @@ function init() {
         console.log();
         process.exit(1);
       } else {
+        const useYarn = isUsingYarn();
         createApp(
           projectName,
           program.verbose,
           program.scriptsVersion,
           program.template,
-          program.useNpm,
+          useYarn,
           program.usePnp
         );
       }
     });
 }
 
-function createApp(name, verbose, version, template, useNpm, usePnp) {
+function createApp(name, verbose, version, template, useYarn, usePnp) {
   const unsupportedNodeVersion = !semver.satisfies(
     // Coerce strings with metadata (i.e. `15.0.0-nightly`).
     semver.coerce(process.version),
-    '>=10'
+    '>=14'
   );
 
   if (unsupportedNodeVersion) {
     console.log(
       chalk.yellow(
         `You are using Node ${process.version} so the project will be bootstrapped with an old unsupported version of tools.\n\n` +
-          `Please update to Node 10 or higher for a better, fully supported experience.\n`
+          `Please update to Node 14 or higher for a better, fully supported experience.\n`
       )
     );
     // Fall back to latest supported react-scripts on Node 4
@@ -276,7 +280,6 @@ function createApp(name, verbose, version, template, useNpm, usePnp) {
     JSON.stringify(packageJson, null, 2) + os.EOL
   );
 
-  const useYarn = useNpm ? false : shouldUseYarn();
   const originalDirectory = process.cwd();
   process.chdir(root);
   if (!useYarn && !checkThatNpmCanReadCwd()) {
@@ -351,15 +354,6 @@ function createApp(name, verbose, version, template, useNpm, usePnp) {
   );
 }
 
-function shouldUseYarn() {
-  try {
-    execSync('yarnpkg --version', { stdio: 'ignore' });
-    return true;
-  } catch (e) {
-    return false;
-  }
-}
-
 function install(root, useYarn, usePnp, dependencies, verbose, isOnline) {
   return new Promise((resolve, reject) => {
     let command;
@@ -392,6 +386,7 @@ function install(root, useYarn, usePnp, dependencies, verbose, isOnline) {
       command = 'npm';
       args = [
         'install',
+        '--no-audit', // https://github.com/facebook/create-react-app/issues/11174
         '--save',
         '--save-exact',
         '--loglevel',
@@ -526,7 +521,7 @@ function run(
           console.log(
             chalk.yellow(
               `\nNote: the project was bootstrapped with an old unsupported version of tools.\n` +
-                `Please update to Node >=10 and npm >=6 to get supported tools in new projects.\n`
+                `Please update to Node >=14 and npm >=6 to get supported tools in new projects.\n`
             )
           );
         }

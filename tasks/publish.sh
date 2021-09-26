@@ -8,7 +8,7 @@
 # This releases an update to the `react-scripts` package.
 # Don't use `npm publish` for it.
 # Read the release instructions:
-# https://github.com/facebook/create-react-app/blob/master/CONTRIBUTING.md#cutting-a-release
+# https://github.com/facebook/create-react-app/blob/main/CONTRIBUTING.md#cutting-a-release
 # ******************************************************************************
 
 # Start in tasks/ even if run from root directory
@@ -27,7 +27,7 @@ cd ..
 root_path=$PWD
 
 if [ -z $CI ]; then
-  yarn compile:lockfile
+  npm run compile:lockfile
 fi
 
 if [ -n "$(git status --porcelain)" ]; then
@@ -36,9 +36,7 @@ if [ -n "$(git status --porcelain)" ]; then
 fi
 
 # Compile
-cd packages/react-error-overlay/
-npm run build:prod
-cd ../..
+npm run build:prod -w react-error-overlay
 
 # Get 2FA when not CI
 otp=""

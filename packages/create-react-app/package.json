@@ -12,7 +12,7 @@
   },
   "license": "MIT",
   "engines": {
-    "node": ">=10"
+    "node": ">=14"
   },
   "bugs": {
     "url": "https://github.com/facebook/create-react-app/issues"
@@ -43,6 +43,6 @@
   },
   "devDependencies": {
     "cross-env": "^7.0.2",
-    "jest": "26.6.0"
+    "jest": "27.1.0"
   }
 }

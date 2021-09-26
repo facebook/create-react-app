@@ -194,7 +194,9 @@ function build(previousFileSizes) {
         messages.warnings.length
       ) {
         // Ignore sourcemap warnings in CI builds. See #8227 for more info.
-        const filteredWarnings = messages.warnings.filter(w => !/Failed to parse source map/.test(w));
+        const filteredWarnings = messages.warnings.filter(
+          w => !/Failed to parse source map/.test(w)
+        );
         if (filteredWarnings.length) {
           console.log(
             chalk.yellow(

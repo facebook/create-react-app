@@ -5,7 +5,7 @@ title: Running Tests
 
 > Note: this feature is available with `react-scripts@0.3.0` and higher.
 
-> [Read the migration guide to learn how to enable it in older projects!](https://github.com/facebook/create-react-app/blob/master/CHANGELOG-0.x.md#migrating-from-023-to-030)
+> [Read the migration guide to learn how to enable it in older projects!](https://github.com/facebook/create-react-app/blob/main/CHANGELOG-0.x.md#migrating-from-023-to-030)
 
 Create React App uses [Jest](https://jestjs.io/) as its test runner. To prepare for this integration, we did a [major revamp](https://jestjs.io/blog/2016/09/01/jest-15.html) of Jest so if you heard bad things about it years ago, give it another try.
 
@@ -184,7 +184,7 @@ Note that tests run much slower with coverage so it is recommended to run it sep
 
 ### Configuration
 
-The [default configuration](https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/scripts/utils/createJestConfig.js) that Create React App uses for Jest can be overridden by adding any of the following supported keys to a Jest config in your package.json.
+The [default configuration](https://github.com/facebook/create-react-app/blob/main/packages/react-scripts/scripts/utils/createJestConfig.js) that Create React App uses for Jest can be overridden by adding any of the following supported keys to a Jest config in your package.json.
 
 Supported overrides:
 

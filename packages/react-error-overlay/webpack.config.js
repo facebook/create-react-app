@@ -34,13 +34,13 @@ module.exports = {
     alias: {
       iframeScript$: path.resolve(__dirname, './lib/iframe-bundle.js'),
     },
+    fallback: {
+      fs: false,
+      path: false,
+    },
   },
   optimization: {
     nodeEnv: false,
-  },
-  node: {
-    fs: 'empty',
-    process: false,
   },
   performance: {
     hints: false,

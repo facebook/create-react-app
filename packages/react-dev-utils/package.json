@@ -12,7 +12,7 @@
     "url": "https://github.com/facebook/create-react-app/issues"
   },
   "engines": {
-    "node": ">=10"
+    "node": ">=14"
   },
   "files": [
     "browsersHelper.js",
@@ -25,6 +25,7 @@
     "evalSourceMapMiddleware.js",
     "FileSizeReporter.js",
     "ForkTsCheckerWebpackPlugin.js",
+    "ForkTsCheckerWarningWebpackPlugin.js",
     "formatWebpackMessages.js",
     "getCacheIdentifier.js",
     "getCSSModuleLocalIdent.js",
@@ -47,25 +48,24 @@
     "redirectServedPathMiddleware.js",
     "refreshOverlayInterop.js",
     "typescriptFormatter.js",
-    "WatchMissingNodeModulesPlugin.js",
     "WebpackDevServerUtils.js",
     "webpackHotDevClient.js"
   ],
   "dependencies": {
     "@babel/code-frame": "^7.10.4",
     "address": "1.1.2",
-    "browserslist": "4.14.2",
+    "browserslist": "4.16.5",
     "chalk": "2.4.2",
     "cross-spawn": "7.0.3",
     "detect-port-alt": "1.1.6",
     "escape-string-regexp": "2.0.0",
     "filesize": "6.1.0",
     "find-up": "4.1.0",
-    "fork-ts-checker-webpack-plugin": "4.1.6",
+    "fork-ts-checker-webpack-plugin": "6.0.5",
     "global-modules": "2.0.0",
     "globby": "11.0.1",
     "gzip-size": "5.1.1",
-    "immer": "8.0.4",
+    "immer": "9.0.6",
     "is-root": "2.1.0",
     "loader-utils": "2.0.0",
     "open": "^7.0.2",
@@ -79,7 +79,7 @@
   },
   "devDependencies": {
     "cross-env": "^7.0.2",
-    "jest": "26.6.0"
+    "jest": "27.1.0"
   },
   "scripts": {
     "test": "cross-env FORCE_COLOR=true jest"
