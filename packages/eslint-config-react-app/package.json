@@ -1,6 +1,6 @@
 {
   "name": "eslint-config-react-app",
-  "version": "6.0.0",
+  "version": "^6.0.0",
   "description": "ESLint configuration used by Create React App",
   "repository": {
     "type": "git",
@@ -20,7 +20,7 @@
     "eslint": "^7.30.0"
   },
   "dependencies": {
-    "@babel/core": "7.14.2",
+    "@babel/core": "^7.14.2",
     "@babel/eslint-parser": "^7.14.7",
     "@rushstack/eslint-patch": "^1.0.6",
     "@typescript-eslint/eslint-plugin": "^4.0.0",
