@@ -98,7 +98,8 @@ function verifyPackageTree() {
             `  ${chalk.bold(chalk.red(maybeDep))} (version: ${chalk.bold(
               chalk.red(depPackageJson.version)
             )}) \n\n` +
-            `Manually installing incompatible versions is known to cause hard-to-debug issues.\n\n` +
+            `Manually installing incompatible versions is known to cause hard-to-debug issues.\n` +
+            `If you are using Create React App in a multi-project setup, you may want to ignore this check.\n\n` +
             chalk.red(
               `If you would prefer to ignore this check, add ${chalk.bold(
                 'SKIP_PREFLIGHT_CHECK=true'
