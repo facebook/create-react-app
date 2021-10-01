@@ -1,6 +1,6 @@
 {
   "name": "react-scripts",
-  "version": "^4.0.3",
+  "version": "4.0.3",
   "description": "Configuration and scripts for Create React App.",
   "repository": {
     "type": "git",
