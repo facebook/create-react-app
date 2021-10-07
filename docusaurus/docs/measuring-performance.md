@@ -37,7 +37,7 @@ function sendToAnalytics(metric) {
 
   // Use `navigator.sendBeacon()` if available, falling back to `fetch()`
   if (navigator.sendBeacon) {
-    navigator.sendBeacon(url, body);
+    navigator.sendBeacon(url, new Blob([body], { type: 'application/json' }));
   } else {
     fetch(url, { body, method: 'POST', keepalive: true });
   }
