@@ -81,6 +81,10 @@
     "cross-env": "^7.0.2",
     "jest": "^27.1.0"
   },
+  "peerDependencies": {
+    "typescript": ">=2.7",
+    "webpack": ">=4"
+  },
   "scripts": {
     "test": "cross-env FORCE_COLOR=true jest"
   }
