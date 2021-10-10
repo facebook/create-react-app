@@ -16,11 +16,11 @@
     "index.js"
   ],
   "peerDependencies": {
-    "@babel/core": "^7.1.0"
+    "@babel/core": "^7.15.8"
   },
   "devDependencies": {
-    "babel-plugin-tester": "^8.0.1",
-    "jest": "^27.1.0"
+    "babel-plugin-tester": "^10.1.0",
+    "jest": "^27.2.5"
   },
   "scripts": {
     "test": "jest"
