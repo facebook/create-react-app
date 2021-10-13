@@ -1,6 +1,6 @@
 {
   "name": "@bentley/react-scripts",
-  "version": "4.0.3",
+  "version": "4.0.4-dev.0",
   "description": "iModel.js configuration and scripts for Create React App.",
   "repository": {
     "type": "git",
@@ -55,7 +55,7 @@
     "eslint-plugin-jsx-a11y": "^6.3.1",
     "eslint-plugin-react": "^7.21.5",
     "eslint-plugin-react-hooks": "^4.2.0",
-    "eslint-plugin-testing-library": "^3.9.2",
+    "eslint-plugin-testing-library": "^4.9.0",
     "eslint-webpack-plugin": "^2.5.2",
     "fast-sass-loader": "^2.0.0",
     "file-loader": "6.1.1",
