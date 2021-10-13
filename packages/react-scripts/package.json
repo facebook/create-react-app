@@ -1,6 +1,6 @@
 {
   "name": "@bentley/react-scripts",
-  "version": "4.0.4-dev.0",
+  "version": "4.0.4",
   "description": "iModel.js configuration and scripts for Create React App.",
   "repository": {
     "type": "git",
@@ -30,7 +30,7 @@
   "dependencies": {
     "@babel/core": "7.12.3",
     "@bentley/webpack-tools-core": "^2.16.2",
-    "@pmmmwh/react-refresh-webpack-plugin": "0.4.3",
+    "@pmmmwh/react-refresh-webpack-plugin": "^0.5.1",
     "@svgr/webpack": "5.5.0",
     "@typescript-eslint/eslint-plugin": "^4.5.0",
     "@typescript-eslint/parser": "^4.5.0",
