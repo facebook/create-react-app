@@ -1,6 +1,6 @@
 {
   "name": "@bentley/react-scripts",
-  "version": "4.0.4",
+  "version": "4.0.5",
   "description": "iModel.js configuration and scripts for Create React App.",
   "repository": {
     "type": "git",
@@ -77,7 +77,7 @@
     "prompts": "2.4.0",
     "react-app-polyfill": "^2.0.0",
     "react-dev-utils": "^11.0.3",
-    "react-refresh": "^0.8.3",
+    "react-refresh": "^0.10.0",
     "resolve": "1.18.1",
     "resolve-url-loader": "^3.1.2",
     "sass": "^1.32.8",
