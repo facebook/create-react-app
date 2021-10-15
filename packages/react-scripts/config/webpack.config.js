@@ -185,7 +185,7 @@ module.exports = function(webpackEnv) {
     bail: isEnvProduction,
     devtool: isEnvProduction
       ? shouldUseSourceMap
-        ? 'source-map'
+        ? 'hidden-source-map'
         : false
       : isEnvDevelopment && 'cheap-module-source-map',
     // These are the "entry points" to our application.
@@ -231,6 +231,7 @@ module.exports = function(webpackEnv) {
       chunkFilename: isEnvProduction
         ? 'static/js/[name].[contenthash:8].chunk.js'
         : isEnvDevelopment && 'static/js/[name].chunk.js',
+      sourceMapFilename: 'static/js/[name].chunk.js.map',
       // webpack uses `publicPath` to determine where the app is being served from.
       // It requires a trailing slash, or the file assets will get an incorrect path.
       // We inferred the "public path" (such as / or /my-project) from homepage.
