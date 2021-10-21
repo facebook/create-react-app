@@ -1,6 +1,6 @@
 {
   "name": "@skyscanner/backpack-react-scripts",
-  "version": "9.3.2",
+  "version": "9.4.0",
   "description": "Backpack configuration and scripts for Create React App.",
   "repository": {
     "type": "git",
@@ -28,8 +28,6 @@
     "@babel/core": "7.12.3",
     "@pmmmwh/react-refresh-webpack-plugin": "0.4.3",
     "@svgr/webpack": "5.5.0",
-    "@typescript-eslint/eslint-plugin": "^4.5.0",
-    "@typescript-eslint/parser": "^4.5.0",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^26.6.0",
     "babel-loader": "8.1.0",
