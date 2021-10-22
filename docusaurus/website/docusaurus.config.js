@@ -51,7 +51,7 @@ const siteConfig = {
           position: 'right',
         },
         {
-          href: 'https://www.github.com/facebook/create-react-app',
+          href: 'https://github.com/facebook/create-react-app',
           label: 'GitHub',
           position: 'right',
         },
@@ -101,7 +101,7 @@ const siteConfig = {
           items: [
             {
               label: 'GitHub',
-              href: 'https://www.github.com/facebook/create-react-app',
+              href: 'https://github.com/facebook/create-react-app',
             },
           ],
         },
