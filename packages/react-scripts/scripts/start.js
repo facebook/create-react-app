@@ -123,7 +123,7 @@ checkBrowsers(paths.appPath, isInteractive)
     const devServer = new WebpackDevServer(serverConfig, compiler);
     // Launch WebpackDevServer.
     devServer.startCallback(() => {
-      if (isInteractive) {
+      if (isInteractive && process.env.CRA_CLEAR_CONSOLE !== 'false') {
         clearConsole();
       }
 
