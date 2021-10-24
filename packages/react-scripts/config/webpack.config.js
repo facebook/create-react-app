@@ -471,7 +471,7 @@ module.exports = function (webpackEnv) {
                 ),
                 // @remove-on-eject-end
                 // Babel sourcemaps are needed for debugging into node_modules
-                // code.  Without the options below, debuggers like VSCode
+                // code. Without the options below, debuggers like VSCode
                 // show incorrect code and set breakpoints on the wrong lines.
                 sourceMaps: shouldUseSourceMap,
                 inputSourceMap: shouldUseSourceMap,

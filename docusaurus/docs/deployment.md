@@ -406,9 +406,8 @@ If you exclude or ignore necessary files from the package you will see a error s
 
 ```
 remote: Could not find a required file.
-remote:   Name: `index.html`
-remote:   Searched in: /tmp/build_a2875fc163b209225122d68916f1d4df/public
-remote:
+remote: Name: `index.html`
+remote: Searched in: /tmp/build_a2875fc163b209225122d68916f1d4df/public
 remote: npm ERR! Linux 3.13.0-105-generic
 remote: npm ERR! argv "/tmp/build_a2875fc163b209225122d68916f1d4df/.heroku/node/bin/node" "/tmp/build_a2875fc163b209225122d68916f1d4df/.heroku/node/bin/npm" "run" "build"
 ```

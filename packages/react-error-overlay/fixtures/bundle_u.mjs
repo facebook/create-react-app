@@ -4038,7 +4038,7 @@ var DOMProperty = {
    *
    * @type {Object}
    */
-  getPossibleStandardName:  true ? { autofocus: 'autoFocus' } : null,
+  getPossibleStandardName: true ? { autofocus: 'autoFocus' } : null,
 
   /**
    * All of the isCustomAttribute() functions that have been injected.
@@ -6758,7 +6758,7 @@ var EventPluginRegistry = {
    * only in __DEV__.
    * @type {Object}
    */
-  possibleRegistrationNames:  true ? {} : null,
+  possibleRegistrationNames: true ? {} : null,
   // Trust the developer to only use possibleRegistrationNames in __DEV__
 
   /**
@@ -7257,14 +7257,14 @@ var MouseEventInterface = {
   getModifierState: getEventModifierState,
   button: function (event) {
     // Webkit, Firefox, IE9+
-    // which:  1 2 3
+    // which: 1 2 3
     // button: 0 1 2 (standard)
     var button = event.button;
     if ('which' in event) {
       return button;
     }
     // IE<9
-    // which:  undefined
+    // which: undefined
     // button: 0 0 0
     // button: 1 4 2 (onmouseup)
     return button === 2 ? 2 : button === 4 ? 1 : 0;
@@ -8958,7 +8958,7 @@ function executeDirectDispatch(event) {
 
 /**
  * @param {SyntheticEvent} event
- * @return {boolean} True iff number of dispatches accumulated is greater than 0.
+ * @return {boolean} True if number of dispatches accumulated is greater than 0.
  */
 function hasDispatches(event) {
   return !!event._dispatchListeners;

@@ -35,7 +35,7 @@ const dotenvFiles = [
 
 // Load environment variables from .env* files. Suppress warnings using silent
 // if this file is missing. dotenv will never modify any environment variables
-// that have already been set.  Variable expansion is supported in .env files.
+// that have already been set. Variable expansion is supported in .env files.
 // https://github.com/motdotla/dotenv
 // https://github.com/motdotla/dotenv-expand
 dotenvFiles.forEach(dotenvFile => {
