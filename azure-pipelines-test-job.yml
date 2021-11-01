@@ -8,6 +8,7 @@ parameters:
   configurations:
     LinuxNode14: { vmImage: 'ubuntu-latest', nodeVersion: 14.x }
     LinuxNode16: { vmImage: 'ubuntu-latest', nodeVersion: 16.x }
+    LinuxNode17: { vmImage: 'ubuntu-latest', nodeVersion: 17.x }
 
 jobs:
   - job: ${{ parameters.name }}
