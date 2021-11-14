@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { getLinesAround } from '../utils/getLinesAround';
+import { getLinesAround } from '../utils/getLinesAround.js';
 
 const arr = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight'];
 

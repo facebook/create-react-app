@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { parse } from '../../utils/parser';
+import { parse } from '../../utils/parser.js';
 
 test('stack with eval', () => {
   expect(
