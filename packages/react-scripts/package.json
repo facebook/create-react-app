@@ -70,8 +70,8 @@
     "source-map-loader": "^1.1.2",
     "style-loader": "^3.0.0",
     "terser-webpack-plugin": "^5.1.4",
-    "webpack": "^5.61.0",
-    "webpack-dev-server": "^4.0.0",
+    "webpack": "^5.64.0",
+    "webpack-dev-server": "^4.4.0",
     "webpack-manifest-plugin": "^4.0.2",
     "workbox-webpack-plugin": "^6.2.4"
   },
