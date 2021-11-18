@@ -7,7 +7,8 @@ const { rmSync } = require('fs');
 
 const cli = require.resolve('create-react-app/index.js');
 
-jest.setTimeout(1000 * 60 * 5);
+// Increase the timeout for GitHub macOS runner
+jest.setTimeout(1000 * 60 * (process.env.RUNNER_OS === 'macOS' ? 10 : 5));
 
 const projectName = 'test-app';
 const genPath = join(__dirname, projectName);
