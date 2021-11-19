@@ -26,7 +26,7 @@
     "@testing-library/user-event": "^13.5.0",
     "alex": "^10.0.0",
     "eslint": "^8.2.0",
-    "execa": "^5.1.1",
+    "execa": "^6.0.0",
     "fs-extra": "^10.0.0",
     "get-port": "^6.0.0",
     "globby": "^12.0.2",
