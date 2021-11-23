@@ -33,6 +33,7 @@
   "dependencies": {
     "babel-plugin-jsx-conditional-component": "^0.1.5",
     "babel-plugin-lodash": "^3.3.4",
+    "compression-webpack-plugin": "^9.0.1",
     "copy-webpack-plugin": "^6.1.0",
     "@babel/core": "7.12.3",
     "@pmmmwh/react-refresh-webpack-plugin": "0.4.2",
