@@ -897,7 +897,7 @@ module.exports = function(webpackEnv) {
       isEnvProduction && new CompressionPlugin({
         test: /\.(js|jsx)$/,
         exclude: /.map$/,
-        filename: '[path][base].[ext]',
+        filename: '[path][base]',
         deleteOriginalAssets: 'keep-source-map',
       })
     ].filter(Boolean),
