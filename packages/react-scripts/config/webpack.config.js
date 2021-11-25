@@ -28,6 +28,7 @@ const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeM
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const getCSSModuleLocalIdent = require('react-dev-utils/getCSSModuleLocalIdent');
 // const ESLintPlugin = require('eslint-webpack-plugin');
+const CompressionPlugin = require('compression-webpack-plugin');
 const paths = require('./paths');
 const modules = require('./modules');
 const getClientEnvironment = require('./env');
@@ -893,6 +894,12 @@ module.exports = function(webpackEnv) {
       //     },
       //   },
       // }),
+      isEnvProduction && new CompressionPlugin({
+        test: /\.(js|jsx)$/,
+        exclude: /.map$/,
+        filename: '[path][base]',
+        deleteOriginalAssets: 'keep-source-map',
+      })
     ].filter(Boolean),
     // Some libraries import Node modules but don't use them in the browser.
     // Tell webpack to provide empty mocks for them so importing them works.
