@@ -1,7 +1,7 @@
 'use strict';
 
 const execa = require('execa');
-const { mkdirp, remove, writeFileSync, existsSync } = require('fs-extra');
+const { mkdirp, writeFileSync, existsSync, removeSync } = require('fs-extra');
 const { join } = require('path');
 
 const cli = require.resolve('create-react-app/index.js');
@@ -18,8 +18,8 @@ const generatedFiles = [
   'package-lock.json',
 ];
 
-beforeEach(() => remove(genPath));
-afterAll(() => remove(genPath));
+beforeEach(() => removeSync(genPath));
+afterAll(() => removeSync(genPath));
 
 const run = (args, options) => execa('node', [cli].concat(args), options);
 
