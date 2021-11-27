@@ -34,6 +34,12 @@ const run = (args, options) => execa('node', [cli].concat(args), options);
 const genFileExists = f => existsSync(join(genPath, f));
 
 describe('create-react-app', () => {
+  it('check yarn installation', async () => {
+    // Assert that yarn is installed
+    const { exitCode } = await execa('yarn --version');
+    expect(exitCode).toBe(0);
+  });
+
   it('asks to supply an argument if none supplied', async () => {
     const { exitCode, stderr } = await run([], { reject: false });
 
@@ -89,10 +95,6 @@ describe('create-react-app', () => {
   });
 
   it('uses yarn as the package manager', async () => {
-    // Assert that yarn is installed
-    const yarnVersionResult = await execa('yarn --version');
-    expect(yarnVersionResult.exitCode).toBe(0);
-
     const { exitCode } = await run([projectName], {
       cwd: __dirname,
       env: { npm_config_user_agent: 'yarn' },
