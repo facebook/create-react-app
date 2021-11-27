@@ -89,6 +89,11 @@ describe('create-react-app', () => {
   });
 
   it('uses yarn as the package manager', async () => {
+    const yarnVersionResult = await execa('yarn --version');
+
+    expect(yarnVersionResult.code).toBe(0);
+    expect(yarnVersionResult.stdout).toBe('');
+
     const { code } = await run([projectName], {
       cwd: __dirname,
       env: { npm_config_user_agent: 'yarn' },
