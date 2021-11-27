@@ -90,12 +90,9 @@ describe('create-react-app', () => {
   });
 
   it('uses yarn as the package manager', async () => {
-    if (os.type() === 'Darwin') {
-      const yarnVersionResult = await execa('yarn --version');
-
-      expect(yarnVersionResult.code).toBe(0);
-      expect(yarnVersionResult.stdout).toBe('');
-    }
+    // Assert that yarn is installed
+    const yarnVersionResult = await execa('yarn --version');
+    expect(yarnVersionResult.exitCode).toBe(0);
 
     const { exitCode } = await run([projectName], {
       cwd: __dirname,
