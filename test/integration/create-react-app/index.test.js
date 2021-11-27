@@ -3,7 +3,7 @@
 const execa = require('execa');
 const { mkdirp, writeFileSync, existsSync } = require('fs-extra');
 const { join } = require('path');
-const { rmdirSync } = require('fs');
+const { rmSync } = require('fs');
 
 const cli = require.resolve('create-react-app/index.js');
 
@@ -20,7 +20,7 @@ const generatedFiles = [
 ];
 
 const removeGenPath = () => {
-  rmdirSync(genPath, {
+  rmSync(genPath, {
     recursive: true,
     force: true,
   });
