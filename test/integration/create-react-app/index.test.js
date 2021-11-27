@@ -1,6 +1,5 @@
 'use strict';
 
-const os = require('os');
 const execa = require('execa');
 const { mkdirp, writeFileSync, existsSync } = require('fs-extra');
 const { join } = require('path');
