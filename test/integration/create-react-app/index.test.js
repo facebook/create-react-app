@@ -35,8 +35,9 @@ const genFileExists = f => existsSync(join(genPath, f));
 
 describe('create-react-app', () => {
   it('check yarn installation', async () => {
-    // Assert that yarn is installed
-    const { exitCode } = await execa('yarn --version');
+    const { exitCode } = await execa('yarn', ['--version']);
+
+    // Assert for exit code
     expect(exitCode).toBe(0);
   });
 
