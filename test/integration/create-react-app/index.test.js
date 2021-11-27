@@ -18,8 +18,10 @@ const generatedFiles = [
   'package-lock.json',
 ];
 
-beforeEach(() => removeSync(genPath));
-afterAll(() => removeSync(genPath));
+const removeGenPath = () => existsSync(genPath) && removeSync(genPath);
+
+beforeEach(removeGenPath);
+afterAll(removeGenPath);
 
 const run = (args, options) => execa('node', [cli].concat(args), options);
 
