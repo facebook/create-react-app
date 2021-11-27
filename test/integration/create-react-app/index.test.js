@@ -1,5 +1,6 @@
 'use strict';
 
+const os = require('os');
 const execa = require('execa');
 const { mkdirp, writeFileSync, existsSync } = require('fs-extra');
 const { join } = require('path');
@@ -89,10 +90,12 @@ describe('create-react-app', () => {
   });
 
   it('uses yarn as the package manager', async () => {
-    const yarnVersionResult = await execa('yarn --version');
+    if (os.type() === 'Darwin') {
+      const yarnVersionResult = await execa('yarn --version');
 
-    expect(yarnVersionResult.code).toBe(0);
-    expect(yarnVersionResult.stdout).toBe('');
+      expect(yarnVersionResult.code).toBe(0);
+      expect(yarnVersionResult.stdout).toBe('');
+    }
 
     const { code } = await run([projectName], {
       cwd: __dirname,
