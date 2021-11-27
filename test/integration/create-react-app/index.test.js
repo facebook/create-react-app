@@ -36,18 +36,18 @@ const genFileExists = f => existsSync(join(genPath, f));
 
 describe('create-react-app', () => {
   it('asks to supply an argument if none supplied', async () => {
-    const { code, stderr } = await run([], { reject: false });
+    const { exitCode, stderr } = await run([], { reject: false });
 
     // Assertions
-    expect(code).toBe(1);
+    expect(exitCode).toBe(1);
     expect(stderr).toContain('Please specify the project directory');
   });
 
   it('creates a project on supplying a name as the argument', async () => {
-    const { code } = await run([projectName], { cwd: __dirname });
+    const { exitCode } = await run([projectName], { cwd: __dirname });
 
     // Assert for exit code
-    expect(code).toBe(0);
+    expect(exitCode).toBe(0);
 
     // Assert for the generated files
     generatedFiles.forEach(file => expect(genFileExists(file)).toBeTruthy());
@@ -61,13 +61,13 @@ describe('create-react-app', () => {
     const pkgJson = join(genPath, 'package.json');
     writeFileSync(pkgJson, '{ "foo": "bar" }');
 
-    const { code, stdout } = await run([projectName], {
+    const { exitCode, stdout } = await run([projectName], {
       cwd: __dirname,
       reject: false,
     });
 
     // Assert for exit code
-    expect(code).toBe(1);
+    expect(exitCode).toBe(1);
 
     // Assert for the expected message
     expect(stdout).toContain(
@@ -80,10 +80,10 @@ describe('create-react-app', () => {
     await mkdirp(genPath);
 
     // Create a project in the current directory
-    const { code } = await run(['.'], { cwd: genPath });
+    const { exitCode } = await run(['.'], { cwd: genPath });
 
     // Assert for exit code
-    expect(code).toBe(0);
+    expect(exitCode).toBe(0);
 
     // Assert for the generated files
     generatedFiles.forEach(file => expect(genFileExists(file)).toBeTruthy());
@@ -97,13 +97,13 @@ describe('create-react-app', () => {
       expect(yarnVersionResult.stdout).toBe('');
     }
 
-    const { code } = await run([projectName], {
+    const { exitCode } = await run([projectName], {
       cwd: __dirname,
       env: { npm_config_user_agent: 'yarn' },
     });
 
     // Assert for exit code
-    expect(code).toBe(0);
+    expect(exitCode).toBe(0);
 
     // Assert for the generated files
     const generatedFilesWithYarn = [
@@ -117,12 +117,12 @@ describe('create-react-app', () => {
   });
 
   it('creates a project based on the typescript template', async () => {
-    const { code } = await run([projectName, '--template', 'typescript'], {
+    const { exitCode } = await run([projectName, '--template', 'typescript'], {
       cwd: __dirname,
     });
 
     // Assert for exit code
-    expect(code).toBe(0);
+    expect(exitCode).toBe(0);
 
     // Assert for the generated files
     [...generatedFiles, 'tsconfig.json'].forEach(file =>
