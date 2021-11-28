@@ -150,4 +150,10 @@ describe('create-react-app', () => {
       expect(genFileExists(file)).toBeTruthy()
     );
   });
+
+  it('dummy test', async () => {
+    expect(false).toBe(false);
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    expect(true).toBe(true);
+  });
 });
