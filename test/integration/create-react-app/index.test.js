@@ -95,25 +95,30 @@ describe('create-react-app', () => {
     generatedFiles.forEach(file => expect(genFileExists(file)).toBeTruthy());
   });
 
-  it('uses yarn as the package manager', async () => {
-    const { exitCode } = await run([projectName], {
-      cwd: __dirname,
-      env: { npm_config_user_agent: 'yarn' },
-    });
+  it(
+    'uses yarn as the package manager',
+    async () => {
+      const { exitCode } = await run([projectName], {
+        cwd: __dirname,
+        env: { npm_config_user_agent: 'yarn' },
+        stdio: 'inherit',
+      });
 
-    // Assert for exit code
-    expect(exitCode).toBe(0);
+      // Assert for exit code
+      expect(exitCode).toBe(0);
 
-    // Assert for the generated files
-    const generatedFilesWithYarn = [
-      ...generatedFiles.filter(file => file !== 'package-lock.json'),
-      'yarn.lock',
-    ];
+      // Assert for the generated files
+      const generatedFilesWithYarn = [
+        ...generatedFiles.filter(file => file !== 'package-lock.json'),
+        'yarn.lock',
+      ];
 
-    generatedFilesWithYarn.forEach(file =>
-      expect(genFileExists(file)).toBeTruthy()
-    );
-  });
+      generatedFilesWithYarn.forEach(file =>
+        expect(genFileExists(file)).toBeTruthy()
+      );
+    },
+    1000 * 60 * 10
+  );
 
   it('creates a project based on the typescript template', async () => {
     const { exitCode } = await run([projectName, '--template', 'typescript'], {
