@@ -30,17 +30,17 @@ beforeEach(removeGenPath);
 afterAll(removeGenPath);
 
 const run = async (args, options) => {
-  console.log(
+  process.stdout.write(
     `::group:: Test " ${
       expect.getState().currentTestName
-    }" - "create-react-app ${args.join(' ')}" output:`
+    }" - "create-react-app ${args.join(' ')}" output:\n`
   );
-  const result = await execa('node', [cli].concat(args), {
-    stdio: 'inherit',
-    ...options,
-  });
-  console.log('::endgroup::');
-  return result;
+  const result = execa('node', [cli].concat(args), options);
+  result.stdout.on('data', chunk =>
+    process.stdout.write(chunk.toString('utf8'))
+  );
+  process.stdout.write('::endgroup::\n');
+  return await result;
 };
 
 const genFileExists = f => existsSync(join(genPath, f));
