@@ -27,7 +27,11 @@ const removeGenPath = () => {
 };
 
 beforeEach(removeGenPath);
-afterAll(removeGenPath);
+afterAll(async () => {
+  removeGenPath();
+  // Defer jest result output waiting for stdout to flush
+  await new Promise(resolve => setTimeout(resolve, 100));
+});
 
 const run = async (args, options) => {
   process.stdout.write(
@@ -145,11 +149,5 @@ describe('create-react-app', () => {
     [...generatedFiles, 'tsconfig.json'].forEach(file =>
       expect(genFileExists(file)).toBeTruthy()
     );
-  });
-
-  it('dummy test', async () => {
-    expect(false).toBe(false);
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    expect(true).toBe(true);
   });
 });
