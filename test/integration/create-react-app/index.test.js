@@ -31,7 +31,7 @@ afterAll(removeGenPath);
 
 const run = async (args, options) => {
   process.stdout.write(
-    `::group:: Test " ${
+    `::group::Test "${
       expect.getState().currentTestName
     }" - "create-react-app ${args.join(' ')}" output:\n`
   );
