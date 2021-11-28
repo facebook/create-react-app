@@ -39,8 +39,9 @@ const run = async (args, options) => {
   result.stdout.on('data', chunk =>
     process.stdout.write(chunk.toString('utf8'))
   );
+  const childProcessResult = await result;
   process.stdout.write('::endgroup::\n');
-  return await result;
+  return childProcessResult;
 };
 
 const genFileExists = f => existsSync(join(genPath, f));
