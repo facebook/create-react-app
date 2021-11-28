@@ -136,7 +136,7 @@ describe('create-react-app', () => {
     const { exitCode } = await run([projectName, '--template', 'typescript'], {
       cwd: __dirname,
     });
-    process.stdout.write('EO-Run\n');
+
     // Assert for exit code
     expect(exitCode).toBe(0);
 
