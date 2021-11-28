@@ -29,7 +29,19 @@ const removeGenPath = () => {
 beforeEach(removeGenPath);
 afterAll(removeGenPath);
 
-const run = (args, options) => execa('node', [cli].concat(args), options);
+const run = async (args, options) => {
+  console.log(
+    `::group:: Test " ${
+      expect.getState().currentTestName
+    }" - "create-react-app ${args.join(' ')}" output:`
+  );
+  const result = await execa('node', [cli].concat(args), {
+    stdio: 'inherit',
+    ...options,
+  });
+  console.log('::endgroup::');
+  return result;
+};
 
 const genFileExists = f => existsSync(join(genPath, f));
 
@@ -101,7 +113,6 @@ describe('create-react-app', () => {
       const { exitCode } = await run([projectName], {
         cwd: __dirname,
         env: { npm_config_user_agent: 'yarn' },
-        stdio: 'inherit',
       });
 
       // Assert for exit code
