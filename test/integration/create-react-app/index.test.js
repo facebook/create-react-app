@@ -41,6 +41,8 @@ const run = async (args, options) => {
   );
   const childProcessResult = await result;
   process.stdout.write('::endgroup::\n');
+  // Wait for stream to be done writing result
+  await new Promise(resolve => process.stdout.once('drain', resolve));
   return childProcessResult;
 };
 
