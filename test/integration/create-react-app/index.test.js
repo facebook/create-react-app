@@ -40,6 +40,7 @@ const run = async (args, options) => {
     process.stdout.write(chunk.toString('utf8'))
   );
   const childProcessResult = await result;
+  process.stdout.write(`ExitCode: ${childProcessResult.exitCode}`);
   process.stdout.write('::endgroup::\n');
   // Wait for stream to be done writing result
   if (!process.stdout.write('')) {
