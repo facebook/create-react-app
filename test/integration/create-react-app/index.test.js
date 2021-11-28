@@ -42,10 +42,6 @@ const run = async (args, options) => {
   const childProcessResult = await result;
   process.stdout.write(`ExitCode: ${childProcessResult.exitCode}`);
   process.stdout.write('::endgroup::\n');
-  // Wait for stream to be done writing result
-  if (!process.stdout.write('')) {
-    await new Promise(resolve => process.stdout.once('drain', resolve));
-  }
   return childProcessResult;
 };
 
