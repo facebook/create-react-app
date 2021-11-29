@@ -69,7 +69,7 @@ const swSrc = paths.swSrc;
 
 // style files regexes
 const cssRegex = /\.css$/;
-// const cssModuleRegex = /\.module\.css$/;
+const cssModuleRegex = /\.module\.css$/;
 const sassRegex = /\.(scss|sass)$/;
 const sassModuleRegex = /\.module\.(scss|sass)$/;
 
@@ -598,23 +598,23 @@ module.exports = function(webpackEnv) {
             // to a file, but in development "style" loader enables hot editing
             // of CSS.
             // By default we support CSS Modules with the extension .module.css
-            // {
-            //   test: cssRegex,
-            //   exclude: cssModuleRegex,
-            //   use: getStyleLoaders({
-            //     importLoaders: 1,
-            //     sourceMap: isEnvProduction && shouldUseSourceMap,
-            //   }),
-            //   // Don't consider CSS imports dead code even if the
-            //   // containing package claims to have no side effects.
-            //   // Remove this when webpack adds a warning or an error for this.
-            //   // See https://github.com/webpack/webpack/issues/6571
-            //   sideEffects: true,
-            // },
+            {
+              test: cssRegex,
+              use: getStyleLoaders({
+                importLoaders: 1,
+                sourceMap: isEnvProduction && shouldUseSourceMap,
+                modules: true,
+              }),
+              include: cssModuleRegex,
+              // // Don't consider CSS imports dead code even if the
+              // // containing package claims to have no side effects.
+              // // Remove this when webpack adds a warning or an error for this.
+              // // See https://github.com/webpack/webpack/issues/6571
+              // sideEffects: true,
+            },
             // Adds support for CSS Modules (https://github.com/css-modules/css-modules)
             // using the extension .module.css
             {
-              // test: cssModuleRegex,
               test: cssRegex,
               use: getStyleLoaders({
                 url: false,
@@ -626,6 +626,7 @@ module.exports = function(webpackEnv) {
                   getLocalIdent: getCSSModuleLocalIdent,
                 },
               }),
+              exclude: cssModuleRegex,
             },
             // Opt-in support for SASS (using .scss or .sass extensions).
             // By default we support SASS Modules with the
