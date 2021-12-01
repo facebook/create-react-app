@@ -28,7 +28,9 @@ const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeM
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const getCSSModuleLocalIdent = require('react-dev-utils/getCSSModuleLocalIdent');
 // const ESLintPlugin = require('eslint-webpack-plugin');
-const CompressionPlugin = require('compression-webpack-plugin');
+//TODO: enable compression
+// const CompressionPlugin = require('compression-webpack-plugin');
+
 const paths = require('./paths');
 const modules = require('./modules');
 const getClientEnvironment = require('./env');
@@ -108,16 +110,16 @@ module.exports = function(webpackEnv) {
   // common function to get style loaders
   const getStyleLoaders = (cssOptions, preProcessor) => {
     const loaders = [
-      // isEnvDevelopment && require.resolve('style-loader'),
-      // isEnvProduction && {
-      //   loader: MiniCssExtractPlugin.loader,
-      //   // css is located in `static/css`, use '../../' to locate index.html folder
-      //   // in production `paths.publicUrlOrPath` can be a relative path
-      //   options: paths.publicUrlOrPath.startsWith('.')
-      //     ? { publicPath: '../../' }
-      //     : {},
-      // },
-      require.resolve('style-loader'),
+      isEnvDevelopment && require.resolve('style-loader'),
+      isEnvProduction && {
+        loader: MiniCssExtractPlugin.loader,
+        // css is located in `static/css`, use '../../' to locate index.html folder
+        // in production `paths.publicUrlOrPath` can be a relative path
+        options: paths.publicUrlOrPath.startsWith('.')
+          ? { publicPath: '../../' }
+          : {},
+      },
+      // require.resolve('style-loader'),
       {
         loader: require.resolve('css-loader'),
         options: cssOptions,
@@ -603,7 +605,10 @@ module.exports = function(webpackEnv) {
               use: getStyleLoaders({
                 importLoaders: 1,
                 sourceMap: isEnvProduction && shouldUseSourceMap,
-                modules: true,
+                modules: {
+                  localIdentName: isEnvProduction ? '[name]-[local]-[hash:base64:4]' : '[local]--[hash:base64:4]',
+                  // getLocalIdent: getCSSModuleLocalIdent,
+                },
               }),
               include: cssModuleRegex,
               // // Don't consider CSS imports dead code even if the
@@ -614,20 +619,16 @@ module.exports = function(webpackEnv) {
             },
             // Adds support for CSS Modules (https://github.com/css-modules/css-modules)
             // using the extension .module.css
-            {
-              test: cssRegex,
-              use: getStyleLoaders({
-                url: false,
-                importLoaders: 1,
-                sourceMap: isEnvProduction
-                  ? shouldUseSourceMap
-                  : isEnvDevelopment,
-                modules: {
-                  getLocalIdent: getCSSModuleLocalIdent,
-                },
-              }),
-              exclude: cssModuleRegex,
-            },
+            // {
+            //   test: cssRegex,
+            //   use: getStyleLoaders({
+            //     url: false,
+            //     sourceMap: isEnvProduction
+            //       ? shouldUseSourceMap
+            //       : isEnvDevelopment,
+            //   }),
+            //   exclude: cssModuleRegex,
+            // },
             // Opt-in support for SASS (using .scss or .sass extensions).
             // By default we support SASS Modules with the
             // extensions .module.scss or .module.sass
@@ -895,12 +896,14 @@ module.exports = function(webpackEnv) {
       //     },
       //   },
       // }),
-      isEnvProduction && new CompressionPlugin({
-        test: /\.(js|jsx)$/,
-        exclude: /.map$/,
-        filename: '[path][base]',
-        deleteOriginalAssets: 'keep-source-map',
-      })
+      //TODO: enable compression
+      // isEnvProduction && new CompressionPlugin({
+      //   test: /\.(js|jsx)$/,
+      //   exclude: /.map$/,
+      //   filename: '[path][base]',
+      //   deleteOriginalAssets: 'keep-source-map',
+      // })
+
     ].filter(Boolean),
     // Some libraries import Node modules but don't use them in the browser.
     // Tell webpack to provide empty mocks for them so importing them works.
