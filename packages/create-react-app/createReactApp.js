@@ -325,23 +325,6 @@ function createApp(name, verbose, version, template, useYarn, usePnp) {
     }
   }
 
-  if (useYarn) {
-    let yarnUsesDefaultRegistry = true;
-    try {
-      yarnUsesDefaultRegistry =
-        execSync('yarnpkg config get registry').toString().trim() ===
-        'https://registry.yarnpkg.com';
-    } catch (e) {
-      // ignore
-    }
-    if (yarnUsesDefaultRegistry) {
-      fs.copySync(
-        require.resolve('./yarn.lock.cached'),
-        path.join(root, 'yarn.lock')
-      );
-    }
-  }
-
   run(
     root,
     appName,
@@ -540,11 +523,7 @@ function run(
         console.log();
 
         // On 'exit' we will delete these files from target directory.
-        const knownGeneratedFiles = [
-          'package.json',
-          'yarn.lock',
-          'node_modules',
-        ];
+        const knownGeneratedFiles = ['package.json', 'node_modules'];
         const currentFiles = fs.readdirSync(path.join(root));
         currentFiles.forEach(file => {
           knownGeneratedFiles.forEach(fileToMatch => {
