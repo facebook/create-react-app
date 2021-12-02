@@ -1,7 +1,7 @@
 'use strict';
 
 const execa = require('execa');
-const { mkdirp, writeFileSync, existsSync } = require('fs-extra');
+const { mkdirp, writeFileSync, existsSync, readdirSync } = require('fs-extra');
 const { join } = require('path');
 const { rmSync } = require('fs');
 
@@ -15,7 +15,10 @@ const genPath = join(__dirname, projectName);
 
 const generatedFiles = [
   '.gitignore',
+  'README.md',
+  'node_modules',
   'package.json',
+  'public',
   'src',
   'package-lock.json',
 ];
@@ -47,10 +50,17 @@ const run = async (args, options) => {
   const childProcessResult = await result;
   process.stdout.write(`ExitCode: ${childProcessResult.exitCode}\n`);
   process.stdout.write('::endgroup::\n');
-  return childProcessResult;
+  const files = existsSync(genPath)
+    ? readdirSync(genPath).filter(f => existsSync(join(genPath, f)))
+    : null;
+  return {
+    ...childProcessResult,
+    files,
+  };
 };
 
-const genFileExists = f => existsSync(join(genPath, f));
+const expectAllFiles = (arr1, arr2) =>
+  expect([...arr1].sort()).toEqual([...arr2].sort());
 
 describe('create-react-app', () => {
   it('check yarn installation', async () => {
@@ -61,21 +71,22 @@ describe('create-react-app', () => {
   });
 
   it('asks to supply an argument if none supplied', async () => {
-    const { exitCode, stderr } = await run([], { reject: false });
+    const { exitCode, stderr, files } = await run([], { reject: false });
 
     // Assertions
     expect(exitCode).toBe(1);
     expect(stderr).toContain('Please specify the project directory');
+    expect(files).toBe(null);
   });
 
   it('creates a project on supplying a name as the argument', async () => {
-    const { exitCode } = await run([projectName], { cwd: __dirname });
+    const { exitCode, files } = await run([projectName], { cwd: __dirname });
 
     // Assert for exit code
     expect(exitCode).toBe(0);
 
     // Assert for the generated files
-    generatedFiles.forEach(file => expect(genFileExists(file)).toBeTruthy());
+    expectAllFiles(files, generatedFiles);
   });
 
   it('warns about conflicting files in path', async () => {
@@ -86,7 +97,7 @@ describe('create-react-app', () => {
     const pkgJson = join(genPath, 'package.json');
     writeFileSync(pkgJson, '{ "foo": "bar" }');
 
-    const { exitCode, stdout } = await run([projectName], {
+    const { exitCode, stdout, files } = await run([projectName], {
       cwd: __dirname,
       reject: false,
     });
@@ -98,6 +109,9 @@ describe('create-react-app', () => {
     expect(stdout).toContain(
       `The directory ${projectName} contains files that could conflict`
     );
+
+    // Existing file is still there
+    expectAllFiles(files, ['package.json']);
   });
 
   it('creates a project in the current directory', async () => {
@@ -105,50 +119,44 @@ describe('create-react-app', () => {
     await mkdirp(genPath);
 
     // Create a project in the current directory
-    const { exitCode } = await run(['.'], { cwd: genPath });
+    const { exitCode, files } = await run(['.'], { cwd: genPath });
 
     // Assert for exit code
     expect(exitCode).toBe(0);
 
     // Assert for the generated files
-    generatedFiles.forEach(file => expect(genFileExists(file)).toBeTruthy());
+    expectAllFiles(files, generatedFiles);
   });
 
-  it(
-    'uses yarn as the package manager',
-    async () => {
-      const { exitCode } = await run([projectName], {
-        cwd: __dirname,
-        env: { npm_config_user_agent: 'yarn' },
-      });
-
-      // Assert for exit code
-      expect(exitCode).toBe(0);
-
-      // Assert for the generated files
-      const generatedFilesWithYarn = [
-        ...generatedFiles.filter(file => file !== 'package-lock.json'),
-        'yarn.lock',
-      ];
-
-      generatedFilesWithYarn.forEach(file =>
-        expect(genFileExists(file)).toBeTruthy()
-      );
-    },
-    1000 * 60 * 10
-  );
-
-  it('creates a project based on the typescript template', async () => {
-    const { exitCode } = await run([projectName, '--template', 'typescript'], {
+  it('uses yarn as the package manager', async () => {
+    const { exitCode, files } = await run([projectName], {
       cwd: __dirname,
+      env: { npm_config_user_agent: 'yarn' },
     });
 
     // Assert for exit code
     expect(exitCode).toBe(0);
 
     // Assert for the generated files
-    [...generatedFiles, 'tsconfig.json'].forEach(file =>
-      expect(genFileExists(file)).toBeTruthy()
+    const generatedFilesWithYarn = generatedFiles.map(file =>
+      file === 'package-lock.json' ? 'yarn.lock' : file
     );
+
+    expectAllFiles(files, generatedFilesWithYarn);
+  });
+
+  it('creates a project based on the typescript template', async () => {
+    const { exitCode, files } = await run(
+      [projectName, '--template', 'typescript'],
+      {
+        cwd: __dirname,
+      }
+    );
+
+    // Assert for exit code
+    expect(exitCode).toBe(0);
+
+    // Assert for the generated files
+    expectAllFiles(files, [...generatedFiles, 'tsconfig.json']);
   });
 });
