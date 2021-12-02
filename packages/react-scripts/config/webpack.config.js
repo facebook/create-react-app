@@ -602,33 +602,31 @@ module.exports = function(webpackEnv) {
             // By default we support CSS Modules with the extension .module.css
             {
               test: cssRegex,
+              exclude: cssModuleRegex,
               use: getStyleLoaders({
                 importLoaders: 1,
-                sourceMap: isEnvProduction && shouldUseSourceMap,
-                modules: {
-                  localIdentName: isEnvProduction ? '[name]-[local]-[hash:base64:4]' : '[local]--[hash:base64:4]',
-                  // getLocalIdent: getCSSModuleLocalIdent,
-                },
+                sourceMap: isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
               }),
-              include: cssModuleRegex,
-              // // Don't consider CSS imports dead code even if the
-              // // containing package claims to have no side effects.
-              // // Remove this when webpack adds a warning or an error for this.
-              // // See https://github.com/webpack/webpack/issues/6571
-              // sideEffects: true,
+              // Don't consider CSS imports dead code even if the
+              // containing package claims to have no side effects.
+              // Remove this when webpack adds a warning or an error for this.
+              // See https://github.com/webpack/webpack/issues/6571
+              sideEffects: true,
             },
             // Adds support for CSS Modules (https://github.com/css-modules/css-modules)
             // using the extension .module.css
-            // {
-            //   test: cssRegex,
-            //   use: getStyleLoaders({
-            //     url: false,
-            //     sourceMap: isEnvProduction
-            //       ? shouldUseSourceMap
-            //       : isEnvDevelopment,
-            //   }),
-            //   exclude: cssModuleRegex,
-            // },
+            {
+              test: cssModuleRegex,
+              use: getStyleLoaders({
+                importLoaders: 1,
+                sourceMap: isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
+                modules: {
+                  localIdentName: isEnvProduction ? '[name]-[local]-[hash:base64:4]' : '[local]--[hash:base64:4]',
+                  // There is an issue with escaping of symbols in provided utility function
+                  // getLocalIdent: getCSSModuleLocalIdent,
+                },
+              }),
+            },
             // Opt-in support for SASS (using .scss or .sass extensions).
             // By default we support SASS Modules with the
             // extensions .module.scss or .module.sass
