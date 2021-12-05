@@ -21,11 +21,11 @@
     "compile:lockfile": "node tasks/compile-lockfile.js"
   },
   "devDependencies": {
-    "@testing-library/jest-dom": "^5.15.1",
+    "@testing-library/jest-dom": "^5.16.0",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
     "alex": "^10.0.0",
-    "eslint": "^8.3.0",
+    "eslint": "^8.4.0",
     "execa": "^6.0.0",
     "fs-extra": "^10.0.0",
     "get-port": "^6.0.0",
