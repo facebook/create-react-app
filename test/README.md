@@ -13,8 +13,7 @@ To only run the webpack messages, type `p` followed by `webpack-message` and pre
 
 ### `fixtures/`
 
-Each `fixture/` gets spun up in a temporary directory and has its dependencies installed with Yarn PnP (for speed).<br>
-To opt-out of PnP, create a `.disable-pnp` file in the specific fixture directory.
+Each `fixture/` gets spun up in a temporary directory and has its dependencies installed.
 
 A global (`testSetup`) is created which has a few interesting properties:
 

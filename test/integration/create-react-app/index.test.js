@@ -4,11 +4,11 @@ const execa = require('execa');
 const { mkdirp, writeFileSync, existsSync, readdirSync } = require('fs-extra');
 const { join } = require('path');
 const { rmSync } = require('fs');
+const { timeout } = require('../../__shared__/utils');
 
 const cli = require.resolve('create-react-app/index.js');
 
-// Increase the timeout for GitHub macOS runner
-jest.setTimeout(1000 * 60 * (process.env.RUNNER_OS === 'macOS' ? 10 : 5));
+jest.setTimeout(timeout);
 
 const projectName = 'test-app';
 const genPath = join(__dirname, projectName);

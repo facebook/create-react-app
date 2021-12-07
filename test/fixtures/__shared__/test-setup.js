@@ -1,21 +1,18 @@
 const path = require('path');
-const fs = require('fs-extra');
 const TestSetup = require('./util/setup');
+const { timeout } = require('../../__shared__/utils');
 
 const fixturePath = path.dirname(module.parent.filename);
 const fixtureName = path.basename(fixturePath);
-const disablePnp = fs.existsSync(path.resolve(fixturePath, '.disable-pnp'));
-const testSetup = new TestSetup(fixtureName, fixturePath, {
-  pnp: !disablePnp,
-});
+const testSetup = new TestSetup(fixtureName, fixturePath);
 
 beforeAll(async () => {
   await testSetup.setup();
-}, 1000 * 60 * 5);
+}, timeout);
 afterAll(async () => {
   await testSetup.teardown();
 });
 
-beforeEach(() => jest.setTimeout(1000 * 60 * 5));
+beforeEach(() => jest.setTimeout(timeout));
 
 module.exports = testSetup;

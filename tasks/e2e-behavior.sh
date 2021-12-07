@@ -76,8 +76,7 @@ publishToLocalRegistry
 # ******************************************************************************
 
 # Run all tests
-cd test/
-CI=true ../node_modules/.bin/jest -w 2
+CI=true npm run test:behavior -- -w 2
 
 # Cleanup
 cleanup

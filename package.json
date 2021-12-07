@@ -16,6 +16,7 @@
     "screencast:error": "svg-term --cast jyu19xGl88FQ3poMY8Hbmfw8y --out screencast-error.svg --window --at 12000 --no-cursor",
     "alex": "alex .",
     "test:integration": "jest test/integration",
+    "test:behavior": "jest test/fixtures",
     "test": "cd packages/react-scripts && node bin/react-scripts.js test",
     "format": "prettier --write 'packages/*/*.js' 'packages/*/!(node_modules)/**/*.js'"
   },
