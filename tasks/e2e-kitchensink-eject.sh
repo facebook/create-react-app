@@ -69,14 +69,6 @@ if [ "$AGENT_OS" == 'Windows_NT' ]; then
   root_path=$(cmd //c cd)
 fi
 
-if hash npm 2>/dev/null
-then
-  npm i -g npm@latest
-fi
-
-# Bootstrap monorepo
-npm install
-
 # ******************************************************************************
 # First, publish the monorepo.
 # ******************************************************************************
