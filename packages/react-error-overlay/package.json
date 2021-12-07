@@ -44,8 +44,6 @@
     "chalk": "^4.1.2",
     "chokidar": "^3.5.2",
     "cross-env": "^7.0.3",
-    "eslint": "^8.3.0",
-    "eslint-config-react-app": "^7.0.1",
     "flow-bin": "^0.116.0",
     "html-entities": "^2.3.2",
     "jest": "^27.4.3",

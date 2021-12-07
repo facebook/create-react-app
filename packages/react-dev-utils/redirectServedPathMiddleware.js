@@ -19,7 +19,10 @@ module.exports = function createRedirectServedPathMiddleware(servedPath) {
     ) {
       next();
     } else {
-      const newPath = path.posix.join(servedPath, req.path !== '/' ? req.path : '');
+      const newPath = path.posix.join(
+        servedPath,
+        req.path !== '/' ? req.path : ''
+      );
       res.redirect(newPath);
     }
   };

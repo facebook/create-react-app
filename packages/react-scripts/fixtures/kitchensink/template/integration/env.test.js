@@ -26,21 +26,12 @@ describe('Integration', () => {
         doc.getElementById('feature-file-env-original-2').textContent
       ).toBe('override-from-original-local-env-2');
 
-      if (process.env.NODE_ENV === 'production') {
-        expect(doc.getElementById('feature-file-env').textContent).toBe(
-          'production'
-        );
-        expect(doc.getElementById('feature-file-env-x').textContent).toBe(
-          'x-from-original-local-env'
-        );
-      } else {
-        expect(doc.getElementById('feature-file-env').textContent).toBe(
-          'development'
-        );
-        expect(doc.getElementById('feature-file-env-x').textContent).toBe(
-          'x-from-original-local-env'
-        );
-      }
+      expect(doc.getElementById('feature-file-env').textContent).toBe(
+        process.env.NODE_ENV === 'production' ? 'production' : 'development'
+      );
+      expect(doc.getElementById('feature-file-env-x').textContent).toBe(
+        'x-from-original-local-env'
+      );
     });
 
     it('PUBLIC_URL', async () => {
