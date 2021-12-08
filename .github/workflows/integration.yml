@@ -22,8 +22,8 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
           cache: 'npm'
-      - name: Install npm@7
-        run: npm i -g npm@7
+      - name: Install npm@8
+        run: npm i -g npm@8
       - name: Install yarn
         run: npm i -g yarn
       - name: Install packages
