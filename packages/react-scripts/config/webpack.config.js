@@ -90,6 +90,7 @@ module.exports = function (webpackEnv) {
   const swcConfig = createSwcConfig({
     shouldUseSourceMap,
     isEnvDevelopment,
+    isEnvProduction,
     shouldUseReactRefresh,
   });
 

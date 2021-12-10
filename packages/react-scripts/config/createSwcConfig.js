@@ -12,8 +12,16 @@ const hasJsxRuntime = require('./hasJsxRuntime');
 module.exports = function createSwcConfig({
   shouldUseSourceMap = true,
   isEnvDevelopment = false,
+  isEnvProduction = false,
   shouldUseReactRefresh = false,
 } = {}) {
+  const env =
+    isEnvDevelopment | isEnvProduction
+      ? {
+          mode: 'entry',
+          coreJs: 3,
+        }
+      : {};
   return {
     ecmascript: {
       sourceMaps: shouldUseSourceMap,
@@ -31,6 +39,7 @@ module.exports = function createSwcConfig({
           },
         },
       },
+      env,
     },
     typescript: {
       sourceMaps: shouldUseSourceMap,
@@ -45,9 +54,11 @@ module.exports = function createSwcConfig({
           react: {
             runtime: hasJsxRuntime ? 'automatic' : 'clasic',
             refresh: shouldUseReactRefresh,
+            development: isEnvDevelopment,
           },
         },
       },
     },
+    env,
   };
 };

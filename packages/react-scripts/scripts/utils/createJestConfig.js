@@ -14,7 +14,6 @@ const modules = require('../../config/modules');
 const createSwcConfig = require('../../config/createSwcConfig');
 const swcConfig = createSwcConfig({
   shouldUseSourceMap: true,
-  isEnvDevelopment: true,
 });
 
 module.exports = (resolve, rootDir, isEjecting) => {
