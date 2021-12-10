@@ -19,7 +19,7 @@ const formatWebpackMessages = require('./formatWebpackMessages');
 const getProcessForPort = require('./getProcessForPort');
 const forkTsCheckerWebpackPlugin = require('./ForkTsCheckerWebpackPlugin');
 
-const isInteractive = process.stdout.isTTY;
+const isInteractive = process.stdout.isTTY && !process.env.CI;
 
 function prepareUrls(protocol, host, port, pathname = '/') {
   const formatUrl = hostname =>

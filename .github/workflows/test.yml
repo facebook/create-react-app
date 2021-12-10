@@ -1,0 +1,127 @@
+name: Test
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  integration:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: ['ubuntu-latest', 'macos-latest', 'windows-latest']
+        node: ['14', '16']
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node }}
+          cache: 'npm'
+      - run: npm i -g npm@8
+      - run: npm i -g yarn
+      - run: npm ci --prefer-offline
+      - run: npm run test:integration
+
+  e2e-simple:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: ['ubuntu-latest', 'macos-latest', 'windows-latest']
+        node: ['14', '16']
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node }}
+          cache: 'npm'
+      - run: npm i -g npm@8
+      - run: npm i -g yarn
+      - run: npm ci --prefer-offline
+      - run: npm run test:e2e -- simple
+
+  e2e-installs:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: ['ubuntu-latest', 'macos-latest', 'windows-latest']
+        node: ['14', '16']
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node }}
+          cache: 'npm'
+      - run: npm i -g npm@8
+      - run: npm i -g yarn
+      - run: npm ci --prefer-offline
+      - run: npm run test:e2e -- installs
+
+  e2e-kitchensink:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: ['ubuntu-latest', 'macos-latest', 'windows-latest']
+        node: ['14', '16']
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node }}
+          cache: 'npm'
+      - run: npm i -g npm@8
+      - run: npm i -g yarn
+      - run: npm ci --prefer-offline
+      - run: npm run test:e2e -- kitchensink
+
+  e2e-kitchensink-eject:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: ['ubuntu-latest', 'macos-latest', 'windows-latest']
+        node: ['14', '16']
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node }}
+          cache: 'npm'
+      - run: npm i -g npm@8
+      - run: npm i -g yarn
+      - run: npm ci --prefer-offline
+      - run: npm run test:e2e -- kitchensink-eject
+
+  e2e-old-node:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: ['ubuntu-latest', 'macos-latest', 'windows-latest']
+        node: ['12']
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node }}
+          cache: 'npm'
+      - run: npm i -g npm@8
+      - run: npm i -g yarn
+      - run: npm ci --prefer-offline
+      - run: npm run test:e2e -- old-node
+
+  behavior:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: ['ubuntu-latest', 'macos-latest', 'windows-latest']
+        node: ['14', '16']
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node }}
+          cache: 'npm'
+      - run: npm i -g npm@8
+      - run: npm i -g yarn
+      - run: npm ci --prefer-offline
+      - run: npm run test:behavior

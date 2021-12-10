@@ -1,4 +1,4 @@
 node_modules/
 build/
-test/fixtures/webpack-message-formatting/src/AppBabel.js
+test/behavior/__fixtures__/webpack-message-formatting/src/AppBabel.js
 packages/react-error-overlay/lib/

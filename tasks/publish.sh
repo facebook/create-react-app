@@ -32,7 +32,7 @@ if [ -n "$(git status --porcelain)" ]; then
 fi
 
 # Compile
-npm run build:prod -w react-error-overlay
+npm run build:prod
 
 # Get 2FA when not CI
 otp=""
@@ -42,4 +42,4 @@ if [ -z $CI ]; then
 fi
 
 # Go!
-NPM_CONFIG_OTP="$otp" ./node_modules/.bin/lerna publish "$@"
+NPM_CONFIG_OTP="$otp" npx lerna publish "$@"

@@ -115,19 +115,7 @@ and then run `npm start` or `npm run build`.
 
 ## Contributing to E2E (end to end) tests
 
-**TL;DR** use the command `npm run e2e:docker` to run unit and e2e tests.
-
 More detailed information are in the dedicated [README](/test/README.md).
-
-### CI testing with private packages
-
-**create-react-app** relies on main registry to fetch all dependencies, but, if you are in the need to usage of custom private packages that need to be fetch while running E2E test you might need a different configuration.
-
-#### Customizing E2E registry configuration
-
-We use [verdaccio](https://github.com/verdaccio/verdaccio) to emulate packages publishing in a registry using a default configuration. You might modify the current behaviour by editing the file `task/verdaccio.yaml`.
-
-For more information about the configuration check out the [Verdaccio documentation](https://verdaccio.org/docs/en/configuration).
 
 ## Tips for contributors using Windows
 

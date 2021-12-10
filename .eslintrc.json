@@ -21,15 +21,15 @@
         "docusaurus/website/src/**/*.js",
         "packages/cra-template/**/*.js",
         "packages/react-error-overlay/**/*.js",
-        "packages/react-scripts/fixtures/kitchensink/template/{src,integration}/**/*.js",
-        "test/fixtures/*/src/*.js"
+        "test/e2e/fixtures/kitchensink/template/{src,integration}/**/*.js",
+        "test/behavior/__fixtures__/**/*.js"
       ],
       "excludedFiles": ["packages/react-error-overlay/*.js"],
       "extends": ["react-app", "react-app/jest"]
     },
     {
       "files": [
-        "test/fixtures/webpack-message-formatting/src/{AppLintError,AppLintWarning,AppUnknownFile}.js"
+        "test/behavior/__fixtures__/webpack-message-formatting/src/{AppLintError,AppLintWarning,AppUnknownFile}.js"
       ],
       "rules": {
         "no-unused-vars": "off",
@@ -37,13 +37,17 @@
       }
     },
     {
-      "files": ["test/fixtures/webpack-message-formatting/src/Export5.js"],
+      "files": [
+        "test/behavior/__fixtures__/webpack-message-formatting/src/Export5.js"
+      ],
       "rules": {
         "import/no-anonymous-default-export": "off"
       }
     },
     {
-      "files": ["test/fixtures/issue-5176-flow-class-properties/src/App.js"],
+      "files": [
+        "test/behavior/__fixtures__/issue-5176-flow-class-properties/src/App.js"
+      ],
       "rules": {
         "no-dupe-class-members": "off"
       }
