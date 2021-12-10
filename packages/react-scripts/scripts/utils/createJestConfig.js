@@ -11,6 +11,11 @@ const fs = require('fs');
 const chalk = require('react-dev-utils/chalk');
 const paths = require('../../config/paths');
 const modules = require('../../config/modules');
+const createSwcConfig = require('../../config/createSwcConfig');
+const swcConfig = createSwcConfig({
+  shouldUseSourceMap: true,
+  isEnvDevelopment: true,
+});
 
 module.exports = (resolve, rootDir, isEjecting) => {
   // Use this instead of `paths.testsSetup` to avoid putting
@@ -40,9 +45,11 @@ module.exports = (resolve, rootDir, isEjecting) => {
     ],
     testEnvironment: 'jsdom',
     transform: {
-      '^.+\\.(js|jsx|mjs|cjs|ts|tsx)$': resolve(
-        'config/jest/babelTransform.js'
-      ),
+      '^.+\\.(js|jsx|mjs|cjs)$': [
+        require.resolve('@swc/jest'),
+        swcConfig.ecmascript,
+      ],
+      '^.+\\.(ts|tsx)$': [require.resolve('@swc/jest'), swcConfig.typescript],
       '^.+\\.css$': resolve('config/jest/cssTransform.js'),
       '^(?!.*\\.(js|jsx|mjs|cjs|ts|tsx|css|json)$)': resolve(
         'config/jest/fileTransform.js'

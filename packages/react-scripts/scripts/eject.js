@@ -109,7 +109,12 @@ prompts({
     }
   }
 
-  const folders = ['config', 'config/jest', 'scripts', 'config/webpack/persistentCache'];
+  const folders = [
+    'config',
+    'config/jest',
+    'scripts',
+    'config/webpack/persistentCache',
+  ];
 
   // Make shallow array of files paths
   const files = folders.reduce((files, folder) => {
@@ -138,7 +143,7 @@ prompts({
   console.log(cyan(`Copying files into ${appPath}`));
 
   folders.forEach(folder => {
-    fs.mkdirSync(path.join(appPath, folder), {recursive: true});
+    fs.mkdirSync(path.join(appPath, folder), { recursive: true });
   });
 
   files.forEach(file => {
@@ -229,12 +234,6 @@ prompts({
   // Add Jest config
   console.log(`  Adding ${cyan('Jest')} configuration`);
   appPackage.jest = jestConfig;
-
-  // Add Babel config
-  console.log(`  Adding ${cyan('Babel')} preset`);
-  appPackage.babel = {
-    presets: ['react-app'],
-  };
 
   // Add ESlint config
   if (!appPackage.eslintConfig) {
