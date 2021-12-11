@@ -51,6 +51,8 @@
     "jest": "^27.4.4",
     "jest-resolve": "^27.4.2",
     "jest-watch-typeahead": "^1.0.0",
+    "json5": "^2.2.0",
+    "lodash.merge": "^4.6.2",
     "mini-css-extract-plugin": "^2.4.5",
     "postcss": "^8.4.4",
     "postcss-flexbugs-fixes": "^5.0.2",
