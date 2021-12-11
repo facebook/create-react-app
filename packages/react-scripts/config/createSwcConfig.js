@@ -13,6 +13,9 @@ const merge = require('lodash.merge');
 const JSON5 = require('json5');
 const paths = require('./paths');
 const hasJsxRuntime = require('./hasJsxRuntime');
+const browserslist = require('browserslist');
+
+const targets = browserslist.loadConfig({ path: paths.appPath });
 
 module.exports = function createSwcConfig({
   shouldUseSourceMap = true,
@@ -27,7 +30,7 @@ module.exports = function createSwcConfig({
     runtime: hasJsxRuntime ? 'automatic' : 'clasic',
     sourceMaps: shouldUseSourceMap,
     refresh: shouldUseReactRefresh,
-    useBroserlists: isEnvDevelopment | isEnvProduction,
+    useBrowserslist: isEnvDevelopment | isEnvProduction,
     development: isEnvDevelopment,
   };
 
@@ -56,7 +59,7 @@ function getBaseConfiguration({
   jsx = false,
   sourceMaps = false,
   refresh = false,
-  useBroserlists = false,
+  useBrowserslist = false,
   development = false,
 }) {
   return {
@@ -74,8 +77,9 @@ function getBaseConfiguration({
         },
       },
     },
-    env: useBroserlists
+    env: useBrowserslist
       ? {
+          targets,
           mode: 'entry',
           coreJs: 3,
         }
@@ -134,10 +138,9 @@ function getProjectConfig(configPath, loadedPaths = []) {
       fs.readFileSync(projectConfigPath, 'utf-8')
     );
     if (projectConfig.extends != null) {
-      const baseConfig = path.resolve(
-        path.dirname(projectConfigPath),
-        projectConfig.extends.replace('/', path.sep)
-      );
+      const baseConfig = require.resolve(projectConfig.extends, {
+        paths: [path.dirname(projectConfigPath)],
+      });
       delete projectConfig.extends;
       return merge(
         getProjectConfig(baseConfig, [...loadedPaths, projectConfigPath]),
