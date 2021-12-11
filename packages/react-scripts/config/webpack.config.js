@@ -371,7 +371,7 @@ module.exports = function (webpackEnv) {
               },
             },
             // Process application JS with swc.
-            // The preset includes JSX, Flow, TypeScript, and some ESnext features.
+            // The preset includes JSX, TypeScript, and some ESnext features.
             {
               test: /\.(js|mjs|jsx)$/,
               include: paths.appSrc,

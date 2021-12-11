@@ -148,7 +148,7 @@ Please refer to the [User Guide](https://facebook.github.io/create-react-app/doc
 
 Your environment will have everything you need to build a modern single-page React app:
 
-- React, JSX, ES6, TypeScript and Flow syntax support.
+- React, JSX, ES6 and TypeScript syntax support.
 - Language extras beyond ES6 like the object spread operator.
 - Autoprefixed CSS, so you don’t need `-webkit-` or other prefixes.
 - A fast interactive unit test runner with built-in support for coverage reporting.
