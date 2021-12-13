@@ -16,6 +16,9 @@
     "index.js",
     "jest.js"
   ],
+  "engines": {
+    "node": ">=16.0.0"
+  },
   "peerDependencies": {
     "eslint": "^8.0.0"
   },
@@ -34,8 +37,5 @@
     "eslint-plugin-react": "^7.27.1",
     "eslint-plugin-react-hooks": "^4.3.0",
     "eslint-plugin-testing-library": "^5.0.1"
-  },
-  "engines": {
-    "node": ">=14.0.0"
   }
 }

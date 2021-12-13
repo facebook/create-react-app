@@ -243,14 +243,14 @@ function createApp(name, verbose, version, template, useYarn, usePnp) {
   const unsupportedNodeVersion = !semver.satisfies(
     // Coerce strings with metadata (i.e. `15.0.0-nightly`).
     semver.coerce(process.version),
-    '>=14'
+    '>=16'
   );
 
   if (unsupportedNodeVersion) {
     console.log(
       chalk.yellow(
         `You are using Node ${process.version} so the project will be bootstrapped with an old unsupported version of tools.\n\n` +
-          `Please update to Node 14 or higher for a better, fully supported experience.\n`
+          `Please update to Node 16 or higher for a better, fully supported experience.\n`
       )
     );
     // Fall back to latest supported react-scripts on Node 4
@@ -504,7 +504,7 @@ function run(
           console.log(
             chalk.yellow(
               `\nNote: the project was bootstrapped with an old unsupported version of tools.\n` +
-                `Please update to Node >=14 and npm >=6 to get supported tools in new projects.\n`
+                `Please update to Node >=16 and npm >=7 to get supported tools in new projects.\n`
             )
           );
         }
