@@ -20,7 +20,7 @@ Features are categorized by their scope:
 
 - _env_, all those which deal with environment variables (e.g. `NODE_PATH`)
 
-- _syntax_, all those which showcase a single EcmaScript syntax feature that is expected to be transpiled by **SWC**
+- _syntax_, all those which showcase a single EcmaScript syntax feature that is expected to be transpiled by **Babel** _(or **SWC** if `SWC_TRANSFORM` set to "true")_
 
 - _webpack_, all those which make use of webpack settings, loaders or plugins
 

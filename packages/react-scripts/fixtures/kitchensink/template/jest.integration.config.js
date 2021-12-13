@@ -1,5 +1,11 @@
+const useSwc = process.env.SWC_TRANSFORM === 'true';
+
 module.exports = {
   testEnvironment: 'node',
   testMatch: ['**/integration/*.test.js'],
-  transform: { '^.+\\.js$': [require.resolve('@swc/jest')] },
+  transform: {
+    '^.+\\.js$': useSwc
+      ? [require.resolve('@swc/jest')]
+      : './jest.transform.js',
+  },
 };

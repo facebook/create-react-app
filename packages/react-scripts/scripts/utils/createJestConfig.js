@@ -16,6 +16,8 @@ const swcConfig = createSwcConfig({
   shouldUseSourceMap: true,
 });
 
+const useSwc = process.env.SWC_TRANSFORM === 'true';
+
 module.exports = (resolve, rootDir, isEjecting) => {
   // Use this instead of `paths.testsSetup` to avoid putting
   // an absolute filename into configuration after ejecting.
@@ -26,6 +28,20 @@ module.exports = (resolve, rootDir, isEjecting) => {
     ? `<rootDir>/src/setupTests.${setupTestsFileExtension}`
     : undefined;
 
+  const codeTransformers = {
+    babel: {
+      '^.+\\.(js|jsx|mjs|cjs|ts|tsx)$': resolve(
+        'config/jest/babelTransform.js'
+      ),
+    },
+    swc: {
+      '^.+\\.(js|jsx|mjs|cjs)$': [
+        require.resolve('@swc/jest'),
+        swcConfig.ecmascript,
+      ],
+      '^.+\\.(ts|tsx)$': [require.resolve('@swc/jest'), swcConfig.typescript],
+    },
+  };
   const config = {
     roots: ['<rootDir>/src'],
 
@@ -44,11 +60,7 @@ module.exports = (resolve, rootDir, isEjecting) => {
     ],
     testEnvironment: 'jsdom',
     transform: {
-      '^.+\\.(js|jsx|mjs|cjs)$': [
-        require.resolve('@swc/jest'),
-        swcConfig.ecmascript,
-      ],
-      '^.+\\.(ts|tsx)$': [require.resolve('@swc/jest'), swcConfig.typescript],
+      ...(useSwc ? codeTransformers.swc : codeTransformers.babel),
       '^.+\\.css$': resolve('config/jest/cssTransform.js'),
       '^(?!.*\\.(js|jsx|mjs|cjs|ts|tsx|css|json)$)': resolve(
         'config/jest/fileTransform.js'

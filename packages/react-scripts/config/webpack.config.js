@@ -35,7 +35,11 @@ const ForkTsCheckerWebpackPlugin =
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const createEnvironmentHash = require('./webpack/persistentCache/createEnvironmentHash');
 const hasJsxRuntime = require('./hasJsxRuntime');
-const createSwcConfig = require('./createSwcConfig');
+
+const useSwc = process.env.SWC_TRANSFORM === 'true';
+const codeLoaders = useSwc
+  ? require('./webpack/loaders/code/swc')
+  : require('./webpack/loaders/code/babel');
 
 // Source maps are resource heavy and can cause out of memory issue for large source files.
 const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false';
@@ -44,6 +48,15 @@ const reactRefreshRuntimeEntry = require.resolve('react-refresh/runtime');
 const reactRefreshWebpackPluginRuntimeEntry = require.resolve(
   '@pmmmwh/react-refresh-webpack-plugin'
 );
+
+const babelRuntimeEntry = require.resolve('babel-preset-react-app');
+const babelRuntimeEntryHelpers = require.resolve(
+  '@babel/runtime/helpers/esm/assertThisInitialized',
+  { paths: [babelRuntimeEntry] }
+);
+const babelRuntimeRegenerator = require.resolve('@babel/runtime/regenerator', {
+  paths: [babelRuntimeEntry],
+});
 
 // Some apps do not need the benefits of saving a web request, so not inlining the chunk
 // makes for a smoother build process.
@@ -86,13 +99,6 @@ module.exports = function (webpackEnv) {
   const env = getClientEnvironment(paths.publicUrlOrPath.slice(0, -1));
 
   const shouldUseReactRefresh = env.raw.FAST_REFRESH;
-
-  const swcConfig = createSwcConfig({
-    shouldUseSourceMap,
-    isEnvDevelopment,
-    isEnvProduction,
-    shouldUseReactRefresh,
-  });
 
   // common function to get style loaders
   const getStyleLoaders = (cssOptions, preProcessor) => {
@@ -295,7 +301,7 @@ module.exports = function (webpackEnv) {
       },
       plugins: [
         // Prevents users from importing files from outside of src/ (or node_modules/).
-        // This often causes confusion because we only process files within src/ with swc.
+        // This often causes confusion because we only process files within src/ with babel (or experimental swc).
         // To fix this, we prevent you from importing files out of src/ -- if you'd like to,
         // please link the files into your node_modules/ and let module-resolution kick in.
         // Make sure your source files are compiled, as they will not be processed in any way.
@@ -303,6 +309,9 @@ module.exports = function (webpackEnv) {
           paths.appPackageJson,
           reactRefreshRuntimeEntry,
           reactRefreshWebpackPluginRuntimeEntry,
+          babelRuntimeEntry,
+          babelRuntimeEntryHelpers,
+          babelRuntimeRegenerator,
         ]),
       ],
     },
@@ -370,26 +379,15 @@ module.exports = function (webpackEnv) {
                 and: [/\.(ts|tsx|js|jsx|md|mdx)$/],
               },
             },
-            // Process application JS with swc.
+            // Process application JS with Babel (or experimental swc).
             // The preset includes JSX, Flow, TypeScript, and some ESnext features.
-            {
-              test: /\.(js|mjs|jsx)$/,
-              include: paths.appSrc,
-              loader: require.resolve('swc-loader'),
-              options: swcConfig.ecmascript,
-            },
-            {
-              test: /\.(ts|tsx)$/,
-              include: paths.appSrc,
-              loader: require.resolve('swc-loader'),
-              options: swcConfig.typescript,
-            },
-            // Process any JS outside of the app with swc.
-            // Unlike the application JS, we only compile the standard ES features.
-            {
-              test: /\.(js|mjs)$/,
-              loader: require.resolve('swc-loader'),
-            },
+            ...codeLoaders({
+              shouldUseSourceMap,
+              isEnvDevelopment,
+              isEnvProduction,
+              shouldUseReactRefresh,
+            }),
+
             // "postcss" loader applies autoprefixer to our CSS.
             // "css" loader resolves paths in CSS and adds assets as dependencies.
             // "style" loader turns CSS into JS modules that inject <style> tags.

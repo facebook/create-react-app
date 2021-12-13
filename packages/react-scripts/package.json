@@ -28,8 +28,13 @@
   },
   "types": "./lib/react-app.d.ts",
   "dependencies": {
+    "@babel/core": "^7.16.0",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.3",
     "@svgr/webpack": "^5.5.0",
+    "babel-jest": "^27.4.2",
+    "babel-loader": "^8.2.3",
+    "babel-plugin-named-asset-import": "^0.3.7",
+    "babel-preset-react-app": "^10.0.0",
     "@swc/core": "^1.2.119",
     "@swc/helpers": "^0.3.2",
     "@swc/jest": "^0.2.12",

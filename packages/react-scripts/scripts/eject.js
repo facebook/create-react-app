@@ -114,6 +114,7 @@ prompts({
     'config/jest',
     'scripts',
     'config/webpack/persistentCache',
+    'config/webpack/loaders/code',
   ];
 
   // Make shallow array of files paths
@@ -234,6 +235,12 @@ prompts({
   // Add Jest config
   console.log(`  Adding ${cyan('Jest')} configuration`);
   appPackage.jest = jestConfig;
+
+  // Add Babel config
+  console.log(`  Adding ${cyan('Babel')} preset`);
+  appPackage.babel = {
+    presets: ['react-app'],
+  };
 
   // Add ESlint config
   if (!appPackage.eslintConfig) {
