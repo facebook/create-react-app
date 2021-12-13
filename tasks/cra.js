@@ -106,7 +106,6 @@ const scriptsFileName = cp
 const scriptsPath = path.join(packagesDir, 'react-scripts', scriptsFileName);
 
 // Now that we have packed them, call the global CLI.
-cp.execSync('npm cache clean');
 
 const args = process.argv.slice(2);
 
