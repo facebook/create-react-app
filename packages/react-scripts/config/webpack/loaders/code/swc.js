@@ -7,8 +7,6 @@
  */
 // @remove-on-eject-end
 'use strict';
-const createSwcConfig = require('./createSwcConfig');
-const paths = require('../../../paths');
 
 module.exports = ({
   shouldUseSourceMap,
@@ -16,6 +14,12 @@ module.exports = ({
   isEnvProduction,
   shouldUseReactRefresh,
 }) => {
+  console.log();
+  console.log('INFO: Using SWC for code transpilation (Experimental)');
+  console.log();
+  const createSwcConfig = require('../../../createSwcConfig');
+  const paths = require('../../../paths');
+
   const swcConfig = createSwcConfig({
     shouldUseSourceMap,
     isEnvDevelopment,
