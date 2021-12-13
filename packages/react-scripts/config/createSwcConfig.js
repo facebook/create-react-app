@@ -11,8 +11,8 @@ const fs = require('fs');
 const path = require('path');
 const merge = require('lodash.merge');
 const JSON5 = require('json5');
-const paths = require('../../../paths');
-const hasJsxRuntime = require('../../../hasJsxRuntime');
+const paths = require('./paths');
+const hasJsxRuntime = require('./hasJsxRuntime');
 const browserslist = require('browserslist');
 
 const targets = browserslist.loadConfig({ path: paths.appPath });
