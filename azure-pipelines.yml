@@ -71,7 +71,7 @@ jobs:
     steps:
       - task: NodeTool@0
         inputs:
-          versionSpec: 8.x
-        displayName: 'Install Node.js 8.x'
+          versionSpec: 10.x
+        displayName: 'Install Node.js 10.x'
       - bash: tasks/e2e-old-node.sh
         displayName: 'Run tests'
