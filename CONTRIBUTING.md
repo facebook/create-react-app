@@ -169,9 +169,10 @@ Make sure to test the released version! If you want to be extra careful, you can
 ## Releasing the Docs
 
 1. Go to the `docusaurus/website` directory
-2. Run `npm run build`
-3. You'll need an [access token for the GitHub API](https://help.github.com/articles/creating-an-access-token-for-command-line-use/). Save it to this environment variable: `export GITHUB_AUTH="..."`
-4. Run `GIT_USER=<GITHUB_USERNAME> CURRENT_BRANCH=main USE_SSH=true npm run deploy`
+2. Run `npm ci`
+3. Run `npm run build`
+4. You'll need an [access token for the GitHub API](https://help.github.com/articles/creating-an-access-token-for-command-line-use/). Save it to this environment variable: `export GITHUB_AUTH="..."`
+5. Run `GIT_USER=<GITHUB_USERNAME> CURRENT_BRANCH=main USE_SSH=true npm run deploy`
 
 ---
 
