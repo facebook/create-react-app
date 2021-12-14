@@ -54,10 +54,16 @@ These packages can be found in the [`packages/`](https://github.com/facebook/cre
 
 ```
 packages/
+  babel-plugin-named-asset-import/
   babel-preset-react-app/
+  confusing-browser-globals/
+  cra-template/
+  cra-template-typescript/
   create-react-app/
   eslint-config-react-app/
+  react-app-polyfill/
   react-dev-utils/
+  react-error-overlay/
   react-scripts/
 ```
 
