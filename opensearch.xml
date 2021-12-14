@@ -7,5 +7,5 @@
   <Image width="16" height="16" type="image/x-icon">https://create-react-app.dev/img/favicon/favicon.ico</Image>
   <Url type="text/html" method="get" template="https://create-react-app.dev/search?q={searchTerms}"/>
   <Url type="application/opensearchdescription+xml" rel="self" template="https://create-react-app.dev/opensearch.xml" />
-  <moz:SearchForm>https://create-react-app.dev</moz:SearchForm>
+  <moz:SearchForm>https://create-react-app.dev/</moz:SearchForm>
 </OpenSearchDescription>
