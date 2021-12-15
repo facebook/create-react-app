@@ -37,6 +37,7 @@ const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin'
 const getCacheIdentifier = require('react-dev-utils/getCacheIdentifier');
 // @remove-on-eject-end
 const createEnvironmentHash = require('./webpack/persistentCache/createEnvironmentHash');
+const nodeBuiltin = require('./nodeBuiltinFallbacks');
 
 // Source maps are resource heavy and can cause out of memory issue for large source files.
 const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false';
@@ -301,6 +302,10 @@ module.exports = function (webpackEnv) {
       ],
     },
     resolve: {
+      // This adds support for node builins
+      fallback: {
+        ...nodeBuiltin.fallbacks,
+      },
       // This allows you to set a fallback for where webpack should look for modules.
       // We placed these paths second because we want `node_modules` to "win"
       // if there are any conflicts. This matches Node resolution mechanism.
@@ -341,6 +346,7 @@ module.exports = function (webpackEnv) {
           babelRuntimeEntry,
           babelRuntimeEntryHelpers,
           babelRuntimeRegenerator,
+          ...nodeBuiltin.fallbackEntries,
         ]),
       ],
     },
