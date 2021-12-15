@@ -27,7 +27,7 @@ module.exports = function createSwcConfig({
 
   const generalOptions = {
     jsx: true,
-    runtime: hasJsxRuntime ? 'automatic' : 'clasic',
+    runtime: hasJsxRuntime ? 'automatic' : 'classic',
     sourceMaps: shouldUseSourceMap,
     refresh: shouldUseReactRefresh,
     useBrowserslist: isEnvDevelopment | isEnvProduction,
