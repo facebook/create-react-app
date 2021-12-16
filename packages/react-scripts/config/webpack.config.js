@@ -392,7 +392,7 @@ module.exports = function (webpackEnv) {
                     prettier: false,
                     svgo: false,
                     svgoConfig: {
-                      plugins: [{ removeViewBox: false }],
+                      plugins: [{ name: 'removeViewBox', active: false }],
                     },
                     titleProp: true,
                     ref: true,
