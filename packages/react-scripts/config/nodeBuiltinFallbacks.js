@@ -42,29 +42,38 @@ const builtinFallbackMap = {
   zlib: 'browserify-zlib',
 };
 
-const fallbacks = {};
+function createNodeBuiltinFallbacks(webpackEnv) {
+  const fallbacks = {};
+  const isEnvProduction = webpackEnv === 'production';
 
-const appPackageJson = require(paths.appPackageJson);
+  const appPackageJson = require(paths.appPackageJson);
 
-for (const [nodeModule, fallbackModule] of Object.entries(builtinFallbackMap)) {
-  fallbacks[nodeModule] = false; // Default don't include polyfills per default
-  const [fallbackModuleName] = fallbackModule.split('/');
+  for (const [nodeModule, fallbackModule] of Object.entries(
+    builtinFallbackMap
+  )) {
+    const [fallbackModuleName] = fallbackModule.split('/');
+    fallbacks[nodeModule] = isEnvProduction
+      ? false // Default don't include polyfills per default in production
+      : require.resolve('./defaultNodeBuiltinFallback'); // Default polyfill in development for better DX
 
-  if (appPackageJson.dependencies[fallbackModuleName]) {
-    // Check app package.json for fallback dependency making sure we use project installed fallbacks
-    try {
-      // Use installed fallback
-      fallbacks[nodeModule] = require.resolve(fallbackModule);
-    } catch (e) {
-      // If ever fallback resolve failed
-      console.error(
-        `Failed to load fallback module "${fallbackModule}" for "${nodeModule}"`
-      );
+    if (appPackageJson.dependencies[fallbackModuleName]) {
+      // Check app package.json for fallback dependency making sure we use project installed fallbacks
+      try {
+        // Use installed fallback
+        fallbacks[nodeModule] = require.resolve(fallbackModule);
+      } catch (e) {
+        // If ever fallback resolve failed
+        console.error(
+          `Failed to load fallback module "${fallbackModule}" for "${nodeModule}"`
+        );
+      }
     }
   }
+
+  return {
+    fallbacks,
+    fallbackEntries: Object.values(fallbacks),
+  };
 }
 
-module.exports = {
-  fallbacks,
-  fallbackEntries: Object.values(fallbacks),
-};
+module.exports = createNodeBuiltinFallbacks;

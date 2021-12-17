@@ -37,7 +37,7 @@ const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin'
 const getCacheIdentifier = require('react-dev-utils/getCacheIdentifier');
 // @remove-on-eject-end
 const createEnvironmentHash = require('./webpack/persistentCache/createEnvironmentHash');
-const nodeBuiltin = require('./nodeBuiltinFallbacks');
+const nodeBuiltinFallbacks = require('./nodeBuiltinFallbacks');
 
 // Source maps are resource heavy and can cause out of memory issue for large source files.
 const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false';
@@ -114,6 +114,8 @@ module.exports = function (webpackEnv) {
   const env = getClientEnvironment(paths.publicUrlOrPath.slice(0, -1));
 
   const shouldUseReactRefresh = env.raw.FAST_REFRESH;
+
+  const nodeBuiltin = nodeBuiltinFallbacks(webpackEnv);
 
   // common function to get style loaders
   const getStyleLoaders = (cssOptions, preProcessor) => {
