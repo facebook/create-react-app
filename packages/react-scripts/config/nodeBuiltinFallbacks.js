@@ -42,6 +42,9 @@ const builtinFallbackMap = {
   zlib: 'browserify-zlib',
 };
 
+const disableDevelopmentFallback =
+  process.env.DISABLE_MISSING_NODEJS_BUILTIN_MODULE_FALLBACK_WARNING === 'true';
+
 function createNodeBuiltinFallbacks(webpackEnv) {
   const fallbacks = {};
   const isEnvProduction = webpackEnv === 'production';
@@ -52,9 +55,10 @@ function createNodeBuiltinFallbacks(webpackEnv) {
     builtinFallbackMap
   )) {
     const [fallbackModuleName] = fallbackModule.split('/');
-    fallbacks[nodeModule] = isEnvProduction
-      ? false // Default don't include polyfills per default in production
-      : require.resolve('./defaultNodeBuiltinFallback'); // Default polyfill in development for better DX
+    fallbacks[nodeModule] =
+      isEnvProduction || disableDevelopmentFallback
+        ? false // Default don't include polyfills per default in production
+        : require.resolve('./developmentNodeBuiltinFallback'); // Default polyfill in development for better DX
 
     if (appPackageJson.dependencies[fallbackModuleName]) {
       // Check app package.json for fallback dependency making sure we use project installed fallbacks
