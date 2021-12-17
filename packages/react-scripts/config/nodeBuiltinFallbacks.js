@@ -58,7 +58,7 @@ function createNodeBuiltinFallbacks(webpackEnv) {
     fallbacks[nodeModule] =
       isEnvProduction || disableDevelopmentFallback
         ? false // Default don't include polyfills per default in production
-        : require.resolve('./developmentNodeBuiltinFallback'); // Default polyfill in development for better DX
+        : require.resolve(`./developmentBuiltinFallbacks/${nodeModule}`); // Default polyfill in development for better DX
 
     if (appPackageJson.dependencies[fallbackModuleName]) {
       // Check app package.json for fallback dependency making sure we use project installed fallbacks
