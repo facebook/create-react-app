@@ -47,6 +47,7 @@ const fallbacks = {};
 const appPackageJson = require(paths.appPackageJson);
 
 for (const [nodeModule, fallbackModule] of Object.entries(builtinFallbackMap)) {
+  fallbacks[nodeModule] = false; // Default don't include polyfills per default
   const [fallbackModuleName] = fallbackModule.split('/');
 
   if (appPackageJson.dependencies[fallbackModuleName]) {
@@ -56,6 +57,9 @@ for (const [nodeModule, fallbackModule] of Object.entries(builtinFallbackMap)) {
       fallbacks[nodeModule] = require.resolve(fallbackModule);
     } catch (e) {
       // If ever fallback resolve failed
+      console.error(
+        `Failed to load fallback module "${fallbackModule}" for "${nodeModule}"`
+      );
     }
   }
 }
