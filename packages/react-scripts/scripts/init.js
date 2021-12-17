@@ -47,8 +47,8 @@ function tryGitInit() {
     if (isInGitRepository() || isInMercurialRepository()) {
       return false;
     }
-
-    execSync('git init', { stdio: 'ignore' });
+    // Initialize a git repository and rename the branch to "main"
+    execSync('git init && git checkout -b main', { stdio: 'ignore' });
     return true;
   } catch (e) {
     console.warn('Git repo not initialized', e);
