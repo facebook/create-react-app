@@ -11,6 +11,7 @@ const webpack = require('webpack');
 const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
+  target: ['web', 'es5'],
   mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
   entry: './src/iframeScript.js',
   output: {
@@ -74,6 +75,8 @@ module.exports = {
       'process.env': { NODE_ENV: '"production"' },
       // This prevents our bundled React from accidentally hijacking devtools.
       __REACT_DEVTOOLS_GLOBAL_HOOK__: '({})',
+      // webpack 5 does no longer include a polyfill for this Node.js variable
+      process: '({})',
     }),
   ],
   performance: false,

@@ -9,13 +9,16 @@
 const path = require('path');
 
 module.exports = {
+  target: ['web', 'es5'],
   mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
   entry: './src/index.js',
   output: {
+    library: {
+      name: 'ReactErrorOverlay',
+      type: 'umd',
+    },
     path: path.join(__dirname, './lib'),
     filename: 'index.js',
-    library: 'ReactErrorOverlay',
-    libraryTarget: 'umd',
   },
   module: {
     rules: [
