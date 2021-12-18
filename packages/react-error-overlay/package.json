@@ -59,7 +59,8 @@
     "rimraf": "^3.0.2",
     "settle-promise": "^1.0.0",
     "source-map": "^0.5.7",
-    "webpack": "^5.64.4"
+    "terser-webpack-plugin": "^5.3.0",
+    "webpack": "^5.65.0"
   },
   "jest": {
     "setupFiles": [
