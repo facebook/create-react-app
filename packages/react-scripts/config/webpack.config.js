@@ -318,6 +318,11 @@ module.exports = function (webpackEnv) {
         .map(ext => `.${ext}`)
         .filter(ext => useTypeScript || !ext.includes('ts')),
       alias: {
+        // This can be removed if the fix for react v18 is backported to previous versions of react
+        // https://github.com/facebook/react/issues/20235
+        // https://github.com/facebook/create-react-app/issues/11769
+        'react/jsx-dev-runtime': 'react/jsx-dev-runtime.js',
+        'react/jsx-runtime': 'react/jsx-runtime.js',
         // Support React Native Web
         // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
         'react-native': 'react-native-web',
