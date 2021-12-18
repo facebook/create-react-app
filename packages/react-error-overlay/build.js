@@ -21,29 +21,26 @@ const isCI =
 
 function build(config, name, callback) {
   console.log(chalk.cyan('Compiling ' + name));
-  webpack(config).run((error, stats) => {
+  const compiler = webpack(config);
+  compiler.run((error, stats) => {
     if (error) {
       console.log(chalk.red('Failed to compile.'));
       console.log(error.message || error);
       console.log();
     }
 
-    if (stats.compilation.errors.length) {
+    if (stats.hasErrors()) {
       console.log(chalk.red('Failed to compile.'));
       console.log(stats.toString({ all: false, errors: true }));
     }
 
-    if (stats.compilation.warnings.length) {
+    if (stats.hasWarnings()) {
       console.log(chalk.yellow('Compiled with warnings.'));
       console.log(stats.toString({ all: false, warnings: true }));
     }
 
     // Fail the build if running in a CI server
-    if (
-      error ||
-      stats.compilation.errors.length ||
-      stats.compilation.warnings.length
-    ) {
+    if (error || stats.hasErrors() || stats.hasWarnings()) {
       isCI && process.exit(1);
       return;
     }
@@ -53,7 +50,13 @@ function build(config, name, callback) {
     );
     console.log();
 
-    callback(stats);
+    compiler.close(closeError => {
+      if (closeError) {
+        console.log(chalk.red('Compiler closing with error'), closeError);
+        isCI && process.exit(1);
+      }
+      callback(stats);
+    });
   });
 }
 
