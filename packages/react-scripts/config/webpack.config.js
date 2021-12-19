@@ -37,6 +37,9 @@ const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin'
 const getCacheIdentifier = require('react-dev-utils/getCacheIdentifier');
 // @remove-on-eject-end
 const createEnvironmentHash = require('./webpack/persistentCache/createEnvironmentHash');
+// @remove-on-eject-begin
+const nodeBuiltinFallbacks = require('./nodeBuiltinFallbacks');
+// @remove-on-eject-end
 
 // Source maps are resource heavy and can cause out of memory issue for large source files.
 const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false';
@@ -113,6 +116,10 @@ module.exports = function (webpackEnv) {
   const env = getClientEnvironment(paths.publicUrlOrPath.slice(0, -1));
 
   const shouldUseReactRefresh = env.raw.FAST_REFRESH;
+
+  // @remove-on-eject-begin
+  const nodeBuiltin = nodeBuiltinFallbacks(webpackEnv);
+  // @remove-on-eject-end
 
   // common function to get style loaders
   const getStyleLoaders = (cssOptions, preProcessor) => {
@@ -301,6 +308,13 @@ module.exports = function (webpackEnv) {
       ],
     },
     resolve: {
+      // @remove-on-eject-begin
+      // This adds support for node builtins
+      fallback: {
+        ...nodeBuiltin.fallbacks,
+      },
+      // @remove-on-eject-end
+
       // This allows you to set a fallback for where webpack should look for modules.
       // We placed these paths second because we want `node_modules` to "win"
       // if there are any conflicts. This matches Node resolution mechanism.
@@ -341,6 +355,9 @@ module.exports = function (webpackEnv) {
           babelRuntimeEntry,
           babelRuntimeEntryHelpers,
           babelRuntimeRegenerator,
+          // @remove-on-eject-begin
+          ...nodeBuiltin.fallbackEntries,
+          // @remove-on-eject-end
         ]),
       ],
     },
