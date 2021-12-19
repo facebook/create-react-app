@@ -54,7 +54,7 @@ module.exports = function createSwcConfig({
 };
 
 function getBaseConfiguration({
-  runtime = 'clasic',
+  runtime = 'classic',
   syntax = 'ecmascript',
   jsx = false,
   sourceMaps = false,
