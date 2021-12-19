@@ -1,0 +1,16 @@
+// Sending event to client
+bridge
+  .send('VKWebAppGetEmail')
+  .then(data => {
+    // Обработка события в случае успеха
+    console.log(data.email);
+  })
+  .catch(error => {
+    // Обработка события в случае ошибки
+  });{
+  "type": "EventNameFailed",
+  "data": {
+    "error_type": String
+    "error_data": {}
+  }
+}
