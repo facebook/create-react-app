@@ -309,7 +309,7 @@ module.exports = function (webpackEnv) {
     },
     resolve: {
       // @remove-on-eject-begin
-      // This adds support for node builins
+      // This adds support for node builtins
       fallback: {
         ...nodeBuiltin.fallbacks,
       },
