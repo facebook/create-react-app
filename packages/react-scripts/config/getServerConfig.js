@@ -51,24 +51,30 @@ function readEnvFile(file, type) {
   return fs.readFileSync(file);
 }
 
-// Get the https config
-// Return cert files if provided in env, otherwise just true or false
-function getHttpsConfig() {
+// Get the server config
+// Return server option if provided in env, otherwise just string
+function getServerConfig() {
   const { SSL_CRT_FILE, SSL_KEY_FILE, HTTPS } = process.env;
-  const isHttps = HTTPS === 'true';
+  const protocolType = HTTPS === 'true' ? 'https' : 'http';
 
-  if (isHttps && SSL_CRT_FILE && SSL_KEY_FILE) {
-    const crtFile = path.resolve(paths.appPath, SSL_CRT_FILE);
-    const keyFile = path.resolve(paths.appPath, SSL_KEY_FILE);
-    const config = {
-      cert: readEnvFile(crtFile, 'SSL_CRT_FILE'),
-      key: readEnvFile(keyFile, 'SSL_KEY_FILE'),
-    };
+  if (protocolType === 'https') {
+    if (SSL_CRT_FILE && SSL_KEY_FILE) {
+      const crtFile = path.resolve(paths.appPath, SSL_CRT_FILE);
+      const keyFile = path.resolve(paths.appPath, SSL_KEY_FILE);
+      const config = {
+        type: protocolType,
+        options: {
+          cert: readEnvFile(crtFile, 'SSL_CRT_FILE'),
+          key: readEnvFile(keyFile, 'SSL_KEY_FILE'),
+        },
+      };
 
-    validateKeyAndCerts({ ...config, keyFile, crtFile });
-    return config;
+      validateKeyAndCerts({ ...config.options, keyFile, crtFile });
+      return config;
+    }
+    return protocolType;
   }
-  return isHttps;
+  return protocolType;
 }
 
-module.exports = getHttpsConfig;
+module.exports = getServerConfig;
