@@ -25,7 +25,7 @@
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
     "alex": "^10.0.0",
-    "eslint": "^8.4.1",
+    "eslint": "^8.5.0",
     "execa": "^6.0.0",
     "fs-extra": "^10.0.0",
     "get-port": "^6.0.0",
