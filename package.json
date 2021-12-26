@@ -34,7 +34,7 @@
     "jest": "^27.4.5",
     "lerna": "^4.0.0",
     "lerna-changelog": "^2.2.0",
-    "lint-staged": "^12.1.3",
+    "lint-staged": "^12.1.4",
     "meow": "^10.1.2",
     "multimatch": "^6.0.0",
     "prettier": "^2.5.1",
