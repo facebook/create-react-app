@@ -214,7 +214,7 @@ function verify_module_scope {
 cd test-app
 
 # Test linter
-npm run lint
+npx react-scripts lint
 
 # Test the build
 npm run build
@@ -250,7 +250,7 @@ echo yes | npm run eject
 test -n "$(git diff --staged --name-only)"
 
 # Test linter
-npm run lint
+npx react-scripts lint
 
 # Test the build
 npm run build
