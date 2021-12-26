@@ -26,10 +26,6 @@ set -x
 cd ..
 root_path=$PWD
 
-if [ -z $CI ]; then
-  npm run compile:lockfile
-fi
-
 if [ -n "$(git status --porcelain)" ]; then
   echo "Your git status is not clean. Aborting.";
   exit 1;

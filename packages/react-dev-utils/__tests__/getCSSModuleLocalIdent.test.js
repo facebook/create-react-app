@@ -16,19 +16,19 @@ const options = { context: undefined, hashPrefix: '', regExp: null };
 const tests = [
   {
     resourcePath: '/path/to/file.module.css',
-    expected: 'file_class__13tFD',
+    expected: 'file_class__jqNYY',
   },
   {
     resourcePath: '/path/to/file.module.scss',
-    expected: 'file_class__3lYUI',
+    expected: 'file_class__BjEjJ',
   },
   {
     resourcePath: '/path/to/file.module.sass',
-    expected: 'file_class__2KnOB',
+    expected: 'file_class__dINZX',
   },
   {
     resourcePath: '/path/to/file.name.module.css',
-    expected: 'file_name_class__1OzEh',
+    expected: 'file_name_class__XpUJW',
   },
 ];
 

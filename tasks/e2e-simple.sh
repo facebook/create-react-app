@@ -76,14 +76,6 @@ if [ "$EXPECTED" != "$ACTUAL" ]; then
   exit 1
 fi
 
-if hash npm 2>/dev/null
-then
-  npm i -g npm@latest
-fi
-
-# Bootstrap monorepo
-npm install
-
 # Start the local NPM registry
 startLocalRegistry "$root_path"/tasks/verdaccio.yaml
 
