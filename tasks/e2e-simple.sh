@@ -250,7 +250,7 @@ echo yes | npm run eject
 test -n "$(git diff --staged --name-only)"
 
 # Test linter
-npx react-scripts lint
+node scripts/lint.js
 
 # Test the build
 npm run build
