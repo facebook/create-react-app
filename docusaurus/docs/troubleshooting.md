@@ -107,3 +107,7 @@ This will only work for locales that have been explicitly imported before.
 Before `react-scripts@2.0.0`, this problem was caused by third party `node_modules` using modern JavaScript features because the minifier couldn't handle them during the build. This has been solved by compiling standard modern JavaScript features inside `node_modules` in `react-scripts@2.0.0` and higher.
 
 If you're seeing this error, you're likely using an old version of `react-scripts`. You can either fix it by avoiding a dependency that uses modern syntax, or by upgrading to `react-scripts@>=2.0.0` and following the migration instructions in the changelog.
+
+## `npx create-react-app my-app` fails because you're using v4.0.3 of `create-react-app` which is behind the latest of v5.0.0
+
+After the release of `create-react-app@5.0.0`, an issue arose for some users that blocks them from being able to successfully create new projects using `create-react-app` via `npx`. The warning message from `create-react-app`, as well as the [Getting Started](https://create-react-app.dev/docs/getting-started/) documentation, incorrectly suggests for the user to remove any global npm or yarn installations of `create-react-app`. For some users, the cause of this issue is not a global installation of `create-react-app`, but rather a dirty state of their `npx` cache. This dirty `npx` cache issue can be resolved by clearing the `npx` cache with `npx clear-npx-cache`. Clearing the `npx` cache will clear up any lingering references to `create-react-app@4.0.3`.
