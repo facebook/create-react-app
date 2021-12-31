@@ -55,14 +55,14 @@ function readEnvFile(file, type) {
 // Return server option if provided in env, otherwise just string
 function getServerConfig() {
   const { SSL_CRT_FILE, SSL_KEY_FILE, HTTPS } = process.env;
-  const protocolType = HTTPS === 'true' ? 'https' : 'http';
+  const protocol = HTTPS === 'true' ? 'https' : 'http';
 
-  if (protocolType === 'https') {
+  if (protocol === 'https') {
     if (SSL_CRT_FILE && SSL_KEY_FILE) {
       const crtFile = path.resolve(paths.appPath, SSL_CRT_FILE);
       const keyFile = path.resolve(paths.appPath, SSL_KEY_FILE);
       const config = {
-        type: protocolType,
+        type: protocol,
         options: {
           cert: readEnvFile(crtFile, 'SSL_CRT_FILE'),
           key: readEnvFile(keyFile, 'SSL_KEY_FILE'),
@@ -72,9 +72,9 @@ function getServerConfig() {
       validateKeyAndCerts({ ...config.options, keyFile, crtFile });
       return config;
     }
-    return protocolType;
+    return protocol;
   }
-  return protocolType;
+  return protocol;
 }
 
 module.exports = getServerConfig;
