@@ -82,7 +82,7 @@ my-app
 │   ├── index.html
 │   ├── logo*.png
 │   ├── manifest.json
-│   └── robots.txt
+│   └── robots.txt 
 └── src
     ├── App.css
     ├── App.js
