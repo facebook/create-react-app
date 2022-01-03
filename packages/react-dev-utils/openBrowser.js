@@ -115,15 +115,14 @@ function startBrowserProcess(browser, url, args) {
     browser = undefined;
   }
 
-  // If there are arguments, they must be passed as array with the browser
-  if (typeof browser === 'string' && args.length > 0) {
-    browser = [browser].concat(args);
-  }
-
   // Fallback to open
   // (It will always open new tab)
   try {
-    var options = { app: browser, wait: false, url: true };
+    var options = {
+      app: { name: browser, arguments: args },
+      wait: false,
+      url: true,
+    };
     open(url, options).catch(() => {}); // Prevent `unhandledRejection` error.
     return true;
   } catch (err) {
