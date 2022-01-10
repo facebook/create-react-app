@@ -3,7 +3,7 @@
 Inside any created `backpack-react-scripts` project that has not been ejected, run:
 
 ```
-npm install --save-dev @skyscanner/backpack-react-scripts@
+npm install --save-dev @skyscanner/backpack-react-scripts
 ```
 
 ## Breaking Changes
