@@ -204,9 +204,9 @@ module.exports = function (
   }
 
   // Setup the eslint config
-  appPackage.eslintConfig = {
-    extends: 'react-app',
-  };
+  // appPackage.eslintConfig = {
+  //   extends: 'react-app',
+  // };
 
   // Setup the browsers list
   appPackage.browserslist = defaultBrowsers;
@@ -286,14 +286,14 @@ module.exports = function (
   if (useYarn) {
     command = 'yarnpkg';
     remove = 'remove';
-    args = ['add'];
+    args = ['add', `--dev`];
   } else {
     command = 'npm';
     remove = 'uninstall';
     args = [
       'install',
       '--no-audit', // https://github.com/facebook/create-react-app/issues/11174
-      '--save',
+      '--save-dev',
       verbose && '--verbose',
     ].filter(e => e);
   }
@@ -314,20 +314,24 @@ module.exports = function (
   // Install react and react-dom for backward compatibility with old CRA cli
   // which doesn't install react and react-dom along with react-scripts
   if (!isReactInstalled(appPackage)) {
-    args = args.concat(['react', 'react-dom']);
+    args = args.concat(['react@17.0.2', 'react-dom@17.0.2']);
   }
 
   // Install template dependencies, and react and react-dom if missing.
-  if ((!isReactInstalled(appPackage) || templateName) && args.length > 1) {
-    console.log();
-    console.log(`Installing template dependencies using ${command}...`);
+  // if ((!isReactInstalled(appPackage) || templateName) && args.length > 1) {
+  //  console.log();
+  //  console.log(`Installing template dependencies using ${command}...`);
+  console.log(
+    `Installing ${chalk.cyan('Backpack')} dependencies using ${command}`
+  );
+  console.log();
 
-    const proc = spawn.sync(command, args, { stdio: 'inherit' });
-    if (proc.status !== 0) {
-      console.error(`\`${command} ${args.join(' ')}\` failed`);
-      return;
-    }
+  let proc = spawn.sync(command, args, { stdio: 'inherit' });
+  if (proc.status !== 0) {
+    console.error(`\`${command} ${args.join(' ')}\` failed`);
+    return;
   }
+  //}
 
   if (args.find(arg => arg.includes('typescript'))) {
     console.log();
@@ -338,7 +342,7 @@ module.exports = function (
   console.log(`Removing template package using ${command}...`);
   console.log();
 
-  const proc = spawn.sync(command, [remove, templateName], {
+  proc = spawn.sync(command, [remove, templateName], {
     stdio: 'inherit',
   });
   if (proc.status !== 0) {
