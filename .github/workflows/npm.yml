@@ -1,0 +1,31 @@
+name: Node.js Packages
+
+on:
+  push:
+    branches: ['umati']
+    # Publish semver tags as releases.
+    # tags: [ 'v*.*.*' ]
+
+jobs:
+  publish-gpr:
+    runs-on: ubuntu-20.04
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v2.4.0
+        with:
+          fetch-depth: 2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16.x'
+          registry-url: 'https://npm.pkg.github.com'
+          scope: '@umati'
+      - name: Install
+        run: npm ci --prefer-offline
+      - name: Build
+        run: npm run build
+      - run: npm publish
+        working-directory: './packages/react-scripts'
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

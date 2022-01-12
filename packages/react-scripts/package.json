@@ -1,10 +1,10 @@
 {
-  "name": "react-scripts",
+  "name": "@umati/react-scripts",
   "version": "5.0.1",
   "description": "Configuration and scripts for Create React App.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/facebook/create-react-app.git",
+    "url": "https://github.com/umati/create-react-app.git",
     "directory": "packages/react-scripts"
   },
   "license": "MIT",
@@ -72,9 +72,9 @@
     "tailwindcss": "^3.0.2",
     "terser-webpack-plugin": "^5.2.5",
     "webpack": "^5.64.4",
-    "webpack-dev-server": "^4.6.0",
+    "webpack-dev-server": "^4.7.3",
     "webpack-manifest-plugin": "^4.0.2",
-    "workbox-webpack-plugin": "^6.4.1"
+    "workbox-webpack-plugin": "^6.4.2"
   },
   "devDependencies": {
     "react": "^18.0.0",

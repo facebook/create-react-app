@@ -1,0 +1,46 @@
+{
+  "extends": ["config:base"],
+  "baseBranches": ["develop"],
+  "labels": ["dependencies"],
+  "packageRules": [
+    {
+      "matchDatasources": ["docker"],
+      "matchUpdateTypes": ["major"],
+      "enabled": true,
+      "pinDigests": true
+    },
+    {
+      "matchPackagePatterns": ["eslint"],
+      "labels": ["linting"],
+      "groupName": "eslint"
+    },
+    {
+      "matchPackagePatterns": ["react"],
+      "labels": ["react"],
+      "groupName": "react"
+    },
+    {
+      "matchPackagePatterns": ["bootstrap"],
+      "labels": ["bootstrap"],
+      "groupName": "bootstrap"
+    },
+    {
+      "matchPackagePatterns": ["redux"],
+      "labels": ["redux"],
+      "groupName": "redux"
+    },
+    {
+      "matchPackagePatterns": ["stylelint"],
+      "labels": ["stylelint"],
+      "groupName": "stylelint"
+    },
+    {
+      "matchDepTypes": ["optionalDependencies"],
+      "addLabels": ["optional"]
+    },
+    {
+      "matchDepTypes": ["devDependencies"],
+      "addLabels": ["dev-deps"]
+    }
+  ]
+}

@@ -2,18 +2,16 @@ name: Integration Tests
 
 on:
   push:
-    branches:
-      - main
+    branches: [main, umati]
   pull_request:
-    branches:
-      - main
+    branches: [umati, develop]
 
 jobs:
   job:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: ['ubuntu-latest', 'macos-latest', 'windows-latest']
+        os: ['ubuntu-latest', 'windows-latest']
         node: ['14', '16']
     steps:
       - uses: actions/checkout@v2

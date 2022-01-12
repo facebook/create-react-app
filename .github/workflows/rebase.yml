@@ -1,0 +1,21 @@
+name: Rebase and force push
+
+on: workflow_dispatch
+
+jobs:
+  rebase:
+    runs-on: ubuntu-20.04
+    permissions:
+      contents: write
+      packages: write
+    steps:
+      - name: Auto Rebase Upstream Node
+        uses: wlkrm/auto-rebase-upstream-node@v0.0.2
+        with:
+          upstream: https://github.com/facebook/create-react-app.git
+          branch: main
+          nodetoken: ${{ secrets.GITHUB_TOKEN }}
+          nodescope: '@umati'
+          nodeurl: 'https://npm.pkg.github.com'
+          repo: ${{ github.repository }}
+          repotoken: ${{ secrets.GITHUB_TOKEN }}
