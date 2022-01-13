@@ -10,7 +10,9 @@ const reportWebVitals = (onPerfEntry?: ReportHandler) => {
         getLCP(onPerfEntry);
         getTTFB(onPerfEntry);
       })
-      .catch(() => {});
+      .catch((err) => {
+        console.error(err);
+      });
   }
 };
 
