@@ -78,6 +78,25 @@ module.exports = {
   appTsBuildInfoFile: resolveApp('node_modules/.cache/tsconfig.tsbuildinfo'),
   swSrc: resolveModule(resolveApp, 'src/service-worker'),
   publicUrlOrPath,
+  // CUSTOM ENTRIES
+  publishedHtml: resolveApp('public/published.html'),
+  evaluationReportHtml: resolveApp('public/evaluation_report.html'),
+  submitterPortalHtml: resolveApp('public/submitterPortal.html'),
+  appMobileHtml: resolveApp('public/mobile.html'),
+  polyfillJs: resolveModule(resolveApp, 'polyfill/index'),
+  appPackages: resolveApp('packages'),
+  siteJs: resolveModule(resolveApp, 'src/pages/site/index'),
+  formPageJs: resolveModule(resolveApp, 'src/pages/FormPage/index'),
+  appPublishedIndexJs: resolveModule(resolveApp, 'src/published/index'),
+  appEvaluationReportIndexJs: resolveModule(
+    resolveApp,
+    'src/evaluation_report/index'
+  ),
+  appSubmitterPortalIndexJs: resolveModule(
+    resolveApp,
+    'src/submitterPortal/index'
+  ),
+  appMobileIndexJs: resolveModule(resolveApp, 'src/mobile/index'),
 };
 
 // @remove-on-eject-begin
@@ -103,6 +122,25 @@ module.exports = {
   appTsBuildInfoFile: resolveApp('node_modules/.cache/tsconfig.tsbuildinfo'),
   swSrc: resolveModule(resolveApp, 'src/service-worker'),
   publicUrlOrPath,
+  // CUSTOM ENTRIES
+  publishedHtml: resolveApp('public/published.html'),
+  evaluationReportHtml: resolveApp('public/evaluation_report.html'),
+  submitterPortalHtml: resolveApp('public/submitterPortal.html'),
+  appMobileHtml: resolveApp('public/mobile.html'),
+  polyfillJs: resolveModule(resolveApp, 'polyfill/index'),
+  appPackages: resolveApp('packages'),
+  siteJs: resolveModule(resolveApp, 'src/pages/site/index'),
+  formPageJs: resolveModule(resolveApp, 'src/pages/FormPage/index'),
+  appPublishedIndexJs: resolveModule(resolveApp, 'src/published/index'),
+  appEvaluationReportIndexJs: resolveModule(
+    resolveApp,
+    'src/evaluation_report/index'
+  ),
+  appSubmitterPortalIndexJs: resolveModule(
+    resolveApp,
+    'src/submitterPortal/index'
+  ),
+  appMobileIndexJs: resolveModule(resolveApp, 'src/mobile/index'),
   // These properties only exist before ejecting:
   ownPath: resolveOwn('.'),
   ownNodeModules: resolveOwn('node_modules'), // This is empty on npm 3
