@@ -42,6 +42,8 @@ const BundleAnalyzerPlugin =
 const SentryWebpackPlugin = require('@sentry/webpack-plugin');
 const { mergeWithCustomize } = require('webpack-merge');
 
+const modifyVars = require(`${paths.appUikitNext}/lib/utils/styleModifyVars`);
+
 // @remove-on-eject-begin
 const getCacheIdentifier = require('react-dev-utils/getCacheIdentifier');
 // @remove-on-eject-end
@@ -502,7 +504,7 @@ module.exports = function (webpackEnv) {
               'less-loader',
               {
                 modifyVars: shouldUseNewUI
-                  ? require('@gd-uikit/uikit-next/lib/utils/styleModifyVars')
+                  ? modifyVars
                   : {
                       'primary-color': '#2875E8',
                       'success-color': '#48B65A', // 成功色

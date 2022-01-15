@@ -97,6 +97,7 @@ module.exports = {
     'src/submitterPortal/index'
   ),
   appMobileIndexJs: resolveModule(resolveApp, 'src/mobile/index'),
+  appUikitNext: resolveApp('node_modules/@gd-uikit/uikit-next'),
 };
 
 // @remove-on-eject-begin
@@ -141,6 +142,7 @@ module.exports = {
     'src/submitterPortal/index'
   ),
   appMobileIndexJs: resolveModule(resolveApp, 'src/mobile/index'),
+  appUikitNext: resolveApp('node_modules/@gd-uikit/uikit-next'),
   // These properties only exist before ejecting:
   ownPath: resolveOwn('.'),
   ownNodeModules: resolveOwn('node_modules'), // This is empty on npm 3
