@@ -42,7 +42,7 @@ const BundleAnalyzerPlugin =
 const SentryWebpackPlugin = require('@sentry/webpack-plugin');
 const { mergeWithCustomize } = require('webpack-merge');
 
-const modifyVars = require(`${paths.appUikitNext}/lib/utils/styleModifyVars`);
+const modifyVars = require(`${paths.appUikit}/uikit-next/lib/utils/styleModifyVars`);
 
 // @remove-on-eject-begin
 const getCacheIdentifier = require('react-dev-utils/getCacheIdentifier');
@@ -581,7 +581,7 @@ module.exports = function (webpackEnv) {
     // This means they will be the "root" imports that are included in JS bundle.
     entry: {
       // TODO: entries must have a 'main'
-      main: paths.polyfillJs,
+      main: `${paths.appUikit}/react-scripts/config/main.js`,
       index: paths.appIndexJs,
       fe_site: paths.siteJs,
       polyfill: paths.polyfillJs,
@@ -1124,7 +1124,10 @@ module.exports = function (webpackEnv) {
         return undefined;
       },
     })(config, {
-      entry: { main: paths.polyfillJs, form_page: paths.formPageJs },
+      entry: {
+        main: `${paths.appUikit}/react-scripts/config/main.js`,
+        form_page: paths.formPageJs,
+      },
       resolve: { alias: { '@gd-uikit/uikit': '@gd-uikit/uikit-next' } },
       module: {
         rules: getRules({ shouldUseNewUI: true }),
