@@ -639,6 +639,7 @@ module.exports = function (webpackEnv) {
       minimizer: [
         // This is only used in production mode
         new TerserPlugin({
+          extractComments: false,
           terserOptions: {
             parse: {
               // We want terser to parse ecma 8 code. However, we don't want it
@@ -680,6 +681,39 @@ module.exports = function (webpackEnv) {
         // This is only used in production mode
         new CssMinimizerPlugin(),
       ],
+      splitChunks: {
+        // name: false,
+        // minSize: 20000,
+        // maxSize: 0,
+        // chunks: 'all',
+        // minSize: 20000,
+        // minChunks: 1,
+        // maxAsyncRequests: 30,
+        // maxInitialRequests: 30,
+        // automaticNameDelimiter: '.',
+        cacheGroups: {
+          // default: false,
+          vendors: false,
+          localesEN: {
+            test: /[\\/]locales[\\/](en)[\\/]/,
+            name: 'localesEN',
+            chunks: 'all',
+          },
+          localesCN: {
+            test: /[\\/]locales[\\/](zh-CN)[\\/]/,
+            name: 'localesCN',
+            chunks: 'all',
+          },
+          localesTW: {
+            test: /[\\/]locales[\\/](zh-TW)[\\/]/,
+            name: 'localesTW',
+            chunks: 'all',
+          },
+        },
+      },
+      // Keep the runtime chunk separated to enable long term caching
+      // https://twitter.com/wSokra/status/969679223278505985
+      runtimeChunk: false,
     },
     resolve: {
       // This allows you to set a fallback for where webpack should look for modules.
@@ -744,7 +778,7 @@ module.exports = function (webpackEnv) {
           {},
           {
             inject: true,
-            chunk: ['index'],
+            chunks: ['index'],
             template: paths.appHtml,
             mixpanelToken: process.env.REACT_APP_MIXPANEL_TOKEN,
           },
@@ -941,6 +975,17 @@ module.exports = function (webpackEnv) {
           };
         },
       }),
+      // Moment.js is an extremely popular library that bundles large locale files
+      // by default due to how Webpack interprets its code. This is a practical
+      // solution that requires the user to opt into importing specific locales.
+      // https://github.com/jmblog/how-to-optimize-momentjs-with-webpack
+      // You can remove this if you don't use Moment.js:
+      // new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+      // load `moment/locale/ja.js` and `moment/locale/it.js`
+      new webpack.ContextReplacementPlugin(
+        /moment[/\\]locale$/,
+        /en|zh-cn|zh-tw/
+      ),
       // Moment.js is an extremely popular library that bundles large locale files
       // by default due to how webpack interprets its code. This is a practical
       // solution that requires the user to opt into importing specific locales.
