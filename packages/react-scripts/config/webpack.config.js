@@ -40,9 +40,11 @@ const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const BundleAnalyzerPlugin =
   require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const SentryWebpackPlugin = require('@sentry/webpack-plugin');
-const { mergeWithCustomize } = require('webpack-merge');
-
 const modifyVars = require(`${paths.appUikit}/uikit-next/lib/utils/styleModifyVars`);
+const webpackOverrideConfig = require(path.resolve(
+  paths.appPath,
+  'webpack.override'
+));
 
 // @remove-on-eject-begin
 const getCacheIdentifier = require('react-dev-utils/getCacheIdentifier');
@@ -70,7 +72,7 @@ const babelRuntimeRegenerator = require.resolve('@babel/runtime/regenerator', {
 const shouldInlineRuntimeChunk = process.env.INLINE_RUNTIME_CHUNK !== 'false';
 
 const emitErrorsAsWarnings = process.env.ESLINT_NO_DEV_ERRORS === 'true';
-const disableESLintPlugin = process.env.DISABLE_ESLINT_PLUGIN === 'true';
+const disableESLintPlugin = true; // process.env.DISABLE_ESLINT_PLUGIN === 'true';
 
 const imageInlineSizeLimit = parseInt(
   process.env.IMAGE_INLINE_SIZE_LIMIT || '10000'
@@ -582,13 +584,6 @@ module.exports = function (webpackEnv) {
     entry: {
       // TODO: entries must have a 'main'
       main: `${paths.appUikit}/react-scripts/config/main.js`,
-      index: paths.appIndexJs,
-      fe_site: paths.siteJs,
-      polyfill: paths.polyfillJs,
-      evaluation_report: paths.appEvaluationReportIndexJs,
-      published: paths.appPublishedIndexJs,
-      mobile: paths.appMobileIndexJs,
-      submitterPortal: paths.appSubmitterPortalIndexJs,
     },
     output: {
       // The build folder.
@@ -1087,7 +1082,8 @@ module.exports = function (webpackEnv) {
         new BundleAnalyzerPlugin({
           analyzerMode: 'disabled',
           openAnalyzer: false,
-          generateStatsFile: false,
+          generateStatsFile:
+            webpackOverrideConfig.generateBundleAnalyzerStatsFile || false,
         }),
       shouldUseSourceMap &&
         isEnvProduction &&
@@ -1111,31 +1107,5 @@ module.exports = function (webpackEnv) {
     performance: false,
   };
 
-  const configResult = [
-    config,
-    mergeWithCustomize({
-      customizeObject(a, b, key) {
-        if (key === 'entry') {
-          // Custom merging
-          return b;
-        }
-        if (key === 'module') {
-          return { ...a, ...b };
-        }
-        // Fall back to default merging
-        return undefined;
-      },
-    })(config, {
-      entry: {
-        main: `${paths.appUikit}/react-scripts/config/main.js`,
-        form_page: paths.formPageJs,
-      },
-      resolve: { alias: { '@gd-uikit/uikit': '@gd-uikit/uikit-next' } },
-      module: {
-        rules: getRules({ shouldUseNewUI: true }),
-      },
-    }),
-  ];
-
-  return configResult;
+  return webpackOverrideConfig.overrideConfig(config, getRules, webpackEnv);
 };
