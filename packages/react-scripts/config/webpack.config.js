@@ -95,6 +95,16 @@ const hasJsxRuntime = (() => {
   }
 })();
 
+// Check, if a module is imported, e.g., as peer dependency.
+const moduleIsAvailable = path => {
+  try {
+    require.resolve(path);
+    return true;
+  } catch (e) {
+    return false;
+  }
+};
+
 // This is the production and development configuration.
 // It is focused on developer experience, fast rebuilds, and a minimal bundle.
 module.exports = function (webpackEnv) {
@@ -788,11 +798,12 @@ module.exports = function (webpackEnv) {
             },
           },
         }),
-      new webpack.ProvidePlugin({
-        process: 'process/browser',
-        Buffer: ['buffer', 'Buffer'],
-        url: 'url',
-      }),
+      moduleIsAvailable('process/browser') &&
+        new webpack.ProvidePlugin({
+          process: 'process/browser',
+          Buffer: ['buffer', 'Buffer'],
+          url: 'url',
+        }),
     ].filter(Boolean),
     // Turn off performance processing because we utilize
     // our own hints via the FileSizeReporter
