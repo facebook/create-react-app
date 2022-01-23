@@ -12,10 +12,11 @@ const path = require('path');
 const os = require('os');
 
 class ModuleScopePlugin {
-  constructor(appSrc, allowedFiles = []) {
+  constructor(appSrc, allowedFiles = [], errorMessage) {
     this.appSrcs = Array.isArray(appSrc) ? appSrc : [appSrc];
     this.allowedFiles = new Set(allowedFiles);
     this.allowedPaths = [...allowedFiles].map(path.dirname).filter(p => path.relative(p, process.cwd()) !== '');
+    this.errorMessage = errorMessage;
   }
 
   apply(resolver) {
@@ -70,8 +71,7 @@ class ModuleScopePlugin {
             );
           })
         ) {
-          const scopeError = new Error(
-            `You attempted to import ${chalk.cyan(
+          const message = !!this.errorMessage ? this.errorMessage : `You attempted to import ${chalk.cyan(
               request.__innerRequest_request
             )} which falls outside of the project ${chalk.cyan(
               'src/'
@@ -85,7 +85,7 @@ class ModuleScopePlugin {
               )}, or add a symlink to it from project's ${chalk.cyan(
                 'node_modules/'
               )}.`
-          );
+          const scopeError = new Error(message);
           Object.defineProperty(scopeError, '__module_scope_plugin', {
             value: true,
             writable: false,
