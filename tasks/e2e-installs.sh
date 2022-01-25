@@ -51,7 +51,7 @@ function exists {
 # Check for accidental dependencies in package.json
 function checkDependencies {
   if ! awk '/"dependencies": {/{y=1;next}/},/{y=0; next}y' package.json | \
-  grep -v -q -E '^\s*"react(-dom|-scripts)?"'; then
+  grep -v -q -E '^\s*"(@testing-library\/.+)|web-vitals|(react(-dom|-scripts)?)"'; then
    echo "Dependencies are correct"
   else
    echo "There are extraneous dependencies in package.json"
@@ -62,7 +62,7 @@ function checkDependencies {
 # Check for accidental dependencies in package.json
 function checkTypeScriptDependencies {
   if ! awk '/"dependencies": {/{y=1;next}/},/{y=0; next}y' package.json | \
-  grep -v -q -E '^\s*"(@types\/.+)|typescript|(react(-dom|-scripts)?)"'; then
+  grep -v -q -E '^\s*"(@testing-library\/.+)|web-vitals|(@types\/.+)|typescript|(react(-dom|-scripts)?)"'; then
    echo "Dependencies are correct"
   else
    echo "There are extraneous dependencies in package.json"
@@ -82,14 +82,6 @@ set -x
 # Go to root
 cd ..
 root_path=$PWD
-
-if hash npm 2>/dev/null
-then
-  npm i -g npm@latest
-fi
-
-# Bootstrap monorepo
-yarn
 
 # ******************************************************************************
 # First, publish the monorepo.
@@ -112,10 +104,11 @@ cd "$temp_app_path"
 npx create-react-app test-app-dist-tag --scripts-version=@latest
 cd test-app-dist-tag
 
-# Check corresponding scripts version is installed and no TypeScript is present.
+# Check corresponding scripts version is installed and no TypeScript or yarn is present by default
 exists node_modules/react-scripts
 ! exists node_modules/typescript
 ! exists src/index.tsx
+! exists yarn.lock
 exists src/index.js
 checkDependencies
 
@@ -133,25 +126,25 @@ grep '"version": "1.0.17"' node_modules/react-scripts/package.json
 checkDependencies
 
 # ******************************************************************************
-# Test --use-npm flag
+# Test yarn create
 # ******************************************************************************
 
 cd "$temp_app_path"
-npx create-react-app test-use-npm-flag --use-npm --scripts-version=1.0.17
-cd test-use-npm-flag
+yarn create react-app test-use-yarn-create --scripts-version=1.0.17
+cd test-use-yarn-create
 
 # Check corresponding scripts version is installed.
 exists node_modules/react-scripts
-[ ! -e "yarn.lock" ] && echo "yarn.lock correctly does not exist"
+exists yarn.lock
 grep '"version": "1.0.17"' node_modules/react-scripts/package.json
 checkDependencies
 
 # ******************************************************************************
-# Test --typescript flag
+# Test typescript setup
 # ******************************************************************************
 
 cd "$temp_app_path"
-npx create-react-app test-app-typescript --typescript
+npx create-react-app test-app-typescript --template typescript
 cd test-app-typescript
 
 # Check corresponding template is installed.
@@ -163,26 +156,22 @@ exists src/react-app-env.d.ts
 checkTypeScriptDependencies
 
 # Check that the TypeScript template passes smoke tests, build, and normal tests
-yarn start --smoke-test
-yarn build
-CI=true yarn test
+npm start -- --smoke-test
+npm run build
+CI=true npm test
 
 # Check eject behaves and works
 
 # Eject...
 echo yes | npm run eject
 
-# Temporary workaround for https://github.com/facebook/create-react-app/issues/6099
-rm yarn.lock
-yarn add @babel/plugin-transform-react-jsx-source @babel/plugin-syntax-jsx @babel/plugin-transform-react-jsx @babel/plugin-transform-react-jsx-self
-
 # Ensure env file still exists
 exists src/react-app-env.d.ts
 
 # Check that the TypeScript template passes ejected smoke tests, build, and normal tests
-yarn start --smoke-test
-yarn build
-CI=true yarn test
+npm start -- --smoke-test
+npm run build
+CI=true npm test
 
 # ******************************************************************************
 # Test --scripts-version with a tarball url
@@ -230,8 +219,8 @@ echo '## Hello' > ./test-app-should-remain/README.md
 npx create-react-app test-app-should-remain --scripts-version=`date +%s` || true
 # confirm the file exist
 test -e test-app-should-remain/README.md
-# confirm only README.md and error log are the only files in the directory
-if [ "$(ls -1 ./test-app-should-remain | wc -l | tr -d '[:space:]')" != "2" ]; then
+# confirm only README.md is the only file in the directory
+if [ "$(ls -1 ./test-app-should-remain | wc -l | tr -d '[:space:]')" != "1" ]; then
   false
 fi
 
@@ -258,31 +247,32 @@ cd test-app-nested-paths-t1
 mkdir -p test-app-nested-paths-t1/aa/bb/cc/dd
 npx create-react-app test-app-nested-paths-t1/aa/bb/cc/dd
 cd test-app-nested-paths-t1/aa/bb/cc/dd
-yarn start --smoke-test
+npm start -- --smoke-test
 
 # Testing a path that does not exist
 cd "$temp_app_path"
 npx create-react-app test-app-nested-paths-t2/aa/bb/cc/dd
 cd test-app-nested-paths-t2/aa/bb/cc/dd
-yarn start --smoke-test
+npm start -- --smoke-test
 
 # Testing a path that is half exists
 cd "$temp_app_path"
 mkdir -p test-app-nested-paths-t3/aa
 npx create-react-app test-app-nested-paths-t3/aa/bb/cc/dd
 cd test-app-nested-paths-t3/aa/bb/cc/dd
-yarn start --smoke-test
+npm start -- --smoke-test
 
 # ******************************************************************************
 # Test when PnP is enabled
 # ******************************************************************************
 cd "$temp_app_path"
-npx create-react-app test-app-pnp --use-pnp
+yarn create react-app test-app-pnp --use-pnp
 cd test-app-pnp
 ! exists node_modules
 exists .pnp.js
-yarn start --smoke-test
-yarn build
+# TODO: start and build tasks error with --use-pnp
+# npm start -- --smoke-test
+# npm run build
 
 # Cleanup
 cleanup

@@ -8,7 +8,7 @@ Please refer to its documentation:
 
 ## Usage in Create React App Projects
 
-These utilities come by default with [Create React App](https://github.com/facebook/create-react-app), which includes it by default. **You don’t need to install it separately in Create React App projects.**
+These utilities come by default with [Create React App](https://github.com/facebook/create-react-app). **You don’t need to install it separately in Create React App projects.**
 
 ## Usage Outside of Create React App
 
@@ -20,7 +20,7 @@ There is no single entry point. You can only import individual top-level modules
 
 #### `new InterpolateHtmlPlugin(htmlWebpackPlugin: HtmlWebpackPlugin, replacements: {[key:string]: string})`
 
-This Webpack plugin lets us interpolate custom variables into `index.html`.<br>
+This webpack plugin lets us interpolate custom variables into `index.html`.<br>
 It works in tandem with [HtmlWebpackPlugin](https://github.com/ampedandwired/html-webpack-plugin) 2.x via its [events](https://github.com/ampedandwired/html-webpack-plugin#events).
 
 ```js
@@ -28,7 +28,7 @@ var path = require('path');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 
-// Webpack config
+// webpack config
 var publicUrl = '/my-custom-url';
 
 module.exports = {
@@ -44,7 +44,7 @@ module.exports = {
       template: path.resolve('public/index.html'),
     }),
     // Makes the public URL available as %PUBLIC_URL% in index.html, e.g.:
-    // <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
+    // <link rel="icon" href="%PUBLIC_URL%/favicon.ico">
     new InterpolateHtmlPlugin(HtmlWebpackPlugin, {
       PUBLIC_URL: publicUrl,
       // You can pass any key-value pairs, this was just an example.
@@ -58,7 +58,7 @@ module.exports = {
 
 #### `new InlineChunkHtmlPlugin(htmlWebpackPlugin: HtmlWebpackPlugin, tests: Regex[])`
 
-This Webpack plugin inlines script chunks into `index.html`.<br>
+This webpack plugin inlines script chunks into `index.html`.<br>
 It works in tandem with [HtmlWebpackPlugin](https://github.com/ampedandwired/html-webpack-plugin) 4.x.
 
 ```js
@@ -66,7 +66,7 @@ var path = require('path');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var InlineChunkHtmlPlugin = require('react-dev-utils/InlineChunkHtmlPlugin');
 
-// Webpack config
+// webpack config
 var publicUrl = '/my-custom-url';
 
 module.exports = {
@@ -91,7 +91,7 @@ module.exports = {
 
 #### `new ModuleScopePlugin(appSrc: string | string[], allowedFiles?: string[])`
 
-This Webpack plugin ensures that relative imports from app's source directories don't reach outside of it.
+This webpack plugin ensures that relative imports from app's source directories don't reach outside of it.
 
 ```js
 var path = require('path');
@@ -107,31 +107,6 @@ module.exports = {
     ],
     // ...
   },
-  // ...
-};
-```
-
-#### `new WatchMissingNodeModulesPlugin(nodeModulesPath: string)`
-
-This Webpack plugin ensures `npm install <library>` forces a project rebuild.<br>
-We’re not sure why this isn't Webpack's default behavior.<br>
-See [#186](https://github.com/facebook/create-react-app/issues/186) for details.
-
-```js
-var path = require('path');
-var WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
-
-// Webpack config
-module.exports = {
-  // ...
-  plugins: [
-    // ...
-    // If you require a missing module and then `npm install` it, you still have
-    // to restart the development server for Webpack to discover it. This plugin
-    // makes the discovery automatic so you don't have to restart.
-    // See https://github.com/facebook/create-react-app/issues/186
-    new WatchMissingNodeModulesPlugin(path.resolve('node_modules')),
-  ],
   // ...
 };
 ```
@@ -231,11 +206,11 @@ var formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
 
 var compiler = webpack(config);
 
-compiler.hooks.invalid.tap('invalid', function() {
+compiler.hooks.invalid.tap('invalid', function () {
   console.log('Compiling...');
 });
 
-compiler.hooks.done.tap('done', function(stats) {
+compiler.hooks.done.tap('done', function (stats) {
   var rawMessages = stats.toJson({}, true);
   var messages = formatWebpackMessages(rawMessages);
   if (!messages.errors.length && !messages.warnings.length) {
@@ -287,9 +262,14 @@ getProcessForPort(3000);
 
 On macOS, tries to find a known running editor process and opens the file in it. It can also be explicitly configured by `REACT_EDITOR`, `VISUAL`, or `EDITOR` environment variables. For example, you can put `REACT_EDITOR=atom` in your `.env.local` file, and Create React App will respect that.
 
-#### `noopServiceWorkerMiddleware(): ExpressMiddleware`
+#### `noopServiceWorkerMiddleware(servedPath: string): ExpressMiddleware`
 
-Returns Express middleware that serves a `/service-worker.js` that resets any previously set service worker configuration. Useful for development.
+Returns Express middleware that serves a `${servedPath}/service-worker.js` that resets any previously set service worker configuration. Useful for development.
+
+#### `redirectServedPathMiddleware(servedPath: string): ExpressMiddleware`
+
+Returns Express middleware that redirects to `${servedPath}/${req.path}`, if `req.url`
+does not start with `servedPath`. Useful for development.
 
 #### `openBrowser(url: string): boolean`
 
@@ -310,11 +290,11 @@ if (openBrowser('http://localhost:3000')) {
 
 Prints hosting instructions after the project is built.
 
-Pass your parsed `package.json` object as `appPackage`, your the URL where you plan to host the app as `publicUrl`, `output.publicPath` from your Webpack configuration as `publicPath`, the `buildFolder` name, and whether to `useYarn` in instructions.
+Pass your parsed `package.json` object as `appPackage`, your URL where you plan to host the app as `publicUrl`, `output.publicPath` from your webpack configuration as `publicPath`, the `buildFolder` name, and whether to `useYarn` in instructions.
 
 ```js
 const appPackage = require(paths.appPackageJson);
-const publicUrl = paths.publicUrl;
+const publicUrl = paths.publicUrlOrPath;
 const publicPath = config.output.publicPath;
 printHostingInstructions(appPackage, publicUrl, publicPath, 'build', true);
 ```
@@ -327,23 +307,22 @@ Returns a Promise resolving to either `defaultPort` or next available port if th
 
 ##### `createCompiler(args: Object): WebpackCompiler`
 
-Creates a Webpack compiler instance for WebpackDevServer with built-in helpful messages.
+Creates a webpack compiler instance for WebpackDevServer with built-in helpful messages.
 
 The `args` object accepts a number of properties:
 
 - **appName** `string`: The name that will be printed to the terminal.
 - **config** `Object`: The webpack configuration options to be provided to the webpack constructor.
-- **devSocket** `Object`: Required if `useTypeScript` is `true`. This object should include `errors` and `warnings` which are functions accepting an array of errors or warnings emitted by the type checking. This is useful when running `fork-ts-checker-webpack-plugin` with `async: true` to report errors that are emitted after the webpack build is complete.
 - **urls** `Object`: To provide the `urls` argument, use `prepareUrls()` described below.
 - **useYarn** `boolean`: If `true`, yarn instructions will be emitted in the terminal instead of npm.
 - **useTypeScript** `boolean`: If `true`, TypeScript type checking will be enabled. Be sure to provide the `devSocket` argument above if this is set to `true`.
 - **webpack** `function`: A reference to the webpack constructor.
 
-##### `prepareProxy(proxySetting: string, appPublicFolder: string): Object`
+##### `prepareProxy(proxySetting: string, appPublicFolder: string, servedPathname: string): Object`
 
 Creates a WebpackDevServer `proxy` configuration object from the `proxy` setting in `package.json`.
 
-##### `prepareUrls(protocol: string, host: string, port: number): Object`
+##### `prepareUrls(protocol: string, host: string, port: number, pathname: string = '/'): Object`
 
 Returns an object with local and remote URLs for the development server. Pass this object to `createCompiler()` described above.
 
@@ -351,10 +330,10 @@ Returns an object with local and remote URLs for the development server. Pass th
 
 This is an alternative client for [WebpackDevServer](https://github.com/webpack/webpack-dev-server) that shows a syntax error overlay.
 
-It currently supports only Webpack 3.x.
+It currently supports only webpack 3.x.
 
 ```js
-// Webpack development config
+// webpack development config
 module.exports = {
   // ...
   entry: [
@@ -391,8 +370,9 @@ module: {
           loader: require.resolve('css-loader'),
           options: {
             importLoaders: 1,
-            modules: true,
-            getLocalIdent: getCSSModuleLocalIdent,
+            modules: {
+              getLocalIdent: getCSSModuleLocalIdent,
+            },
           },
         },
         {
@@ -412,5 +392,5 @@ Returns a cache identifier (string) consisting of the specified environment and 
 ```js
 var getCacheIdentifier = require('react-dev-utils/getCacheIdentifier');
 
-getCacheIdentifier('prod', ['react-dev-utils', 'chalk']); // # => 'prod:react-dev-utils@5.0.0:chalk@2.4.1'
+getCacheIdentifier('prod', ['react-dev-utils', 'chalk']); // # => 'prod:react-dev-utils@5.0.0:chalk@3.0.0'
 ```

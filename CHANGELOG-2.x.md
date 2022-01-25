@@ -1,3 +1,7 @@
+## 3.0.0 and Newer Versions
+
+**Please refer to [CHANGELOG.md](./CHANGELOG.md) for the newer versions.**
+
 ## 2.1.8 (March 7, 2019)
 
 v2.1.8 is a maintenance release that reapplies the TypeScript speed improvements ([#6406](https://github.com/facebook/create-react-app/pull/6406)) in a new major version of `react-dev-utils`.
@@ -819,11 +823,11 @@ import 'react-app-polyfill/ie9'; // For IE 9-11 support
 import 'react-app-polyfill/ie11'; // For IE 11 support
 ```
 
-You can read more about [these polyfills here](https://github.com/facebook/create-react-app/tree/master/packages/react-app-polyfill).
+You can read more about [these polyfills here](https://github.com/facebook/create-react-app/tree/main/packages/react-app-polyfill).
 
 ### Dynamic `import()` of a CommonJS module now has a `.default` property
 
-[Webpack 4 changed the behavior of `import()`](https://medium.com/webpack/webpack-4-import-and-commonjs-d619d626b655) to be closer in line with the specification.
+[webpack 4 changed the behavior of `import()`](https://medium.com/webpack/webpack-4-import-and-commonjs-d619d626b655) to be closer in line with the specification.
 
 Previously, importing a CommonJS module did not require you specify the default export. In most cases, this is now required.
 If you see errors in your application about `... is not a function`, you likely need to update your dynamic import, e.g.:
@@ -841,7 +845,7 @@ We previously allowed code splitting with a webpack-specific directive, `require
 **Single Module**
 
 ```js
-require.ensure(['module-a'], function() {
+require.ensure(['module-a'], function () {
   var a = require('module-a');
   // ...
 });
@@ -855,7 +859,7 @@ import('module-a').then(a => {
 **Multiple Module**
 
 ```js
-require.ensure(['module-a', 'module-b'], function() {
+require.ensure(['module-a', 'module-b'], function () {
   var a = require('module-a');
   var b = require('module-b');
   // ...
@@ -909,7 +913,7 @@ Next, create `src/setupProxy.js` and place the following contents in it:
 ```js
 const proxy = require('http-proxy-middleware');
 
-module.exports = function(app) {
+module.exports = function (app) {
   // ...
 };
 ```
@@ -932,7 +936,7 @@ Place entries into `src/setupProxy.js` like so:
 ```js
 const proxy = require('http-proxy-middleware');
 
-module.exports = function(app) {
+module.exports = function (app) {
   app.use(proxy('/api', { target: 'http://localhost:5000/' }));
   app.use(proxy('/*.svg', { target: 'http://localhost:5000/' }));
 };
@@ -969,7 +973,7 @@ If you used 2.x alphas, please [follow these instructions](https://gist.github.c
 - `react-scripts`
   - [#5218](https://github.com/facebook/create-react-app/pull/5218) Support globalSetup and globalTeardown Jest options ([@gaearon](https://github.com/gaearon))
   - [#5073](https://github.com/facebook/create-react-app/pull/5073) Add user defined proxy via middleware ([@Timer](https://github.com/Timer))
-  - [#3945](https://github.com/facebook/create-react-app/pull/3945) Allow bundles to be analyzed with Webpack-specific tools ([@joshwcomeau](https://github.com/joshwcomeau))
+  - [#3945](https://github.com/facebook/create-react-app/pull/3945) Allow bundles to be analyzed with webpack-specific tools ([@joshwcomeau](https://github.com/joshwcomeau))
   - [#4195](https://github.com/facebook/create-react-app/pull/4195) Sass loader ([@Fabianopb](https://github.com/Fabianopb))
   - [#3909](https://github.com/facebook/create-react-app/pull/3909) Add loader for .graphql files ([@petetnt](https://github.com/petetnt))
   - [#1288](https://github.com/facebook/create-react-app/pull/1288) Create git repository with initial commit ([@mauricedb](https://github.com/mauricedb))
@@ -984,7 +988,7 @@ If you used 2.x alphas, please [follow these instructions](https://gist.github.c
   - [#3865](https://github.com/facebook/create-react-app/pull/3865) Add opt-out for preset-flow to work with @babel/preset-typescript ([@oieduardorabelo](https://github.com/oieduardorabelo))
   - [#3675](https://github.com/facebook/create-react-app/pull/3675) add experimental babel-plugin-macros support ([@kentcdodds](https://github.com/kentcdodds))
 - `babel-preset-react-app`, `confusing-browser-globals`, `eslint-config-react-app`, `react-dev-utils`, `react-error-overlay`, `react-scripts`
-  - [#4077](https://github.com/facebook/create-react-app/pull/4077) Webpack 4 ([@andriijas](https://github.com/andriijas))
+  - [#4077](https://github.com/facebook/create-react-app/pull/4077) webpack 4 ([@andriijas](https://github.com/andriijas))
 - `create-react-app`
   - [#4350](https://github.com/facebook/create-react-app/pull/4350) Support package distribution tags ([@miraage](https://github.com/miraage))
 - `babel-preset-react-app`, `react-scripts`
@@ -1121,7 +1125,7 @@ If you used 2.x alphas, please [follow these instructions](https://gist.github.c
   - [#4846](https://github.com/facebook/create-react-app/pull/4846) Update jest version ([@skoging](https://github.com/skoging))
   - [#4362](https://github.com/facebook/create-react-app/pull/4362) Bumped jest version to 22.4.1 ([@CGreenburg](https://github.com/CGreenburg))
 - `babel-preset-react-app`, `confusing-browser-globals`, `eslint-config-react-app`, `react-dev-utils`, `react-error-overlay`, `react-scripts`
-  - [#4077](https://github.com/facebook/create-react-app/pull/4077) Webpack 4 ([@andriijas](https://github.com/andriijas))
+  - [#4077](https://github.com/facebook/create-react-app/pull/4077) webpack 4 ([@andriijas](https://github.com/andriijas))
 - `babel-preset-react-app`
   - [#4432](https://github.com/facebook/create-react-app/pull/4432) Update babel-plugin-macros to fix a bug ([@stereobooster](https://github.com/stereobooster))
   - [#3818](https://github.com/facebook/create-react-app/pull/3818) Remove PropTypes from production build (#209) ([@iansu](https://github.com/iansu))

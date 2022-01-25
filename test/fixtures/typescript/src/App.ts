@@ -27,4 +27,11 @@ function propertyDecorator(target: any, key: string) {
   };
 }
 
+declare namespace MyNamespace {
+  interface MyType {
+    foo: string;
+    bar: (n: number) => void;
+  }
+}
+
 export default App;
