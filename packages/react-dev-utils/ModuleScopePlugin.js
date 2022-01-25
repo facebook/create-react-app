@@ -12,10 +12,12 @@ const path = require('path');
 const os = require('os');
 
 class ModuleScopePlugin {
-  constructor(appSrc, allowedFiles = [], errorMessage) {
+  constructor(appSrc, allowedFiles = [], errorMessage = '') {
     this.appSrcs = Array.isArray(appSrc) ? appSrc : [appSrc];
     this.allowedFiles = new Set(allowedFiles);
-    this.allowedPaths = [...allowedFiles].map(path.dirname).filter(p => path.relative(p, process.cwd()) !== '');
+    this.allowedPaths = [...allowedFiles]
+      .map(path.dirname)
+      .filter(p => path.relative(p, process.cwd()) !== '');
     this.errorMessage = errorMessage;
   }
 
@@ -55,9 +57,11 @@ class ModuleScopePlugin {
         if (this.allowedFiles.has(requestFullPath)) {
           return callback();
         }
-        if (this.allowedPaths.some((allowedFile) => {
-          return requestFullPath.startsWith(allowedFile);
-        })) {
+        if (
+          this.allowedPaths.some(allowedFile => {
+            return requestFullPath.startsWith(allowedFile);
+          })
+        ) {
           return callback();
         }
         // Find path from src to the requested file
@@ -71,20 +75,23 @@ class ModuleScopePlugin {
             );
           })
         ) {
-          const message = !!this.errorMessage ? this.errorMessage : `You attempted to import ${chalk.cyan(
-              request.__innerRequest_request
-            )} which falls outside of the project ${chalk.cyan(
-              'src/'
-            )} directory. ` +
-              `Relative imports outside of ${chalk.cyan(
-                'src/'
-              )} are not supported.` +
-              os.EOL +
-              `You can either move it inside ${chalk.cyan(
-                'src/'
-              )}, or add a symlink to it from project's ${chalk.cyan(
-                'node_modules/'
-              )}.`
+          const message =
+            this.errorMessage.length > 0
+              ? this.errorMessage
+              : `You attempted to import ${chalk.cyan(
+                  request.__innerRequest_request
+                )} which falls outside of the project ${chalk.cyan(
+                  'src/'
+                )} directory. ` +
+                `Relative imports outside of ${chalk.cyan(
+                  'src/'
+                )} are not supported.` +
+                os.EOL +
+                `You can either move it inside ${chalk.cyan(
+                  'src/'
+                )}, or add a symlink to it from project's ${chalk.cyan(
+                  'node_modules/'
+                )}.`;
           const scopeError = new Error(message);
           Object.defineProperty(scopeError, '__module_scope_plugin', {
             value: true,
