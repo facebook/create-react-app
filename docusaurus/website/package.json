@@ -1,5 +1,6 @@
 {
   "name": "cra-docs",
+  "verson": "1.0.0",
   "scripts": {
     "start": "docusaurus start",
     "build": "docusaurus build",
