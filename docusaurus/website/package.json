@@ -1,4 +1,5 @@
 {
+  "name": "cra-docs",
   "scripts": {
     "start": "docusaurus start",
     "build": "docusaurus build",
