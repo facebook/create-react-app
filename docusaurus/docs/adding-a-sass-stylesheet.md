@@ -26,7 +26,7 @@ To share variables between Sass files, you can use Sass's [`@use` rule](https://
 This will allow you to do imports like
 
 ```scss
-@use 'styles/_colors.scss'; // assuming a styles directory under src/
+@use 'styles/colors.scss'; // assuming a styles directory under src/
 @use '~nprogress/nprogress'; // loading a css file from the nprogress node module
 ```
 
