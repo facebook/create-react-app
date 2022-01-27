@@ -1,4 +1,4 @@
-
+import './Expenseitems.css'
 let age = 20
 function Expenseitems(name){
 

@@ -1,7 +1,7 @@
 
 import './App.css';
-import './componment/Expenseitems'
-import Expenseitems from './componment/Expenseitems';
+import './components/Expenseitems'
+import Expenseitems from './components/Expenseitems';
 
  const newItem = new Expenseitems("Avengers") 
 function App() {
