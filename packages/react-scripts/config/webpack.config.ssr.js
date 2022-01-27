@@ -200,7 +200,9 @@ module.exports = function (webpackEnv) {
           {
             loader: require.resolve('resolve-url-loader'),
             options: {
-              sourceMap: isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
+              sourceMap: isEnvProduction
+                ? shouldUseSourceMap
+                : isEnvDevelopment,
               root: paths.appSrc,
             },
           },
@@ -213,7 +215,7 @@ module.exports = function (webpackEnv) {
               },
             },
           },
-        ].filter(Boolean),
+        ].filter(Boolean)
       );
     }
     return loaders;
@@ -745,7 +747,9 @@ module.exports = function (webpackEnv) {
                 },
                 'sass-loader',
                 {
-                  functions: sassFunctions,
+                  sassOptions: {
+                    functions: sassFunctions,
+                  },
                 }
               ),
               // Don't consider CSS imports dead code even if the
@@ -785,7 +789,9 @@ module.exports = function (webpackEnv) {
                 },
                 'sass-loader',
                 {
-                  functions: sassFunctions,
+                  sassOptions: {
+                    functions: sassFunctions,
+                  },
                 }
               ),
             },
