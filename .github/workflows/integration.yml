@@ -1,18 +1,19 @@
+---
 name: Integration Tests
 
 on:
   push:
-    branches: [main, umati]
+    branches: [main, umati, develop, update]
   pull_request:
-    branches: [umati, develop]
+    branches: [umati, develop, update]
 
 jobs:
   job:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: ['ubuntu-latest', 'windows-latest']
-        node: ['14', '16']
+        os: ['ubuntu-20.04', 'windows-2019', 'windows-2022']
+        node: ['14', '16', '17']
     steps:
       - uses: actions/checkout@v2
       - name: Setup node
