@@ -95,6 +95,8 @@ const hasJsxRuntime = (() => {
   }
 })();
 
+const appName = require(paths.appPackageJson).name;
+
 // This is the production and development configuration.
 // It is focused on developer experience, fast rebuilds, and a minimal bundle.
 module.exports = function (webpackEnv) {
@@ -537,6 +539,7 @@ module.exports = function (webpackEnv) {
                 modules: {
                   mode: 'local',
                   getLocalIdent: getCSSModuleLocalIdent,
+                  localIdentHashSalt: appName,
                 },
               }),
             },
@@ -577,6 +580,7 @@ module.exports = function (webpackEnv) {
                   modules: {
                     mode: 'local',
                     getLocalIdent: getCSSModuleLocalIdent,
+                    localIdentHashSalt: appName,
                   },
                 },
                 'sass-loader'

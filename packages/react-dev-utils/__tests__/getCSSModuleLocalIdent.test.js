@@ -11,7 +11,11 @@ const getCSSModuleLocalIdent = require('../getCSSModuleLocalIdent');
 
 const rootContext = '/path';
 const defaultClassName = 'class';
-const options = { context: undefined, hashPrefix: '', regExp: null };
+const defaultOptions = {
+  context: undefined,
+  hashSalt: undefined,
+  regExp: null,
+};
 
 const tests = [
   {
@@ -27,14 +31,40 @@ const tests = [
     expected: 'file_class__dINZX',
   },
   {
+    resourcePath: '/path/to/file.module.sass',
+    expected: 'file_class__9vVbt',
+    options: {
+      hashSalt: 'my-app',
+    },
+  },
+  {
     resourcePath: '/path/to/file.name.module.css',
     expected: 'file_name_class__XpUJW',
+  },
+  {
+    resourcePath: '/path/to/file.name.module.css',
+    expected: 'file_name_class__OS1Yg',
+    options: {
+      hashSalt: 'my-app',
+    },
+  },
+  {
+    resourcePath: '/path/to/file.name.module.css',
+    expected: 'file_name_class__uMbcn',
+    options: {
+      hashSalt: 'my-app-123',
+    },
   },
 ];
 
 describe('getCSSModuleLocalIdent', () => {
   tests.forEach(test => {
-    const { className = defaultClassName, expected, resourcePath } = test;
+    const {
+      className = defaultClassName,
+      expected,
+      resourcePath,
+      options = defaultOptions,
+    } = test;
     it(JSON.stringify({ resourcePath, className }), () => {
       const ident = getCSSModuleLocalIdent(
         {
