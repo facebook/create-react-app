@@ -118,31 +118,6 @@ You can install this package by running: yarn add unknown-package.
 }
 `;
 
-exports[`formats missing package 2`] = `
-Object {
-  "stderr": "npm ERR! errno 1
-npm ERR! @ build: \`react-scripts build\`
-npm ERR! Exit status 1
-npm ERR! 
-npm ERR! Failed at the @ build script.
-npm ERR! This is probably not a problem with npm. There is likely additional logging output above.
-
-npm ERR! A complete log of this run can be found in:
-npm ERR!     /Users/joeldenning/.npm/_logs/2022-02-03T16_22_12_179Z-debug.log
-
-> @ build /private/var/folders/kw/p55thfcs6c1gvqtt2kf0jhc00000gn/T/e5679eac6637671518cac4cc684f4358
-> react-scripts build
-
-Creating an optimized production build...
-Failed to compile.
-
-Module not found: Error: Can't resolve 'unknown-package' in '/private/var/folders/kw/p55thfcs6c1gvqtt2kf0jhc00000gn/T/e5679eac6637671518cac4cc684f4358/src'
-
-",
-  "stdout": "",
-}
-`;
-
 exports[`formats no default export 1`] = `
 Object {
   "stderr": "Creating an optimized production build...
@@ -183,60 +158,5 @@ Attempted import error: 'bar' is not exported from './AppUnknownExport'.
 
 ",
   "stdout": "",
-}
-`;
-
-exports[`formats unknown export 2`] = `
-Object {
-  "stderr": "npm ERR! errno 1
-npm ERR! @ build: \`react-scripts build\`
-npm ERR! Exit status 1
-npm ERR! 
-npm ERR! Failed at the @ build script.
-npm ERR! This is probably not a problem with npm. There is likely additional logging output above.
-
-npm ERR! A complete log of this run can be found in:
-npm ERR!     /Users/joeldenning/.npm/_logs/2022-02-03T16_21_59_312Z-debug.log
-
-> @ build /private/var/folders/kw/p55thfcs6c1gvqtt2kf0jhc00000gn/T/e5679eac6637671518cac4cc684f4358
-> react-scripts build
-
-Creating an optimized production build...
-Failed to compile.
-
-Attempted import error: 'bar' is not exported from './AppUnknownExport' (imported as 'bar').
-
-",
-  "stdout": "",
-}
-`;
-
-exports[`helps when users tries to use sass 1`] = `
-Object {
-  "stderr": "",
-  "stdout": "
-> @ build /private/var/folders/kw/p55thfcs6c1gvqtt2kf0jhc00000gn/T/e5679eac6637671518cac4cc684f4358
-> react-scripts build
-
-Creating an optimized production build...
-Compiled successfully.
-
-File sizes after gzip:
-
-  43.16 kB  build/static/js/main.aa544ec3.js
-
-The project was built assuming it is hosted at /.
-You can control this with the homepage field in your package.json.
-
-The build folder is ready to be deployed.
-You may serve it with a static server:
-
-  npm install -g serve
-  serve -s build
-
-Find out more about deployment here:
-
-  https://cra.link/deployment
-",
 }
 `;
