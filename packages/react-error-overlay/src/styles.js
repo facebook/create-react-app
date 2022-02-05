@@ -118,7 +118,7 @@ const iframeStyle = {
   height: '100%',
   border: 'none',
   'z-index': 2147483647,
-  'pointer-event': 'none',
+  'pointer-events': 'none',
 };
 
 const overlayStyle = (theme: Theme) => ({
