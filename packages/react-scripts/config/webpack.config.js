@@ -285,6 +285,17 @@ module.exports = function (webpackEnv) {
             include: [paths.appSrc, paths.appPackages],
             loader: 'graphql-tag/loader',
           },
+          {
+            test: /\.js$/,
+            include: path.resolve(paths.appNodeModules, './@gd-uikit/uikit'),
+            loader: require.resolve('babel-loader'),
+            options: {
+              plugins: [['import', { libraryName: 'antd', libraryDirectory: 'lib', style: true }]],
+              cacheDirectory: true,
+              cacheCompression: false,
+              compact: isEnvProduction,
+            },
+          },
           // Process application JS with Babel.
           // The preset includes JSX, Flow, TypeScript, and some ESnext features.
           {
@@ -498,7 +509,7 @@ module.exports = function (webpackEnv) {
             exclude: lessModuleRegex,
             use: getStyleLoaders(
               {
-                importLoaders: 2,
+                importLoaders: 3,
                 sourceMap: isEnvProduction
                   ? shouldUseSourceMap
                   : isEnvDevelopment,
@@ -977,21 +988,15 @@ module.exports = function (webpackEnv) {
       // solution that requires the user to opt into importing specific locales.
       // https://github.com/jmblog/how-to-optimize-momentjs-with-webpack
       // You can remove this if you don't use Moment.js:
-      // new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+      // new webpack.IgnorePlugin({
+      //   resourceRegExp: /^\.\/locale$/,
+      //   contextRegExp: /moment$/,
+      // }),
       // load `moment/locale/ja.js` and `moment/locale/it.js`
       new webpack.ContextReplacementPlugin(
         /moment[/\\]locale$/,
         /en|zh-cn|zh-tw/
       ),
-      // Moment.js is an extremely popular library that bundles large locale files
-      // by default due to how webpack interprets its code. This is a practical
-      // solution that requires the user to opt into importing specific locales.
-      // https://github.com/jmblog/how-to-optimize-momentjs-with-webpack
-      // You can remove this if you don't use Moment.js:
-      new webpack.IgnorePlugin({
-        resourceRegExp: /^\.\/locale$/,
-        contextRegExp: /moment$/,
-      }),
       // Generate a service worker script that will precache, and keep up to date,
       // the HTML & assets that are part of the webpack build.
       isEnvProduction &&
