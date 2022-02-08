@@ -290,7 +290,12 @@ module.exports = function (webpackEnv) {
             include: path.resolve(paths.appNodeModules, './@gd-uikit/uikit'),
             loader: require.resolve('babel-loader'),
             options: {
-              plugins: [['import', { libraryName: 'antd', libraryDirectory: 'lib', style: true }]],
+              plugins: [
+                [
+                  'import',
+                  { libraryName: 'antd', libraryDirectory: 'lib', style: true },
+                ],
+              ],
               cacheDirectory: true,
               cacheCompression: false,
               compact: isEnvProduction,
@@ -480,30 +485,6 @@ module.exports = function (webpackEnv) {
             // See https://github.com/webpack/webpack/issues/6571
             sideEffects: true,
           },
-          // Adds support for CSS Modules, but using SASS
-          // using the extension .module.scss or .module.sass
-          {
-            test: sassModuleRegex,
-            use: getStyleLoaders(
-              {
-                importLoaders: 3,
-                sourceMap: isEnvProduction
-                  ? shouldUseSourceMap
-                  : isEnvDevelopment,
-                modules: {
-                  mode: 'local',
-                  getLocalIdent: getCSSModuleLocalIdent,
-                },
-              },
-              'sass-loader',
-              {
-                implementation: require('sass'),
-                sassOptions: {
-                  includePaths: ['src'],
-                },
-              }
-            ),
-          },
           {
             test: lessRegex,
             exclude: lessModuleRegex,
@@ -550,6 +531,30 @@ module.exports = function (webpackEnv) {
                       'zindex-notification': 1051,
                     },
                 javascriptEnabled: true,
+              }
+            ),
+          },
+          // Adds support for CSS Modules, but using SASS
+          // using the extension .module.scss or .module.sass
+          {
+            test: sassModuleRegex,
+            use: getStyleLoaders(
+              {
+                importLoaders: 3,
+                sourceMap: isEnvProduction
+                  ? shouldUseSourceMap
+                  : isEnvDevelopment,
+                modules: {
+                  mode: 'local',
+                  getLocalIdent: getCSSModuleLocalIdent,
+                },
+              },
+              'sass-loader',
+              {
+                implementation: require('sass'),
+                sassOptions: {
+                  includePaths: ['src'],
+                },
               }
             ),
           },
@@ -788,118 +793,6 @@ module.exports = function (webpackEnv) {
             inject: true,
             chunks: ['index'],
             template: paths.appHtml,
-            mixpanelToken: process.env.REACT_APP_MIXPANEL_TOKEN,
-          },
-          isEnvProduction
-            ? {
-                minify: {
-                  removeComments: true,
-                  collapseWhitespace: true,
-                  removeRedundantAttributes: true,
-                  useShortDoctype: true,
-                  removeEmptyAttributes: true,
-                  removeStyleLinkTypeAttributes: true,
-                  keepClosingSlash: true,
-                  minifyJS: true,
-                  minifyCSS: true,
-                  minifyURLs: true,
-                },
-              }
-            : undefined
-        )
-      ),
-      new HtmlWebpackPlugin(
-        Object.assign(
-          {},
-          {
-            inject: true,
-            chunks: ['published'],
-            template: paths.publishedHtml,
-            filename: 'published.html',
-            mixpanelToken: process.env.REACT_APP_MIXPANEL_TOKEN,
-          },
-          isEnvProduction
-            ? {
-                minify: {
-                  removeComments: true,
-                  collapseWhitespace: true,
-                  removeRedundantAttributes: true,
-                  useShortDoctype: true,
-                  removeEmptyAttributes: true,
-                  removeStyleLinkTypeAttributes: true,
-                  keepClosingSlash: true,
-                  minifyJS: true,
-                  minifyCSS: true,
-                  minifyURLs: true,
-                },
-              }
-            : undefined
-        )
-      ),
-      new HtmlWebpackPlugin(
-        Object.assign(
-          {},
-          {
-            inject: true,
-            chunks: ['evaluation_report'],
-            template: paths.evaluationReportHtml,
-            filename: 'evaluation_report.html',
-            mixpanelToken: process.env.REACT_APP_MIXPANEL_TOKEN,
-          },
-          isEnvProduction
-            ? {
-                minify: {
-                  removeComments: true,
-                  collapseWhitespace: true,
-                  removeRedundantAttributes: true,
-                  useShortDoctype: true,
-                  removeEmptyAttributes: true,
-                  removeStyleLinkTypeAttributes: true,
-                  keepClosingSlash: true,
-                  minifyJS: true,
-                  minifyCSS: true,
-                  minifyURLs: true,
-                },
-              }
-            : undefined
-        )
-      ),
-      new HtmlWebpackPlugin(
-        Object.assign(
-          {},
-          {
-            inject: true,
-            chunks: ['mobile'],
-            template: paths.appMobileHtml,
-            filename: 'mobile.html',
-            mixpanelToken: process.env.REACT_APP_MIXPANEL_TOKEN,
-          },
-          isEnvProduction
-            ? {
-                minify: {
-                  removeComments: true,
-                  collapseWhitespace: true,
-                  removeRedundantAttributes: true,
-                  useShortDoctype: true,
-                  removeEmptyAttributes: true,
-                  removeStyleLinkTypeAttributes: true,
-                  keepClosingSlash: true,
-                  minifyJS: true,
-                  minifyCSS: true,
-                  minifyURLs: true,
-                },
-              }
-            : undefined
-        )
-      ),
-      new HtmlWebpackPlugin(
-        Object.assign(
-          {},
-          {
-            inject: true,
-            chunks: ['submitterPortal'],
-            template: paths.submitterPortalHtml,
-            filename: 'submitterPortal.html',
             mixpanelToken: process.env.REACT_APP_MIXPANEL_TOKEN,
           },
           isEnvProduction

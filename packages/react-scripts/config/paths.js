@@ -79,10 +79,6 @@ module.exports = {
   swSrc: resolveModule(resolveApp, 'src/service-worker'),
   publicUrlOrPath,
   // CUSTOM ENTRIES
-  publishedHtml: resolveApp('public/published.html'),
-  evaluationReportHtml: resolveApp('public/evaluation_report.html'),
-  submitterPortalHtml: resolveApp('public/submitterPortal.html'),
-  appMobileHtml: resolveApp('public/mobile.html'),
   appPackages: resolveApp('packages'),
   appUikit: resolveApp('node_modules/@gd-uikit'),
 };
@@ -111,10 +107,6 @@ module.exports = {
   swSrc: resolveModule(resolveApp, 'src/service-worker'),
   publicUrlOrPath,
   // CUSTOM ENTRIES
-  publishedHtml: resolveApp('public/published.html'),
-  evaluationReportHtml: resolveApp('public/evaluation_report.html'),
-  submitterPortalHtml: resolveApp('public/submitterPortal.html'),
-  appMobileHtml: resolveApp('public/mobile.html'),
   appPackages: resolveApp('packages'),
   appUikit: resolveApp('node_modules/@gd-uikit'),
   // These properties only exist before ejecting:
