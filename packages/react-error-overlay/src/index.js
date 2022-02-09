@@ -80,29 +80,28 @@ export function startReportingRuntimeErrors(options: RuntimeReportingOptions) {
   );
 }
 
-const handleRuntimeError = (options: RuntimeReportingOptions) => (
-  errorRecord: ErrorRecord
-) => {
-  try {
-    if (typeof options.onError === 'function') {
-      options.onError.call(null);
+const handleRuntimeError =
+  (options: RuntimeReportingOptions) => (errorRecord: ErrorRecord) => {
+    try {
+      if (typeof options.onError === 'function') {
+        options.onError.call(null);
+      }
+    } finally {
+      if (
+        currentRuntimeErrorRecords.some(
+          ({ error }) => error === errorRecord.error
+        )
+      ) {
+        // Deduplicate identical errors.
+        // This fixes https://github.com/facebook/create-react-app/issues/3011.
+        return;
+      }
+      currentRuntimeErrorRecords = currentRuntimeErrorRecords.concat([
+        errorRecord,
+      ]);
+      update();
     }
-  } finally {
-    if (
-      currentRuntimeErrorRecords.some(
-        ({ error }) => error === errorRecord.error
-      )
-    ) {
-      // Deduplicate identical errors.
-      // This fixes https://github.com/facebook/create-react-app/issues/3011.
-      return;
-    }
-    currentRuntimeErrorRecords = currentRuntimeErrorRecords.concat([
-      errorRecord,
-    ]);
-    update();
-  }
-};
+  };
 
 export function dismissRuntimeErrors() {
   currentRuntimeErrorRecords = [];
@@ -137,14 +136,14 @@ function update() {
   // We need to schedule the first render.
   isLoadingIframe = true;
   const loadingIframe = window.document.createElement('iframe');
+  loadingIframe.setAttribute('title', 'React Error Overlay');
   applyStyles(loadingIframe, iframeStyle);
   loadingIframe.onload = function () {
     const iframeDocument = loadingIframe.contentDocument;
     if (iframeDocument != null && iframeDocument.body != null) {
       iframe = loadingIframe;
-      const script = loadingIframe.contentWindow.document.createElement(
-        'script'
-      );
+      const script =
+        loadingIframe.contentWindow.document.createElement('script');
       script.type = 'text/javascript';
       script.innerHTML = iframeScript;
       iframeDocument.body.appendChild(script);
@@ -179,11 +178,12 @@ function updateIframeContent() {
 
 window.__REACT_ERROR_OVERLAY_GLOBAL_HOOK__ =
   window.__REACT_ERROR_OVERLAY_GLOBAL_HOOK__ || {};
-window.__REACT_ERROR_OVERLAY_GLOBAL_HOOK__.iframeReady = function iframeReady() {
-  isIframeReady = true;
-  isLoadingIframe = false;
-  updateIframeContent();
-};
+window.__REACT_ERROR_OVERLAY_GLOBAL_HOOK__.iframeReady =
+  function iframeReady() {
+    isIframeReady = true;
+    isLoadingIframe = false;
+    updateIframeContent();
+  };
 
 if (process.env.NODE_ENV === 'production') {
   console.warn(
