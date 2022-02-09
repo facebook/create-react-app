@@ -216,7 +216,12 @@ module.exports = function (webpackEnv) {
     return loaders;
   };
 
-  const getRules = ({ shouldUseNewUI } = { shouldUseNewUI: false }) =>
+  const getRules = (
+    { shouldUseNewUI, shouldLoadLessFile } = {
+      shouldUseNewUI: false,
+      shouldLoadLessFile: true,
+    }
+  ) =>
     [
       // Handle node_modules packages that contain sourcemaps
       shouldUseSourceMap && {
@@ -458,34 +463,7 @@ module.exports = function (webpackEnv) {
           // Opt-in support for SASS (using .scss or .sass extensions).
           // By default we support SASS Modules with the
           // extensions .module.scss or .module.sass
-          {
-            test: sassRegex,
-            exclude: sassModuleRegex,
-            use: getStyleLoaders(
-              {
-                importLoaders: 3,
-                sourceMap: isEnvProduction
-                  ? shouldUseSourceMap
-                  : isEnvDevelopment,
-                modules: {
-                  mode: 'icss',
-                },
-              },
-              'sass-loader',
-              {
-                implementation: require('sass'),
-                sassOptions: {
-                  includePaths: ['src'],
-                },
-              }
-            ),
-            // Don't consider CSS imports dead code even if the
-            // containing package claims to have no side effects.
-            // Remove this when webpack adds a warning or an error for this.
-            // See https://github.com/webpack/webpack/issues/6571
-            sideEffects: true,
-          },
-          {
+          shouldLoadLessFile && {
             test: lessRegex,
             exclude: lessModuleRegex,
             use: getStyleLoaders(
@@ -534,6 +512,33 @@ module.exports = function (webpackEnv) {
               }
             ),
           },
+          {
+            test: sassRegex,
+            exclude: sassModuleRegex,
+            use: getStyleLoaders(
+              {
+                importLoaders: 3,
+                sourceMap: isEnvProduction
+                  ? shouldUseSourceMap
+                  : isEnvDevelopment,
+                modules: {
+                  mode: 'icss',
+                },
+              },
+              'sass-loader',
+              {
+                implementation: require('sass'),
+                sassOptions: {
+                  includePaths: ['src'],
+                },
+              }
+            ),
+            // Don't consider CSS imports dead code even if the
+            // containing package claims to have no side effects.
+            // Remove this when webpack adds a warning or an error for this.
+            // See https://github.com/webpack/webpack/issues/6571
+            sideEffects: true,
+          },
           // Adds support for CSS Modules, but using SASS
           // using the extension .module.scss or .module.sass
           {
@@ -579,7 +584,7 @@ module.exports = function (webpackEnv) {
           },
           // ** STOP ** Are you adding a new loader?
           // Make sure to add the new loader(s) before the "file" loader.
-        ],
+        ].filter(Boolean),
       },
     ].filter(Boolean);
 
