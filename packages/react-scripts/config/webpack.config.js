@@ -217,9 +217,9 @@ module.exports = function (webpackEnv) {
   };
 
   const getRules = (
-    { shouldUseNewUI, shouldLoadLessFile } = {
+    { isRemoteEntry, shouldUseNewUI } = {
+      isRemoteEntry: false,
       shouldUseNewUI: false,
-      shouldLoadLessFile: true,
     }
   ) =>
     [
@@ -463,7 +463,7 @@ module.exports = function (webpackEnv) {
           // Opt-in support for SASS (using .scss or .sass extensions).
           // By default we support SASS Modules with the
           // extensions .module.scss or .module.sass
-          shouldLoadLessFile && {
+          !isRemoteEntry && {
             test: lessRegex,
             exclude: lessModuleRegex,
             use: getStyleLoaders(
@@ -512,7 +512,7 @@ module.exports = function (webpackEnv) {
               }
             ),
           },
-          {
+          !isRemoteEntry && {
             test: sassRegex,
             exclude: sassModuleRegex,
             use: getStyleLoaders(
