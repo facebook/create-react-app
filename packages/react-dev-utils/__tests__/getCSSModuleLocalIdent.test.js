@@ -55,6 +55,20 @@ const tests = [
       hashSalt: 'my-app-123',
     },
   },
+  {
+    resourcePath: '/path/a/b/c/file.name.module.css',
+    className: 'test',
+    expected: 'file_name_test__2F_aq',
+    description:
+      'Verifies that hash is encoded with base64url (2F_aq instead of 2F/aq)',
+  },
+  {
+    resourcePath: '/path/a/b/file.name.module.css',
+    className: 'test',
+    expected: 'file_name_test__58Gc-',
+    description:
+      'Verifies that hash is encoded with base64url (58Gc- instead of 58Gc+)',
+  },
 ];
 
 describe('getCSSModuleLocalIdent', () => {
@@ -64,8 +78,12 @@ describe('getCSSModuleLocalIdent', () => {
       expected,
       resourcePath,
       options = defaultOptions,
+      description,
     } = test;
-    it(JSON.stringify({ resourcePath, className }), () => {
+    const testDescription =
+      description || JSON.stringify({ resourcePath, className });
+
+    it(testDescription, () => {
       const ident = getCSSModuleLocalIdent(
         {
           resourcePath,

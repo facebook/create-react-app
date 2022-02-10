@@ -30,7 +30,7 @@ module.exports = function getLocalIdent(
       path.posix.relative(context.rootContext, context.resourcePath) +
       localName,
     'md5',
-    'base64',
+    'base64url',
     5
   );
   // Use loaderUtils to find the file or folder name
