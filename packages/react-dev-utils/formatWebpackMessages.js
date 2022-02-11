@@ -26,7 +26,7 @@ function formatMessage(message) {
     message.forEach(message => {
       if ('message' in message) {
         lines = message['message'].split('\n');
-        lines.unshift(`TypeScript error in ${message['file']}`);
+        lines.unshift(`Error in ${message['file']}`);
       }
     });
   }
