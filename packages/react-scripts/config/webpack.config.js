@@ -132,19 +132,27 @@ module.exports = function (webpackEnv) {
   // common function to get style loaders
   const getStyleLoaders = (
     cssOptions,
+    isRemoteEntry = false,
     preProcessor,
     preProcessorOptions = {}
   ) => {
     const loaders = [
-      isEnvDevelopment && require.resolve('style-loader'),
-      isEnvProduction && {
-        loader: MiniCssExtractPlugin.loader,
-        // css is located in `gd-frontend/css`, use '../../' to locate index.html folder
-        // in production `paths.publicUrlOrPath` can be a relative path
-        options: paths.publicUrlOrPath.startsWith('.')
-          ? { publicPath: '../../' }
-          : {},
+      isEnvDevelopment && {
+        loader: require.resolve('style-loader'),
+        options: {
+          // TODO: not every remote entry would be injected into the iframe
+          insert: !isRemoteEntry ? 'head' : 'iframe#form_preview',
+        },
       },
+      !isRemoteEntry &&
+        isEnvProduction && {
+          loader: MiniCssExtractPlugin.loader,
+          // css is located in `gd-frontend/css`, use '../../' to locate index.html folder
+          // in production `paths.publicUrlOrPath` can be a relative path
+          options: paths.publicUrlOrPath.startsWith('.')
+            ? { publicPath: '../../' }
+            : {},
+        },
       {
         loader: require.resolve('css-loader'),
         options: cssOptions,
@@ -463,7 +471,7 @@ module.exports = function (webpackEnv) {
           // Opt-in support for SASS (using .scss or .sass extensions).
           // By default we support SASS Modules with the
           // extensions .module.scss or .module.sass
-          !isRemoteEntry && {
+          {
             test: lessRegex,
             exclude: lessModuleRegex,
             use: getStyleLoaders(
@@ -473,6 +481,7 @@ module.exports = function (webpackEnv) {
                   ? shouldUseSourceMap
                   : isEnvDevelopment,
               },
+              isRemoteEntry,
               'less-loader',
               {
                 modifyVars: shouldUseNewUI
@@ -512,7 +521,7 @@ module.exports = function (webpackEnv) {
               }
             ),
           },
-          !isRemoteEntry && {
+          {
             test: sassRegex,
             exclude: sassModuleRegex,
             use: getStyleLoaders(
@@ -525,6 +534,7 @@ module.exports = function (webpackEnv) {
                   mode: 'icss',
                 },
               },
+              isRemoteEntry,
               'sass-loader',
               {
                 implementation: require('sass'),
@@ -554,6 +564,7 @@ module.exports = function (webpackEnv) {
                   getLocalIdent: getCSSModuleLocalIdent,
                 },
               },
+              isRemoteEntry,
               'sass-loader',
               {
                 implementation: require('sass'),
