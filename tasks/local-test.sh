@@ -4,25 +4,25 @@
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
 
-function print_help {
-  echo "Usage: ${0} [OPTIONS]"
-  echo ""
-  echo "OPTIONS:"
-  echo "  --node-version <version>  the node version to use while testing [12]"
-  echo "  --git-branch <branch>     the git branch to checkout for testing [the current one]"
-  echo "  --test-suite <suite>      which test suite to use ('all', 'behavior', installs', 'kitchensink', 'kitchensink-eject', 'simple') ['all']"
-  echo "  --interactive             gain a bash shell after the test run"
-  echo "  --help                    print this message and exit"
-  echo ""
-}
-
-cd $(dirname $0)
-
 node_version=14
 current_git_branch=`git rev-parse --abbrev-ref HEAD`
 git_branch=${current_git_branch}
 test_suite=all
 interactive=false
+
+function print_help {
+  echo "Usage: ${0} [OPTIONS]"
+  echo ""
+  echo "OPTIONS:"
+  echo "  --node-version <version>  the node version to use while testing [${node_version}]"
+  echo "  --git-branch <branch>     the git branch to checkout for testing [${current_git_branch}]"
+  echo "  --test-suite <suite>      which test suite to use ('all', 'behavior', installs', 'kitchensink', 'kitchensink-eject', 'simple') ['${test_suite}']"
+  echo "  --interactive             gain a bash shell after the test run [${interactive}]"
+  echo "  --help                    print this message and exit"
+  echo ""
+}
+
+cd $(dirname $0)
 
 while [ "$1" != "" ]; do
   case $1 in
@@ -84,6 +84,8 @@ cd -
 mv /var/create-react-app/patch .
 git apply patch
 rm patch
+git add -A
+git commit -m 'Apply local changes'
 CMD
 
 if [ ${git_branch} != ${current_git_branch} ]; then
@@ -91,15 +93,15 @@ if [ ${git_branch} != ${current_git_branch} ]; then
 fi
 
 read -r -d '' command <<- CMD
-echo "prefix=~/.npm" > ~/.npmrc
-mkdir ~/.npm
-export PATH=\$PATH:~/.npm/bin
+npm install npm@8 -g
+export PATH=\$(npm config get prefix -g)/bin:\$PATH
 set -x
 git clone /var/create-react-app create-react-app --branch ${git_branch}
 cd create-react-app
 ${apply_changes}
 node --version
 npm --version
+npm ci
 set +x
 ${test_command}
 result_code=\$?

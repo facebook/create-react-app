@@ -464,7 +464,7 @@ If you want to use a Custom Domain with your Vercel deployment, you can **Add** 
 
 To add your domain to your project, navigate to your [Project](https://vercel.com/docs/platform/projects) from the Vercel Dashboard. Once you have selected your project, click on the "Settings" tab, then select the **Domains** menu item. From your projects **Domain** page, enter the domain you wish to add to your project.
 
-Once the domain as been added, you will be presented with different methods for configuring it.
+Once the domain has been added, you will be presented with different methods for configuring it.
 
 ### Deploying a fresh React project
 

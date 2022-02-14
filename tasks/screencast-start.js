@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 
 /**
- * Copyright (c) 2015-present, Facebook, Inc. 
- * 
- * This source code is licensed under the MIT license found in the 
- * LICENSE file in the root directory of this source tree. 
+ * Copyright (c) 2015-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  */
 
 'use strict';
@@ -20,7 +20,7 @@ function main(cli) {
 
   const start = Date.now();
   const duration = parseInt(cli.flags.timeout, 10) * 1000;
-  const cp = execa.shell(cli.flags.command);
+  const cp = execa(cli.flags.command, { shell: true });
 
   const target = parseInt(cli.flags.patternCount || '1', 10);
 
@@ -52,7 +52,7 @@ function main(cli) {
     }
 
     setTimeout(() => {
-      process.exit(e.code);
+      process.exit(e.exitCode);
     }, duration - elapsed);
   });
 }
