@@ -815,7 +815,7 @@ module.exports = function (webpackEnv) {
       rules: getRules(),
     },
     plugins: [
-      new WebpackBar(),
+      isEnvDevelopment && new WebpackBar(),
       // Generates an `index.html` file with the <script> injected.
       new HtmlWebpackPlugin(
         Object.assign(
