@@ -373,12 +373,8 @@ module.exports = function (webpackEnv) {
                 },
               },
             },
-            // "url" loader works like "file" loader except that it embeds assets
-            // smaller than specified limit in bytes as data URLs to avoid requests.
-            // A missing `test` is equivalent to a match.
             {
-              // include svg
-              test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/, /\.svg$/],
+              test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
               type: 'asset',
               parser: {
                 dataUrlCondition: {
@@ -386,8 +382,12 @@ module.exports = function (webpackEnv) {
                 },
               },
             },
+            // "url" loader works like "file" loader except that it embeds assets
+            // smaller than specified limit in bytes as data URLs to avoid requests.
+            // A missing `test` is equivalent to a match.
             {
               test: /\.svg$/,
+              resourceQuery: /component/,
               use: [
                 {
                   loader: require.resolve('@svgr/webpack'),
@@ -410,6 +410,16 @@ module.exports = function (webpackEnv) {
               ],
               issuer: {
                 and: [/\.(ts|tsx|js|jsx|md|mdx)$/],
+              },
+            },
+            // include svg
+            {
+              test: [/\.svg$/],
+              type: 'asset',
+              parser: {
+                dataUrlCondition: {
+                  maxSize: imageInlineSizeLimit,
+                },
               },
             },
             // Process application JS with Babel.
