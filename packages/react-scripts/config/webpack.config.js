@@ -256,6 +256,9 @@ module.exports = function (webpackEnv) {
       level: 'none',
     },
     optimization: {
+      splitChunks: {
+        chunks: 'all',
+      },
       minimize: isEnvProduction,
       minimizer: [
         // This is only used in production mode
