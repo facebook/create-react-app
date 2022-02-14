@@ -140,8 +140,23 @@ module.exports = function (webpackEnv) {
       isEnvDevelopment && {
         loader: require.resolve('style-loader'),
         options: {
-          // TODO: not every remote entry would be injected into the iframe
-          insert: !isRemoteEntry ? 'head' : 'iframe#form_preview',
+          insert: !isRemoteEntry
+            ? 'head'
+            : function insert2TemplateNode(element) {
+                const styleTargetId = 'remote_entry_style_template_node';
+                const styleTarget = document.getElementById(styleTargetId);
+
+                if (styleTarget) {
+                  element.media = 'none';
+                  styleTarget.appendChild(element);
+                } else {
+                  const styleTarget = document.createElement('template');
+                  element.media = 'none';
+                  styleTarget.id = styleTargetId;
+                  styleTarget.appendChild(element);
+                  document.body.appendChild(styleTarget);
+                }
+              },
         },
       },
       !isRemoteEntry &&
