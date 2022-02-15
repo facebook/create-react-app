@@ -77,20 +77,22 @@ module.exports = function (proxy, allowedHost) {
         ignored: ignoredFiles(paths.appSrc),
       },
     },
-    client: {
-      webSocketURL: {
-        // Enable custom sockjs pathname for websocket connection to hot reloading server.
-        // Enable custom sockjs hostname, pathname and port for websocket connection
-        // to hot reloading server.
-        hostname: sockHost,
-        pathname: sockPath,
-        port: sockPort,
-      },
-      overlay: {
-        errors: true,
-        warnings: false,
-      },
-    },
+    hot: false,
+    client: false,
+    // client: {
+    //   webSocketURL: {
+    //     // Enable custom sockjs pathname for websocket connection to hot reloading server.
+    //     // Enable custom sockjs hostname, pathname and port for websocket connection
+    //     // to hot reloading server.
+    //     hostname: sockHost,
+    //     pathname: sockPath,
+    //     port: sockPort,
+    //   },
+    //   overlay: {
+    //     errors: true,
+    //     warnings: false,
+    //   },
+    // },
     devMiddleware: {
       // It is important to tell WebpackDevServer to use the same "publicPath" path as
       // we specified in the webpack config. When homepage is '.', default to serving
