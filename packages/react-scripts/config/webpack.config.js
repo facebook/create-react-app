@@ -141,7 +141,7 @@ module.exports = function (webpackEnv) {
       element.media = 'none';
       styleTarget.id = styleTargetId;
       styleTarget.appendChild(element);
-      document.body.appendChild(styleTarget);
+      document.head.appendChild(styleTarget);
     }
   }
 
