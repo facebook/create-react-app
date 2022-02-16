@@ -213,7 +213,7 @@ module.exports = function (webpackEnv) {
                   ],
                 ],
           },
-          sourceMap: isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
+          sourceMap: isEnvDevelopment, // isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
         },
       },
     ].filter(Boolean);
@@ -222,14 +222,14 @@ module.exports = function (webpackEnv) {
         {
           loader: require.resolve('resolve-url-loader'),
           options: {
-            sourceMap: isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
+            sourceMap: isEnvDevelopment, // isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
             root: paths.appSrc,
           },
         },
         {
           loader: require.resolve(preProcessor),
           options: {
-            sourceMap: true,
+            sourceMap: isEnvDevelopment,
             ...preProcessorOptions,
           },
         }
@@ -454,9 +454,7 @@ module.exports = function (webpackEnv) {
             exclude: cssModuleRegex,
             use: getStyleLoaders({
               importLoaders: 1,
-              sourceMap: isEnvProduction
-                ? shouldUseSourceMap
-                : isEnvDevelopment,
+              sourceMap: isEnvDevelopment, // isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
               modules: {
                 mode: 'icss',
               },
@@ -473,9 +471,7 @@ module.exports = function (webpackEnv) {
             test: cssModuleRegex,
             use: getStyleLoaders({
               importLoaders: 1,
-              sourceMap: isEnvProduction
-                ? shouldUseSourceMap
-                : isEnvDevelopment,
+              sourceMap: isEnvDevelopment, // isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
               modules: {
                 mode: 'local',
                 getLocalIdent: getCSSModuleLocalIdent,
@@ -491,9 +487,7 @@ module.exports = function (webpackEnv) {
             use: getStyleLoaders(
               {
                 importLoaders: 3,
-                sourceMap: isEnvProduction
-                  ? shouldUseSourceMap
-                  : isEnvDevelopment,
+                sourceMap: isEnvDevelopment, // isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
               },
               isRemoteEntry,
               'less-loader',
@@ -541,9 +535,7 @@ module.exports = function (webpackEnv) {
             use: getStyleLoaders(
               {
                 importLoaders: 3,
-                sourceMap: isEnvProduction
-                  ? shouldUseSourceMap
-                  : isEnvDevelopment,
+                sourceMap: isEnvDevelopment, // isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
                 modules: {
                   mode: 'icss',
                 },
@@ -570,9 +562,7 @@ module.exports = function (webpackEnv) {
             use: getStyleLoaders(
               {
                 importLoaders: 3,
-                sourceMap: isEnvProduction
-                  ? shouldUseSourceMap
-                  : isEnvDevelopment,
+                sourceMap: isEnvDevelopment, // isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
                 modules: {
                   mode: 'local',
                   getLocalIdent: getCSSModuleLocalIdent,
@@ -682,6 +672,7 @@ module.exports = function (webpackEnv) {
           // both options are optional
           filename: 'gd-frontend/css/[name].[contenthash:8].css',
           chunkFilename: 'gd-frontend/css/[name].[contenthash:8].chunk.css',
+          ignoreOrder: true,
           ...(isRemoteEntry
             ? {
                 insert: insert2TemplateNode,
