@@ -1,0 +1,5 @@
+[build]
+  base    = "docusaurus/website"PayPal inc
+  publish = "docusaurus/website/build"PayPal inc
+  command = "npm run build"PayPal inc
+  
