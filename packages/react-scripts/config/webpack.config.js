@@ -127,7 +127,7 @@ module.exports = function (webpackEnv) {
   // Get environment variables to inject into our app.
   const env = getClientEnvironment(paths.publicUrlOrPath.slice(0, -1));
 
-  const shouldUseReactRefresh = false; // env.raw.FAST_REFRESH;
+  const shouldUseReactRefresh = env.raw.FAST_REFRESH;
 
   function insert2TemplateNode(element) {
     const styleTargetId = 'remote_entry_style_template_node';
@@ -213,19 +213,19 @@ module.exports = function (webpackEnv) {
                   ],
                 ],
           },
-          sourceMap: isEnvDevelopment, // isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
+          sourceMap: isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
         },
       },
     ].filter(Boolean);
     if (preProcessor) {
       loaders.push(
-        // {
-        //   loader: require.resolve('resolve-url-loader'),
-        //   options: {
-        //     sourceMap: isEnvDevelopment, // isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
-        //     root: paths.appSrc,
-        //   },
-        // },
+        {
+          loader: require.resolve('resolve-url-loader'),
+          options: {
+            sourceMap: isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
+            root: paths.appSrc,
+          },
+        },
         {
           loader: require.resolve(preProcessor),
           options: {
@@ -454,7 +454,9 @@ module.exports = function (webpackEnv) {
             exclude: cssModuleRegex,
             use: getStyleLoaders({
               importLoaders: 1,
-              sourceMap: isEnvDevelopment, // isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
+              sourceMap: isEnvProduction
+                ? shouldUseSourceMap
+                : isEnvDevelopment,
               modules: {
                 mode: 'icss',
               },
@@ -471,7 +473,9 @@ module.exports = function (webpackEnv) {
             test: cssModuleRegex,
             use: getStyleLoaders({
               importLoaders: 1,
-              sourceMap: isEnvDevelopment, // isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
+              sourceMap: isEnvProduction
+                ? shouldUseSourceMap
+                : isEnvDevelopment,
               modules: {
                 mode: 'local',
                 getLocalIdent: getCSSModuleLocalIdent,
@@ -487,7 +491,9 @@ module.exports = function (webpackEnv) {
             use: getStyleLoaders(
               {
                 importLoaders: 3,
-                sourceMap: isEnvDevelopment, // isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
+                sourceMap: isEnvProduction
+                  ? shouldUseSourceMap
+                  : isEnvDevelopment,
               },
               isRemoteEntry,
               'less-loader',
@@ -535,7 +541,9 @@ module.exports = function (webpackEnv) {
             use: getStyleLoaders(
               {
                 importLoaders: 3,
-                sourceMap: isEnvDevelopment, // isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
+                sourceMap: isEnvProduction
+                  ? shouldUseSourceMap
+                  : isEnvDevelopment,
                 modules: {
                   mode: 'icss',
                 },
@@ -562,7 +570,9 @@ module.exports = function (webpackEnv) {
             use: getStyleLoaders(
               {
                 importLoaders: 3,
-                sourceMap: isEnvDevelopment, // isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
+                sourceMap: isEnvProduction
+                  ? shouldUseSourceMap
+                  : isEnvDevelopment,
                 modules: {
                   mode: 'local',
                   getLocalIdent: getCSSModuleLocalIdent,
