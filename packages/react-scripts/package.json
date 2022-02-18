@@ -9,7 +9,7 @@
   },
   "license": "MIT",
   "engines": {
-    "node": "^10.12.0 || >=12.0.0"
+    "node": ">=12.0.0"
   },
   "files": [
     "bin",
@@ -34,7 +34,6 @@
     "babel-plugin-named-asset-import": "^0.3.7",
     "babel-preset-react-app": "^10.0.0",
     "bfj": "^7.0.2",
-    "bpk-mixins": "^21.0.0",
     "cache-loader": "^4.1.0",
     "camelcase": "^6.1.0",
     "case-sensitive-paths-webpack-plugin": "2.3.0",
@@ -51,7 +50,7 @@
     "jest-watch-typeahead": "0.6.1",
     "lodash": "^4.17.20",
     "mini-css-extract-plugin": "0.11.3",
-    "node-sass": "^4.12.0",
+    "node-sass": "^6.0.1",
     "optimize-css-assets-webpack-plugin": "5.0.4",
     "pnp-webpack-plugin": "1.6.4",
     "postcss-flexbugs-fixes": "4.2.1",

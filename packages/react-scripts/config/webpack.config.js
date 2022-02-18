@@ -58,7 +58,7 @@ const getCSSModuleLocalIdent = require('../utils/getCSSModuleLocalIdentWithProje
   appPackageJson.name
 );
 
-const sassFunctions = require('bpk-mixins/sass-functions');
+const sassFunctions = require('../utils/sassFunction');
 const camelCase = require('lodash/camelCase');
 const bpkReactScriptsConfig = appPackageJson['backpack-react-scripts'] || {};
 const customModuleRegexes = bpkReactScriptsConfig.babelIncludePrefixes
