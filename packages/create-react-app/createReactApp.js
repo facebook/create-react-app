@@ -996,6 +996,20 @@ function getProxy() {
   }
 }
 
+function getRegisrty() {
+  if (process.env.npm_registry) {
+    return process.env.npm_registry;
+  } else {
+    try {
+      // Trying to read registry from .npmrc
+      let httpsProxy = execSync('npm config get registry').toString().trim();
+      return registry !== 'null' ? registry : undefined;
+    } catch (e) {
+      return;
+    }
+  }
+}
+
 // See https://github.com/facebook/create-react-app/pull/3355
 function checkThatNpmCanReadCwd() {
   const cwd = process.cwd();
@@ -1067,12 +1081,19 @@ function checkIfOnline(useYarn) {
 
   return new Promise(resolve => {
     dns.lookup('registry.yarnpkg.com', err => {
-      let proxy;
+      let proxy, registry;
       if (err != null && (proxy = getProxy())) {
         // If a proxy is defined, we likely can't resolve external hostnames.
         // Try to resolve the proxy name as an indication of a connection.
         dns.lookup(url.parse(proxy).hostname, proxyErr => {
           resolve(proxyErr == null);
+        });
+      } else if(err != null && (registry = getRegisrty()) {
+        // When running on a network that has no DNS record for yarnpkg.com,
+        // we would like to look after alternative npm registry that is being used.
+        // Try to resolve the registry defined in the .npmrc file as an indication of a connection.
+        dns.lookup(url.parse(registry).hostname, registryErr => {
+          resolve(registryErr == null);
         });
       } else {
         resolve(err == null);
