@@ -95,6 +95,24 @@ const hasJsxRuntime = (() => {
   }
 })();
 
+//  Polling for remote dev environment vagrant, etc.
+const isPolling = process.env.WDS_POLLING || false
+
+//  Create watchOptions Object
+const createWatchOptions = (isEnvDevelopment) => {
+  
+  //  Return configs on develoment and set WDS_POLLING to true
+  if(isEnvDevelopment && isPolling) {
+    return {
+      aggregateTimeout: parseInt(process.env.WDS_AGGREGATE_TIMEOUT) || 300,
+      poll: parseInt(process.env.WDS_POLLING_INTERVAL) || 500,
+      ignored: process.env.WSD_WATCH_IGNORE || '**/node_modules',
+    };
+  }
+
+  return {};
+};
+
 // This is the production and development configuration.
 // It is focused on developer experience, fast rebuilds, and a minimal bundle.
 module.exports = function (webpackEnv) {
@@ -790,5 +808,6 @@ module.exports = function (webpackEnv) {
     // Turn off performance processing because we utilize
     // our own hints via the FileSizeReporter
     performance: false,
+    watchOptions: createWatchOptions(isEnvDevelopment),
   };
 };
