@@ -718,15 +718,15 @@ module.exports = function (webpackEnv) {
       // solution that requires the user to opt into importing specific locales.
       // https://github.com/jmblog/how-to-optimize-momentjs-with-webpack
       // You can remove this if you don't use Moment.js:
-      // new webpack.IgnorePlugin({
-      //   resourceRegExp: /^\.\/locale$/,
-      //   contextRegExp: /moment$/,
-      // }),
+      new webpack.IgnorePlugin({
+        resourceRegExp: /^\.\/locale$/,
+        contextRegExp: /moment$/,
+      }),
       // load `moment/locale/ja.js` and `moment/locale/it.js`
-      new webpack.ContextReplacementPlugin(
-        /moment[/\\]locale$/,
-        /en|zh-cn|zh-tw/
-      ),
+      // new webpack.ContextReplacementPlugin(
+      //   /moment[/\\]locale$/,
+      //   /en|zh-cn|zh-tw/
+      // ),
       // Generate a service worker script that will precache, and keep up to date,
       // the HTML & assets that are part of the webpack build.
       isEnvProduction &&
