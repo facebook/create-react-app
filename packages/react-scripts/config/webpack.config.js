@@ -722,11 +722,6 @@ module.exports = function (webpackEnv) {
         resourceRegExp: /^\.\/locale$/,
         contextRegExp: /moment$/,
       }),
-      // load `moment/locale/ja.js` and `moment/locale/it.js`
-      // new webpack.ContextReplacementPlugin(
-      //   /moment[/\\]locale$/,
-      //   /en|zh-cn|zh-tw/
-      // ),
       // Generate a service worker script that will precache, and keep up to date,
       // the HTML & assets that are part of the webpack build.
       isEnvProduction &&
