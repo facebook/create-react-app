@@ -346,17 +346,7 @@ module.exports = function (webpackEnv) {
         }),
       ],
       ...require('../backpack-addons/splitChunks')(isEnvDevelopment),  // #backpack-addons splitChunks
-      // Keep the runtime chunk separated to enable long term caching
-      // https://twitter.com/wSokra/status/969679223278505985
-      // https://github.com/facebook/create-react-app/issues/5358
-      // runtimeChunk: {
-      //   name: entrypoint => `runtime-${entrypoint.name}`,
-      // },
-      runtimeChunk: bpkReactScriptsConfig.enableAutomaticChunking
-        ? {
-            name: entrypoint => `runtime-${entrypoint.name}`,
-          }
-        : false,
+      ...require('../backpack-addons/runtimeChunk').runtimeChunk, // #backpack-addons runtimeChunk
     },
     ...require('../backpack-addons/externals').externals(isEnvProduction), // #backpack-addons externals
     resolve: {

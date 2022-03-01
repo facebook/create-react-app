@@ -382,7 +382,7 @@ module.exports = function (webpackEnv) {
       //       name: entrypoint => `runtime-${entrypoint.name}`,
       //     }
       //   : false,
-      runtimeChunk: false,
+      ...require('../backpack-addons/runtimeChunk').ssrRuntimeChunk, // #backpack-addons runtimeChunk 
     },
     ...require('../backpack-addons/externals').ssrExternals(), // #backpack-addons externals
     resolve: {
