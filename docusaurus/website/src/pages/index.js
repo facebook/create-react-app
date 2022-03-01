@@ -44,6 +44,15 @@ function Home() {
       permalink={'/'}
       description={'Set up a modern web app by running one command.'}
     >
+      <div>
+          <div className={styles.banner}>
+            Support Ukraine 🇺🇦{' '}
+            <Link to="http://www.facebook.com/fundraisers">
+              Help Provide Humanitarian Aid to Ukraine
+            </Link>
+            .
+          </div>
+        </div>
       <div className={clsx('hero hero--dark', styles.heroBanner)}>
         <div className="container">
           <img

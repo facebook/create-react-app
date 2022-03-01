@@ -34,6 +34,7 @@ const siteConfig = {
   themeConfig: {
     image: 'img/logo-og.png',
     algolia: {
+      appId: 'create-react-app',
       apiKey: '3be60f4f8ffc24c75da84857d6323791',
       indexName: 'create-react-app',
     },

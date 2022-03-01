@@ -5,6 +5,15 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+ .banner {
+  font-weight: bold;
+  font-size: 20px;
+  padding: 20px;
+  max-width: 768px;
+  margin: 0 auto;
+  text-align: center;
+ }
+
 .heroBanner {
   padding: 2.5rem 0;
   text-align: center;
