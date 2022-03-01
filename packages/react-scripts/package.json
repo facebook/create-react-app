@@ -30,7 +30,7 @@
   "dependencies": {
     "@babel/core": "^7.16.0",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.3",
-    "@sentry/webpack-plugin": "^1.18.3",
+    "@sentry/webpack-plugin": "~1.17.3",
     "@svgr/webpack": "^5.5.0",
     "babel-jest": "^27.4.2",
     "babel-loader": "^8.2.3",
