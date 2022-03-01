@@ -359,7 +359,7 @@ module.exports = function (webpackEnv) {
           }
         : false,
     },
-    externals: isEnvProduction ? bpkReactScriptsConfig.externals || {} : {},
+    ...require('../backpack-addons/externals').externals(isEnvProduction), // #backpack-addons externals
     resolve: {
       // This allows you to set a fallback for where webpack should look for modules.
       // We placed these paths second because we want `node_modules` to "win"

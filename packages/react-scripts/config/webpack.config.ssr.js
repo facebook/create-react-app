@@ -385,7 +385,7 @@ module.exports = function (webpackEnv) {
       //   : false,
       runtimeChunk: false,
     },
-    externals: bpkReactScriptsConfig.ssrExternals || [],
+    ...require('../backpack-addons/externals').ssrExternals(), // #backpack-addons externals
     resolve: {
       // This allows you to set a fallback for where webpack should look for modules.
       // We placed these paths second because we want `node_modules` to "win"
