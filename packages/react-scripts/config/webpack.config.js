@@ -53,7 +53,6 @@ const jsWorkerPool = {
 
 const appPackageJson = require(paths.appPackageJson);
 
-const sassFunctions = require('../utils/sassFunction');
 const camelCase = require('lodash/camelCase');
 const bpkReactScriptsConfig = appPackageJson['backpack-react-scripts'] || {};
 
@@ -669,11 +668,7 @@ module.exports = function (webpackEnv) {
                     : isEnvDevelopment,
                 },
                 'sass-loader',
-                {
-                  sassOptions: {
-                    functions: sassFunctions,
-                  },
-                }
+                require('../backpack-addons/sassFunctions')  // #backpack-addons sassFunctions
               ),
               // Don't consider CSS imports dead code even if the
               // containing package claims to have no side effects.
@@ -698,11 +693,7 @@ module.exports = function (webpackEnv) {
                   },
                 },
                 'sass-loader',
-                {
-                  sassOptions: {
-                    functions: sassFunctions,
-                  },
-                }
+                require('../backpack-addons/sassFunctions')  // #backpack-addons sassFunctions
               ),
             },
             // "file" loader makes sure those assets get served by WebpackDevServer.
