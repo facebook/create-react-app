@@ -31,3 +31,45 @@
   flex-shrink: 0;
   max-width: 100%;
 }
+
+
+/* Announcement banner */
+
+:root {
+  --docusaurus-announcement-bar-height: auto !important;
+}
+
+div[class^="announcementBar"][role="banner"] {
+  border-bottom-color: var(--deepdark);
+}
+
+div[class^="announcementBarContent"] {
+  line-height: 40px;
+  font-size: 20px;
+  font-weight: bold;
+  padding: 8px 30px;
+}
+
+div[class^="announcementBarContent"] a {
+  text-decoration: underline;
+  display: inline-block;
+  color: var(--ifm-color-primary) !important;
+}
+
+div[class^="announcementBarContent"] a:hover {
+  color: var(--brand) !important;
+}
+
+@media only screen and (max-width: 768px) {
+  .announcement {
+    font-size: 18px;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .announcement {
+    font-size: 15px;
+    line-height: 22px;
+    padding: 6px 30px;
+  }
+}
