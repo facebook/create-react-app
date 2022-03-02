@@ -47,7 +47,7 @@ function Home() {
       <div>
           <div className={styles.banner}>
             Support Ukraine 🇺🇦{' '}
-            <Link to="http://www.facebook.com/fundraisers">
+            <Link to="https://opensource.facebook.com/support-ukraine">
               Help Provide Humanitarian Aid to Ukraine
             </Link>
             .
