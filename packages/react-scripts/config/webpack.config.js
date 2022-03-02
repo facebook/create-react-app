@@ -196,7 +196,7 @@ module.exports = function (webpackEnv) {
           {
             loader: require.resolve(preProcessor),
             options: {
-              ...preProcessorOptions,
+              ...preProcessorOptions,  // #backpack-addons sassFunctions
               ...{
                 sourceMap: true,
               },
