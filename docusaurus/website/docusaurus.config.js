@@ -33,7 +33,17 @@ const siteConfig = {
   ],
   themeConfig: {
     image: 'img/logo-og.png',
+    announcementBar: {
+      id: 'support_ukraine',
+      content:
+        'Support Ukraine 🇺🇦 <a target="_blank" rel="noopener noreferrer" \
+        href="https://opensource.facebook.com/support-ukraine"> Help Provide Humanitarian Aid to Ukraine</a>.',
+      backgroundColor: '#20232a',
+      textColor: '#fff',
+      isCloseable: false,
+    },
     algolia: {
+      appId: 'create-react-app',
       apiKey: '3be60f4f8ffc24c75da84857d6323791',
       indexName: 'create-react-app',
     },
