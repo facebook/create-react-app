@@ -18,7 +18,8 @@
     "scripts",
     "template",
     "template-typescript",
-    "utils"
+    "utils",
+    "backpack-addons"
   ],
   "bin": {
     "react-scripts": "./bin/react-scripts.js"
