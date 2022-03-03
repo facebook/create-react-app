@@ -1,5 +1,11 @@
 # `backpack-react-scripts` Change Log
 
+## 9.6.1
+
+- Extract the existing custom features from the BRS fork branch
+  - Extract custom features into backpack-addons files
+  - Add backpack-addons README.md
+
 ## 9.6.0
 
 - Node.js support limits to >=12.

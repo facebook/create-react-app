@@ -1,6 +1,6 @@
 {
   "name": "@skyscanner/backpack-react-scripts",
-  "version": "9.6.0",
+  "version": "9.6.1",
   "description": "Backpack configuration and scripts for Create React App.",
   "repository": {
     "type": "git",
