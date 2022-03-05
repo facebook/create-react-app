@@ -24,11 +24,12 @@ export const fetchFile = url => {
   );
 };
 
-const fileResourceLoader = new (class FileResourceLoader extends ResourceLoader {
-  fetch(href, options) {
-    return Promise.resolve(fetchFile(url.parse(href)));
-  }
-})();
+const fileResourceLoader =
+  new (class FileResourceLoader extends ResourceLoader {
+    fetch(href, options) {
+      return Promise.resolve(fetchFile(url.parse(href)));
+    }
+  })();
 
 if (!process.env.E2E_FILE && !process.env.E2E_URL) {
   it.only('can run jsdom (at least one of "E2E_FILE" or "E2E_URL" environment variables must be provided)', () => {

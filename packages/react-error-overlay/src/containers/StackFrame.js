@@ -62,10 +62,8 @@ function StackFrame(props: StackFramePropsType) {
   };
 
   const getErrorLocation = (): ErrorLocation | null => {
-    const {
-      _originalFileName: fileName,
-      _originalLineNumber: lineNumber,
-    } = props.frame;
+    const { _originalFileName: fileName, _originalLineNumber: lineNumber } =
+      props.frame;
     // Unknown file
     if (!fileName) {
       return null;
