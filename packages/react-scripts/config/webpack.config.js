@@ -347,6 +347,8 @@ module.exports = function (webpackEnv) {
     module: {
       strictExportPresence: true,
       rules: [
+        // support magic comments in commonjs (i.e. webpackIgnore for dynamic imports)
+        { parser: { commonjsMagicComments: true} },
         // Handle node_modules packages that contain sourcemaps
         shouldUseSourceMap && {
           enforce: 'pre',
