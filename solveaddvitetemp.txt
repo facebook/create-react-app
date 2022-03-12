@@ -1,0 +1,11 @@
+// Create vite project
+1. Create vite project from vue-ts template npm init vite@latest vite-vue-typescript-starter -- --template vue-ts
+2. Move contents of created folder into root of repo.
+
+$ mv vite-vue-typescript-starter/* vite-vue-typescript-starter/.gitignore .
+$ rmdir vite-vue-typescript-starter
+
+3. git add .
+4. git commit -m 'npm init vite@latest . -- --template vue-ts'
+
+// Links https://vitejs.dev/guide/#scaffolding-your-first-vite-project
