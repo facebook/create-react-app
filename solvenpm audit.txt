@@ -1,0 +1,12 @@
+
+Often times, this is related to package-lock.json messing. I would suggest to try to:
+
+1 - Delete your package-lock.json
+
+2 - Delete your node_modules folder
+
+3 - Try npm install again
+
+This used to fix several issues when adding new packages in my angular apps.
+
+Good luck!
