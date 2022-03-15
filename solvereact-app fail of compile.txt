@@ -1,0 +1,12 @@
+ // I have had the exact same errors when I created app using the create-react-app and setup the eslint for the application.
+
+// The eslint errors were showing up in the browser rather than in the console.
+
+// Once, I debugged all the dependencies. It seems that the react-scripts was causing the lint errors for me.
+
+// The newest version of the react-scripts:"4.0.0" may have some breaking changes which could be causing the eslint to throw the errors in the browser.
+
+Solution:
+This issue has been fixed in the react-scipts:"4.0.3" but, the eslint errors present in the project are not converted to warnings by default. You have to create an .env file which should contain a ESLINT_NO_DEV_ERRORS=true flag. Due to this flag, you will receive the eslint errors as warnings and not as errors in the development.
+
+This flag is ignored during production and when they are any git hooks running, which will in turn cause an error when you are trying to commit the code with an eslint error in it.
