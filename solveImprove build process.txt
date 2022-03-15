@@ -1,0 +1,24 @@
+// actually establishing a build process when there isn't much of one in place to begin with.
+
+Currently, that's pretty much the situation my group faces. We do web-app development primarily (but no desktop development at this time). Software deployments are ugly and unwieldy even with our modest apps, and we've had far too many issues crop up in the two years I have been a part of this team (and company). It's past time to do something about that, and the upshot is that we'll be able to kill two Joel Test birds with one stone (daily builds and one-step builds, neither of which exists in any form whatsoever).
+
+What I'm after here is some general insight on the kinds of things I need to be doing or thinking about, from people who have been in software development for longer than I have and also have bigger brains. I'm confident that will be most of the people currently posting in the beta.
+
+Relevant Tools: Visual Build Source Safe 6.0 (I know, but I can't do anything about whether or not we use Source Safe at this time. That might be the next battle I fight.)
+
+Tentatively, I've got a Visual Build project that does this:
+
+1.Get source and place in local directory, including necessary DLLs needed for project.
+
+2.Get config files and rename as needed (we're storing them in a special sub directory that isn't part of the actual application, and they are named according to use).
+
+3.Build using Visual Studio
+
+4.Precompile using command line, copying into what will be a "build" directory
+
+5.Copy to destination.
+
+6.Get any necessary additional resources - mostly things like documents, images, and reports that are associated with the project (and put into directory from step 5). There's a lot of this stuff, and I didn't want to include it previously. However, I'm going to only copy changed items, so maybe it's irrelevant. I wasn't sure whether I really wanted to include this stuff in earlier steps.
+I still need to coax some logging out of Visual Build for all of this, but I'm not at a point where I need to do that yet.
+
+Does anyone have any advice or suggestions to make? We're not currently using a Deployment Project, I'll note. It would remove some of the steps necessary in this build I presume (like web.config swapping).
