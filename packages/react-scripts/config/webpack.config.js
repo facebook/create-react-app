@@ -38,6 +38,8 @@ const getCacheIdentifier = require('react-dev-utils/getCacheIdentifier');
 // @remove-on-eject-end
 const postcssNormalize = require('postcss-normalize');
 
+const isSsr = require('../scripts/utils/isSsr');
+
 // thread-loader options
 const jsWorkerPool = {
   // name of the pool
@@ -54,7 +56,7 @@ const jsWorkerPool = {
 const appPackageJson = require(paths.appPackageJson);
 
 const camelCase = require('lodash/camelCase');
-const bpkReactScriptsConfig = appPackageJson['backpack-react-scripts'] || {};
+const LoadablePlugin = require('@loadable/webpack-plugin');
 
 // Source maps are resource heavy and can cause out of memory issue for large source files.
 const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false';
@@ -85,9 +87,9 @@ const useTypeScript = fs.existsSync(paths.appTsConfig);
 const swSrc = paths.swSrc;
 
 // style files regexes
-const cssRegex = /\.css$/;
+// const cssRegex = /\.css$/;
 const cssModuleRegex = /\.module\.css$/;
-const sassRegex = /\.(scss|sass)$/;
+// const sassRegex = /\.(scss|sass)$/;
 const sassModuleRegex = /\.module\.(scss|sass)$/;
 
 const hasJsxRuntime = (() => {
@@ -102,11 +104,6 @@ const hasJsxRuntime = (() => {
     return false;
   }
 })();
-
-// Backpack / saddlebag node module regexes
-const backpackModulesRegex = /node_modules[\\/]bpk-/;
-const saddlebagModulesRegex = /node_modules[\\/]saddlebag-/;
-const scopedBackpackModulesRegex = /node_modules[\\/]@skyscanner[\\/]bpk-/;
 
 // This is the production and development configuration.
 // It is focused on developer experience, fast rebuilds, and a minimal bundle.
@@ -247,7 +244,7 @@ module.exports = function (webpackEnv) {
     output: {
       ...require('../backpack-addons/crossOriginLoading'),  // #backpack-addon crossOriginLoading
       // The build folder.
-      path: isEnvProduction ? paths.appBuild : undefined,
+      path: isSsr() ? paths.appBuildWeb : paths.appBuild,
       // Add /* filename */ comments to generated require()s in the output.
       pathinfo: isEnvDevelopment,
       // There will be one main bundle, and one file per asynchronous chunk.
@@ -400,6 +397,7 @@ module.exports = function (webpackEnv) {
       ],
     },
     module: {
+      noParse: /iconv-loader\.js$/, // https://github.com/webpack/webpack/issues/3078#issuecomment-400697407
       strictExportPresence: true,
       rules: [
         // Disable require.ensure as it's not a standard language feature.
@@ -471,6 +469,7 @@ module.exports = function (webpackEnv) {
                 ),
                 // @remove-on-eject-end
                 plugins: [
+                  require.resolve('@loadable/babel-plugin'),
                   [
                     require.resolve('babel-plugin-named-asset-import'),
                     {
@@ -709,6 +708,7 @@ module.exports = function (webpackEnv) {
       ],
     },
     plugins: [
+      new LoadablePlugin(),
       // Generates an `index.html` file with the <script> injected.
       new HtmlWebpackPlugin(
         Object.assign(
@@ -775,7 +775,10 @@ module.exports = function (webpackEnv) {
       // It is absolutely essential that NODE_ENV is set to production
       // during a production build.
       // Otherwise React will be compiled in the very slow development mode.
-      new webpack.DefinePlugin(env.stringified),
+      new webpack.DefinePlugin({
+        ...env.stringified,
+        'typeof window': '"object"',
+      }),
       // This is necessary to emit hot updates (CSS and Fast Refresh):
       isEnvDevelopment && new webpack.HotModuleReplacementPlugin(),
       // Experimental hot reloading for React .

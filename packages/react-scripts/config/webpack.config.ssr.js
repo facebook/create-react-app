@@ -8,6 +8,10 @@
 // @remove-on-eject-end
 'use strict';
 
+// We need to disable React Refresh, because we don't use a DevServer for SSR
+// builds. The least intrusive way to do that is to use CRA's FAST_REFRESH option.
+process.env.FAST_REFRESH = 'false';
+
 const fs = require('fs');
 const path = require('path');
 const webpack = require('webpack');
@@ -17,11 +21,11 @@ const PnpWebpackPlugin = require('pnp-webpack-plugin');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 // const InlineChunkHtmlPlugin = require('react-dev-utils/InlineChunkHtmlPlugin');
 // const TerserPlugin = require('terser-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+// const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 // const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 // const safePostCssParser = require('postcss-safe-parser');
 // const ManifestPlugin = require('webpack-manifest-plugin');
-// const SubresourceIntegrityPlugin = require('webpack-subresource-integrity');
+const SubresourceIntegrityPlugin = require('webpack-subresource-integrity');
 // const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 // const WorkboxWebpackPlugin = require('workbox-webpack-plugin');
 const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
@@ -39,6 +43,11 @@ const getCacheIdentifier = require('react-dev-utils/getCacheIdentifier');
 // @remove-on-eject-end
 const postcssNormalize = require('postcss-normalize');
 
+const isSsr = require('../scripts/utils/isSsr');
+
+// Just for the case that `ssr.js` exists in `src` folder but not in SSR mode
+const needBuildSsr = !isSsr() && fs.existsSync(paths.appSsrJs);
+
 // // thread-loader options
 // const jsWorkerPool = {
 //   // name of the pool
@@ -52,14 +61,10 @@ const postcssNormalize = require('postcss-normalize');
 //   workerParallelJobs: 50,
 // };
 
-const appPackageJson = require(paths.appPackageJson);
+// const appPackageJson = require(paths.appPackageJson);
 
 // const camelCase = require('lodash/camelCase');
-const bpkReactScriptsConfig = appPackageJson['backpack-react-scripts'] || {};
-
-// const crossOriginLoading = bpkReactScriptsConfig.crossOriginLoading || false;
-// const sriEnabled = bpkReactScriptsConfig.sriEnabled || false;
-// const supressCssWarnings = bpkReactScriptsConfig.ignoreCssWarnings || false;
+const LoadablePlugin = require('@loadable/webpack-plugin');
 
 // Source maps are resource heavy and can cause out of memory issue for large source files.
 const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false';
@@ -86,9 +91,9 @@ const useTypeScript = fs.existsSync(paths.appTsConfig);
 // const swSrc = paths.swSrc;
 
 // style files regexes
-const cssRegex = /\.css$/;
+// const cssRegex = /\.css$/;
 const cssModuleRegex = /\.module\.css$/;
-const sassRegex = /\.(scss|sass)$/;
+// const sassRegex = /\.(scss|sass)$/;
 const sassModuleRegex = /\.module\.(scss|sass)$/;
 
 const hasJsxRuntime = (() => {
@@ -103,11 +108,6 @@ const hasJsxRuntime = (() => {
     return false;
   }
 })();
-
-// Backpack / saddlebag node module regexes
-const backpackModulesRegex = /node_modules[\\/]bpk-/;
-const saddlebagModulesRegex = /node_modules[\\/]saddlebag-/;
-const scopedBackpackModulesRegex = /node_modules[\\/]@skyscanner[\\/]bpk-/;
 
 // This is the production and development configuration.
 // It is focused on developer experience, fast rebuilds, and a minimal bundle.
@@ -139,15 +139,15 @@ module.exports = function (webpackEnv) {
     preProcessorOptions = {}
   ) => {
     const loaders = [
-      isEnvDevelopment && require.resolve('style-loader'),
-      isEnvProduction && {
-        loader: MiniCssExtractPlugin.loader,
-        // css is located in `static/css`, use '../../' to locate index.html folder
-        // in production `paths.publicUrlOrPath` can be a relative path
-        options: paths.publicUrlOrPath.startsWith('.')
-          ? { publicPath: '../../' }
-          : {},
-      },
+      // isEnvDevelopment && require.resolve('style-loader'),
+      // isEnvProduction && {
+      //   loader: MiniCssExtractPlugin.loader,
+      //   // css is located in `static/css`, use '../../' to locate index.html folder
+      //   // in production `paths.publicUrlOrPath` can be a relative path
+      //   options: paths.publicUrlOrPath.startsWith('.')
+      //     ? { publicPath: '../../' }
+      //     : {},
+      // },
       {
         loader: require.resolve('css-loader'),
         options: cssOptions,
@@ -238,7 +238,7 @@ module.exports = function (webpackEnv) {
             //
             // When using the experimental react-refresh integration,
             // the webpack plugin takes care of injecting the dev client for us.
-            webpackDevClientEntry,
+            // webpackDevClientEntry,
             // Finally, this is your app's code:
             // paths.appIndexJs,
             paths.appSsrJs,
@@ -248,9 +248,9 @@ module.exports = function (webpackEnv) {
           ]
         : paths.appSsrJs,
     output: {
-      // crossOriginLoading: sriEnabled ? 'anonymous' : crossOriginLoading,
+      ...require('../backpack-addons/crossOriginLoading'),  // #backpack-addon crossOriginLoading
       // The build folder.
-      path: isEnvProduction ? paths.appBuild : undefined,
+      path: needBuildSsr ? paths.appBuild : paths.appBuildSsr,
       // Add /* filename */ comments to generated require()s in the output.
       pathinfo: isEnvDevelopment,
       // There will be one main bundle, and one file per asynchronous chunk.
@@ -260,12 +260,12 @@ module.exports = function (webpackEnv) {
       //   : isEnvDevelopment && 'static/js/bundle.js',
       // TODO: remove this when upgrading to webpack 5
       futureEmitAssets: true,
-      filename: 'ssr.js',
+      filename: needBuildSsr ? 'ssr.js' : 'ssr.[hash:8].js',
       libraryTarget: 'commonjs2',
       // There are also additional JS chunk files if you use code splitting.
       chunkFilename: isEnvProduction
         ? 'static/js/[name].[contenthash:8].chunk.js'
-        : isEnvDevelopment && 'static/js/[name].chunk.js',
+        : isEnvDevelopment && 'static/js/[name].[chunkhash:8].chunk.js',
       // webpack uses `publicPath` to determine where the app is being served from.
       // It requires a trailing slash, or the file assets will get an incorrect path.
       // We inferred the "public path" (such as / or /my-project) from homepage.
@@ -436,6 +436,7 @@ module.exports = function (webpackEnv) {
       ],
     },
     module: {
+      noParse: /iconv-loader\.js$/, // https://github.com/webpack/webpack/issues/3078#issuecomment-400697407
       strictExportPresence: true,
       rules: [
         // Disable require.ensure as it's not a standard language feature.
@@ -507,6 +508,7 @@ module.exports = function (webpackEnv) {
                 ),
                 // @remove-on-eject-end
                 plugins: [
+                  require.resolve('@loadable/babel-plugin'),
                   [
                     require.resolve('babel-plugin-named-asset-import'),
                     {
@@ -657,6 +659,9 @@ module.exports = function (webpackEnv) {
                 sourceMap: isEnvProduction
                   ? shouldUseSourceMap
                   : isEnvDevelopment,
+                modules: {
+                  exportOnlyLocals: true,
+                },
               }),
               // Don't consider CSS imports dead code even if the
               // containing package claims to have no side effects.
@@ -674,6 +679,7 @@ module.exports = function (webpackEnv) {
                   ? shouldUseSourceMap
                   : isEnvDevelopment,
                 modules: {
+                  exportOnlyLocals: true,
                   getLocalIdent: require('../backpack-addons/cssModules').getCSSModuleLocalIdent(), // #backpack-addons cssModulesEnabled
                 },
               }),
@@ -693,6 +699,9 @@ module.exports = function (webpackEnv) {
                   sourceMap: isEnvProduction
                     ? shouldUseSourceMap
                     : isEnvDevelopment,
+                  modules: {
+                    exportOnlyLocals: true,
+                  },
                 },
                 'sass-loader',
                 require('../backpack-addons/sassFunctions') // #backpack-addons sassFunctions
@@ -717,6 +726,7 @@ module.exports = function (webpackEnv) {
                     ? shouldUseSourceMap
                     : isEnvDevelopment,
                   modules: {
+                    exportOnlyLocals: true,
                     getLocalIdent: require('../backpack-addons/cssModules').getCSSModuleLocalIdent(), // #backpack-addons cssModulesEnabled
                   },
                 },
@@ -747,6 +757,7 @@ module.exports = function (webpackEnv) {
       ],
     },
     plugins: [
+      new LoadablePlugin(),
       // Generates an `index.html` file with the <script> injected.
       // new HtmlWebpackPlugin(
       //   Object.assign(
@@ -813,9 +824,12 @@ module.exports = function (webpackEnv) {
       // It is absolutely essential that NODE_ENV is set to production
       // during a production build.
       // Otherwise React will be compiled in the very slow development mode.
-      new webpack.DefinePlugin(env.stringified),
+      new webpack.DefinePlugin({
+        ...env.stringified,
+        'typeof window': '"undefined"',
+      }),
       // This is necessary to emit hot updates (CSS and Fast Refresh):
-      isEnvDevelopment && new webpack.HotModuleReplacementPlugin(),
+      // isEnvDevelopment && new webpack.HotModuleReplacementPlugin(),
       // Experimental hot reloading for React .
       // https://github.com/facebook/react/tree/master/packages/react-refresh
       isEnvDevelopment &&
@@ -841,15 +855,15 @@ module.exports = function (webpackEnv) {
       // See https://github.com/facebook/create-react-app/issues/186
       isEnvDevelopment &&
         new WatchMissingNodeModulesPlugin(paths.appNodeModules),
-      isEnvProduction &&
-        new MiniCssExtractPlugin({
-          // Options similar to the same options in webpackOptions.output
-          // both options are optional
-          // filename: 'static/css/[name].[contenthash:8].css',
-          filename: 'ssr.css',
-          // chunkFilename: 'static/css/[name].[contenthash:8].chunk.css',
-          // ignoreOrder: supressCssWarnings,
-        }),
+      // isEnvProduction &&
+      //   new MiniCssExtractPlugin({
+      //     // Options similar to the same options in webpackOptions.output
+      //     // both options are optional
+      //     // filename: 'static/css/[name].[contenthash:8].css',
+      //     filename: 'ssr.css',
+      //     // chunkFilename: 'static/css/[name].[contenthash:8].chunk.css',
+      //     // ignoreOrder: supressCssWarnings,
+      //   }),
       // Generate an asset manifest file with the following content:
       // - "files" key: Mapping of all asset filenames to their corresponding
       //   output file so that tools can pick it up without having to parse
@@ -878,11 +892,7 @@ module.exports = function (webpackEnv) {
       // https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity
       // This is a security feature that enables browsers to verify that resources
       // they fetch (for example, from a CDN) are delivered without unexpected manipulation.
-      // sriEnabled &&
-      //   new SubresourceIntegrityPlugin({
-      //     enabled: true,
-      //     hashFuncNames: ['sha384'],
-      //   }),
+      require('../backpack-addons/sriEnabled')(), // #backpack-addon sriEnabled
       // Moment.js is an extremely popular library that bundles large locale files
       // by default due to how webpack interprets its code. This is a practical
       // solution that requires the user to opt into importing specific locales.

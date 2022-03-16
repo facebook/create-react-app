@@ -45,6 +45,8 @@ const printHostingInstructions = require('react-dev-utils/printHostingInstructio
 const FileSizeReporter = require('react-dev-utils/FileSizeReporter');
 const printBuildError = require('react-dev-utils/printBuildError');
 
+const isSsr = require('../scripts/utils/isSsr');
+
 const measureFileSizesBeforeBuild =
   FileSizeReporter.measureFileSizesBeforeBuild;
 const printFileSizesAfterBuild = FileSizeReporter.printFileSizesAfterBuild;
@@ -70,7 +72,12 @@ const ssrConfig = ssrConfigFactory('production');
 
 // If an SSR entry file is found, lets make use of webpacks multi-compiler
 // functionality to bundle it in parallel
-const compileSsr = fs.existsSync(paths.appSsrJs);
+const compileSsr = isSsr();
+
+// Just for the case that `ssr.js` exists in `src` folder but not in SSR mode
+const needBuildSsr = !compileSsr && fs.existsSync(paths.appSsrJs);
+
+const buildPath = compileSsr ? paths.appBuildWeb : paths.appBuild;
 
 // We require that you explicitly set browsers and do not fall back to
 // browserslist defaults.
@@ -79,12 +86,12 @@ checkBrowsers(paths.appPath, isInteractive)
   .then(() => {
     // First, read the current file sizes in build directory.
     // This lets us display how much they changed later.
-    return measureFileSizesBeforeBuild(paths.appBuild);
+    return measureFileSizesBeforeBuild(buildPath);
   })
   .then(previousFileSizes => {
     // Remove all content but keep the directory so that
     // if you're in it, you don't end up in Trash
-    fs.emptyDirSync(paths.appBuild);
+    fs.emptyDirSync(buildPath);
     // Merge with the public folder
     copyPublicFolder();
     // Start the webpack build
@@ -96,15 +103,15 @@ checkBrowsers(paths.appPath, isInteractive)
       // with upstream a pain. The rest of the code in this function relies on
       // `config` and `stats` being an object as opposed to an array (from
       // webpack's multi-compiler feature.)
-      if (compileSsr) {
+      if (compileSsr || needBuildSsr) {
         stats = stats.stats[0];
       }
 
       // The SSR config still omits a css file - it's not yet possible to omit
       // file output in ExtractTextPlugin. This is not needed so lets clean
       // it up to avoid confusion.
-      const ssrCssPath = path.join(paths.appBuild, 'ssr.css');
-      const ssrCssMapPath = path.join(paths.appBuild, 'ssr.css.map');
+      const ssrCssPath = path.join(needBuildSsr ? paths.appBuild : paths.appBuildSsr, 'ssr.css');
+      const ssrCssMapPath = path.join(needBuildSsr ? paths.appBuild : paths.appBuildSsr, 'ssr.css.map');
       if (fs.existsSync(ssrCssPath)) {
         fs.unlinkSync(ssrCssPath);
       }
@@ -133,7 +140,7 @@ checkBrowsers(paths.appPath, isInteractive)
       printFileSizesAfterBuild(
         stats,
         previousFileSizes,
-        paths.appBuild,
+        buildPath,
         WARN_AFTER_BUNDLE_GZIP_SIZE,
         WARN_AFTER_CHUNK_GZIP_SIZE
       );
@@ -142,7 +149,7 @@ checkBrowsers(paths.appPath, isInteractive)
       const appPackage = require(paths.appPackageJson);
       const publicUrl = paths.publicUrlOrPath;
       const publicPath = config.output.publicPath;
-      const buildFolder = path.relative(process.cwd(), paths.appBuild);
+      const buildFolder = path.relative(process.cwd(), buildPath);
       printHostingInstructions(
         appPackage,
         publicUrl,
@@ -180,7 +187,7 @@ function build(previousFileSizes) {
 
   let finalConfig = config;
 
-  if (compileSsr) {
+  if (compileSsr || needBuildSsr) {
     finalConfig = [config, ssrConfig];
   }
 
@@ -243,7 +250,7 @@ function build(previousFileSizes) {
 
       if (writeStatsJson) {
         return bfj
-          .write(paths.appBuild + '/bundle-stats.json', stats.toJson())
+          .write(buildPath + '/bundle-stats.json', stats.toJson())
           .then(() => resolve(resolveArgs))
           .catch(error => reject(new Error(error)));
       }
@@ -254,7 +261,7 @@ function build(previousFileSizes) {
 }
 
 function copyPublicFolder() {
-  fs.copySync(paths.appPublic, paths.appBuild, {
+  fs.copySync(paths.appPublic, buildPath, {
     dereference: true,
     filter: file => file !== paths.appHtml,
   });

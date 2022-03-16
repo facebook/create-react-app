@@ -6,6 +6,16 @@
  * LICENSE file in the root directory of this source tree.
  */
 // @remove-on-eject-end
+
+// @brs-begin
+/**
+ * This script is a copy of start.js with an SSR compiler included. It runs
+ * both the `web` and `ssr` builds at once, serving the `web` build exactly as
+ * start does (with a WebpackDevServer), and spawning the `ssr` build in a
+ * forked process.
+ */
+// @brs-end
+
 'use strict';
 
 // Do this as the first thing so that any code reading it knows the right env.
@@ -39,7 +49,6 @@ const clearConsole = require('react-dev-utils/clearConsole');
 const checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
 const {
   choosePort,
-  createCompiler,
   prepareProxy,
   prepareUrls,
 } = require('react-dev-utils/WebpackDevServerUtils');
@@ -53,9 +62,15 @@ const react = require(require.resolve('react', { paths: [paths.appPath] }));
 
 const env = getClientEnvironment(paths.publicUrlOrPath.slice(0, -1));
 
+// @brs-begin
 const statusFile = require('./utils/statusFile');
-
-const isSsr = require('./utils/isSsr');
+const { createCustomCompiler } = require('./utils/customWebpackUtils');
+const {
+  MultiCompilerUi,
+  WebCompilerUi,
+  ProcessMessageCompilerUi,
+} = require('./utils/MultiCompilerUi');
+// @brs-end
 
 const useYarn = fs.existsSync(paths.yarnLockFile);
 const isInteractive = process.stdout.isTTY;
@@ -86,10 +101,13 @@ if (process.env.HOST) {
   console.log();
 }
 
+// @brs-begin
+const ui = new MultiCompilerUi();
+// @brs-end
+
 // We require that you explicitly set browsers and do not fall back to
 // browserslist defaults.
 const { checkBrowsers } = require('react-dev-utils/browsersHelper');
-
 checkBrowsers(paths.appPath, isInteractive)
   .then(() => {
     // We attempt to use the default port but if it is busy, we offer the user to
@@ -120,8 +138,16 @@ checkBrowsers(paths.appPath, isInteractive)
       errors: errors =>
         devServer.sockWrite(devServer.sockets, 'errors', errors),
     };
-    // Create a webpack compiler that is configured with custom messages.
-    const compiler = createCompiler({
+
+    // @brs-begin
+    const webUi = new WebCompilerUi(
+      'web',
+      { color: 'bgBlue' },
+      { appName, urls, useYarn }
+    );
+    ui.register(webUi);
+
+    const compiler = createCustomCompiler(webUi, {
       appName,
       config,
       devSocket,
@@ -131,10 +157,9 @@ checkBrowsers(paths.appPath, isInteractive)
       tscCompileOnError,
       webpack,
     });
-    
-    // Just in case still want to run CSR in SSR mode, build path needs to be the same.
-    const buildPath = isSsr() ? paths.appBuildWeb : paths.appBuild;
-    statusFile.init(compiler, buildPath);
+
+    statusFile.init(compiler, paths.appBuildWeb);
+    // @brs-end
 
     // Load proxy config
     const proxySetting = require(paths.appPackageJson).proxy;
@@ -173,12 +198,39 @@ checkBrowsers(paths.appPath, isInteractive)
 
       console.log(chalk.cyan('Starting the development server...\n'));
       openBrowser(urls.localUrlForBrowser);
+
+      // @brs-begin
+      // This method will clear the console, so we put it after CRA has logged the messages above.
+      ui.start();
+      // @brs-end
     });
+
+    // @brs-begin
+    const { fork } = require('child_process');
+    const { join } = require('path');
+
+    // We do this in a background process for performance - multicore, yo.
+    const ssr = fork(join(__dirname, './utils/forkSsr'));
+
+    const ssrUi = new ProcessMessageCompilerUi(ssr, 'ssr', {
+      color: 'bgMagenta',
+    });
+    ui.register(ssrUi);
+
+    ssr.on('exit', code => {
+      ssrUi.log(chalk.red(`Fatal! Process ended with code ${code}`));
+      devServer.close();
+      process.exit();
+    });
+    // @brs-end
 
     ['SIGINT', 'SIGTERM'].forEach(function (sig) {
       process.on(sig, function () {
         devServer.close();
+        // @brs-begin
+        ssr.kill();
         process.exit();
+        // @brs-end
       });
     });
 
@@ -186,7 +238,10 @@ checkBrowsers(paths.appPath, isInteractive)
       // Gracefully exit when stdin ends
       process.stdin.on('end', function () {
         devServer.close();
+        // @brs-begin
+        ssr.kill();
         process.exit();
+        // @brs-end
       });
     }
   })

@@ -27,7 +27,9 @@
   "types": "./lib/react-app.d.ts",
   "dependencies": {
     "@babel/core": "7.12.3",
-    "@pmmmwh/react-refresh-webpack-plugin": "0.4.3",
+    "@loadable/babel-plugin": "^5.13.2",
+    "@loadable/webpack-plugin": "^5.15.2",
+    "@pmmmwh/react-refresh-webpack-plugin": "^0.5.4",
     "@svgr/webpack": "5.5.0",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^26.6.0",
@@ -51,6 +53,7 @@
     "jest-watch-typeahead": "0.6.1",
     "lodash": "^4.17.20",
     "mini-css-extract-plugin": "0.11.3",
+    "mkdirp": "^1.0.3",
     "node-sass": "^6.0.1",
     "optimize-css-assets-webpack-plugin": "5.0.4",
     "pnp-webpack-plugin": "1.6.4",
@@ -62,7 +65,7 @@
     "prompts": "2.4.0",
     "react-app-polyfill": "^2.0.0",
     "react-dev-utils": "^11.0.3",
-    "react-refresh": "^0.8.3",
+    "react-refresh": "^0.11.0",
     "resolve": "1.18.1",
     "resolve-url-loader": "^3.1.2",
     "sass-loader": "^10.2.1",
@@ -79,8 +82,8 @@
     "workbox-webpack-plugin": "5.1.4"
   },
   "devDependencies": {
-    "react": "16.2.0",
-    "react-dom": "16.2.0"
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
   },
   "optionalDependencies": {
     "fsevents": "^2.1.3"

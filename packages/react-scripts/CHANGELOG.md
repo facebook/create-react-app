@@ -1,5 +1,29 @@
 # `backpack-react-scripts` Change Log
 
+## 10.0.0
+
+### Features
+
+- Added support for loadable components.
+- Added `start-ssr` command, to produce Node.js-compatible watched output. Several changes to SSR Webpack config to support.
+- Defined `typeof window` for browser and SSR environments, enabling dead code elimination (https://webpack.js.org/plugins/define-plugin/#usage)
+- SSR output always includes hash as part of filename
+- `web` and `ssr` subpaths for each build's output
+- Output build 'status files' (`.build-status`, one for web, one for SSR), which can be watched by a Node.js server to know when builds are in progress or completed.
+- Enabled SRI for SSR builds and support loadable SRI hashes
+
+### Fixed
+
+- Fixed an issue with writing stats json for web bundles due to path updates
+
+### Breaking
+
+- Removed `hard-source-webpack-plugin` (So `USE_HARD_SOURCE_WEBPACK_PLUGIN` environment variable can't be used any more)
+- Added `build-ssr` command, to indicate that the build is running in SSR mode, `3` steps are required for SSR mode:
+  - Add `ssrEnabled` and set it to `true` (The default is `false`) in `backpack-react-scripts` configuration in `package.json`
+  - Add `ssr.js` file to `src` folder - Keep this as the same as before
+  - Change `build` command to `build-ssr` command - You should know what you are doing is in SSR mode
+
 ## 9.6.1
 
 - Extract the existing custom features from the BRS fork branch

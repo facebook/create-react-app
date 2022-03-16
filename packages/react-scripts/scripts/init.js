@@ -192,7 +192,9 @@ module.exports = function (
   appPackage.scripts = Object.assign(
     {
       start: 'react-scripts start',
+      'start-ssr': 'react-scripts start-ssr',
       build: 'react-scripts build',
+      'build-ssr': 'react-scripts build-ssr',
       test: 'react-scripts test',
       eject: 'react-scripts eject',
     },
@@ -316,7 +318,7 @@ module.exports = function (
   // Install react and react-dom for backward compatibility with old CRA cli
   // which doesn't install react and react-dom along with react-scripts
   if (!isReactInstalled(appPackage)) {
-    args = args.concat(['react@16.2.0', 'react-dom@16.2.0']);
+    args = args.concat(['react@17.0.2', 'react-dom@17.0.2']);
   }
 
   // Install template dependencies, and react and react-dom if missing.
