@@ -136,6 +136,10 @@ module.exports = function (webpackEnv) {
 
   const shouldUseReactRefresh = env.raw.FAST_REFRESH;
 
+  if (env.raw.IMJS_URL_PREFIX === undefined) {
+    env.stringified["process.env"].IMJS_URL_PREFIX = `(globalThis.IMJS_URL_PREFIX ?? "")`;
+  }
+
   // common function to get style loaders
   const getStyleLoaders = (cssOptions, preProcessor) => {
     const loaders = [
