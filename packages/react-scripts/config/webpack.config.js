@@ -50,7 +50,7 @@ const {
   BanBackendImportsPlugin,
   CopyBentleyStaticResourcesPlugin,
   CopyStaticAssetsPlugin,
-  IModeljsLibraryExportsPlugin
+  IModeljsLibraryExportsPlugin,
 } = require('@bentley/webpack-tools-core');
 
 // iModel.js change to support using the fast-sass-loader instead of sass-loader.
@@ -137,7 +137,9 @@ module.exports = function (webpackEnv) {
   const shouldUseReactRefresh = env.raw.FAST_REFRESH;
 
   if (env.raw.IMJS_URL_PREFIX === undefined) {
-    env.stringified["process.env"].IMJS_URL_PREFIX = `(globalThis.IMJS_URL_PREFIX ?? "")`;
+    env.stringified[
+      'process.env'
+    ].IMJS_URL_PREFIX = `(globalThis.IMJS_URL_PREFIX ? globalThis.IMJS_URL_PREFIX : "")`;
   }
 
   // common function to get style loaders
@@ -479,7 +481,7 @@ module.exports = function (webpackEnv) {
       rules: [
         // Disable require.ensure as it's not a standard language feature.
         // Add support for magic comments in commonjs modules (i.e. webpackIgnore for dynamic imports)
-        { parser: { requireEnsure: false,  commonjsMagicComments: true} },
+        { parser: { requireEnsure: false, commonjsMagicComments: true } },
         {
           // iModel.js Changes
           // always use source-map-loader and use strip-assert-loader on production builds;
