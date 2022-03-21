@@ -478,7 +478,8 @@ module.exports = function (webpackEnv) {
       strictExportPresence: true,
       rules: [
         // Disable require.ensure as it's not a standard language feature.
-        { parser: { requireEnsure: false } },
+        // Add support for magic comments in commonjs modules (i.e. webpackIgnore for dynamic imports)
+        { parser: { requireEnsure: false,  commonjsMagicComments: true} },
         {
           // iModel.js Changes
           // always use source-map-loader and use strip-assert-loader on production builds;
