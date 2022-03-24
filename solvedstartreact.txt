@@ -1,0 +1,8 @@
+53
+
+In my case, "create-react-app" was not installed. to install run this command
+
+ npm install -g create-react-app
+Once installation successful, try running
+
+npx create-react-app hello-world
