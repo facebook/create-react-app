@@ -1,0 +1,1 @@
+Try using <img src={process.env.PUBLIC_URL + "/barbell.svg"}> if your images are in a public folder
