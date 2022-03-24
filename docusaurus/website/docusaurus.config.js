@@ -43,8 +43,8 @@ const siteConfig = {
       isCloseable: false,
     },
     algolia: {
-      appId: 'create-react-app',
-      apiKey: '3be60f4f8ffc24c75da84857d6323791',
+      appId: 'AUJYIQ70HN',
+      apiKey: '25243dbf9049cf036e87f64b361bd2b9',
       indexName: 'create-react-app',
     },
     navbar: {
@@ -88,8 +88,7 @@ const siteConfig = {
           items: [
             {
               label: 'Stack Overflow',
-              href:
-                'https://stackoverflow.com/questions/tagged/create-react-app',
+              href: 'https://stackoverflow.com/questions/tagged/create-react-app',
             },
             {
               label: 'GitHub Discussions',
@@ -101,8 +100,7 @@ const siteConfig = {
             },
             {
               label: 'Contributor Covenant',
-              href:
-                'https://www.contributor-covenant.org/version/1/4/code-of-conduct',
+              href: 'https://www.contributor-covenant.org/version/1/4/code-of-conduct',
             },
           ],
         },
