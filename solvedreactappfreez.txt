@@ -1,0 +1,13 @@
+I had this problem, mine got stuck at
+
+Creating a new React app in C:\project
+
+Installing packages. This might take a couple of minutes.
+Installing react, react-dom, and react-scripts...
+
+[  ................] \ fetchMetadata: sill resolveWithNewModule react-is@4.0.0
+The solution for me was to ensure npm is up to date by running:
+
+npm install npm@latest -g
+
+After this, create-react-app worked correctly.
