@@ -1,0 +1,12 @@
+I don't have a typescript version but have you tried gulp-remove-code? You can surround your JavaScript with some comments to remove whatever code you want when running your production build. This is from the above linked page:
+
+var removeCode = require('gulp-remove-code');
+
+gulp.src('./src/file.js')
+  .pipe(removeCode({ production: true }))
+  .pipe(gulp.dest('./dist'))
+
+
+//removeIf(production) 
+value = JSON.stringify({key: 'value'}, null, 2);
+//endRemoveIf(production) 
