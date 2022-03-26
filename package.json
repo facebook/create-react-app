@@ -21,7 +21,7 @@
     "compile:lockfile": "node tasks/compile-lockfile.js"
   },
   "devDependencies": {
-    "@testing-library/jest-dom": "^5.16.2",
+    "@testing-library/jest-dom": "^5.16.3",
     "@testing-library/react": "^12.1.4",
     "@testing-library/user-event": "^13.5.0",
     "alex": "^10.0.0",
@@ -37,7 +37,7 @@
     "lint-staged": "^12.3.7",
     "meow": "^10.1.2",
     "multimatch": "^6.0.0",
-    "prettier": "^2.6.0",
+    "prettier": "^2.6.1",
     "puppeteer": "^13.5.1",
     "strip-ansi": "^7.0.1",
     "svg-term-cli": "^2.1.1",
