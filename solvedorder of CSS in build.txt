@@ -1,0 +1,14 @@
+
+
+I believe there is no answer to your question. If you google for 'wrong css order' you may found github issues for webpack older than 2 years. Like that one https://github.com/webpack-contrib/extract-text-webpack-plugin/issues/548 and there are many others.
+
+I have solved this by combining styles into one file. I use scss so did something like:
+
+// main.scss
+
+@import 'globals';
+@import 'responsive';
+
+and in js
+
+import main.scss
