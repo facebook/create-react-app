@@ -1,0 +1,3 @@
+The quick fix I said in my comment, using --watchAll instead, eg: react-scripts test --coverage --watchAll.
+
+Just for future reference, I think ideally we should be using --watch, which would only run on changed files, but it gave me the same trouble. I think it's related to this issue '--coverage --watch' should calculate coverage for all files at first iteration and also this issue No coverage when running in watch mode. I'm not sure why it worked for some people and not you, presumably something to do with Git and staging of files.
