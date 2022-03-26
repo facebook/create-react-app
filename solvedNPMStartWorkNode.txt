@@ -1,0 +1,7 @@
+
+
+You can run any one of the below mentioned commands to start the node server for your reactJs application:
+
+ npm run-script start
+ npm run start
+ npm start
