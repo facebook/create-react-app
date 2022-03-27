@@ -329,7 +329,7 @@ module.exports = function (
     }
   }
 
-  if (args.find(arg => arg.includes('typescript'))) {
+  if (process.env.SKIP_TSCONFIG_CHECK !== 'true' && args.find(arg => arg.includes('typescript'))) {
     console.log();
     verifyTypeScriptSetup();
   }
