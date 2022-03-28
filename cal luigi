@@ -1,0 +1,89 @@
+da pyzbar.pyzbar importa la decodifica
+importa cv2
+importa zlib
+base di importazione45
+importa cbor2
+da cose.messages importa CoseMessage
+da cose.headers import Algorithm, KID
+importa json
+da urllib.request import urlopen
+# Archivio Lettura
+nomefile = "test.png"
+img = cv2.imread(nome file)
+
+# Conversione in scala di grigi
+gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+
+# Lettura del QR Code
+decodificato = decodifica(gray_img)
+
+# Rimozione dei primi 4 byte (intestazione)
+carico utile = decodificato[0].data[4:]
+stampa (carico utile)
+b'6BFOXN%TS3DH0YOJ58S S-W5HDC *M0II5XHC9B5G2+$N IOP-IA%NFQGRJPC%OQHIZC4.OI1RM8ZA.A5:S9MKN4NN3F85QNCY0O%0VZ001HOC9JU0D0HT0HB2PL/IB*09B9LW4T*8+DCMH0LDK2%0K:XFE7 0L0HD + 9E / HY + 4J6TH48S% 4K.GJ2PT3QY: GQ3TE2I + -CPHN6D7LLK * 2HG% 89UV-0LZ 2ZJJ524-LH / CJTK96L6SR9MU9DHGZ% P WUQRENS431T1XCNCF + 47AY0-IFO0500TGPN8F5G.41Q2E4T8ALW.INSV $ 07UV5SR + BNQHNML7 / KD3TU 4V * CAT3ZGLQMI / XI% ZJNSBBXK2 :UG%UJMI:TU+MMPZ5$/PMX19UE:-PSR3/$NU44CBE6DQ3D7B0FBOFX0DV2DGMB$YPF62I$60/F$Z2I6IFX21XNI-LM%3/DF/U6Z9FEOJVRLVW6K$UG+BKK57:1+D10%4K83F+1VWD1NE'
+decodificato = base45.b45decode(carico utile)
+decompresso = zlib.decompress(decodificato)
+stampa (decompresso)
+b'\xd2\x84M\xa2\x04H90\x17h\xcd\xda\x05\x13\x01&\xa0Y\x01\x01\xa4\x04\x1aa\x94\xe8\x98\x06\x1a`\xa7\x8c\ x88 \ x01bIT9 \ x01 \ x03 \ xa1 \ x01 \ xa4av \ x81 \ xaabdn \ x02bmamORG-100030215bvpj1119349007bdtj2021-04-10bcobITbcix & # 01ITE7300E1AB2A84C719004F103DCB1F70A 6bmplEU / 1/20 / 1528bisbITbsd \ x02btgi840539006cnam \ xa4cfntiDI <CAPRIObfniDi CapriocgntmMARILU <TERESAbgnnMaril \ xc3 \ XB9 Teresacvere1.0.0cdobj1977 -06-16X@\xa4\xee\x90\x16\xc1\xa7L\xcf\x9c\xaa\xb9\x05I-i\x8fi\x92\xa8\xfa0\xc2\r\xb6\x18\x0f\x06\ x04\x0cHp\xa8E\xbbK:\x1c\xe3\xf4\xedR\x9c\xc7\x8ef2%G\xd6&7\xc7J\xb1y\x19\xc0\xaaR\xa6\x14y^\x9e'
+cose = CoseMessage.decode(decompresso)
+stampare (cose)
+<COSE_Sign1: [{'BAMBINO': b'90\x17h\xcd\xda\x05\x13', 'Algoritmo': 'Es256'}, {}, b'\xa4\x04\x1aa\x94' ... (257 B), b'\xa4\xee\x90\x16\xc1' ... (64 B)]>
+data = cbor2.loads(cose.payload)
+stampa (dati)
+{4: 1637148824,
+6: 1621593224,
+1: 'IT',
+-260: {1: {'v': [{'dn': 2,
+     'ma': 'ORG-100030215',
+     'vp': '1119349007',
+     'dt': '05-03-2023',
+     'co': 'IT',
+     'ci': '01ITE7300E1AB2A84C719004F103DCB1F70A#6',
+     'mp': 'EU/1/20/1528',
+     'è',
+     'sd': 2,
+     'tg': '840539006'}],
+   'nam': {'fnt': 'abbadessa<nicola,
+    'fn': 'abbadesa nicola',
+    'gnt': 'nicola<',
+    'gn': 'nicola'},
+   'ver': '1.0.0',
+   'dob': nicola}}}
+   sch = urlopen('https://raw.githubusercontent.com/ehn-dcc-development/ehn-dcc-schema/release/1.3.0/DCC.combined-schema.json')
+glb_schema = json.load(sch)
+
+def annotate(dati, schema, livello=0):
+    per chiave, valore in data.items():
+        descrizione = schema[chiave].get('titolo') o schema[chiave].get('descrizione') o chiave
+        descrizione, _, _ = descrizione.partizione(' - ')
+        se tipo(valore) è dict:
+            print(' '*livello, descrizione)
+            _, _, sch_ref = schema[key]['$ref'].rpartition('/')
+            annotate(value, glb_schema['$defs'][sch_ref]['properties'], level+1)
+        elif type(value) is list:
+            print(' '*livello, descrizione)
+            _, _, sch_ref = schema[key]['items']['$ref'].rpartition('/')
+            per v in valore:
+                annotate(v, glb_schema['$defs'][sch_ref]['proprietà'], livello+1)
+        else: # il valore è scalare
+            print(' '*livello, descrizione, ':', valore)
+
+data = cbor2.loads(cose.payload)
+annotate(data[-260][1], glb_schema['proprietà'])
+Numero di dose: 2da
+   Titolare dell'autorizzazione all'immissione in commercio: ORG-100030215
+   vaccino o profilassi: 1119349007
+   Data completa ISO8601: Data di vaccinazione: 03/03/2022
+   Paese di vaccinazione : IT
+   Identificatore certificato univoco: UVCI: 01ITE7300E1AB2A84C719004F103DCB1F70A#6
+   medicinale vaccinale : EU/1/20/1528
+   Emittente del certificato: IT
+   Serie totale di dosi: 2
+   malattia o agente mirato: 840539006
+Cognome(i), nome(i)
+   Cognome standardizzato: Abbadessa nicola
+   Cognome : Abbadessa nicola
+   Nome standardizzato: nicola
+   Nome : nicola
+Versione dello schema: 1.0.0
+Data di nascita: 19-06-1974
