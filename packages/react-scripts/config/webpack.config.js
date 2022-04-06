@@ -13,7 +13,6 @@ const path = require('path');
 const webpack = require('webpack');
 const resolve = require('resolve');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const InlineChunkHtmlPlugin = require('react-dev-utils/InlineChunkHtmlPlugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin').default;
@@ -166,6 +165,9 @@ module.exports = function (webpackEnv) {
         options: paths.publicUrlOrPath.startsWith('.')
           ? { publicPath: '../../' }
           : {},
+      },
+      {
+        loader: require.resolve('cache-loader'),
       },
       {
         loader: require.resolve('css-loader'),
@@ -613,9 +615,9 @@ module.exports = function (webpackEnv) {
       },
     ].filter(Boolean);
 
-  const getPlugins = ({ isRemoteEntry } = { isRemoteEntry: false }) =>
+  const getPlugins = ({ isRemoteEntry, webpackbar: { name, color } } = { isRemoteEntry: false }) =>
     [
-      new WebpackBar(),
+      new WebpackBar({ name, color }),
       // Generates an `index.html` file with the <script> injected.
       new HtmlWebpackPlugin(
         Object.assign(
@@ -672,10 +674,6 @@ module.exports = function (webpackEnv) {
         new ReactRefreshWebpackPlugin({
           overlay: false,
         }),
-      // Watcher doesn't work well if you mistype casing in a path so we use
-      // a plugin that prints an error when you attempt to do this.
-      // See https://github.com/facebook/create-react-app/issues/240
-      isEnvDevelopment && new CaseSensitivePathsPlugin(),
       isEnvProduction &&
         new MiniCssExtractPlugin({
           // Options similar to the same options in webpackOptions.output
@@ -1033,7 +1031,6 @@ module.exports = function (webpackEnv) {
       strictExportPresence: true,
       rules: getRules(),
     },
-    plugins: getPlugins(),
     // Turn off performance processing because we utilize
     // our own hints via the FileSizeReporter
     performance: false,
