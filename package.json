@@ -21,7 +21,7 @@
     "compile:lockfile": "node tasks/compile-lockfile.js"
   },
   "devDependencies": {
-    "@testing-library/jest-dom": "^5.16.3",
+    "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.0.0",
     "@testing-library/user-event": "^14.0.4",
     "alex": "^10.0.0",
