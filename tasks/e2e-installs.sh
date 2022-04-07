@@ -124,12 +124,12 @@ checkDependencies
 # ******************************************************************************
 
 cd "$temp_app_path"
-npx create-react-app test-app-version-number --scripts-version=backpack-react-scripts@8.0.0-beta.41a3a687f --template @skyscanner/backpack
+npx create-react-app test-app-version-number --scripts-version=@skyscanner/backpack-react-scripts@9.7.0-beta.5 --template @skyscanner/backpack
 cd test-app-version-number
 
 # Check corresponding scripts version is installed.
-exists node_modules/backpack-react-scripts
-grep '"version": "8.0.0-beta.41a3a687f"' node_modules/backpack-react-scripts/package.json
+exists node_modules/@skyscanner/backpack-react-scripts
+grep '"version": "9.7.0-beta.5"' node_modules/@skyscanner/backpack-react-scripts/package.json
 checkDependencies
 
 # ******************************************************************************
@@ -137,13 +137,13 @@ checkDependencies
 # ******************************************************************************
 
 cd "$temp_app_path"
-npx create-react-app test-use-npm-flag --use-npm --scripts-version=@skyscanner/backpack-react-scripts@9.1.0 --template @skyscanner/backpack
+npx create-react-app test-use-npm-flag --use-npm --scripts-version=@skyscanner/backpack-react-scripts@10.0.0 --template @skyscanner/backpack
 cd test-use-npm-flag
 
 # Check corresponding scripts version is installed.
 exists node_modules/@skyscanner/backpack-react-scripts
 [ ! -e "yarn.lock" ] && echo "yarn.lock correctly does not exist"
-grep '"version": "9.1.0"' node_modules/@skyscanner/backpack-react-scripts/package.json
+grep '"version": "10.0.0"' node_modules/@skyscanner/backpack-react-scripts/package.json
 checkDependencies
 
 # ******************************************************************************
