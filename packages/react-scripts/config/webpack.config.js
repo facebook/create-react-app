@@ -167,9 +167,6 @@ module.exports = function (webpackEnv) {
           : {},
       },
       {
-        loader: require.resolve('cache-loader'),
-      },
-      {
         loader: require.resolve('css-loader'),
         options: cssOptions,
       },
@@ -615,7 +612,9 @@ module.exports = function (webpackEnv) {
       },
     ].filter(Boolean);
 
-  const getPlugins = ({ isRemoteEntry, webpackbar: { name, color } } = { isRemoteEntry: false }) =>
+  const getPlugins = (
+    { isRemoteEntry, webpackbar: { name, color } } = { isRemoteEntry: false }
+  ) =>
     [
       new WebpackBar({ name, color }),
       // Generates an `index.html` file with the <script> injected.
