@@ -39,8 +39,7 @@ pluginTester.default({
         'import { ReactComponent as logo } from "@svgr/webpack?-svgo!logo.svg";',
     },
     svgMultipleImport: {
-      code:
-        'import logo, { logoUrl , ReactComponent as Logo } from "logo.svg";',
+      code: 'import logo, { logoUrl , ReactComponent as Logo } from "logo.svg";',
       output:
         'import logo from "logo.svg";\n' +
         'import { logoUrl } from "logo.svg";\n' +
