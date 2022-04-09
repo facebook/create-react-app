@@ -95,6 +95,15 @@ const hasJsxRuntime = (() => {
   }
 })();
 
+const hasGraphqlTagLoader = (() => {
+  try {
+    require.resolve('graphql-tag/loader')
+    return true;
+  } catch (e) {
+    return false;
+  }
+})();
+
 // This is the production and development configuration.
 // It is focused on developer experience, fast rebuilds, and a minimal bundle.
 module.exports = function (webpackEnv) {
@@ -582,6 +591,12 @@ module.exports = function (webpackEnv) {
                 'sass-loader'
               ),
             },
+            // Process GraphQL files with graphql-tag/loader.
+            // e.g. import query from './foo.graphql';
+            hasGraphqlTagLoader && {
+              test: /\.(gql|graphql)$/,
+              loader: require.resolve('graphql-tag/loader'),
+            },
             // "file" loader makes sure those assets get served by WebpackDevServer.
             // When you `import` an asset, you get its (virtual) filename.
             // In production, they would get copied to the `build` folder.
@@ -597,7 +612,7 @@ module.exports = function (webpackEnv) {
             },
             // ** STOP ** Are you adding a new loader?
             // Make sure to add the new loader(s) before the "file" loader.
-          ],
+          ].filter(Boolean),
         },
       ].filter(Boolean),
     },
