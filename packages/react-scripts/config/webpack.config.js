@@ -135,6 +135,7 @@ module.exports = function (webpackEnv) {
         // Adds vendor prefixing based on your specified browser support in
         // package.json
         loader: require.resolve('postcss-loader'),
+        implementation: require.resolve("postcss"),
         options: {
           postcssOptions: {
             // Necessary for external CSS imports to work
@@ -143,9 +144,9 @@ module.exports = function (webpackEnv) {
             config: false,
             plugins: !useTailwind
               ? [
-                  'postcss-flexbugs-fixes',
+                  require('postcss-flexbugs-fixes'),
                   [
-                    'postcss-preset-env',
+                    require('postcss-preset-env'),
                     {
                       autoprefixer: {
                         flexbox: 'no-2009',
@@ -156,13 +157,13 @@ module.exports = function (webpackEnv) {
                   // Adds PostCSS Normalize as the reset css with default options,
                   // so that it honors browserslist config in package.json
                   // which in turn let's users customize the target behavior as per their needs.
-                  'postcss-normalize',
+                  require('postcss-normalize'),
                 ]
               : [
-                  'tailwindcss',
-                  'postcss-flexbugs-fixes',
+                  require('tailwindcss'),
+                  require('postcss-flexbugs-fixes'),
                   [
-                    'postcss-preset-env',
+                    require('postcss-preset-env'),
                     {
                       autoprefixer: {
                         flexbox: 'no-2009',
