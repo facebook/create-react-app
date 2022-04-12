@@ -788,6 +788,8 @@ module.exports = function (webpackEnv) {
             },
           },
         }),
+      fs.existsSync(paths.mfSetup) &&
+        new webpack.container.ModuleFederationPlugin(require(paths.mfSetup)),
     ].filter(Boolean),
     // Turn off performance processing because we utilize
     // our own hints via the FileSizeReporter
