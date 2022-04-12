@@ -1,6 +1,6 @@
 {
   "name": "react-scripts",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "description": "Configuration and scripts for Create React App.",
   "repository": {
     "type": "git",
@@ -44,7 +44,7 @@
     "dotenv": "^10.0.0",
     "dotenv-expand": "^5.1.0",
     "eslint": "^8.3.0",
-    "eslint-config-react-app": "^7.0.0",
+    "eslint-config-react-app": "^7.0.1",
     "eslint-webpack-plugin": "^3.1.1",
     "file-loader": "^6.2.0",
     "fs-extra": "^10.0.0",
@@ -61,7 +61,7 @@
     "postcss-preset-env": "^7.0.1",
     "prompts": "^2.4.2",
     "react-app-polyfill": "^3.0.0",
-    "react-dev-utils": "^12.0.0",
+    "react-dev-utils": "^12.0.1",
     "react-refresh": "^0.11.0",
     "resolve": "^1.20.0",
     "resolve-url-loader": "^4.0.0",
