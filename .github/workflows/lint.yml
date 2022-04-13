@@ -1,6 +1,6 @@
 name: Lint
 
-on: [push]
+on: [push, pull_request]
 
 jobs:
   lint:
@@ -15,5 +15,11 @@ jobs:
         run: npm i -g npm@8
       - name: Install
         run: npm ci --prefer-offline
+      - name: Build
+        run: npm run build
       - name: Alex
         run: npm run alex
+      - name: Prettier
+        run: npm run prettier -- --list-different
+      - name: Eslint
+        run: npm run eslint -- --max-warnings 0

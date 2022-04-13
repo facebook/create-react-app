@@ -43,12 +43,8 @@ async function unmap(
   }
   const map = await getSourceMap(fileUri, fileContents);
   return frames.map(frame => {
-    const {
-      functionName,
-      lineNumber,
-      columnNumber,
-      _originalLineNumber,
-    } = frame;
+    const { functionName, lineNumber, columnNumber, _originalLineNumber } =
+      frame;
     if (_originalLineNumber != null) {
       return frame;
     }
