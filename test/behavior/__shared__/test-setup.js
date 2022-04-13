@@ -3,8 +3,9 @@
 const path = require('path');
 const TestSetup = require('./util/setup');
 
-const fixturePath = path.dirname(module.parent.filename);
-const fixtureName = path.basename(fixturePath);
+const { path: testDir } = module.parent;
+const fixtureName = path.basename(testDir);
+const fixturePath = path.resolve(testDir, '..', '__fixtures__', fixtureName);
 const testSetup = new TestSetup(fixtureName, fixturePath);
 
 beforeAll(async () => {
