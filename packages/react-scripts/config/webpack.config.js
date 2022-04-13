@@ -677,25 +677,24 @@ module.exports = function (webpackEnv) {
       //   `index.html`
       // - "entrypoints" key: Array of files which are included in `index.html`,
       //   can be used to reconstruct the HTML if necessary
-      fs.existsSync(paths.appHtml) &&
-        new WebpackManifestPlugin({
-          fileName: 'asset-manifest.json',
-          publicPath: paths.publicUrlOrPath,
-          generate: (seed, files, entrypoints) => {
-            const manifestFiles = files.reduce((manifest, file) => {
-              manifest[file.name] = file.path;
-              return manifest;
-            }, seed);
-            const entrypointFiles = entrypoints.main.filter(
-              fileName => !fileName.endsWith('.map')
-            );
+      new WebpackManifestPlugin({
+        fileName: 'asset-manifest.json',
+        publicPath: paths.publicUrlOrPath,
+        generate: (seed, files, entrypoints) => {
+          const manifestFiles = files.reduce((manifest, file) => {
+            manifest[file.name] = file.path;
+            return manifest;
+          }, seed);
+          const entrypointFiles = entrypoints.main.filter(
+            fileName => !fileName.endsWith('.map')
+          );
 
-            return {
-              files: manifestFiles,
-              entrypoints: entrypointFiles,
-            };
-          },
-        }),
+          return {
+            files: manifestFiles,
+            entrypoints: entrypointFiles,
+          };
+        },
+      }),
       // Moment.js is an extremely popular library that bundles large locale files
       // by default due to how webpack interprets its code. This is a practical
       // solution that requires the user to opt into importing specific locales.
@@ -709,16 +708,15 @@ module.exports = function (webpackEnv) {
       // the HTML & assets that are part of the webpack build.
       isEnvProduction &&
         fs.existsSync(swSrc) &&
-          fs.existsSync(paths.appHtml) && 
-          new WorkboxWebpackPlugin.InjectManifest({
-            swSrc,
-            dontCacheBustURLsMatching: /\.[0-9a-f]{8}\./,
-            exclude: [/\.map$/, /asset-manifest\.json$/, /LICENSE/],
-            // Bump up the default maximum size (2mb) that's precached,
-            // to make lazy-loading failure scenarios less likely.
-            // See https://github.com/cra-template/pwa/issues/13#issuecomment-722667270
-            maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
-          }),
+        new WorkboxWebpackPlugin.InjectManifest({
+          swSrc,
+          dontCacheBustURLsMatching: /\.[0-9a-f]{8}\./,
+          exclude: [/\.map$/, /asset-manifest\.json$/, /LICENSE/],
+          // Bump up the default maximum size (2mb) that's precached,
+          // to make lazy-loading failure scenarios less likely.
+          // See https://github.com/cra-template/pwa/issues/13#issuecomment-722667270
+          maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
+        }),
       // TypeScript type checking
       useTypeScript &&
         new ForkTsCheckerWebpackPlugin({
