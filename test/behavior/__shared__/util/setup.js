@@ -28,7 +28,6 @@ module.exports = class TestSetup {
       this.testDirectory
     );
     await fs.copy(this.templateDirectory, this.testDirectory);
-    await fs.remove(path.resolve(this.testDirectory, 'test.partial.js'));
 
     const packageJson = await fs.readJson(
       path.resolve(this.testDirectory, 'package.json')
@@ -58,14 +57,12 @@ module.exports = class TestSetup {
     if (!shouldInstallScripts) {
       await fs.ensureSymlink(
         path.resolve(
-          path.resolve(
-            __dirname,
-            '../../../..',
-            'packages',
-            'react-scripts',
-            'bin',
-            'react-scripts.js'
-          )
+          __dirname,
+          '../../../..',
+          'packages',
+          'react-scripts',
+          'bin',
+          'react-scripts.js'
         ),
         path.join(this.testDirectory, 'node_modules', '.bin', 'react-scripts')
       );

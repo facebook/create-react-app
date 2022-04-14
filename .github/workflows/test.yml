@@ -8,11 +8,12 @@ on:
 
 jobs:
   integration:
-    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: ['ubuntu-latest', 'macos-latest', 'windows-latest']
         node: ['14', '16']
+      fail-fast: false
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -25,11 +26,12 @@ jobs:
       - run: npm run test:integration
 
   e2e-simple:
-    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: ['ubuntu-latest', 'macos-latest', 'windows-latest']
         node: ['14', '16']
+      fail-fast: false
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -42,11 +44,12 @@ jobs:
       - run: npm run test:e2e -- simple
 
   e2e-installs:
-    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: ['ubuntu-latest', 'macos-latest', 'windows-latest']
         node: ['14', '16']
+      fail-fast: false
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -59,11 +62,12 @@ jobs:
       - run: npm run test:e2e -- installs
 
   e2e-kitchensink:
-    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: ['ubuntu-latest', 'macos-latest', 'windows-latest']
         node: ['14', '16']
+      fail-fast: false
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -76,11 +80,12 @@ jobs:
       - run: npm run test:e2e -- kitchensink
 
   e2e-kitchensink-eject:
-    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: ['ubuntu-latest', 'macos-latest', 'windows-latest']
         node: ['14', '16']
+      fail-fast: false
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -93,11 +98,12 @@ jobs:
       - run: npm run test:e2e -- kitchensink-eject
 
   e2e-old-node:
-    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: ['ubuntu-latest', 'macos-latest', 'windows-latest']
         node: ['12']
+      fail-fast: false
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -110,11 +116,12 @@ jobs:
       - run: npm run test:e2e -- old-node
 
   behavior:
-    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: ['ubuntu-latest', 'macos-latest', 'windows-latest']
         node: ['14', '16']
+      fail-fast: false
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3

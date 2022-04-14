@@ -7,17 +7,18 @@ const path = require('path');
 
 test('formats babel syntax error', async () => {
   fs.copySync(
-    path.join(__dirname, 'src', 'AppBabel.js'),
+    path.join(testSetup.testDirectory, 'src', 'AppBabel.js'),
     path.join(testSetup.testDirectory, 'src', 'App.js')
   );
 
   const { stdout, stderr } = await testSetup.scripts.build();
+
   expect({ stdout, stderr }).toMatchSnapshot();
 });
 
 test('formats css syntax error', async () => {
   fs.copySync(
-    path.join(__dirname, 'src', 'AppCss.js'),
+    path.join(testSetup.testDirectory, 'src', 'AppCss.js'),
     path.join(testSetup.testDirectory, 'src', 'App.js')
   );
 
@@ -27,7 +28,7 @@ test('formats css syntax error', async () => {
 
 test('formats unknown export', async () => {
   fs.copySync(
-    path.join(__dirname, 'src', 'AppUnknownExport.js'),
+    path.join(testSetup.testDirectory, 'src', 'AppUnknownExport.js'),
     path.join(testSetup.testDirectory, 'src', 'App.js')
   );
 
@@ -37,7 +38,7 @@ test('formats unknown export', async () => {
 
 test('formats aliased unknown export', async () => {
   fs.copySync(
-    path.join(__dirname, 'src', 'AppAliasUnknownExport.js'),
+    path.join(testSetup.testDirectory, 'src', 'AppAliasUnknownExport.js'),
     path.join(testSetup.testDirectory, 'src', 'App.js')
   );
 
@@ -47,7 +48,7 @@ test('formats aliased unknown export', async () => {
 
 test('formats no default export', async () => {
   fs.copySync(
-    path.join(__dirname, 'src', 'AppNoDefault.js'),
+    path.join(testSetup.testDirectory, 'src', 'AppNoDefault.js'),
     path.join(testSetup.testDirectory, 'src', 'App.js')
   );
 
@@ -57,7 +58,7 @@ test('formats no default export', async () => {
 
 test('formats missing package', async () => {
   fs.copySync(
-    path.join(__dirname, 'src', 'AppMissingPackage.js'),
+    path.join(testSetup.testDirectory, 'src', 'AppMissingPackage.js'),
     path.join(testSetup.testDirectory, 'src', 'App.js')
   );
 
@@ -70,7 +71,7 @@ test('formats missing package', async () => {
 
 test('formats eslint warning', async () => {
   fs.copySync(
-    path.join(__dirname, 'src', 'AppLintWarning.js'),
+    path.join(testSetup.testDirectory, 'src', 'AppLintWarning.js'),
     path.join(testSetup.testDirectory, 'src', 'App.js')
   );
 
@@ -84,7 +85,7 @@ test('formats eslint warning', async () => {
 
 test('formats eslint error', async () => {
   fs.copySync(
-    path.join(__dirname, 'src', 'AppLintError.js'),
+    path.join(testSetup.testDirectory, 'src', 'AppLintError.js'),
     path.join(testSetup.testDirectory, 'src', 'App.js')
   );
 
@@ -94,7 +95,7 @@ test('formats eslint error', async () => {
 
 test('helps when users tries to use sass', async () => {
   fs.copySync(
-    path.join(__dirname, 'src', 'AppSass.js'),
+    path.join(testSetup.testDirectory, 'src', 'AppSass.js'),
     path.join(testSetup.testDirectory, 'src', 'App.js')
   );
 
@@ -108,7 +109,7 @@ test('helps when users tries to use sass', async () => {
 
 test('formats file not found error', async () => {
   fs.copySync(
-    path.join(__dirname, 'src', 'AppUnknownFile.js'),
+    path.join(testSetup.testDirectory, 'src', 'AppUnknownFile.js'),
     path.join(testSetup.testDirectory, 'src', 'App.js')
   );
 
@@ -123,7 +124,7 @@ test('formats file not found error', async () => {
 
 test('formats case sensitive path error', async () => {
   fs.copySync(
-    path.join(__dirname, 'src', 'AppIncorrectCase.js'),
+    path.join(testSetup.testDirectory, 'src', 'AppIncorrectCase.js'),
     path.join(testSetup.testDirectory, 'src', 'App.js')
   );
 
@@ -143,7 +144,7 @@ test('formats case sensitive path error', async () => {
 
 test('formats out of scope error', async () => {
   fs.copySync(
-    path.join(__dirname, 'src', 'AppOutOfScopeImport.js'),
+    path.join(testSetup.testDirectory, 'src', 'AppOutOfScopeImport.js'),
     path.join(testSetup.testDirectory, 'src', 'App.js')
   );
 
