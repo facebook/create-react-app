@@ -48,6 +48,7 @@
     ],
     "Deployment": ["deployment"],
     "Advanced Usage": [
+      "webpack-module-federation",
       "custom-templates",
       "can-i-use-decorators",
       "pre-rendering-into-static-html-files",
