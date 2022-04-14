@@ -128,7 +128,7 @@ checkBrowsers(paths.appPath, isInteractive)
       } else {
         console.log(chalk.red('Failed to compile.\n'));
         printBuildError(err);
-        process.exit(1);
+        process.exitCode = 1;
       }
     }
   )
@@ -136,7 +136,7 @@ checkBrowsers(paths.appPath, isInteractive)
     if (err && err.message) {
       console.log(err.message);
     }
-    process.exit(1);
+    process.exitCode = 1;
   });
 
 // Create the production build and print the deployment instructions.
