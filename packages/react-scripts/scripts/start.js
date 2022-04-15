@@ -53,9 +53,9 @@ const react = require(require.resolve('react', { paths: [paths.appPath] }));
 
 const env = getClientEnvironment(paths.publicUrlOrPath.slice(0, -1));
 
-const statusFile = require('./utils/statusFile');
+const statusFile = require('../backpack-addons/ssr/statusFile');
 
-const isSsr = require('./utils/isSsr');
+const isSsr = require('../backpack-addons/ssr/isSsr');
 
 const useYarn = fs.existsSync(paths.yarnLockFile);
 const isInteractive = process.stdout.isTTY;

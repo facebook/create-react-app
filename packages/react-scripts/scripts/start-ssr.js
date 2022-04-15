@@ -63,13 +63,13 @@ const react = require(require.resolve('react', { paths: [paths.appPath] }));
 const env = getClientEnvironment(paths.publicUrlOrPath.slice(0, -1));
 
 // @brs-begin
-const statusFile = require('./utils/statusFile');
-const { createCustomCompiler } = require('./utils/customWebpackUtils');
+const statusFile = require('../backpack-addons/ssr/statusFile');
+const { createCustomCompiler } = require('../backpack-addons/ssr/customWebpackUtils');
 const {
   MultiCompilerUi,
   WebCompilerUi,
   ProcessMessageCompilerUi,
-} = require('./utils/MultiCompilerUi');
+} = require('../backpack-addons/ssr/MultiCompilerUi');
 // @brs-end
 
 const useYarn = fs.existsSync(paths.yarnLockFile);
@@ -210,7 +210,7 @@ checkBrowsers(paths.appPath, isInteractive)
     const { join } = require('path');
 
     // We do this in a background process for performance - multicore, yo.
-    const ssr = fork(join(__dirname, './utils/forkSsr'));
+    const ssr = fork(join(__dirname, '../backpack-addons/ssr/forkSsr'));
 
     const ssrUi = new ProcessMessageCompilerUi(ssr, 'ssr', {
       color: 'bgMagenta',

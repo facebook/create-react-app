@@ -43,7 +43,7 @@ const getCacheIdentifier = require('react-dev-utils/getCacheIdentifier');
 // @remove-on-eject-end
 const postcssNormalize = require('postcss-normalize');
 
-const isSsr = require('../scripts/utils/isSsr');
+const isSsr = require('../backpack-addons/ssr/isSsr');
 
 // Just for the case that `ssr.js` exists in `src` folder but not in SSR mode
 const needBuildSsr = !isSsr() && fs.existsSync(paths.appSsrJs);

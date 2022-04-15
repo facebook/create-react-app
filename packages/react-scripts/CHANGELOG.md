@@ -1,5 +1,9 @@
 # `backpack-react-scripts` Change Log
 
+## 10.0.1
+- Extract the existing custom features from the BRS fork branch
+  - Extract custom `ssr` features into backpack-addons folder
+
 ## 10.0.0
 
 ### Features
