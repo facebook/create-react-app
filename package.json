@@ -22,7 +22,7 @@
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.4",
-    "@testing-library/react": "^13.0.1",
+    "@testing-library/react": "^13.1.1",
     "@testing-library/user-event": "^14.1.0",
     "alex": "^10.0.0",
     "eslint": "^8.13.0",
@@ -34,7 +34,7 @@
     "jest": "^27.5.1",
     "lerna": "^4.0.0",
     "lerna-changelog": "^2.2.0",
-    "lint-staged": "^12.3.7",
+    "lint-staged": "^12.3.8",
     "meow": "^10.1.2",
     "multimatch": "^6.0.0",
     "prettier": "^2.6.2",
