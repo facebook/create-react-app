@@ -23,7 +23,7 @@
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.1.1",
-    "@testing-library/user-event": "^14.1.0",
+    "@testing-library/user-event": "^14.1.1",
     "alex": "^10.0.0",
     "eslint": "^8.13.0",
     "execa": "^6.1.0",
