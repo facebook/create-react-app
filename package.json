@@ -41,7 +41,7 @@
     "puppeteer": "^13.5.2",
     "strip-ansi": "^7.0.1",
     "svg-term-cli": "^2.1.1",
-    "tempy": "^2.0.0",
+    "tempy": "^3.0.0",
     "wait-for-localhost": "^4.0.0",
     "web-vitals": "^2.1.4"
   },
