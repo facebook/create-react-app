@@ -1,6 +1,7 @@
+'use strict';
+
 const execa = require('execa');
 const getPort = require('get-port');
-const os = require('os');
 const stripAnsi = require('strip-ansi');
 const waitForLocalhost = require('wait-for-localhost');
 

@@ -32,31 +32,30 @@
   max-width: 100%;
 }
 
-
 /* Announcement banner */
 
 :root {
   --docusaurus-announcement-bar-height: auto !important;
 }
 
-div[class^="announcementBar"][role="banner"] {
+div[class^='announcementBar'][role='banner'] {
   border-bottom-color: var(--deepdark);
 }
 
-div[class^="announcementBarContent"] {
+div[class^='announcementBarContent'] {
   line-height: 40px;
   font-size: 20px;
   font-weight: bold;
   padding: 8px 30px;
 }
 
-div[class^="announcementBarContent"] a {
+div[class^='announcementBarContent'] a {
   text-decoration: underline;
   display: inline-block;
   color: var(--ifm-color-primary) !important;
 }
 
-div[class^="announcementBarContent"] a:hover {
+div[class^='announcementBarContent'] a:hover {
   color: var(--brand) !important;
 }
 
