@@ -13,4 +13,4 @@ const $ = window.$;
 
 This makes it clear you are using a global variable intentionally rather than because of a typo.
 
-Alternatively, you can force the linter to ignore any line by adding `// eslint-disable-line` after it.
+Alternatively, you can force the linter to ignore any line by adding `// eslint-disable-next-line` after it.
