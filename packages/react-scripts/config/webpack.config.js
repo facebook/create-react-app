@@ -768,10 +768,13 @@ module.exports = function (webpackEnv) {
             include: [
               { file: '../**/src/**/*.{ts,tsx}' },
               { file: '**/src/**/*.{ts,tsx}' },
+              { file: '**/packages/**/*.{ts,tsx}' },
             ],
             exclude: [
               { file: '**/src/**/__tests__/**' },
               { file: '**/src/**/?(*.){spec|test}.*' },
+              { file: '**/packages/**/__tests__/**' },
+              { file: '**/packages/**/?(*.){spec|test}.*' },
               { file: '**/src/setupProxy.*' },
               { file: '**/src/setupTests.*' },
             ],
