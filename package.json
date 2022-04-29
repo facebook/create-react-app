@@ -31,7 +31,7 @@
     "get-port": "^6.1.2",
     "globby": "^13.1.1",
     "husky": "^7.0.4",
-    "jest": "^27.5.1",
+    "jest": "^28.0.2",
     "lerna": "^4.0.0",
     "lerna-changelog": "^2.2.0",
     "lint-staged": "^12.4.1",
