@@ -403,7 +403,24 @@ module.exports = function (webpackEnv) {
             // The preset includes JSX, Flow, TypeScript, and some ESnext features.
             {
               test: /\.(js|mjs|jsx|ts|tsx)$/,
-              include: paths.appSrc,
+              include: [
+                paths.appSrc,
+                path.join(
+                    paths.appNodeModules,
+                    "tdex-sdk",
+                    "dist-web",
+                    "api-spec",
+                    "protobuf",
+                    "gen",
+                    "js",
+                    "tdex",
+                    "v1"
+                ),
+                path.join(
+                    paths.appNodeModules,
+                    "tdex-sdk"
+                )
+              ],
               loader: require.resolve('babel-loader'),
               options: {
                 customize: require.resolve(
