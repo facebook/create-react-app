@@ -120,8 +120,6 @@ function startBrowserProcess(browser, url, args) {
   try {
     var options = {
       app: { name: browser, arguments: args },
-      wait: false,
-      url: true,
     };
     open(url, options).catch(() => {}); // Prevent `unhandledRejection` error.
     return true;
