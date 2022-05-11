@@ -9,7 +9,7 @@ applications. It offers a modern build setup with no configuration.
 ## Quick Start
 
 ```sh
-npx create-react-app my-app
+npx create-react-app@latest my-app
 cd my-app
 npm start
 ```
