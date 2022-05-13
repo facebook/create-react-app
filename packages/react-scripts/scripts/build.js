@@ -214,6 +214,11 @@ function build(previousFileSizes) {
 
       return resolve(resolveArgs);
     });
+  }).then((res) => {
+    compiler.close((closeErr) => {
+      closeErr && console.error(closeErr);
+    });
+    return res;
   });
 }
 
