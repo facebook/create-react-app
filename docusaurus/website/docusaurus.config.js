@@ -63,8 +63,9 @@ const siteConfig = {
         },
         {
           href: 'https://www.github.com/facebook/create-react-app',
-          label: 'GitHub',
+          'aria-label': 'GitHub',
           position: 'right',
+          className: 'header-github-link',
         },
       ],
     },
