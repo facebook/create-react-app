@@ -14,6 +14,41 @@ Attempted import error: 'bar' is not exported from './AppUnknownExport' (importe
 }
 `;
 
+exports[`formats aliased unknown export 2`] = `
+Object {
+  "stderr": "> build
+> react-scripts build
+
+Creating an optimized production build...
+Failed to compile.
+
+Syntax error: /private/var/folders/4_/mlyy2b8102j_7y42pq063cr40000gn/T/8f041a170de78ef5ac74d17fa6b7ff98/src/AppCss.css Unexpected } (3:2)
+  1 | .App {
+  2 |   color: red;
+> 3 | }}
+    |  ^
+  4 | 
+
+",
+  "stdout": "",
+}
+`;
+
+exports[`formats aliased unknown export 3`] = `
+Object {
+  "stderr": "> build
+> react-scripts build
+
+Creating an optimized production build...
+Failed to compile.
+
+Attempted import error: 'bar' is not exported from './AppUnknownExport' (imported as 'bar2').
+
+",
+  "stdout": "",
+}
+`;
+
 exports[`formats babel syntax error 1`] = `
 Object {
   "stderr": "Creating an optimized production build...
@@ -132,6 +167,21 @@ Attempted import error: './ExportNoDefault' does not contain a default export (i
 }
 `;
 
+exports[`formats no default export 2`] = `
+Object {
+  "stderr": "> build
+> react-scripts build
+
+Creating an optimized production build...
+Failed to compile.
+
+Attempted import error: './ExportNoDefault' does not contain a default export (imported as 'myImport').
+
+",
+  "stdout": "",
+}
+`;
+
 exports[`formats out of scope error 1`] = `
 Object {
   "stderr": "Creating an optimized production build...
@@ -158,5 +208,50 @@ Attempted import error: 'bar' is not exported from './AppUnknownExport'.
 
 ",
   "stdout": "",
+}
+`;
+
+exports[`formats unknown export 2`] = `
+Object {
+  "stderr": "> build
+> react-scripts build
+
+Creating an optimized production build...
+Failed to compile.
+
+Attempted import error: 'bar' is not exported from './AppUnknownExport' (imported as 'bar').
+
+",
+  "stdout": "",
+}
+`;
+
+exports[`helps when users tries to use sass 1`] = `
+Object {
+  "stderr": "",
+  "stdout": "
+> build
+> react-scripts build
+
+Creating an optimized production build...
+Compiled successfully.
+
+File sizes after gzip:
+
+  45.76 kB  build/static/js/main.07c4efe6.js
+
+The project was built assuming it is hosted at /.
+You can control this with the homepage field in your package.json.
+
+The build folder is ready to be deployed.
+You may serve it with a static server:
+
+  npm install -g serve
+  serve -s build
+
+Find out more about deployment here:
+
+  https://cra.link/deployment
+",
 }
 `;
