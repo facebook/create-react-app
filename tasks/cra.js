@@ -104,9 +104,6 @@ const scriptsFileName = cp
   .toString()
   .trim();
 const scriptsPath = path.join(packagesDir, 'react-scripts', scriptsFileName);
-
-// Now that we have packed them, call the global CLI.
-
 const args = process.argv.slice(2);
 
 // Now run the CRA command
