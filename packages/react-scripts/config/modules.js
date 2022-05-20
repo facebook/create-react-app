@@ -13,6 +13,7 @@ const path = require('path');
 const paths = require('./paths');
 const chalk = require('react-dev-utils/chalk');
 const resolve = require('resolve');
+const JSON5 = require('json5');
 
 /**
  * Get additional module paths based on the baseUrl of a compilerOptions object.
@@ -123,7 +124,19 @@ function getModules() {
     // Otherwise we'll check if there is jsconfig.json
     // for non TS projects.
   } else if (hasJsConfig) {
-    config = require(paths.appJsConfig);
+    // Projects using jsconfig.json do not need TypeScript installed, using JSON5
+    try {
+      config = JSON5.parse(fs.readFileSync(paths.appJsConfig, 'utf-8'));
+    } catch (error) {
+      const errorType = /^JSON5/.test(error.message) ? 'parse' : 'load';
+      const errorMessge = error.message.replace(/^JSON5/, 'Error');
+      console.error(
+        chalk.red(
+          `Failed to ${errorType} "${paths.appJsConfig}" got error: "${errorMessge}"`
+        )
+      );
+      process.exit(1);
+    }
   }
 
   config = config || {};

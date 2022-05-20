@@ -43,7 +43,8 @@ const path = require('path');
 const semver = require('semver');
 const spawn = require('cross-spawn');
 const tmp = require('tmp');
-const unpack = require('tar-pack').unpack;
+const tar = require('tar');
+const zlib = require('zlib');
 const url = require('url');
 const validateProjectName = require('validate-npm-package-name');
 
@@ -667,15 +668,13 @@ function getTemporaryDirectory() {
 
 function extractStream(stream, dest) {
   return new Promise((resolve, reject) => {
-    stream.pipe(
-      unpack(dest, err => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(dest);
-        }
-      })
-    );
+    stream
+      .on('error', reject)
+      .pipe(zlib.createGunzip())
+      .on('error', reject)
+      .pipe(tar.extract({ strip: 1, C: dest }))
+      .on('error', reject)
+      .on('finish', () => resolve(dest));
   });
 }
 
