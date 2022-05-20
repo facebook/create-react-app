@@ -47,9 +47,12 @@ const reactRefreshWebpackPluginRuntimeEntry = require.resolve(
 );
 const babelRuntimeEntry = require.resolve('babel-preset-react-app');
 const babelRuntimeEntryHelpers = require.resolve(
-  '@babel/runtime/helpers/esm/assertThisInitialized'
+  '@babel/runtime/helpers/esm/assertThisInitialized',
+  { paths: [babelRuntimeEntry] }
 );
-const babelRuntimeRegenerator = require.resolve('@babel/runtime/regenerator');
+const babelRuntimeRegenerator = require.resolve('@babel/runtime/regenerator', {
+  paths: [babelRuntimeEntry],
+});
 
 // Some apps do not need the benefits of saving a web request, so not inlining the chunk
 // makes for a smoother build process.
@@ -64,6 +67,11 @@ const imageInlineSizeLimit = parseInt(
 
 // Check if TypeScript is setup
 const useTypeScript = fs.existsSync(paths.appTsConfig);
+
+// Check if Tailwind config exists
+const useTailwind = fs.existsSync(
+  path.join(paths.appPath, 'tailwind.config.js')
+);
 
 // Get the path to the uncompiled service worker (if it exists).
 const swSrc = paths.swSrc;
@@ -132,22 +140,37 @@ module.exports = function (webpackEnv) {
             // Necessary for external CSS imports to work
             // https://github.com/facebook/create-react-app/issues/2677
             ident: 'postcss',
-            plugins: [
-              'postcss-flexbugs-fixes',
-              [
-                'postcss-preset-env',
-                {
-                  autoprefixer: {
-                    flexbox: 'no-2009',
-                  },
-                  stage: 3,
-                },
-              ],
-              // Adds PostCSS Normalize as the reset css with default options,
-              // so that it honors browserslist config in package.json
-              // which in turn let's users customize the target behavior as per their needs.
-              'postcss-normalize',
-            ],
+            config: false,
+            plugins: !useTailwind
+              ? [
+                  'postcss-flexbugs-fixes',
+                  [
+                    'postcss-preset-env',
+                    {
+                      autoprefixer: {
+                        flexbox: 'no-2009',
+                      },
+                      stage: 3,
+                    },
+                  ],
+                  // Adds PostCSS Normalize as the reset css with default options,
+                  // so that it honors browserslist config in package.json
+                  // which in turn let's users customize the target behavior as per their needs.
+                  'postcss-normalize',
+                ]
+              : [
+                  'tailwindcss',
+                  'postcss-flexbugs-fixes',
+                  [
+                    'postcss-preset-env',
+                    {
+                      autoprefixer: {
+                        flexbox: 'no-2009',
+                      },
+                      stage: 3,
+                    },
+                  ],
+                ],
           },
           sourceMap: isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
         },
@@ -175,6 +198,8 @@ module.exports = function (webpackEnv) {
 
   return {
     target: ['browserslist'],
+    // Webpack noise constrained to errors and warnings
+    stats: 'errors-warnings',
     mode: isEnvProduction ? 'production' : isEnvDevelopment && 'development',
     // Stop compilation early in production
     bail: isEnvProduction,
@@ -329,7 +354,7 @@ module.exports = function (webpackEnv) {
           enforce: 'pre',
           exclude: /@babel(?:\/|\\{1,2})runtime/,
           test: /\.(js|mjs|jsx|ts|tsx|css)$/,
-          use: 'source-map-loader',
+          loader: require.resolve('source-map-loader'),
         },
         {
           // "oneOf" will traverse all following loaders until one will
@@ -364,7 +389,7 @@ module.exports = function (webpackEnv) {
               test: /\.svg$/,
               use: [
                 {
-                  loader: '@svgr/webpack',
+                  loader: require.resolve('@svgr/webpack'),
                   options: {
                     prettier: false,
                     svgo: false,
@@ -376,7 +401,7 @@ module.exports = function (webpackEnv) {
                   },
                 },
                 {
-                  loader: 'file-loader',
+                  loader: require.resolve('file-loader'),
                   options: {
                     name: 'static/media/[name].[hash].[ext]',
                   },

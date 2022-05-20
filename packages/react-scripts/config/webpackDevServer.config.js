@@ -44,6 +44,11 @@ module.exports = function (proxy, allowedHost) {
     // Note: ["localhost", ".localhost"] will support subdomains - but we might
     // want to allow setting the allowedHosts manually for more complex setups
     allowedHosts: disableFirewall ? 'all' : [allowedHost],
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': '*',
+      'Access-Control-Allow-Headers': '*',
+    },
     // Enable gzip compression of generated files.
     compress: true,
     static: {
@@ -81,7 +86,10 @@ module.exports = function (proxy, allowedHost) {
         pathname: sockPath,
         port: sockPort,
       },
-      overlay: true,
+      overlay: {
+        errors: true,
+        warnings: false,
+      },
     },
     devMiddleware: {
       // It is important to tell WebpackDevServer to use the same "publicPath" path as

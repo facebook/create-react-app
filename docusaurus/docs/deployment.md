@@ -8,14 +8,14 @@ sidebar_label: Deployment
 
 ## Static Server
 
-For environments using [Node](https://nodejs.org/), the easiest way to handle this would be to install [serve](https://github.com/zeit/serve) and let it handle the rest:
+For environments using [Node](https://nodejs.org/), the easiest way to handle this would be to install [serve](https://github.com/vercel/serve) and let it handle the rest:
 
 ```sh
 npm install -g serve
 serve -s build
 ```
 
-The last command shown above will serve your static site on the port **5000**. Like many of [serve](https://github.com/zeit/serve)’s internal settings, the port can be adjusted using the `-l` or `--listen` flags:
+The last command shown above will serve your static site on the port **3000**. Like many of [serve](https://github.com/vercel/serve)’s internal settings, the port can be adjusted using the `-l` or `--listen` flags:
 
 ```sh
 serve -s build -l 4000
@@ -464,7 +464,7 @@ If you want to use a Custom Domain with your Vercel deployment, you can **Add** 
 
 To add your domain to your project, navigate to your [Project](https://vercel.com/docs/platform/projects) from the Vercel Dashboard. Once you have selected your project, click on the "Settings" tab, then select the **Domains** menu item. From your projects **Domain** page, enter the domain you wish to add to your project.
 
-Once the domain as been added, you will be presented with different methods for configuring it.
+Once the domain has been added, you will be presented with different methods for configuring it.
 
 ### Deploying a fresh React project
 

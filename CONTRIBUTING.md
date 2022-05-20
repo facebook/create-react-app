@@ -54,10 +54,16 @@ These packages can be found in the [`packages/`](https://github.com/facebook/cre
 
 ```
 packages/
+  babel-plugin-named-asset-import/
   babel-preset-react-app/
+  confusing-browser-globals/
+  cra-template/
+  cra-template-typescript/
   create-react-app/
   eslint-config-react-app/
+  react-app-polyfill/
   react-dev-utils/
+  react-error-overlay/
   react-scripts/
 ```
 
@@ -145,7 +151,7 @@ By default git would use `CRLF` line endings which would cause the scripts to fa
 2. Close the milestone and create a new one for the next release.
 3. In most releases, only `react-scripts` needs to be released. If you don’t have any changes to the `packages/create-react-app` folder, you don’t need to bump its version or publish it (the publish script will publish only changed packages).
 4. Note that files in `packages/create-react-app` should be modified with extreme caution. Since it’s a global CLI, any version of `create-react-app` (global CLI) including very old ones should work with the latest version of `react-scripts`.
-5. Run `npm run compile:lockfile`. The command will generate an updated lockfile in `packages/create-react-app` that should be committed.
+5. Pull the latest changes from GitHub, run `npm ci`.
 6. Create a change log entry for the release:
 
 - You'll need an [access token for the GitHub API](https://help.github.com/articles/creating-an-access-token-for-command-line-use/). Save it to this environment variable: `export GITHUB_AUTH="..."`
@@ -163,9 +169,10 @@ Make sure to test the released version! If you want to be extra careful, you can
 ## Releasing the Docs
 
 1. Go to the `docusaurus/website` directory
-2. Run `npm run build`
-3. You'll need an [access token for the GitHub API](https://help.github.com/articles/creating-an-access-token-for-command-line-use/). Save it to this environment variable: `export GITHUB_AUTH="..."`
-4. Run `GIT_USER=<GITHUB_USERNAME> CURRENT_BRANCH=main USE_SSH=true npm run deploy`
+2. Run `npm ci`
+3. Run `npm run build`
+4. You'll need an [access token for the GitHub API](https://help.github.com/articles/creating-an-access-token-for-command-line-use/). Save it to this environment variable: `export GITHUB_AUTH="..."`
+5. Run `GIT_USER=<GITHUB_USERNAME> CURRENT_BRANCH=main USE_SSH=true npm run deploy`
 
 ---
 
