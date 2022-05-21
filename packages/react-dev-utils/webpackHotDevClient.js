@@ -277,18 +277,13 @@ function tryApplyUpdates(onHotUpdateSuccess) {
     }
   }
 
-  // https://webpack.github.io/docs/hot-module-replacement.html#check
-  var result = module.hot.check(/* autoApply */ true, handleApplyUpdates);
-
-  // // webpack 2 returns a Promise instead of invoking a callback
-  if (result && result.then) {
-    result.then(
-      function (updatedModules) {
-        handleApplyUpdates(null, updatedModules);
-      },
-      function (err) {
-        handleApplyUpdates(err, null);
-      }
-    );
-  }
+  // https://webpack.js.org/api/hot-module-replacement
+  module.hot
+    .check(/* autoApply */ true)
+    .then(function (updatedModules) {
+      handleApplyUpdates(null, updatedModules);
+    })
+    .catch(function (err) {
+      handleApplyUpdates(err, null);
+    });
 }
