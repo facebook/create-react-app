@@ -15,7 +15,9 @@ class ModuleScopePlugin {
   constructor(appSrc, allowedFiles = []) {
     this.appSrcs = Array.isArray(appSrc) ? appSrc : [appSrc];
     this.allowedFiles = new Set(allowedFiles);
-    this.allowedPaths = [...allowedFiles].map(path.dirname).filter(p => path.relative(p, process.cwd()) !== '');
+    this.allowedPaths = [...allowedFiles]
+      .map(path.dirname)
+      .filter(p => path.relative(p, process.cwd()) !== '');
   }
 
   apply(resolver) {
@@ -54,9 +56,11 @@ class ModuleScopePlugin {
         if (this.allowedFiles.has(requestFullPath)) {
           return callback();
         }
-        if (this.allowedPaths.some((allowedFile) => {
-          return requestFullPath.startsWith(allowedFile);
-        })) {
+        if (
+          this.allowedPaths.some(allowedFile => {
+            return requestFullPath.startsWith(allowedFile);
+          })
+        ) {
           return callback();
         }
         // Find path from src to the requested file

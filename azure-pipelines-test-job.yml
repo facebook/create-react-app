@@ -31,8 +31,8 @@ jobs:
           versionSpec: $(nodeVersion)
         displayName: 'Install Node.js'
 
-      - script: npm i -g npm@7
-        displayName: 'Update npm to v7'
+      - script: npm i -g npm@8
+        displayName: 'Update npm to v8'
 
       - script: npm ci
         displayName: 'Run npm ci'
