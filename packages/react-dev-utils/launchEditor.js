@@ -194,7 +194,7 @@ function getArgumentsForLineNumber(
   return [fileName];
 }
 
-function guessEditor() {
+export function guessEditor() {
   // Explicit config always wins
   if (process.env.REACT_EDITOR) {
     return shellQuote.parse(process.env.REACT_EDITOR);
