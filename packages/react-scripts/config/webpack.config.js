@@ -754,7 +754,7 @@ module.exports = function (webpackEnv) {
             ],
             exclude: [
               { file: '**/src/**/__tests__/**' },
-              { file: '**/src/**/?(*.){spec|test}.*' },
+              { file: '**/src/**/?(*.){spec,test}.*' },
               { file: '**/src/setupProxy.*' },
               { file: '**/src/setupTests.*' },
             ],
