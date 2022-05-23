@@ -1,3 +1,5 @@
+'use strict';
+
 const testSetup = require('../__shared__/test-setup');
 const path = require('path');
 const fs = require('fs');
