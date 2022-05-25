@@ -448,7 +448,7 @@ When you build the project, Create React App will place the `public` folder cont
 
 Cloudflare Pages is a hosting platform for developers to deploy websites on Cloudflare's edge network. You can also integrate dynamic functionality into your application using [Pages Functions](https://developers.cloudflare.com/pages/platform/functions/) and other Cloudflare products like [KV](https://developers.cloudflare.com/workers/learning/how-kv-works/) for global, low-latency, key-value data storage  and [Durable objects](https://developers.cloudflare.com/workers/learning/using-durable-objects/) for consistent storage. 
 
-Currently, you can set up a Pages project by [connecting your git provider](https://developers.cloudflare.com/pages/get-started/#connecting-your-git-provider-to-pages) to pages or by deploying your pre-built assets right to Pages with [Direct Uploads](https://developers.cloudflare.com/pages/platform/direct-upload/), which allows you drag and drop your project to the dashboard or use [Wrangler](/workers/wrangler/get-started/) from the CLI
+Currently, you can set up a Pages project by [connecting your git provider](https://developers.cloudflare.com/pages/get-started/#connecting-your-git-provider-to-pages) to pages or by deploying your pre-built assets right to Pages with [Direct Uploads](https://developers.cloudflare.com/pages/platform/direct-upload/), which allows you drag and drop your project to the dashboard or using [Wrangler](/workers/wrangler/get-started/) from the CLI
 
 ### Option 1: Using a Git provider 
 
@@ -457,17 +457,21 @@ Deploy your site to Pages by logging in to the Cloudflare dashboard > **Account 
 | Configuration option | Value           |
 | -------------------- | --------------- |
 | Production branch    | `main`          |
-| Framework preset     |`Create ReactApp`|
+| Framework preset     |`Create React App`|
 | Build command        | `npm run build` |
 | Build directory      | `build`         |
 
-### option 2: Using Drag and drop
+After deploying your site, you will receive a unique subdomain for your project on `*.pages.dev`.
 
-To begin the deployment process of your pre-built site, on the Create a Project page, select Upload Assets and enter your project name in the provided field. Your project will be served from `<PROJECT_NAME>.pages.dev`. 
+Every time you commit new code to your React application, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](https://developers.cloudflare.com/pages/platform/preview-deployments/) on new pull requests, so you can preview how changes look to your site before deploying them to production.
 
-Next drag and drop your build output directory into the uploading frame. Once your files have been successfully uploaded, select Save and Deploy and continue to your newly deployed project.
+### Option 2: Using Drag and drop
 
-### option 3: Using Wrangler
+To begin the deployment process of your pre-built site, on the Cloudflare Pages dashboard select **Create a Project** page, select **Upload Assets** and enter your project name in the provided field. Your project will be served from `<PROJECT_NAME>.pages.dev`. 
+
+Next drag and drop your build output directory into the uploading frame. Once your files have been successfully uploaded, select **Save and Deploy** and continue to your newly deployed project.
+
+### Option 3: Using Wrangler
 
 To begin, [install the latest version of Wrangler](https://developers.cloudflare.com/workers/wrangler/get-started/) and set up Wrangler. Note that Pages integration with Wrangler relies on Wrangler 2.
 
