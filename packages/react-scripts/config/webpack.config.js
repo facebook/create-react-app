@@ -221,14 +221,14 @@ module.exports = function (webpackEnv) {
         {
           loader: require.resolve('resolve-url-loader'),
           options: {
-            sourceMap: false,
+            sourceMap: isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
             root: paths.appSrc,
           },
         },
         {
           loader: require.resolve(preProcessor),
           options: {
-            sourceMap: false,
+            sourceMap: true,
             ...preProcessorOptions,
           },
         }
