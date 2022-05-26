@@ -212,7 +212,7 @@ module.exports = function (webpackEnv) {
                   ],
                 ],
           },
-          sourceMap: isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
+          sourceMap: false,
         },
       },
     ].filter(Boolean);
@@ -228,7 +228,7 @@ module.exports = function (webpackEnv) {
         {
           loader: require.resolve(preProcessor),
           options: {
-            sourceMap: true,
+            sourceMap: false,
             ...preProcessorOptions,
           },
         }
@@ -248,7 +248,7 @@ module.exports = function (webpackEnv) {
       shouldUseSourceMap && {
         enforce: 'pre',
         exclude: [/@babel(?:\/|\\{1,2})runtime/, /node_modules/],
-        test: /\.(js|mjs|jsx|ts|tsx|css)$/,
+        test: /\.(js|mjs|jsx|ts|tsx)$/,
         loader: require.resolve('source-map-loader'),
       },
       {
@@ -453,9 +453,7 @@ module.exports = function (webpackEnv) {
             exclude: cssModuleRegex,
             use: getStyleLoaders({
               importLoaders: 1,
-              sourceMap: isEnvProduction
-                ? shouldUseSourceMap
-                : isEnvDevelopment,
+              sourceMap: false,
               modules: {
                 mode: 'icss',
               },
@@ -472,9 +470,7 @@ module.exports = function (webpackEnv) {
             test: cssModuleRegex,
             use: getStyleLoaders({
               importLoaders: 1,
-              sourceMap: isEnvProduction
-                ? shouldUseSourceMap
-                : isEnvDevelopment,
+              sourceMap: false,
               modules: {
                 mode: 'local',
                 getLocalIdent: getCSSModuleLocalIdent,
@@ -490,9 +486,7 @@ module.exports = function (webpackEnv) {
             use: getStyleLoaders(
               {
                 importLoaders: 3,
-                sourceMap: isEnvProduction
-                  ? shouldUseSourceMap
-                  : isEnvDevelopment,
+                sourceMap: false,
               },
               isRemoteEntry,
               'less-loader',
@@ -540,9 +534,7 @@ module.exports = function (webpackEnv) {
             use: getStyleLoaders(
               {
                 importLoaders: 3,
-                sourceMap: isEnvProduction
-                  ? shouldUseSourceMap
-                  : isEnvDevelopment,
+                sourceMap: false,
                 modules: {
                   mode: 'icss',
                 },
@@ -569,9 +561,7 @@ module.exports = function (webpackEnv) {
             use: getStyleLoaders(
               {
                 importLoaders: 3,
-                sourceMap: isEnvProduction
-                  ? shouldUseSourceMap
-                  : isEnvDevelopment,
+                sourceMap: false,
                 modules: {
                   mode: 'local',
                   getLocalIdent: getCSSModuleLocalIdent,
