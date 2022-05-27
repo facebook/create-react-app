@@ -32,7 +32,7 @@
     "globby": "^13.1.1",
     "husky": "^8.0.1",
     "jest": "^28.1.0",
-    "lerna": "^4.0.0",
+    "lerna": "^5.0.0",
     "lerna-changelog": "^2.2.0",
     "lint-staged": "^12.4.2",
     "meow": "^10.1.2",
