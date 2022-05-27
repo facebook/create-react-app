@@ -31,6 +31,7 @@ module.exports = [
   'moveBy',
   'moveTo',
   'name',
+  'navigation',
   'onblur',
   'onerror',
   'onfocus',
