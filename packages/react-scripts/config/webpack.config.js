@@ -245,7 +245,7 @@ module.exports = function (webpackEnv) {
   ) =>
     [
       // Handle node_modules packages that contain sourcemaps
-      shouldUseSourceMap && {
+      shouldUseSourceMap && !isRemoteEntry && {
         enforce: 'pre',
         exclude: [/@babel(?:\/|\\{1,2})runtime/, /node_modules/],
         test: /\.(js|mjs|jsx|ts|tsx)$/,
@@ -437,8 +437,8 @@ module.exports = function (webpackEnv) {
               // Babel sourcemaps are needed for debugging into node_modules
               // code.  Without the options below, debuggers like VSCode
               // show incorrect code and set breakpoints on the wrong lines.
-              sourceMaps: shouldUseSourceMap,
-              inputSourceMap: shouldUseSourceMap,
+              sourceMaps: shouldUseSourceMap && !isRemoteEntry,
+              inputSourceMap: shouldUseSourceMap && !isRemoteEntry,
             },
           },
           // "postcss" loader applies autoprefixer to our CSS.
@@ -733,7 +733,7 @@ module.exports = function (webpackEnv) {
             configOverwrite: {
               compilerOptions: {
                 sourceMap: isEnvProduction
-                  ? shouldUseSourceMap
+                  ? (shouldUseSourceMap && !isRemoteEntry)
                   : isEnvDevelopment,
                 skipLibCheck: true,
                 inlineSourceMap: false,
@@ -805,7 +805,7 @@ module.exports = function (webpackEnv) {
           generateStatsFile:
             webpackOverrideConfig.generateBundleAnalyzerStatsFile || false,
         }),
-      shouldUseSourceMap &&
+      shouldUseSourceMap && !isRemoteEntry &&
         isEnvProduction &&
         new SentryWebpackPlugin({
           // sentry-cli configuration
