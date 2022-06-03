@@ -1,0 +1,17 @@
+name: Trufflehog_Leaked_Secrets_Scan
+on: [push,pull_request]
+jobs:
+  TruffleHog:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout_code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: TruffleHog OSS scan
+        uses: trufflesecurity/trufflehog@v3.4.3
+        with:
+          path: ./
+          base: ${{ github.event.repository.default_branch }}
+          head: HEAD
+          scanArguments: "--regex --entropy=False --debug"
