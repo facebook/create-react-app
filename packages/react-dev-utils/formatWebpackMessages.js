@@ -7,7 +7,6 @@
 
 'use strict';
 
-const chalk = require('chalk');
 const friendlySyntaxErrorLabel = 'Syntax error:';
 
 function isLikelyASyntaxError(message) {
@@ -16,7 +15,19 @@ function isLikelyASyntaxError(message) {
 
 // Cleans up webpack error messages.
 function formatMessage(message) {
-  let lines = message.split('\n');
+  let lines = [];
+
+  if (typeof message === 'string') {
+    lines = message.split('\n');
+  } else if ('message' in message) {
+    lines = message['message'].split('\n');
+  } else if (Array.isArray(message)) {
+    message.forEach(message => {
+      if ('message' in message) {
+        lines = message['message'].split('\n');
+      }
+    });
+  }
 
   // Strip webpack-added headers off errors/warnings
   // https://github.com/webpack/webpack/blob/master/lib/ModuleError.js
@@ -74,13 +85,11 @@ function formatMessage(message) {
   }
 
   // Add helpful message for users trying to use Sass for the first time
-  if (lines[1] && lines[1].match(/Cannot find module.+node-sass/)) {
-    lines[1] = 'To import Sass files, you first need to install node-sass.\n';
+  if (lines[1] && lines[1].match(/Cannot find module.+sass/)) {
+    lines[1] = 'To import Sass files, you first need to install sass.\n';
     lines[1] +=
-      'Run `npm install node-sass` or `yarn add node-sass` inside your workspace.';
+      'Run `npm install sass` or `yarn add sass` inside your workspace.';
   }
-
-  lines[0] = chalk.inverse(lines[0]);
 
   message = lines.join('\n');
   // Internal stacks are generally useless so we strip them... with the

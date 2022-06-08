@@ -1,3 +1,5 @@
+'use strict';
+
 const testSetup = require('../__shared__/test-setup');
 
 const fs = require('fs-extra');

@@ -1,6 +1,6 @@
 {
   "name": "cra-template-typescript",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "keywords": [
     "react",
     "create-react-app",
@@ -15,7 +15,7 @@
   },
   "license": "MIT",
   "engines": {
-    "node": ">=10"
+    "node": ">=14"
   },
   "bugs": {
     "url": "https://github.com/facebook/create-react-app/issues"

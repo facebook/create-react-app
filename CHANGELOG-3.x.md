@@ -330,7 +330,7 @@ v3.3.0 is a minor release that adds new features, including custom templates and
 
 You can now create a new app using custom templates.
 
-We've published our existing templates as [`cra-template`](https://github.com/facebook/create-react-app/tree/master/packages/cra-template) and [`cra-template-typescript`](https://github.com/facebook/create-react-app/tree/master/packages/cra-template-typescript), but we expect to see many great templates from the community over the coming weeks.
+We've published our existing templates as [`cra-template`](https://github.com/facebook/create-react-app/tree/main/packages/cra-template) and [`cra-template-typescript`](https://github.com/facebook/create-react-app/tree/main/packages/cra-template-typescript), but we expect to see many great templates from the community over the coming weeks.
 
 The below command shows how you can create a new app with `cra-template-typescript`.
 

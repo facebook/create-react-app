@@ -24,7 +24,7 @@ class BuiltEmitter extends Component {
 
     // Class components must call this.props.onReady when they're ready for the test.
     // We will assume functional components are ready immediately after mounting.
-    if (!Component.isPrototypeOf(feature)) {
+    if (!Object.prototype.isPrototypeOf.call(Component, feature)) {
       this.handleReady();
     }
   }
