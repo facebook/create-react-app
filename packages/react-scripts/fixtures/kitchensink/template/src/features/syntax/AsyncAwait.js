@@ -10,9 +10,16 @@ async function load() {
   ];
 }
 
-const x = async (y: void) => {
+/* eslint-disable */
+// Regression test for https://github.com/facebook/create-react-app/issues/3055
+const x = async (
+  /* prettier-ignore */
+  y: void
+) => {
   const z = await y;
 };
+/* eslint-enable */
+
 export default class AsyncAwait extends Component {
   static propTypes = {
     onReady: PropTypes.func.isRequired,
