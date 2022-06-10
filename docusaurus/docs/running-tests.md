@@ -202,6 +202,7 @@ Supported overrides:
 - [`resetModules`](https://jestjs.io/docs/en/configuration.html#resetmodules-boolean)
 - [`restoreMocks`](https://jestjs.io/docs/en/configuration#restoremocks-boolean)
 - [`snapshotSerializers`](https://jestjs.io/docs/en/configuration.html#snapshotserializers-array-string)
+- [`snapshotResolver`](https://jestjs.io/docs/en/configuration#snapshotresolver-string)
 - [`testMatch`](https://jestjs.io/docs/en/configuration#testmatch-arraystring)
 - [`transform`](https://jestjs.io/docs/en/configuration.html#transform-object-string-pathtotransformer-pathtotransformer-object)
 - [`transformIgnorePatterns`](https://jestjs.io/docs/en/configuration.html#transformignorepatterns-array-string)
@@ -227,7 +228,8 @@ Example package.json:
       }
     },
     "coverageReporters": ["text"],
-    "snapshotSerializers": ["my-serializer-module"]
+    "snapshotSerializers": ["my-serializer-module"],
+    "snapshotResolver": "my-resolver-module"
   }
 }
 ```

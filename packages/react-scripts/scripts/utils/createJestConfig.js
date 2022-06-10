@@ -90,6 +90,7 @@ module.exports = (resolve, rootDir, isEjecting) => {
     'transform',
     'transformIgnorePatterns',
     'watchPathIgnorePatterns',
+    'snapshotResolver',
   ];
   if (overrides) {
     supportedKeys.forEach(key => {
