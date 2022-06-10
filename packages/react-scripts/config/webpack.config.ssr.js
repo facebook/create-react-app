@@ -25,7 +25,6 @@ const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 // const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 // const safePostCssParser = require('postcss-safe-parser');
 // const ManifestPlugin = require('webpack-manifest-plugin');
-const SubresourceIntegrityPlugin = require('webpack-subresource-integrity');
 // const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 // const WorkboxWebpackPlugin = require('workbox-webpack-plugin');
 const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
@@ -190,7 +189,9 @@ module.exports = function (webpackEnv) {
           {
             loader: require.resolve('resolve-url-loader'),
             options: {
-              sourceMap: isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
+              sourceMap: isEnvProduction
+                ? shouldUseSourceMap
+                : isEnvDevelopment,
               root: paths.appSrc,
             },
           },
@@ -203,7 +204,7 @@ module.exports = function (webpackEnv) {
               },
             },
           },
-        ].filter(Boolean),
+        ].filter(Boolean)
       );
     }
     return loaders;
@@ -248,7 +249,7 @@ module.exports = function (webpackEnv) {
           ]
         : paths.appSsrJs,
     output: {
-      ...require('../backpack-addons/crossOriginLoading'),  // #backpack-addon crossOriginLoading
+      ...require('../backpack-addons/crossOriginLoading'), // #backpack-addon crossOriginLoading
       // The build folder.
       path: needBuildSsr ? paths.appBuild : paths.appBuildSsr,
       // Add /* filename */ comments to generated require()s in the output.
@@ -382,7 +383,7 @@ module.exports = function (webpackEnv) {
       //       name: entrypoint => `runtime-${entrypoint.name}`,
       //     }
       //   : false,
-      ...require('../backpack-addons/runtimeChunk').ssrRuntimeChunk, // #backpack-addons runtimeChunk 
+      ...require('../backpack-addons/runtimeChunk').ssrRuntimeChunk, // #backpack-addons runtimeChunk
     },
     ...require('../backpack-addons/externals').ssrExternals(), // #backpack-addons externals
     resolve: {
@@ -457,7 +458,7 @@ module.exports = function (webpackEnv) {
                 name: 'static/media/[name].[hash:8].[ext]',
               },
             },
-            require('../backpack-addons/amdExcludes'),  // #backpack-addons amdExcludes
+            require('../backpack-addons/amdExcludes'), // #backpack-addons amdExcludes
             // "url" loader works like "file" loader except that it embeds assets
             // smaller than specified limit in bytes as data URLs to avoid requests.
             // A missing `test` is equivalent to a match.
@@ -473,7 +474,7 @@ module.exports = function (webpackEnv) {
             // The preset includes JSX, Flow, TypeScript, and some ESnext features.
             {
               test: /\.(js|mjs|jsx|ts|tsx)$/,
-              include: require('../backpack-addons/babelIncludePrefixes')(),  // #backpack-addon babelIncludePrefixes
+              include: require('../backpack-addons/babelIncludePrefixes')(), // #backpack-addon babelIncludePrefixes
               loader: require.resolve('babel-loader'),
               options: {
                 customize: require.resolve(
@@ -538,7 +539,7 @@ module.exports = function (webpackEnv) {
             {
               test: /\.(js|mjs|jsx|ts|tsx)$/,
               exclude: /\.storybook/,
-              include: require('../backpack-addons/babelIncludePrefixes')(),  // #backpack-addon babelIncludePrefixes
+              include: require('../backpack-addons/babelIncludePrefixes')(), // #backpack-addon babelIncludePrefixes
               use: [
                 // {
                 //   loader: require.resolve('thread-loader'),
@@ -652,7 +653,9 @@ module.exports = function (webpackEnv) {
             // of CSS.
             // By default we support CSS Modules with the extension .module.css
             {
-              test: require('../backpack-addons/cssModules').getStyleTestRegexes('css'),  // #backpack-addons cssModulesEnabled
+              test: require('../backpack-addons/cssModules').getStyleTestRegexes(
+                'css'
+              ), // #backpack-addons cssModulesEnabled
               exclude: cssModuleRegex,
               use: getStyleLoaders({
                 importLoaders: 1,
@@ -672,7 +675,9 @@ module.exports = function (webpackEnv) {
             // Adds support for CSS Modules (https://github.com/css-modules/css-modules)
             // using the extension .module.css
             {
-              test: require('../backpack-addons/cssModules').getStyleTestRegexes('cssModule'),  // #backpack-addons cssModulesEnabled
+              test: require('../backpack-addons/cssModules').getStyleTestRegexes(
+                'cssModule'
+              ), // #backpack-addons cssModulesEnabled
               use: getStyleLoaders({
                 importLoaders: 1,
                 sourceMap: isEnvProduction
@@ -688,7 +693,9 @@ module.exports = function (webpackEnv) {
             // By default we support SASS Modules with the
             // extensions .module.scss or .module.sass
             {
-              test: require('../backpack-addons/cssModules').getStyleTestRegexes('sass'), // #backpack-addons cssModulesEnabled
+              test: require('../backpack-addons/cssModules').getStyleTestRegexes(
+                'sass'
+              ), // #backpack-addons cssModulesEnabled
               exclude: sassModuleRegex,
               use: getStyleLoaders(
                 {
@@ -715,7 +722,9 @@ module.exports = function (webpackEnv) {
             // Adds support for CSS Modules, but using SASS
             // using the extension .module.scss or .module.sass
             {
-              test: require('../backpack-addons/cssModules').getStyleTestRegexes('sassModule'), // #backpack-addons cssModulesEnabled
+              test: require('../backpack-addons/cssModules').getStyleTestRegexes(
+                'sassModule'
+              ), // #backpack-addons cssModulesEnabled
               use: getStyleLoaders(
                 {
                   // When using cache-loader, the total count of loaders is up to 4 including cache-loader below the css-loader
