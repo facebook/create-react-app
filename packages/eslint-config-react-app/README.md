@@ -16,10 +16,10 @@ The easiest way to use this configuration is with [Create React App](https://git
 
 If you want to use this ESLint configuration in a project not built with Create React App, you can install it with the following steps.
 
-First, install this package, ESLint and the necessary plugins.
+First, install this package and ESLint.
 
 ```sh
-npm install --save-dev eslint-config-react-app @typescript-eslint/eslint-plugin@^4.0.0 @typescript-eslint/parser@^4.0.0 babel-eslint@^10.0.0 eslint@^7.5.0 eslint-plugin-flowtype@^5.2.0 eslint-plugin-import@^2.22.0 eslint-plugin-jsx-a11y@^6.3.1 eslint-plugin-react@^7.20.3 eslint-plugin-react-hooks@^4.0.8
+npm install --save-dev eslint-config-react-app eslint@^8.0.0
 ```
 
 Then create a file named `.eslintrc.json` with following contents in the root folder of your project:
@@ -30,19 +30,13 @@ Then create a file named `.eslintrc.json` with following contents in the root fo
 }
 ```
 
-That's it! You can override the settings from `eslint-config-react-app` by editing the `.eslintrc.json` file. Learn more about [configuring ESLint](http://eslint.org/docs/user-guide/configuring) on the ESLint website.
+That's it! You can override the settings from `eslint-config-react-app` by editing the `.eslintrc.json` file. Learn more about [configuring ESLint](https://eslint.org/docs/user-guide/configuring) on the ESLint website.
 
 ## Jest rules
 
 This config also ships with optional Jest rules for ESLint (based on [`eslint-plugin-jest`](https://github.com/jest-community/eslint-plugin-jest)).
 
-You'll first need to add the ESLint plugin for Jest (if you don't already have it installed).
-
-```sh
-npm install --save-dev eslint-plugin-jest@^24.0.0 eslint-plugin-testing-library&^3.9.0
-```
-
-You can then enable these rules by adding the Jest config to the `extends` array in your ESLint config.
+You can enable these rules by adding the Jest config to the `extends` array in your ESLint config.
 
 ```json
 {

@@ -140,8 +140,8 @@ module.exports = {
       },
     ],
     'no-multi-str': 'warn',
-    'no-native-reassign': 'warn',
-    'no-negated-in-lhs': 'warn',
+    'no-global-assign': 'warn',
+    'no-unsafe-negation': 'warn',
     'no-new-func': 'warn',
     'no-new-object': 'warn',
     'no-new-symbol': 'warn',
@@ -280,7 +280,7 @@ module.exports = {
     'jsx-a11y/role-supports-aria-props': 'warn',
     'jsx-a11y/scope': 'warn',
 
-    // https://github.com/facebook/react/tree/master/packages/eslint-plugin-react-hooks
+    // https://github.com/facebook/react/tree/main/packages/eslint-plugin-react-hooks
     'react-hooks/rules-of-hooks': 'error',
 
     // https://github.com/gajus/eslint-plugin-flowtype

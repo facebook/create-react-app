@@ -49,6 +49,10 @@ const validateProjectName = require('validate-npm-package-name');
 
 const packageJson = require('./package.json');
 
+function isUsingYarn() {
+  return (process.env.npm_config_user_agent || '').indexOf('yarn') === 0;
+}
+
 let projectName;
 
 function init() {
@@ -69,7 +73,6 @@ function init() {
       '--template <path-to-template>',
       'specify a template for the created project'
     )
-    .option('--use-npm')
     .option('--use-pnp')
     .allowUnknownOption()
     .on('--help', () => {
@@ -206,14 +209,8 @@ function init() {
         console.error(
           chalk.yellow(
             `You are running \`create-react-app\` ${packageJson.version}, which is behind the latest release (${latest}).\n\n` +
-              'We no longer support global installation of Create React App.'
+              'We recommend always using the latest version of create-react-app if possible.'
           )
-        );
-        console.log();
-        console.log(
-          'Please remove any global installs with one of the following commands:\n' +
-            '- npm uninstall -g create-react-app\n' +
-            '- yarn global remove create-react-app'
         );
         console.log();
         console.log(
@@ -221,27 +218,32 @@ function init() {
             'https://create-react-app.dev/docs/getting-started/'
         );
         console.log();
-        process.exit(1);
       } else {
+        const useYarn = isUsingYarn();
         createApp(
           projectName,
           program.verbose,
           program.scriptsVersion,
           program.template,
-          program.useNpm,
+          useYarn,
           program.usePnp
         );
       }
     });
 }
 
-function createApp(name, verbose, version, template, useNpm, usePnp) {
-  const unsupportedNodeVersion = !semver.satisfies(process.version, '>=10');
+function createApp(name, verbose, version, template, useYarn, usePnp) {
+  const unsupportedNodeVersion = !semver.satisfies(
+    // Coerce strings with metadata (i.e. `15.0.0-nightly`).
+    semver.coerce(process.version),
+    '>=14'
+  );
+
   if (unsupportedNodeVersion) {
     console.log(
       chalk.yellow(
         `You are using Node ${process.version} so the project will be bootstrapped with an old unsupported version of tools.\n\n` +
-          `Please update to Node 10 or higher for a better, fully supported experience.\n`
+          `Please update to Node 14 or higher for a better, fully supported experience.\n`
       )
     );
     // Fall back to latest supported react-scripts on Node 4
@@ -271,7 +273,6 @@ function createApp(name, verbose, version, template, useNpm, usePnp) {
     JSON.stringify(packageJson, null, 2) + os.EOL
   );
 
-  const useYarn = useNpm ? false : shouldUseYarn();
   const originalDirectory = process.cwd();
   process.chdir(root);
   if (!useYarn && !checkThatNpmCanReadCwd()) {
@@ -317,23 +318,6 @@ function createApp(name, verbose, version, template, useNpm, usePnp) {
     }
   }
 
-  if (useYarn) {
-    let yarnUsesDefaultRegistry = true;
-    try {
-      yarnUsesDefaultRegistry =
-        execSync('yarnpkg config get registry').toString().trim() ===
-        'https://registry.yarnpkg.com';
-    } catch (e) {
-      // ignore
-    }
-    if (yarnUsesDefaultRegistry) {
-      fs.copySync(
-        require.resolve('./yarn.lock.cached'),
-        path.join(root, 'yarn.lock')
-      );
-    }
-  }
-
   run(
     root,
     appName,
@@ -344,15 +328,6 @@ function createApp(name, verbose, version, template, useNpm, usePnp) {
     useYarn,
     usePnp
   );
-}
-
-function shouldUseYarn() {
-  try {
-    execSync('yarnpkg --version', { stdio: 'ignore' });
-    return true;
-  } catch (e) {
-    return false;
-  }
 }
 
 function install(root, useYarn, usePnp, dependencies, verbose, isOnline) {
@@ -387,6 +362,7 @@ function install(root, useYarn, usePnp, dependencies, verbose, isOnline) {
       command = 'npm';
       args = [
         'install',
+        '--no-audit', // https://github.com/facebook/create-react-app/issues/11174
         '--save',
         '--save-exact',
         '--loglevel',
@@ -512,7 +488,7 @@ function run(
           },
           [root, appName, verbose, originalDirectory, templateName],
           `
-        var init = require('${packageName}/scripts/init.js');
+        const init = require('${packageName}/scripts/init.js');
         init.apply(null, JSON.parse(process.argv[1]));
       `
         );
@@ -521,7 +497,7 @@ function run(
           console.log(
             chalk.yellow(
               `\nNote: the project was bootstrapped with an old unsupported version of tools.\n` +
-                `Please update to Node >=10 and npm >=6 to get supported tools in new projects.\n`
+                `Please update to Node >=14 and npm >=6 to get supported tools in new projects.\n`
             )
           );
         }
@@ -540,11 +516,7 @@ function run(
         console.log();
 
         // On 'exit' we will delete these files from target directory.
-        const knownGeneratedFiles = [
-          'package.json',
-          'yarn.lock',
-          'node_modules',
-        ];
+        const knownGeneratedFiles = ['package.json', 'node_modules'];
         const currentFiles = fs.readdirSync(path.join(root));
         currentFiles.forEach(file => {
           knownGeneratedFiles.forEach(fileToMatch => {

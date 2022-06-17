@@ -1,4 +1,6 @@
 {
+  "name": "cra-docs",
+  "private": true,
   "scripts": {
     "start": "docusaurus start",
     "build": "docusaurus build",
