@@ -69,7 +69,7 @@ However, they [can make debugging deployments more
 challenging](https://github.com/facebook/create-react-app/issues/2398).
 
 The
-[`workbox-webpack-plugin`](https://developers.google.com/web/tools/workbox/modules/workbox-webpack-plugin)
+[`workbox-webpack-plugin`](https://developer.chrome.com/docs/workbox/modules/workbox-webpack-plugin/)
 is integrated into production configuration, and it will take care of compiling
 a service worker file that will automatically precache all of your
 `webpack`-generated assets and keep them up to date as you deploy updates. The
