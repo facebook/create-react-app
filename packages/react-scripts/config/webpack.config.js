@@ -17,7 +17,6 @@ const InlineChunkHtmlPlugin = require('react-dev-utils/InlineChunkHtmlPlugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin').default;
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
-const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
 const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 const WorkboxWebpackPlugin = require('workbox-webpack-plugin');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
@@ -245,12 +244,13 @@ module.exports = function (webpackEnv) {
   ) =>
     [
       // Handle node_modules packages that contain sourcemaps
-      shouldUseSourceMap && !isRemoteEntry && {
-        enforce: 'pre',
-        exclude: [/@babel(?:\/|\\{1,2})runtime/, /node_modules/],
-        test: /\.(js|mjs|jsx|ts|tsx)$/,
-        loader: require.resolve('source-map-loader'),
-      },
+      shouldUseSourceMap &&
+        !isRemoteEntry && {
+          enforce: 'pre',
+          exclude: [/@babel(?:\/|\\{1,2})runtime/, /node_modules/],
+          test: /\.(js|mjs|jsx|ts|tsx)$/,
+          loader: require.resolve('source-map-loader'),
+        },
       {
         // "oneOf" will traverse all following loaders until one will
         // match the requirements. When no loader matches it will fall
@@ -676,30 +676,6 @@ module.exports = function (webpackEnv) {
               }
             : {}),
         }),
-      // Generate an asset manifest file with the following content:
-      // - "files" key: Mapping of all asset filenames to their corresponding
-      //   output file so that tools can pick it up without having to parse
-      //   `index.html`
-      // - "entrypoints" key: Array of files which are included in `index.html`,
-      //   can be used to reconstruct the HTML if necessary
-      new WebpackManifestPlugin({
-        fileName: 'asset-manifest.json',
-        publicPath: paths.publicUrlOrPath,
-        generate: (seed, files, entrypoints) => {
-          const manifestFiles = files.reduce((manifest, file) => {
-            manifest[file.name] = file.path;
-            return manifest;
-          }, seed);
-          const entrypointFiles = entrypoints.main.filter(
-            fileName => !fileName.endsWith('.map')
-          );
-
-          return {
-            files: manifestFiles,
-            entrypoints: entrypointFiles,
-          };
-        },
-      }),
       // Moment.js is an extremely popular library that bundles large locale files
       // by default due to how Webpack interprets its code. This is a practical
       // solution that requires the user to opt into importing specific locales.
@@ -733,7 +709,7 @@ module.exports = function (webpackEnv) {
             configOverwrite: {
               compilerOptions: {
                 sourceMap: isEnvProduction
-                  ? (shouldUseSourceMap && !isRemoteEntry)
+                  ? shouldUseSourceMap && !isRemoteEntry
                   : isEnvDevelopment,
                 skipLibCheck: true,
                 inlineSourceMap: false,
@@ -805,7 +781,8 @@ module.exports = function (webpackEnv) {
           generateStatsFile:
             webpackOverrideConfig.generateBundleAnalyzerStatsFile || false,
         }),
-      shouldUseSourceMap && !isRemoteEntry &&
+      shouldUseSourceMap &&
+        !isRemoteEntry &&
         isEnvProduction &&
         new SentryWebpackPlugin({
           // sentry-cli configuration
@@ -935,18 +912,24 @@ module.exports = function (webpackEnv) {
         new CssMinimizerPlugin(),
       ],
       splitChunks: {
-        // name: false,
-        // minSize: 20000,
-        // maxSize: 0,
-        // chunks: 'all',
-        // minSize: 20000,
-        // minChunks: 1,
-        // maxAsyncRequests: 30,
-        // maxInitialRequests: 30,
-        // automaticNameDelimiter: '.',
+        chunks: 'all',
+        minSize: 20000,
+        minRemainingSize: 0,
+        minChunks: 1,
+        maxAsyncRequests: 30,
+        maxInitialRequests: 30,
+        enforceSizeThreshold: 50000,
         cacheGroups: {
-          // default: false,
-          vendors: false,
+          defaultVendors: {
+            test: /[\\/]node_modules[\\/]/,
+            priority: -10,
+            reuseExistingChunk: true,
+          },
+          default: {
+            minChunks: 2,
+            priority: -20,
+            reuseExistingChunk: true,
+          },
           localesEN: {
             test: /[\\/]locales[\\/](en)[\\/]/,
             name: 'localesEN',
@@ -966,7 +949,7 @@ module.exports = function (webpackEnv) {
       },
       // Keep the runtime chunk separated to enable long term caching
       // https://twitter.com/wSokra/status/969679223278505985
-      runtimeChunk: false,
+      runtimeChunk: 'single',
     },
     resolve: {
       // This allows you to set a fallback for where webpack should look for modules.
