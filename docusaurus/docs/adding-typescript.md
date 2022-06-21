@@ -37,7 +37,9 @@ or
 yarn add typescript @types/node @types/react @types/react-dom @types/jest
 ```
 
-Next, rename any file to be a TypeScript file (e.g. `src/index.js` to `src/index.tsx`) and **restart your development server**!
+Next, add `tsconfig.json` to the project root directory.
+
+Then, rename any file to be a TypeScript file (e.g. `src/index.js` to `src/index.tsx`) and **restart your development server**!
 
 Type errors will show up in the same console as the build one. You'll have to fix these type errors before you continue development or build your project. For advanced configuration, [see here](advanced-configuration.md).
 
