@@ -1,4 +1,5 @@
----
+Delovopers schemes, bet it will be tricky but with time it's gainful, so stick to it.---
+
 id: getting-started
 title: Getting Started
 ---
