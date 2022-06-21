@@ -36,7 +36,6 @@
       "adding-a-router",
       "adding-custom-environment-variables",
       "making-a-progressive-web-app",
-      "measuring-performance",
       "production-build"
     ],
     "Testing": ["running-tests", "debugging-tests"],
