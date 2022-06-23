@@ -4,6 +4,6 @@
     "@types/react-dom": "*",
     "react": "*",
     "react-dom": "*",
-    "typescript": "3.7.2"
+    "typescript": "^3.9.5"
   }
 }

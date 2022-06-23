@@ -1,3 +1,5 @@
+'use strict';
+
 const testSetup = require('../__shared__/test-setup');
 
 const fs = require('fs-extra');
@@ -100,7 +102,7 @@ test('helps when users tries to use sass', async () => {
   expect(stdout).toBeFalsy();
   // TODO: Snapshots differ between Node 10/12 as the call stack log output has changed.
   expect(stderr).toContain(
-    'To import Sass files, you first need to install node-sass.'
+    'To import Sass files, you first need to install sass.'
   );
 });
 
@@ -125,12 +127,14 @@ test('formats case sensitive path error', async () => {
     path.join(testSetup.testDirectory, 'src', 'App.js')
   );
 
-  const { stdout, stderr } = await testSetup.scripts.start({ smoke: true });
+  const { stderr } = await testSetup.scripts.start({ smoke: true });
   if (process.platform === 'darwin') {
+    // eslint-disable-next-line jest/no-conditional-expect
     expect(stderr).toMatch(
       `Cannot find file: 'export5.js' does not match the corresponding name on disk: './src/Export5.js'.`
     );
   } else {
+    // eslint-disable-next-line jest/no-conditional-expect
     expect(stderr).not.toEqual(''); // TODO: figure out how we can test this on Linux/Windows
     // I believe getting this working requires we tap into enhanced-resolve
     // pipeline, which is debt we don't want to take on right now.

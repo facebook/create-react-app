@@ -49,7 +49,7 @@ reportWebVitals(sendToAnalytics);
 > **Note:** If you use Google Analytics, use the `id` value to make it easier to construct metric distributions manually (to calculate percentiles, etc…).
 >
 > ```js
-> function sendToAnalytics({id, name, value}) {
+> function sendToAnalytics({ id, name, value }) {
 >   ga('send', 'event', {
 >     eventCategory: 'Web Vitals',
 >     eventAction: name,
@@ -58,7 +58,7 @@ reportWebVitals(sendToAnalytics);
 >     nonInteraction: true, // avoids affecting bounce rate
 >   });
 > }
-> 
+>
 > reportWebVitals(sendToAnalytics);
 > ```
 >
