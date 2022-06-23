@@ -1,6 +1,17 @@
 # `backpack-react-scripts` Change Log
 
+## 10.0.2
+
+- Fix security issues
+  - Add `Node.js requirement` and `Script change` in `README.md`
+  - Delete the yarn.lock
+  - Bump up 'lerna' to version 5.1.0
+  - Bump up 'lerna-changelog' to version 2.2.0
+  - Bump up 'browserslist' to version 4.16.5
+  - Bump up 'immer' to version 9.0.6
+
 ## 10.0.1
+
 - Extract the existing custom features from the BRS fork branch
   - Extract custom `ssr` features into backpack-addons folder
 

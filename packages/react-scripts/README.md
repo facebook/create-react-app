@@ -2,11 +2,15 @@
 
 ### **Important:** The currently supported version of **CRA** by `backpack-react-scripts` is up to `v4.0.3`. Versions above this may not work.
 
+Node.js requirement - Because of the EOF for Node.js 12 and BRS has used a higher version of node-sass, you should make sure that your Node.js is 14+ (Better to use Node.js 16+).
+
+Script change - When executing the command npx create-react-app my-app --scripts-version=@skyscanner/backpack-react-scripts --template @skyscanner/backpack --use-npm, npx will install the latest create-react-app to your machine, and create-react-app will also check if you are using the latest create-react-app or not, if not, this command will break down and you can't create a project to use BRS as bundler, so for now you can't use commands like npx create-react-app@4.0.3 my-app --scripts-version=@skyscanner/backpack-react-scripts --template @skyscanner/backpack --use-npm to create a project, instead you should use this command: npx create-react-app my-app --scripts-version=@skyscanner/backpack-react-scripts --template @skyscanner/backpack --use-npm.
+
 This package is a fork of [Create React App](https://github.com/facebookincubator/create-react-app) (specifically the
 `react-scripts` package). It's intended to be used in conjuction with `create-react-app` like so:
 
 ```sh
-npx create-react-app@4.0.3 my-app --scripts-version=@skyscanner/backpack-react-scripts --template @skyscanner/backpack --use-npm
+npx create-react-app my-app --scripts-version=@skyscanner/backpack-react-scripts --template @skyscanner/backpack --use-npm
 
 # start your app development like you normally would with `create-react-app`
 cd my-app
