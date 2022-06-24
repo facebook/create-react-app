@@ -2,13 +2,14 @@
 
 # dependencies
 /node_modules
+.pnp.* # comment for zero-install
 .yarn/*
 # !.yarn/cache # uncomment for zero-install
-!.yarn/releases
+!.yarn/patches
 !.yarn/plugins
+!.yarn/releases
 !.yarn/sdks
 !.yarn/versions
-.pnp.* # comment for zero-install
 
 # testing
 /coverage
