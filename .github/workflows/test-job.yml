@@ -1,41 +1,46 @@
 #
-# Azure Pipelines job for building and testing create-react-app on Linux, Windows, and macOS.
+# GitHub Actions workflow for building and testing create-react-app on Linux, Windows, and macOS.
 #
 
-parameters:
-  name: ''
-  testScript: ''
-  configurations:
-    LinuxNode14: { vmImage: 'ubuntu-latest', nodeVersion: 14.x }
-    LinuxNode16: { vmImage: 'ubuntu-latest', nodeVersion: 16.x }
+on:
+  workflow_call:
+    inputs:
+      name:
+        default: ''
+        required: true
+        type: string
+      testScript:
+        default: ''
+        required: true
+        type: string
 
 jobs:
-  - job: ${{ parameters.name }}
+  build:
+    name: ${{ inputs.name }}
     strategy:
       matrix:
-        ${{ insert }}: ${{ parameters.configurations }}
-    pool:
-      vmImage: $(vmImage)
+        node-version: [14.x, 16.x]
+    runs-on: ubuntu-latest
     steps:
-      - script: |
+      - run: |
           git config --global core.autocrlf false
           git config --global user.name "Create React App"
           git config --global user.email "cra@email.com"
-        displayName: 'Initialize Git config'
+        name: 'Initialize Git config'
 
-      - checkout: self
-        path: create-react-app
+      - uses: actions/checkout@v2
 
-      - task: NodeTool@0
-        inputs:
-          versionSpec: $(nodeVersion)
-        displayName: 'Install Node.js'
+      - uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+        name: 'Install Node.js'
 
-      - script: npm i -g npm@8
-        displayName: 'Update npm to v8'
+      - run: npm i -g npm@8
+        name: 'Update npm to v8'
 
-      - script: npm ci
-        displayName: 'Run npm ci'
+      - run: npm ci
+        name: 'Run npm ci'
 
-      - bash: ${{ parameters.testScript }}
-        displayName: 'Run tests'
+      - run: ${{ inputs.testScript }}
+        name: 'Run tests'
