@@ -19,7 +19,7 @@ env:
 # ******************************************************************************
 jobs:
   simple:
-    uses: ./.github/workflows/test-job
+    uses: ./.github/workflows/test-job.yml
     with:
       name: Simple
       testScript: tasks/e2e-simple.sh
@@ -28,7 +28,7 @@ jobs:
   # Installs test suite
   # ******************************************************************************
   installs:
-    uses: ./.github/workflows/test-job
+    uses: ./.github/workflows/test-job.yml
     with:
       name: Installs
       testScript: tasks/e2e-installs.sh
@@ -37,7 +37,7 @@ jobs:
   # Kitchensink test suite
   # ******************************************************************************
   kitchensink:
-    uses: ./.github/workflows/test-job
+    uses: ./.github/workflows/test-job.yml
     with:
       name: Kitchensink
       testScript: tasks/e2e-kitchensink.sh
