@@ -8,6 +8,9 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
 
 env:
   # Sets TEMP to be on the same drive as the cloned source on Windows. This avoids test scripts that "cd" into a directory under TEMP from failing because this directory is on a different drive from the current directory.
