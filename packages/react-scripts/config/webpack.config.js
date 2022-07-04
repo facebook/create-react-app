@@ -920,6 +920,11 @@ module.exports = function (webpackEnv) {
         maxInitialRequests: 30,
         enforceSizeThreshold: 50000,
         cacheGroups: {
+          vendor: {
+            test: /[\\/]node_modules[\\/](react|react-dom)[\\/]/,
+            name: 'vendor',
+            chunks: 'all',
+          },
           defaultVendors: {
             test: /[\\/]node_modules[\\/]/,
             priority: -10,
@@ -949,7 +954,7 @@ module.exports = function (webpackEnv) {
       },
       // Keep the runtime chunk separated to enable long term caching
       // https://twitter.com/wSokra/status/969679223278505985
-      runtimeChunk: 'single',
+      runtimeChunk: false,
     },
     resolve: {
       // This allows you to set a fallback for where webpack should look for modules.
