@@ -4,7 +4,7 @@ title: Making a Progressive Web App
 ---
 
 The production build has all the tools necessary to generate a first-class
-[Progressive Web App](https://developers.google.com/web/progressive-web-apps/),
+[Progressive Web App](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps),
 but **the offline/cache-first behavior is opt-in only**.
 
 Starting with Create React App 4, you can add a `src/service-worker.js` file to
