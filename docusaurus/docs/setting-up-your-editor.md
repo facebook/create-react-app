@@ -69,7 +69,7 @@ Visual Studio Code and WebStorm support debugging out of the box with Create Rea
 
 ### Visual Studio Code
 
-You need to have the latest version of [VS Code](https://code.visualstudio.com) and VS Code [JavaScript Debugger Extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode.js-debug) installed.
+You need to have the latest version of [VS Code](https://code.visualstudio.com) installed.
 
 Then add the block below to your `launch.json` file and put it inside the `.vscode` folder in your app’s root directory.
 
