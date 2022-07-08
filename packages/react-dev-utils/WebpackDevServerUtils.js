@@ -379,6 +379,15 @@ function prepareProxy(proxy, appPublicFolder, servedPathname) {
           proxyReq.setHeader('origin', target);
         }
       },
+      onProxyReqWs: proxyReq => {
+        // Browsers may send Origin headers even with same-origin
+        // requests. It is common for WebSocket servers to check the Origin
+        // header, so we have to change the Origin to match
+        // the target URL.
+        if (proxyReq.getHeader('origin')) {
+          proxyReq.setHeader('origin', target);
+        }
+      },
       onError: onProxyError(target),
       secure: false,
       changeOrigin: true,
