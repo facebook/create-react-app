@@ -87,7 +87,7 @@ labels: 'issue: bug report, needs triage'
   Run the following command in your React app's folder in terminal.
   Note: The result is copied to your clipboard directly.
 
-  `npx create-react-app --info`
+  `npm create react-app --info`
 
   Paste the output of the command in the section below.
 -->

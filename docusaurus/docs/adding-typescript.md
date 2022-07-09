@@ -12,7 +12,7 @@ title: Adding TypeScript
 To start a new Create React App project with [TypeScript](https://www.typescriptlang.org/), you can run:
 
 ```sh
-npx create-react-app my-app --template typescript
+npm create react-app my-app --template typescript
 ```
 
 or

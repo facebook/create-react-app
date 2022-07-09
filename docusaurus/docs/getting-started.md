@@ -9,7 +9,7 @@ applications. It offers a modern build setup with no configuration.
 ## Quick Start
 
 ```sh
-npx create-react-app my-app
+npm create react-app my-app
 cd my-app
 npm start
 ```
@@ -41,7 +41,7 @@ To create a new app, you may choose one of the following methods:
 ### npx
 
 ```sh
-npx create-react-app@latest my-app
+npm create react-app my-app
 ```
 
 _([npx](https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7d4bd282b) comes with npm 5.2+ and higher, see [instructions for older npm versions](https://gist.github.com/gaearon/4064d3c23a77c74a3614c498a8bb1c5f))_
@@ -71,7 +71,7 @@ If you don't select a template, we'll create your project with our base template
 Templates are always named in the format `cra-template-[template-name]`, however you only need to provide the `[template-name]` to the creation command.
 
 ```sh
-npx create-react-app my-app --template [template-name]
+npm create react-app my-app --template [template-name]
 ```
 
 > You can find a list of available templates by searching for ["cra-template-\*"](https://www.npmjs.com/search?q=cra-template-*) on npm.
@@ -83,7 +83,7 @@ Our [Custom Templates](custom-templates.md) documentation describes how you can 
 You can start a new TypeScript app using templates. To use our provided TypeScript template, append `--template typescript` to the creation command.
 
 ```sh
-npx create-react-app my-app --template typescript
+npm create react-app my-app --template typescript
 ```
 
 If you already have a project and would like to add TypeScript, see our [Adding TypeScript](adding-typescript.md) documentation.
@@ -94,7 +94,7 @@ When you create a new app, the CLI will use [npm](https://docs.npmjs.com) or [Ya
 
 ```sh
 # Run this to use npm
-npx create-react-app my-app
+npm create react-app my-app
 # Or run this to use yarn
 yarn create react-app my-app
 ```
