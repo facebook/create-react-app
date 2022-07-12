@@ -75,6 +75,12 @@ const reactRefreshOverlayEntry = require.resolve(
   'react-dev-utils/refreshOverlayInterop'
 );
 
+// The istanbul plugin is not required by ssr. Added it here only to
+// comply with BRS maintenance convention that plugin added to webpack.config.js
+// needs to have an acccordingly config in webpack.config.ssr.js. It can be removed 
+// once such a convention is dropped.
+// const enableIstanbulPlugin = process.env.ENABLE_ISTANBUL_PLUGIN === 'true';
+
 // Some apps do not need the benefits of saving a web request, so not inlining the chunk
 // makes for a smoother build process.
 // const shouldInlineRuntimeChunk = process.env.INLINE_RUNTIME_CHUNK !== 'false';
@@ -524,6 +530,17 @@ module.exports = function (webpackEnv) {
                   isEnvDevelopment &&
                     shouldUseReactRefresh &&
                     require.resolve('react-refresh/babel'),
+                  // The istanbul plugin is not required by ssr. Added it here only to
+                  // comply with BRS maintenance convention that plugin added to webpack.config.js
+                  // needs to have an acccordingly config in webpack.config.ssr.js. It can be removed 
+                  // once such a convention is dropped.
+                  // enableIstanbulPlugin && [
+                  //   require.resolve('babel-plugin-istanbul'),
+                  //     {
+                  //       // do not instrument code coverage for tests / storybook files
+                  //       exclude: ["**/*.test.*", "**/*.stories.*"],
+                  //     },
+                  //   ],
                 ].filter(Boolean),
                 // This is a feature of `babel-loader` for webpack (not Babel itself).
                 // It enables caching results in ./node_modules/.cache/babel-loader/

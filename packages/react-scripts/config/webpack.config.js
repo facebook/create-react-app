@@ -105,6 +105,11 @@ const hasJsxRuntime = (() => {
   }
 })();
 
+// The istanbul plugin is used to instrument code for coverage information, 
+// pass the config ENABLE_ISTANBUL_PLUGIN=true to enable the plugin. Be cautious this will 
+// result in a large increasement on bundle size, so it should never be enabled in prod build.
+const enableIstanbulPlugin = process.env.ENABLE_ISTANBUL_PLUGIN === 'true';
+
 // This is the production and development configuration.
 // It is focused on developer experience, fast rebuilds, and a minimal bundle.
 module.exports = function (webpackEnv) {
@@ -484,6 +489,13 @@ module.exports = function (webpackEnv) {
                   isEnvDevelopment &&
                     shouldUseReactRefresh &&
                     require.resolve('react-refresh/babel'),
+                  enableIstanbulPlugin && [
+                    require.resolve('babel-plugin-istanbul'),
+                      {
+                        // do not instrument code coverage for tests / storybook files
+                        exclude: ["**/*.test.*", "**/*.stories.*"],
+                      },
+                    ],
                 ].filter(Boolean),
                 // This is a feature of `babel-loader` for webpack (not Babel itself).
                 // It enables caching results in ./node_modules/.cache/babel-loader/
