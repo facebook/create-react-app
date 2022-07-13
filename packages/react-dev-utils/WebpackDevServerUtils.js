@@ -359,16 +359,19 @@ function prepareProxy(proxy, appPublicFolder, servedPathname) {
       // We use a heuristic: We want to proxy all the requests that are not meant
       // for static assets and as all the requests for static assets will be using
       // `GET` method, we can proxy all non-`GET` requests.
-      // For `GET` requests, if request `accept`s text/html, we pick /index.html.
+      // For `GET` requests, if request `Accept`s text/html, we pick /index.html.
       // Modern browsers include text/html into `accept` header when navigating.
       // However API calls like `fetch()` won’t generally accept text/html.
+      // Some browsers don't set an `Accept` header on WebSocket upgrade requests,
+      // so we also have a check for those to make sure they are still proxied.
       // If this heuristic doesn’t work well for you, use `src/setupProxy.js`.
       context: function (pathname, req) {
         return (
           req.method !== 'GET' ||
           (mayProxy(pathname) &&
-            req.headers.accept &&
-            req.headers.accept.indexOf('text/html') === -1)
+            ((req.headers.accept &&
+              req.headers.accept.indexOf('text/html') === -1) ||
+              (req.headers.upgrade && req.headers.upgrade === 'websocket')))
         );
       },
       onProxyReq: proxyReq => {
