@@ -1,5 +1,9 @@
 # `backpack-react-scripts` Change Log
 
+## 10.0.4
+
+- Upgrade packages as many as possible in `react-scripts`
+
 ## 10.0.3
 
 - Add babel-istanbul-plugin to support collecting test coverage
