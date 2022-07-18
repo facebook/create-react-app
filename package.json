@@ -34,7 +34,7 @@
     "globby": "^11.0.4",
     "husky": "^4.3.8",
     "jest": "^27.4.3",
-    "lerna": "^4.0.0",
+    "lerna": "^5.0.0",
     "lerna-changelog": "^2.2.0",
     "lint-staged": "^12.1.2",
     "meow": "^9.0.0",
