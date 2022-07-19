@@ -53,11 +53,11 @@ module.exports = (resolve, rootDir, isEjecting) => {
       '[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs|cjs|ts|tsx)$',
       '^.+\\.module\\.(css|sass|scss)$',
     ],
-    modulePaths: Array.isArray(modules.additionalModulePaths)
-      ? modules.additionalModulePaths.map(
+    modulePaths: modules.additionalModulePaths
+      ? modules.additionalModulePaths.relative.map(
           // Absolute paths will cause issues if the ejected jest config is applied on other
-          // machines, so we translate them to relative paths to rootDir
-          modulePath => `<rootDir>/${path.basename(modulePath)}`
+          // machines, so we translate them to relative paths to the rootDir
+          modulePath => path.join('<rootDir>', modulePath)
         )
       : [],
     moduleNameMapper: {
