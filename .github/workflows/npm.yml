@@ -13,7 +13,7 @@ jobs:
       contents: read
       packages: write
     steps:
-      - uses: actions/checkout@v2.4.2
+      - uses: actions/checkout@v3.0.2
         with:
           fetch-depth: 2
       - uses: actions/setup-node@v3
