@@ -22,7 +22,7 @@ function annotation(target: any) {
 }
 
 function propertyDecorator(target: any, key: string) {
-  arguments[2].initializer = function() {
+  arguments[2].initializer = function () {
     return 42;
   };
 }
