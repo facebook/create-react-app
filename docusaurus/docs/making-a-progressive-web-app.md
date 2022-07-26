@@ -49,8 +49,8 @@ file:
 serviceWorkerRegistration.unregister();
 ```
 
-As the comment states, switching `serviceWorker.unregister()` to
-`serviceWorker.register()` will opt you in to using the service worker.
+As the comment states, switching `serviceWorkerRegistration.unregister()` to
+`serviceWorkerRegistration.register()` will opt you in to using the service worker.
 
 ## Why Opt-in?
 
