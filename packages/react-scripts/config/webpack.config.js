@@ -73,6 +73,12 @@ const useTailwind = fs.existsSync(
   path.join(paths.appPath, 'tailwind.config.js')
 );
 
+// Check if FormatJs enabled
+// formatjs.config.js is a file with babel plugin options
+const useFormatJs = fs.existsSync(
+  path.join(paths.appPath, 'formatjs.config.js')
+);
+
 // Get the path to the uncompiled service worker (if it exists).
 const swSrc = paths.swSrc;
 
@@ -453,6 +459,10 @@ module.exports = function (webpackEnv) {
                   isEnvDevelopment &&
                     shouldUseReactRefresh &&
                     require.resolve('react-refresh/babel'),
+                  useFormatJs && [
+                    'formatjs',
+                    require(path.join(paths.appPath, 'formatjs.config.js')),
+                  ],
                 ].filter(Boolean),
                 // This is a feature of `babel-loader` for webpack (not Babel itself).
                 // It enables caching results in ./node_modules/.cache/babel-loader/
