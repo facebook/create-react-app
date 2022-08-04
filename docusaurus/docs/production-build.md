@@ -29,7 +29,7 @@ To deliver the best performance to your users, it's best practice to specify a `
 
 Using `Cache-Control: max-age=31536000` for your `build/static` assets, and `Cache-Control: no-cache` for everything else is a safe and effective starting point that ensures your user's browser will always check for an updated `index.html` file, and will cache all of the `build/static` files for one year. Note that you can use the one year expiration on `build/static` safely because the file contents hash is embedded into the filename.
 
-## Profiling
+## Profilingg
 
 ReactDOM automatically supports profiling in development mode for v16.5+, but since profiling adds some small
 additional overhead it is opt-in for production mode. You can opt-in by using the `--profile` flag. Use `npm run build -- --profile` or `yarn build --profile` to enable profiling in the production build. See the [React docs](https://reactjs.org/docs/optimizing-performance.html#profiling-components-with-the-devtools-profiler) for details about profiling
