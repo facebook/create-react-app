@@ -81,6 +81,8 @@ const cssRegex = /\.css$/;
 const cssModuleRegex = /\.module\.css$/;
 const sassRegex = /\.(scss|sass)$/;
 const sassModuleRegex = /\.module\.(scss|sass)$/;
+const lessRegex = /\.less$/;
+const lessModuleRegex = /\.module\.less$/;
 
 const hasJsxRuntime = (() => {
   if (process.env.DISABLE_NEW_JSX_TRANSFORM === 'true') {
@@ -177,6 +179,12 @@ module.exports = function (webpackEnv) {
       },
     ].filter(Boolean);
     if (preProcessor) {
+      // support antd customize theme
+      const modifyVars = {};
+      const lessToJs = require("less-vars-to-js");
+      const antdCustomizeThemeVariables = lessToJs(fs.readFileSync(path.resolve(paths.appSrc, 'styles/antd.customize.less'), 'utf-8'));
+      Object.assign(modifyVars, antdCustomizeThemeVariables);
+
       loaders.push(
         {
           loader: require.resolve('resolve-url-loader'),
@@ -189,7 +197,20 @@ module.exports = function (webpackEnv) {
           loader: require.resolve(preProcessor),
           options: {
             sourceMap: true,
+            ...(preProcessor === 'less-loader' && {
+              modifyVars,
+              javascriptEnabled: true,
+            })
           },
+        },
+        {
+          loader: require.resolve('style-resources-loader'),
+          options:{
+            patterns: [
+              preProcessor === 'less-loader' && path.resolve(paths.appSrc, "styles/variables.less"),
+              preProcessor === 'sass-loader' && path.resolve(paths.appSrc, 'styles/variables.scss'),
+            ].filter(Boolean)
+          }
         }
       );
     }
@@ -584,6 +605,49 @@ module.exports = function (webpackEnv) {
                 'sass-loader'
               ),
             },
+            // ========= start xiaochuan1719 ======== fixed: less supported
+            // Opt-in support for LESS (using .scss or .less extensions).
+            // By default we support SASS Modules with the extensions .module.less
+            {
+              test: lessRegex,
+              exclude: lessModuleRegex,
+              use: getStyleLoaders(
+                {
+                  importLoaders: 3,
+                  sourceMap: isEnvProduction
+                    ? shouldUseSourceMap
+                    : isEnvDevelopment,
+                  modules: {
+                    mode: 'icss',
+                  },
+                },
+                'less-loader'
+              ),
+              // Don't consider CSS imports dead code even if the
+              // containing package claims to have no side effects.
+              // Remove this when webpack adds a warning or an error for this.
+              // See https://github.com/webpack/webpack/issues/6571
+              sideEffects: true,
+            },
+            // Adds support for CSS Modules, but using LESS
+            // using the extension .module.less
+            {
+              test: lessModuleRegex,
+              use: getStyleLoaders(
+                {
+                  importLoaders: 3,
+                  sourceMap: isEnvProduction
+                    ? shouldUseSourceMap
+                    : isEnvDevelopment,
+                  modules: {
+                    mode: 'local',
+                    getLocalIdent: getCSSModuleLocalIdent,
+                  },
+                },
+                'less-loader'
+              ),
+            },
+            // ========= end xiaochuan1719 ========
             // "file" loader makes sure those assets get served by WebpackDevServer.
             // When you `import` an asset, you get its (virtual) filename.
             // In production, they would get copied to the `build` folder.
