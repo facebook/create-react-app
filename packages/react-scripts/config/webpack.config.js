@@ -386,29 +386,30 @@ module.exports = function (webpackEnv) {
               },
             },
             {
-              test: /\.svg$/,
-              use: [
-                {
-                  loader: require.resolve('@svgr/webpack'),
-                  options: {
-                    prettier: false,
-                    svgo: false,
-                    svgoConfig: {
-                      plugins: [{ removeViewBox: false }],
-                    },
-                    titleProp: true,
-                    ref: true,
-                  },
-                },
-                {
-                  loader: require.resolve('file-loader'),
-                  options: {
-                    name: 'static/media/[name].[hash].[ext]',
-                  },
-                },
-              ],
+              test: /\.svg$/i,
               issuer: {
                 and: [/\.(ts|tsx|js|jsx|md|mdx)$/],
+              },
+              type: 'asset',
+              resourceQuery: /url/, // *.svg?url
+            },
+            {
+              test: /\.svg$/i,
+              issuer: {
+                and: [/\.(ts|tsx|js|jsx|md|mdx)$/],
+              },
+              resourceQuery: { not: [/url/] }, // exclude react component if *.svg?url
+              use: {
+                loader: require.resolve('@svgr/webpack'),
+                options: {
+                  prettier: false,
+                  svgo: false,
+                  svgoConfig: {
+                    plugins: [{ removeViewBox: false }],
+                  },
+                  titleProp: true,
+                  ref: true,
+                },
               },
             },
             // Process application JS with Babel.
