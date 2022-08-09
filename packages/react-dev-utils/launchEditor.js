@@ -259,7 +259,6 @@ function guessEditor() {
 }
 
 function printInstructions(fileName, errorMessage) {
-  console.log();
   console.log(
     chalk.red('Could not open ' + path.basename(fileName) + ' in the editor.')
   );
@@ -271,7 +270,6 @@ function printInstructions(fileName, errorMessage) {
       chalk.red('The editor process exited with an error: ' + errorMessage)
     );
   }
-  console.log();
   console.log(
     'To set up the editor integration, add something like ' +
       chalk.cyan('REACT_EDITOR=atom') +
@@ -281,7 +279,6 @@ function printInstructions(fileName, errorMessage) {
       'and restart the development server. Learn more: ' +
       chalk.green('https://goo.gl/MMTaZt')
   );
-  console.log();
 }
 
 let _childProcess = null;
@@ -336,18 +333,15 @@ function launchEditor(fileName, lineNumber, colNumber) {
     process.platform === 'win32' &&
     !WINDOWS_FILE_NAME_WHITELIST.test(fileName.trim())
   ) {
-    console.log();
     console.log(
       chalk.red('Could not open ' + path.basename(fileName) + ' in the editor.')
     );
-    console.log();
     console.log(
       'When running on Windows, file names are checked against a whitelist ' +
         'to protect against remote code execution attacks. File names may ' +
         'consist only of alphanumeric characters (all languages), periods, ' +
         'dashes, slashes, and underscores.'
     );
-    console.log();
     return;
   }
 
