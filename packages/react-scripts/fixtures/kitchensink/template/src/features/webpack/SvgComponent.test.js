@@ -14,7 +14,7 @@ describe('svg component', () => {
     const div = document.createElement('div');
     ReactDOM.render(<SvgComponent />, div);
     expect(div.innerHTML).toBe(
-      '<logo.svg id="feature-svg-component"></logo.svg>'
+      '<Logo id="feature-svg-component"></Logo>'
     );
   });
 
@@ -22,7 +22,7 @@ describe('svg component', () => {
     const div = document.createElement('div');
     const someRef = React.createRef();
     ReactDOM.render(<SvgComponentWithRef ref={someRef} />, div);
-    const svgElement = div.getElementsByTagName('logo.svg');
+    const svgElement = div.getElementsByTagName('Logo');
     expect(svgElement).toHaveLength(1);
     expect(svgElement[0]).toBe(someRef.current);
   });
