@@ -102,7 +102,7 @@ npm run build
 exists build/*.html
 exists build/static/js/*.js
 exists build/static/css/*.css
-exists build/static/media/*.svg
+# TODO: 'exists build/static/media/*.svg' if size higher than IMAGE_INLINE_SIZE_LIMIT
 exists build/favicon.ico
 
 # Run tests with CI flag
@@ -210,7 +210,7 @@ npm run build
 exists build/*.html
 exists build/static/js/*.js
 exists build/static/css/*.css
-exists build/static/media/*.svg
+# TODO: 'exists build/static/media/*.svg' if size higher than IMAGE_INLINE_SIZE_LIMIT
 exists build/favicon.ico
 
 # Run tests with CI flag
@@ -243,7 +243,7 @@ npm run build
 exists build/*.html
 exists build/static/js/*.js
 exists build/static/css/*.css
-exists build/static/media/*.svg
+# TODO: 'exists build/static/media/*.svg' if size higher than IMAGE_INLINE_SIZE_LIMIT
 exists build/favicon.ico
 
 # Run tests, overriding the watch option to disable it.
