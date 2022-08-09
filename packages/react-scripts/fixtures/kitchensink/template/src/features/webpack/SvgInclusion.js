@@ -6,7 +6,7 @@
  */
 
 import React from 'react';
-import logo from './assets/logo.svg';
+import logo from './assets/logo.svg?url';
 
 const SvgInclusion = () => (
   <img id="feature-svg-inclusion" src={logo} alt="logo" />
