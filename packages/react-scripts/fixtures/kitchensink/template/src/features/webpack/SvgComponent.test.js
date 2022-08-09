@@ -13,7 +13,9 @@ describe('svg component', () => {
   it('renders without crashing', () => {
     const div = document.createElement('div');
     ReactDOM.render(<SvgComponent />, div);
-    expect(div.innerHTML).toBe('<logo.svg></logo.svg>');
+    expect(div.innerHTML).toBe(
+      '<logo.svg id="feature-svg-component"></logo.svg>'
+    );
   });
 
   it('svg root element equals the passed ref', () => {
