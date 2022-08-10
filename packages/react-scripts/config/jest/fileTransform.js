@@ -20,7 +20,7 @@ module.exports = {
       return `const React = require('react');
       module.exports = {
         __esModule: true,
-        default: ${pascalCaseFilename},
+        default: ${assetFilename},
         ReactComponent: React.forwardRef(function ${componentName}(props, ref) {
           return {
             $$typeof: Symbol.for('react.element'),
