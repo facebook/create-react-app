@@ -55,7 +55,7 @@ module.exports = (resolve, rootDir, isEjecting) => {
     modulePaths: modules.additionalModulePaths || [],
     moduleNameMapper: {
       '^react-native$': 'react-native-web',
-      '^.+\\.module\\.(css|sass|scss)$': 'identity-obj-proxy',
+      '^.+\\.module\\.(css|sass|scss)$': 'jest-scss-transform',
       ...(modules.jestAliases || {}),
     },
     moduleFileExtensions: [...paths.moduleFileExtensions, 'node'].filter(
