@@ -47,6 +47,7 @@
     "flow-bin": "^0.116.0",
     "html-entities": "^2.3.2",
     "jest": "^28.1.3",
+    "jest-environment-jsdom": "^28.1.3",
     "jest-fetch-mock": "^3.0.3",
     "object-assign": "^4.1.1",
     "promise": "^8.1.0",
