@@ -43,6 +43,8 @@ Finally **restart your development server**!
 
 Type errors will show up in the same console as the build one. You'll have to fix these type errors before you continue development or build your project. For advanced configuration, [see here](advanced-configuration.md).
 
+Note: You'll need to add a tsconfig.json file by yourself. You could get the content of the file from this [`codegrepper`](https://www.codegrepper.com/code-examples/typescript/tsconfig.json+for+react) saved code.
+
 ## Getting Started with TypeScript and React
 
 You are not required to make a [`tsconfig.json` file](https://www.typescriptlang.org/docs/handbook/tsconfig-json.html), one will be made for you. You are allowed to edit the generated TypeScript configuration.
