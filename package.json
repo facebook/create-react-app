@@ -1,7 +1,8 @@
 {
   "private": true,
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "docusaurus/website"
   ],
   "scripts": {
     "build": "cd packages/react-scripts && node bin/react-scripts.js build",
@@ -17,7 +18,9 @@
     "alex": "alex .",
     "test:integration": "jest test/integration",
     "test": "cd packages/react-scripts && node bin/react-scripts.js test",
-    "format": "prettier --write 'packages/*/*.js' 'packages/*/!(node_modules)/**/*.js'"
+    "eslint": "eslint .",
+    "prettier": "prettier .",
+    "format": "npm run prettier -- --write"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.15.1",

@@ -28,7 +28,8 @@ function extractLocation(token: string): [string, number, number] {
 }
 
 const regexValidFrame_Chrome = /^\s*(at|in)\s.+(:\d+)/;
-const regexValidFrame_FireFox = /(^|@)\S+:\d+|.+line\s+\d+\s+>\s+(eval|Function).+/;
+const regexValidFrame_FireFox =
+  /(^|@)\S+:\d+|.+line\s+\d+\s+>\s+(eval|Function).+/;
 
 function parseStack(stack: string[]): StackFrame[] {
   const frames = stack

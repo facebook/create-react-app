@@ -1,6 +1,0 @@
-{
-  "extends": ["react-app", "react-app/jest"],
-  "rules": {
-    "curly": "warn"
-  }
-}

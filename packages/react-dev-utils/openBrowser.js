@@ -77,6 +77,8 @@ function startBrowserProcess(browser, url, args) {
     // Will use the first open browser found from list
     const supportedChromiumBrowsers = [
       'Google Chrome Canary',
+      'Google Chrome Dev',
+      'Google Chrome Beta',
       'Google Chrome',
       'Microsoft Edge',
       'Brave Browser',
