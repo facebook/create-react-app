@@ -60,9 +60,9 @@ it('sums numbers', () => {
 });
 ```
 
-All `expect()` matchers supported by Jest are [extensively documented here](https://jestjs.io/docs/en/expect.html#content).
+All `expect()` matchers supported by Jest are [extensively documented here](https://jestjs.io/docs/expect).
 
-You can also use [`jest.fn()` and `expect(fn).toBeCalled()`](https://jestjs.io/docs/en/expect.html#tohavebeencalled) to create “spies” or mock functions.
+You can also use [`jest.fn()` and `expect(fn).toBeCalled()`](https://jestjs.io/docs/expect#tohavebeencalled) to create “spies” or mock functions.
 
 ## Testing Components
 
@@ -188,24 +188,24 @@ The [default configuration](https://github.com/facebook/create-react-app/blob/ma
 
 Supported overrides:
 
-- [`clearMocks`](https://jestjs.io/docs/en/configuration.html#clearmocks-boolean)
-- [`collectCoverageFrom`](https://jestjs.io/docs/en/configuration.html#collectcoveragefrom-array)
-- [`coveragePathIgnorePatterns`](https://jestjs.io/docs/en/configuration#coveragepathignorepatterns-arraystring)
-- [`coverageReporters`](https://jestjs.io/docs/en/configuration.html#coveragereporters-array-string)
-- [`coverageThreshold`](https://jestjs.io/docs/en/configuration.html#coveragethreshold-object)
-- [`displayName`](https://jestjs.io/docs/en/configuration.html#displayname-string-object)
-- [`extraGlobals`](https://jestjs.io/docs/en/configuration.html#extraglobals-array-string)
-- [`globalSetup`](https://jestjs.io/docs/en/configuration.html#globalsetup-string)
-- [`globalTeardown`](https://jestjs.io/docs/en/configuration.html#globalteardown-string)
-- [`moduleNameMapper`](https://jestjs.io/docs/en/configuration.html#modulenamemapper-object-string-string)
-- [`resetMocks`](https://jestjs.io/docs/en/configuration.html#resetmocks-boolean)
-- [`resetModules`](https://jestjs.io/docs/en/configuration.html#resetmodules-boolean)
-- [`restoreMocks`](https://jestjs.io/docs/en/configuration#restoremocks-boolean)
-- [`snapshotSerializers`](https://jestjs.io/docs/en/configuration.html#snapshotserializers-array-string)
-- [`testMatch`](https://jestjs.io/docs/en/configuration#testmatch-arraystring)
-- [`transform`](https://jestjs.io/docs/en/configuration.html#transform-object-string-pathtotransformer-pathtotransformer-object)
-- [`transformIgnorePatterns`](https://jestjs.io/docs/en/configuration.html#transformignorepatterns-array-string)
-- [`watchPathIgnorePatterns`](https://jestjs.io/docs/en/configuration.html#watchpathignorepatterns-array-string)
+- [`clearMocks`](https://jestjs.io/docs/configuration#clearmocks-boolean)
+- [`collectCoverageFrom`](https://jestjs.io/docs/configuration#collectcoveragefrom-array)
+- [`coveragePathIgnorePatterns`](https://jestjs.io/docs/configuration#coveragepathignorepatterns-arraystring)
+- [`coverageReporters`](https://jestjs.io/docs/configuration#coveragereporters-arraystring--string-options)
+- [`coverageThreshold`](https://jestjs.io/docs/configuration#coveragethreshold-object)
+- [`displayName`](https://jestjs.io/docs/configuration#displayname-string-object)
+- [`extraGlobals`](https://jestjs.io/docs/configuration#extraglobals-arraystring)
+- [`globalSetup`](https://jestjs.io/docs/configuration#globalsetup-string)
+- [`globalTeardown`](https://jestjs.io/docs/configuration#globalteardown-string)
+- [`moduleNameMapper`](https://jestjs.io/docs/configuration#modulenamemapper-objectstring-string--arraystring)
+- [`resetMocks`](https://jestjs.io/docs/configuration#resetmocks-boolean)
+- [`resetModules`](https://jestjs.io/docs/configuration#resetmodules-boolean)
+- [`restoreMocks`](https://jestjs.io/docs/configuration#restoremocks-boolean)
+- [`snapshotSerializers`](https://jestjs.io/docs/configuration#snapshotserializers-arraystring)
+- [`testMatch`](https://jestjs.io/docs/configuration#testmatch-arraystring)
+- [`transform`](https://jestjs.io/docs/configuration#transform-objectstring-pathtotransformer--pathtotransformer-object)
+- [`transformIgnorePatterns`](https://jestjs.io/docs/configuration#transformignorepatterns-arraystring)
+- [`watchPathIgnorePatterns`](https://jestjs.io/docs/configuration#watchpathignorepatterns-arraystring)
 
 Example package.json:
 
