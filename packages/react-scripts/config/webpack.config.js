@@ -313,7 +313,7 @@ module.exports = function (webpackEnv) {
           },
           {
             test: /\.js$/,
-            include: path.resolve(paths.appNodeModules, './@gd-uikit/uikit'),
+            include: paths.appNodeModules,
             loader: require.resolve('babel-loader'),
             options: {
               plugins: [
