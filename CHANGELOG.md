@@ -98,8 +98,8 @@ If you previously ejected but now want to upgrade, one common solution is to fin
 
 Like any major release, `react-scripts@5.0.0` contains a number of breaking changes. We expect that they won't affect every user, but we recommend you look over this section to see if something is relevant to you. If we missed something, please file a new issue.
 
-Dropped support for Node 10 and 12
-Node 10 reached End-of-Life in April 2021 and Node 12 will be End-of-Life in April 2022. Going forward we will only support the latest LTS release of Node.js.
+Dropped support for Node 10 and 12. 
+They've reached End-of-Life in April 2021 and April 2022 respectively. Going forward we will only support the latest LTS release of Node.js.
 
 # Full Changelog
 
