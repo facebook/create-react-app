@@ -314,9 +314,12 @@ module.exports = function (webpackEnv) {
           fs.existsSync(`${paths.appNodeModules}/@gd-uikit/uikit`)
             ? {
                 test: /\.js$/,
-                include: fs.realpathSync(
-                  `${paths.appNodeModules}/@gd-uikit/uikit`
-                ),
+                include: [
+                  fs.realpathSync(`${paths.appNodeModules}/@gd-uikit/uikit`),
+                  fs.realpathSync(
+                    `${paths.appNodeModules}/@gd-uikit/uikit-next`
+                  ),
+                ],
                 loader: require.resolve('babel-loader'),
                 options: {
                   plugins: [
