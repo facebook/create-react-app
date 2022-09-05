@@ -311,33 +311,26 @@ module.exports = function (webpackEnv) {
             include: [paths.appSrc, paths.appPackages],
             loader: 'graphql-tag/loader',
           },
-          fs.existsSync(`${paths.appNodeModules}/@gd-uikit/uikit`)
-            ? {
-                test: /\.js$/,
-                include: [
-                  fs.realpathSync(`${paths.appNodeModules}/@gd-uikit/uikit`),
-                  fs.realpathSync(
-                    `${paths.appNodeModules}/@gd-uikit/uikit-next`
-                  ),
+          {
+            test: /\.js$/,
+            include: /@gd-uikit(\+|\/)uikit/,
+            loader: require.resolve('babel-loader'),
+            options: {
+              plugins: [
+                [
+                  'import',
+                  {
+                    libraryName: 'antd',
+                    libraryDirectory: 'lib',
+                    style: true,
+                  },
                 ],
-                loader: require.resolve('babel-loader'),
-                options: {
-                  plugins: [
-                    [
-                      'import',
-                      {
-                        libraryName: 'antd',
-                        libraryDirectory: 'lib',
-                        style: true,
-                      },
-                    ],
-                  ],
-                  cacheDirectory: true,
-                  cacheCompression: false,
-                  compact: isEnvProduction,
-                },
-              }
-            : null,
+              ],
+              cacheDirectory: true,
+              cacheCompression: false,
+              compact: isEnvProduction,
+            },
+          },
           // Process application JS with Babel.
           // The preset includes JSX, Flow, TypeScript, and some ESnext features.
           {
