@@ -21,6 +21,9 @@ function formatMessage(message) {
     lines = message.split('\n');
   } else if ('message' in message) {
     lines = message['message'].split('\n');
+    if('file' in message){
+      lines.unshift(message['file']);
+    }
   } else if (Array.isArray(message)) {
     message.forEach(message => {
       if ('message' in message) {
