@@ -114,6 +114,7 @@ prompts({
     'config/jest',
     'scripts',
     'config/webpack/persistentCache',
+    'config/webpack/loaders/code',
   ];
 
   // Make shallow array of files paths
