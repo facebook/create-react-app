@@ -63,7 +63,7 @@ var connection = new WebSocket(
     hostname: process.env.WDS_SOCKET_HOST || window.location.hostname,
     port: process.env.WDS_SOCKET_PORT || window.location.port,
     // Hardcoded in WebpackDevServer
-    pathname: process.env.WDS_SOCKET_PATH || '/sockjs-node',
+    pathname: process.env.WDS_SOCKET_PATH || '/ws',
     slashes: true,
   })
 );
@@ -230,6 +230,18 @@ function canApplyUpdates() {
   return module.hot.status() === 'idle';
 }
 
+function canAcceptErrors() {
+  // NOTE: This var is injected by Webpack's DefinePlugin, and is a boolean instead of string.
+  const hasReactRefresh = process.env.FAST_REFRESH;
+
+  const status = module.hot.status();
+  // React refresh can handle hot-reloading over errors.
+  // However, when hot-reload status is abort or fail,
+  // it indicates the current update cannot be applied safely,
+  // and thus we should bail out to a forced reload for consistency.
+  return hasReactRefresh && ['abort', 'fail'].indexOf(status) === -1;
+}
+
 // Attempt to update code on the fly, fall back to a hard reload.
 function tryApplyUpdates(onHotUpdateSuccess) {
   if (!module.hot) {
@@ -243,11 +255,13 @@ function tryApplyUpdates(onHotUpdateSuccess) {
   }
 
   function handleApplyUpdates(err, updatedModules) {
-    // NOTE: This var is injected by Webpack's DefinePlugin, and is a boolean instead of string.
-    const hasReactRefresh = process.env.FAST_REFRESH;
-    const wantsForcedReload = err || !updatedModules || hadRuntimeError;
-    // React refresh can handle hot-reloading over errors.
-    if (!hasReactRefresh && wantsForcedReload) {
+    const haveErrors = err || hadRuntimeError;
+    // When there is no error but updatedModules is unavailable,
+    // it indicates a critical failure in hot-reloading,
+    // e.g. server is not ready to serve new bundle,
+    // and hence we need to do a forced reload.
+    const needsForcedReload = !err && !updatedModules;
+    if ((haveErrors && !canAcceptErrors()) || needsForcedReload) {
       window.location.reload();
       return;
     }

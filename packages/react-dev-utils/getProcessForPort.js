@@ -9,6 +9,7 @@
 
 var chalk = require('chalk');
 var execSync = require('child_process').execSync;
+var execFileSync = require('child_process').execFileSync;
 var path = require('path');
 
 var execOptions = {
@@ -25,7 +26,7 @@ function isProcessAReactApp(processCommand) {
 }
 
 function getProcessIdOnPort(port) {
-  return execSync('lsof -i:' + port + ' -P -t -sTCP:LISTEN', execOptions)
+  return execFileSync('lsof', ['-i:' + port, '-P', '-t', '-sTCP:LISTEN'], execOptions)
     .split('\n')[0]
     .trim();
 }

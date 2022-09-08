@@ -21,7 +21,7 @@ const siteConfig = {
           path: '../docs',
           sidebarPath: require.resolve('./sidebars.json'),
           editUrl:
-            'https://github.com/facebook/create-react-app/edit/master/docusaurus/website',
+            'https://github.com/facebook/create-react-app/edit/main/docusaurus/website',
           showLastUpdateAuthor: true,
           showLastUpdateTime: true,
         },
@@ -33,8 +33,18 @@ const siteConfig = {
   ],
   themeConfig: {
     image: 'img/logo-og.png',
+    announcementBar: {
+      id: 'support_ukraine',
+      content:
+        'Support Ukraine 🇺🇦 <a target="_blank" rel="noopener noreferrer" \
+        href="https://opensource.facebook.com/support-ukraine"> Help Provide Humanitarian Aid to Ukraine</a>.',
+      backgroundColor: '#20232a',
+      textColor: '#fff',
+      isCloseable: false,
+    },
     algolia: {
-      apiKey: '3be60f4f8ffc24c75da84857d6323791',
+      appId: 'AUJYIQ70HN',
+      apiKey: '25243dbf9049cf036e87f64b361bd2b9',
       indexName: 'create-react-app',
     },
     navbar: {
@@ -78,8 +88,7 @@ const siteConfig = {
           items: [
             {
               label: 'Stack Overflow',
-              href:
-                'https://stackoverflow.com/questions/tagged/create-react-app',
+              href: 'https://stackoverflow.com/questions/tagged/create-react-app',
             },
             {
               label: 'GitHub Discussions',
@@ -91,8 +100,7 @@ const siteConfig = {
             },
             {
               label: 'Contributor Covenant',
-              href:
-                'https://www.contributor-covenant.org/version/1/4/code-of-conduct',
+              href: 'https://www.contributor-covenant.org/version/1/4/code-of-conduct',
             },
           ],
         },
