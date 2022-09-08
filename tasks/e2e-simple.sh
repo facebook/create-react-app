@@ -76,25 +76,8 @@ if [ "$EXPECTED" != "$ACTUAL" ]; then
   exit 1
 fi
 
-if hash npm 2>/dev/null
-then
-  npm i -g npm@latest
-fi
-
-# Bootstrap monorepo
-npm install
-
 # Start the local NPM registry
 startLocalRegistry "$root_path"/tasks/verdaccio.yaml
-
-# Lint own code
-./node_modules/.bin/eslint --max-warnings 0 packages/babel-preset-react-app/
-./node_modules/.bin/eslint --max-warnings 0 packages/confusing-browser-globals/
-./node_modules/.bin/eslint --max-warnings 0 packages/create-react-app/
-./node_modules/.bin/eslint --max-warnings 0 packages/eslint-config-react-app/
-./node_modules/.bin/eslint --max-warnings 0 packages/react-dev-utils/
-./node_modules/.bin/eslint --max-warnings 0 packages/react-error-overlay/src/
-./node_modules/.bin/eslint --max-warnings 0 packages/react-scripts/
 
 npm test -w react-error-overlay
 if [ "$AGENT_OS" != 'Windows_NT' ]; then

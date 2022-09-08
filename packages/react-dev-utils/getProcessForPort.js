@@ -26,7 +26,11 @@ function isProcessAReactApp(processCommand) {
 }
 
 function getProcessIdOnPort(port) {
-  return execFileSync('lsof', ['-i:' + port, '-P', '-t', '-sTCP:LISTEN'], execOptions)
+  return execFileSync(
+    'lsof',
+    ['-i:' + port, '-P', '-t', '-sTCP:LISTEN'],
+    execOptions
+  )
     .split('\n')[0]
     .trim();
 }

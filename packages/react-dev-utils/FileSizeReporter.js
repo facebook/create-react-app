@@ -92,7 +92,7 @@ function printFileSizesAfterBuild(
     );
     console.log(
       chalk.yellow(
-        'Consider reducing it with code splitting: https://goo.gl/9VhYWB'
+        'Consider reducing it with code splitting: https://create-react-app.dev/docs/code-splitting/'
       )
     );
     console.log(
