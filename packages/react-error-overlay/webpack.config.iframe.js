@@ -72,6 +72,7 @@ module.exports = {
       // We set process.env.NODE_ENV to 'production' so that React is built
       // in production mode.
       'process.env': { NODE_ENV: '"production"' },
+      'process.platform': '""',
       // This prevents our bundled React from accidentally hijacking devtools.
       __REACT_DEVTOOLS_GLOBAL_HOOK__: '({})',
     }),
