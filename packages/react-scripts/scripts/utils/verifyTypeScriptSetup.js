@@ -260,18 +260,18 @@ function verifyTypeScriptSetup() {
     );
   }
 
-  if (parsedTsConfig.compilerOptions.paths != null) {
+  if (appTsConfig.compilerOptions.paths != null) {
     if (
       semver.lt(ts.version, '4.1.0') &&
-      parsedTsConfig.compilerOptions.baseUrl == null
+      appTsConfig.compilerOptions.baseUrl == null
     ) {
       errors.push(
         `${chalk.cyan('paths')} requires ${chalk.cyan('baseUrl')} to be set`
       );
     }
     // Webpack 4 cannot support multiple locations
-    for (const path of Object.keys(parsedTsConfig.compilerOptions.paths)) {
-      const values = parsedTsConfig.compilerOptions.paths[path];
+    for (const path of Object.keys(appTsConfig.compilerOptions.paths)) {
+      const values = appTsConfig.compilerOptions.paths[path];
 
       if (!Array.isArray(values) || values.length > 1) {
         errors.push(
