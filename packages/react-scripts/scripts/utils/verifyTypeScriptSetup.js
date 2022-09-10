@@ -156,7 +156,6 @@ function verifyTypeScriptSetup() {
           : 'react',
       reason: 'to support the new JSX transform in React 17',
     },
-    paths: { value: undefined, reason: 'aliased imports are not supported' },
   };
 
   const formatDiagnosticHost = {
@@ -165,6 +164,7 @@ function verifyTypeScriptSetup() {
     getNewLine: () => os.EOL,
   };
 
+  const errors = [];
   const messages = [];
   let appTsConfig;
   let parsedTsConfig;
@@ -258,6 +258,44 @@ function verifyTypeScriptSetup() {
     messages.push(
       `${chalk.cyan('include')} should be ${chalk.cyan.bold('src')}`
     );
+  }
+
+  if (appTsConfig.compilerOptions.paths != null) {
+    if (
+      semver.lt(ts.version, '4.1.0') &&
+      appTsConfig.compilerOptions.baseUrl == null
+    ) {
+      errors.push(
+        `${chalk.cyan('paths')} requires ${chalk.cyan('baseUrl')} to be set`
+      );
+    }
+    // Webpack 4 cannot support multiple locations
+    for (const path of Object.keys(appTsConfig.compilerOptions.paths)) {
+      const values = appTsConfig.compilerOptions.paths[path];
+
+      if (!Array.isArray(values) || values.length > 1) {
+        errors.push(
+          `Each path in ${chalk.cyan(
+            'paths'
+          )} must have an array with only one location`
+        );
+        break;
+      }
+    }
+  }
+
+  if (errors.length > 0) {
+    console.error(
+      chalk.bold(
+        'The following errors need fixing in your',
+        chalk.cyan('tsconfig.json')
+      )
+    );
+    errors.forEach(error => {
+      console.error('  - ' + error);
+    });
+    console.error();
+    process.exit(1);
   }
 
   if (messages.length > 0) {
