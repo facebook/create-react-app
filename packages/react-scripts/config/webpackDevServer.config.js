@@ -110,10 +110,6 @@ module.exports = function (proxy, allowedHost) {
     // `proxy` is run between `before` and `after` `webpack-dev-server` hooks
     proxy,
     setupMiddlewares(middlewares, devServer) {
-      if (!devServer) {
-        throw new Error('webpack-dev-server is not defined');
-      }
-
       if (fs.existsSync(paths.proxySetup)) {
         // This registers user provided middleware for proxy reasons
         require(paths.proxySetup)(devServer.app);
