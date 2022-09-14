@@ -119,7 +119,10 @@ module.exports = function (proxy, allowedHost) {
         // Keep `evalSourceMapMiddleware`
         // middlewares before `redirectServedPath` otherwise will not have any effect
         // This lets us fetch source contents from webpack for the error overlay
-        evalSourceMapMiddleware(devServer),
+        evalSourceMapMiddleware(devServer)
+      );
+
+      middlewares.push(
         // Redirect to `PUBLIC_URL` or `homepage` from `package.json` if url not match
         redirectServedPath(paths.publicUrlOrPath),
         // This service worker file is effectively a 'no-op' that will reset any
