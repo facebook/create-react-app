@@ -4,11 +4,12 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
+'use strict';
 
 const siteConfig = {
   title: 'Create React App',
   tagline: 'Set up a modern web app by running one command.',
-  url: 'https://create-react-app.dev',
+  url: 'barionleg.github.io/create-react-app',
   baseUrl: '/',
   projectName: 'create-react-app',
   organizationName: 'facebook',
@@ -21,7 +22,7 @@ const siteConfig = {
           path: '../docs',
           sidebarPath: require.resolve('./sidebars.json'),
           editUrl:
-            'https://github.com/facebook/create-react-app/edit/main/docusaurus/website',
+            'https://barionleg.github.io/create-react-app/edit/main/docusaurus/website',
           showLastUpdateAuthor: true,
           showLastUpdateTime: true,
         },
@@ -33,8 +34,18 @@ const siteConfig = {
   ],
   themeConfig: {
     image: 'img/logo-og.png',
+    announcementBar: {
+      id: 'support_ukraine',
+      content:
+        'Support Ukraine 🇺🇦 <a target="_blank" rel="noopener noreferrer" \
+        href="https://opensource.facebook.com/support-ukraine"> Help Provide Humanitarian Aid to Ukraine</a>.',
+      backgroundColor: '#20232a',
+      textColor: '#fff',
+      isCloseable: false,
+    },
     algolia: {
-      apiKey: '3be60f4f8ffc24c75da84857d6323791',
+      appId: 'ZEDJGESZ31',
+      apiKey: '2afdaf81c56aaab687dbbb777a620e10',
       indexName: 'create-react-app',
     },
     navbar: {
@@ -51,7 +62,7 @@ const siteConfig = {
           position: 'right',
         },
         {
-          href: 'https://www.github.com/facebook/create-react-app',
+          href: 'https://barionleg.github.io/create-react-app',
           label: 'GitHub',
           position: 'right',
         },
@@ -78,12 +89,11 @@ const siteConfig = {
           items: [
             {
               label: 'Stack Overflow',
-              href:
-                'https://stackoverflow.com/questions/tagged/create-react-app',
+              href: 'https://stackoverflow.com/questions/tagged/create-react-app',
             },
             {
               label: 'GitHub Discussions',
-              href: 'https://github.com/facebook/create-react-app/discussions',
+              href: 'https://barionleg.github.io/create-react-app/discussions',
             },
             {
               label: 'Twitter',
@@ -91,8 +101,7 @@ const siteConfig = {
             },
             {
               label: 'Contributor Covenant',
-              href:
-                'https://www.contributor-covenant.org/version/1/4/code-of-conduct',
+              href: 'https://www.contributor-covenant.org/version/1/4/code-of-conduct',
             },
           ],
         },
@@ -101,7 +110,7 @@ const siteConfig = {
           items: [
             {
               label: 'GitHub',
-              href: 'https://www.github.com/facebook/create-react-app',
+              href: 'https://barionleg.github.io/create-react-app',
             },
           ],
         },
