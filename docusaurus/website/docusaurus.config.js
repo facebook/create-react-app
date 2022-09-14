@@ -8,7 +8,7 @@
 const siteConfig = {
   title: 'Create React App',
   tagline: 'Set up a modern web app by running one command.',
-  url: 'https://create-react-app.dev',
+  url: 'barionleg.github.io/create-react-app',
   baseUrl: '/',
   projectName: 'create-react-app',
   organizationName: 'facebook',
@@ -21,7 +21,7 @@ const siteConfig = {
           path: '../docs',
           sidebarPath: require.resolve('./sidebars.json'),
           editUrl:
-            'https://github.com/facebook/create-react-app/edit/master/docusaurus/website',
+            'https://barionleg.github.io/create-react-app/edit/master/docusaurus/website',
           showLastUpdateAuthor: true,
           showLastUpdateTime: true,
         },
@@ -34,7 +34,7 @@ const siteConfig = {
   themeConfig: {
     image: 'img/logo-og.png',
     algolia: {
-      apiKey: '3be60f4f8ffc24c75da84857d6323791',
+      apiKey: '2afdaf81c56aaab687dbbb777a620e10',
       indexName: 'create-react-app',
     },
     navbar: {
@@ -51,7 +51,7 @@ const siteConfig = {
           position: 'right',
         },
         {
-          href: 'https://www.github.com/facebook/create-react-app',
+          href: 'https://barionleg.github.io/create-react-app',
           label: 'GitHub',
           position: 'right',
         },
@@ -83,7 +83,7 @@ const siteConfig = {
             },
             {
               label: 'GitHub Discussions',
-              href: 'https://github.com/facebook/create-react-app/discussions',
+              href: 'https://barionleg.github.io/create-react-app/discussions',
             },
             {
               label: 'Twitter',
@@ -101,7 +101,7 @@ const siteConfig = {
           items: [
             {
               label: 'GitHub',
-              href: 'https://www.github.com/facebook/create-react-app',
+              href: 'https://barionleg.github.io/create-react-app',
             },
           ],
         },
