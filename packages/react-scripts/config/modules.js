@@ -103,6 +103,7 @@ function getModules() {
   // Check if TypeScript is setup
   const hasTsConfig = fs.existsSync(paths.appTsConfig);
   const hasJsConfig = fs.existsSync(paths.appJsConfig);
+  const isYarn = fs.existsSync(paths.yarnLockFile);
 
   if (hasTsConfig && hasJsConfig) {
     throw new Error(
@@ -123,7 +124,43 @@ function getModules() {
     // Otherwise we'll check if there is jsconfig.json
     // for non TS projects.
   } else if (hasJsConfig) {
-    config = require(paths.appJsConfig);
+    // Trying to parse jsconfig.json
+    // using TypeScript
+    try {
+      const ts = require(resolve.sync('typescript', {
+        basedir: paths.appNodeModules,
+      }));
+
+      config = ts.readConfigFile(paths.appJsConfig, ts.sys.readFile).config;
+    } catch (err) {
+      // Trying to parse jsconfig.json
+      try {
+        config = require(paths.appJsConfig);
+        // If error we assume jsconfig.json has comments
+      } catch (err) {
+        console.error(
+          chalk.bold.red(
+            `It looks like your jsconfig.json file has comments but ${chalk.bold(
+              'typescript'
+            )} is not installed.`,
+            `If you want to support JSONC you have to install ${chalk.bold(
+              'typescript'
+            )} as a dependency.`
+          )
+        );
+        console.log(
+          chalk.bold(
+            'Please install',
+            chalk.cyan.bold('typescript'),
+            'by running',
+            chalk.cyan.bold(
+              (isYarn ? 'yarn add' : 'npm install') + ' typescript'
+            ) + '.'
+          )
+        );
+        process.exit(1);
+      }
+    }
   }
 
   config = config || {};
