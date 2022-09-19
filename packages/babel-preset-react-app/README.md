@@ -56,7 +56,7 @@ Make sure you have a `tsconfig.json` file at the root directory. You can also us
 
 Absolute paths are enabled by default for imports. To use relative paths instead, set the `absoluteRuntime` option in `.babelrc` to `false`:
 
-```
+```json
 {
   "presets": [["react-app", { "absoluteRuntime": false }]]
 }
