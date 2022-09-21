@@ -60,13 +60,13 @@ div[class^='announcementBarContent'] a:hover {
 }
 
 @media only screen and (max-width: 768px) {
-  .announcement {
+  div[class^='announcementBarContent'] {
     font-size: 18px;
   }
 }
 
 @media only screen and (max-width: 500px) {
-  .announcement {
+  div[class^='announcementBarContent'] {
     font-size: 15px;
     line-height: 22px;
     padding: 6px 30px;
