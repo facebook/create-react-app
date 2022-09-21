@@ -25,7 +25,7 @@ function getBrowserEnv() {
   // Attempt to honor this environment variable.
   // It is specific to the operating system.
   // See https://github.com/sindresorhus/open#app for documentation.
-  const value = process.env.BROWSER;
+  const value = (process.env.BROWSER || "").trim();
   const args = process.env.BROWSER_ARGS
     ? process.env.BROWSER_ARGS.split(' ')
     : [];
