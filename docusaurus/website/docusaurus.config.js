@@ -55,16 +55,21 @@ const siteConfig = {
         src: 'img/logo.svg',
       },
       items: [
-        { to: 'docs/getting-started', label: 'Docs', position: 'right' },
+        { 
+          to: 'docs/getting-started',
+          label: 'Docs',
+          position: 'left'
+        },
         {
           href: 'https://reactjs.org/community/support.html',
           label: 'Help',
-          position: 'right',
+          position: 'left',
         },
         {
           href: 'https://www.github.com/facebook/create-react-app',
-          label: 'GitHub',
+          'aria-label': 'GitHub',
           position: 'right',
+          className: 'header-github-link',
         },
       ],
     },
