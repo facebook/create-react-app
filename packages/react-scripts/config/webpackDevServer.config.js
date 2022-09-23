@@ -90,7 +90,7 @@ module.exports = function (proxy, allowedHost) {
       // remove last slash so user can land on `/test` instead of `/test/`
       publicPath: paths.publicUrlOrPath.slice(0, -1),
     },
-    server: {
+    server: !getHttpsConfig() ? 'http' : {
       type: 'https',
       options: getHttpsConfig(),
     },
