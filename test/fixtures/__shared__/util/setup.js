@@ -1,3 +1,5 @@
+'use strict';
+
 const execa = require('execa');
 const fs = require('fs-extra');
 const path = require('path');

@@ -1,3 +1,63 @@
+## 5.0.1 (2022-04-12)
+
+Create React App 5.0.1 is a maintenance release that improves compatibility with React 18. We've also updated our templates to use `createRoot` and relaxed our check for older versions of Create React App.
+
+# Migrating from 5.0.0 to 5.0.1
+
+Inside any created project that has not been ejected, run:
+
+```
+npm install --save --save-exact react-scripts@5.0.1
+```
+
+or
+
+```
+yarn add --exact react-scripts@5.0.1
+```
+
+#### :bug: Bug Fix
+
+- `react-scripts`
+  - [#12245](https://github.com/facebook/create-react-app/pull/12245) fix: webpack noise printed only if error or warning ([@Andrew47](https://github.com/Andrew47))
+- `create-react-app`
+  - [#11915](https://github.com/facebook/create-react-app/pull/11915) Warn when not using the latest version of create-react-app but do not exit ([@iansu](https://github.com/iansu))
+- `react-dev-utils`
+  - [#11640](https://github.com/facebook/create-react-app/pull/11640) Ensure posix compliant joins for urls in middleware ([@psiservices-justin-sullard](https://github.com/psiservices-justin-sullard))
+
+#### :nail_care: Enhancement
+
+- `cra-template-typescript`, `cra-template`, `react-scripts`
+  - [#12220](https://github.com/facebook/create-react-app/pull/12220) Update templates to use React 18 `createRoot` ([@kyletsang](https://github.com/kyletsang))
+- `cra-template-typescript`, `cra-template`
+  - [#12223](https://github.com/facebook/create-react-app/pull/12223) chore: upgrade rtl version to support react 18 ([@MatanBobi](https://github.com/MatanBobi))
+- `eslint-config-react-app`
+  - [#11622](https://github.com/facebook/create-react-app/pull/11622) updated deprecated rules ([@wisammechano](https://github.com/wisammechano))
+
+#### :memo: Documentation
+
+- [#11594](https://github.com/facebook/create-react-app/pull/11594) Fix a typo in deployment.md ([@fishmandev](https://github.com/fishmandev))
+- [#11805](https://github.com/facebook/create-react-app/pull/11805) docs: Changelog 5.0.0 ([@jafin](https://github.com/jafin))
+- [#11757](https://github.com/facebook/create-react-app/pull/11757) prevent both npm and yarn commands from being copied ([@mubarakn](https://github.com/mubarakn))
+
+#### :house: Internal
+
+- [#11985](https://github.com/facebook/create-react-app/pull/11985) Ignore docs when publishing ([@iansu](https://github.com/iansu))
+
+#### Committers: 11
+
+- Andrew Burnie ([@Andrew47](https://github.com/Andrew47))
+- Clément Vannicatte ([@shortcuts](https://github.com/shortcuts))
+- Dmitriy Fishman ([@fishmandev](https://github.com/fishmandev))
+- Dmitry Vinnik ([@dmitryvinn](https://github.com/dmitryvinn))
+- Ian Sutherland ([@iansu](https://github.com/iansu))
+- Jason Finch ([@jafin](https://github.com/jafin))
+- Kyle Tsang ([@kyletsang](https://github.com/kyletsang))
+- Matan Borenkraout ([@MatanBobi](https://github.com/MatanBobi))
+- Wisam Naji ([@wisammechano](https://github.com/wisammechano))
+- [@mubarakn](https://github.com/mubarakn)
+- [@psiservices-justin-sullard](https://github.com/psiservices-justin-sullard)
+
 ## 5.0.0 (2021-12-14)
 
 Create React App 5.0 is a major release with several new features and the latest version of all major dependencies.
