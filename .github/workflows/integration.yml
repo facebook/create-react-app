@@ -8,6 +8,9 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read # to fetch code (actions/checkout)
+
 jobs:
   job:
     runs-on: ${{ matrix.os }}
