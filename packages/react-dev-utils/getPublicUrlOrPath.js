@@ -25,6 +25,10 @@ module.exports = getPublicUrlOrPath;
 function getPublicUrlOrPath(isEnvDevelopment, homepage, envPublicUrl) {
   const stubDomain = 'https://create-react-app.dev';
 
+  if (envPublicUrl === 'auto' || (!envPublicUrl && homepage === 'auto')) {
+    return 'auto';
+  }
+
   if (envPublicUrl) {
     // ensure last slash exists
     envPublicUrl = envPublicUrl.endsWith('/')

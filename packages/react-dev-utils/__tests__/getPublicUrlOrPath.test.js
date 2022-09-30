@@ -11,6 +11,7 @@ const getPublicUrlOrPath = require('../getPublicUrlOrPath');
 
 const tests = [
   // DEVELOPMENT with homepage
+  { dev: true, homepage: 'auto', expect: 'auto' },
   { dev: true, homepage: '/', expect: '/' },
   { dev: true, homepage: '/test', expect: '/test/' },
   { dev: true, homepage: '/test/', expect: '/test/' },
@@ -24,7 +25,9 @@ const tests = [
     homepage: 'https://create-react-app.dev/test',
     expect: '/test/',
   },
+
   // DEVELOPMENT with publicURL
+  { dev: true, publicUrl: 'auto', expect: 'auto' },
   { dev: true, publicUrl: '/', expect: '/' },
   { dev: true, publicUrl: '/test', expect: '/test/' },
   { dev: true, publicUrl: '/test/', expect: '/test/' },
@@ -39,6 +42,8 @@ const tests = [
     expect: '/test/',
   },
   // DEVELOPMENT with publicURL and homepage
+  { dev: true, publicUrl: 'auto', homepage: '/path', expect: 'auto' },
+  { dev: true, publicUrl: '/path', homepage: 'auto', expect: '/path/' },
   { dev: true, publicUrl: '/', homepage: '/test', expect: '/' },
   { dev: true, publicUrl: '/test', homepage: '/path', expect: '/test/' },
   { dev: true, publicUrl: '/test/', homepage: '/test/path', expect: '/test/' },
@@ -60,6 +65,7 @@ const tests = [
   },
 
   // PRODUCTION with homepage
+  { dev: false, homepage: 'auto', expect: 'auto' },
   { dev: false, homepage: '/', expect: '/' },
   { dev: false, homepage: '/test', expect: '/test/' },
   { dev: false, homepage: '/test/', expect: '/test/' },
@@ -74,6 +80,7 @@ const tests = [
     expect: '/test/',
   },
   // PRODUCTION with publicUrl
+  { dev: false, publicUrl: 'auto', expect: 'auto' },
   { dev: false, publicUrl: '/', expect: '/' },
   { dev: false, publicUrl: '/test', expect: '/test/' },
   { dev: false, publicUrl: '/test/', expect: '/test/' },
@@ -92,6 +99,8 @@ const tests = [
     expect: 'https://create-react-app.dev/test/',
   },
   // PRODUCTION with publicUrl and homepage
+  { dev: false, publicUrl: 'auto', homepage: '/path', expect: 'auto' },
+  { dev: false, publicUrl: '/path', homepage: 'auto', expect: '/path/' },
   { dev: false, publicUrl: '/', homepage: '/test', expect: '/' },
   { dev: false, publicUrl: '/test', homepage: '/path', expect: '/test/' },
   { dev: false, publicUrl: '/test/', homepage: '/test/path', expect: '/test/' },
@@ -116,6 +125,9 @@ const tests = [
     homepage: '/path',
     expect: 'https://create-react-app.dev/test/',
   },
+  // default
+  { dev: false, expect: '/' },
+  { dev: true, expect: '/' },
 ];
 
 describe('getPublicUrlOrPath', () => {
