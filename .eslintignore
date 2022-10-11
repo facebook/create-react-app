@@ -1,6 +1,4 @@
 node_modules/
-build
-my-app*
-packages/react-scripts/template
-packages/react-scripts/fixtures
-fixtures/
+build/
+test/fixtures/webpack-message-formatting/src/AppBabel.js
+packages/react-error-overlay/lib/

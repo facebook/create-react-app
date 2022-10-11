@@ -209,14 +209,8 @@ function init() {
         console.error(
           chalk.yellow(
             `You are running \`create-react-app\` ${packageJson.version}, which is behind the latest release (${latest}).\n\n` +
-              'We no longer support global installation of Create React App.'
+              'We recommend always using the latest version of create-react-app if possible.'
           )
-        );
-        console.log();
-        console.log(
-          'Please remove any global installs with one of the following commands:\n' +
-            '- npm uninstall -g create-react-app\n' +
-            '- yarn global remove create-react-app'
         );
         console.log();
         console.log(
@@ -224,7 +218,6 @@ function init() {
             'https://create-react-app.dev/docs/getting-started/'
         );
         console.log();
-        process.exit(1);
       } else {
         const useYarn = isUsingYarn();
         createApp(
