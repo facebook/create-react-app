@@ -1088,7 +1088,7 @@ function checkIfOnline(useYarn) {
         dns.lookup(url.parse(proxy).hostname, proxyErr => {
           resolve(proxyErr == null);
         });
-      } else if(err != null && (registry = getRegisrty()) {
+      } else if (err != null && (registry = getRegisrty())) {
         // When running on a network that has no DNS record for yarnpkg.com,
         // we would like to look after alternative npm registry that is being used.
         // Try to resolve the registry defined in the .npmrc file as an indication of a connection.
