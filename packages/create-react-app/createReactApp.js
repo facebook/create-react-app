@@ -253,6 +253,12 @@ function createApp(name, verbose, version, template, useYarn, usePnp) {
   const root = path.resolve(name);
   const appName = path.basename(root);
 
+  // We check if (the user is on windows and the project path contains a space)
+  if (isWindows() && stringContainsSpace(root)) {
+    console.error('Project path cannot contain spaces on Windows.');
+    process.exit(1);
+  }
+
   checkAppName(appName);
   fs.ensureDirSync(name);
   if (!isSafeToCreateProjectIn(root, name)) {
@@ -1115,6 +1121,13 @@ function checkForLatestVersion() {
         reject();
       });
   });
+}
+function isWindows() {
+  // https://nodejs.org/api/process.html#processplatform
+  return process.platform === 'win32';
+}
+function stringContainsSpace(string) {
+  return string.indexOf(' ') >= 0;
 }
 
 module.exports = {
