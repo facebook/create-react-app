@@ -196,6 +196,12 @@ module.exports = function (webpackEnv) {
     return loaders;
   };
 
+  const builtinFallbackMap = {
+    crypto: 'crypto-browserify',
+    stream: 'stream-browserify',
+    zlib: 'browserify-zlib',
+  }
+
   return {
     target: ['browserslist'],
     // Webpack noise constrained to errors and warnings
@@ -303,6 +309,12 @@ module.exports = function (webpackEnv) {
       ],
     },
     resolve: {
+      // @remove-on-eject-begin
+      // This adds support for node builtins
+      fallback: {
+        ...builtinFallbackMap
+      },
+      // @remove-on-eject-end
       // This allows you to set a fallback for where webpack should look for modules.
       // We placed these paths second because we want `node_modules` to "win"
       // if there are any conflicts. This matches Node resolution mechanism.
@@ -343,6 +355,9 @@ module.exports = function (webpackEnv) {
           babelRuntimeEntry,
           babelRuntimeEntryHelpers,
           babelRuntimeRegenerator,
+          // @remove-on-eject-begin
+          ...builtinFallbackMap
+          // @remove-on-eject-end
         ]),
       ],
     },
