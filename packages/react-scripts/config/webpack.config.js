@@ -196,10 +196,10 @@ module.exports = function (webpackEnv) {
     return loaders;
   };
 
-  const builtinFallbackMap = {
-    crypto: 'crypto-browserify',
-    stream: 'stream-browserify',
-    zlib: 'browserify-zlib',
+  const fallbacks = {
+    crypto: require.resolve('crypto-browserify'),
+    stream: require.resolve('stream-browserify'),
+    zlib: require.resolve('browserify-zlib'),
   }
 
   return {
@@ -310,11 +310,10 @@ module.exports = function (webpackEnv) {
     },
     resolve: {
       // @remove-on-eject-begin
-      // This adds support for node builtins
-      fallback: {
-        ...builtinFallbackMap
-      },
+      // This adds support for vndr node builtins
+      fallback: fallbacks,
       // @remove-on-eject-end
+
       // This allows you to set a fallback for where webpack should look for modules.
       // We placed these paths second because we want `node_modules` to "win"
       // if there are any conflicts. This matches Node resolution mechanism.
@@ -356,7 +355,7 @@ module.exports = function (webpackEnv) {
           babelRuntimeEntryHelpers,
           babelRuntimeRegenerator,
           // @remove-on-eject-begin
-          ...builtinFallbackMap
+          ...Object.values(fallbacks),
           // @remove-on-eject-end
         ]),
       ],
