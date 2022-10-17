@@ -37,6 +37,9 @@ const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin'
 const getCacheIdentifier = require('react-dev-utils/getCacheIdentifier');
 // @remove-on-eject-end
 const createEnvironmentHash = require('./webpack/persistentCache/createEnvironmentHash');
+// @remove-on-eject-begin
+const nodeBuiltinFallbacks = require('./nodeBuiltinFallbacks');
+// @remove-on-eject-end
 
 // Source maps are resource heavy and can cause out of memory issue for large source files.
 const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false';
@@ -113,6 +116,11 @@ module.exports = function (webpackEnv) {
   const env = getClientEnvironment(paths.publicUrlOrPath.slice(0, -1));
 
   const shouldUseReactRefresh = env.raw.FAST_REFRESH;
+
+  // @remove-on-eject-begin
+  const nodeBuiltin = nodeBuiltinFallbacks(webpackEnv);
+  // @remove-on-eject-end
+  
 
   // common function to get style loaders
   const getStyleLoaders = (cssOptions, preProcessor) => {
@@ -195,12 +203,6 @@ module.exports = function (webpackEnv) {
     }
     return loaders;
   };
-
-  const fallbacks = {
-    crypto: require.resolve('crypto-browserify'),
-    stream: require.resolve('stream-browserify'),
-    zlib: require.resolve('browserify-zlib'),
-  }
 
   return {
     target: ['browserslist'],
@@ -311,7 +313,9 @@ module.exports = function (webpackEnv) {
     resolve: {
       // @remove-on-eject-begin
       // This adds support for vndr node builtins
-      fallback: fallbacks,
+      fallback: {
+        ...nodeBuiltin.fallbacks,
+      },
       // @remove-on-eject-end
 
       // This allows you to set a fallback for where webpack should look for modules.
@@ -355,7 +359,7 @@ module.exports = function (webpackEnv) {
           babelRuntimeEntryHelpers,
           babelRuntimeRegenerator,
           // @remove-on-eject-begin
-          ...Object.values(fallbacks),
+          ...nodeBuiltin.fallbackEntries,
           // @remove-on-eject-end
         ]),
       ],
