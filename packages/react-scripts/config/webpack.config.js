@@ -622,6 +622,11 @@ module.exports = function (webpackEnv) {
       ].filter(Boolean),
     },
     plugins: [
+      // fix "process is not defined" error:
+      // (do "npm install process" before running the build)
+      new webpack.ProvidePlugin({
+        process: 'process/browser',
+      }),
       // Generates an `index.html` file with the <script> injected.
       new HtmlWebpackPlugin(
         Object.assign(
