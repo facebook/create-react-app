@@ -134,25 +134,21 @@ Now we can make sure every file is formatted correctly by adding a few lines to 
 Add the following field to the `package.json` section:
 
 ```diff
-+  "husky": {
-+    "hooks": {
-+      "pre-commit": "lint-staged"
-+    }
-+  }
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  }
 ```
 
 Next we add a 'lint-staged' field to the `package.json`, for example:
 
 ```diff
-  "dependencies": {
-    // ...
-  },
-+ "lint-staged": {
-+   "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
-+     "prettier --write"
-+   ]
-+ },
-  "scripts": {
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
+      "prettier --write"
+    ]
+  },  
 ```
 
 Now, whenever you make a commit, Prettier will format the changed files automatically. You can also run `./node_modules/.bin/prettier --write "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}"` to format your entire project for the first time.
