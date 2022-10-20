@@ -118,7 +118,7 @@ module.exports = function (webpackEnv) {
   const shouldUseReactRefresh = env.raw.FAST_REFRESH;
 
   // @remove-on-eject-begin
-  const nodeBuiltin = nodeBuiltinFallbacks(webpackEnv);
+  const nodeBuiltin = nodeBuiltinFallbacks();
   // @remove-on-eject-end
   
 
@@ -367,6 +367,7 @@ module.exports = function (webpackEnv) {
     module: {
       strictExportPresence: true,
       rules: [
+        // https://stackoverflow.com/questions/69427025/programmatic-webpack-jest-esm-cant-resolve-module-without-js-file-exten
         {
           test: /\.m?js$/,
           resolve: {
@@ -630,16 +631,15 @@ module.exports = function (webpackEnv) {
     plugins: [
       // fix "process is not defined" error:
       // (do "npm install process" before running the build)
+      // https://stackoverflow.com/questions/41359504/webpack-bundle-js-uncaught-referenceerror-process-is-not-defined
       new webpack.ProvidePlugin({
         process: 'process/browser',
       }),
       // Work around for Buffer is undefined:
-        // https://github.com/webpack/changelog-v5/issues/10
-        new webpack.ProvidePlugin({
-          Buffer: ['buffer', 'Buffer'],
-      }),
+      // https://github.com/webpack/changelog-v5/issues/10
+      // https://stackoverflow.com/questions/68707553/uncaught-referenceerror-buffer-is-not-defined
       new webpack.ProvidePlugin({
-          process: 'process/browser',
+        Buffer: ['buffer', 'Buffer'],
       }),
       // Generates an `index.html` file with the <script> injected.
       new HtmlWebpackPlugin(
