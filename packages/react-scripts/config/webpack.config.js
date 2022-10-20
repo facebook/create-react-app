@@ -38,7 +38,7 @@ const getCacheIdentifier = require('react-dev-utils/getCacheIdentifier');
 // @remove-on-eject-end
 const createEnvironmentHash = require('./webpack/persistentCache/createEnvironmentHash');
 // @remove-on-eject-begin
-const nodeBuiltinFallbacks = require('./nodeBuiltinFallbacks');
+const nodeBuiltinFallbacks = require('./nodeBuiltInFallbacks');
 // @remove-on-eject-end
 
 // Source maps are resource heavy and can cause out of memory issue for large source files.
