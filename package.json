@@ -56,5 +56,26 @@
     "*.{js,json,yml,yaml,css,scss,ts,tsx,md}": [
       "prettier --write"
     ]
-  }
+  },
+  "dependencies": {
+    "json-server": "^0.17.0"
+  },
+  "name": "create-react-app",
+  "description": "<img alt=\"Logo\" align=\"right\" src=\"https://create-react-app.dev/img/logo.svg\" width=\"20%\" />",
+  "version": "1.0.0",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mr-Dy986/create-react-app.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Mr-Dy986/create-react-app/issues"
+  },
+  "homepage": "https://github.com/Mr-Dy986/create-react-app#readme"
 }

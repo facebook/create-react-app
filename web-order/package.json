@@ -9,11 +9,12 @@
     "axios": "^1.1.2",
     "bootstrap": "^5.2.2",
     "http-proxy-middleware": "^2.0.6",
+    "json-server": "^0.17.0",
     "react": "^18.2.0",
     "react-bootstrap": "^2.5.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.4.2",
-    "react-scripts": "5.0.1",
+    "react-scripts": "^5.0.1",
     "react-to-print": "^2.14.7",
     "react-toastify": "^9.0.8",
     "toasty": "^6.0.3",
@@ -44,5 +45,10 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:5000"
+  "proxy": "http://localhost:5000",
+  "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }

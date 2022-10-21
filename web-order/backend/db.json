@@ -4,7 +4,11 @@
       "id": 123,
       "name": "Water",
       "price": "1500",
+<<<<<<< HEAD
       "image": "https://thestreet7makara.sharepoint.com/sites/aronium/Shared%20Documents/General/Aronium/Pictures/Vital-500ml.png?Web=1"
+=======
+      "image": "https://thestreet7makara.netlify.app/static/media/VitalWater500ml.dbbf1c555a1cf131f02f.png"
+>>>>>>> eccff8c4fd248f0a784ec0ae3dc8f0cfa0a5aa7d
     },
     {
       "id": 124,
@@ -34,7 +38,11 @@
       "id": 128,
       "name": "Water",
       "price": "1500",
+<<<<<<< HEAD
       "image": "https://thestreet7makara.sharepoint.com/sites/aronium/Shared%20Documents/General/Aronium/Pictures/Vital-500ml.png?Web=1"
+=======
+      "image": "https://thestreet7makara.netlify.app/static/media/VitalWater500ml.dbbf1c555a1cf131f02f.png"
+>>>>>>> eccff8c4fd248f0a784ec0ae3dc8f0cfa0a5aa7d
     },
     {
       "id": 129,
@@ -64,7 +72,11 @@
       "id": 133,
       "name": "Water",
       "price": "1500",
+<<<<<<< HEAD
       "image": "https://thestreet7makara.sharepoint.com/sites/aronium/Shared%20Documents/General/Aronium/Pictures/Vital-500ml.png?Web=1"
+=======
+      "image": "https://thestreet7makara.netlify.app/static/media/VitalWater500ml.dbbf1c555a1cf131f02f.png"
+>>>>>>> eccff8c4fd248f0a784ec0ae3dc8f0cfa0a5aa7d
     },
     {
       "id": 134,
@@ -94,7 +106,11 @@
       "id": 138,
       "name": "Water",
       "price": "1500",
+<<<<<<< HEAD
       "image": "https://thestreet7makara.sharepoint.com/sites/aronium/Shared%20Documents/General/Aronium/Pictures/Vital-500ml.png?Web=1"
+=======
+      "image": "https://thestreet7makara.netlify.app/static/media/VitalWater500ml.dbbf1c555a1cf131f02f.png"
+>>>>>>> eccff8c4fd248f0a784ec0ae3dc8f0cfa0a5aa7d
     },
     {
       "id": 139,
