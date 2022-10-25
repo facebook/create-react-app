@@ -45,6 +45,7 @@
     "openChrome.applescript",
     "printBuildError.js",
     "printHostingInstructions.js",
+    "recursiveReaddir.js",
     "redirectServedPathMiddleware.js",
     "refreshOverlayInterop.js",
     "typescriptFormatter.js",
