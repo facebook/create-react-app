@@ -11,7 +11,7 @@ var fs = require('fs');
 var path = require('path');
 var chalk = require('chalk');
 var filesize = require('filesize');
-var recursive = require('recursive-readdir');
+var recursive = require('./recursiveReaddir');
 var stripAnsi = require('strip-ansi');
 var gzipSize = require('gzip-size').sync;
 
