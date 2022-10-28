@@ -80,6 +80,7 @@ module.exports = {
   publicUrlOrPath,
   // CUSTOM ENTRIES
   appPackages: resolveApp('packages'),
+  uikitX: resolveApp('../../packages/uikit-x'),
   appUikit: resolveApp('node_modules/@gd-uikit'),
 };
 
@@ -108,6 +109,7 @@ module.exports = {
   publicUrlOrPath,
   // CUSTOM ENTRIES
   appPackages: resolveApp('packages'),
+  uikitX: resolveApp('../../packages/uikit-x'),
   appUikit: resolveApp('node_modules/@gd-uikit'),
   // These properties only exist before ejecting:
   ownPath: resolveOwn('.'),
