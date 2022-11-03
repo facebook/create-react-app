@@ -53,6 +53,8 @@ const shouldTranspileDeps = process.env.TRANSPILE_DEPS !== 'false';
 
 const shouldMinify = process.env.DISABLE_TERSER !== 'true';
 
+const shouldCopyAssets = process.env.DISABLE_COPY_ASSETS !== 'true';
+
 // End iModel.js Changes block
 
 // Source maps are resource heavy and can cause out of memory issue for large source files.
@@ -148,7 +150,7 @@ module.exports = function (webpackEnv) {
       },
     } : 'sass-loader';
 
-  const copyPluginPatterns = Object.keys(require(paths.appPackageJson).dependencies)
+  const copyPluginPatterns = shouldCopyAssets ? Object.keys(require(paths.appPackageJson).dependencies)
     .filter(dependency => dependency.startsWith('@bentley') || dependency.startsWith('@itwin'))
     .map(dependency => {
       return {
@@ -163,7 +165,7 @@ module.exports = function (webpackEnv) {
           return regex.exec(absoluteFilename)[2];
         },
       };
-    });
+    }) : undefined;
 
   // End iModel.js Changes block
 
@@ -745,7 +747,7 @@ module.exports = function (webpackEnv) {
       // NOTE: iModel.js specific plugin to copy a set of static resources from the node_modules
       // directory of each dependent package into the 'build/public' directory.
       // Used for resources such as locales, which are defined by each consuming package.
-      new CopyPlugin({ patterns: copyPluginPatterns }),
+      copyPluginPatterns && new CopyPlugin({ patterns: copyPluginPatterns }),
 
       // Inlines the webpack runtime script. This script is too small to warrant
       // a network request.
