@@ -172,7 +172,7 @@ function init() {
       .then(console.log);
   }
 
-  if (typeof projectName === 'undefined') {
+  if (projectName === undefined) {
     console.error('Please specify the project directory:');
     console.log(
       `  ${chalk.cyan(program.name())} ${chalk.green('<project-directory>')}`
