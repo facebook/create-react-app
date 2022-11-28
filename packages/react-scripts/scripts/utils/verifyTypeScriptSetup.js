@@ -144,7 +144,7 @@ function verifyTypeScriptSetup() {
     },
     resolveJsonModule: { value: true, reason: 'to match webpack loader' },
     isolatedModules: { value: true, reason: 'implementation limitation' },
-    noEmit: { value: true },
+    noEmit: { value: false },
     jsx: {
       parsedValue:
         hasJsxRuntime && semver.gte(ts.version, '4.1.0-beta')
