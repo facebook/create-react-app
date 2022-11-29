@@ -138,7 +138,7 @@ module.exports = function (webpackEnv) {
   if (env.raw.IMJS_URL_PREFIX === undefined) {
     env.stringified[
       'process.env'
-    ].IMJS_URL_PREFIX = `(globalThis.IMJS_URL_PREFIX ? globalThis.IMJS_URL_PREFIX : undefined)`;
+    ].IMJS_URL_PREFIX = `(globalThis.IMJS_URL_PREFIX ? globalThis.IMJS_URL_PREFIX : "")`;
   }
 
   const sassLoaderConfig = shouldUseFastSass
