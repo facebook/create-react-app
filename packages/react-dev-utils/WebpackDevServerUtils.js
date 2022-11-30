@@ -376,7 +376,10 @@ function prepareProxy(proxy, appPublicFolder, servedPathname) {
         // requests. To prevent CORS issues, we have to change
         // the Origin to match the target URL.
         if (proxyReq.getHeader('origin')) {
-          proxyReq.setHeader('origin', target);
+          // The syntax of the Origin header does not include trailing slash
+          // (see RFC6454). The proxy target as accepted by prepareProxy is
+          // not strict with regards to trailing slashes, so we adjust it here.
+          proxyReq.setHeader('origin', target.replace(/\/+$/g, ''));
         }
       },
       onError: onProxyError(target),
