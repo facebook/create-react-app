@@ -803,7 +803,7 @@ module.exports = function (webpackEnv) {
             console.log('Sentry CLI Plugin: ' + err.message);
           },
         }),
-      new RetryChunkLoadPlugin({ maxRetries: 5, }),
+      new RetryChunkLoadPlugin({ maxRetries: 3, }),
     ].filter(Boolean);
 
   const config = {
