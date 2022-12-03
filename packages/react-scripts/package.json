@@ -90,7 +90,8 @@
   },
   "devDependencies": {
     "react": "^18.0.0",
-    "react-dom": "^18.0.0"
+    "react-dom": "^18.0.0",
+    "webpack-retry-chunk-load-plugin": "^3.1.1"
   },
   "optionalDependencies": {
     "fsevents": "^2.3.2"
