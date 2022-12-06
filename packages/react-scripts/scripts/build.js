@@ -115,7 +115,6 @@ checkBrowsers(paths.appPath, isInteractive)
         buildFolder,
         useYarn
       );
-
       compiler.close(err => {
         if (err && err.message) {
           console.log(err.message);
