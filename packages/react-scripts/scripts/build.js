@@ -76,7 +76,7 @@ checkBrowsers(paths.appPath, isInteractive)
     return build(previousFileSizes);
   })
   .then(
-    ({ stats, previousFileSizes, warnings }) => {
+    ({ stats, previousFileSizes, warnings, compiler }) => {
       if (warnings.length) {
         console.log(chalk.yellow('Compiled with warnings.\n'));
         console.log(warnings.join('\n\n'));
@@ -115,6 +115,13 @@ checkBrowsers(paths.appPath, isInteractive)
         buildFolder,
         useYarn
       );
+
+      compiler.close(err => {
+        if (err && err.message) {
+          console.log(err.message);
+          process.exit(1);
+        }
+      });
     },
     err => {
       const tscCompileOnError = process.env.TSC_COMPILE_ON_ERROR === 'true';
@@ -203,6 +210,7 @@ function build(previousFileSizes) {
         stats,
         previousFileSizes,
         warnings: messages.warnings,
+        compiler,
       };
 
       if (writeStatsJson) {
