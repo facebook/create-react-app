@@ -15,6 +15,7 @@ npm start
 ```
 
 > If you've previously installed `create-react-app` globally via `npm install -g create-react-app`, we recommend you uninstall the package using `npm uninstall -g create-react-app` or `yarn global remove create-react-app` to ensure that `npx` always uses the latest version.
+> If you continue to get an issue like `You are running "create-react-app" 4.0.3, which is behind the latest release (5.0.1)`, you may need to `npx clear-npx-cache` first, and then try again. Note that clearing the `npx` cache doesn't give any UI feedback about progress, so you may need to wait a moment before running `create-react-app` again.
 
 _([npx](https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7d4bd282b) comes with npm 5.2+ and higher, see [instructions for older npm versions](https://gist.github.com/gaearon/4064d3c23a77c74a3614c498a8bb1c5f))_
 
