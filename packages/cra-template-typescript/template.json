@@ -8,6 +8,7 @@
       "@types/node": "^16.7.13",
       "@types/react": "^18.0.0",
       "@types/react-dom": "^18.0.0",
+      "@types/testing-library__jest-dom": "^5.14.2",
       "typescript": "^4.4.2",
       "web-vitals": "^2.1.0"
     },

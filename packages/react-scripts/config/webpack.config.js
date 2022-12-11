@@ -143,9 +143,9 @@ module.exports = function (webpackEnv) {
             config: false,
             plugins: !useTailwind
               ? [
-                  'postcss-flexbugs-fixes',
+                  require.resolve('postcss-flexbugs-fixes'),
                   [
-                    'postcss-preset-env',
+                    require.resolve('postcss-preset-env'),
                     {
                       autoprefixer: {
                         flexbox: 'no-2009',
@@ -156,13 +156,13 @@ module.exports = function (webpackEnv) {
                   // Adds PostCSS Normalize as the reset css with default options,
                   // so that it honors browserslist config in package.json
                   // which in turn let's users customize the target behavior as per their needs.
-                  'postcss-normalize',
+                  require.resolve('postcss-normalize'),
                 ]
               : [
-                  'tailwindcss',
-                  'postcss-flexbugs-fixes',
+                  require.resolve('tailwindcss'),
+                  require.resolve('postcss-flexbugs-fixes'),
                   [
-                    'postcss-preset-env',
+                    require.resolve('postcss-preset-env'),
                     {
                       autoprefixer: {
                         flexbox: 'no-2009',

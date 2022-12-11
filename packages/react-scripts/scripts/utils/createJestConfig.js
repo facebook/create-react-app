@@ -62,8 +62,8 @@ module.exports = (resolve, rootDir, isEjecting) => {
       ext => !ext.includes('mjs')
     ),
     watchPlugins: [
-      'jest-watch-typeahead/filename',
-      'jest-watch-typeahead/testname',
+      require.resolve('jest-watch-typeahead/filename'),
+      require.resolve('jest-watch-typeahead/testname'),
     ],
     resetMocks: true,
   };
