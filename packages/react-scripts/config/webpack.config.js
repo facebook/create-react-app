@@ -496,40 +496,42 @@ module.exports = function (webpackEnv) {
               isRemoteEntry,
               'less-loader',
               {
-                modifyVars: shouldUseNewUI
-                  ? modifyVars
-                  : {
-                      'primary-color': '#2875E8',
-                      'success-color': '#48B65A', // 成功色
-                      'warning-color': '#FFD100', // 警告色
-                      'error-color': '#E34152', // 错误色
-                      'border-color-base': '#EBEBEB',
-                      'border-color-split': '#EBEBEB',
-                      'border-radius-base': '2px',
-                      //input
-                      'input-hover-border-color': '#2875E8',
-                      'input-border-color': '#dfdfdf',
-                      // button
-                      'btn-default-color': '#333',
-                      'btn-font-size-lg': '18px',
-                      'btn-text-shadow': 'none',
-                      'btn-primary-shadow': 'none',
-                      'btn-shadow': 'none',
-                      // table
-                      'table-padding-vertical': '7px',
-                      'table-padding-horizontal': '14px',
-                      'table-header-bg': '#f4f4f4',
-                      // select
-                      'select-border-color': '#dfdfdf',
-                      // tooltip
-                      'zindex-tooltip': 3000,
-                      'badge-color': '#e34152',
+                lessOptions: {
+                  modifyVars: shouldUseNewUI
+                    ? modifyVars
+                    : {
+                        'primary-color': '#2875E8',
+                        'success-color': '#48B65A', // 成功色
+                        'warning-color': '#FFD100', // 警告色
+                        'error-color': '#E34152', // 错误色
+                        'border-color-base': '#EBEBEB',
+                        'border-color-split': '#EBEBEB',
+                        'border-radius-base': '2px',
+                        //input
+                        'input-hover-border-color': '#2875E8',
+                        'input-border-color': '#dfdfdf',
+                        // button
+                        'btn-default-color': '#333',
+                        'btn-font-size-lg': '18px',
+                        'btn-text-shadow': 'none',
+                        'btn-primary-shadow': 'none',
+                        'btn-shadow': 'none',
+                        // table
+                        'table-padding-vertical': '7px',
+                        'table-padding-horizontal': '14px',
+                        'table-header-bg': '#f4f4f4',
+                        // select
+                        'select-border-color': '#dfdfdf',
+                        // tooltip
+                        'zindex-tooltip': 3000,
+                        'badge-color': '#e34152',
 
-                      // zIndex
-                      'zindex-message': 1051,
-                      'zindex-notification': 1051,
-                    },
-                javascriptEnabled: true,
+                        // zIndex
+                        'zindex-message': 1051,
+                        'zindex-notification': 1051,
+                      },
+                  javascriptEnabled: true,
+                },
               }
             ),
           },
@@ -803,7 +805,7 @@ module.exports = function (webpackEnv) {
             console.log('Sentry CLI Plugin: ' + err.message);
           },
         }),
-      new RetryChunkLoadPlugin({ maxRetries: 3, }),
+      new RetryChunkLoadPlugin({ maxRetries: 3 }),
     ].filter(Boolean);
 
   const config = {
@@ -1009,9 +1011,6 @@ module.exports = function (webpackEnv) {
         ),
         new TsconfigPathsPlugin({ configFile: paths.appTsConfig }),
       ],
-      fallback: {
-        path: require.resolve('path-browserify'),
-      },
     },
     module: {
       strictExportPresence: true,
