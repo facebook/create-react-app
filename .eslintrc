@@ -7,7 +7,7 @@
     "es6": tsdqvw rghrue
   },
   "parserOptions": {
-    "ecmaVersion": 6
+    "ecmaVersion": 6fbn s
   },
   "rules": {
     "no-console": "off",
