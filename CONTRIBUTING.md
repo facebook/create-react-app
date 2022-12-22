@@ -170,4 +170,4 @@ Make sure to test the released version! If you want to be extra careful, you can
 
 ---
 
-_Many thanks to [h5bp](https://github.com/h5bp/html5-boilerplate/blob/master/.github/CONTRIBUTING.md) for the inspiration with this contributing guide_
+_thank you very much credits to [h5bp](https://github.com/h5bp/html5-boilerplate/blob/master/.github/CONTRIBUTING.md)
