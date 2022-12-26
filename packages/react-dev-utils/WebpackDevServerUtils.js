@@ -17,37 +17,25 @@ const inquirer = require('inquirer');
 const clearConsole = require('./clearConsole');
 const formatWebpackMessages = require('./formatWebpackMessages');
 const getProcessForPort = require('./getProcessForPort');
+const typescriptFormatter = require('./typescriptFormatter');
+const forkTsCheckerWebpackPlugin = require('./ForkTsCheckerWebpackPlugin');
 
 const isInteractive = process.stdout.isTTY;
-let handleCompile;
 
-// You can safely remove this after ejecting.
-// We only use this block for testing of Create React App itself:
-const isSmokeTest = process.argv.some(arg => arg.indexOf('--smoke-test') > -1);
-if (isSmokeTest) {
-  handleCompile = (err, stats) => {
-    if (err || stats.hasErrors() || stats.hasWarnings()) {
-      process.exit(1);
-    } else {
-      process.exit(0);
-    }
-  };
-}
-
-function prepareUrls(protocol, host, port) {
+function prepareUrls(protocol, host, port, pathname = '/') {
   const formatUrl = hostname =>
     url.format({
       protocol,
       hostname,
       port,
-      pathname: '/',
+      pathname,
     });
   const prettyPrintUrl = hostname =>
     url.format({
       protocol,
       hostname,
       port: chalk.bold(port),
-      pathname: '/',
+      pathname,
     });
 
   const isUnspecifiedHost = host === '0.0.0.0' || host === '::';
@@ -113,12 +101,21 @@ function printInstructions(appName, urls, useYarn) {
   console.log();
 }
 
-function createCompiler(webpack, config, appName, urls, useYarn) {
-  // "Compiler" is a low-level interface to Webpack.
+function createCompiler({
+  appName,
+  config,
+  devSocket,
+  urls,
+  useYarn,
+  useTypeScript,
+  tscCompileOnError,
+  webpack,
+}) {
+  // "Compiler" is a low-level interface to webpack.
   // It lets us listen to some events and provide our own custom messages.
   let compiler;
   try {
-    compiler = webpack(config, handleCompile);
+    compiler = webpack(config);
   } catch (err) {
     console.log(chalk.red('Failed to compile.'));
     console.log();
@@ -127,7 +124,7 @@ function createCompiler(webpack, config, appName, urls, useYarn) {
     process.exit(1);
   }
 
-  // "invalid" event fires when you have changed a file, and Webpack is
+  // "invalid" event fires when you have changed a file, and webpack is
   // recompiling a bundle. WebpackDevServer takes care to pause serving the
   // bundle, so if you refresh, it'll wait instead of serving the old one.
   // "invalid" is short for "bundle invalidated", it doesn't imply any errors.
@@ -139,22 +136,93 @@ function createCompiler(webpack, config, appName, urls, useYarn) {
   });
 
   let isFirstCompile = true;
+  let tsMessagesPromise;
+  let tsMessagesResolver;
 
-  // "done" event fires when Webpack has finished recompiling the bundle.
+  if (useTypeScript) {
+    compiler.hooks.beforeCompile.tap('beforeCompile', () => {
+      tsMessagesPromise = new Promise(resolve => {
+        tsMessagesResolver = msgs => resolve(msgs);
+      });
+    });
+
+    forkTsCheckerWebpackPlugin
+      .getCompilerHooks(compiler)
+      .receive.tap('afterTypeScriptCheck', (diagnostics, lints) => {
+        const allMsgs = [...diagnostics, ...lints];
+        const format = message =>
+          `${message.file}\n${typescriptFormatter(message, true)}`;
+
+        tsMessagesResolver({
+          errors: allMsgs.filter(msg => msg.severity === 'error').map(format),
+          warnings: allMsgs
+            .filter(msg => msg.severity === 'warning')
+            .map(format),
+        });
+      });
+  }
+
+  // "done" event fires when webpack has finished recompiling the bundle.
   // Whether or not you have warnings or errors, you will get this event.
-  compiler.hooks.done.tap('done', stats => {
+  compiler.hooks.done.tap('done', async stats => {
     if (isInteractive) {
       clearConsole();
     }
 
-    // We have switched off the default Webpack output in WebpackDevServer
+    // We have switched off the default webpack output in WebpackDevServer
     // options so we are going to "massage" the warnings and errors and present
     // them in a readable focused way.
     // We only construct the warnings and errors for speed:
     // https://github.com/facebook/create-react-app/issues/4492#issuecomment-421959548
-    const messages = formatWebpackMessages(
-      stats.toJson({ all: false, warnings: true, errors: true })
-    );
+    const statsData = stats.toJson({
+      all: false,
+      warnings: true,
+      errors: true,
+    });
+
+    if (useTypeScript && statsData.errors.length === 0) {
+      const delayedMsg = setTimeout(() => {
+        console.log(
+          chalk.yellow(
+            'Files successfully emitted, waiting for typecheck results...'
+          )
+        );
+      }, 100);
+
+      const messages = await tsMessagesPromise;
+      clearTimeout(delayedMsg);
+      if (tscCompileOnError) {
+        statsData.warnings.push(...messages.errors);
+      } else {
+        statsData.errors.push(...messages.errors);
+      }
+      statsData.warnings.push(...messages.warnings);
+
+      // Push errors and warnings into compilation result
+      // to show them after page refresh triggered by user.
+      if (tscCompileOnError) {
+        stats.compilation.warnings.push(...messages.errors);
+      } else {
+        stats.compilation.errors.push(...messages.errors);
+      }
+      stats.compilation.warnings.push(...messages.warnings);
+
+      if (messages.errors.length > 0) {
+        if (tscCompileOnError) {
+          devSocket.warnings(messages.errors);
+        } else {
+          devSocket.errors(messages.errors);
+        }
+      } else if (messages.warnings.length > 0) {
+        devSocket.warnings(messages.warnings);
+      }
+
+      if (isInteractive) {
+        clearConsole();
+      }
+    }
+
+    const messages = formatWebpackMessages(statsData);
     const isSuccessful = !messages.errors.length && !messages.warnings.length;
     if (isSuccessful) {
       console.log(chalk.green('Compiled successfully!'));
@@ -194,6 +262,27 @@ function createCompiler(webpack, config, appName, urls, useYarn) {
       );
     }
   });
+
+  // You can safely remove this after ejecting.
+  // We only use this block for testing of Create React App itself:
+  const isSmokeTest = process.argv.some(
+    arg => arg.indexOf('--smoke-test') > -1
+  );
+  if (isSmokeTest) {
+    compiler.hooks.failed.tap('smokeTest', async () => {
+      await tsMessagesPromise;
+      process.exit(1);
+    });
+    compiler.hooks.done.tap('smokeTest', async stats => {
+      await tsMessagesPromise;
+      if (stats.hasErrors() || stats.hasWarnings()) {
+        process.exit(1);
+      } else {
+        process.exit(0);
+      }
+    });
+  }
+
   return compiler;
 }
 
@@ -267,7 +356,7 @@ function onProxyError(proxy) {
   };
 }
 
-function prepareProxy(proxy, appPublicFolder) {
+function prepareProxy(proxy, appPublicFolder, servedPathname) {
   // `proxy` lets you specify alternate servers for specific requests.
   if (!proxy) {
     return undefined;
@@ -285,10 +374,21 @@ function prepareProxy(proxy, appPublicFolder) {
     process.exit(1);
   }
 
-  // If proxy is specified, let it handle any request except for files in the public folder.
+  // If proxy is specified, let it handle any request except for
+  // files in the public folder and requests to the WebpackDevServer socket endpoint.
+  // https://github.com/facebook/create-react-app/issues/6720
+  const sockPath = process.env.WDS_SOCKET_PATH || '/sockjs-node';
+  const isDefaultSockHost = !process.env.WDS_SOCKET_HOST;
   function mayProxy(pathname) {
-    const maybePublicPath = path.resolve(appPublicFolder, pathname.slice(1));
-    return !fs.existsSync(maybePublicPath);
+    const maybePublicPath = path.resolve(
+      appPublicFolder,
+      pathname.replace(new RegExp('^' + servedPathname), '')
+    );
+    const isPublicFileRequest = fs.existsSync(maybePublicPath);
+    // used by webpackHotDevClient
+    const isWdsEndpointRequest =
+      isDefaultSockHost && pathname.startsWith(sockPath);
+    return !(isPublicFileRequest || isWdsEndpointRequest);
   }
 
   if (!/^http(s)?:\/\//.test(proxy)) {
@@ -320,7 +420,7 @@ function prepareProxy(proxy, appPublicFolder) {
       // Modern browsers include text/html into `accept` header when navigating.
       // However API calls like `fetch()` won’t generally accept text/html.
       // If this heuristic doesn’t work well for you, use `src/setupProxy.js`.
-      context: function(pathname, req) {
+      context: function (pathname, req) {
         return (
           req.method !== 'GET' ||
           (mayProxy(pathname) &&

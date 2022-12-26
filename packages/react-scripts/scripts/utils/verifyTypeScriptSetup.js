@@ -18,11 +18,17 @@ const immer = require('react-dev-utils/immer').produce;
 const globby = require('react-dev-utils/globby').sync;
 
 function writeJson(fileName, object) {
-  fs.writeFileSync(fileName, JSON.stringify(object, null, 2) + os.EOL);
+  fs.writeFileSync(
+    fileName,
+    JSON.stringify(object, null, 2).replace(/\n/g, os.EOL) + os.EOL
+  );
 }
 
 function verifyNoTypeScript() {
-  const typescriptFiles = globby(['**/*.(ts|tsx)', '!**/node_modules'], { cwd: paths.appSrc });
+  const typescriptFiles = globby(
+    ['**/*.(ts|tsx)', '!**/node_modules', '!**/*.d.ts'],
+    { cwd: paths.appSrc }
+  );
   if (typescriptFiles.length > 0) {
     console.warn(
       chalk.yellow(
@@ -53,9 +59,17 @@ function verifyTypeScriptSetup() {
   // Ensure typescript is installed
   let ts;
   try {
+    // TODO: Remove this hack once `globalThis` issue is resolved
+    // https://github.com/jsdom/jsdom/issues/2961
+    const globalThisWasDefined = !!global.globalThis;
+
     ts = require(resolve.sync('typescript', {
       basedir: paths.appNodeModules,
     }));
+
+    if (!globalThisWasDefined && !!global.globalThis) {
+      delete global.globalThis;
+    }
   } catch (_) {
     console.error(
       chalk.bold.red(
@@ -100,6 +114,7 @@ function verifyTypeScriptSetup() {
     allowSyntheticDefaultImports: { suggested: true },
     strict: { suggested: true },
     forceConsistentCasingInFileNames: { suggested: true },
+    noFallthroughCasesInSwitch: { suggested: true },
 
     // These values are required and cannot be changed by the user
     // Keep this in sync with the webpack config
@@ -117,15 +132,8 @@ function verifyTypeScriptSetup() {
     isolatedModules: { value: true, reason: 'implementation limitation' },
     noEmit: { value: true },
     jsx: {
-      parsedValue: ts.JsxEmit.Preserve,
-      value: 'preserve',
-      reason: 'JSX is compiled by Babel',
-    },
-    // We do not support absolute imports, though this may come as a future
-    // enhancement
-    baseUrl: {
-      value: undefined,
-      reason: 'absolute imports are not supported (yet)',
+      parsedValue: ts.JsxEmit.React,
+      suggested: 'react',
     },
     paths: { value: undefined, reason: 'aliased imports are not supported' },
   };
@@ -172,14 +180,17 @@ function verifyTypeScriptSetup() {
 
     parsedCompilerOptions = result.options;
   } catch (e) {
-    console.error(
-      chalk.red.bold(
-        'Could not parse',
-        chalk.cyan('tsconfig.json') + '.',
-        'Please make sure it contains syntactically correct JSON.'
-      )
-    );
-    console.error(e && e.message ? `Details: ${e.message}` : '');
+    if (e && e.name === 'SyntaxError') {
+      console.error(
+        chalk.red.bold(
+          'Could not parse',
+          chalk.cyan('tsconfig.json') + '.',
+          'Please make sure it contains syntactically correct JSON.'
+        )
+      );
+    }
+
+    console.log(e && e.message ? `${e.message}` : '');
     process.exit(1);
   }
 

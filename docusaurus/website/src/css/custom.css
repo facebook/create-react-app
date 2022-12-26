@@ -1,0 +1,33 @@
+:root {
+  --ifm-color-primary: #09d3ac;
+  --ifm-color-primary-dark: rgb(8, 190, 155);
+  --ifm-color-primary-darker: rgb(8, 179, 146);
+  --ifm-color-primary-darkest: rgb(6, 148, 120);
+  --ifm-color-primary-light: rgb(46, 218, 184);
+  --ifm-color-primary-lighter: rgb(83, 224, 197);
+  --ifm-color-primary-lightest: rgb(132, 233, 214);
+}
+
+@media screen and (max-width: 996px) {
+  :root {
+    --ifm-font-size-base: 15px;
+  }
+}
+
+@media screen and (min-width: 997px) {
+  :root {
+    --ifm-font-size-base: 17px;
+  }
+}
+
+.docusaurus-highlight-code-line {
+  background-color: rgb(72, 77, 91);
+  display: block;
+  margin: 0 calc(-1 * var(--ifm-pre-padding));
+  padding: 0 var(--ifm-pre-padding);
+}
+
+.navbar .navbar__brand > strong {
+  flex-shrink: 0;
+  max-width: 100%;
+}

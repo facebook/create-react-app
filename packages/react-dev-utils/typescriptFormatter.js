@@ -12,45 +12,31 @@ const codeFrame = require('@babel/code-frame').codeFrameColumns;
 const chalk = require('chalk');
 const fs = require('fs');
 
-function formatter(message, useColors) {
-  const hasGetters = typeof message.getFile === 'function';
-  const colors = new chalk.constructor({ enabled: useColors });
-  const messageColor = message.isWarningSeverity() ? colors.yellow : colors.red;
+const issueOrigins = {
+  typescript: 'TypeScript',
+  internal: 'fork-ts-checker-webpack-plugin',
+};
 
-  let source;
+function formatter(issue) {
+  const { origin, severity, file, line, message, code, character } = issue;
 
-  if (hasGetters) {
-    source =
-      message.getFile() &&
-      fs.existsSync(message.getFile()) &&
-      fs.readFileSync(message.getFile(), 'utf-8');
-  } else {
-    source =
-      message.file &&
-      fs.existsSync(message.file) &&
-      fs.readFileSync(message.file, 'utf-8');
-  }
+  const colors = new chalk.constructor();
+  const messageColor = severity === 'warning' ? colors.yellow : colors.red;
+  const fileAndNumberColor = colors.bold.cyan;
 
-  let frame = '';
-
-  if (source) {
-    frame = codeFrame(
-      source,
-      { start: { line: message.line, column: message.character } },
-      { highlightCode: useColors }
-    )
-      .split('\n')
-      .map(str => '  ' + str)
-      .join(os.EOL);
-  }
-
-  const severity = hasGetters ? message.getSeverity() : message.severity;
+  const source = file && fs.existsSync(file) && fs.readFileSync(file, 'utf-8');
+  const frame = source
+    ? codeFrame(source, { start: { line: line, column: character } })
+        .split('\n')
+        .map(str => '  ' + str)
+        .join(os.EOL)
+    : '';
 
   return [
-    messageColor.bold(`Type ${severity.toLowerCase()}: `) +
-      (hasGetters ? message.getContent() : message.content) +
-      '  ' +
-      messageColor.underline(`TS${message.code}`),
+    messageColor.bold(`${issueOrigins[origin]} ${severity.toLowerCase()} in `) +
+      fileAndNumberColor(`${file}(${line},${character})`) +
+      messageColor(':'),
+    message + '  ' + messageColor.underline(`TS${code}`),
     '',
     frame,
   ].join(os.EOL);

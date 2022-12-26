@@ -1,11 +1,15 @@
 {
   "name": "react-scripts",
-  "version": "2.1.3",
+  "version": "3.4.1",
   "description": "Configuration and scripts for Create React App.",
-  "repository": "facebook/create-react-app",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/facebook/create-react-app.git",
+    "directory": "packages/react-scripts"
+  },
   "license": "MIT",
   "engines": {
-    "node": ">=6"
+    "node": "^10.12.0 || >=12.0.0"
   },
   "bugs": {
     "url": "https://github.com/facebook/create-react-app/issues"
@@ -24,64 +28,87 @@
   },
   "types": "./lib/react-app.d.ts",
   "dependencies": {
-    "@babel/core": "7.2.2",
-    "@svgr/webpack": "4.1.0",
-    "babel-core": "7.0.0-bridge.0",
-    "babel-eslint": "9.0.0",
-    "babel-jest": "23.6.0",
-    "babel-loader": "8.0.5",
-    "babel-plugin-named-asset-import": "^0.3.0",
-    "babel-preset-react-app": "^7.0.0",
-    "bfj": "6.1.1",
-    "case-sensitive-paths-webpack-plugin": "2.1.2",
-    "css-loader": "1.0.0",
-    "dotenv": "6.0.0",
-    "dotenv-expand": "4.2.0",
-    "eslint": "5.12.0",
-    "eslint-config-react-app": "^3.0.6",
-    "eslint-loader": "2.1.1",
-    "eslint-plugin-flowtype": "2.50.1",
-    "eslint-plugin-import": "2.14.0",
-    "eslint-plugin-jsx-a11y": "6.1.2",
-    "eslint-plugin-react": "7.12.3",
-    "file-loader": "2.0.0",
-    "fork-ts-checker-webpack-plugin-alt": "0.4.14",
-    "fs-extra": "7.0.1",
-    "html-webpack-plugin": "4.0.0-alpha.2",
+    "@babel/core": "7.10.5",
+    "@pmmmwh/react-refresh-webpack-plugin": "0.4.1",
+    "@svgr/webpack": "5.4.0",
+    "@typescript-eslint/eslint-plugin": "^3.3.0",
+    "@typescript-eslint/parser": "^3.3.0",
+    "babel-eslint": "^10.1.0",
+    "babel-jest": "^26.0.1",
+    "babel-loader": "8.1.0",
+    "babel-plugin-named-asset-import": "^0.3.6",
+    "babel-preset-react-app": "^9.1.2",
+    "bfj": "^7.0.2",
+    "camelcase": "^6.0.0",
+    "case-sensitive-paths-webpack-plugin": "2.3.0",
+    "css-loader": "3.6.0",
+    "dotenv": "8.2.0",
+    "dotenv-expand": "5.1.0",
+    "eslint": "^7.5.0",
+    "eslint-config-react-app": "^5.2.1",
+    "eslint-loader": "^4.0.2",
+    "eslint-plugin-flowtype": "^5.2.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-jsx-a11y": "^6.3.1",
+    "eslint-plugin-react": "^7.20.3",
+    "eslint-plugin-react-hooks": "^4.0.8",
+    "file-loader": "6.0.0",
+    "fs-extra": "^9.0.0",
+    "html-webpack-plugin": "4.3.0",
     "identity-obj-proxy": "3.0.0",
-    "jest": "23.6.0",
-    "jest-pnp-resolver": "1.0.2",
-    "jest-resolve": "23.6.0",
-    "mini-css-extract-plugin": "0.4.3",
-    "optimize-css-assets-webpack-plugin": "5.0.1",
-    "pnp-webpack-plugin": "1.2.1",
-    "postcss-flexbugs-fixes": "4.1.0",
+    "jest": "26.1.0",
+    "jest-circus": "26.1.0",
+    "jest-resolve": "26.1.0",
+    "jest-watch-typeahead": "0.6.0",
+    "mini-css-extract-plugin": "0.9.0",
+    "optimize-css-assets-webpack-plugin": "5.0.3",
+    "pnp-webpack-plugin": "1.6.4",
+    "postcss-flexbugs-fixes": "4.2.1",
     "postcss-loader": "3.0.0",
-    "postcss-preset-env": "6.5.0",
-    "postcss-safe-parser": "4.0.1",
-    "react-app-polyfill": "^0.2.0",
-    "react-dev-utils": "^7.0.1",
-    "resolve": "1.9.0",
-    "sass-loader": "7.1.0",
-    "style-loader": "0.23.1",
-    "terser-webpack-plugin": "1.2.1",
-    "url-loader": "1.1.2",
-    "webpack": "4.28.3",
-    "webpack-dev-server": "3.1.14",
-    "webpack-manifest-plugin": "2.0.4",
-    "workbox-webpack-plugin": "3.6.3"
+    "postcss-normalize": "8.0.1",
+    "postcss-preset-env": "6.7.0",
+    "postcss-safe-parser": "4.0.2",
+    "react-app-polyfill": "^1.0.6",
+    "react-dev-utils": "^10.2.1",
+    "react-refresh": "^0.8.3",
+    "resolve": "1.17.0",
+    "resolve-url-loader": "3.1.1",
+    "sass-loader": "8.0.2",
+    "semver": "7.3.2",
+    "style-loader": "1.2.1",
+    "terser-webpack-plugin": "3.0.7",
+    "ts-pnp": "1.2.0",
+    "url-loader": "4.1.0",
+    "webpack": "4.43.0",
+    "webpack-dev-server": "3.11.0",
+    "webpack-manifest-plugin": "2.2.0",
+    "workbox-webpack-plugin": "5.1.3"
   },
   "devDependencies": {
-    "react": "^16.3.2",
-    "react-dom": "^16.3.2"
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0"
   },
   "optionalDependencies": {
-    "fsevents": "1.2.4"
+    "fsevents": "^2.1.3"
   },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ]
+  "peerDependencies": {
+    "typescript": "^3.2.1"
+  },
+  "peerDependenciesMeta": {
+    "typescript": {
+      "optional": true
+    }
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
 }

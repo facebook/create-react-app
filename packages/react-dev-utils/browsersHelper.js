@@ -13,12 +13,14 @@ const inquirer = require('inquirer');
 const pkgUp = require('pkg-up');
 const fs = require('fs');
 
-const defaultBrowsers = [
-  '>0.2%',
-  'not dead',
-  'not ie <= 11',
-  'not op_mini all',
-];
+const defaultBrowsers = {
+  production: ['>0.2%', 'not dead', 'not op_mini all'],
+  development: [
+    'last 1 chrome version',
+    'last 1 firefox version',
+    'last 1 safari version',
+  ],
+};
 
 function shouldSetBrowsers(isInteractive) {
   if (!isInteractive) {
@@ -40,7 +42,7 @@ function shouldSetBrowsers(isInteractive) {
 }
 
 function checkBrowsers(dir, isInteractive, retry = true) {
-  const current = browserslist.findConfig(dir);
+  const current = browserslist.loadConfig({ path: dir });
   if (current != null) {
     return Promise.resolve(current);
   }
@@ -65,7 +67,7 @@ function checkBrowsers(dir, isInteractive, retry = true) {
     }
 
     return (
-      pkgUp(dir)
+      pkgUp({ cwd: dir })
         .then(filePath => {
           if (filePath == null) {
             return Promise.reject();

@@ -1,3 +1,5 @@
+import absoluteLoad from 'absoluteLoad';
+
 interface MyType {
   foo: number;
   bar: boolean;
@@ -12,6 +14,7 @@ class App {
   n = App.foo.baz!.n;
   @propertyDecorator
   decorated = 5;
+  users = absoluteLoad();
 }
 
 function annotation(target: any) {
@@ -22,6 +25,13 @@ function propertyDecorator(target: any, key: string) {
   arguments[2].initializer = function() {
     return 42;
   };
+}
+
+declare namespace MyNamespace {
+  interface MyType {
+    foo: string;
+    bar: (n: number) => void;
+  }
 }
 
 export default App;

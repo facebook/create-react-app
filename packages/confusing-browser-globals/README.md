@@ -20,7 +20,7 @@ This package exports a list of globals that are often used by mistake. You can f
 
 ## Installation
 
-```
+```sh
 npm install --save confusing-browser-globals
 ```
 
