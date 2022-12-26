@@ -84,6 +84,7 @@ module.exports = {
           {
             args: 'none',
             ignoreRestSiblings: true,
+            destructuredArrayIgnorePattern: '^_',
           },
         ],
         'no-useless-constructor': 'off',
@@ -178,6 +179,7 @@ module.exports = {
       {
         args: 'none',
         ignoreRestSiblings: true,
+        destructuredArrayIgnorePattern: '^_',
       },
     ],
     'no-use-before-define': [
