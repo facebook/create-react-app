@@ -34,6 +34,7 @@ module.exports = function createEvalSourceMapMiddleware(server) {
       const id = fileName.match(/webpack-internal:\/\/\/(.+)/)[1];
       if (!id || !server._stats) {
         next();
+        return;
       }
 
       const source = getSourceById(server, id);
