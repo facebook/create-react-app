@@ -38,7 +38,7 @@ const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const BundleAnalyzerPlugin =
   require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const SentryWebpackPlugin = require('@sentry/webpack-plugin');
-const modifyVars = require(`${paths.appUikit}/uikit-next/lib/utils/styleModifyVars`);
+const modifyVars = require(`${paths.appUikit}/uikit/lib/utils/styleModifyVars`);
 const webpackOverrideConfig = require(path.resolve(
   paths.appPath,
   'webpack.override'
@@ -238,9 +238,8 @@ module.exports = function (webpackEnv) {
   };
 
   const getRules = (
-    { isRemoteEntry, shouldUseNewUI } = {
+    { isRemoteEntry } = {
       isRemoteEntry: false,
-      shouldUseNewUI: false,
     }
   ) =>
     [
@@ -497,39 +496,7 @@ module.exports = function (webpackEnv) {
               'less-loader',
               {
                 lessOptions: {
-                  modifyVars: shouldUseNewUI
-                    ? modifyVars
-                    : {
-                        'primary-color': '#2875E8',
-                        'success-color': '#48B65A', // 成功色
-                        'warning-color': '#FFD100', // 警告色
-                        'error-color': '#E34152', // 错误色
-                        'border-color-base': '#EBEBEB',
-                        'border-color-split': '#EBEBEB',
-                        'border-radius-base': '2px',
-                        //input
-                        'input-hover-border-color': '#2875E8',
-                        'input-border-color': '#dfdfdf',
-                        // button
-                        'btn-default-color': '#333',
-                        'btn-font-size-lg': '18px',
-                        'btn-text-shadow': 'none',
-                        'btn-primary-shadow': 'none',
-                        'btn-shadow': 'none',
-                        // table
-                        'table-padding-vertical': '7px',
-                        'table-padding-horizontal': '14px',
-                        'table-header-bg': '#f4f4f4',
-                        // select
-                        'select-border-color': '#dfdfdf',
-                        // tooltip
-                        'zindex-tooltip': 3000,
-                        'badge-color': '#e34152',
-
-                        // zIndex
-                        'zindex-message': 1051,
-                        'zindex-notification': 1051,
-                      },
+                  modifyVars,
                   javascriptEnabled: true,
                 },
               }
