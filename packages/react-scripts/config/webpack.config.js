@@ -319,6 +319,11 @@ module.exports = function (webpackEnv) {
       extensions: paths.moduleFileExtensions
         .map(ext => `.${ext}`)
         .filter(ext => useTypeScript || !ext.includes('ts')),
+      extensionAlias: {
+        '.js': [...(useTypeScript ? ['.ts', '.tsx'] : []), '.js'],
+        '.cjs': [...(useTypeScript ? ['.cts', '.ctsx'] : []), '.cjs'],
+        '.mjs': [...(useTypeScript ? ['.mts', '.mtsx'] : []), '.mjs'],
+      },
       alias: {
         // Support React Native Web
         // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
