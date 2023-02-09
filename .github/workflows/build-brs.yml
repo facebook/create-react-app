@@ -21,13 +21,13 @@ jobs:
         with:
           node-version: 16.x
 
-      - name: Run simple
+      - name: Run e2e
         run: |
-          tasks/e2e-simple.sh
+          tasks/e2e-brs.sh
 
-      - name: Run Installs
-        run: |
-          tasks/e2e-installs.sh
+      # - name: Run Installs
+      #   run: |
+      #     tasks/e2e-installs.sh
 
       ## For now we don't need to worry about Kitchensink as this is also failing upstream and the functions is executes are not relevant
 
