@@ -1,12 +1,12 @@
 {
-  "name": "cra-template",
-  "version": "1.2.0",
+  "name": "deepintent-template",
+  "version": "1.1.1",
   "keywords": [
     "react",
     "create-react-app",
     "template"
   ],
-  "description": "The base template for Create React App.",
+  "description": "Configuration and scripts for DI React App.",
   "repository": {
     "type": "git",
     "url": "https://github.com/facebook/create-react-app.git",
