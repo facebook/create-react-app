@@ -17,6 +17,7 @@ Current upstream is `react-scripts@5.0.1`, a diff of upstream and this fork can 
   | TRANSPILE_DEPS          | ✅ Used     | ✅ Used    | When set to `false`, webpack will not run babel on anything in node_modules. Transpiling dependencies can be costly, and is often not necessary when targeting newer browsers. |
   | DISABLE_TERSER          | 🚫 Ignored  | ✅ Used    | When set to `true`, skips all minification. Useful for PR builds and test apps. |
   | DISABLE_COPY_ASSETS     | ✅ Used     | ✅ Used    | When set to `true`, skips applying the copy plugin to extract assets from @bentley or @itwinjs packages. |
+  | USING_NPM               | ✅ Used     | ✅ Used    | When set to `true`, indicates that the application uses npm instead of pnpm. This disables a pnpm workaround while copying assets. (The pnpm workaround prevents assets copying from working in npm.) Ignored if `DISABLE_COPY_ASSETS` is `true`. |
 
 - Typing changes
 
