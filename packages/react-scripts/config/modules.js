@@ -64,16 +64,20 @@ function getAdditionalModulePaths(options = {}) {
  */
 function getWebpackAliases(options = {}) {
   const baseUrl = options.baseUrl;
+  const paths = options.paths;
 
   if (!baseUrl) {
-    return {};
+    return paths ? {...paths} : {};
   }
 
   const baseUrlResolved = path.resolve(paths.appPath, baseUrl);
 
   if (path.relative(paths.appPath, baseUrlResolved) === '') {
-    return {
+    return paths ? {
       src: paths.appSrc,
+      ...paths
+    }: {
+      src: paths.appSrc
     };
   }
 }
@@ -85,15 +89,19 @@ function getWebpackAliases(options = {}) {
  */
 function getJestAliases(options = {}) {
   const baseUrl = options.baseUrl;
+  const paths = options.paths;
 
   if (!baseUrl) {
-    return {};
+    return paths ? {...paths} : {};
   }
 
   const baseUrlResolved = path.resolve(paths.appPath, baseUrl);
 
   if (path.relative(paths.appPath, baseUrlResolved) === '') {
-    return {
+    return paths ? {
+      '^src/(.*)$': '<rootDir>/src/$1',
+      ...paths
+    } : {
       '^src/(.*)$': '<rootDir>/src/$1',
     };
   }
