@@ -68,8 +68,14 @@ function getWebpackAliases(options = {}) {
   const paths = options.paths || {};
   Object.keys(paths).forEach(alias=>{
     const realPath = paths[alias];
-    if(/\*$/.test(alias) && /\*$/.test(realPath)) {
-        aliases[alias.slice(0,-1)] = realPath.slice(0,-1)
+    if(/\*$/.test(alias)) {
+      if(realPath instanceof Array) {
+        aliases[alias.slice(0,-1)] = realPath.map(function(oneRealPath){
+          return oneRealPath.replace(/\*$/,"");
+        })
+      } else {
+        aliases[alias.slice(0,-1)] = realPath.replace(/\*$/,"");
+      }
     }
   });
 
@@ -97,8 +103,14 @@ function getJestAliases(options = {}) {
   const paths = options.paths || {};
   Object.keys(paths).forEach(alias=>{
     const realPath = paths[alias];
-    if(/\*$/.test(alias) && /\*$/.test(realPath)) {
-        aliases[alias.slice(0,-1)] = realPath.slice(0,-1)
+    if(/\*$/.test(alias)) {
+      if(realPath instanceof Array) {
+        aliases[alias.slice(0,-1)] = realPath.map(function(oneRealPath){
+          return oneRealPath.replace(/\*$/,"");
+        })
+      } else {
+        aliases[alias.slice(0,-1)] = realPath.replace(/\*$/,"");
+      }
     }
   });
 
