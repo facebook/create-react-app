@@ -159,4 +159,4 @@ Builds the app for production to the `build` folder. It correctly bundles React 
 
 The build is minified and the filenames include the hashes.
 
-Your app is ready to be deployed.
+Your app is ready to be deployed..
