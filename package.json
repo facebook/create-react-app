@@ -20,7 +20,8 @@
     "test": "cd packages/react-scripts && node bin/react-scripts.js test",
     "eslint": "eslint .",
     "prettier": "prettier .",
-    "format": "npm run prettier -- --write"
+    "format": "npm run prettier -- --write",
+    "flow": "flow"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.15.1",
@@ -56,5 +57,14 @@
     "*.{js,json,yml,yaml,css,scss,ts,tsx,md}": [
       "prettier --write"
     ]
+  },
+  "dependencies": {
+    "@types/jest": "^29.4.0",
+    "@types/node": "^18.14.2",
+    "@types/react": "^18.0.28",
+    "@types/react-dom": "^18.0.11",
+    "flow-bin": "^0.200.1",
+    "graphql": "^16.6.0",
+    "typescript": "^4.9.5"
   }
 }

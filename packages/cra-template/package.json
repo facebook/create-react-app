@@ -1,6 +1,6 @@
 {
-  "name": "deepintent-template",
-  "version": "1.1.1",
+  "name": "tikhsup-react-scripts",
+  "version": "1.1.4",
   "keywords": [
     "react",
     "create-react-app",
@@ -9,7 +9,7 @@
   "description": "Configuration and scripts for DI React App.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/facebook/create-react-app.git",
+    "url": "https://github.com/tikhsuP/create-react-app.git",
     "directory": "packages/cra-template"
   },
   "license": "MIT",
@@ -22,5 +22,8 @@
   "files": [
     "template",
     "template.json"
-  ]
+  ],
+  "dependencies": {
+    "sass": "^1.58.3"
+  }
 }
