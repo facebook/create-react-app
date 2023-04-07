@@ -1,11 +1,3 @@
-// @remove-on-eject-begin
-/**
- * Copyright (c) 2015-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-// @remove-on-eject-end
 'use strict';
 
 // Do this as the first thing so that any code reading it knows the right env.
@@ -24,8 +16,8 @@ require('../config/env');
 
 const fs = require('fs');
 const chalk = require('react-dev-utils/chalk');
-const webpack = require('webpack');
-const WebpackDevServer = require('webpack-dev-server');
+const { rspack } = require('@rspack/core');
+const { RspackDevServer } = require('@rspack/dev-server');
 const clearConsole = require('react-dev-utils/clearConsole');
 const checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
 const {
@@ -105,7 +97,7 @@ checkBrowsers(paths.appPath, isInteractive)
       urls,
       useYarn,
       useTypeScript,
-      webpack,
+      webpack: rspack,
     });
     // Load proxy config
     const proxySetting = require(paths.appPackageJson).proxy;
@@ -120,7 +112,7 @@ checkBrowsers(paths.appPath, isInteractive)
       host: HOST,
       port,
     };
-    const devServer = new WebpackDevServer(serverConfig, compiler);
+    const devServer = new RspackDevServer(serverConfig, compiler);
     // Launch WebpackDevServer.
     devServer.startCallback(() => {
       if (isInteractive) {

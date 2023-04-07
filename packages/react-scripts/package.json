@@ -1,6 +1,6 @@
 {
-  "name": "react-scripts",
-  "version": "5.0.1",
+  "name": "react-scripts-rspack",
+  "version": "0.0.7",
   "description": "Configuration and scripts for Create React App.",
   "repository": {
     "type": "git",
@@ -24,10 +24,13 @@
     "utils"
   ],
   "bin": {
-    "react-scripts": "./bin/react-scripts.js"
+    "react-scripts-rspack": "./bin/react-scripts.js"
   },
   "types": "./lib/react-app.d.ts",
   "dependencies": {
+    "@rspack/core": "0.1.6",
+    "@rspack/dev-server": "0.1.6",
+    "@rspack/plugin-html": "0.1.6",
     "@babel/core": "^7.16.0",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.3",
     "@svgr/webpack": "^5.5.0",
