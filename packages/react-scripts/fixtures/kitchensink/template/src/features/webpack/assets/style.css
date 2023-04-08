@@ -1,0 +1,10 @@
+/*
+ * Ensure CSS inclusion doesn't regress
+ * https://github.com/facebook/create-react-app/issues/2677
+ */
+@import '~normalize.css/normalize.css';
+
+#feature-css-inclusion {
+  background: palevioletred;
+  color: papayawhip;
+}

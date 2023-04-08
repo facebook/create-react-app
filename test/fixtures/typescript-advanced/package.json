@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "@types/react": "*",
+    "@types/react-dom": "*",
+    "@types/jest": "*",
+    "react": "*",
+    "react-dom": "*",
+    "typescript": "^3.9.5"
+  }
+}
