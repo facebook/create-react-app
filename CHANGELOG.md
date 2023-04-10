@@ -1,3 +1,7 @@
+
+124
+421
+
 ## 5.0.1 (2022-04-12)
 
 Create React App 5.0.1 is a maintenance release that improves compatibility with React 18. We've also updated our templates to use `createRoot` and relaxed our check for older versions of Create React App.
