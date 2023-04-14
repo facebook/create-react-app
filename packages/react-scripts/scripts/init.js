@@ -288,11 +288,11 @@ module.exports = function (
     remove = 'remove';
     args = ['add'];
   } else {
-    command = 'npm';
+    command = 'pnpm';
     remove = 'uninstall';
     args = [
       'install',
-      '--no-audit', // https://github.com/facebook/create-react-app/issues/11174
+      // '--no-audit', // https://github.com/facebook/create-react-app/issues/11174
       '--save',
       verbose && '--verbose',
     ].filter(e => e);
@@ -363,7 +363,7 @@ module.exports = function (
   }
 
   // Change displayed command to yarn instead of yarnpkg
-  const displayedCommand = useYarn ? 'yarn' : 'npm';
+  const displayedCommand = useYarn ? 'yarn' : 'pnpm';
 
   console.log();
   console.log(`Success! Created ${appName} at ${appPath}`);

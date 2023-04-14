@@ -161,7 +161,7 @@ function init() {
             'Firefox',
             'Safari',
           ],
-          npmPackages: ['react', 'react-dom', 'react-scripts'],
+          npmPackages: ['react', 'react-dom', '@upleveled/react-scripts'],
           npmGlobalPackages: ['create-react-app'],
         },
         {
@@ -359,10 +359,10 @@ function install(root, useYarn, usePnp, dependencies, verbose, isOnline) {
         console.log();
       }
     } else {
-      command = 'npm';
+      command = 'pnpm';
       args = [
         'install',
-        '--no-audit', // https://github.com/facebook/create-react-app/issues/11174
+        // '--no-audit', // https://github.com/facebook/create-react-app/issues/11174
         '--save',
         '--save-exact',
         '--loglevel',
@@ -443,7 +443,7 @@ function run(
           console.log('');
           console.log(
             `The ${chalk.cyan(packageInfo.name)} version you're using ${
-              packageInfo.name === 'react-scripts' ? 'is not' : 'may not be'
+              packageInfo.name === '@upleveled/react-scripts' ? 'is not' : 'may not be'
             } compatible with the ${chalk.cyan('--template')} option.`
           );
           console.log('');
@@ -545,7 +545,7 @@ function run(
 }
 
 function getInstallPackage(version, originalDirectory) {
-  let packageToInstall = 'react-scripts';
+  let packageToInstall = '@upleveled/react-scripts';
   const validSemver = semver.valid(version);
   if (validSemver) {
     packageToInstall += `@${validSemver}`;
@@ -839,7 +839,7 @@ function checkAppName(appName) {
   }
 
   // TODO: there should be a single place that holds the dependencies
-  const dependencies = ['react', 'react-dom', 'react-scripts'].sort();
+  const dependencies = ['react', 'react-dom', '@upleveled/react-scripts'].sort();
   if (dependencies.includes(appName)) {
     console.error(
       chalk.red(
