@@ -443,7 +443,9 @@ function run(
           console.log('');
           console.log(
             `The ${chalk.cyan(packageInfo.name)} version you're using ${
-              packageInfo.name === '@upleveled/react-scripts' ? 'is not' : 'may not be'
+              packageInfo.name === '@upleveled/react-scripts'
+                ? 'is not'
+                : 'may not be'
             } compatible with the ${chalk.cyan('--template')} option.`
           );
           console.log('');
@@ -595,7 +597,7 @@ function getInstallPackage(version, originalDirectory) {
 }
 
 function getTemplateInstallPackage(template, originalDirectory) {
-  let templateToInstall = 'cra-template';
+  let templateToInstall = '@upleveled/cra-template';
   if (template) {
     if (template.match(/^file:/)) {
       templateToInstall = `file:${path.resolve(
@@ -839,7 +841,11 @@ function checkAppName(appName) {
   }
 
   // TODO: there should be a single place that holds the dependencies
-  const dependencies = ['react', 'react-dom', '@upleveled/react-scripts'].sort();
+  const dependencies = [
+    'react',
+    'react-dom',
+    '@upleveled/react-scripts',
+  ].sort();
   if (dependencies.includes(appName)) {
     console.error(
       chalk.red(
