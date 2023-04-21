@@ -2,17 +2,18 @@
   "name": "@upleveled/react-scripts",
   "version": "5.0.2",
   "description": "Configuration and scripts for Create React App.",
+  "bugs": {
+    "url": "https://github.com/facebook/create-react-app/issues"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/facebook/create-react-app.git",
     "directory": "packages/react-scripts"
   },
   "license": "MIT",
-  "engines": {
-    "node": ">=14.0.0"
-  },
-  "bugs": {
-    "url": "https://github.com/facebook/create-react-app/issues"
+  "types": "./lib/react-app.d.ts",
+  "bin": {
+    "react-scripts": "./bin/react-scripts.js"
   },
   "files": [
     "bin",
@@ -23,10 +24,18 @@
     "template-typescript",
     "utils"
   ],
-  "bin": {
-    "react-scripts": "./bin/react-scripts.js"
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   },
-  "types": "./lib/react-app.d.ts",
   "dependencies": {
     "@babel/core": "^7.16.0",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.3",
@@ -80,28 +89,19 @@
     "react": "^18.0.0",
     "react-dom": "^18.0.0"
   },
-  "optionalDependencies": {
-    "fsevents": "^2.3.2"
-  },
   "peerDependencies": {
     "react": ">= 16",
-    "typescript": "^3.2.1 || ^4"
+    "typescript": ">= 3.2.1"
   },
   "peerDependenciesMeta": {
     "typescript": {
       "optional": true
     }
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "optionalDependencies": {
+    "fsevents": "^2.3.2"
+  },
+  "engines": {
+    "node": ">=14.0.0"
   }
 }
