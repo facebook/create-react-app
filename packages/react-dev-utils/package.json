@@ -60,7 +60,7 @@
     "detect-port-alt": "^1.1.6",
     "escape-string-regexp": "^4.0.0",
     "filesize": "^10.0.7",
-    "find-up": "^6.3.0",
+    "find-up": "^5.0.0",
     "fork-ts-checker-webpack-plugin": "^8.0.0",
     "global-modules": "^2.0.0",
     "globby": "^13.1.4",
