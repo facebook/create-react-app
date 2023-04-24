@@ -20,7 +20,8 @@
   },
   "devDependencies": {
     "babel-plugin-tester": "^11.0.4",
-    "jest": "^29.5.0"
+    "jest": "^29.5.0",
+    "jest-environment-jsdom": "^29.5.0"
   },
   "scripts": {
     "test": "jest"

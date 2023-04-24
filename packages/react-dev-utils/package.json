@@ -79,7 +79,8 @@
   },
   "devDependencies": {
     "cross-env": "^7.0.3",
-    "jest": "^29.5.0"
+    "jest": "^29.5.0",
+    "jest-environment-jsdom": "^29.5.0"
   },
   "scripts": {
     "test": "cross-env FORCE_COLOR=true jest"
