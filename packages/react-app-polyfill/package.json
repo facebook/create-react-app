@@ -21,11 +21,11 @@
     "stable.js"
   ],
   "dependencies": {
-    "core-js": "^3.19.2",
+    "core-js": "^3.30.1",
     "object-assign": "^4.1.1",
-    "promise": "^8.1.0",
+    "promise": "^8.3.0",
     "raf": "^3.4.1",
-    "regenerator-runtime": "^0.13.9",
+    "regenerator-runtime": "^0.13.11",
     "whatwg-fetch": "^3.6.2"
   }
 }
