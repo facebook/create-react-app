@@ -29,7 +29,6 @@ module.exports = {
         'jest/no-identical-title': 'error',
         'jest/no-interpolation-in-snapshots': 'error',
         'jest/no-jasmine-globals': 'error',
-        'jest/no-jest-import': 'error',
         'jest/no-mocks-import': 'error',
         'jest/valid-describe-callback': 'error',
         'jest/valid-expect': 'error',
