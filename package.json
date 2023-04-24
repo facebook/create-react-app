@@ -34,6 +34,8 @@
     "globby": "^13.1.4",
     "husky": "^8.0.3",
     "jest": "^29.5.0",
+    "jest-environment-jsdom": "^29.5.0",
+    "jest-jasmine2": "^29.5.0",
     "lerna": "^6.6.1",
     "lerna-changelog": "^2.2.0",
     "lint-staged": "^13.2.1",

@@ -17,22 +17,24 @@ module.exports = {
         pascalCase: true,
       });
       const componentName = `Svg${pascalCaseFilename}`;
-      return `const React = require('react');
-      module.exports = {
-        __esModule: true,
-        default: ${assetFilename},
-        ReactComponent: React.forwardRef(function ${componentName}(props, ref) {
-          return {
-            $$typeof: Symbol.for('react.element'),
-            type: 'svg',
-            ref: ref,
-            key: null,
-            props: Object.assign({}, props, {
-              children: ${assetFilename}
-            })
-          };
-        }),
-      };`;
+      return {
+        code: `const React = require('react');
+        module.exports = {
+          __esModule: true,
+          default: ${assetFilename},
+          ReactComponent: React.forwardRef(function ${componentName}(props, ref) {
+            return {
+              $$typeof: Symbol.for('react.element'),
+              type: 'svg',
+              ref: ref,
+              key: null,
+              props: Object.assign({}, props, {
+                children: ${assetFilename}
+              })
+            };
+          }),
+        };`,
+      };
     }
 
     return `module.exports = ${assetFilename};`;
