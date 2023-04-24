@@ -74,7 +74,7 @@
     "react-error-overlay": "^6.0.11",
     "recursive-readdir": "^2.2.3",
     "shell-quote": "^1.8.1",
-    "strip-ansi": "^7.0.1",
+    "strip-ansi": "^6.0.1",
     "text-table": "^0.2.0"
   },
   "devDependencies": {

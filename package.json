@@ -41,7 +41,7 @@
     "multimatch": "^6.0.0",
     "prettier": "^2.8.8",
     "puppeteer": "^19.11.0",
-    "strip-ansi": "^7.0.1",
+    "strip-ansi": "^6.0.1",
     "svg-term-cli": "^2.1.1",
     "tempy": "^3.0.0",
     "wait-for-localhost": "^4.0.1",
