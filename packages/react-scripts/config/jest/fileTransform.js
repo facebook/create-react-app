@@ -37,6 +37,8 @@ module.exports = {
       };
     }
 
-    return `module.exports = ${assetFilename};`;
+    return {
+      code: `module.exports = ${assetFilename};`
+    }
   },
 };
