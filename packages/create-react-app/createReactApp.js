@@ -73,6 +73,7 @@ function init() {
       '--template <path-to-template>',
       'specify a template for the created project'
     )
+    .option('--no-bin-links')
     .option('--use-pnp')
     .allowUnknownOption()
     .on('--help', () => {
@@ -330,7 +331,15 @@ function createApp(name, verbose, version, template, useYarn, usePnp) {
   );
 }
 
-function install(root, useYarn, usePnp, dependencies, verbose, isOnline) {
+function install(
+  root,
+  binLinks,
+  useYarn,
+  usePnp,
+  dependencies,
+  verbose,
+  isOnline
+) {
   return new Promise((resolve, reject) => {
     let command;
     let args;
@@ -339,6 +348,9 @@ function install(root, useYarn, usePnp, dependencies, verbose, isOnline) {
       args = ['add', '--exact'];
       if (!isOnline) {
         args.push('--offline');
+      }
+      if (!binLinks) {
+        args.push('--no-bin-links');
       }
       if (usePnp) {
         args.push('--enable-pnp');
@@ -399,6 +411,7 @@ function run(
   version,
   verbose,
   originalDirectory,
+  binLinks,
   template,
   useYarn,
   usePnp
@@ -460,6 +473,7 @@ function run(
 
         return install(
           root,
+          binLinks,
           useYarn,
           usePnp,
           allDependencies,
