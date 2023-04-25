@@ -117,12 +117,12 @@ checkDependencies
 # ******************************************************************************
 
 cd "$temp_app_path"
-npx create-react-app test-app-version-number --scripts-version=1.0.17
+npx create-react-app test-app-version-number --scripts-version=5.0.1
 cd test-app-version-number
 
 # Check corresponding scripts version is installed.
 exists node_modules/react-scripts
-grep '"version": "1.0.17"' node_modules/react-scripts/package.json
+grep '"version": "5.0.1"' node_modules/react-scripts/package.json
 checkDependencies
 
 # ******************************************************************************
@@ -130,13 +130,13 @@ checkDependencies
 # ******************************************************************************
 
 cd "$temp_app_path"
-yarn create react-app test-use-yarn-create --scripts-version=1.0.17
+yarn create react-app test-use-yarn-create --scripts-version=5.0.1
 cd test-use-yarn-create
 
 # Check corresponding scripts version is installed.
 exists node_modules/react-scripts
 exists yarn.lock
-grep '"version": "1.0.17"' node_modules/react-scripts/package.json
+grep '"version": "5.0.1"' node_modules/react-scripts/package.json
 checkDependencies
 
 # ******************************************************************************
@@ -178,12 +178,12 @@ CI=true npm test
 # ******************************************************************************
 
 cd "$temp_app_path"
-npx create-react-app test-app-tarball-url --scripts-version=https://registry.npmjs.org/react-scripts/-/react-scripts-1.0.17.tgz
+npx create-react-app test-app-tarball-url --scripts-version=https://registry.npmjs.org/react-scripts/-/react-scripts-5.0.1.tgz
 cd test-app-tarball-url
 
 # Check corresponding scripts version is installed.
 exists node_modules/react-scripts
-grep '"version": "1.0.17"' node_modules/react-scripts/package.json
+grep '"version": "5.0.1"' node_modules/react-scripts/package.json
 checkDependencies
 
 # ******************************************************************************
