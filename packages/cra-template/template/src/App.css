@@ -5,7 +5,6 @@
 .App-logo {
   height: 40vmin;
   pointer-events: none;
-  // To stop weird logo selection when right-clicking the logo.
   user-select:none;
 }
 
