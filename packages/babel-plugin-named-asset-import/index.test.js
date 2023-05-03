@@ -1,7 +1,9 @@
-const pluginTester = require('babel-plugin-tester');
+'use strict';
+
+const pluginTester = require('babel-plugin-tester/pure');
 const namedAssetImport = require('./index');
 
-pluginTester({
+pluginTester.default({
   plugin: namedAssetImport,
   pluginOptions: {
     loaderMap: {
@@ -39,8 +41,7 @@ pluginTester({
         'import { ReactComponent as logo } from "@svgr/webpack?-svgo!logo.svg";',
     },
     svgMultipleImport: {
-      code:
-        'import logo, { logoUrl , ReactComponent as Logo } from "logo.svg";',
+      code: 'import logo, { logoUrl , ReactComponent as Logo } from "logo.svg";',
       output:
         'import logo from "logo.svg";\n' +
         'import { logoUrl } from "logo.svg";\n' +

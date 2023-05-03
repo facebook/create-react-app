@@ -1,0 +1,12 @@
+{
+  "package": {
+    "dependencies": {
+      "bootstrap": "4.3.1",
+      "jest": "27.1.0",
+      "node-sass": "6.x",
+      "normalize.css": "7.0.0",
+      "prop-types": "15.7.2",
+      "test-integrity": "2.0.1"
+    }
+  }
+}

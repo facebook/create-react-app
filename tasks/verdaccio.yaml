@@ -20,6 +20,15 @@ auth:
 uplinks:
   npmjs:
     url: https://registry.npmjs.org/
+    max_fails: 40
+    maxage: 30m
+    timeout: 60s
+    agent_options:
+      keepAlive: true
+      # Avoid exceeding the max sockets that are allocated per VM.
+      # https://docs.microsoft.com/en-us/azure/app-service/app-service-web-nodejs-best-practices-and-troubleshoot-guide#my-node-application-is-making-excessive-outbound-calls
+      maxSockets: 40
+      maxFreeSockets: 10
 
 packages:
   '@*/*':
@@ -45,5 +54,9 @@ packages:
 
 # log settings
 logs:
-  - {type: stdout, format: pretty, level: http}
+  - { type: stdout, format: pretty, level: warn }
   #- {type: file, path: verdaccio.log, level: info}
+
+# See https://github.com/verdaccio/verdaccio/issues/301
+server:
+  keepAliveTimeout: 0

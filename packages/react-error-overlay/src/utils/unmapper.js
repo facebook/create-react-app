@@ -12,7 +12,7 @@ import { getLinesAround } from './getLinesAround';
 import path from 'path';
 
 function count(search: string, string: string): number {
-  // Count starts at -1 becuse a do-while loop always runs at least once
+  // Count starts at -1 because a do-while loop always runs at least once
   let count = -1,
     index = -1;
   do {
@@ -43,12 +43,8 @@ async function unmap(
   }
   const map = await getSourceMap(fileUri, fileContents);
   return frames.map(frame => {
-    const {
-      functionName,
-      lineNumber,
-      columnNumber,
-      _originalLineNumber,
-    } = frame;
+    const { functionName, lineNumber, columnNumber, _originalLineNumber } =
+      frame;
     if (_originalLineNumber != null) {
       return frame;
     }

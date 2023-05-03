@@ -5,7 +5,6 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-/* @flow */
 import {
   register as registerError,
   unregister as unregisterError,
@@ -37,26 +36,25 @@ export type ErrorRecord = {|
   stackFrames: StackFrame[],
 |};
 
-export const crashWithFrames = (crash: ErrorRecord => void) => (
-  error: Error,
-  unhandledRejection = false
-) => {
-  getStackFrames(error, unhandledRejection, CONTEXT_SIZE)
-    .then(stackFrames => {
-      if (stackFrames == null) {
-        return;
-      }
-      crash({
-        error,
-        unhandledRejection,
-        contextSize: CONTEXT_SIZE,
-        stackFrames,
+export const crashWithFrames =
+  (crash: ErrorRecord => void) =>
+  (error: Error, unhandledRejection = false) => {
+    getStackFrames(error, unhandledRejection, CONTEXT_SIZE)
+      .then(stackFrames => {
+        if (stackFrames == null) {
+          return;
+        }
+        crash({
+          error,
+          unhandledRejection,
+          contextSize: CONTEXT_SIZE,
+          stackFrames,
+        });
+      })
+      .catch(e => {
+        console.log('Could not get the stack frames of error:', e);
       });
-    })
-    .catch(e => {
-      console.log('Could not get the stack frames of error:', e);
-    });
-};
+  };
 
 export function listenToRuntimeErrors(
   crash: ErrorRecord => void,

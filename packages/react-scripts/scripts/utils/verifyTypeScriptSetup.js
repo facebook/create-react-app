@@ -14,15 +14,35 @@ const resolve = require('resolve');
 const path = require('path');
 const paths = require('../../config/paths');
 const os = require('os');
+const semver = require('semver');
 const immer = require('react-dev-utils/immer').produce;
 const globby = require('react-dev-utils/globby').sync;
 
+const hasJsxRuntime = (() => {
+  if (process.env.DISABLE_NEW_JSX_TRANSFORM === 'true') {
+    return false;
+  }
+
+  try {
+    require.resolve('react/jsx-runtime', { paths: [paths.appPath] });
+    return true;
+  } catch (e) {
+    return false;
+  }
+})();
+
 function writeJson(fileName, object) {
-  fs.writeFileSync(fileName, JSON.stringify(object, null, 2) + os.EOL);
+  fs.writeFileSync(
+    fileName,
+    JSON.stringify(object, null, 2).replace(/\n/g, os.EOL) + os.EOL
+  );
 }
 
 function verifyNoTypeScript() {
-  const typescriptFiles = globby(['**/*.(ts|tsx)', '!**/node_modules'], { cwd: paths.appSrc });
+  const typescriptFiles = globby(
+    ['**/*.(ts|tsx)', '!**/node_modules', '!**/*.d.ts'],
+    { cwd: paths.appSrc }
+  );
   if (typescriptFiles.length > 0) {
     console.warn(
       chalk.yellow(
@@ -53,9 +73,17 @@ function verifyTypeScriptSetup() {
   // Ensure typescript is installed
   let ts;
   try {
+    // TODO: Remove this hack once `globalThis` issue is resolved
+    // https://github.com/jsdom/jsdom/issues/2961
+    const globalThisWasDefined = !!global.globalThis;
+
     ts = require(resolve.sync('typescript', {
       basedir: paths.appNodeModules,
     }));
+
+    if (!globalThisWasDefined && !!global.globalThis) {
+      delete global.globalThis;
+    }
   } catch (_) {
     console.error(
       chalk.bold.red(
@@ -100,6 +128,7 @@ function verifyTypeScriptSetup() {
     allowSyntheticDefaultImports: { suggested: true },
     strict: { suggested: true },
     forceConsistentCasingInFileNames: { suggested: true },
+    noFallthroughCasesInSwitch: { suggested: true },
 
     // These values are required and cannot be changed by the user
     // Keep this in sync with the webpack config
@@ -117,15 +146,15 @@ function verifyTypeScriptSetup() {
     isolatedModules: { value: true, reason: 'implementation limitation' },
     noEmit: { value: true },
     jsx: {
-      parsedValue: ts.JsxEmit.Preserve,
-      value: 'preserve',
-      reason: 'JSX is compiled by Babel',
-    },
-    // We do not support absolute imports, though this may come as a future
-    // enhancement
-    baseUrl: {
-      value: undefined,
-      reason: 'absolute imports are not supported (yet)',
+      parsedValue:
+        hasJsxRuntime && semver.gte(ts.version, '4.1.0-beta')
+          ? ts.JsxEmit.ReactJSX
+          : ts.JsxEmit.React,
+      value:
+        hasJsxRuntime && semver.gte(ts.version, '4.1.0-beta')
+          ? 'react-jsx'
+          : 'react',
+      reason: 'to support the new JSX transform in React 17',
     },
     paths: { value: undefined, reason: 'aliased imports are not supported' },
   };
@@ -172,14 +201,17 @@ function verifyTypeScriptSetup() {
 
     parsedCompilerOptions = result.options;
   } catch (e) {
-    console.error(
-      chalk.red.bold(
-        'Could not parse',
-        chalk.cyan('tsconfig.json') + '.',
-        'Please make sure it contains syntactically correct JSON.'
-      )
-    );
-    console.error(e && e.message ? `Details: ${e.message}` : '');
+    if (e && e.name === 'SyntaxError') {
+      console.error(
+        chalk.red.bold(
+          'Could not parse',
+          chalk.cyan('tsconfig.json') + '.',
+          'Please make sure it contains syntactically correct JSON.'
+        )
+      );
+    }
+
+    console.log(e && e.message ? `${e.message}` : '');
     process.exit(1);
   }
 
@@ -196,7 +228,9 @@ function verifyTypeScriptSetup() {
 
     if (suggested != null) {
       if (parsedCompilerOptions[option] === undefined) {
-        appTsConfig.compilerOptions[option] = suggested;
+        appTsConfig = immer(appTsConfig, config => {
+          config.compilerOptions[option] = suggested;
+        });
         messages.push(
           `${coloredOption} to be ${chalk.bold(
             'suggested'
@@ -204,7 +238,9 @@ function verifyTypeScriptSetup() {
         );
       }
     } else if (parsedCompilerOptions[option] !== valueToCheck) {
-      appTsConfig.compilerOptions[option] = value;
+      appTsConfig = immer(appTsConfig, config => {
+        config.compilerOptions[option] = value;
+      });
       messages.push(
         `${coloredOption} ${chalk.bold(
           valueToCheck == null ? 'must not' : 'must'
@@ -216,7 +252,9 @@ function verifyTypeScriptSetup() {
 
   // tsconfig will have the merged "include" and "exclude" by this point
   if (parsedTsConfig.include == null) {
-    appTsConfig.include = ['src'];
+    appTsConfig = immer(appTsConfig, config => {
+      config.include = ['src'];
+    });
     messages.push(
       `${chalk.cyan('include')} should be ${chalk.cyan.bold('src')}`
     );

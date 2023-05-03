@@ -1,5 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`can use mjs library in development 1`] = `"Pikachu"`;
+exports[`can use mjs library in development 1`] = `"world"`;
 
-exports[`can use mjs library in production 1`] = `"Pikachu"`;
+exports[`can use mjs library in production 1`] = `"world"`;

@@ -11,7 +11,7 @@ if (typeof Promise === 'undefined') {
   // inconsistent state due to an error, but it gets swallowed by a Promise,
   // and the user has no idea what causes React's erratic future behavior.
   require('promise/lib/rejection-tracking').enable();
-  window.Promise = require('promise/lib/es6-extensions.js');
+  self.Promise = require('promise/lib/es6-extensions.js');
 }
 
 // Make sure we're in a Browser-like environment before importing polyfills
@@ -26,6 +26,6 @@ if (typeof window !== 'undefined') {
 Object.assign = require('object-assign');
 
 // Support for...of (a commonly used syntax feature that requires Symbols)
-require('core-js/es6/symbol');
+require('core-js/features/symbol');
 // Support iterable spread (...Set, ...Map)
-require('core-js/fn/array/from');
+require('core-js/features/array/from');

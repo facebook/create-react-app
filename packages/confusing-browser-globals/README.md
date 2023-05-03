@@ -20,7 +20,7 @@ This package exports a list of globals that are often used by mistake. You can f
 
 ## Installation
 
-```
+```sh
 npm install --save confusing-browser-globals
 ```
 
@@ -31,7 +31,7 @@ If you use Create React App, you don't need to configure anything, as this rule 
 If you maintain your own ESLint configuration, you can do this:
 
 ```js
-var restrictedGlobals = require('confusing-browser-globals');
+const restrictedGlobals = require('confusing-browser-globals');
 
 module.exports = {
   rules: {

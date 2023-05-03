@@ -79,7 +79,7 @@ class RuntimeErrorContainer extends PureComponent<Props, State> {
         />
         <Footer
           line1="This screen is visible only in development. It will not appear if the app crashes in production."
-          line2="Open your browser’s developer console to further inspect this error."
+          line2="Open your browser’s developer console to further inspect this error.  Click the 'X' or hit ESC to dismiss this message."
         />
       </ErrorOverlay>
     );

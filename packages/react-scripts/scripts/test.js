@@ -22,15 +22,6 @@ process.on('unhandledRejection', err => {
 
 // Ensure environment variables are read.
 require('../config/env');
-// @remove-on-eject-begin
-// Do the preflight check (only happens before eject).
-const verifyPackageTree = require('./utils/verifyPackageTree');
-if (process.env.SKIP_PREFLIGHT_CHECK !== 'true') {
-  verifyPackageTree();
-}
-const verifyTypeScriptSetup = require('./utils/verifyTypeScriptSetup');
-verifyTypeScriptSetup();
-// @remove-on-eject-end
 
 const jest = require('jest');
 const execSync = require('child_process').execSync;
@@ -54,11 +45,11 @@ function isInMercurialRepository() {
   }
 }
 
-// Watch unless on CI, in coverage mode, or explicitly running all tests
+// Watch unless on CI or explicitly running all tests
 if (
   !process.env.CI &&
-  argv.indexOf('--coverage') === -1 &&
-  argv.indexOf('--watchAll') === -1
+  argv.indexOf('--watchAll') === -1 &&
+  argv.indexOf('--watchAll=false') === -1
 ) {
   // https://github.com/facebook/create-react-app/issues/5210
   const hasSourceControl = isInGitRepository() || isInMercurialRepository();

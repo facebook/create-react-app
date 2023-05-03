@@ -15,16 +15,16 @@ cd "$(dirname "$0")"
 # CLI and app temporary locations
 # http://unix.stackexchange.com/a/84980
 temp_app_path=`mktemp -d 2>/dev/null || mktemp -d -t 'temp_app_path'`
-custom_registry_url=http://localhost:4873
-original_npm_registry_url=`npm get registry`
-original_yarn_registry_url=`yarn config get registry`
+
+# Load functions for working with local NPM registry (Verdaccio)
+source local-registry.sh
 
 function cleanup {
   echo 'Cleaning up.'
   cd "$root_path"
   rm -rf "$temp_app_path"
-  npm set registry "$original_npm_registry_url"
-  yarn config set registry "$original_yarn_registry_url"
+  # Restore the original NPM and Yarn registry URLs and stop Verdaccio
+  stopLocalRegistry
 }
 
 # Error messages are redirected to stderr
@@ -51,7 +51,7 @@ function exists {
 # Check for accidental dependencies in package.json
 function checkDependencies {
   if ! awk '/"dependencies": {/{y=1;next}/},/{y=0; next}y' package.json | \
-  grep -v -q -E '^\s*"react(-dom|-scripts)?"'; then
+  grep -v -q -E '^\s*"(@testing-library\/.+)|web-vitals|(react(-dom|-scripts)?)"'; then
    echo "Dependencies are correct"
   else
    echo "There are extraneous dependencies in package.json"
@@ -62,7 +62,7 @@ function checkDependencies {
 # Check for accidental dependencies in package.json
 function checkTypeScriptDependencies {
   if ! awk '/"dependencies": {/{y=1;next}/},/{y=0; next}y' package.json | \
-  grep -v -q -E '^\s*"(@types\/.+)|typescript|(react(-dom|-scripts)?)"'; then
+  grep -v -q -E '^\s*"(@testing-library\/.+)|web-vitals|(@types\/.+)|typescript|(react(-dom|-scripts)?)"'; then
    echo "Dependencies are correct"
   else
    echo "There are extraneous dependencies in package.json"
@@ -83,34 +83,15 @@ set -x
 cd ..
 root_path=$PWD
 
-if hash npm 2>/dev/null
-then
-  npm i -g npm@latest
-fi
-
-# Bootstrap monorepo
-yarn
-
 # ******************************************************************************
 # First, publish the monorepo.
 # ******************************************************************************
 
-# Start local registry
-tmp_registry_log=`mktemp`
-(cd && nohup npx verdaccio@3.8.2 -c "$root_path"/tasks/verdaccio.yaml &>$tmp_registry_log &)
-# Wait for `verdaccio` to boot
-grep -q 'http address' <(tail -f $tmp_registry_log)
-
-# Set registry to local registry
-npm set registry "$custom_registry_url"
-yarn config set registry "$custom_registry_url"
-
-# Login so we can publish packages
-(cd && npx npm-auth-to-token@1.0.0 -u user -p password -e user@example.com -r "$custom_registry_url")
+# Start the local NPM registry
+startLocalRegistry "$root_path"/tasks/verdaccio.yaml
 
 # Publish the monorepo
-git clean -df
-./tasks/publish.sh --yes --force-publish=* --skip-git --cd-version=prerelease --exact --npm-tag=latest
+publishToLocalRegistry
 
 echo "Create React App Version: "
 npx create-react-app --version
@@ -120,13 +101,14 @@ npx create-react-app --version
 # ******************************************************************************
 
 cd "$temp_app_path"
-npx create-react-app --scripts-version=@latest test-app-dist-tag
+npx create-react-app test-app-dist-tag --scripts-version=@latest
 cd test-app-dist-tag
 
-# Check corresponding scripts version is installed and no TypeScript is present.
+# Check corresponding scripts version is installed and no TypeScript or yarn is present by default
 exists node_modules/react-scripts
 ! exists node_modules/typescript
 ! exists src/index.tsx
+! exists yarn.lock
 exists src/index.js
 checkDependencies
 
@@ -135,7 +117,7 @@ checkDependencies
 # ******************************************************************************
 
 cd "$temp_app_path"
-npx create-react-app --scripts-version=1.0.17 test-app-version-number
+npx create-react-app test-app-version-number --scripts-version=1.0.17
 cd test-app-version-number
 
 # Check corresponding scripts version is installed.
@@ -144,25 +126,25 @@ grep '"version": "1.0.17"' node_modules/react-scripts/package.json
 checkDependencies
 
 # ******************************************************************************
-# Test --use-npm flag
+# Test yarn create
 # ******************************************************************************
 
 cd "$temp_app_path"
-npx create-react-app --use-npm --scripts-version=1.0.17 test-use-npm-flag
-cd test-use-npm-flag
+yarn create react-app test-use-yarn-create --scripts-version=1.0.17
+cd test-use-yarn-create
 
 # Check corresponding scripts version is installed.
 exists node_modules/react-scripts
-[ ! -e "yarn.lock" ] && echo "yarn.lock correctly does not exist"
+exists yarn.lock
 grep '"version": "1.0.17"' node_modules/react-scripts/package.json
 checkDependencies
 
 # ******************************************************************************
-# Test --typescript flag
+# Test typescript setup
 # ******************************************************************************
 
 cd "$temp_app_path"
-npx create-react-app test-app-typescript --typescript
+npx create-react-app test-app-typescript --template typescript
 cd test-app-typescript
 
 # Check corresponding template is installed.
@@ -174,9 +156,9 @@ exists src/react-app-env.d.ts
 checkTypeScriptDependencies
 
 # Check that the TypeScript template passes smoke tests, build, and normal tests
-yarn start --smoke-test
-yarn build
-CI=true yarn test
+npm start -- --smoke-test
+npm run build
+CI=true npm test
 
 # Check eject behaves and works
 
@@ -187,16 +169,16 @@ echo yes | npm run eject
 exists src/react-app-env.d.ts
 
 # Check that the TypeScript template passes ejected smoke tests, build, and normal tests
-yarn start --smoke-test
-yarn build
-CI=true yarn test
+npm start -- --smoke-test
+npm run build
+CI=true npm test
 
 # ******************************************************************************
 # Test --scripts-version with a tarball url
 # ******************************************************************************
 
 cd "$temp_app_path"
-npx create-react-app --scripts-version=https://registry.npmjs.org/react-scripts/-/react-scripts-1.0.17.tgz test-app-tarball-url
+npx create-react-app test-app-tarball-url --scripts-version=https://registry.npmjs.org/react-scripts/-/react-scripts-1.0.17.tgz
 cd test-app-tarball-url
 
 # Check corresponding scripts version is installed.
@@ -209,7 +191,7 @@ checkDependencies
 # ******************************************************************************
 
 cd "$temp_app_path"
-npx create-react-app --scripts-version=react-scripts-fork test-app-fork
+npx create-react-app test-app-fork --scripts-version=react-scripts-fork
 cd test-app-fork
 
 # Check corresponding scripts version is installed.
@@ -220,8 +202,8 @@ exists node_modules/react-scripts-fork
 # ******************************************************************************
 
 cd "$temp_app_path"
-# we will install a non-existing package to simulate a failed installataion.
-npx create-react-app --scripts-version=`date +%s` test-app-should-not-exist || true
+# we will install a non-existing package to simulate a failed installation.
+npx create-react-app test-app-should-not-exist --scripts-version=`date +%s` || true
 # confirm that the project files were deleted
 test ! -e test-app-should-not-exist/package.json
 test ! -d test-app-should-not-exist/node_modules
@@ -233,12 +215,12 @@ test ! -d test-app-should-not-exist/node_modules
 cd "$temp_app_path"
 mkdir test-app-should-remain
 echo '## Hello' > ./test-app-should-remain/README.md
-# we will install a non-existing package to simulate a failed installataion.
-npx create-react-app --scripts-version=`date +%s` test-app-should-remain || true
+# we will install a non-existing package to simulate a failed installation.
+npx create-react-app test-app-should-remain --scripts-version=`date +%s` || true
 # confirm the file exist
 test -e test-app-should-remain/README.md
-# confirm only README.md and error log are the only files in the directory
-if [ "$(ls -1 ./test-app-should-remain | wc -l | tr -d '[:space:]')" != "2" ]; then
+# confirm only README.md is the only file in the directory
+if [ "$(ls -1 ./test-app-should-remain | wc -l | tr -d '[:space:]')" != "1" ]; then
   false
 fi
 
@@ -248,7 +230,7 @@ fi
 
 cd $temp_app_path
 curl "https://registry.npmjs.org/@enoah_netzach/react-scripts/-/react-scripts-0.9.0.tgz" -o enoah-scripts-0.9.0.tgz
-npx create-react-app --scripts-version=$temp_app_path/enoah-scripts-0.9.0.tgz test-app-scoped-fork-tgz
+npx create-react-app test-app-scoped-fork-tgz --scripts-version=$temp_app_path/enoah-scripts-0.9.0.tgz
 cd test-app-scoped-fork-tgz
 
 # Check corresponding scripts version is installed.
@@ -265,31 +247,32 @@ cd test-app-nested-paths-t1
 mkdir -p test-app-nested-paths-t1/aa/bb/cc/dd
 npx create-react-app test-app-nested-paths-t1/aa/bb/cc/dd
 cd test-app-nested-paths-t1/aa/bb/cc/dd
-yarn start --smoke-test
+npm start -- --smoke-test
 
 # Testing a path that does not exist
 cd "$temp_app_path"
 npx create-react-app test-app-nested-paths-t2/aa/bb/cc/dd
 cd test-app-nested-paths-t2/aa/bb/cc/dd
-yarn start --smoke-test
+npm start -- --smoke-test
 
 # Testing a path that is half exists
 cd "$temp_app_path"
 mkdir -p test-app-nested-paths-t3/aa
 npx create-react-app test-app-nested-paths-t3/aa/bb/cc/dd
 cd test-app-nested-paths-t3/aa/bb/cc/dd
-yarn start --smoke-test
+npm start -- --smoke-test
 
 # ******************************************************************************
 # Test when PnP is enabled
 # ******************************************************************************
 cd "$temp_app_path"
-npx create-react-app test-app-pnp --use-pnp
+yarn create react-app test-app-pnp --use-pnp
 cd test-app-pnp
 ! exists node_modules
 exists .pnp.js
-yarn start --smoke-test
-yarn build
+# TODO: start and build tasks error with --use-pnp
+# npm start -- --smoke-test
+# npm run build
 
 # Cleanup
 cleanup

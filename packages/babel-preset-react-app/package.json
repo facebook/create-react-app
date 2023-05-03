@@ -1,8 +1,12 @@
 {
   "name": "babel-preset-react-app",
-  "version": "7.0.0",
+  "version": "10.0.1",
   "description": "Babel preset used by Create React App",
-  "repository": "facebook/create-react-app",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/facebook/create-react-app.git",
+    "directory": "packages/babel-preset-react-app"
+  },
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/facebook/create-react-app/issues"
@@ -17,24 +21,21 @@
     "test.js"
   ],
   "dependencies": {
-    "@babel/core": "7.2.2",
-    "@babel/plugin-proposal-class-properties": "7.2.3",
-    "@babel/plugin-proposal-decorators": "7.2.3",
-    "@babel/plugin-proposal-object-rest-spread": "7.2.0",
-    "@babel/plugin-syntax-dynamic-import": "7.2.0",
-    "@babel/plugin-transform-classes": "7.2.2",
-    "@babel/plugin-transform-destructuring": "7.2.0",
-    "@babel/plugin-transform-flow-strip-types": "7.2.3",
-    "@babel/plugin-transform-react-constant-elements": "7.2.0",
-    "@babel/plugin-transform-react-display-name": "7.2.0",
-    "@babel/plugin-transform-runtime": "7.2.0",
-    "@babel/preset-env": "7.2.3",
-    "@babel/preset-react": "7.0.0",
-    "@babel/preset-typescript": "7.1.0",
-    "@babel/runtime": "7.2.0",
-    "babel-loader": "8.0.5",
-    "babel-plugin-dynamic-import-node": "2.2.0",
-    "babel-plugin-macros": "2.4.4",
-    "babel-plugin-transform-react-remove-prop-types": "0.4.21"
+    "@babel/core": "^7.16.0",
+    "@babel/plugin-proposal-class-properties": "^7.16.0",
+    "@babel/plugin-proposal-decorators": "^7.16.4",
+    "@babel/plugin-proposal-nullish-coalescing-operator": "^7.16.0",
+    "@babel/plugin-proposal-numeric-separator": "^7.16.0",
+    "@babel/plugin-proposal-optional-chaining": "^7.16.0",
+    "@babel/plugin-proposal-private-methods": "^7.16.0",
+    "@babel/plugin-transform-flow-strip-types": "^7.16.0",
+    "@babel/plugin-transform-react-display-name": "^7.16.0",
+    "@babel/plugin-transform-runtime": "^7.16.4",
+    "@babel/preset-env": "^7.16.4",
+    "@babel/preset-react": "^7.16.0",
+    "@babel/preset-typescript": "^7.16.0",
+    "@babel/runtime": "^7.16.3",
+    "babel-plugin-macros": "^3.1.0",
+    "babel-plugin-transform-react-remove-prop-types": "^0.4.24"
   }
 }

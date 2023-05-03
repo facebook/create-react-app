@@ -1,28 +1,17 @@
+'use strict';
+
 const execa = require('execa');
 const getPort = require('get-port');
-const os = require('os');
 const stripAnsi = require('strip-ansi');
 const waitForLocalhost = require('wait-for-localhost');
-
-function stripYarn(output) {
-  let lines = output.split('\n');
-
-  let runIndex = lines.findIndex(line => line.match(/^yarn run/));
-  if (runIndex !== -1) {
-    lines.splice(0, runIndex + 2);
-    lines = lines.filter(line => !line.match(/^info Visit.*yarnpkg/));
-  }
-
-  return lines.join('\n');
-}
 
 function execaSafe(...args) {
   return execa(...args)
     .then(({ stdout, stderr, ...rest }) => ({
       fulfilled: true,
       rejected: false,
-      stdout: stripYarn(stripAnsi(stdout)),
-      stderr: stripYarn(stripAnsi(stderr)),
+      stdout: stripAnsi(stdout),
+      stderr: stripAnsi(stderr),
       ...rest,
     }))
     .catch(err => ({
@@ -30,14 +19,7 @@ function execaSafe(...args) {
       rejected: true,
       reason: err,
       stdout: '',
-      stderr: stripYarn(
-        stripAnsi(
-          err.message
-            .split(os.EOL)
-            .slice(2)
-            .join(os.EOL)
-        )
-      ),
+      stderr: stripAnsi(err.message.split('\n').slice(2).join('\n')),
     }));
 }
 
@@ -63,10 +45,10 @@ module.exports = class ReactScripts {
     };
 
     if (smoke) {
-      return await execaSafe('yarnpkg', ['start', '--smoke-test'], options);
+      return await execaSafe('npm', ['start', '--smoke-test'], options);
     }
-    const startProcess = execa('yarnpkg', ['start'], options);
-    await waitForLocalhost(port);
+    const startProcess = execa('npm', ['start'], options);
+    await waitForLocalhost({ port });
     return {
       port,
       done() {
@@ -76,7 +58,7 @@ module.exports = class ReactScripts {
   }
 
   async build({ env = {} } = {}) {
-    return await execaSafe('yarnpkg', ['build'], {
+    return await execaSafe('npm', ['run', 'build'], {
       cwd: this.root,
       env: Object.assign({}, { CI: 'false', FORCE_COLOR: '0' }, env),
     });
@@ -85,13 +67,13 @@ module.exports = class ReactScripts {
   async serve() {
     const port = await getPort();
     const serveProcess = execa(
-      'yarnpkg',
-      ['serve', '--', '-p', port, '-s', 'build/'],
+      'npm',
+      ['run', 'serve', '--', '-p', port, '-s', 'build/'],
       {
         cwd: this.root,
       }
     );
-    await waitForLocalhost(port);
+    await waitForLocalhost({ port });
     return {
       port,
       done() {
@@ -101,13 +83,9 @@ module.exports = class ReactScripts {
   }
 
   async test({ jestEnvironment = 'jsdom', env = {} } = {}) {
-    return await execaSafe(
-      'yarnpkg',
-      ['test', '--env', jestEnvironment, '--ci'],
-      {
-        cwd: this.root,
-        env: Object.assign({}, { CI: 'true' }, env),
-      }
-    );
+    return await execaSafe('npm', ['test', '--env', jestEnvironment, '--ci'], {
+      cwd: this.root,
+      env: Object.assign({}, { CI: 'true' }, env),
+    });
   }
 };

@@ -18,8 +18,10 @@
       "adding-a-stylesheet",
       "adding-a-css-modules-stylesheet",
       "adding-a-sass-stylesheet",
+      "adding-css-reset",
       "post-processing-css",
       "adding-images-fonts-and-files",
+      "loading-graphql-files",
       "using-the-public-folder",
       "code-splitting"
     ],
@@ -34,6 +36,7 @@
       "adding-a-router",
       "adding-custom-environment-variables",
       "making-a-progressive-web-app",
+      "measuring-performance",
       "production-build"
     ],
     "Testing": ["running-tests", "debugging-tests"],
@@ -45,6 +48,7 @@
     ],
     "Deployment": ["deployment"],
     "Advanced Usage": [
+      "custom-templates",
       "can-i-use-decorators",
       "pre-rendering-into-static-html-files",
       "advanced-configuration",

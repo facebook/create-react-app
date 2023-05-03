@@ -6,11 +6,12 @@
  */
 
 /* @flow */
-import React from 'react';
-import { black } from '../styles';
+import React, { useContext } from 'react';
+import { ThemeContext } from '../iframeScript';
+import type { Theme } from '../styles';
 
-const closeButtonStyle = {
-  color: black,
+const closeButtonStyle = (theme: Theme) => ({
+  color: theme.closeColor,
   lineHeight: '1rem',
   fontSize: '1.5rem',
   padding: '1rem',
@@ -18,15 +19,19 @@ const closeButtonStyle = {
   position: 'absolute',
   right: 0,
   top: 0,
-};
+});
 
-type CloseCallback = () => void;
-function CloseButton({ close }: {| close: CloseCallback |}) {
+type CloseButtonPropsType = {|
+  close: () => void,
+|};
+
+function CloseButton({ close }: CloseButtonPropsType) {
+  const theme = useContext(ThemeContext);
   return (
     <span
       title="Click or press Escape to dismiss."
       onClick={close}
-      style={closeButtonStyle}
+      style={closeButtonStyle(theme)}
     >
       ×
     </span>
