@@ -15,7 +15,7 @@ const getPublicUrlOrPath = require('react-dev-utils/getPublicUrlOrPath');
 // Make sure any symlinks in the project folder are resolved:
 // https://github.com/facebook/create-react-app/issues/637
 const appDirectory = fs.realpathSync(process.cwd());
-const resolveApp = relativePath => path.resolve(appDirectory, relativePath);
+const resolveApp = (relativePath) => path.resolve(appDirectory, relativePath);
 
 // We use `PUBLIC_URL` environment variable or "homepage" field to infer
 // "public path" at which the app is served.
@@ -26,10 +26,13 @@ const resolveApp = relativePath => path.resolve(appDirectory, relativePath);
 const publicUrlOrPath = getPublicUrlOrPath(
   process.env.NODE_ENV === 'development',
   require(resolveApp('package.json')).homepage,
-  process.env.PUBLIC_URL
+  process.env.PUBLIC_URL,
 );
 
-const buildPath = process.env.BUILD_PATH || 'build';
+const buildPath =
+  process.env.BUILD_PATH ||
+  // Default for Netlify when deploying an app using `@upleveled/react-scripts`
+  'dist';
 
 const moduleFileExtensions = [
   'web.mjs',
@@ -47,8 +50,8 @@ const moduleFileExtensions = [
 
 // Resolve file paths in the same order as webpack
 const resolveModule = (resolveFn, filePath) => {
-  const extension = moduleFileExtensions.find(extension =>
-    fs.existsSync(resolveFn(`${filePath}.${extension}`))
+  const extension = moduleFileExtensions.find((extension) =>
+    fs.existsSync(resolveFn(`${filePath}.${extension}`)),
   );
 
   if (extension) {
@@ -81,7 +84,8 @@ module.exports = {
 };
 
 // @remove-on-eject-begin
-const resolveOwn = relativePath => path.resolve(__dirname, '..', relativePath);
+const resolveOwn = (relativePath) =>
+  path.resolve(__dirname, '..', relativePath);
 
 // config before eject: we're in ./node_modules/react-scripts/config/
 module.exports = {
