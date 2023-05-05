@@ -1,6 +1,6 @@
 {
   "name": "@upleveled/react-scripts",
-  "version": "5.0.5",
+  "version": "5.0.6",
   "description": "Configuration and scripts for Create React App.",
   "bugs": {
     "url": "https://github.com/facebook/create-react-app/issues"
