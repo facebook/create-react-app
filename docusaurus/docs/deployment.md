@@ -112,7 +112,7 @@ This will let Create React App correctly infer the root path to use in the gener
 
 **Note**: If you are using `react-router@^4`, you can root `<Link>`s using the `basename` prop on any `<Router>`.
 
-More information [here](https://reacttraining.com/react-router/web/api/BrowserRouter/basename-string).
+More information [here](https://reactrouter.com/en/main/routers/create-browser-router#basename).
 
 For example:
 
