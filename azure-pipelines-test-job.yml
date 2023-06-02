@@ -32,7 +32,7 @@ jobs:
         displayName: 'Install Node.js'
 
       - script: npm i -g npm@8
-        displayName: 'Update npm to v8'
+        displayName: 'Update npm to v9'
 
       - script: npm ci
         displayName: 'Run npm ci'
