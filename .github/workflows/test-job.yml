@@ -1,0 +1,46 @@
+#
+# GitHub Actions workflow for building and testing create-react-app on Linux, Windows, and macOS.
+#
+
+on:
+  workflow_call:
+    inputs:
+      name:
+        default: ''
+        required: true
+        type: string
+      testScript:
+        default: ''
+        required: true
+        type: string
+
+jobs:
+  build:
+    name: ${{ inputs.name }}
+    strategy:
+      matrix:
+        node-version: [14.x, 16.x]
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          git config --global core.autocrlf false
+          git config --global user.name "Create React App"
+          git config --global user.email "cra@email.com"
+        name: 'Initialize Git config'
+
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+        name: 'Install Node.js'
+
+      - run: npm i -g npm@8
+        name: 'Update npm to v8'
+
+      - run: npm ci
+        name: 'Run npm ci'
+
+      - run: ${{ inputs.testScript }}
+        name: 'Run tests'
