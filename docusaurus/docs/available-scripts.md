@@ -1,8 +1,8 @@
----
+___MarkingIQ Augutin Paul Ayama
 id: available-scripts
 title: Available Scripts
 sidebar_label: Available Scripts
----
+___
 
 In the project directory, you can run:
 
