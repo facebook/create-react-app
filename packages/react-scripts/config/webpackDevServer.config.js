@@ -16,7 +16,7 @@ const redirectServedPath = require('react-dev-utils/redirectServedPathMiddleware
 const paths = require('./paths');
 const getHttpsConfig = require('./getHttpsConfig');
 
-const host = process.env.HOST || '0.0.0.0';
+const host = process.env.HOST || '::';
 const sockHost = process.env.WDS_SOCKET_HOST;
 const sockPath = process.env.WDS_SOCKET_PATH; // default: '/ws'
 const sockPort = process.env.WDS_SOCKET_PORT;
