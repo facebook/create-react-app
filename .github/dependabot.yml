@@ -1,0 +1,22 @@
+# To get started with Dependabot version updates, you'll need to specify which
+# package ecosystems to update and where the package manifests are located.
+# Please see the documentation for all configuration options:
+# https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
+
+version: 2
+
+updates:
+
+  # Maintain dependencies for npm
+  - package-ecosystem: "npm"
+    directory: "/" # Location of package manifests
+    schedule: # Daily check
+      interval: "daily"
+    target-branch: "main" # Branch to create pull requests against
+
+  # Maintain dependencies for GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/" # Location of package manifests
+    schedule: # Daily check
+      interval: "daily"
+    target-branch: "main" # Branch to create pull requests against
