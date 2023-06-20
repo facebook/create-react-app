@@ -21,10 +21,12 @@ function formatMessage(message) {
     lines = message.split('\n');
   } else if ('message' in message) {
     lines = message['message'].split('\n');
+    lines.unshift(`Error in ${message['file']}`);
   } else if (Array.isArray(message)) {
     message.forEach(message => {
       if ('message' in message) {
         lines = message['message'].split('\n');
+        lines.unshift(`Error in ${message['file']}`);
       }
     });
   }
