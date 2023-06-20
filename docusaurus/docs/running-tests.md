@@ -89,26 +89,6 @@ When you encounter bugs caused by changing components, you will gain a deeper in
 
 If you’d like to test components in isolation from the child components they render, we recommend using `react-testing-library`. [`react-testing-library`](https://github.com/testing-library/react-testing-library) is a library for testing React components in a way that resembles the way the components are used by end users. It is well suited for unit, integration, and end-to-end testing of React components and applications. It works more directly with DOM nodes, and therefore it's recommended to use with [`jest-dom`](https://github.com/testing-library/jest-dom) for improved assertions.
 
-To install `react-testing-library` and `jest-dom`, you can run:
-
-```sh
-npm install --save @testing-library/react @testing-library/jest-dom
-```
-
-Alternatively you may use `yarn`:
-
-```sh
-yarn add @testing-library/react @testing-library/jest-dom
-```
-
-If you want to avoid boilerplate in your test files, you can create a [`src/setupTests.js`](#initializing-test-environment) file:
-
-```js
-// react-testing-library renders your components to document.body,
-// this adds jest-dom's custom assertions
-import '@testing-library/jest-dom';
-```
-
 Here's an example of using `react-testing-library` and `jest-dom` for testing that the `<App />` component renders "Learn React".
 
 ```js
