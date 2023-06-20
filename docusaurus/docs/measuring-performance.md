@@ -16,7 +16,7 @@ reportWebVitals(console.log);
 This function is fired when the final values for any of the metrics have finished calculating on the
 page. You can use it to log any of the results to the console or send to a particular endpoint.
 
-## Web Vitals
+## Web Vitals and viswa
 
 [Web Vitals](https://web.dev/vitals/) are a set of useful metrics that aim to capture the user
 experience of a web page. In Create React App, a third-party library is used to measure these
