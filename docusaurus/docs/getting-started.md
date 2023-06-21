@@ -9,10 +9,20 @@ applications. It offers a modern build setup with no configuration.
 ## Quick Start
 
 ```sh
+# Create a new React app with a specific project name
 npx create-react-app my-app
 cd my-app
 npm start
 ```
+
+Alternatively, if you already have a directory or GitHub repository that you want to build your React app within, you can create a new React app in the current directory by running:
+
+```sh
+# Create a new React app in the current directory
+npx create-react-app .
+```
+
+This command will initialize a new React app using Create React App within the current directory. Make sure you navigate to the desired directory in your terminal before running the command. Once the app is created, you can proceed with the development process by following the remaining steps.
 
 > If you've previously installed `create-react-app` globally via `npm install -g create-react-app`, we recommend you uninstall the package using `npm uninstall -g create-react-app` or `yarn global remove create-react-app` to ensure that `npx` always uses the latest version.
 
