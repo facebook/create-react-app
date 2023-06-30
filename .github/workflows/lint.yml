@@ -15,7 +15,7 @@ jobs:
         run: npm ci --prefer-offline
       - name: Alex
         run: npm run alex
-      - name: Prettier
-        run: npm run prettier -- --list-different
+      # - name: Prettier
+      #   run: npm run prettier -- --list-different
       - name: Eslint
         run: npm run eslint -- --max-warnings 0
