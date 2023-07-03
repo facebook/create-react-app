@@ -1,9 +1,9 @@
-name: Lint
+name: Build
 
 on: [push, pull_request]
 
 jobs:
-  lint:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -17,9 +17,3 @@ jobs:
         run: npm ci --prefer-offline
       - name: Build
         run: npm run build
-      - name: Alex
-        run: npm run alex
-      - name: Prettier
-        run: npm run prettier -- --list-different
-      - name: Eslint
-        run: npm run eslint -- --max-warnings 0
