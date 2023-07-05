@@ -20,9 +20,17 @@
   },
   "devDependencies": {
     "babel-plugin-tester": "^10.1.0",
-    "jest": "^27.4.3"
+    "jest": "^25.0.0"
   },
   "scripts": {
     "test": "jest"
+  },
+  "dependencies": {
+    "alex": "11.0.0",
+    "babel-jest": "18.0.0",
+    "babel-loader": "9.1.2",
+    "eslint-plugin-react": "7.25.3",
+    "lerna": "7.1.1",
+    "puppeteer": "20.7.4"
   }
 }

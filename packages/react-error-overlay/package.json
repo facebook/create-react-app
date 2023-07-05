@@ -38,15 +38,15 @@
     "@babel/code-frame": "^7.16.0",
     "@babel/core": "^7.16.0",
     "anser": "^2.1.0",
-    "babel-jest": "^27.4.2",
-    "babel-loader": "^8.2.3",
+    "babel-jest": "^18.0.0",
+    "babel-loader": "^9.1.2",
     "babel-preset-react-app": "^10.0.1",
     "chalk": "^4.1.2",
     "chokidar": "^3.5.2",
     "cross-env": "^7.0.3",
     "flow-bin": "^0.116.0",
     "html-entities": "^2.3.2",
-    "jest": "^27.4.3",
+    "jest": "^25.0.0",
     "jest-fetch-mock": "^3.0.3",
     "object-assign": "^4.1.1",
     "promise": "^8.1.0",
@@ -76,5 +76,11 @@
       "/fixtures/",
       "setupJest.js"
     ]
+  },
+  "dependencies": {
+    "alex": "11.0.0",
+    "eslint-plugin-react": "7.25.3",
+    "lerna": "7.1.1",
+    "puppeteer": "20.7.4"
   }
 }
