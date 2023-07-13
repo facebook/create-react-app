@@ -9,7 +9,7 @@
 const siteConfig = {
   title: 'Create React App',
   tagline: 'Set up a modern web app by running one command.',
-  url: 'https://create-react-app.dev',
+  url: 'https://www.propelleraero.com/dirtmate/',
   baseUrl: '/',
   projectName: 'create-react-app',
   organizationName: 'facebook',
