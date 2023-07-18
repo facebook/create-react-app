@@ -6,6 +6,19 @@ sidebar_label: Deployment
 
 `npm run build` creates a `build` directory with a production build of your app. Set up your favorite HTTP server so that a visitor to your site is served `index.html`, and requests to static paths like `/static/js/main.<hash>.js` are served with the contents of the `/static/js/main.<hash>.js` file. For more information see the [production build](production-build.md) section.
 
+## Options
+1. [Static Server](https://create-react-app.dev/docs/deployment#static-server)
+2. [AWS Amplify](https://create-react-app.dev/docs/deployment#aws-amplify)
+3. [Azure](https://create-react-app.dev/docs/deployment#azure)
+4. [Firebase](https://create-react-app.dev/docs/deployment#firebase)
+5. [GitHub Pages](https://create-react-app.dev/docs/deployment#github-pages)
+6. [Heroku](https://create-react-app.dev/docs/deployment#heroku)
+7. [Netlify](https://create-react-app.dev/docs/deployment#netlify)
+8. [Vercel](https://create-react-app.dev/docs/deployment#vercel)
+9. [Render](https://create-react-app.dev/docs/deployment#render)
+10. [S3 and CloudFont](https://create-react-app.dev/docs/deployment#s3-and-cloudfront)
+11. [Surge](https://create-react-app.dev/docs/deployment#surge)
+
 ## Static Server
 
 For environments using [Node](https://nodejs.org/), the easiest way to handle this would be to install [serve](https://github.com/vercel/serve) and let it handle the rest:
