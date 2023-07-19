@@ -10,7 +10,7 @@ const webpack = require('webpack');
 const chalk = require('chalk');
 const webpackConfig = require('./webpack.config.js');
 const iframeWebpackConfig = require('./webpack.config.iframe.js');
-const rimraf = require('rimraf');
+const { rimraf } = require('rimraf');
 const chokidar = require('chokidar');
 
 const args = process.argv.slice(2);
@@ -91,7 +91,7 @@ function setupWatch() {
 }
 
 // Clean up lib folder
-rimraf('lib/', () => {
+rimraf('lib/').then(() => {
   console.log('Cleaned up the lib folder.\n');
   watchMode ? setupWatch() : runBuildSteps();
 });
