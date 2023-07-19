@@ -17,7 +17,7 @@
     "screencast:error": "svg-term --cast jyu19xGl88FQ3poMY8Hbmfw8y --out screencast-error.svg --window --at 12000 --no-cursor",
     "alex": "alex .",
     "test:integration": "jest test/integration",
-    "test": "cd packages/react-scripts && node bin/react-scripts.js test",
+    "test": "npm test -w babel-plugin-named-asset-import && npm test -w create-react-app && npm test -w react-dev-utils && npm test -w react-error-overlay && cd packages/react-scripts && node bin/react-scripts.js test",
     "eslint": "eslint .",
     "prettier": "prettier .",
     "format": "npm run prettier -- --write"
