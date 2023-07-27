@@ -88,7 +88,7 @@ function formatMessage(message) {
   if (lines[1] && lines[1].match(/Cannot find module.+sass/)) {
     lines[1] = 'To import Sass files, you first need to install sass.\n';
     lines[1] +=
-      'Run `npm install sass` or `yarn add sass` inside your workspace.';
+      'Run `npm install sass --save-dev` or `yarn add --dev sass` inside your workspace.';
   }
 
   message = lines.join('\n');
