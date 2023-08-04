@@ -238,6 +238,8 @@ module.exports = function (webpackEnv) {
               .replace(/\\/g, '/')
         : isEnvDevelopment &&
           (info => path.resolve(info.absoluteResourcePath).replace(/\\/g, '/')),
+      // Some environments disable insecure hash functions like md4,md5
+      hashFunction: 'sha256',
     },
     cache: {
       type: 'filesystem',

@@ -2,7 +2,7 @@
 const { createHash } = require('crypto');
 
 module.exports = env => {
-  const hash = createHash('md5');
+  const hash = createHash('sha256');
   hash.update(JSON.stringify(env));
 
   return hash.digest('hex');
