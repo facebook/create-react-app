@@ -7,6 +7,9 @@
 
 'use strict';
 
+// Fix eslint shareable config (https://github.com/eslint/eslint/issues/3458)
+require('@rushstack/eslint-patch/modern-module-resolution');
+
 // This file contains the minimum ESLint configuration required for Create
 // React App support, and is used as the `baseConfig` for `eslint-loader`
 // to ensure that user-provided configs don't need this boilerplate.
@@ -14,7 +17,7 @@
 module.exports = {
   root: true,
 
-  parser: 'babel-eslint',
+  parser: '@babel/eslint-parser',
 
   plugins: ['react'],
 
@@ -27,10 +30,10 @@ module.exports = {
   },
 
   parserOptions: {
-    ecmaVersion: 2018,
     sourceType: 'module',
-    ecmaFeatures: {
-      jsx: true,
+    requireConfigFile: false,
+    babelOptions: {
+      presets: [require.resolve('babel-preset-react-app/prod')],
     },
   },
 

@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 
 /**
- * Copyright (c) 2015-present, Facebook, Inc. 
- * 
- * This source code is licensed under the MIT license found in the 
- * LICENSE file in the root directory of this source tree. 
+ * Copyright (c) 2015-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  */
 
 'use strict';
@@ -51,8 +51,6 @@ function main() {
 
     console.log(`Recorded screencast to ${cast}`);
     console.log(`Rendered SVG to ${out}`);
-  } catch (err) {
-    throw err;
   } finally {
     process.chdir(previous);
   }
