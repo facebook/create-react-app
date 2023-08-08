@@ -55,8 +55,6 @@ const shouldMinify = process.env.DISABLE_TERSER !== 'true';
 
 const shouldCopyAssets = process.env.DISABLE_COPY_ASSETS !== 'true';
 
-const isUsingNpm = process.env.USING_NPM === 'true';
-
 // End iModel.js Changes block
 
 // Source maps are resource heavy and can cause out of memory issue for large source files.
@@ -159,8 +157,8 @@ module.exports = function (webpackEnv) {
         from: "**/public/**",
         noErrorOnMissing: true,
         context: path.dirname(require.resolve(`${paths.appNodeModules}/${dependency}/package.json`)),
-        globOptions: isUsingNpm ? undefined : {
-          ignore: ["**/node_modules/**"],
+        globOptions: {
+          ignore: ["/node_modules/**", "**/index.html"],
         },
         to({ absoluteFilename }) {
           const regex = new RegExp("(public(?:\\\\|\/))(.*)");
