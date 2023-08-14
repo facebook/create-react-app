@@ -62,6 +62,12 @@ yarn create react-app my-app
 
 _`yarn create` is available in Yarn 0.25+_
 
+### Bun
+
+```sh
+bunx create-react-app my-app
+```
+
 ### Selecting a template
 
 You can now optionally start a new app from a template by appending `--template [template-name]` to the creation command.
@@ -90,13 +96,15 @@ If you already have a project and would like to add TypeScript, see our [Adding 
 
 ### Selecting a package manager
 
-When you create a new app, the CLI will use [npm](https://docs.npmjs.com) or [Yarn](https://yarnpkg.com/) to install dependencies, depending on which tool you use to run `create-react-app`. For example:
+When you create a new app, the CLI will use [npm](https://docs.npmjs.com), [Yarn](https://yarnpkg.com/), or [Bun](https://bun.sh/package-manager) to install dependencies, depending on which tool you use to run `create-react-app`. For example:
 
 ```sh
 # Run this to use npm
 npx create-react-app my-app
 # Or run this to use yarn
 yarn create react-app my-app
+# Or run this to use bun
+bunx create-react-app my-app
 ```
 
 ## Output

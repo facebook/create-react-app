@@ -102,7 +102,7 @@ You will need `npm@7` and `yarn@1` in order to bootstrap and test a local copy o
 
 2. Run `npm install` in the root `create-react-app` folder.
 
-Once it is done, you can modify any file locally and run `npm start`, `npm test` or `npm run build` like you can in a generated project. It will serve the application from the files located in `packages/cra-template/template`.
+Once it is done, you can modify any file locally and run `npm start`, `npm test` or `r` like you can in a generated project. It will serve the application from the files located in `packages/cra-template/template`.
 
 If you want to try out the end-to-end flow with the global CLI, you can do this too:
 
@@ -111,7 +111,7 @@ npx create-react-app my-app
 cd my-app
 ```
 
-and then run `npm start` or `npm run build`.
+and then run `npm start` or `r`.
 
 ## Contributing to E2E (end to end) tests
 

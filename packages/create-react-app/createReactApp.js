@@ -49,8 +49,15 @@ const validateProjectName = require('validate-npm-package-name');
 
 const packageJson = require('./package.json');
 
-function isUsingYarn() {
-  return (process.env.npm_config_user_agent || '').indexOf('yarn') === 0;
+function getPackageManager() {
+  const pm_user_agent = process.env.npm_config_user_agent || '';
+  if (pm_user_agent.indexOf('yarn') === 0) {
+    return 'yarn';
+  }
+  if (pm_user_agent.indexOf('bun') === 0) {
+    return 'bun';
+  }
+  return 'npm';
 }
 
 let projectName;
@@ -219,20 +226,23 @@ function init() {
         );
         console.log();
       } else {
-        const useYarn = isUsingYarn();
+        let packageManager = getPackageManager();
+        if (packageManager === 'yarn' && program.usePnp) {
+          packageManager = 'yarn-pnp';
+        }
         createApp(
           projectName,
           program.verbose,
           program.scriptsVersion,
           program.template,
-          useYarn,
+          packageManager,
           program.usePnp
         );
       }
     });
 }
 
-function createApp(name, verbose, version, template, useYarn, usePnp) {
+function createApp(name, verbose, version, template, packageManager, usePnp) {
   const unsupportedNodeVersion = !semver.satisfies(
     // Coerce strings with metadata (i.e. `15.0.0-nightly`).
     semver.coerce(process.version),
@@ -275,11 +285,11 @@ function createApp(name, verbose, version, template, useYarn, usePnp) {
 
   const originalDirectory = process.cwd();
   process.chdir(root);
-  if (!useYarn && !checkThatNpmCanReadCwd()) {
+  if (packageManager === 'npm' && !checkThatNpmCanReadCwd()) {
     process.exit(1);
   }
 
-  if (!useYarn) {
+  if (packageManager === 'npm') {
     const npmInfo = checkNpmVersion();
     if (!npmInfo.hasMinNpm) {
       if (npmInfo.npmVersion) {
@@ -293,7 +303,7 @@ function createApp(name, verbose, version, template, useYarn, usePnp) {
       // Fall back to latest supported react-scripts for npm 3
       version = 'react-scripts@0.9.x';
     }
-  } else if (usePnp) {
+  } else if (packageManager.startsWith('yarn') && usePnp) {
     const yarnInfo = checkYarnVersion();
     if (yarnInfo.yarnVersion) {
       if (!yarnInfo.hasMinYarnPnp) {
@@ -304,7 +314,7 @@ function createApp(name, verbose, version, template, useYarn, usePnp) {
           )
         );
         // 1.11 had an issue with webpack-dev-middleware, so better not use PnP with it (never reached stable, but still)
-        usePnp = false;
+        packageManager = 'yarn';
       }
       if (!yarnInfo.hasMaxYarnPnp) {
         console.log(
@@ -313,7 +323,7 @@ function createApp(name, verbose, version, template, useYarn, usePnp) {
           )
         );
         // 2 supports PnP by default and breaks when trying to use the flag
-        usePnp = false;
+        packageManager = 'yarn';
       }
     }
   }
@@ -325,16 +335,23 @@ function createApp(name, verbose, version, template, useYarn, usePnp) {
     verbose,
     originalDirectory,
     template,
-    useYarn,
+    packageManager,
     usePnp
   );
 }
 
-function install(root, useYarn, usePnp, dependencies, verbose, isOnline) {
+function install(
+  root,
+  packageManager,
+  usePnp,
+  dependencies,
+  verbose,
+  isOnline
+) {
   return new Promise((resolve, reject) => {
     let command;
     let args;
-    if (useYarn) {
+    if (packageManager.startsWith('yarn')) {
       command = 'yarnpkg';
       args = ['add', '--exact'];
       if (!isOnline) {
@@ -356,6 +373,15 @@ function install(root, useYarn, usePnp, dependencies, verbose, isOnline) {
       if (!isOnline) {
         console.log(chalk.yellow('You appear to be offline.'));
         console.log(chalk.yellow('Falling back to the local Yarn cache.'));
+        console.log();
+      }
+    } else if (packageManager === 'bun') {
+      command = 'bun';
+      args = ['add', '--exact'].concat(dependencies);
+
+      if (usePnp) {
+        console.log(chalk.yellow("Bun doesn't support PnP."));
+        console.log(chalk.yellow('Falling back to the regular installs.'));
         console.log();
       }
     } else {
@@ -400,7 +426,7 @@ function run(
   verbose,
   originalDirectory,
   template,
-  useYarn,
+  packageManager,
   usePnp
 ) {
   Promise.all([
@@ -416,7 +442,7 @@ function run(
       getPackageInfo(templateToInstall),
     ])
       .then(([packageInfo, templateInfo]) =>
-        checkIfOnline(useYarn).then(isOnline => ({
+        checkIfOnline(packageManager).then(isOnline => ({
           isOnline,
           packageInfo,
           templateInfo,
@@ -460,7 +486,7 @@ function run(
 
         return install(
           root,
-          useYarn,
+          packageManager,
           usePnp,
           allDependencies,
           verbose,
@@ -488,7 +514,7 @@ function run(
           },
           [root, appName, verbose, originalDirectory, templateName],
           `
-        const init = require('${packageName}/scripts/init.js');
+        const init = require('../../react-scripts/scripts/init.js');
         init.apply(null, JSON.parse(process.argv[1]));
       `
         );
@@ -1051,8 +1077,8 @@ function checkThatNpmCanReadCwd() {
   return false;
 }
 
-function checkIfOnline(useYarn) {
-  if (!useYarn) {
+function checkIfOnline(packageManager) {
+  if (!packageManager.startsWith('yarn')) {
     // Don't ping the Yarn registry.
     // We'll just assume the best case.
     return Promise.resolve(true);
