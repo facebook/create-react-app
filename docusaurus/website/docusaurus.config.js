@@ -33,7 +33,7 @@ const siteConfig = {
     ],
   ],
   themeConfig: {
-    image: 'img/logo-og.png',
+    image: 'https://www.propelleraero.com/wp-content/uploads/2021/05/Vector.svg',
     announcementBar: {
       id: 'support_ukraine',
       content:
@@ -52,12 +52,12 @@ const siteConfig = {
       title: 'Create React App',
       logo: {
         alt: 'Create React App Logo',
-        src: 'img/logo.svg',
+        src: 'https://www.propelleraero.com/wp-content/uploads/2021/05/Vector.svg',
       },
       items: [
         { to: 'docs/getting-started', label: 'Docs', position: 'right' },
         {
-          href: 'https://reactjs.org/community/support.html',
+          href: 'https://www.propelleraero.com/dirtmate/',
           label: 'Help',
           position: 'right',
         },
@@ -80,7 +80,7 @@ const siteConfig = {
             },
             {
               label: 'Learn React',
-              href: 'https://reactjs.org/',
+              href: 'https://www.propelleraero.com/dirtmate/',
             },
           ],
         },
@@ -117,7 +117,7 @@ const siteConfig = {
       ],
       logo: {
         alt: 'Facebook Open Source Logo',
-        src: 'img/oss_logo.png',
+        src: 'https://www.propelleraero.com/wp-content/uploads/2021/05/Vector.svg',
       },
       copyright: `Copyright © ${new Date().getFullYear()} Facebook, Inc.`,
     },
