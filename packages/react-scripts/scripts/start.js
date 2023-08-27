@@ -122,7 +122,16 @@ checkBrowsers(paths.appPath, isInteractive)
     };
     const devServer = new WebpackDevServer(serverConfig, compiler);
     // Launch WebpackDevServer.
-    devServer.startCallback(() => {
+    devServer.startCallback((err) => {
+      if(err) {
+        console.log(
+          chalk.red(
+            `Dev server failed to start.`
+          )
+          );
+          err.message && console.log(err.message);
+        process.exit();
+      }
       if (isInteractive) {
         clearConsole();
       }
