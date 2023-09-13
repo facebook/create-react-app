@@ -9,11 +9,7 @@
 /coverage
 
 # production
-# /build
-# Changed from /build to /dist because this is default for
-# Netlify when deploying an app using `@upleveled/react-scripts`
-# Ref: https://github.com/upleveled/create-react-app/commit/ab165a178994751e837d2835b2a4dbcc48f6f709#
-/dist
+/build
 
 # misc
 .DS_Store

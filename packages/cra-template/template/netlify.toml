@@ -1,0 +1,3 @@
+[build]
+  publish = "build"
+  command = "pnpm run build"

@@ -29,10 +29,7 @@ const publicUrlOrPath = getPublicUrlOrPath(
   process.env.PUBLIC_URL,
 );
 
-const buildPath =
-  process.env.BUILD_PATH ||
-  // Default for Netlify when deploying an app using `@upleveled/react-scripts`
-  'dist';
+const buildPath = process.env.BUILD_PATH || 'build';
 
 const moduleFileExtensions = [
   'web.mjs',
