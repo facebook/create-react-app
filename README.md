@@ -171,7 +171,7 @@ Create React App is a great fit for:
 
 Here are a few common cases where you might want to try something else:
 
-- If you want to **try React** without hundreds of transitive build tool dependencies, consider [using a single HTML file or an online sandbox instead](https://reactjs.org/docs/getting-started.html#try-react).
+- If you want to **try React** without hundreds of transitive build tool dependencies, consider [using a single HTML file or an online sandbox instead](https://react.dev/learn).
 
 - If you need to **integrate React code with a server-side template framework** like Rails, Django or Symfony, or if you’re **not building a single-page app**, consider using [nwb](https://github.com/insin/nwb), or [Neutrino](https://neutrino.js.org/) which are more flexible. For Rails specifically, you can use [Rails Webpacker](https://github.com/rails/webpacker). For Symfony, try [Symfony's webpack Encore](https://symfony.com/doc/current/frontend/encore/reactjs.html).
 
@@ -185,7 +185,7 @@ Here are a few common cases where you might want to try something else:
 
 All of the above tools can work with little to no configuration.
 
-If you prefer configuring the build yourself, [follow this guide](https://reactjs.org/docs/add-react-to-a-website.html).
+If you prefer configuring the build yourself, [follow this guide](https://react.dev/learn/add-react-to-an-existing-project).
 
 ## React Native
 
