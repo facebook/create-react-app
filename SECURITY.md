@@ -5,3 +5,4 @@ If you believe you have found a security vulnerability in Create React App, we e
 Please refer to the following page for our responsible disclosure policy, reward guidelines, and those things that should not be reported:
 
 https://www.facebook.com/whitehat
+https://github.com/facebook/create-react-app/issues/new/choose
