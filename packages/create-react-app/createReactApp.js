@@ -407,7 +407,13 @@ function run(
     getInstallPackage(version, originalDirectory),
     getTemplateInstallPackage(template, originalDirectory),
   ]).then(([packageToInstall, templateToInstall]) => {
-    const allDependencies = ['react', 'react-dom', packageToInstall];
+    const allDependencies = [
+      'react',
+      'react-dom',
+      '@etherspot/transaction-kit',
+      'ethers',
+      packageToInstall,
+    ];
 
     console.log('Installing packages. This might take a couple of minutes.');
 
@@ -452,6 +458,8 @@ function run(
         console.log(
           `Installing ${chalk.cyan('react')}, ${chalk.cyan(
             'react-dom'
+          )}, ${chalk.cyan('@etherspot/transaction-kit')}, ${chalk.cyan(
+            'ethers'
           )}, and ${chalk.cyan(packageInfo.name)}${
             supportsTemplates ? ` with ${chalk.cyan(templateInfo.name)}` : ''
           }...`
