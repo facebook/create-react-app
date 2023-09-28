@@ -1,38 +1,139 @@
 .App {
   text-align: center;
+  display: flex;
+  justify-content: center;
 }
 
 .App-logo {
-  height: 40vmin;
+  height: 200px;
+  margin: 50px 0;
   pointer-events: none;
 }
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+    animation: App-logo-shake infinite 1s linear;
   }
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: #fff;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  color: #000;
+  font-size: 20px;
+  max-width: 600px;
+}
+
+.App-wallet-address {
+  color: rgb(255, 70, 66);
+  font-weight: bold;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 8px;
+  margin: 15px 0 25px;
+}
+
+.App-wallet-address-label {
+  font-size: 14px;
+  margin: 25px 0 0;
 }
 
 .App-link {
-  color: #61dafb;
+  color: rgb(255, 70, 66);
+  margin-bottom: 15px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.App-info {
+  font-size: 14px;
+  line-height: 20px;
+  text-align: left;
+  background: #e2e4ff;
+  padding: 10px;
+  border-radius: 5px;
+  border-left: 3px solid #031362;
+}
+
+.App-transaction-details {
+  font-size: 14px;
+  line-height: 20px;
+  text-align: left;
+  background: #ccffc5;
+  padding: 10px;
+  border-radius: 5px;
+  border-left: 3px solid #036219;
+  margin-bottom: 25px;
+}
+
+.App-label {
+  font-size: 14px;
+  margin-right: 25px;
+  text-align: right;
+  flex: 1;
+}
+
+.App-form-control {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  text-align: left;
+  margin-bottom: 45px;
+}
+
+.App-text-input {
+  padding: 10px;
+  margin: 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 50%;
+  box-sizing: border-box;
+}
+
+.App-form-buttons-control {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  text-align: left;
+  margin-bottom: 45px;
+}
+
+.App-form-buttons-control button {
+  margin-left: 10px;
+  background: none;
+  border: 1px solid #ccc;
+  font-size: 15px;
+  font-weight: bold;
+  padding: 15px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.App-form-buttons-control button:hover {
+  opacity: 0.5;
+}
+
+@keyframes App-logo-shake {
+  0% {
+    transform: skewY(-15deg);
   }
-  to {
-    transform: rotate(360deg);
+  5% {
+    transform: skewY(15deg);
+  }
+  10% {
+    transform: skewY(-15deg);
+  }
+  15% {
+    transform: skewY(15deg);
+  }
+  20% {
+    transform: skewY(0deg);
+  }
+  100% {
+    transform: skewY(0deg);
   }
 }

@@ -1,13 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { EtherspotTransactionKit } from '@etherspot/transaction-kit';
+import { ethers } from 'ethers';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+const randomWallet = ethers.Wallet.createRandom();
+const providerWallet = new ethers.Wallet(randomWallet.privateKey);
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <EtherspotTransactionKit provider={providerWallet} chainId={80001}>
+      <App />
+    </EtherspotTransactionKit>
   </React.StrictMode>
 );
 
