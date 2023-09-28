@@ -9,7 +9,7 @@
   "description": "The base template for Create React App.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ethrerspot/create-react-txkit-app.git",
+    "url": "https://github.com/etherspot/create-react-txkit-app.git",
     "directory": "packages/cra-template"
   },
   "license": "MIT",
