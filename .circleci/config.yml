@@ -52,7 +52,7 @@ jobs:
           command: cd ./packages/cra-template && npm install && npm publish --access=public
       - run:
           name: Build and publish cra-template-typescript
-          command: cd ./packages/cra-template && npm install && npm publish --access=public
+          command: cd ./packages/cra-template-typescript && npm install && npm publish --access=public
       - run:
           name: Announce Publish
           command: |
