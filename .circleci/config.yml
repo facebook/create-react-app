@@ -1,0 +1,96 @@
+version: 2.1
+
+orbs:
+  slack: circleci/slack@3.4.2
+
+jobs:
+  install:
+    working_directory: ~/create-react-txkit-app
+    docker:
+      - image: cimg/node:18.16.0
+        auth:
+          username: $DOCKERHUB_USER
+          password: $DOCKERHUB_PASSWORD
+    steps:
+      - checkout
+      - run:
+          name: Authenticate with registry
+          command: echo "//registry.npmjs.org/:_authToken=$ETHERSPOT_NPM_TOKEN" > ~/create-react-txkit-app/.npmrc
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+      - run:
+          name: Install dependencies
+          command: npm install
+      - save_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+          paths:
+            - ./node_modules
+      - slack/status:
+          fail_only: true
+          failure_message: "Triggered by: *${CIRCLE_USERNAME}* \n\n Ooops! The *$CIRCLE_JOB* job has failed! :circleci-fail:"
+          webhook: "${SLACK_WEBHOOK_URL}"
+
+  publish:
+    working_directory: ~/create-react-txkit-app
+    docker:
+      - image: cimg/node:18.16.0
+        auth:
+          username: $DOCKERHUB_USER
+          password: $DOCKERHUB_PASSWORD
+    steps:
+      - checkout
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+      - run:
+          name: Authenticate with registry
+          command: echo "//registry.npmjs.org/:_authToken=$ETHERSPOT_NPM_TOKEN" > ~/create-react-txkit-app/.npmrc
+      - run:
+          name: Build create-react-txkit-app
+          command: npm run build
+      - run:
+          name: Publish package to npm
+          command: npm run publish
+      - run:
+          name: Announce Publish
+          command: |
+            chmod +x .circleci/announcePublish.sh
+            .circleci/announcePublish.sh "create-react-txkit-app" "$(node -e "console.log(require('./package.json').version)")"
+      - slack/status:
+          fail_only: true
+          failure_message: "Triggered by: *${CIRCLE_USERNAME}* \n\n Ooops! The *$CIRCLE_JOB* job has failed! :circleci-fail:"
+          only_for_branches: master
+          webhook: "${SLACK_WEBHOOK_URL}"
+  publish-github-release:
+    docker:
+      - image: ardd97/ghr
+    steps:
+      - checkout
+      - run:
+          name: "Publish Release on GitHub"
+          command: |
+            PACKAGE_VERSION="$(jq .version package.json -r)"
+            echo $PACKAGE_VERSION
+            ghr -t "${GITHUB_TOKEN}" -u "${CIRCLE_PROJECT_USERNAME}" -r "${CIRCLE_PROJECT_REPONAME}" -c "${CIRCLE_SHA1}" "$PACKAGE_VERSION"
+
+workflows:
+  version: 2.1
+  install_and_publish:
+    jobs:
+      - install:
+          context: general-vars
+      - publish:
+          context: general-vars
+          requires:
+            - install
+          filters:
+            branches:
+              only:
+                  - main
+      - publish-github-release:
+          context: general-vars
+          requires:
+            - publish
+          filters:
+            branches:
+              only:
+                  - main
