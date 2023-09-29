@@ -45,11 +45,14 @@ jobs:
           name: Authenticate with registry
           command: echo "//registry.npmjs.org/:_authToken=$ETHERSPOT_NPM_TOKEN" > ~/create-react-txkit-app/.npmrc
       - run:
-          name: Build create-react-txkit-app
-          command: npm run build
+          name: Build and publish create-react-txkit-app
+          command: cd ./packages/create-react-app && npm install && npm publish --access=public
       - run:
-          name: Publish package to npm
-          command: npm run publish
+          name: Build and publish cra-template
+          command: cd ./packages/cra-template && npm install && npm publish --access=public
+      - run:
+          name: Build and publish cra-template-typescript
+          command: cd ./packages/cra-template-typescript && npm install && npm publish --access=public
       - run:
           name: Announce Publish
           command: |
