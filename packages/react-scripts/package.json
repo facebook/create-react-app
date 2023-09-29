@@ -1,6 +1,6 @@
 {
   "name": "@bentley/react-scripts",
-  "version": "5.0.5",
+  "version": "5.0.6",
   "description": "iTwin.js configuration and scripts for Create React App.",
   "repository": {
     "type": "git",
@@ -28,7 +28,7 @@
   },
   "types": "./lib/react-app.d.ts",
   "dependencies": {
-    "@babel/core": "^7.16.0",
+    "@babel/core": "^7.23.0",
     "@itwin/core-webpack-tools": "^3.3.0",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.3",
     "@svgr/webpack": "^6.2.1",

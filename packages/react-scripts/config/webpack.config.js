@@ -161,7 +161,7 @@ module.exports = function (webpackEnv) {
           ignore: ["/node_modules/**", "**/index.html"],
         },
         to({ absoluteFilename }) {
-          const regex = new RegExp("(public(?:\\\\|\/))(.*)");
+          const regex = new RegExp("(public(?:\\\\|/))(.*)");
           return regex.exec(absoluteFilename)[2];
         },
       };
@@ -747,7 +747,7 @@ module.exports = function (webpackEnv) {
       // NOTE: iModel.js specific plugin to copy a set of static resources from the node_modules
       // directory of each dependent package into the 'build/public' directory.
       // Used for resources such as locales, which are defined by each consuming package.
-      copyPluginPatterns && new CopyPlugin({ patterns: copyPluginPatterns }),
+      copyPluginPatterns && copyPluginPatterns.length && new CopyPlugin({ patterns: copyPluginPatterns }),
 
       // Inlines the webpack runtime script. This script is too small to warrant
       // a network request.
