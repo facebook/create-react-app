@@ -407,13 +407,7 @@ function run(
     getInstallPackage(version, originalDirectory),
     getTemplateInstallPackage(template, originalDirectory),
   ]).then(([packageToInstall, templateToInstall]) => {
-    const allDependencies = [
-      'react',
-      'react-dom',
-      '@etherspot/transaction-kit',
-      'ethers',
-      packageToInstall,
-    ];
+    const allDependencies = ['react', 'react-dom', packageToInstall];
 
     console.log('Installing packages. This might take a couple of minutes.');
 
