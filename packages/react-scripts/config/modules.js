@@ -14,6 +14,11 @@ const paths = require('./paths');
 const chalk = require('react-dev-utils/chalk');
 const resolve = require('resolve');
 
+// dynamic/optional requires
+const requireTypescript = () =>
+  require(resolve.sync('typescript', { basedir: paths.appNodeModules }));
+const requireJsConfig = () => require(paths.appJsConfig);
+
 /**
  * Get additional module paths based on the baseUrl of a compilerOptions object.
  *
@@ -116,14 +121,12 @@ function getModules() {
   // TypeScript project and set up the config
   // based on tsconfig.json
   if (hasTsConfig) {
-    const ts = require(resolve.sync('typescript', {
-      basedir: paths.appNodeModules,
-    }));
+    const ts = requireTypescript();
     config = ts.readConfigFile(paths.appTsConfig, ts.sys.readFile).config;
     // Otherwise we'll check if there is jsconfig.json
     // for non TS projects.
   } else if (hasJsConfig) {
-    config = require(paths.appJsConfig);
+    config = requireJsConfig();
   }
 
   config = config || {};
