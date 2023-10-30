@@ -1,4 +1,4 @@
----
+ ---
 id: proxying-api-requests-in-development
 title: Proxying API Requests in Development
 sidebar_label: Proxying in Development
