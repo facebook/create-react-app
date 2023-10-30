@@ -1,4 +1,4 @@
----
+ ---
 id: code-splitting
 title: Code Splitting
 ---
