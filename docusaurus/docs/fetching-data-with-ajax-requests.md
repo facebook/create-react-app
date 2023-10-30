@@ -1,4 +1,4 @@
----
+ ---
 id: fetching-data-with-ajax-requests
 title: Fetching Data with AJAX Requests
 sidebar_label: Fetching Data
