@@ -11,7 +11,7 @@ For example:
 ```js
 handleClick() { // missing `event` argument
   this.setState({
-  	text: event.target.value // uses the `event` global: oops!
+    text: event.target.value // uses the `event` global: oops!
   });
 }
 ```

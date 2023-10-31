@@ -24,10 +24,10 @@ sleep 1
 echo "npm start" | pv -qL $[10+(-2 + RANDOM%5)]
 
 BROWSER="none" node "$(dirname $0)/screencast-start.js" \
-    --command "npm start" \
-    --pattern="Compiled successfully*" \
-    --pattern-count 2 \
-    --error-pattern="*already running on port" \
-    --timeout 10
+  --command "npm start" \
+  --pattern="Compiled successfully*" \
+  --pattern-count 2 \
+  --error-pattern="*already running on port" \
+  --timeout 10
 
 echo ""
