@@ -11,7 +11,7 @@ const filePathRegex = /^\.(\/[^/\n ]+)+\.[^/\n ]+$/;
 
 const lineNumberRegexes = [
   // Babel syntax errors
-  // Based on syntax error formating of babylon parser
+  // Based on syntax error formatting of babylon parser
   // https://github.com/babel/babylon/blob/v7.0.0-beta.22/src/parser/location.js#L19
   /^.*\((\d+):(\d+)\)$/,
 

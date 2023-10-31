@@ -94,7 +94,7 @@ Object {
 Failed to compile.
 
 ./src/App.js
-Cannot find file './ThisFileSouldNotExist' in './src'.
+Cannot find file './ThisFileShouldNotExist' in './src'.
 
 
 ",
