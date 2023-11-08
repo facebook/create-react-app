@@ -85,7 +85,7 @@
   },
   "peerDependencies": {
     "react": ">= 16",
-    "typescript": "^3.2.1 || ^4"
+    "typescript": "^3.2.1 || > 4"
   },
   "peerDependenciesMeta": {
     "typescript": {
