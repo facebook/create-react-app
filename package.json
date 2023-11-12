@@ -1,32 +1,26 @@
 {
   "private": true,
+  "workspaces": [
+    "packages/*",
+    "docusaurus/website"
+  ],
   "scripts": {
-    "alex": "alex .",
     "build": "cd packages/react-scripts && node bin/react-scripts.js build",
     "changelog": "lerna-changelog",
     "create-react-app": "node tasks/cra.js",
     "e2e": "tasks/e2e-simple.sh",
     "e2e:docker": "tasks/local-test.sh",
-    "eslint": "eslint .",
-    "format": "npm run prettier -- --write",
     "postinstall": "npm run build:prod -w react-error-overlay",
-    "prettier": "prettier .",
     "publish": "tasks/publish.sh",
+    "start": "cd packages/react-scripts && node bin/react-scripts.js start",
     "screencast": "node ./tasks/screencast.js",
     "screencast:error": "svg-term --cast jyu19xGl88FQ3poMY8Hbmfw8y --out screencast-error.svg --window --at 12000 --no-cursor",
-    "start": "cd packages/react-scripts && node bin/react-scripts.js start",
+    "alex": "alex .",
+    "test:integration": "jest test/integration",
     "test": "cd packages/react-scripts && node bin/react-scripts.js test",
-    "test:integration": "jest test/integration"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "*.{js,json,yml,yaml,css,scss,ts,tsx,md}": [
-      "prettier --write"
-    ]
+    "eslint": "eslint .",
+    "prettier": "prettier .",
+    "format": "npm run prettier -- --write"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.15.1",
@@ -52,5 +46,15 @@
     "tempy": "^1.0.1",
     "wait-for-localhost": "^3.3.0",
     "web-vitals": "^2.1.2"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,json,yml,yaml,css,scss,ts,tsx,md}": [
+      "prettier --write"
+    ]
   }
 }
