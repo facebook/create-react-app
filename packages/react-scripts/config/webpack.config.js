@@ -414,6 +414,19 @@ module.exports = function (webpackEnv) {
               test: /\.(js|mjs|jsx|ts|tsx)$/,
               include: paths.appSrc,
               loader: require.resolve('babel-loader'),
+              // Allow "type": "module" in package.json without
+              // fully-specified file extension
+              // https://webpack.js.org/configuration/module/#resolvefullyspecified
+              //
+              // We require "type": "module" in package.json because
+              // ESLint we want to use ESM syntax in our eslint.config.js
+              // file and ESLint does not support other ways of specifying
+              // that the config file is ESM such as an .mjs extension:
+              // https://github.com/eslint/eslint/issues/13440
+              // https://github.com/eslint/eslint/issues/16580
+              resolve: {
+                fullySpecified: false,
+              },
               options: {
                 customize: require.resolve(
                   'babel-preset-react-app/webpack-overrides',
