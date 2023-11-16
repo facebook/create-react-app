@@ -707,7 +707,9 @@ module.exports = function (webpackEnv) {
               // its runtime that would otherwise be processed through "file" loader.
               // Also exclude `html` and `json` extensions so they get processed
               // by webpacks internal loaders.
-              exclude: [/^$/, /\.(js|mjs|jsx|ts|tsx)$/, /\.html$/, /\.json$/],
+              
+              // note: 10/16/23 update to also exclude cjs files as packages such as axios may be configured to prefer these for the browser
+              exclude: [/^$/, /\.(js|mjs|jsx|cjs|ts|tsx)$/, /\.html$/, /\.json$/],
               type: 'asset/resource',
             },
             // ** STOP ** Are you adding a new loader?
