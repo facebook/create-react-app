@@ -1,6 +1,6 @@
 {
   "name": "@bentley/react-scripts",
-  "version": "5.0.6",
+  "version": "5.0.7",
   "description": "iTwin.js configuration and scripts for Create React App.",
   "repository": {
     "type": "git",
