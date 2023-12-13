@@ -125,6 +125,13 @@ Alternatively you may use `yarn`:
 yarn add husky lint-staged prettier --dev
 ```
 
+Afterwards, install the githooks by running this set of commands since [husky doesn't automatically install hooks](https://blog.typicode.com/posts/husky-git-hooks-autoinstall/):
+
+```sh
+npm pkg set scripts.prepare="husky install"
+npm run prepare
+```
+
 - `husky` makes it possible to use githooks as if they are npm scripts.
 - `lint-staged` allows us to run scripts on staged files in git. See this [blog post about lint-staged to learn more about it](https://medium.com/@okonetchnikov/make-linting-great-again-f3890e1ad6b8).
 - `prettier` is the JavaScript formatter we will run before commits.
