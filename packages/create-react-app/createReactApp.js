@@ -74,6 +74,7 @@ function init() {
       'specify a template for the created project'
     )
     .option('--use-pnp')
+    .option('--no-git')
     .allowUnknownOption()
     .on('--help', () => {
       console.log(
@@ -226,13 +227,14 @@ function init() {
           program.scriptsVersion,
           program.template,
           useYarn,
-          program.usePnp
+          program.usePnp,
+          program.noGit
         );
       }
     });
 }
 
-function createApp(name, verbose, version, template, useYarn, usePnp) {
+function createApp(name, verbose, version, template, useYarn, usePnp, noGit) {
   const unsupportedNodeVersion = !semver.satisfies(
     // Coerce strings with metadata (i.e. `15.0.0-nightly`).
     semver.coerce(process.version),
@@ -326,7 +328,8 @@ function createApp(name, verbose, version, template, useYarn, usePnp) {
     originalDirectory,
     template,
     useYarn,
-    usePnp
+    usePnp,
+    noGit
   );
 }
 
@@ -401,7 +404,8 @@ function run(
   originalDirectory,
   template,
   useYarn,
-  usePnp
+  usePnp,
+  noGit
 ) {
   Promise.all([
     getInstallPackage(version, originalDirectory),
@@ -486,7 +490,7 @@ function run(
             cwd: process.cwd(),
             args: nodeArgs,
           },
-          [root, appName, verbose, originalDirectory, templateName],
+          [root, appName, verbose, originalDirectory, templateName, noGit],
           `
         const init = require('${packageName}/scripts/init.js');
         init.apply(null, JSON.parse(process.argv[1]));

@@ -86,7 +86,8 @@ module.exports = function (
   appName,
   verbose,
   originalDirectory,
-  templateName
+  templateName,
+  noGit
 ) {
   const appPackage = require(path.join(appPath, 'package.json'));
   const useYarn = fs.existsSync(path.join(appPath, 'yarn.lock'));
@@ -273,12 +274,6 @@ module.exports = function (
   // Initialize git repo
   let initializedGit = false;
 
-  if (tryGitInit()) {
-    initializedGit = true;
-    console.log();
-    console.log('Initialized a git repository.');
-  }
-
   let command;
   let remove;
   let args;
@@ -295,7 +290,19 @@ module.exports = function (
       '--no-audit', // https://github.com/facebook/create-react-app/issues/11174
       '--save',
       verbose && '--verbose',
+      noGit,
     ].filter(e => e);
+  }
+
+  if (noGit) {
+    console.log();
+    console.log('Skipping initialize git repository');
+  } else {
+    if (tryGitInit()) {
+      initializedGit = true;
+      console.log();
+      console.log('Initialized a git repository.');
+    }
   }
 
   // Install additional template dependencies, if present.

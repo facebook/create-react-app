@@ -88,6 +88,10 @@ npx create-react-app my-app --template typescript
 
 If you already have a project and would like to add TypeScript, see our [Adding TypeScript](adding-typescript.md) documentation.
 
+### Disabling git repo initilization
+
+By default, a git repo is created in the `my-app` directory. You can disable the creation of this git repo using the `--no-git` flag.
+
 ### Selecting a package manager
 
 When you create a new app, the CLI will use [npm](https://docs.npmjs.com) or [Yarn](https://yarnpkg.com/) to install dependencies, depending on which tool you use to run `create-react-app`. For example:
