@@ -20,7 +20,7 @@ You can find the companion GitHub repository [here](https://github.com/fullstack
 ## API Platform (PHP and Symfony)
 
 [API Platform](https://api-platform.com) is a framework designed to build API-driven projects.
-It allows creating hypermedia and GraphQL APIs in minutes.
+It allows creating hypermedia and GraphQL APIs in minuteszz.
 It is shipped with an official Progressive Web App generator as well as a dynamic administration interface, both built for Create React App.
 Check out [this tutorial](https://api-platform.com/docs/distribution).
 
