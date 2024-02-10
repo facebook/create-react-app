@@ -12,8 +12,8 @@ import LinkedModules from './LinkedModules';
 
 describe('linked modules', () => {
   it('has integrity', () => {
-    expect(test());
-    expect(version() === '2.0.0');
+    expect(test()).toBeTruthy();
+    expect(version() === '2.0.0').toBeTruthy();
   });
 
   it('renders without crashing', () => {

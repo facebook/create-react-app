@@ -4,7 +4,7 @@ title: Making a Progressive Web App
 ---
 
 The production build has all the tools necessary to generate a first-class
-[Progressive Web App](https://developers.google.com/web/progressive-web-apps/),
+[Progressive Web App](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps),
 but **the offline/cache-first behavior is opt-in only**.
 
 Starting with Create React App 4, you can add a `src/service-worker.js` file to
@@ -69,7 +69,7 @@ However, they [can make debugging deployments more
 challenging](https://github.com/facebook/create-react-app/issues/2398).
 
 The
-[`workbox-webpack-plugin`](https://developers.google.com/web/tools/workbox/modules/workbox-webpack-plugin)
+[`workbox-webpack-plugin`](https://developer.chrome.com/docs/workbox/modules/workbox-webpack-plugin/)
 is integrated into production configuration, and it will take care of compiling
 a service worker file that will automatically precache all of your
 `webpack`-generated assets and keep them up to date as you deploy updates. The

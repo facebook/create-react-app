@@ -14,7 +14,9 @@ To start a new Create React App project with [TypeScript](https://www.typescript
 ```sh
 npx create-react-app my-app --template typescript
 ```
+
 or
+
 ```sh
 yarn create react-app my-app --template typescript
 ```
@@ -28,12 +30,16 @@ To add [TypeScript](https://www.typescriptlang.org/) to an existing Create React
 ```sh
 npm install --save typescript @types/node @types/react @types/react-dom @types/jest
 ```
+
 or
+
 ```sh
 yarn add typescript @types/node @types/react @types/react-dom @types/jest
 ```
 
-Next, rename any file to be a TypeScript file (e.g. `src/index.js` to `src/index.tsx`) and **restart your development server**!
+Next, rename any file to be a TypeScript file (e.g. `src/index.js` to `src/index.tsx`) and create tsconfig.json if it's not in the root of your project [`tsconfig.json` file](https://www.typescriptlang.org/docs/handbook/tsconfig-json.html).
+
+Finally **restart your development server**!
 
 Type errors will show up in the same console as the build one. You'll have to fix these type errors before you continue development or build your project. For advanced configuration, [see here](advanced-configuration.md).
 
