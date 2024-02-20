@@ -92,13 +92,13 @@ If you’d like to test components in isolation from the child components they r
 To install `react-testing-library` and `jest-dom`, you can run:
 
 ```sh
-npm install --save @testing-library/react @testing-library/jest-dom
+npm install --save-dev @testing-library/react @testing-library/jest-dom
 ```
 
 Alternatively you may use `yarn`:
 
 ```sh
-yarn add @testing-library/react @testing-library/jest-dom
+yarn add --dev @testing-library/react @testing-library/jest-dom
 ```
 
 If you want to avoid boilerplate in your test files, you can create a [`src/setupTests.js`](#initializing-test-environment) file:
