@@ -69,9 +69,9 @@ const imageInlineSizeLimit = parseInt(
 const useTypeScript = fs.existsSync(paths.appTsConfig);
 
 // Check if Tailwind config exists
-const useTailwind = fs.existsSync(
-  path.join(paths.appPath, 'tailwind.config.js')
-);
+const useTailwind =
+  fs.existsSync(path.join(paths.appPath, 'tailwind.config.js')) ||
+  fs.existsSync(path.join(paths.appPath, 'tailwind.config.cjs'));
 
 // Get the path to the uncompiled service worker (if it exists).
 const swSrc = paths.swSrc;
