@@ -9,8 +9,8 @@
 'use strict';
 
 // Do this as the first thing so that any code reading it knows the right env.
-process.env.BABEL_ENV = 'production';
-process.env.NODE_ENV = 'production';
+process.env.NODE_ENV ||= 'production';
+process.env.BABEL_ENV = process.env.NODE_ENV;
 
 // Makes the script crash on unhandled rejections instead of silently
 // ignoring them. In the future, promise rejections that are not handled will
@@ -55,7 +55,7 @@ const argv = process.argv.slice(2);
 const writeStatsJson = argv.indexOf('--stats') !== -1;
 
 // Generate configuration
-const config = configFactory('production');
+const config = configFactory(process.env.NODE_ENV);
 
 // We require that you explicitly set browsers and do not fall back to
 // browserslist defaults.
@@ -139,9 +139,13 @@ checkBrowsers(paths.appPath, isInteractive)
     process.exit(1);
   });
 
-// Create the production build and print the deployment instructions.
+// Create the build and print the deployment instructions.
 function build(previousFileSizes) {
-  console.log('Creating an optimized production build...');
+  if (process.env.NODE_ENV === 'production') {
+    console.log('Creating an optimized production build...');
+  } else {
+    console.log(`Creating a ${process.env.NODE_ENV} build...`);
+  }
 
   const compiler = webpack(config);
   return new Promise((resolve, reject) => {
