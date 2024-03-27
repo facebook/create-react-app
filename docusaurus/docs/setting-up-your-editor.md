@@ -101,13 +101,15 @@ Having problems with VS Code Debugging? Please see their [troubleshooting guide]
 
 You need to have [WebStorm](https://www.jetbrains.com/webstorm/) and [JetBrains IDE Support](https://chrome.google.com/webstore/detail/jetbrains-ide-support/hmhgeddbohgjknpmjagkdomcpobmllji) Chrome extension installed.
 
-In the WebStorm menu `Run` select `Edit Configurations...`. Then click `+` and select `JavaScript Debug`. Paste `http://localhost:3000` into the URL field and save the configuration.
+In the WebStorm menu `Run` select `Edit Configurations...`. Then click `+` and select `JavaScript Debug`. Paste `http://localhost:3000` into the URL field.
 
 > Note: the URL may be different if you've made adjustments via the [HOST or PORT environment variables](advanced-configuration.md).
 
-Start your app by running `npm start`, then press `^D` on macOS or `F9` on Windows and Linux or click the green debug icon to start debugging in WebStorm.
+Then under the `Before Launch` section, click `+` and select `Run npm script`. It will open the NPM Script dialog box. Now choose `run` for the Command, and save the configuration.
 
-The same way you can debug your application in IntelliJ IDEA Ultimate, PhpStorm, PyCharm Pro, and RubyMine.
+Press `^D` on macOS or `F9` on Windows and Linux or click the green debug icon to start debugging in WebStorm.
+
+You can debug your application in IntelliJ IDEA Ultimate, PhpStorm, PyCharm Pro, and RubyMine in the same way.
 
 ## Formatting Code Automatically
 
