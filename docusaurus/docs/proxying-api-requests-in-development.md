@@ -101,7 +101,7 @@ module.exports = function (app) {
   app.use(
     '/api',
     createProxyMiddleware({
-      target: 'http://localhost:5000',
+      target: 'http://localhost:5000/api',
       changeOrigin: true,
     })
   );
@@ -113,3 +113,5 @@ module.exports = function (app) {
 > **Note:** This file only supports Node's JavaScript syntax. Be sure to only use supported language features (i.e. no support for Flow, ES Modules, etc).
 
 > **Note:** Passing the path to the proxy function allows you to use globbing and/or pattern matching on the path, which is more flexible than the express route matching.
+
+> **Note** When proxy is mounted on a path, this path should be provided in the target.
