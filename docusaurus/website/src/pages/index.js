@@ -99,7 +99,7 @@ function Home() {
                 className={styles.featureImage}
                 alt="Easy to get started in seconds"
                 src={
-                  'https://camo.githubusercontent.com/29765c4a32f03bd01d44edef1cd674225e3c906b/68747470733a2f2f63646e2e7261776769742e636f6d2f66616365626f6f6b2f6372656174652d72656163742d6170702f323762343261632f73637265656e636173742e737667'
+                  'https://cdn.jsdelivr.net/gh/facebook/create-react-app@27b42ac7efa018f2541153ab30d63180f5fa39e0/screencast.svg'
                 }
               />
             </div>
