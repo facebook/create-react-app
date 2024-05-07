@@ -416,7 +416,7 @@ function run(
       getPackageInfo(templateToInstall),
     ])
       .then(([packageInfo, templateInfo]) =>
-        checkIfOnline(useYarn).then(isOnline => ({
+        checkIfOnline(useYarn).then(isOnline => ({ 
           isOnline,
           packageInfo,
           templateInfo,
