@@ -367,8 +367,11 @@ function prepareProxy(proxy, appPublicFolder, servedPathname) {
         return (
           req.method !== 'GET' ||
           (mayProxy(pathname) &&
-            req.headers.accept &&
-            req.headers.accept.indexOf('text/html') === -1)
+            (!req.headers.accept ||
+              (req.headers.accept &&
+               req.headers.accept.indexOf('text/html') === -1)
+            )
+          )
         );
       },
       onProxyReq: proxyReq => {
