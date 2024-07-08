@@ -17,6 +17,6 @@ Alternatively you may use `yarn`:
 yarn add react-router-dom
 ```
 
-To try it, delete all the code in `src/App.js` and replace it with any of the examples on its website. The [Basic Example](https://reactrouter.com/docs/examples/basic) is a good place to get started. For more info on adding routes, check out [the React Router docs on adding routes](https://reactrouter.com/docs/getting-started/tutorial#add-some-routes).
+To try it, delete all the code in `src/App.js` and replace it with any of the examples on its website. The [Basic Example](https://github.com/remix-run/react-router/tree/dev/examples/basic) is a good place to get started. For more info on adding routes, check out [the React Router docs on adding routes](https://reactrouter.com/en/6.24.1/start/tutorial).
 
 Note that [you may need to configure your production server to support client-side routing](deployment.md#serving-apps-with-client-side-routing) before deploying your app.
