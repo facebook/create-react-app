@@ -1,0 +1,35 @@
+on:
+  workflow_call:
+    inputs:
+      testScript:
+        required: true
+        type: string
+
+name: E2E
+
+jobs:
+  test:
+    name: 'Test (${{ matrix.os }}, Node ${{ matrix.node }})'
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - 'ubuntu-latest'
+        node:
+          - '16'
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node }}
+          cache: 'npm'
+      - name: Install
+        run: npm ci --prefer-offline
+      - name: Initialize Global Git config
+        run: |
+          git config --global core.autocrlf false
+          git config --global user.name "Create React App"
+          git config --global user.email "cra@email.com"
+      - name: Run tests
+        run: ${{ inputs.testScript }}
