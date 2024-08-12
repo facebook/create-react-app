@@ -1,4 +1,4 @@
----
+---react-scripts@0.5.0
 id: adding-a-stylesheet
 title: Adding a Stylesheet
 sidebar_label: Adding Stylesheets
