@@ -16,6 +16,7 @@ import CodeBlock from '@theme/CodeBlock';
 import clsx from 'clsx';
 
 import styles from './styles.module.css';
+import getStarted from './getstart.png'
 
 const features = [
   {
@@ -41,43 +42,43 @@ function Home() {
 
   return (
     <Layout
-      permalink={'/'}
-      description={'Set up a modern web app by running one command.'}
+      permalink={ '/' }
+      description={ 'Set up a modern web app by running one command.' }
     >
-      <div className={clsx('hero hero--dark', styles.heroBanner)}>
+      <div className={ clsx('hero hero--dark', styles.heroBanner) }>
         <div className="container">
           <img
-            className={clsx(styles.heroBannerLogo, 'margin-vert--md')}
+            className={ clsx(styles.heroBannerLogo, 'margin-vert--md') }
             alt="Create React App logo"
-            src={useBaseUrl('img/logo.svg')}
+            src={ useBaseUrl('img/logo.svg') }
           />
-          <h1 className="hero__title">{siteConfig.title}</h1>
-          <p className="hero__subtitle">{siteConfig.tagline}</p>
-          <div className={styles.getStarted}>
+          <h1 className="hero__title">{ siteConfig.title }</h1>
+          <p className="hero__subtitle">{ siteConfig.tagline }</p>
+          <div className={ styles.getStarted }>
             <Link
               className="button button--outline button--primary button--lg"
-              to={useBaseUrl('docs/getting-started')}
+              to={ useBaseUrl('docs/getting-started') }
             >
               Get Started
             </Link>
           </div>
         </div>
       </div>
-      {features && features.length && (
-        <div className={styles.features}>
+      { features && features.length && (
+        <div className={ styles.features }>
           <div className="container">
             <div className="row">
-              {features.map(({ title, content }, idx) => (
-                <div key={idx} className={clsx('col col--4', styles.feature)}>
-                  <h2>{title}</h2>
-                  <p>{content}</p>
+              { features.map(({ title, content }, idx) => (
+                <div key={ idx } className={ clsx('col col--4', styles.feature) }>
+                  <h2>{ title }</h2>
+                  <p>{ content }</p>
                 </div>
-              ))}
+              )) }
             </div>
           </div>
         </div>
-      )}
-      <div className={styles.gettingStartedSection}>
+      ) }
+      <div className={ styles.gettingStartedSection }>
         <div className="container padding-vert--xl text--left">
           <div className="row">
             <div className="col col--4 col--offset-1">
@@ -96,11 +97,9 @@ function Home() {
             </div>
             <div className="col col--5 col--offset-1">
               <img
-                className={styles.featureImage}
+                className={ styles.featureImage }
                 alt="Easy to get started in seconds"
-                src={
-                  'https://camo.githubusercontent.com/29765c4a32f03bd01d44edef1cd674225e3c906b/68747470733a2f2f63646e2e7261776769742e636f6d2f66616365626f6f6b2f6372656174652d72656163742d6170702f323762343261632f73637265656e636173742e737667'
-                }
+                src={ getStarted }
               />
             </div>
           </div>
@@ -111,9 +110,9 @@ function Home() {
           <div className="row">
             <div className="col col--4 col--offset-1">
               <img
-                className={styles.featureImage}
+                className={ styles.featureImage }
                 alt="Easy to update"
-                src={useBaseUrl('img/update.png')}
+                src={ useBaseUrl('img/update.png') }
               />
             </div>
             <div className="col col--5 col--offset-1">
