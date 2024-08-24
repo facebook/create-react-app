@@ -11,7 +11,8 @@ Create React App works on macOS, Windows, and Linux.<br>
 If something doesn’t work, please [file an issue](https://github.com/facebook/create-react-app/issues/new).<br>
 If you have questions or need help, please ask in [GitHub Discussions](https://github.com/facebook/create-react-app/discussions).
 
-## Quick Overview
+## Quick Overview 
+## Nitin Kumar
 
 ```sh
 npx create-react-app my-app
