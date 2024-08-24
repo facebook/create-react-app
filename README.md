@@ -12,7 +12,7 @@ If something doesn’t work, please [file an issue](https://github.com/facebook/
 If you have questions or need help, please ask in [GitHub Discussions](https://github.com/facebook/create-react-app/discussions).
 
 ## Quick Overview 
-## Nitin Kumar
+## Nitin Kumar ##
 
 ```sh
 npx create-react-app my-app
