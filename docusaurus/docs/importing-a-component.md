@@ -12,7 +12,7 @@ For example:
 ## `Button.js`
 
 ```js
-import React, { Component } from 'react';
+import { Component } from 'react';
 
 class Button extends Component {
   render() {
@@ -26,7 +26,7 @@ export default Button; // Don’t forget to use export default!
 ## `DangerButton.js`
 
 ```js
-import React, { Component } from 'react';
+import { Component } from 'react';
 import Button from './Button'; // Import a component from another file
 
 class DangerButton extends Component {

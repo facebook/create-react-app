@@ -71,7 +71,6 @@ There is a broad spectrum of component testing techniques. They range from a “
 Different projects choose different testing tradeoffs based on how often components change, and how much logic they contain. If you haven’t decided on a testing strategy yet, we recommend that you start with creating basic smoke tests for your components:
 
 ```js
-import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 
@@ -112,7 +111,6 @@ import '@testing-library/jest-dom';
 Here's an example of using `react-testing-library` and `jest-dom` for testing that the `<App />` component renders "Learn React".
 
 ```js
-import React from 'react';
 import { render, screen } from '@testing-library/react';
 import App from './App';
 

@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import React from 'react';
+import { createRef } from 'react';
 import ReactDOM from 'react-dom';
 import SvgComponent, { SvgComponentWithRef } from './SvgComponent';
 
@@ -18,7 +18,7 @@ describe('svg component', () => {
 
   it('svg root element equals the passed ref', () => {
     const div = document.createElement('div');
-    const someRef = React.createRef();
+    const someRef = createRef();
     ReactDOM.render(<SvgComponentWithRef ref={someRef} />, div);
     const svgElement = div.getElementsByTagName('svg');
     expect(svgElement).toHaveLength(1);
