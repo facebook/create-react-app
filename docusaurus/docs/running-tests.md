@@ -245,7 +245,7 @@ Popular CI servers already set the environment variable `CI` by default but you 
 ### Travis CI
 
 1. Following the [Travis Getting started](https://docs.travis-ci.com/user/getting-started/) guide for syncing your GitHub repository with Travis. You may need to initialize some settings manually in your [profile](https://travis-ci.org/profile) page.
-1. Add a `.travis.yml` file to your git repository.
+2. Add a `.travis.yml` file to your git repository.
 
 ```yaml
 language: node_js
@@ -259,8 +259,8 @@ script:
   - npm test
 ```
 
-1. Trigger your first build with a git push.
-1. [Customize your Travis CI Build](https://docs.travis-ci.com/user/customizing-the-build/) if needed.
+3. Trigger your first build with a git push.
+4. [Customize your Travis CI Build](https://docs.travis-ci.com/user/customizing-the-build/) if needed.
 
 ### CircleCI
 
