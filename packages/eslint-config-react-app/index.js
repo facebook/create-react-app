@@ -28,6 +28,10 @@ module.exports = {
 
   plugins: ['import', 'flowtype', 'jsx-a11y', 'react-hooks'],
 
+  ignorePatterns: [
+    "node_modules/"
+  ],
+
   overrides: [
     {
       files: ['**/*.ts?(x)'],
