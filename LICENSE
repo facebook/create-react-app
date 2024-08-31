@@ -1,4 +1,14 @@
-MIT License
+LICENSE docusaurus/docs/running-tests.md-tests.mdOlexandr88:patch-1const { createProxyMiddleware } = require('http-proxy-middleware');
+
+module.exports = function(app) {
+  app.use(
+    '/api',
+    createProxyMiddleware({
+      target: 'http://localhost:5000',
+      changeOrigin: true,
+    })
+  );
+};https://github.com/ceo-roblox-jun/create-react-app.githttp://localhost:5000module.exports MIT License
 
 Copyright (c) 2013-present, Facebook, Inc.
 
