@@ -37,6 +37,9 @@ const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin'
 const getCacheIdentifier = require('react-dev-utils/getCacheIdentifier');
 // @remove-on-eject-end
 const createEnvironmentHash = require('./webpack/persistentCache/createEnvironmentHash');
+// @remove-on-eject-begin
+const nodeBuiltinFallbacks = require('./nodeBuiltInFallbacks');
+// @remove-on-eject-end
 
 // Source maps are resource heavy and can cause out of memory issue for large source files.
 const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false';
@@ -113,6 +116,11 @@ module.exports = function (webpackEnv) {
   const env = getClientEnvironment(paths.publicUrlOrPath.slice(0, -1));
 
   const shouldUseReactRefresh = env.raw.FAST_REFRESH;
+
+  // @remove-on-eject-begin
+  const nodeBuiltin = nodeBuiltinFallbacks();
+  // @remove-on-eject-end
+  
 
   // common function to get style loaders
   const getStyleLoaders = (cssOptions, preProcessor) => {
@@ -303,6 +311,13 @@ module.exports = function (webpackEnv) {
       ],
     },
     resolve: {
+      // @remove-on-eject-begin
+      // This adds support for vndr node builtins
+      fallback: {
+        ...nodeBuiltin.fallbacks,
+      },
+      // @remove-on-eject-end
+
       // This allows you to set a fallback for where webpack should look for modules.
       // We placed these paths second because we want `node_modules` to "win"
       // if there are any conflicts. This matches Node resolution mechanism.
@@ -343,12 +358,22 @@ module.exports = function (webpackEnv) {
           babelRuntimeEntry,
           babelRuntimeEntryHelpers,
           babelRuntimeRegenerator,
+          // @remove-on-eject-begin
+          ...nodeBuiltin.fallbackEntries,
+          // @remove-on-eject-end
         ]),
       ],
     },
     module: {
       strictExportPresence: true,
       rules: [
+        // https://stackoverflow.com/questions/69427025/programmatic-webpack-jest-esm-cant-resolve-module-without-js-file-exten
+        {
+          test: /\.m?js$/,
+          resolve: {
+            fullySpecified: false
+          },
+        },
         // Handle node_modules packages that contain sourcemaps
         shouldUseSourceMap && {
           enforce: 'pre',
@@ -604,6 +629,18 @@ module.exports = function (webpackEnv) {
       ].filter(Boolean),
     },
     plugins: [
+      // fix "process is not defined" error:
+      // (do "npm install process" before running the build)
+      // https://stackoverflow.com/questions/41359504/webpack-bundle-js-uncaught-referenceerror-process-is-not-defined
+      new webpack.ProvidePlugin({
+        process: 'process/browser',
+      }),
+      // Work around for Buffer is undefined:
+      // https://github.com/webpack/changelog-v5/issues/10
+      // https://stackoverflow.com/questions/68707553/uncaught-referenceerror-buffer-is-not-defined
+      new webpack.ProvidePlugin({
+        Buffer: ['buffer', 'Buffer'],
+      }),
       // Generates an `index.html` file with the <script> injected.
       new HtmlWebpackPlugin(
         Object.assign(
