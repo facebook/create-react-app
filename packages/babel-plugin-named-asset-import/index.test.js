@@ -8,7 +8,7 @@ pluginTester.default({
   pluginOptions: {
     loaderMap: {
       svg: {
-        ReactComponent: '@svgr/webpack?-svgo![path]',
+        ReactComponent: '[path]',
       },
     },
   },
@@ -28,24 +28,24 @@ pluginTester.default({
       output: 'import { Url as logo1 } from "logo";',
     },
     svgDefaultImport: {
-      code: 'import logo from "logo.svg";',
-      output: 'import logo from "logo.svg";',
+      code: 'import Logo from "logo.svg";',
+      output: 'import Logo from "logo.svg";',
     },
     svgNamedImport: {
       code: 'import { logo } from "logo.svg";',
       output: 'import { logo } from "logo.svg";',
     },
     svgReactComponentNamedImport: {
-      code: 'import { ReactComponent as logo } from "logo.svg";',
-      output:
-        'import { ReactComponent as logo } from "@svgr/webpack?-svgo!logo.svg";',
+      code: 'import { ReactComponent as Logo } from "logo.svg";',
+      output: 'import { ReactComponent as Logo } from "logo.svg";',
     },
     svgMultipleImport: {
-      code: 'import logo, { logoUrl , ReactComponent as Logo } from "logo.svg";',
+      code:
+        'import logoUrl from "logo.svg?url";\n' +
+        'import Logo from "logo.svg";',
       output:
-        'import logo from "logo.svg";\n' +
-        'import { logoUrl } from "logo.svg";\n' +
-        'import { ReactComponent as Logo } from "@svgr/webpack?-svgo!logo.svg";',
+        'import logoUrl from "logo.svg?url";\n' +
+        'import Logo from "logo.svg";',
     },
     defaultExport: {
       code: 'export default logo;',
@@ -81,18 +81,19 @@ pluginTester.default({
     },
     svgReactComponentNamedExport: {
       code: 'export { ReactComponent as Logo } from "logo.svg";',
-      output:
-        'export { ReactComponent as Logo } from "@svgr/webpack?-svgo!logo.svg";',
+      output: 'export { ReactComponent as Logo } from "logo.svg";',
     },
     svgReactComponentExport: {
       code: 'export { ReactComponent } from "logo.svg";',
-      output: 'export { ReactComponent } from "@svgr/webpack?-svgo!logo.svg";',
+      output: 'export { ReactComponent } from "logo.svg";',
     },
     svgMultipleExport: {
-      code: 'export { logoUrl , ReactComponent as Logo } from "logo.svg";',
+      code:
+        'export { logoUrl } from "logo.svg?url";\n' +
+        'export { ReactComponent as Logo } from "logo.svg";',
       output:
-        'export { logoUrl } from "logo.svg";\n' +
-        'export { ReactComponent as Logo } from "@svgr/webpack?-svgo!logo.svg";',
+        'export { logoUrl } from "logo.svg?url";\n' +
+        'export { ReactComponent as Logo } from "logo.svg";',
     },
   },
 });

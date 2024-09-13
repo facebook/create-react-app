@@ -47,21 +47,24 @@ An alternative way of handling static assets is described in the next section.
 
 > Note: this feature is available with `react-scripts@2.0.0` and higher, and `react@16.3.0` and higher.
 
-One way to add SVG files was described in the section above. You can also import SVGs directly as React components. You can use either of the two approaches. In your code it would look like this:
+One way to add SVG files was described in the section above, but you need to add `?url` as query string to import it as URL. You can also import SVGs directly as React components. You can use either of the two approaches. In your code it would look like this:
 
 ```js
-import { ReactComponent as Logo } from './logo.svg';
+import Logo from './logo.svg';
+import logo from './logo.svg?url';
 
 function App() {
   return (
     <div>
       {/* Logo is an actual React component */}
       <Logo />
+      {/* logo as url */}
+      <img src={logo} alt="logo" />
     </div>
   );
 }
 ```
 
-This is handy if you don't want to load SVG as a separate file. Don't forget the curly braces in the import! The `ReactComponent` import name is significant and tells Create React App that you want a React component that renders an SVG, rather than its filename.
+This is handy if you don't want to load SVG as a separate file.
 
 > **Tip:** The imported SVG React Component accepts a `title` prop along with other props that a `svg` element accepts. Use this prop to add an accessible title to your svg component.
