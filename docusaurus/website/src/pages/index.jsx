@@ -16,7 +16,6 @@ import CodeBlock from '@theme/CodeBlock';
 import clsx from 'clsx';
 
 import styles from './styles.module.css';
-import getStarted from './getstart.png'
 
 const features = [
   {
@@ -112,7 +111,7 @@ function Home() {
               <img
                 className={ styles.featureImage }
                 alt="Easy to update"
-                src={ useBaseUrl('img/update.png') }
+                src="https://cdn.rawgit.com/facebook/create-react-app/27b42ac/screencast.svg"
               />
             </div>
             <div className="col col--5 col--offset-1">
