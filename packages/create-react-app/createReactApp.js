@@ -330,68 +330,70 @@ function createApp(name, verbose, version, template, useYarn, usePnp) {
   );
 }
 
-function install(root, useYarn, usePnp, dependencies, verbose, isOnline) {
+
+async function install(root, useYarn, usePnp, dependencies, verbose, isOnline) {
+  // Validate inputs
+  if (!root || typeof root !== 'string') {
+    throw new Error('Invalid root directory provided.'); // Ensure root is a valid string
+  }
+  if (!Array.isArray(dependencies) || dependencies.length === 0) {
+    throw new Error('No dependencies provided for installation.'); // Check that dependencies is a non-empty array
+  }
+
   return new Promise((resolve, reject) => {
     let command;
-    let args;
+    let args = [];
+
+    // Determine package manager to use
     if (useYarn) {
-      command = 'yarnpkg';
-      args = ['add', '--exact'];
+      command = 'yarnpkg'; // Set command to Yarn
+      args = ['add', '--exact']; // Initialize Yarn command arguments
+
       if (!isOnline) {
-        args.push('--offline');
+        args.push('--offline'); // Use local cache if offline
+        console.log(chalk.yellow('You appear to be offline. Falling back to the local Yarn cache.'));
       }
       if (usePnp) {
-        args.push('--enable-pnp');
+        args.push('--enable-pnp'); // Enable PnP support
+        console.log(chalk.yellow('Using Plug’n’Play support with Yarn.'));
       }
-      [].push.apply(args, dependencies);
 
-      // Explicitly set cwd() to work around issues like
-      // https://github.com/facebook/create-react-app/issues/3326.
-      // Unfortunately we can only do this for Yarn because npm support for
-      // equivalent --prefix flag doesn't help with this issue.
-      // This is why for npm, we run checkThatNpmCanReadCwd() early instead.
-      args.push('--cwd');
-      args.push(root);
-
-      if (!isOnline) {
-        console.log(chalk.yellow('You appear to be offline.'));
-        console.log(chalk.yellow('Falling back to the local Yarn cache.'));
-        console.log();
-      }
+      // Add dependencies and specify the working directory
+      args.push(...dependencies, '--cwd', root);
     } else {
-      command = 'npm';
-      args = [
-        'install',
-        '--no-audit', // https://github.com/facebook/create-react-app/issues/11174
-        '--save',
-        '--save-exact',
-        '--loglevel',
-        'error',
-      ].concat(dependencies);
+      command = 'npm'; // Set command to npm
+      args = ['install', '--no-audit', '--save', '--save-exact', '--loglevel', 'error', ...dependencies]; // Initialize npm command arguments
 
       if (usePnp) {
-        console.log(chalk.yellow("NPM doesn't support PnP."));
-        console.log(chalk.yellow('Falling back to the regular installs.'));
-        console.log();
+        console.log(chalk.yellow("NPM doesn't support PnP. Falling back to regular installs.")); // Notify about PnP unavailability
       }
     }
 
+    // Verbose logging option
     if (verbose) {
-      args.push('--verbose');
+      args.push('--verbose'); // Add verbose flag to command
+      console.log(chalk.blue(`Running command: ${command} ${args.join(' ')}`)); // Log the command being executed
     }
 
-    const child = spawn(command, args, { stdio: 'inherit' });
-    child.on('close', code => {
+    // Start the package manager process
+    const child = spawn(command, args, { stdio: 'inherit', cwd: root });
+
+    // Error handling for process startup
+    child.on('error', (err) => {
+      reject(new Error(`Failed to start ${command}: ${err.message}`)); // Reject promise if process fails to start
+    });
+
+    // Handle process exit
+    child.on('close', (code) => {
       if (code !== 0) {
-        reject({
-          command: `${command} ${args.join(' ')}`,
-        });
-        return;
+        reject(new Error(`${command} exited with code ${code}.`)); // Reject promise if process exits with error code
+      } else {
+        resolve(); // Resolve promise on successful completion
       }
-      resolve();
     });
   });
 }
+
 
 function run(
   root,
