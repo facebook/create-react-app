@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`eval 1 1`] = `
-Array [
+[
   StackFrame {
     "_originalColumnNumber": null,
     "_originalFileName": null,
@@ -42,7 +42,7 @@ Array [
 `;
 
 exports[`eval 2 1`] = `
-Array [
+[
   StackFrame {
     "_originalColumnNumber": null,
     "_originalFileName": null,
@@ -71,7 +71,7 @@ Array [
 `;
 
 exports[`stack with eval 1`] = `
-Array [
+[
   StackFrame {
     "_originalColumnNumber": null,
     "_originalFileName": null,
@@ -124,7 +124,7 @@ Array [
 `;
 
 exports[`v14 to v29 1`] = `
-Array [
+[
   StackFrame {
     "_originalColumnNumber": null,
     "_originalFileName": null,
@@ -177,7 +177,7 @@ Array [
 `;
 
 exports[`v30+ 1`] = `
-Array [
+[
   StackFrame {
     "_originalColumnNumber": null,
     "_originalFileName": null,

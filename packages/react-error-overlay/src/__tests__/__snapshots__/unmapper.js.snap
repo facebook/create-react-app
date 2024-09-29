@@ -1,13 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`default context & unfound source 1`] = `
-Array [
+[
   StackFrame {
     "_originalColumnNumber": null,
     "_originalFileName": "B.js",
     "_originalFunctionName": "div",
     "_originalLineNumber": 8,
-    "_originalScriptCode": Array [
+    "_originalScriptCode": [
       ScriptLine {
         "content": "    return (",
         "highlight": false,
@@ -44,7 +44,7 @@ Array [
         "lineNumber": 11,
       },
     ],
-    "_scriptCode": Array [
+    "_scriptCode": [
       ScriptLine {
         "content": "        },",
         "highlight": false,

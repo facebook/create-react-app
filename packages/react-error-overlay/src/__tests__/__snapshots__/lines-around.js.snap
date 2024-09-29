@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`should return lines around from a string 1`] = `
-Array [
+[
   ScriptLine {
     "content": "two",
     "highlight": false,
@@ -31,7 +31,7 @@ Array [
 `;
 
 exports[`should return lines around from an array 1`] = `
-Array [
+[
   ScriptLine {
     "content": "two",
     "highlight": false,
