@@ -54,6 +54,37 @@ const babelRuntimeRegenerator = require.resolve('@babel/runtime/regenerator', {
   paths: [babelRuntimeEntry],
 });
 
+// dynamic/optional require's
+const requireJsxRuntime = () => require.resolve('react/jsx-runtime');
+const requireStyleLoader = () => require.resolve('style-loader');
+const requireCssLoader = () => require.resolve('css-loader');
+const requirePostCssLoader = () => require.resolve('postcss-loader');
+const requireResolveUrlLoader = () => require.resolve('resolve-url-loader');
+const requireSourceMapLoader = () => require.resolve('source-map-loader');
+const requireSvgrLoader = () => require.resolve('@svgr/webpack');
+const requireFileLoader = () => require.resolve('file-loader');
+const requireBabelLoader = () => require.resolve('babel-loader');
+const requireBabelPreset = () => require.resolve('babel-preset-react-app');
+const requireBabelPresetOverrides = () =>
+  require.resolve('babel-preset-react-app/webpack-overrides');
+const requireBabelPresetDeps = () =>
+  require.resolve('babel-preset-react-app/dependencies');
+const requireReactRefreshBabel = () => require.resolve('react-refresh/babel');
+const requireEsLintFormatter = () =>
+  require.resolve('react-dev-utils/eslintFormatter');
+const requireEsLint = () => require.resolve('eslint');
+const requireEsLintConfigBase = () =>
+  require.resolve('eslint-config-react-app/base');
+const requirePostCssFlexbugs = () => require.resolve('postcss-flexbugs-fixes');
+const requirePostCssPresetEnv = () => require.resolve('postcss-preset-env');
+const requirePostCssNormalize = () => require.resolve('postcss-normalize');
+const requireTailwind = () => require.resolve('tailwindcss');
+const requireBrowsersList = () => 'browserslist';
+const requireSourceMap = () => 'source-map';
+const requireCheapSourceMap = () => 'cheap-module-source-map';
+
+// TODO: 'babel-plugin-named-asset-import', 'babel-preset-react-app', 'react-dev-utils', 'react-scripts'
+
 // Some apps do not need the benefits of saving a web request, so not inlining the chunk
 // makes for a smoother build process.
 const shouldInlineRuntimeChunk = process.env.INLINE_RUNTIME_CHUNK !== 'false';
@@ -88,7 +119,7 @@ const hasJsxRuntime = (() => {
   }
 
   try {
-    require.resolve('react/jsx-runtime');
+    requireJsxRuntime();
     return true;
   } catch (e) {
     return false;
@@ -117,7 +148,7 @@ module.exports = function (webpackEnv) {
   // common function to get style loaders
   const getStyleLoaders = (cssOptions, preProcessor) => {
     const loaders = [
-      isEnvDevelopment && require.resolve('style-loader'),
+      isEnvDevelopment && requireStyleLoader(),
       isEnvProduction && {
         loader: MiniCssExtractPlugin.loader,
         // css is located in `static/css`, use '../../' to locate index.html folder
@@ -127,14 +158,14 @@ module.exports = function (webpackEnv) {
           : {},
       },
       {
-        loader: require.resolve('css-loader'),
+        loader: requireCssLoader(),
         options: cssOptions,
       },
       {
         // Options for PostCSS as we reference these options twice
         // Adds vendor prefixing based on your specified browser support in
         // package.json
-        loader: require.resolve('postcss-loader'),
+        loader: requirePostCssLoader(),
         options: {
           postcssOptions: {
             // Necessary for external CSS imports to work
@@ -143,9 +174,9 @@ module.exports = function (webpackEnv) {
             config: false,
             plugins: !useTailwind
               ? [
-                  'postcss-flexbugs-fixes',
+                  requirePostCssFlexbugs,
                   [
-                    'postcss-preset-env',
+                    requirePostCssPresetEnv(),
                     {
                       autoprefixer: {
                         flexbox: 'no-2009',
@@ -156,13 +187,13 @@ module.exports = function (webpackEnv) {
                   // Adds PostCSS Normalize as the reset css with default options,
                   // so that it honors browserslist config in package.json
                   // which in turn let's users customize the target behavior as per their needs.
-                  'postcss-normalize',
+                  requirePostCssNormalize(),
                 ]
               : [
-                  'tailwindcss',
-                  'postcss-flexbugs-fixes',
+                  requireTailwind(),
+                  requirePostCssFlexbugs(),
                   [
-                    'postcss-preset-env',
+                    requirePostCssPresetEnv(),
                     {
                       autoprefixer: {
                         flexbox: 'no-2009',
@@ -179,7 +210,7 @@ module.exports = function (webpackEnv) {
     if (preProcessor) {
       loaders.push(
         {
-          loader: require.resolve('resolve-url-loader'),
+          loader: requireResolveUrlLoader(),
           options: {
             sourceMap: isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
             root: paths.appSrc,
@@ -197,7 +228,7 @@ module.exports = function (webpackEnv) {
   };
 
   return {
-    target: ['browserslist'],
+    target: [requireBrowsersList()],
     // Webpack noise constrained to errors and warnings
     stats: 'errors-warnings',
     mode: isEnvProduction ? 'production' : isEnvDevelopment && 'development',
@@ -205,9 +236,9 @@ module.exports = function (webpackEnv) {
     bail: isEnvProduction,
     devtool: isEnvProduction
       ? shouldUseSourceMap
-        ? 'source-map'
+        ? requireSourceMap()
         : false
-      : isEnvDevelopment && 'cheap-module-source-map',
+      : isEnvDevelopment && requireCheapSourceMap(),
     // These are the "entry points" to our application.
     // This means they will be the "root" imports that are included in JS bundle.
     entry: paths.appIndexJs,
@@ -354,7 +385,7 @@ module.exports = function (webpackEnv) {
           enforce: 'pre',
           exclude: /@babel(?:\/|\\{1,2})runtime/,
           test: /\.(js|mjs|jsx|ts|tsx|css)$/,
-          loader: require.resolve('source-map-loader'),
+          loader: requireSourceMapLoader(),
         },
         {
           // "oneOf" will traverse all following loaders until one will
@@ -389,7 +420,7 @@ module.exports = function (webpackEnv) {
               test: /\.svg$/,
               use: [
                 {
-                  loader: require.resolve('@svgr/webpack'),
+                  loader: requireSvgrLoader(),
                   options: {
                     prettier: false,
                     svgo: false,
@@ -401,7 +432,7 @@ module.exports = function (webpackEnv) {
                   },
                 },
                 {
-                  loader: require.resolve('file-loader'),
+                  loader: requireFileLoader(),
                   options: {
                     name: 'static/media/[name].[hash].[ext]',
                   },
@@ -416,14 +447,12 @@ module.exports = function (webpackEnv) {
             {
               test: /\.(js|mjs|jsx|ts|tsx)$/,
               include: paths.appSrc,
-              loader: require.resolve('babel-loader'),
+              loader: requireBabelLoader(),
               options: {
-                customize: require.resolve(
-                  'babel-preset-react-app/webpack-overrides'
-                ),
+                customize: requireBabelPresetOverrides(),
                 presets: [
                   [
-                    require.resolve('babel-preset-react-app'),
+                    requireBabelPreset(),
                     {
                       runtime: hasJsxRuntime ? 'automatic' : 'classic',
                     },
@@ -452,7 +481,7 @@ module.exports = function (webpackEnv) {
                 plugins: [
                   isEnvDevelopment &&
                     shouldUseReactRefresh &&
-                    require.resolve('react-refresh/babel'),
+                    requireReactRefreshBabel(),
                 ].filter(Boolean),
                 // This is a feature of `babel-loader` for webpack (not Babel itself).
                 // It enables caching results in ./node_modules/.cache/babel-loader/
@@ -468,17 +497,12 @@ module.exports = function (webpackEnv) {
             {
               test: /\.(js|mjs)$/,
               exclude: /@babel(?:\/|\\{1,2})runtime/,
-              loader: require.resolve('babel-loader'),
+              loader: requireBabelLoader(),
               options: {
                 babelrc: false,
                 configFile: false,
                 compact: false,
-                presets: [
-                  [
-                    require.resolve('babel-preset-react-app/dependencies'),
-                    { helpers: true },
-                  ],
-                ],
+                presets: [[requireBabelPresetDeps(), { helpers: true }]],
                 cacheDirectory: true,
                 // See #6846 for context on why cacheCompression is disabled
                 cacheCompression: false,
@@ -767,8 +791,8 @@ module.exports = function (webpackEnv) {
         new ESLintPlugin({
           // Plugin options
           extensions: ['js', 'mjs', 'jsx', 'ts', 'tsx'],
-          formatter: require.resolve('react-dev-utils/eslintFormatter'),
-          eslintPath: require.resolve('eslint'),
+          formatter: requireEsLintFormatter(),
+          eslintPath: requireEsLint(),
           failOnError: !(isEnvDevelopment && emitErrorsAsWarnings),
           context: paths.appSrc,
           cache: true,
@@ -780,7 +804,7 @@ module.exports = function (webpackEnv) {
           cwd: paths.appPath,
           resolvePluginsRelativeTo: __dirname,
           baseConfig: {
-            extends: [require.resolve('eslint-config-react-app/base')],
+            extends: [requireEsLintConfigBase()],
             rules: {
               ...(!hasJsxRuntime && {
                 'react/react-in-jsx-scope': 'error',
