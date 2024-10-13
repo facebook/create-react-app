@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/your-username/create-react-app.git' // Replace with your repository URL
+                git 'https://github.com/randihaboc/create-react-app.git' // Replace with your repository URL
             }
         }
 
