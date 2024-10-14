@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/yuancarloss/create-react-app.git' // Replace with your repository URL
+                git branch: 'main', url: 'https://github.com/yuancarlosss/create-react-app' // Replace with your repository URL
             }
         }
 
