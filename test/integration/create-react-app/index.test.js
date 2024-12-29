@@ -155,6 +155,7 @@ describe('create-react-app', () => {
 
     // Assert for exit code
     expect(exitCode).toBe(0);
+    expect(exitCode).toBe(0);
 
     // Assert for the generated files
     expectAllFiles(files, [...generatedFiles, 'tsconfig.json']);
