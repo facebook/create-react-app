@@ -1,7 +1,7 @@
 {
   "package": {
     "dependencies": {
-      "@testing-library/jest-dom": "^5.14.1",
+      "@testing-library/jest-dom": "^6.6.3",
       "@testing-library/react": "16.1.0",
       "@testing-library/dom": "^10.4.0",
       "@testing-library/user-event": "^13.2.1",
