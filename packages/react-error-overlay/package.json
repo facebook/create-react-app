@@ -9,8 +9,7 @@
     "test": "cross-env NODE_ENV=test jest",
     "build": "cross-env NODE_ENV=development node build.js",
     "build:prod": "cross-env NODE_ENV=production node build.js",
-    "flow": "flow",
-    "prepare": "npm run build:prod"
+    "flow": "flow"
   },
   "repository": {
     "type": "git",

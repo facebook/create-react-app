@@ -10,7 +10,7 @@
     "create-react-app": "node tasks/cra.js",
     "e2e": "tasks/e2e-simple.sh",
     "e2e:docker": "tasks/local-test.sh",
-    "postinstall": "npm run build:prod -w react-error-overlay",
+    "postinstall": "npm run build:prod -w react-error-overlay || exit 0",
     "publish": "tasks/publish.sh",
     "start": "cd packages/react-scripts && node bin/react-scripts.js start",
     "screencast": "node ./tasks/screencast.js",
