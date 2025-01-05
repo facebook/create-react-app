@@ -385,8 +385,12 @@ module.exports = function (webpackEnv) {
                 },
               },
             },
+            // Restrict to JavaScript/TypeScript files
             {
               test: /\.svg$/,
+              issuer: {
+                and: [/\.(ts|tsx|js|jsx)$/],
+              },
               use: [
                 {
                   loader: require.resolve('@svgr/webpack'),
@@ -400,15 +404,17 @@ module.exports = function (webpackEnv) {
                     ref: true,
                   },
                 },
-                {
-                  loader: require.resolve('file-loader'),
-                  options: {
-                    name: 'static/media/[name].[hash].[ext]',
-                  },
-                },
               ],
+            },
+            // Exclude JavaScript/TypeScript files
+            {
+              test: /\.svg$/,
               issuer: {
-                and: [/\.(ts|tsx|js|jsx|md|mdx)$/],
+                not: [/\.(ts|tsx|js|jsx)$/],
+              },
+              type: 'asset/resource',
+              generator: {
+                filename: 'static/media/[name].[hash][ext]',
               },
             },
             // Process application JS with Babel.
