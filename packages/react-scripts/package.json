@@ -64,7 +64,7 @@
     "react-dev-utils": "^12.0.1",
     "react-refresh": "^0.11.0",
     "resolve": "^1.20.0",
-    "resolve-url-loader": "^4.0.0",
+    "resolve-url-loader": "^5.0.0",
     "sass-loader": "^12.3.0",
     "semver": "^7.3.5",
     "source-map-loader": "^3.0.0",
