@@ -54,21 +54,19 @@ function isUsingYarn() {
 }
 
 function hasGivenWarning() {
-  const ourPackageInNodeModules = path.join('node_modules', packageJson.name);
-  const warningFilePath = path.join(
-    ourPackageInNodeModules,
+  const localWarningFilePath = path.join(
+    __dirname,
     'given-deprecation-warning'
   );
-  return fs.existsSync(warningFilePath);
+  return fs.existsSync(localWarningFilePath);
 }
 
 function writeWarningFile() {
-  const ourPackageInNodeModules = path.join('node_modules', packageJson.name);
-  const warningFilePath = path.join(
-    ourPackageInNodeModules,
+  const localWarningFilePath = path.join(
+    __dirname,
     'given-deprecation-warning'
   );
-  fs.writeFileSync(warningFilePath, 'true');
+  fs.writeFileSync(localWarningFilePath, 'true');
 }
 
 let projectName;
