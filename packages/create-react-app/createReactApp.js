@@ -53,9 +53,43 @@ function isUsingYarn() {
   return (process.env.npm_config_user_agent || '').indexOf('yarn') === 0;
 }
 
+function hasGivenWarning() {
+  const ourPackageInNodeModules = path.join('node_modules', packageJson.name);
+  const warningFilePath = path.join(
+    ourPackageInNodeModules,
+    'given-deprecation-warning'
+  );
+  return fs.existsSync(warningFilePath);
+}
+
+function writeWarningFile() {
+  const ourPackageInNodeModules = path.join('node_modules', packageJson.name);
+  const warningFilePath = path.join(
+    ourPackageInNodeModules,
+    'given-deprecation-warning'
+  );
+  fs.writeFileSync(warningFilePath, 'true');
+}
+
 let projectName;
 
 function init() {
+  if (!hasGivenWarning()) {
+    console.log(chalk.yellow.bold('create-react-app is deprecated.'));
+    console.log('');
+    console.log(
+      'You can find a list of up-to-date React frameworks on react.dev'
+    );
+    console.log(
+      chalk.underline('https://react.dev/learn/start-a-new-react-project')
+    );
+    console.log('');
+    console.log(
+      chalk.grey('This error message will only be shown once per install.')
+    );
+    writeWarningFile();
+  }
+
   const program = new commander.Command(packageJson.name)
     .version(packageJson.version)
     .arguments('<project-directory>')
