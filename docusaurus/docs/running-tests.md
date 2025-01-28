@@ -72,12 +72,12 @@ Different projects choose different testing tradeoffs based on how often compone
 
 ```js
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOMClient from 'react-dom/client';
 import App from './App';
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
-  ReactDOM.render(<App />, div);
+  ReactDOMClient.createRoot(div).render(<App />);
 });
 ```
 

@@ -6,14 +6,14 @@
  */
 
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOMClient from 'react-dom/client';
 import NodePath from './BaseUrl';
 
 describe('BASE_URL', () => {
   it('renders without crashing', () => {
     const div = document.createElement('div');
     return new Promise(resolve => {
-      ReactDOM.render(<NodePath onReady={resolve} />, div);
+      ReactDOMClient.createRoot(div).render(<NodePath onReady={resolve} />);
     });
   });
 });

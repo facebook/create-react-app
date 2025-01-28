@@ -6,12 +6,12 @@
  */
 
 import React from 'react';
-import ReactDOM from 'react-dom';
 import CssModulesInclusion from './CssModulesInclusion';
+import ReactDOMClient from 'react-dom/client';
 
 describe('css modules inclusion', () => {
   it('renders without crashing', () => {
     const div = document.createElement('div');
-    ReactDOM.render(<CssModulesInclusion />, div);
+    ReactDOMClient.createRoot(div).render(<CssModulesInclusion />);
   });
 });

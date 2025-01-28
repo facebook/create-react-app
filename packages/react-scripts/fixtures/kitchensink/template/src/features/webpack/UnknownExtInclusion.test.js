@@ -6,12 +6,12 @@
  */
 
 import React from 'react';
-import ReactDOM from 'react-dom';
 import UnknownExtInclusion from './UnknownExtInclusion';
+import ReactDOMClient from 'react-dom/client';
 
 describe('unknown ext inclusion', () => {
   it('renders without crashing', () => {
     const div = document.createElement('div');
-    ReactDOM.render(<UnknownExtInclusion />, div);
+    ReactDOMClient.createRoot(div).render(<UnknownExtInclusion />);
   });
 });

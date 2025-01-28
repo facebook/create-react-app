@@ -6,12 +6,12 @@
  */
 
 import React from 'react';
-import ReactDOM from 'react-dom';
 import NoExtInclusion from './NoExtInclusion';
+import ReactDOMClient from 'react-dom/client';
 
 describe('no ext inclusion', () => {
   it('renders without crashing', () => {
     const div = document.createElement('div');
-    ReactDOM.render(<NoExtInclusion />, div);
+    ReactDOMClient.createRoot(div).render(<NoExtInclusion />);
   });
 });

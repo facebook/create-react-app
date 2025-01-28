@@ -6,12 +6,12 @@
  */
 
 import React from 'react';
-import ReactDOM from 'react-dom';
 import PublicUrl from './PublicUrl';
+import ReactDOMClient from 'react-dom/client';
 
 describe('PUBLIC_URL', () => {
   it('renders without crashing', () => {
     const div = document.createElement('div');
-    ReactDOM.render(<PublicUrl />, div);
+    ReactDOMClient.createRoot(div).render(<PublicUrl />);
   });
 });

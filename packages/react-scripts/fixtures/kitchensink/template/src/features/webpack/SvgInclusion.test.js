@@ -6,12 +6,12 @@
  */
 
 import React from 'react';
-import ReactDOM from 'react-dom';
 import SvgInclusion from './SvgInclusion';
+import ReactDOMClient from 'react-dom/client';
 
 describe('svg inclusion', () => {
   it('renders without crashing', () => {
     const div = document.createElement('div');
-    ReactDOM.render(<SvgInclusion />, div);
+    ReactDOMClient.createRoot(div).render(<SvgInclusion />);
   });
 });

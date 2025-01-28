@@ -6,12 +6,12 @@
  */
 
 import React from 'react';
-import ReactDOM from 'react-dom';
 import ScssInclusion from './ScssInclusion';
+import ReactDOMClient from 'react-dom/client';
 
 describe('scss inclusion', () => {
   it('renders without crashing', () => {
     const div = document.createElement('div');
-    ReactDOM.render(<ScssInclusion />, div);
+    ReactDOMClient.createRoot(div).render(<ScssInclusion />);
   });
 });
