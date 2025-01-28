@@ -8,10 +8,13 @@
 import React from 'react';
 import ScssInclusion from './ScssInclusion';
 import ReactDOMClient from 'react-dom/client';
+import { flushSync } from 'react-dom';
 
 describe('scss inclusion', () => {
   it('renders without crashing', () => {
     const div = document.createElement('div');
-    ReactDOMClient.createRoot(div).render(<ScssInclusion />);
+    flushSync(() => {
+      ReactDOMClient.createRoot(div).render(<ScssInclusion />);
+    });
   });
 });

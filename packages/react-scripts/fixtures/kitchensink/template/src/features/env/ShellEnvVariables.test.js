@@ -8,10 +8,13 @@
 import React from 'react';
 import ShellEnvVariables from './ShellEnvVariables';
 import ReactDOMClient from 'react-dom/client';
+import { flushSync } from 'react-dom';
 
 describe('shell env variables', () => {
   it('renders without crashing', () => {
     const div = document.createElement('div');
-    ReactDOMClient.createRoot(div).render(<ShellEnvVariables />);
+    flushSync(() => {
+      ReactDOMClient.createRoot(div).render(<ShellEnvVariables />);
+    });
   });
 });

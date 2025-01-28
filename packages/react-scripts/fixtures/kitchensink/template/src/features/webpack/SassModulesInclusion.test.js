@@ -8,10 +8,13 @@
 import React from 'react';
 import SassModulesInclusion from './SassModulesInclusion';
 import ReactDOMClient from 'react-dom/client';
+import { flushSync } from 'react-dom';
 
 describe('sass modules inclusion', () => {
   it('renders without crashing', () => {
     const div = document.createElement('div');
-    ReactDOMClient.createRoot(div).render(<SassModulesInclusion />);
+    flushSync(() => {
+      ReactDOMClient.createRoot(div).render(<SassModulesInclusion />);
+    });
   });
 });

@@ -9,6 +9,7 @@ import React from 'react';
 import ReactDOMClient from 'react-dom/client';
 import { test, version } from 'test-integrity';
 import LinkedModules from './LinkedModules';
+import { flushSync } from 'react-dom';
 
 describe('linked modules', () => {
   it('has integrity', () => {
@@ -18,6 +19,8 @@ describe('linked modules', () => {
 
   it('renders without crashing', () => {
     const div = document.createElement('div');
-    ReactDOMClient.createRoot(div).render(<LinkedModules />);
+    flushSync(() => {
+      ReactDOMClient.createRoot(div).render(<LinkedModules />);
+    });
   });
 });

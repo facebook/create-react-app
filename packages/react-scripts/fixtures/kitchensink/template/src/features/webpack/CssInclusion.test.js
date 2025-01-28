@@ -8,10 +8,13 @@
 import React from 'react';
 import CssInclusion from './CssInclusion';
 import ReactDOMClient from 'react-dom/client';
+import { flushSync } from 'react-dom';
 
 describe('css inclusion', () => {
   it('renders without crashing', () => {
     const div = document.createElement('div');
-    ReactDOMClient.createRoot(div).render(<CssInclusion />);
+    flushSync(() => {
+      ReactDOMClient.createRoot(div).render(<CssInclusion />);
+    });
   });
 });

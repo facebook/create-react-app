@@ -8,10 +8,13 @@
 import React from 'react';
 import NoExtInclusion from './NoExtInclusion';
 import ReactDOMClient from 'react-dom/client';
+import { flushSync } from 'react-dom';
 
 describe('no ext inclusion', () => {
   it('renders without crashing', () => {
     const div = document.createElement('div');
-    ReactDOMClient.createRoot(div).render(<NoExtInclusion />);
+    flushSync(() => {
+      ReactDOMClient.createRoot(div).render(<NoExtInclusion />);
+    });
   });
 });

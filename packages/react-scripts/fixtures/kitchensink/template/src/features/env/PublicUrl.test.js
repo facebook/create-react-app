@@ -8,10 +8,13 @@
 import React from 'react';
 import PublicUrl from './PublicUrl';
 import ReactDOMClient from 'react-dom/client';
+import { flushSync } from 'react-dom';
 
 describe('PUBLIC_URL', () => {
   it('renders without crashing', () => {
     const div = document.createElement('div');
-    ReactDOMClient.createRoot(div).render(<PublicUrl />);
+    flushSync(() => {
+      ReactDOMClient.createRoot(div).render(<PublicUrl />);
+    });
   });
 });
