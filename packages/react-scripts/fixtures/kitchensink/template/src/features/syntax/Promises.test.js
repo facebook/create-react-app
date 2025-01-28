@@ -6,14 +6,14 @@
  */
 
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOMClient from 'react-dom/client';
 
 describe('promises', () => {
   it('renders without crashing', () => {
     const div = document.createElement('div');
     return import('./Promises').then(({ default: Promises }) => {
       return new Promise(resolve => {
-        ReactDOM.render(<Promises onReady={resolve} />, div);
+        ReactDOMClient.createRoot(div).render(<Promises onReady={resolve} />);
       });
     });
   });

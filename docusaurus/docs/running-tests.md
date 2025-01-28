@@ -72,12 +72,12 @@ Different projects choose different testing tradeoffs based on how often compone
 
 ```js
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOMClient from 'react-dom/client';
 import App from './App';
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
-  ReactDOM.render(<App />, div);
+  ReactDOMClient.createRoot(div).render(<App />);
 });
 ```
 
@@ -92,13 +92,13 @@ If you’d like to test components in isolation from the child components they r
 To install `react-testing-library` and `jest-dom`, you can run:
 
 ```sh
-npm install --save @testing-library/react @testing-library/jest-dom
+npm install --save @testing-library/react @testing-library/dom @testing-library/jest-dom
 ```
 
 Alternatively you may use `yarn`:
 
 ```sh
-yarn add @testing-library/react @testing-library/jest-dom
+yarn add @testing-library/react @testing-library/dom @testing-library/jest-dom
 ```
 
 If you want to avoid boilerplate in your test files, you can create a [`src/setupTests.js`](#initializing-test-environment) file:

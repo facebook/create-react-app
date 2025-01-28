@@ -6,12 +6,15 @@
  */
 
 import React from 'react';
-import ReactDOM from 'react-dom';
 import JsonInclusion from './JsonInclusion';
+import ReactDOMClient from 'react-dom/client';
+import { flushSync } from 'react-dom';
 
 describe('JSON inclusion', () => {
   it('renders without crashing', () => {
     const div = document.createElement('div');
-    ReactDOM.render(<JsonInclusion />, div);
+    flushSync(() => {
+      ReactDOMClient.createRoot(div).render(<JsonInclusion />);
+    });
   });
 });
