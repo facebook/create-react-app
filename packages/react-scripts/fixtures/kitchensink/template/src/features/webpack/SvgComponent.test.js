@@ -8,21 +8,21 @@
 import * as React from 'react';
 import SvgComponent, { SvgComponentWithRef } from './SvgComponent';
 import ReactDOMClient from 'react-dom/client';
-
-global.IS_REACT_ACT_ENVIRONMENT = true;
+import { flushSync } from 'react-dom';
 
 describe('svg component', () => {
-  it('renders without crashing', () => {
+  it('renders without crashing', async () => {
     const div = document.createElement('div');
-    ReactDOMClient.createRoot(div).render(<SvgComponent />);
+    flushSync(() => {
+      ReactDOMClient.createRoot(div).render(<SvgComponent />);
+    });
     expect(div.textContent).toBe('logo.svg');
   });
 
   it('svg root element equals the passed ref', async () => {
     const div = document.createElement('div');
     const someRef = React.createRef();
-    // eslint-disable-next-line testing-library/no-unnecessary-act
-    await React.act(async () => {
+    flushSync(() => {
       ReactDOMClient.createRoot(div).render(
         <SvgComponentWithRef ref={someRef} />
       );
