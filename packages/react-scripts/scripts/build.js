@@ -173,8 +173,12 @@ function build(previousFileSizes) {
       if (messages.errors.length) {
         // Only keep the first error. Others are often indicative
         // of the same problem, but confuse the reader with noise.
-        if (messages.errors.length > 1) {
-          messages.errors.length = 1;
+        const re = /\S+:\d+:\d+/;  // check if error message has filename with line number, to not print errors with no filename or line number
+        for(let i = 0; i < messages.errors.length; i++) {
+          if(re.test(messages.errors[i])) {
+            messages.errors.length = i+1; 
+            break;
+          }
         }
         return reject(new Error(messages.errors.join('\n\n')));
       }
