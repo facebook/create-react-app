@@ -56,5 +56,10 @@
     "*.{js,json,yml,yaml,css,scss,ts,tsx,md}": [
       "prettier --write"
     ]
+  },
+  "overrides": {
+    "ws": "^8.18.0",
+    "nth-check": "^2.0.1",
+    "serialize-javascript": "^6.0.2"
   }
 }
