@@ -38,8 +38,7 @@ const siteConfig = {
     announcementBar: {
       id: 'deprecated',
       content:
-        'Create React App is deprecated. <a target="_blank" rel="noopener noreferrer" \
-        href="https://github.com/facebook/create-react-app/discussions/TODO">Read more here</a>.',
+        'Create React App is deprecated. <a target="_blank" rel="noopener noreferrer" href="https://react.dev/link/cra">Read more here</a>.',
       backgroundColor: '#20232a',
       textColor: '#fff',
       isCloseable: false,
