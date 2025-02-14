@@ -79,7 +79,7 @@ function init() {
       'You can find a list of up-to-date React frameworks on react.dev'
     );
     console.log(
-      chalk.underline('https://react.dev/learn/start-a-new-react-project')
+      'For more info see:' + chalk.underline('https://react.dev/link/cra')
     );
     console.log('');
     console.log(
