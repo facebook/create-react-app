@@ -13,18 +13,33 @@ function isLikelyASyntaxError(message) {
   return message.indexOf(friendlySyntaxErrorLabel) !== -1;
 }
 
+function cleanTerminalColors(input) {
+  // Regular expression to match ANSI escape codes
+  const ansiRegex = /\x1B\[[0-9;]*[a-zA-Z]/g;
+  // Remove ANSI escape codes from the input string
+  return input.replace(ansiRegex, '');
+}
+
 // Cleans up webpack error messages.
 function formatMessage(message) {
   let lines = [];
 
   if (typeof message === 'string') {
-    lines = message.split('\n');
+    lines = cleanTerminalColors(message).split('\n');
   } else if ('message' in message) {
-    lines = message['message'].split('\n');
+    lines = cleanTerminalColors(message['message']).split('\n');
+    // ensure message contains filename
+    if ('file' in message && !message['message'].includes(message.file)) {
+      lines.unshift("While building top file: " + message.file);
+    }  
   } else if (Array.isArray(message)) {
     message.forEach(message => {
       if ('message' in message) {
-        lines = message['message'].split('\n');
+        lines = cleanTerminalColors(message['message']).split('\n');
+        // ensure message contains filename
+        if ('file' in message && !message['message'].includes(message.file)) {
+          lines.unshift("While building top file: " + message.file);
+        }  
       }
     });
   }
