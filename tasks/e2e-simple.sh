@@ -204,6 +204,9 @@ function verify_module_scope {
 # Enter the app directory
 cd test-app
 
+# Test linter
+npx react-scripts lint
+
 # Test the build
 npm run build
 # Check for expected output
@@ -236,6 +239,9 @@ echo yes | npm run eject
 
 # Test ejected files were staged
 test -n "$(git diff --staged --name-only)"
+
+# Test linter
+node scripts/lint.js
 
 # Test the build
 npm run build
