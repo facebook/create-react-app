@@ -16,7 +16,12 @@ module.exports = {
       const pascalCaseFilename = camelcase(path.parse(filename).name, {
         pascalCase: true,
       });
-      const componentName = `Svg${pascalCaseFilename}`;
+      // Convert invalid character to ASCII number
+      const pascalCaseValidFilename = pascalCaseFilename
+        .split('')
+        .map(char => (/[a-zA-Z0-9_]/.test(char) ? char : char.codePointAt(0)))
+        .join('');
+      const componentName = `Svg${pascalCaseValidFilename}`;
       return `const React = require('react');
       module.exports = {
         __esModule: true,
