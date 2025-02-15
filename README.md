@@ -10,7 +10,6 @@
 
 <img alt="Logo" align="right" src="https://create-react-app.dev/img/logo.svg" width="20%" />
 
-Create React apps with no build configuration.
 
 - [Creating an App](#creating-an-app) – How to create a new app.
 - [User Guide](https://facebook.github.io/create-react-app/) – How to develop apps bootstrapped with Create React App.
