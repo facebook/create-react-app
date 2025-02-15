@@ -13,9 +13,9 @@ Following this rule often makes CSS preprocessors less useful, as features like 
 To use Sass, first install `sass`:
 
 ```sh
-$ npm install sass
+$ npm install --save-dev sass
 # or
-$ yarn add sass
+$ yarn add sass --dev
 ```
 
 Now you can rename `src/App.css` to `src/App.scss` and update `src/App.js` to import `src/App.scss`.
@@ -61,8 +61,8 @@ To use imports relative to a path you specify, you can add a [`.env` file](https
 >
 > ```sh
 > $ npm uninstall node-sass
-> $ npm install sass
+> $ npm install sass --save-dev
 > # or
 > $ yarn remove node-sass
-> $ yarn add sass
+> $ yarn add --dev sass
 > ```
