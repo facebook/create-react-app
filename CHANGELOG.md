@@ -1,3 +1,62 @@
+## 5.1.0 (2025-02-14)
+
+This release officially deprecates Create React App, and add support for React 19 to support gradual migration to a new tool. See [TODO](#todo) for more details.
+
+# Migrating from 5.0.1 to 5.1.0
+
+Inside any created project that has not been ejected, run:
+
+```
+npm install --save --save-exact react-scripts@5.1.0
+```
+
+or
+
+```
+yarn add --exact react-scripts@5.1.0
+```
+
+#### :boom: Deprecation
+
+- `create-react-app`
+  - [#17003](https://github.com/facebook/create-react-app/pull/17003) Deprecate Create React App officially ([@orta](https://github.com/orta))
+
+#### :bug: Bug Fix
+
+- `cra-template-typescript`, `cra-template`, `react-scripts`
+  - [#13738](https://github.com/facebook/create-react-app/pull/13738) fix: upgrade RTL version to avoid peer-deps mismatch ([@MatanBobi](https://github.com/MatanBobi))
+
+#### :nail_care: Enhancement
+
+- `react-dev-utils`
+  - [#12412](https://github.com/facebook/create-react-app/pull/12412) fix: Reuse opening tab in Chrome Dev and Chrome Beta ([@nvh95](https://github.com/nvh95))
+
+#### Committers: 23
+
+- Adam Alston ([@adamalston](https://github.com/adamalston))
+- Brian Donovan ([@eventualbuddha](https://github.com/eventualbuddha))
+- Daniel Rentz ([@danielrentz](https://github.com/danielrentz))
+- Darius Dzien ([@ddzz](https://github.com/ddzz))
+- Deepak Bhardwaj ([@imdkbj](https://github.com/imdkbj))
+- Hung Viet Nguyen ([@nvh95](https://github.com/nvh95))
+- J S L Geeganage ([@JSLGeeganage](https://github.com/JSLGeeganage))
+- Liam Mulhall ([@liammulh](https://github.com/liammulh))
+- Lucas Cullen ([@bitcoinbrisbane](https://github.com/bitcoinbrisbane))
+- Luke Karrys ([@lukekarrys](https://github.com/lukekarrys))
+- Matan Borenkraout ([@MatanBobi](https://github.com/MatanBobi))
+- Moshiul Huq Rabbi ([@MoshiulRabbi](https://github.com/MoshiulRabbi))
+- Nasyx Nadeem ([@sdarnadeem](https://github.com/sdarnadeem))
+- Orta Therox ([@orta](https://github.com/orta))
+- Paul O’Shannessy ([@zpao](https://github.com/zpao))
+- Paweł Skowronek ([@pawelskowronek](https://github.com/pawelskowronek))
+- Rouan van der Ende ([@rvdende](https://github.com/rvdende))
+- Toromo Adegboyega ([@teemezzy](https://github.com/teemezzy))
+- Yaman ([@yamankatby](https://github.com/yamankatby))
+- [@Olexandr88](https://github.com/Olexandr88)
+- [@jonniebigodes](https://github.com/jonniebigodes)
+- leonid-omelchuk-jemmic ([@leonid-omelchuk-jemmic](https://github.com/leonid-omelchuk-jemmic))
+- ryan.c ([@jackblackevo](https://github.com/jackblackevo))
+
 ## 5.0.1 (2022-04-12)
 
 Create React App 5.0.1 is a maintenance release that improves compatibility with React 18. We've also updated our templates to use `createRoot` and relaxed our check for older versions of Create React App.
