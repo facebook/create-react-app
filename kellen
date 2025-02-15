@@ -1,0 +1,26 @@
+html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>"Acredite em si mesmo e você será imparável."s</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Bem-vindo ao Gerador de Motivação!</h1>
+        <p>"Acredite em si mesmo e você será imparável.":</p>
+        <input type="text" id="kellen " placeholder="kellen ">
+        <button id="gerar">OK</button>
+        <div id="resultado">
+            <h2 id="frase"></h2>
+            <img id="imagem de gato " alt="Imagem feliz">
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+
+
+---
