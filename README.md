@@ -10,13 +10,13 @@
 
 <img alt="Logo" align="right" src="https://create-react-app.dev/img/logo.svg" width="20%" />
 
-Create React apps with no build configuration.
+Create React apps without the need for build configuration.
 
 - [Creating an App](#creating-an-app) – How to create a new app.
 - [User Guide](https://facebook.github.io/create-react-app/) – How to develop apps bootstrapped with Create React App.
 
 Create React App works on macOS, Windows, and Linux.<br>
-If something doesn’t work, please [file an issue](https://github.com/facebook/create-react-app/issues/new).<br>
+If something isn’t working, please [file an issue](https://github.com/facebook/create-react-app/issues/new).<br>
 If you have questions or need help, please ask in [GitHub Discussions](https://github.com/facebook/create-react-app/discussions).
 
 ## Quick Overview
@@ -40,7 +40,7 @@ When you’re ready to deploy to production, create a minified bundle with `npm 
 
 ### Get Started Immediately
 
-You **don’t** need to install or configure tools like webpack or Babel.<br>
+You **don’t** need to install or manually configure tools like webpack or Babel.<br>
 They are preconfigured and hidden so that you can focus on the code.
 
 Create a project, and you’re good to go.
@@ -75,7 +75,7 @@ yarn create react-app my-app
 
 _[`yarn create <starter-kit-package>`](https://yarnpkg.com/lang/en/docs/cli/create/) is available in Yarn 0.25+_
 
-It will create a directory called `my-app` inside the current folder.<br>
+This command will create a directory named `my-app` inside your current folder.<br>
 Inside that directory, it will generate the initial project structure and install the transitive dependencies:
 
 ```
@@ -134,7 +134,7 @@ It correctly bundles React in production mode and optimizes the build for the be
 
 The build is minified and the filenames include the hashes.<br>
 
-Your app is ready to be deployed.
+Your app is now ready for deployment.
 
 ## User Guide
 
@@ -162,7 +162,7 @@ Your environment will have everything you need to build a modern single-page Rea
 - A fast interactive unit test runner with built-in support for coverage reporting.
 - A live development server that warns about common mistakes.
 - A build script to bundle JS, CSS, and images for production, with hashes and sourcemaps.
-- An offline-first [service worker](https://developers.google.com/web/fundamentals/getting-started/primers/service-workers) and a [web app manifest](https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/), meeting all the [Progressive Web App](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app) criteria. (_Note: Using the service worker is opt-in as of `react-scripts@2.0.0` and higher_)
+- An offline-first [service worker](https://developers.google.com/web/fundamentals/getting-started/primers/service-workers) and a [web app manifest](https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/), meeting all the [Progressive Web App](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app) criteria. (_Note: Using the service worker is opt-in as of `react-scripts@2.0.0` and higher_).
 - Hassle-free updates for the above tools with a single dependency.
 
 Check out [this guide](https://github.com/nitishdayal/cra_closer_look) for an overview of how these tools fit together.
