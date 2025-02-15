@@ -1,0 +1,24 @@
+{
+  "name": "babel-plugin-optimize-react",
+  "version": "0.0.3",
+  "description": "Babel plugin for optimizing common React patterns",
+  "repository": "facebookincubator/create-react-app",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/facebookincubator/create-react-app/issues"
+  },
+  "main": "index.js",
+  "files": [
+    "index.js"
+  ],
+  "peerDependencies": {
+    "@babel/core": "^7.1.0"
+  },
+  "devDependencies": {
+    "jest": "^23.6.0",
+    "prettier": "^1.15.3"
+  },
+  "scripts": {
+    "test": "jest"
+  }
+}

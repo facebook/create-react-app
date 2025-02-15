@@ -1,0 +1,131 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`React hook transforms should support destructuring hooks from imports #2 1`] = `
+"import React from \\"react\\";
+const __reactCreateElement__ = React.createElement;
+const {
+  useState
+} = React;
+export function MyComponent() {
+  const _ref_0 = useState(0);
+
+  const setCounter = _ref_0[1];
+  const counter = _ref_0[0];
+  return __reactCreateElement__(\\"div\\", null, counter);
+}"
+`;
+
+exports[`React hook transforms should support destructuring hooks from imports #3 1`] = `
+"import React from \\"react\\";
+const __reactCreateElement__ = React.createElement;
+const useState = React.useState;
+export function MyComponent() {
+  const _ref_0 = useState(0);
+
+  const setCounter = _ref_0[1];
+  const counter = _ref_0[0];
+  return __reactCreateElement__(\\"div\\", null, counter);
+}"
+`;
+
+exports[`React hook transforms should support destructuring hooks from imports #4 1`] = `
+"import React from \\"react\\";
+const __reactCreateElement__ = React.createElement;
+const foo = React.useState;
+export function MyComponent() {
+  const _ref_0 = foo(0);
+
+  const setCounter = _ref_0[1];
+  const counter = _ref_0[0];
+  return __reactCreateElement__(\\"div\\", null, counter);
+}"
+`;
+
+exports[`React hook transforms should support destructuring hooks from imports #5 1`] = `
+"import React from \\"react\\";
+const __reactCreateElement__ = React.createElement;
+const {
+  useState: foo
+} = React;
+export function MyComponent() {
+  const _ref_0 = foo(0);
+
+  const setCounter = _ref_0[1];
+  const counter = _ref_0[0];
+  return __reactCreateElement__(\\"div\\", null, counter);
+}"
+`;
+
+exports[`React hook transforms should support destructuring hooks from imports 1`] = `
+"import React from \\"react\\";
+const __reactCreateElement__ = React.createElement;
+const {
+  useState
+} = React;
+export function MyComponent() {
+  const _ref_0 = useState(0);
+
+  const setCounter = _ref_0[1];
+  const counter = _ref_0[0];
+  return __reactCreateElement__(\\"div\\", null, counter);
+}"
+`;
+
+exports[`React hook transforms should support destructuring hooks from require calls 1`] = `
+"const React = require(\\"react\\");
+
+const __reactCreateElement__ = React.createElement;
+const {
+  useState
+} = React;
+export function MyComponent() {
+  const _ref_0 = useState(0);
+
+  const setCounter = _ref_0[1];
+  const counter = _ref_0[0];
+  return __reactCreateElement__(\\"div\\", null, counter);
+}"
+`;
+
+exports[`React hook transforms should support hook CJS require with no default 1`] = `
+"const {
+  useState
+} = require(\\"react\\");"
+`;
+
+exports[`React hook transforms should support hook imports with aliasing 1`] = `
+"import React from \\"react\\";
+const {
+  useState: foo
+} = React;"
+`;
+
+exports[`React hook transforms should support hook imports with no default 1`] = `
+"import React from \\"react\\";
+const {
+  useState
+} = React;"
+`;
+
+exports[`React hook transforms should support mixed hook imports 1`] = `
+"import React from \\"react\\";
+import { memo } from \\"react\\";
+const {
+  useState
+} = React;"
+`;
+
+exports[`React hook transforms should support mixed hook imports with no default 1`] = `
+"import React from \\"react\\";
+const {
+  useState
+} = React;
+import { memo } from \\"react\\";"
+`;
+
+exports[`React hook transforms should support transform hook imports 1`] = `
+"import React from \\"react\\";
+const {
+  useState
+} = React;"
+`;
