@@ -37,13 +37,22 @@ class InlineChunkHtmlPlugin {
     }
 
     compiler.hooks.compilation.tap('InlineChunkHtmlPlugin', compilation => {
-      const tagFunction = tag =>
-        this.getInlinedTag(publicPath, compilation.assets, tag);
-
       const hooks = this.htmlWebpackPlugin.getHooks(compilation);
       hooks.alterAssetTagGroups.tap('InlineChunkHtmlPlugin', assets => {
-        assets.headTags = assets.headTags.map(tagFunction);
-        assets.bodyTags = assets.bodyTags.map(tagFunction);
+        const deferScripts = [];
+        const tagFunction = tag => {
+          const result = this.getInlinedTag(publicPath, compilation.assets, tag);
+
+          if (result === tag || tag.tagName !== 'script' || !(tag.attributes && tag.attributes.defer)) {
+            return result;
+          }
+
+          deferScripts.push(result);
+          return undefined;
+        }
+
+        assets.headTags = assets.headTags.map(tagFunction).filter(Boolean);
+        assets.bodyTags = assets.bodyTags.map(tagFunction).filter(Boolean).concat(deferScripts);
       });
 
       // Still emit the runtime chunk for users who do not use our generated
