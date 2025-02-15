@@ -145,7 +145,7 @@ function update() {
       const script =
         loadingIframe.contentWindow.document.createElement('script');
       script.type = 'text/javascript';
-      script.innerHTML = iframeScript;
+      script.textContent = iframeScript;
       iframeDocument.body.appendChild(script);
     }
   };
