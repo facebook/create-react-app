@@ -37,6 +37,44 @@ or
 yarn add typescript @types/node @types/react @types/react-dom @types/jest
 ```
 
+Then, add two files which would normally be generated for you by create-react-app.
+
+In the root of the project add a tsconfig.json file.
+
+```json
+{
+  "compilerOptions": {
+    "target": "es5",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx"
+  },
+  "include": [
+    "src"
+  ]
+}
+```
+
+Add a file `src/react-app-env.d.ts` with this content, in order to import non-script files as modules.
+```typescript
+/// <reference types="react-scripts" />
+```
+
 Next, rename any file to be a TypeScript file (e.g. `src/index.js` to `src/index.tsx`) and create tsconfig.json if it's not in the root of your project [`tsconfig.json` file](https://www.typescriptlang.org/docs/handbook/tsconfig-json.html).
 
 Finally **restart your development server**!
@@ -45,7 +83,7 @@ Type errors will show up in the same console as the build one. You'll have to fi
 
 ## Getting Started with TypeScript and React
 
-You are not required to make a [`tsconfig.json` file](https://www.typescriptlang.org/docs/handbook/tsconfig-json.html), one will be made for you. You are allowed to edit the generated TypeScript configuration.
+If you've created a new project from scratch, you are not required to make a [`tsconfig.json` file](https://www.typescriptlang.org/docs/handbook/tsconfig-json.html), one will be made for you. You are allowed to edit the generated TypeScript configuration.
 
 - [TypeScript Handbook](https://www.typescriptlang.org/)
 - [TypeScript Example on React](https://www.typescriptlang.org/play/index.html?jsx=2&esModuleInterop=true&e=196#example/typescript-with-react)
@@ -58,3 +96,7 @@ If your project is not created with TypeScript enabled, npx may be using a cache
 If you are currently using [create-react-app-typescript](https://github.com/wmonk/create-react-app-typescript/), see [this blog post](https://vincenttunru.com/migrate-create-react-app-typescript-to-create-react-app/) for instructions on how to migrate to Create React App.
 
 Constant enums and namespaces are not supported, you can learn about the constraints of [using Babel with TypeScript here](https://babeljs.io/docs/en/babel-plugin-transform-typescript#caveats).
+
+`TS2307: Cannot find module './logo.svg' or its corresponding type declarations.` In this case you're missing react-scripts types in your projects. to resolve this create `react-app-env.d.ts` with the content from the guide above.
+
+In cases where `Module not found: Error: Can't resolve './App'` is hidden by adding the `.tsx` extension to the imports you may be missing a tsconfig.json.
