@@ -33,7 +33,7 @@
     "get-port": "^5.1.1",
     "globby": "^11.0.4",
     "husky": "^4.3.8",
-    "jest": "^27.4.3",
+    "jest": "^29.7.0",
     "lerna": "^4.0.0",
     "lerna-changelog": "^2.2.0",
     "lint-staged": "^12.1.2",
@@ -47,6 +47,10 @@
     "wait-for-localhost": "^3.3.0",
     "web-vitals": "^2.1.2"
   },
+  "resolutions": {
+    "rollup": "^3.29.5",
+    "serialize-javascript": "^6.0.2"
+  },
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
@@ -56,5 +60,9 @@
     "*.{js,json,yml,yaml,css,scss,ts,tsx,md}": [
       "prettier --write"
     ]
+  },
+  "dependencies": {
+    "babel-loader": "^9.2.1",
+    "webpack": "^5.96.1"
   }
 }
