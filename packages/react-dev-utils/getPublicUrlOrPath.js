@@ -45,7 +45,7 @@ function getPublicUrlOrPath(isEnvDevelopment, homepage, envPublicUrl) {
   }
 
   if (homepage) {
-    // strip last slash if exists
+    // ensure last slash exists
     homepage = homepage.endsWith('/') ? homepage : homepage + '/';
 
     // validate if `homepage` is a URL or path like and use just pathname
