@@ -129,7 +129,7 @@ module.exports = (resolve, rootDir, isEjecting) => {
               supportedKeys
                 .map(key => chalk.bold('  \u2022 ' + key))
                 .join('\n') +
-              '.\n\n' +
+              '\n\n' +
               'These options in your package.json Jest configuration ' +
               'are not currently supported by Create React App:\n\n' +
               unsupportedKeys
