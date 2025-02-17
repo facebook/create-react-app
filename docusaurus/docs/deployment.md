@@ -444,6 +444,45 @@ To support `pushState`, make sure to create a `public/_redirects` file with the 
 
 When you build the project, Create React App will place the `public` folder contents into the build output.
 
+## [Cloudflare Pages](https://developers.cloudflare.com/pages/)
+
+Cloudflare Pages is a hosting platform for developers to deploy websites on Cloudflare's edge network. You can also integrate dynamic functionality into your application using [Pages Functions](https://developers.cloudflare.com/pages/platform/functions/) and other Cloudflare products like [KV](https://developers.cloudflare.com/workers/learning/how-kv-works/) for global, low-latency, key-value data storage  and [Durable objects](https://developers.cloudflare.com/workers/learning/using-durable-objects/) for consistent storage. 
+
+Currently, you can set up a Pages project by [connecting your git provider](https://developers.cloudflare.com/pages/get-started/#connecting-your-git-provider-to-pages) to pages or by deploying your pre-built assets right to Pages with [Direct Uploads](https://developers.cloudflare.com/pages/platform/direct-upload/), which allows you drag and drop your project to the dashboard or using [Wrangler](/workers/wrangler/get-started/) from the CLI
+
+### Option 1: Using a Git provider 
+
+Deploy your site to Pages by logging in to the Cloudflare dashboard > **Account Home** > **Pages** and selecting **Create a project**. Select the new GitHub repository that you created and, in the Set up builds and deployments section, provide the following information:
+
+| Configuration option | Value           |
+| -------------------- | --------------- |
+| Production branch    | `main`          |
+| Framework preset     |`Create React App`|
+| Build command        | `npm run build` |
+| Build directory      | `build`         |
+
+After deploying your site, you will receive a unique subdomain for your project on `*.pages.dev`.
+
+Every time you commit new code to your React application, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](https://developers.cloudflare.com/pages/platform/preview-deployments/) on new pull requests, so you can preview how changes look to your site before deploying them to production.
+
+### Option 2: Using Drag and drop
+
+To begin the deployment process of your pre-built site, on the Cloudflare Pages dashboard select **Create a Project** page, select **Upload Assets** and enter your project name in the provided field. Your project will be served from `<PROJECT_NAME>.pages.dev`. 
+
+Next drag and drop your build output directory into the uploading frame. Once your files have been successfully uploaded, select **Save and Deploy** and continue to your newly deployed project.
+
+### Option 3: Using Wrangler
+
+To begin, [install the latest version of Wrangler](https://developers.cloudflare.com/workers/wrangler/get-started/) and set up Wrangler. Note that Pages integration with Wrangler relies on Wrangler 2.
+
+​​Deploy your project with Wrangler
+Run the following Wrangler command to create a project:
+`wrangler pages publish <project directory>`
+
+After running `wrangler pages publish`, you will be prompted to choose whether you would like to publish assets for an existing project or if you would like to create a new one. 
+
+To begin a new project, select create a new project, continue to name your project, and deploy. Subsequent deployments will reuse these values (saved in your `node_modules/.cache/wrangler` folder).
+
 ## [Vercel](https://vercel.com)
 
 [Vercel](https://vercel.com/home) is a cloud platform that enables developers to host Jamstack websites and web services that deploy instantly, scale automatically, and requires no supervision, all with zero configuration. They provide a global edge network, SSL encryption, asset compression, cache invalidation, and more.
