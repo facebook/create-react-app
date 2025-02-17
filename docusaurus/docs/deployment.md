@@ -151,7 +151,7 @@ For example, to create a build environment for a staging environment:
    ```json
    {
      "scripts": {
-       "build:staging": "env-cmd -f .env.staging npm run build"
+       "build:staging": "env-cmd -f .env.staging --no-override npm run build"
      }
    }
    ```
