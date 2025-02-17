@@ -223,5 +223,6 @@ module.exports = function (api, opts, env) {
         ],
       },
     ].filter(Boolean),
+    sourceType: 'unambiguous',
   };
 };
