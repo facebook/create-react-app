@@ -148,13 +148,10 @@ For example:
 ### `src/setupTests.js`
 
 ```js
-const localStorageMock = {
-  getItem: jest.fn(),
-  setItem: jest.fn(),
-  removeItem: jest.fn(),
-  clear: jest.fn(),
-};
-global.localStorage = localStorageMock;
+Storage.prototype.getItem = jest.fn()
+Storage.prototype.setItem = jest.fn()
+Storage.prototype.removeItem = jest.fn()
+Storage.prototype.clear = jest.fn()
 ```
 
 > Note: Keep in mind that if you decide to "eject" before creating `src/setupTests.js`, the resulting `package.json` file won't contain any reference to it, so you should manually create the property `setupFilesAfterEnv` in the configuration for Jest, something like the following:
