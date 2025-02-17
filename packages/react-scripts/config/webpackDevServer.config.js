@@ -17,9 +17,25 @@ const paths = require('./paths');
 const getHttpsConfig = require('./getHttpsConfig');
 
 const host = process.env.HOST || '0.0.0.0';
+const sockUrl = process.env.WDS_SOCKET_URL;
 const sockHost = process.env.WDS_SOCKET_HOST;
 const sockPath = process.env.WDS_SOCKET_PATH; // default: '/ws'
 const sockPort = process.env.WDS_SOCKET_PORT;
+const sockProtocol = process.env.WDS_SOCKET_PROTOCOL;
+
+// 1st priority is WDS_SOCKET_URL (if exists)
+// 2nd priority is the object from the parameters
+const sockObject = sockUrl
+  ? sockUrl
+  : {
+      // Enable custom sockjs pathname for websocket connection to hot reloading server.
+      // Enable custom sockjs hostname, pathname and port for websocket connection
+      // to hot reloading server.
+      hostname: sockHost,
+      pathname: sockPath,
+      port: sockPort,
+      protocol: sockProtocol,
+    };
 
 module.exports = function (proxy, allowedHost) {
   const disableFirewall =
@@ -78,14 +94,7 @@ module.exports = function (proxy, allowedHost) {
       },
     },
     client: {
-      webSocketURL: {
-        // Enable custom sockjs pathname for websocket connection to hot reloading server.
-        // Enable custom sockjs hostname, pathname and port for websocket connection
-        // to hot reloading server.
-        hostname: sockHost,
-        pathname: sockPath,
-        port: sockPort,
-      },
+      webSocketURL: sockObject,
       overlay: {
         errors: true,
         warnings: false,
