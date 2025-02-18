@@ -81,7 +81,7 @@ it('renders without crashing', () => {
 });
 ```
 
-This test mounts a component and makes sure that it didn’t throw during rendering. Tests like this provide a lot of value with very little effort so they are great as a starting point, and this is the test you will find in `src/App.test.js`.
+This test mounts a component and makes sure that it didn’t throw during rendering. Tests like this provide a lot of value with very little effort so they are great as a starting point.
 
 When you encounter bugs caused by changing components, you will gain a deeper insight into which parts of them are worth testing in your application. This might be a good time to introduce more specific tests asserting specific expected output or behavior.
 
@@ -109,16 +109,16 @@ If you want to avoid boilerplate in your test files, you can create a [`src/setu
 import '@testing-library/jest-dom';
 ```
 
-Here's an example of using `react-testing-library` and `jest-dom` for testing that the `<App />` component renders "Learn React".
+Here's the example you will find in `src/App.test.js` of using `react-testing-library` and `jest-dom` for testing that the `<App />` component renders "Learn React" element.
 
 ```js
-import React from 'react';
 import { render, screen } from '@testing-library/react';
 import App from './App';
 
-it('renders welcome message', () => {
+test('renders learn react link', () => {
   render(<App />);
-  expect(screen.getByText('Learn React')).toBeInTheDocument();
+  const linkElement = screen.getByText(/learn react/i);
+  expect(linkElement).toBeInTheDocument();
 });
 ```
 
