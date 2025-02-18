@@ -354,6 +354,9 @@ module.exports = function (webpackEnv) {
           enforce: 'pre',
           exclude: /@babel(?:\/|\\{1,2})runtime/,
           test: /\.(js|mjs|jsx|ts|tsx|css)$/,
+          resolve: {
+            fullySpecified: false,
+          },
           loader: require.resolve('source-map-loader'),
         },
         {
