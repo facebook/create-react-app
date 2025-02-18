@@ -122,7 +122,7 @@ following into account:
    for more details about this behavior.
 
 1. Users aren't always familiar with offline-first web apps. It can be useful to
-   [let the user know](https://developers.google.com/web/fundamentals/instant-and-offline/offline-ux#inform_the_user_when_the_app_is_ready_for_offline_consumption)
+   [let the user know](https://web.dev/offline-ux-design-guidelines/#inform-the-user-when-the-app-is-ready-for-offline-consumption)
    when the service worker has finished populating your caches (showing a "This web
    app works offline!" message) and also let them know when the service worker has
    fetched the latest updates that will be available the next time they load the
