@@ -14,7 +14,7 @@ const noopServiceWorkerMiddleware = require('react-dev-utils/noopServiceWorkerMi
 const ignoredFiles = require('react-dev-utils/ignoredFiles');
 const redirectServedPath = require('react-dev-utils/redirectServedPathMiddleware');
 const paths = require('./paths');
-const getHttpsConfig = require('./getHttpsConfig');
+const getServerConfig = require('./getServerConfig');
 
 const host = process.env.HOST || '0.0.0.0';
 const sockHost = process.env.WDS_SOCKET_HOST;
@@ -98,8 +98,9 @@ module.exports = function (proxy, allowedHost) {
       // remove last slash so user can land on `/test` instead of `/test/`
       publicPath: paths.publicUrlOrPath.slice(0, -1),
     },
-
-    https: getHttpsConfig(),
+    // https is deprecated from webpack-dev-server v4.4.0+ in favor of server option.
+    // see https://github.com/webpack/webpack-dev-server/blob/master/CHANGELOG.md#440-2021-10-27
+    server: getServerConfig(),
     host,
     historyApiFallback: {
       // Paths with dots should still use the history fallback.
