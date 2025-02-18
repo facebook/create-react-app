@@ -114,15 +114,7 @@ function printDeployInstructions(publicUrl, hasDeployScript, useYarn) {
 function printStaticServerInstructions(buildFolder, useYarn) {
   console.log('You may serve it with a static server:');
   console.log();
-
-  if (!fs.existsSync(`${globalModules}/serve`)) {
-    if (useYarn) {
-      console.log(`  ${chalk.cyan('yarn')} global add serve`);
-    } else {
-      console.log(`  ${chalk.cyan('npm')} install -g serve`);
-    }
-  }
-  console.log(`  ${chalk.cyan('serve')} -s ${buildFolder}`);
+  console.log(`  npx ${chalk.cyan('serve')} -s ${buildFolder}`);
 }
 
 module.exports = printHostingInstructions;
