@@ -106,6 +106,8 @@ To override this, specify the `homepage` in your `package.json`, for example:
 
 ```js
   "homepage": "http://mywebsite.com/relativepath",
+  // or to support multiple different domains/environments:
+  "homepage": "/relativepath",
 ```
 
 This will let Create React App correctly infer the root path to use in the generated HTML file.
