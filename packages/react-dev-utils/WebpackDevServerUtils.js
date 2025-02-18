@@ -285,17 +285,22 @@ function onProxyError(proxy) {
     if (res.writeHead && !res.headersSent) {
       res.writeHead(500);
     }
-    res.end(
-      'Proxy error: Could not proxy request ' +
-        req.url +
-        ' from ' +
-        host +
-        ' to ' +
-        proxy +
-        ' (' +
-        err.code +
-        ').'
-    );
+
+    // In some cases `res` will already be finished. Trying to
+    // double end it can result in ERR_STREAM_WRITE_AFTER_END.
+    if (!res.finished) {
+      res.end(
+        'Proxy error: Could not proxy request ' +
+         req.url +
+         ' from ' +
+         host +
+         ' to ' +
+         proxy +
+         ' (' +
+         err.code +
+         ').'
+      );
+    }
   };
 }
 
