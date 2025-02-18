@@ -95,7 +95,7 @@ module.exports = function (api, opts, env) {
           development: isEnvDevelopment || isEnvTest,
           // Will use the native built-in instead of trying to polyfill
           // behavior for any plugins that require one.
-          ...(opts.runtime !== 'automatic' ? { useBuiltIns: true } : {}),
+          useBuiltIns: opts.runtime !== 'automatic',
           runtime: opts.runtime || 'classic',
         },
       ],
