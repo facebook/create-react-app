@@ -93,10 +93,13 @@ module.exports = function (api, opts, env) {
           // Adds component stack to warning messages
           // Adds __self attribute to JSX which React will use for some warnings
           development: isEnvDevelopment || isEnvTest,
+          runtime: opts.runtime || 'classic',
           // Will use the native built-in instead of trying to polyfill
           // behavior for any plugins that require one.
           ...(opts.runtime !== 'automatic' ? { useBuiltIns: true } : {}),
-          runtime: opts.runtime || 'classic',
+          ...(opts.runtime === 'automatic' && opts.importSource != null
+            ? { importSource: opts.importSource }
+            : {}),
         },
       ],
       isTypeScriptEnabled && [require('@babel/preset-typescript').default],
