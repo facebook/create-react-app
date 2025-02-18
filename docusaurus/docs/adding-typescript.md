@@ -41,7 +41,8 @@ Next, rename any file to be a TypeScript file (e.g. `src/index.js` to `src/index
 
 Finally **restart your development server**!
 
-Type errors will show up in the same console as the build one. You'll have to fix these type errors before you continue development or build your project. For advanced configuration, [see here](advanced-configuration.md).
+Type errors will show up in the same console as the build one. You'll have to fix these type errors before you continue development or build your project. Many of them are fixed by adding `import React from 'react';` to your tsx files.
+For advanced configuration, [see here](advanced-configuration.md).
 
 ## Getting Started with TypeScript and React
 
