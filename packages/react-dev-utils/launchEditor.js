@@ -62,6 +62,7 @@ const COMMON_EDITORS_OSX = {
     '/Applications/GoLand.app/Contents/MacOS/goland',
   '/Applications/Rider.app/Contents/MacOS/rider':
     '/Applications/Rider.app/Contents/MacOS/rider',
+  '/Applications/TextMate.app/Contents/MacOS/TextMate': 'mate'
 };
 
 const COMMON_EDITORS_LINUX = {
