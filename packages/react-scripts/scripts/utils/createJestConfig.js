@@ -87,6 +87,7 @@ module.exports = (resolve, rootDir, isEjecting) => {
     'restoreMocks',
     'snapshotSerializers',
     'testMatch',
+    'testPathIgnorePatterns',
     'transform',
     'transformIgnorePatterns',
     'watchPathIgnorePatterns',
