@@ -12,6 +12,8 @@ Following this rule often makes CSS preprocessors less useful, as features like 
 
 To use Sass, first install `sass`:
 
+> Note: if you prefer you can install `sass` instead with `npm install node-sass@npm:sass`.
+
 ```sh
 $ npm install sass
 # or
