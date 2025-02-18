@@ -1,9 +1,13 @@
 .App {
+  background-color: #282c34;
+  height: 420px;
+  min-height: 100vh;
+  color: white;
   text-align: center;
 }
 
 .App-logo {
-  height: 40vmin;
+  height: 30vmin;
   pointer-events: none;
 }
 
@@ -13,9 +17,8 @@
   }
 }
 
-.App-header {
+.App-header, .App-main, .App-footer {
   background-color: #282c34;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -23,9 +26,56 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
+.App-main {
+  justify-content: space-between;
+}
 
-.App-link {
+.App-footer {
+  position: fixed;
+  bottom: 1.0em;
+  border-bottom: #fff 1px solid;
+  border-top: #fff 1px solid;
+  flex-direction: row;
+  font-size: calc(6px + 2vmin);
+  margin-top: 1em;
+  padding-bottom: 0.15em;
+  width: 100%;
+}
+
+h1 {
+  margin: 0 0.5em;
+}
+p {
+  font-size: calc(10px + 1.2vmin);
+  margin: 0 0.25em;
+}
+
+
+a, .App-link {
   color: #61dafb;
+}
+a:hover, .App-link:hover {
+  color: #ffffff;
+}
+
+ul.list-docs li {
+  font-size: calc(10px + 1.2vmin);
+  text-align: left;
+}
+.flexbox-centerspace {
+  display: flexbox;
+  flex-direction: row;
+  flex-grow: 3;
+}
+.react-cta {
+  border: 1px solid #fff;
+  font-size: calc(12px + 1.2vmin);
+  line-height: 100%;
+  padding: 0.25em 1.5em;
+  margin-bottom: 0.5em;
+}
+.comment-sm {
+  font-size: calc(8px + 1.2vmin);
 }
 
 @keyframes App-logo-spin {
