@@ -83,11 +83,14 @@ my-app
 ├── README.md
 ├── node_modules
 ├── package.json
+├── package-lock.json
 ├── .gitignore
 ├── public
 │   ├── favicon.ico
 │   ├── index.html
-│   └── manifest.json
+│   ├── logo*.png
+│   ├── manifest.json
+│   └── robots.txt 
 └── src
     ├── App.css
     ├── App.js
@@ -95,7 +98,7 @@ my-app
     ├── index.css
     ├── index.js
     ├── logo.svg
-    └── serviceWorker.js
+    ├── reportWebVitals.js
     └── setupTests.js
 ```
 
