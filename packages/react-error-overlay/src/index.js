@@ -145,6 +145,7 @@ function update() {
       const script =
         loadingIframe.contentWindow.document.createElement('script');
       script.type = 'text/javascript';
+      script.nonce = 'react-error-overlay';
       script.innerHTML = iframeScript;
       iframeDocument.body.appendChild(script);
     }
