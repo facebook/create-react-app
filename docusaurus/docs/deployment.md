@@ -87,7 +87,7 @@ On a production build, and when you've [opted-in](making-a-progressive-web-app.m
 a [service worker](https://developers.google.com/web/fundamentals/primers/service-workers/) will automatically handle all navigation requests, like for
 `/todos/42`, by serving the cached copy of your `index.html`. This
 service worker navigation routing can be configured or disabled by
-[`eject`ing](available-scripts.md#npm-run-eject) and then modifying the
+[`ejecting`](available-scripts.md#npm-run-eject) and then modifying the
 [`navigateFallback`](https://github.com/GoogleChrome/sw-precache#navigatefallback-string)
 and [`navigateFallbackWhitelist`](https://github.com/GoogleChrome/sw-precache#navigatefallbackwhitelist-arrayregexp)
 options of the `SWPrecachePlugin` configuration.
