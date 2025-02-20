@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "@headlessui/react": "^1.6.6",
+    "react": "latest",
+    "react-dom": "latest",
+    "serve": "^10.0.2"
+  }
+}
