@@ -387,6 +387,7 @@ module.exports = function (webpackEnv) {
             },
             {
               test: /\.svg$/,
+              dependency: { not: ['url'] },
               use: [
                 {
                   loader: require.resolve('@svgr/webpack'),
