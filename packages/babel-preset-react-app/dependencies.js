@@ -31,19 +31,19 @@ module.exports = function (api, opts) {
   // https://github.com/babel/babel/issues/4539
   // https://github.com/facebook/create-react-app/issues/720
   // It’s also nice that we can enforce `NODE_ENV` being specified.
-  var env = process.env.BABEL_ENV || process.env.NODE_ENV;
-  var isEnvDevelopment = env === 'development';
-  var isEnvProduction = env === 'production';
-  var isEnvTest = env === 'test';
+  const env = process.env.BABEL_ENV || process.env.NODE_ENV;
+  const isEnvDevelopment = env === 'development';
+  const isEnvProduction = env === 'production';
+  const isEnvTest = env === 'test';
 
-  var areHelpersEnabled = validateBoolOption('helpers', opts.helpers, false);
-  var useAbsoluteRuntime = validateBoolOption(
+  const areHelpersEnabled = validateBoolOption('helpers', opts.helpers, false);
+  const useAbsoluteRuntime = validateBoolOption(
     'absoluteRuntime',
     opts.absoluteRuntime,
     true
   );
 
-  var absoluteRuntimePath = undefined;
+  let absoluteRuntimePath = undefined;
   if (useAbsoluteRuntime) {
     absoluteRuntimePath = path.dirname(
       require.resolve('@babel/runtime/package.json')
