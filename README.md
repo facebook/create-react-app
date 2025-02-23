@@ -67,7 +67,15 @@ npm init react-app my-app
 
 _`npm init <initializer>` is available in npm 6+_
 
-### Yarn
+### Yarn version 2+
+
+```sh
+yarn dlx create-react-app ./my-app
+```
+
+_[`yarn dlx <package>`](https://yarnpkg.com/cli/dlx) is available in Yarn 2+_
+
+### Yarn version 1
 
 ```sh
 yarn create react-app my-app
