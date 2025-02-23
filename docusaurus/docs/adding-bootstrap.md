@@ -9,6 +9,9 @@ Each project's respective documentation site has detailed instructions for insta
 
 ```sh
 npm install bootstrap
+
+//for installing a specific version 
+npm i bootstrap@4.1.1
 ```
 
 Alternatively you may use `yarn`:
