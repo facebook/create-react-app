@@ -36,7 +36,10 @@ function getAdditionalModulePaths(options = {}) {
 
   // Allow the user set the `baseUrl` to `appSrc`.
   if (path.relative(paths.appSrc, baseUrlResolved) === '') {
-    return [paths.appSrc];
+    return {
+      resolved: [paths.appSrc],
+      relative: [baseUrl],
+    };
   }
 
   // If the path is equal to the root directory we ignore it here.

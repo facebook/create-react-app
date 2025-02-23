@@ -8,6 +8,7 @@
 'use strict';
 
 const fs = require('fs');
+const path = require('path');
 const chalk = require('react-dev-utils/chalk');
 const paths = require('../../config/paths');
 const modules = require('../../config/modules');
@@ -52,7 +53,13 @@ module.exports = (resolve, rootDir, isEjecting) => {
       '[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs|cjs|ts|tsx)$',
       '^.+\\.module\\.(css|sass|scss)$',
     ],
-    modulePaths: modules.additionalModulePaths || [],
+    modulePaths: modules.additionalModulePaths
+      ? modules.additionalModulePaths.relative.map(
+          // Absolute paths will cause issues if the ejected jest config is applied on other
+          // machines, so we translate them to relative paths to the rootDir
+          modulePath => path.join('<rootDir>', modulePath)
+        )
+      : [],
     moduleNameMapper: {
       '^react-native$': 'react-native-web',
       '^.+\\.module\\.(css|sass|scss)$': 'identity-obj-proxy',
