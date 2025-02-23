@@ -21,6 +21,7 @@ const generatedFiles = [
   'public',
   'src',
   'package-lock.json',
+  '.editorconfig',
 ];
 
 const removeGenPath = () => {
