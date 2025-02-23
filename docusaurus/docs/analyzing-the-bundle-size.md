@@ -11,7 +11,7 @@ bloat is coming from.
 To add Source map explorer to a Create React App project, follow these steps:
 
 ```sh
-npm install --save source-map-explorer
+npm install --save-dev source-map-explorer
 ```
 
 Alternatively you may use `yarn`:
