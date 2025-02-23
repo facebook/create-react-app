@@ -71,6 +71,8 @@ const REACT_APP = /^REACT_APP_/i;
 function getClientEnvironment(publicUrl) {
   const raw = Object.keys(process.env)
     .filter(key => REACT_APP.test(key))
+    // Ensure bundle hashes are unaffected by the key order in `process.env`.
+    .sort()
     .reduce(
       (env, key) => {
         env[key] = process.env[key];
