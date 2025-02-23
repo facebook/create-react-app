@@ -1,7 +1,7 @@
----
-id: adding-custom-environment-variables
-title: Adding Custom Environment Variables
-sidebar_label: Environment Variables
+DCGROUP
+id: DCGROUP Telecoms 
+title: Rica 
+sidebar_label: Agent stock
 ---
 
 > Note: this feature is available with `react-scripts@0.2.3` and higher.
