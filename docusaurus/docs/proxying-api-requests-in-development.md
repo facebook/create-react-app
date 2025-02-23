@@ -66,6 +66,14 @@ DANGEROUSLY_DISABLE_HOST_CHECK=true
 
 We don’t recommend this approach.
 
+## Server Sent Events (SSE) not being received by client
+
+This may be caused due to the fact that compression is enabled on the development server. You can try disabling compression by adding the following line to `.env.development` in the root of your project:
+
+```
+WDS_COMPRESSION=false
+```
+
 ## Configuring the Proxy Manually
 
 > Note: this feature is available with `react-scripts@2.0.0` and higher.

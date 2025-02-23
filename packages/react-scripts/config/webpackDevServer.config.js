@@ -20,6 +20,7 @@ const host = process.env.HOST || '0.0.0.0';
 const sockHost = process.env.WDS_SOCKET_HOST;
 const sockPath = process.env.WDS_SOCKET_PATH; // default: '/ws'
 const sockPort = process.env.WDS_SOCKET_PORT;
+const compress = process.env.WDS_COMPRESSION !== 'false';
 
 module.exports = function (proxy, allowedHost) {
   const disableFirewall =
@@ -50,7 +51,7 @@ module.exports = function (proxy, allowedHost) {
       'Access-Control-Allow-Headers': '*',
     },
     // Enable gzip compression of generated files.
-    compress: true,
+    compress,
     static: {
       // By default WebpackDevServer serves physical files from current directory
       // in addition to all the virtual build products that it serves from memory.
