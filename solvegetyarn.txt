@@ -1,0 +1,8 @@
+// Migrating from 4.0.2 to 4.0.3
+Inside any created project that has not been ejected, run:
+
+npm install --save --save-exact react-scripts@4.0.3
+
+or
+
+yarn add --exact react-scripts@4.0.3

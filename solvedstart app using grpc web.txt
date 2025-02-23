@@ -1,0 +1,20 @@
+2
+
++250
+This is most likely caused by the common CORS Browser restrictions, and not exactly by angular. This question contains great guidance on CORS.
+
+Calling HTTP services from a Node app (or from postman) will not enforce CORS, while calling it from a market standard browser certainly would.
+
+I know there is far more to it than my next simplified comments but this should give you a starting point (a deeper dive is in the links I shared above)
+
+For browsers to execute XMLHttpRequest's from one website to other domains (or other ports of the same domain):
+
+the browser will send an OPTIONS HTTP request before every real request to the other domain and only allow the actual request when the OPTIONS response headers authorize it.
+the "other" website must be configure to reply to OPTIONS requests with specific Headers (Access-Control-Allow-Origin, Access-Control-Request-* ...).
+==> If the other server does not reply to OPTIONS requests or does not provide the appropriate headers in the OPTIONS response, you can get a range of different errors, and "Response closed without headers" is one of them.
+
+I believe your gRPC web application is not configured with the proper CORS to authorize communications from the website where you are hosting your angular application (even if it is localhost, you would still need to configure it).
+
+This article has practical guidance on how to configure CORS on .netcore applications
+
+and finally, This github issue / responses contains some more info about a similar error some people faced with gRPC, you might have stepped into the same one. If you have already configured your CORS rules.

@@ -1,0 +1,32 @@
+// The problem is indeed the file-loader, because it simply copies the file over. By the time html-webpack-plugin tries to write index.html it has already been written by file-loader, hence resulting in a conflict.
+
+// There are several ways to resolve that issue, depending on what your needs are.
+
+// You could use html-loader for your HTML, although if you expect your imported HTML to simply be copied, it isn't the correct choice. To be clear, by the imported HTML I don't mean the template used by the html-webpack-plugin.
+
+// If you want to keep using the file-loader for your other HTML files, you can exclude the index.html so html-webpack-plugin falls back to its default loader. require.resolve works like require but gives you the full path of the module instead of its content.
+
+
+{
+    test: /\.html$/,
+    exclude: [/node_modules/, require.resolve('./index.html')],
+    use: {
+        loader: 'file-loader',
+        query: {
+            name: '[name].[ext]'
+        },
+    },
+},
+
+// When no loader matches the template, the html-webpack-plugin uses an ejs loader as a fallback. If you don't need any loader for .html files, you could remove the rule entirely and it would work just fine. That is rather unlikely, otherwise you wouldn't have a .html rule in the first place, but this also means you can use the .ejs extension to not apply the .html rule, as all HTML is valid EJS. You would rename index.html to index.ejs and change your plugin configuration accordingly:
+
+new HtmlWebpackPlugin({
+    template: 'index.ejs',
+    minify: {
+        removeComments: true,
+        collapseWhitespace: true,
+        removeAttributeQuotes: true
+    },
+    chunksSortMode: 'dependency'
+})
+

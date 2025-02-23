@@ -1,0 +1,22 @@
+0
+
+Did you try recovering your dependencies? run npm install
+
+and make sure from Node and npm version at least npm more than 6 and node more than 10
+
+npm -v 
+node -v
+and finally, try to delete the node_modules and package-lock and do npm i again
+
+
+
+I had this issue before so I will share what my issue was:
+
+in package.json just verify the integrity of you start command. Also try npm run start (add run to it)
+
+"scripts": {
+  "start": "react-scripts start",
+  "build": "react-scripts build",
+  "test": "react-scripts test",
+  "eject": "react-scripts eject"
+}

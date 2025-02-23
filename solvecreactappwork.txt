@@ -1,0 +1,7 @@
+// Try by adding path variable, here are steps:
+
+Use the global Search Charm to search "Environment Variables".
+Click "Edit environment variables for your account"
+Click "Environment Variables" in the dialog.
+In the "System Variables" box, search for Path and edit it to include C:\Program Files\nodejs (or path of node installaton). Make sure it is separated from any other paths by a ;
+Click on apply and save the settings.

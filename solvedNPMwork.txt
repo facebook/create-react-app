@@ -1,0 +1,10 @@
+Rename/remove your package.json file.
+
+Create a new package file by running:
+
+npm init
+Option A: Copy the dependencies you need into the newly created package.json.
+
+Option B: Install the packages and use --save to add the packages to the package.json file.
+
+Run npm install to install the dependencies.

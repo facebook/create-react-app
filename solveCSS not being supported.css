@@ -1,0 +1,113 @@
+/* All browsers behave differently and have their own type of CSS. In the case of Chrome browsers, devs need to set the WebKit pixel ratio. The code below demonstrates how to do so with various Chrome versions. */
+
+/* Chrome version 29 and above */
+@media screen and (-webkit-min-device-pixel-ratio:0)
+and (min-resolution:.001dpcm) {
+selector{ property:value; }
+}
+
+/* Test website on real Chrome version 29 and above */
+
+
+/* Chrome version 22-28 */
+@media screen and(-webkit-min-device-pixel-ratio:0) {
+    selector { -chrome-:only (;
+    property:value;
+    );}
+    }
+    
+    /* Chrome, Safari, and also the Edge Browser and Firefox */
+    @media and (-webkit-min-device-pixel-ratio:0) {
+    selector { property:value; }
+    }
+
+    /* In the case of IE browsers, use conditional statements for CSS code. The example here uses the if conditional for all sections, like the header section, HTML elements, etc.*/
+
+    <!--[if IE]>
+<link rel="stylesheet" type="text/css" href="only-ie.css" />
+<![endif]-->
+
+/* Using conditional comments with head section CSS */
+<!--[if IE]>
+<style type="text/css">
+/************ css for all IE browsers ****************/
+</style>
+<![endif]-->
+
+/* Using conditional comments with HTML elements */
+<!--[if IE]> <div class="ie-only"> /*content*/ </div> <![endif]-->
+
+/* IE10+ */
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+selector { property:value; }
+}
+
+/* IE6,7,9,10 */
+@media screen and (min-width: 640px), screen\9 {
+selector { property:value; }
+}
+
+/* IE6,7 */
+@media screen\9 {
+selector { property:value; }
+}
+
+/* IE8 */
+@media \0screen {
+selector { property:value; }
+}
+
+/* IE9,10 */
+@media screen and (min-width:0\0){
+selector { property:value; }
+}
+
+/* When it comes to the Microsoft Edge browser, the process is simple as it involves a simple selector that has a property value. It also provides automatic alignment which is considered the easy way to create browser-specific CSS code.*/
+
+@supports (-ms-ime-align:auto) {
+    selector {
+    property: value;
+    }
+    }
+
+    /*  In Firefox, first use the prefix for the URL. Or, use moz-appearance to show an element using platform-native styling based on the operating system’s theme.*/
+
+    @-moz-document url-prefix() {
+        selector {
+        property:value;
+        }
+        }
+
+     /* or */
+     
+     @supports (-moz-appearance:none) {
+        selector { property:value; }
+        }
+
+     /* In the case of Safari web browsers, the media uses minimum resolution and WebKit appearance properties in the recent versions. In the previous Safari versions, it used pixel ratio for a CSS property*/
+    
+    /* Safari 11+ */
+@media not all and (min-resolution:.001dpcm)
+{ @supports (-webkit-appearance:none) and (stroke-color:transparent) {
+selector { 
+property:value; 
+}
+}}
+/* Test website on real Safari 11+ */
+
+/* Safari 10.1 */
+@media not all and (min-resolution:.001dpcm){ 
+@supports (-webkit-appearance:none) and (not (stroke-color:transparent)) {
+selector { 
+property:value; 
+}
+}}
+
+/* Safari 6.1-10.0 (but not 10.1) */
+@media screen and (min-color-index:0) and(-webkit-min-device-pixel-ratio:0){ 
+@media {
+selector { 
+property:value;
+}
+}}
+

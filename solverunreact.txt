@@ -1,0 +1,3 @@
+With react, you don't have to use liveserver. Go to your terminal and then navigate to the root of your react project and then run npm start.
+
+This information is also available in the react docs and create-react-app docs

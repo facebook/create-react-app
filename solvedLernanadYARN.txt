@@ -1,0 +1,29 @@
+0
+
+I don't know if this is the most simple approach but I could get it working by adding Yarn workspaces.
+
+In the main packages.json I added:
+
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ],
+    "nohoist": [
+      "**mobile**",
+      "**react**",
+      "**react-native**",
+      ...
+    ]
+  },
+In Lerna.json I added:
+
+  "useWorkspaces": true,
+From the root tsconfig.json I deleted:
+
+    "baseUrl": "./",
+    "paths": {
+      "@project/common1": ["packages/common1/lib"],
+      "@project/common2": ["packages/common2/lib"],
+      "@project/mobile": ["packages/mobile/src"],
+      "@project/cloud-functions": ["packages/cloud-functions/src"],
+    }
