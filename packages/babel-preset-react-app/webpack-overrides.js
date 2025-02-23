@@ -8,7 +8,8 @@
 
 const crypto = require('crypto');
 
-const macroCheck = new RegExp('[./]macro');
+// https://github.com/kentcdodds/babel-plugin-macros/blob/e7ea8eb5d846e6824fb11b992bc38731b4a2dc1e/src/index.js#L5
+const macroCheck = /[./]macro(\.js)?$/;
 
 module.exports = function () {
   return {
