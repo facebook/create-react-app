@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { StackFrame } from '../utils/stack-frame';
+import { StackFrame } from '../utils/stack-frame.js';
 
 test('proper empty shape', () => {
   const empty = new StackFrame();

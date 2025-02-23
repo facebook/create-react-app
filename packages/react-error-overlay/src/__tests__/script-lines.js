@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { ScriptLine } from '../utils/stack-frame';
+import { ScriptLine } from '../utils/stack-frame.js';
 
 test('script line shape', () => {
   expect(new ScriptLine(5, 'foobar', true)).toMatchSnapshot();

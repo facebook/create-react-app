@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { extractSourceMapUrl } from '../utils/getSourceMap';
+import { extractSourceMapUrl } from '../utils/getSourceMap.js';
 
 test('extracts last source map directive', async () => {
   const res = await extractSourceMapUrl(

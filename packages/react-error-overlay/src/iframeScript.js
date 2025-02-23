@@ -8,10 +8,10 @@
 import 'react-app-polyfill/ie9';
 import React, { createContext } from 'react';
 import ReactDOM from 'react-dom';
-import CompileErrorContainer from './containers/CompileErrorContainer';
-import RuntimeErrorContainer from './containers/RuntimeErrorContainer';
-import { overlayStyle } from './styles';
-import { applyStyles, getTheme } from './utils/dom/css';
+import CompileErrorContainer from './containers/CompileErrorContainer.js';
+import RuntimeErrorContainer from './containers/RuntimeErrorContainer.js';
+import { overlayStyle } from './styles.js';
+import { applyStyles, getTheme } from './utils/dom/css.js';
 
 let iframeRoot = null;
 const theme = getTheme();

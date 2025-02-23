@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { map } from '../utils/mapper';
-import { parse } from '../utils/parser';
+import { map } from '../utils/mapper.js';
+import { parse } from '../utils/parser.js';
 import fs from 'fs';
 import { resolve } from 'path';
 

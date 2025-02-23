@@ -7,7 +7,7 @@
  * @jest-environment jsdom
  */
 
-import { getSourceMap } from '../utils/getSourceMap';
+import { getSourceMap } from '../utils/getSourceMap.js';
 import fs from 'fs';
 import { resolve } from 'path';
 

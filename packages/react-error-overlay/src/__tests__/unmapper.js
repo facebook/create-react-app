@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { unmap } from '../utils/unmapper';
-import { parse } from '../utils/parser';
+import { unmap } from '../utils/unmapper.js';
+import { parse } from '../utils/parser.js';
 import fs from 'fs';
 import { resolve } from 'path';
 
