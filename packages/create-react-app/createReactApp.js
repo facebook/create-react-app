@@ -758,7 +758,7 @@ function getPackageInfo(installPackage) {
   } else if (installPackage.match(/.+@/)) {
     // Do not match @scope/ when stripping off @version or @tag
     return Promise.resolve({
-      name: installPackage.charAt(0) + installPackage.substr(1).split('@')[0],
+      name: installPackage.charAt(0) + installPackage.slice(1).split('@')[0],
       version: installPackage.split('@')[1],
     });
   } else if (installPackage.match(/^file:/)) {

@@ -6,7 +6,7 @@ function namedAssetImportPlugin({ types: t }) {
   const visited = new WeakSet();
 
   function generateNewSourcePath(loaderMap, moduleName, sourcePath) {
-    const ext = extname(sourcePath).substr(1);
+    const ext = extname(sourcePath).slice(1);
     const extMap = loaderMap[ext];
     return extMap[moduleName]
       ? extMap[moduleName].replace(/\[path\]/, sourcePath)
@@ -15,7 +15,7 @@ function namedAssetImportPlugin({ types: t }) {
 
   function replaceMatchingSpecifiers(path, loaderMap, callback) {
     const sourcePath = path.node.source.value;
-    const ext = extname(sourcePath).substr(1);
+    const ext = extname(sourcePath).slice(1);
 
     if (visited.has(path.node) || sourcePath.indexOf('!') !== -1) {
       return;
