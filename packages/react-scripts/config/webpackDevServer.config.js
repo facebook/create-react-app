@@ -20,6 +20,7 @@ const host = process.env.HOST || '0.0.0.0';
 const sockHost = process.env.WDS_SOCKET_HOST;
 const sockPath = process.env.WDS_SOCKET_PATH; // default: '/ws'
 const sockPort = process.env.WDS_SOCKET_PORT;
+const sockProtocol = process.env.WDS_SOCKET_PROTOCOL;
 
 module.exports = function (proxy, allowedHost) {
   const disableFirewall =
@@ -85,6 +86,7 @@ module.exports = function (proxy, allowedHost) {
         hostname: sockHost,
         pathname: sockPath,
         port: sockPort,
+        protocol: sockProtocol
       },
       overlay: {
         errors: true,
