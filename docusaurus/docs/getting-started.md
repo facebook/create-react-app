@@ -109,7 +109,7 @@ my-app
 ├── node_modules
 ├── package.json
 ├── .gitignore
-├── public
+├── public 
 │   ├── favicon.ico
 │   ├── index.html
 │   ├── logo192.png
@@ -146,7 +146,6 @@ The page will automatically reload if you make changes to the code. You will see
 <p align='center'>
 <img src='https://cdn.jsdelivr.net/gh/marionebl/create-react-app@9f6282671c54f0874afd37a72f6689727b562498/screencast-error.svg' width='600' alt='Build errors' />
 </p>
-
 ### `npm test` or `yarn test`
 
 Runs the test watcher in an interactive mode. By default, runs tests related to files changed since the last commit.
