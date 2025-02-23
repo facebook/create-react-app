@@ -97,7 +97,7 @@ function printFileSizesAfterBuild(
     );
     console.log(
       chalk.yellow(
-        'You can also analyze the project dependencies: https://goo.gl/LeUzfb'
+        'You can also analyze the project dependencies: https://create-react-app.dev/docs/analyzing-the-bundle-size/'
       )
     );
   }
