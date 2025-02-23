@@ -76,6 +76,28 @@ function getWebpackAliases(options = {}) {
       src: paths.appSrc,
     };
   }
+
+  const aliases = options.paths;
+
+  if (!aliases) {
+    return {};
+  }
+
+  const webpackAliases = {};
+
+  Object.keys(aliases).forEach((key) => {
+    const pathKey = key.endsWith('/*') ? key.slice(0, -2) : key;
+    let pathValue = aliases[key];
+    if (Array.isArray(pathValue) && pathValue.length > 0) {
+      webpackAliases[pathKey] = [];
+      for (let alias of pathValue) {
+        alias = alias.endsWith('/*') ? alias.slice(0, -2) : alias;
+        webpackAliases[pathKey].push(path.resolve(baseUrlResolved, alias));
+      }
+    }
+  });
+
+  return webpackAliases;
 }
 
 /**
