@@ -56,5 +56,8 @@
     "*.{js,json,yml,yaml,css,scss,ts,tsx,md}": [
       "prettier --write"
     ]
+  },
+  "dependencies": {
+    "react-scripts": "^5.0.1"
   }
 }
