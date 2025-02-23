@@ -15,6 +15,6 @@ module.exports = function (api, opts) {
   // https://github.com/babel/babel/issues/4539
   // https://github.com/facebook/create-react-app/issues/720
   // It’s also nice that we can enforce `NODE_ENV` being specified.
-  const env = process.env.BABEL_ENV || process.env.NODE_ENV;
+  const env = process.env.BABEL_ENV || process.env.NODE_ENV || 'production';
   return create(api, opts, env);
 };
