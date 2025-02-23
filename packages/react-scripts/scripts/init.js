@@ -90,6 +90,7 @@ module.exports = function (
 ) {
   const appPackage = require(path.join(appPath, 'package.json'));
   const useYarn = fs.existsSync(path.join(appPath, 'yarn.lock'));
+  const useBun = fs.existsSync(path.join(appPath, 'bun.lockb'));
 
   if (!templateName) {
     console.log('');
@@ -203,6 +204,17 @@ module.exports = function (
     );
   }
 
+  // Update scripts for Bun users
+  if (useBun) {
+    appPackage.scripts = Object.entries(appPackage.scripts).reduce(
+      (acc, [key, value]) => ({
+        ...acc,
+        [key]: value.replace(/(npm run |npm )/, 'bun run '),
+      }),
+      {}
+    );
+  }
+
   // Setup the eslint config
   appPackage.eslintConfig = {
     extends: 'react-app',
@@ -241,14 +253,15 @@ module.exports = function (
   }
 
   // modifies README.md commands based on user used package manager.
-  if (useYarn) {
+  if (useYarn || useBun) {
     try {
       const readme = fs.readFileSync(path.join(appPath, 'README.md'), 'utf8');
-      fs.writeFileSync(
-        path.join(appPath, 'README.md'),
-        readme.replace(/(npm run |npm )/g, 'yarn '),
-        'utf8'
-      );
+      let newReadme = useYarn
+        ? readme.replace(/(npm run |npm )/g, 'yarn ')
+        : useBun
+        ? readme.replace(/(npm run |npm )/g, 'bun run ')
+        : readme;
+      fs.writeFileSync(path.join(appPath, 'README.md'), newReadme, 'utf8');
     } catch (err) {
       // Silencing the error. As it fall backs to using default npm commands.
     }
@@ -285,6 +298,10 @@ module.exports = function (
 
   if (useYarn) {
     command = 'yarnpkg';
+    remove = 'remove';
+    args = ['add'];
+  } else if (useBun) {
+    command = 'bun';
     remove = 'remove';
     args = ['add'];
   } else {
@@ -363,7 +380,7 @@ module.exports = function (
   }
 
   // Change displayed command to yarn instead of yarnpkg
-  const displayedCommand = useYarn ? 'yarn' : 'npm';
+  const displayedCommand = useYarn ? 'yarn' : useBun ? 'bun' : 'npm';
 
   console.log();
   console.log(`Success! Created ${appName} at ${appPath}`);
