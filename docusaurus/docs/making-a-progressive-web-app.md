@@ -9,7 +9,7 @@ but **the offline/cache-first behavior is opt-in only**.
 
 Starting with Create React App 4, you can add a `src/service-worker.js` file to
 your project to use the built-in support for
-[Workbox](https://developers.google.com/web/tools/workbox/)'s
+[Workbox](https://developer.chrome.com/docs/workbox/)'s
 [`InjectManifest`](https://developers.google.com/web/tools/workbox/reference-docs/latest/module-workbox-webpack-plugin.InjectManifest)
 plugin, which will
 [compile](https://developers.google.com/web/tools/workbox/guides/using-bundlers)
