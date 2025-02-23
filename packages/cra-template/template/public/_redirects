@@ -1,0 +1,4 @@
+# Serve the root index.html for all client-side routes when hosted in Netlify or GitLab Pages.
+# More information here: https://create-react-app.dev/docs/deployment/#serving-apps-with-client-side-routing
+
+/* /index.html 200
