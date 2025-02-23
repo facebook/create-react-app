@@ -48,8 +48,7 @@
     "redirectServedPathMiddleware.js",
     "refreshOverlayInterop.js",
     "typescriptFormatter.js",
-    "WebpackDevServerUtils.js",
-    "webpackHotDevClient.js"
+    "WebpackDevServerUtils.js"
   ],
   "dependencies": {
     "@babel/code-frame": "^7.16.0",

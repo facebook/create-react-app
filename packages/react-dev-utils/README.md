@@ -326,28 +326,6 @@ Creates a WebpackDevServer `proxy` configuration object from the `proxy` setting
 
 Returns an object with local and remote URLs for the development server. Pass this object to `createCompiler()` described above.
 
-#### `webpackHotDevClient`
-
-This is an alternative client for [WebpackDevServer](https://github.com/webpack/webpack-dev-server) that shows a syntax error overlay.
-
-It currently supports only webpack 3.x.
-
-```js
-// webpack development config
-module.exports = {
-  // ...
-  entry: [
-    // You can replace the line below with these two lines if you prefer the
-    // stock client:
-    // require.resolve('webpack-dev-server/client') + '?/',
-    // require.resolve('webpack/hot/dev-server'),
-    'react-dev-utils/webpackHotDevClient',
-    'src/index',
-  ],
-  // ...
-};
-```
-
 #### `getCSSModuleLocalIdent(context: Object, localIdentName: String, localName: String, options: Object): string`
 
 Creates a class name for CSS Modules that uses either the filename or folder name if named `index.module.css`.
