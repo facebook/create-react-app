@@ -378,9 +378,11 @@ If, when deploying, you get `Cannot read property 'email' of null`, try the foll
 
 ## [Heroku](https://www.heroku.com/)
 
-Use the [Heroku Buildpack for Create React App](https://github.com/heroku/heroku-buildpack-nodejs).
+**Prequisites:**
+Install the [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli#install-the-heroku-cli) and [create a Heroku remote](https://devcenter.heroku.com/articles/git#create-a-heroku-remote)
 
-You can find instructions in [Deploying React with Zero Configuration](https://blog.heroku.com/deploying-react-with-zero-configuration).
+**To Deploy:**
+Follow the instructions in [Deploy Your Code](https://devcenter.heroku.com/articles/git#deploy-your-code) in [Heroku's documentation](https://devcenter.heroku.com/categories/reference)
 
 ### Resolving Heroku Deployment Errors
 
