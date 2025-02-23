@@ -415,6 +415,27 @@ remote: npm ERR! argv "/tmp/build_a2875fc163b209225122d68916f1d4df/.heroku/node/
 
 In this case, ensure that the file is there with the proper lettercase and that’s not ignored on your local `.gitignore` or `~/.gitignore_global`.
 
+## [Kinsta](https://kinsta.com/application-hosting/)
+### `package.json` preparation
+Because **Kinsta** Application Hosting is using Buildpacks underneath, `package.json` is very important. Make sure that your file has:
+- the `name` field
+- both `build` and `start` scripts
+
+Also, you have to commit `package.lock` file to your repository.
+
+### Connecting with MyKinsta and deploying
+Once your project's GitHub repository is connected, you can trigger manual deploys to Kinsta Application Hosting in the **MyKinsta Admin Panel**. You can also set up automatic deployments in your admin panel.
+
+1. Go to the [My Kinsta](https://my.kinsta.com/) admin panel.
+2. Go to the **Applications** tab.
+3. Connect your GitHub repository.
+4. Press the **Add service** > **Application** button.
+5. Follow the wizard steps.
+6. Your application is deployed.
+
+### Example repository
+Check out the [official Kinsta Application Hosting Starter project for React!](https://github.com/kinsta/hello-world-react).
+
 ## [Netlify](https://www.netlify.com/)
 
 **To do a manual deploy to Netlify’s CDN:**
