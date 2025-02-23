@@ -256,6 +256,9 @@ module.exports = function (webpackEnv) {
       level: 'none',
     },
     optimization: {
+      moduleIds: isEnvProduction
+        ? 'deterministic' // Setting to deterministic to benift from long-term caching
+        : 'named', // Better for debugging
       minimize: isEnvProduction,
       minimizer: [
         // This is only used in production mode
