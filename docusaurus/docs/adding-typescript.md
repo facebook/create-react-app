@@ -37,7 +37,7 @@ or
 yarn add typescript @types/node @types/react @types/react-dom @types/jest
 ```
 
-Next, rename any file to be a TypeScript file (e.g. `src/index.js` to `src/index.tsx`) and create tsconfig.json if it's not in the root of your project [`tsconfig.json` file](https://www.typescriptlang.org/docs/handbook/tsconfig-json.html).
+Next, rename any file to be a TypeScript file (e.g. `src/index.jsx` to `src/index.tsx`) and create tsconfig.json if it's not in the root of your project [`tsconfig.json` file](https://www.typescriptlang.org/docs/handbook/tsconfig-json.html).
 
 Finally **restart your development server**!
 
