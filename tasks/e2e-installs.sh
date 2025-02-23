@@ -94,14 +94,14 @@ startLocalRegistry "$root_path"/tasks/verdaccio.yaml
 publishToLocalRegistry
 
 echo "Create React App Version: "
-npx create-react-app --version
+npm create react-app --version
 
 # ******************************************************************************
 # Test --scripts-version with a distribution tag
 # ******************************************************************************
 
 cd "$temp_app_path"
-npx create-react-app test-app-dist-tag --scripts-version=@latest
+npm create react-app test-app-dist-tag --scripts-version=@latest
 cd test-app-dist-tag
 
 # Check corresponding scripts version is installed and no TypeScript or yarn is present by default
@@ -117,7 +117,7 @@ checkDependencies
 # ******************************************************************************
 
 cd "$temp_app_path"
-npx create-react-app test-app-version-number --scripts-version=1.0.17
+npm create react-app test-app-version-number --scripts-version=1.0.17
 cd test-app-version-number
 
 # Check corresponding scripts version is installed.
@@ -144,7 +144,7 @@ checkDependencies
 # ******************************************************************************
 
 cd "$temp_app_path"
-npx create-react-app test-app-typescript --template typescript
+npm create react-app test-app-typescript --template typescript
 cd test-app-typescript
 
 # Check corresponding template is installed.
@@ -178,7 +178,7 @@ CI=true npm test
 # ******************************************************************************
 
 cd "$temp_app_path"
-npx create-react-app test-app-tarball-url --scripts-version=https://registry.npmjs.org/react-scripts/-/react-scripts-1.0.17.tgz
+npm create react-app test-app-tarball-url --scripts-version=https://registry.npmjs.org/react-scripts/-/react-scripts-1.0.17.tgz
 cd test-app-tarball-url
 
 # Check corresponding scripts version is installed.
@@ -191,7 +191,7 @@ checkDependencies
 # ******************************************************************************
 
 cd "$temp_app_path"
-npx create-react-app test-app-fork --scripts-version=react-scripts-fork
+npm create react-app test-app-fork --scripts-version=react-scripts-fork
 cd test-app-fork
 
 # Check corresponding scripts version is installed.
@@ -203,7 +203,7 @@ exists node_modules/react-scripts-fork
 
 cd "$temp_app_path"
 # we will install a non-existing package to simulate a failed installation.
-npx create-react-app test-app-should-not-exist --scripts-version=`date +%s` || true
+npm create react-app test-app-should-not-exist --scripts-version=`date +%s` || true
 # confirm that the project files were deleted
 test ! -e test-app-should-not-exist/package.json
 test ! -d test-app-should-not-exist/node_modules
@@ -216,7 +216,7 @@ cd "$temp_app_path"
 mkdir test-app-should-remain
 echo '## Hello' > ./test-app-should-remain/README.md
 # we will install a non-existing package to simulate a failed installation.
-npx create-react-app test-app-should-remain --scripts-version=`date +%s` || true
+npm create react-app test-app-should-remain --scripts-version=`date +%s` || true
 # confirm the file exist
 test -e test-app-should-remain/README.md
 # confirm only README.md is the only file in the directory
@@ -230,7 +230,7 @@ fi
 
 cd $temp_app_path
 curl "https://registry.npmjs.org/@enoah_netzach/react-scripts/-/react-scripts-0.9.0.tgz" -o enoah-scripts-0.9.0.tgz
-npx create-react-app test-app-scoped-fork-tgz --scripts-version=$temp_app_path/enoah-scripts-0.9.0.tgz
+npm create react-app test-app-scoped-fork-tgz --scripts-version=$temp_app_path/enoah-scripts-0.9.0.tgz
 cd test-app-scoped-fork-tgz
 
 # Check corresponding scripts version is installed.
@@ -245,20 +245,20 @@ cd "$temp_app_path"
 mkdir test-app-nested-paths-t1
 cd test-app-nested-paths-t1
 mkdir -p test-app-nested-paths-t1/aa/bb/cc/dd
-npx create-react-app test-app-nested-paths-t1/aa/bb/cc/dd
+npm create react-app test-app-nested-paths-t1/aa/bb/cc/dd
 cd test-app-nested-paths-t1/aa/bb/cc/dd
 npm start -- --smoke-test
 
 # Testing a path that does not exist
 cd "$temp_app_path"
-npx create-react-app test-app-nested-paths-t2/aa/bb/cc/dd
+npm create react-app test-app-nested-paths-t2/aa/bb/cc/dd
 cd test-app-nested-paths-t2/aa/bb/cc/dd
 npm start -- --smoke-test
 
 # Testing a path that is half exists
 cd "$temp_app_path"
 mkdir -p test-app-nested-paths-t3/aa
-npx create-react-app test-app-nested-paths-t3/aa/bb/cc/dd
+npm create react-app test-app-nested-paths-t3/aa/bb/cc/dd
 cd test-app-nested-paths-t3/aa/bb/cc/dd
 npm start -- --smoke-test
 

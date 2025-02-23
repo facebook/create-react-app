@@ -22,13 +22,13 @@ templates](https://create-react-app.dev/docs/custom-templates/), you'll get a
 offline-first service worker:
 
 ```sh
-npx create-react-app my-app --template cra-template-pwa
+npm create react-app my-app --template cra-template-pwa
 ```
 
 The TypeScript equivalent is:
 
 ```sh
-npx create-react-app my-app --template cra-template-pwa-typescript
+npm create react-app my-app --template cra-template-pwa-typescript
 ```
 
 If you know that you won't be using service workers, or if you'd prefer to use a
