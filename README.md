@@ -8,6 +8,7 @@
 >
 > If you are following a tutorial to learn React, there is still value in continuing your tutorial, but we do not recommend starting production apps based on Create React App.
 
+https://create-react-app.dev/
 <img alt="Logo" align="right" src="https://create-react-app.dev/img/logo.svg" width="20%" />
 
 Create React apps with no build configuration.
