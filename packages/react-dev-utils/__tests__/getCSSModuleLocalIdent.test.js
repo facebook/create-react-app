@@ -11,7 +11,11 @@ const getCSSModuleLocalIdent = require('../getCSSModuleLocalIdent');
 
 const rootContext = '/path';
 const defaultClassName = 'class';
-const options = { context: undefined, hashPrefix: '', regExp: null };
+const defaultOptions = {
+  context: undefined,
+  hashSalt: undefined,
+  regExp: null,
+};
 
 const tests = [
   {
@@ -27,15 +31,59 @@ const tests = [
     expected: 'file_class__dINZX',
   },
   {
+    resourcePath: '/path/to/file.module.sass',
+    expected: 'file_class__9vVbt',
+    options: {
+      hashSalt: 'my-app',
+    },
+  },
+  {
     resourcePath: '/path/to/file.name.module.css',
     expected: 'file_name_class__XpUJW',
+  },
+  {
+    resourcePath: '/path/to/file.name.module.css',
+    expected: 'file_name_class__OS1Yg',
+    options: {
+      hashSalt: 'my-app',
+    },
+  },
+  {
+    resourcePath: '/path/to/file.name.module.css',
+    expected: 'file_name_class__uMbcn',
+    options: {
+      hashSalt: 'my-app-123',
+    },
+  },
+  {
+    resourcePath: '/path/a/b/c/file.name.module.css',
+    className: 'test',
+    expected: 'file_name_test__2F_aq',
+    description:
+      'Verifies that hash is encoded with base64url (2F_aq instead of 2F/aq)',
+  },
+  {
+    resourcePath: '/path/a/b/file.name.module.css',
+    className: 'test',
+    expected: 'file_name_test__58Gc-',
+    description:
+      'Verifies that hash is encoded with base64url (58Gc- instead of 58Gc+)',
   },
 ];
 
 describe('getCSSModuleLocalIdent', () => {
   tests.forEach(test => {
-    const { className = defaultClassName, expected, resourcePath } = test;
-    it(JSON.stringify({ resourcePath, className }), () => {
+    const {
+      className = defaultClassName,
+      expected,
+      resourcePath,
+      options = defaultOptions,
+      description,
+    } = test;
+    const testDescription =
+      description || JSON.stringify({ resourcePath, className });
+
+    it(testDescription, () => {
       const ident = getCSSModuleLocalIdent(
         {
           resourcePath,

@@ -22,11 +22,15 @@ module.exports = function getLocalIdent(
   )
     ? '[folder]'
     : '[name]';
-  // Create a hash based on a the file location and class name. Will be unique across a project, and close to globally unique.
+  // Create a hash based on the relative file location, class name and hashSalt (if given).
+  // Will be unique across a project and globally unique with a suitable hashSalt.
+  const hashSalt = options.hashSalt || '';
   const hash = loaderUtils.getHashDigest(
-    path.posix.relative(context.rootContext, context.resourcePath) + localName,
+    hashSalt +
+      path.posix.relative(context.rootContext, context.resourcePath) +
+      localName,
     'md5',
-    'base64',
+    'base64url',
     5
   );
   // Use loaderUtils to find the file or folder name
