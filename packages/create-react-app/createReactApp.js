@@ -286,7 +286,7 @@ function createApp(name, verbose, version, template, useYarn, usePnp) {
   const appName = path.basename(root);
 
   checkAppName(appName);
-  fs.ensureDirSync(name);
+  fs.ensureDirSync(root);
   if (!isSafeToCreateProjectIn(root, name)) {
     process.exit(1);
   }
