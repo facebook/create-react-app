@@ -8,6 +8,8 @@ sidebar_label: HTTPS in Development
 
 You may require the dev server to serve pages over HTTPS. One particular case where this could be useful is when using [the "proxy" feature](proxying-api-requests-in-development.md) to proxy requests to an API server when that API server is itself serving HTTPS.
 
+Another case is when connecting with secure websockets `wss` to a backend. Doing so from a non HTTPS page may slow down considerably the requests and consequently the development process.
+
 To do this, set the `HTTPS` environment variable to `true`, then start the dev server as usual with `npm start`:
 
 ### Windows (cmd.exe)
