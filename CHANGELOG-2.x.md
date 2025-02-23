@@ -625,7 +625,7 @@ yarn add --exact react-scripts@2.1.0
   - [#4984](https://github.com/facebook/create-react-app/pull/4984) Use the correct dependency for `babel-plugin-dynamic-import-node`. ([@vikr01](https://github.com/vikr01))
 
 - `react-scripts`
-  - [#5354](https://github.com/facebook/create-react-app/pull/5354) Add environment variable to optionaly disable inlining of chunks. ([@0xdeafcafe](https://github.com/0xdeafcafe))
+  - [#5354](https://github.com/facebook/create-react-app/pull/5354) Add environment variable to optionally disable inlining of chunks. ([@0xdeafcafe](https://github.com/0xdeafcafe))
   - [#5330](https://github.com/facebook/create-react-app/pull/5330) Update `eslint-plugin-jsx-a11y` version. ([@AlmeroSteyn](https://github.com/AlmeroSteyn))
 
 #### :memo: Documentation
@@ -1173,7 +1173,7 @@ If you used 2.x alphas, please [follow these instructions](https://gist.github.c
   - [#4298](https://github.com/facebook/create-react-app/pull/4298) Added learnstorybook.com to Storybook links ([@tmeasday](https://github.com/tmeasday))
   - [#4117](https://github.com/facebook/create-react-app/pull/4117) Document multiple build environments via `env-cmd` #4071 ([@jMuzsik](https://github.com/jMuzsik))
   - [#4197](https://github.com/facebook/create-react-app/pull/4197) Add troubleshooting for Github Pages ([@xnt](https://github.com/xnt))
-  - [#4236](https://github.com/facebook/create-react-app/pull/4236) use the lastest url of gitignore file ([@Plortinus](https://github.com/Plortinus))
+  - [#4236](https://github.com/facebook/create-react-app/pull/4236) use the latest url of gitignore file ([@Plortinus](https://github.com/Plortinus))
   - [#4239](https://github.com/facebook/create-react-app/pull/4239) Fix typo in comment and be clearer about `ecma` settings in uglifyjs options ([@danielberndt](https://github.com/danielberndt))
   - [#4164](https://github.com/facebook/create-react-app/pull/4164) Fix typos in example monorepo documentation. ([@bradfordlemley](https://github.com/bradfordlemley))
   - [#4089](https://github.com/facebook/create-react-app/pull/4089) Fix a typo in packages/react-scripts/template/README.md ([@nott](https://github.com/nott))

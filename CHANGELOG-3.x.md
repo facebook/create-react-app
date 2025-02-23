@@ -136,7 +136,7 @@ v3.4.0 is a minor release that adds new features, including support for SSL and 
 
 - `react-dev-utils`, `react-scripts`
   - [#8442](https://github.com/facebook/create-react-app/pull/8442) fix(react-scripts): do not redirect served path if request may proxy ([@iamandrewluca](https://github.com/iamandrewluca))
-  - [#7259](https://github.com/facebook/create-react-app/pull/7259) feat(react-scripts): allow PUBLIC_URL in develoment mode ([@iamandrewluca](https://github.com/iamandrewluca))
+  - [#7259](https://github.com/facebook/create-react-app/pull/7259) feat(react-scripts): allow PUBLIC_URL in development mode ([@iamandrewluca](https://github.com/iamandrewluca))
   - [#7750](https://github.com/facebook/create-react-app/pull/7750) Enable custom sockjs pathname for hot reloading server. ([@heygrady](https://github.com/heygrady))
 - `cra-template-typescript`
   - [#8412](https://github.com/facebook/create-react-app/pull/8412) Change arrow functions to function declarations ([@lewislbr](https://github.com/lewislbr))
@@ -462,7 +462,7 @@ We've removed this rule as it is not compatible with Prettier. If you rely on th
 - `react-dev-utils`, `react-scripts`
   - [#7972](https://github.com/facebook/create-react-app/pull/7972) Add placeholders where old template READMEs used to be ([@iansu](https://github.com/iansu))
 - `babel-preset-react-app`
-  - [#7932](https://github.com/facebook/create-react-app/pull/7932) fix seperators typo ([@donavon](https://github.com/donavon))
+  - [#7932](https://github.com/facebook/create-react-app/pull/7932) fix separators typo ([@donavon](https://github.com/donavon))
 - `react-dev-utils`
   - [#7897](https://github.com/facebook/create-react-app/pull/7897) chore: Fix broken link for CRA deployment ([@haruelrovix](https://github.com/haruelrovix))
 - `react-scripts`
@@ -609,7 +609,7 @@ v3.2.0 is a minor release that adds support for production profiling and ignorin
 #### :memo: Documentation
 
 - [#7302](https://github.com/facebook/create-react-app/pull/7302) docs: note that 2 to 3 migration may require deletion of node_modules ([@kimpers](https://github.com/kimpers))
-- [#7757](https://github.com/facebook/create-react-app/pull/7757) Documentation typo fix: accessbile→accessible ([@tomer](https://github.com/tomer))
+- [#7757](https://github.com/facebook/create-react-app/pull/7757) Documentation typo fix: accessible→accessible ([@tomer](https://github.com/tomer))
 - [#7601](https://github.com/facebook/create-react-app/pull/7601) [Documentation] Updated list of supported Jest config overrides ([@neilbryson](https://github.com/neilbryson))
 - [#7705](https://github.com/facebook/create-react-app/pull/7705) Update runtime chunk name separator in docs ([@samuelmeuli](https://github.com/samuelmeuli))
 
@@ -865,7 +865,7 @@ v3.1.0 is a minor release that adds ESLint 6 support as well as experimental sup
   - [#7317](https://github.com/facebook/create-react-app/pull/7317) Fix typo ([@mvasin](https://github.com/mvasin))
   - [#7262](https://github.com/facebook/create-react-app/pull/7262) Docs: replace the command line to install relay/macro ([@soufDev](https://github.com/soufDev))
   - [#7170](https://github.com/facebook/create-react-app/pull/7170) Update deprecated package reference ([@bnewcomb](https://github.com/bnewcomb))
-  - [#7133](https://github.com/facebook/create-react-app/pull/7133) Make the OOM abreviation more clear ([@tlehtimaki](https://github.com/tlehtimaki))
+  - [#7133](https://github.com/facebook/create-react-app/pull/7133) Make the OOM abbreviation more clear ([@tlehtimaki](https://github.com/tlehtimaki))
   - [#7086](https://github.com/facebook/create-react-app/pull/7086) Improve breaking changes info for CRA 3.0.0 ([@falldowngoboone](https://github.com/falldowngoboone))
   - [#7059](https://github.com/facebook/create-react-app/pull/7059) Correct spelling of browserslist ([@amyrlam](https://github.com/amyrlam))
   - [#7039](https://github.com/facebook/create-react-app/pull/7039) docs: fix env-cmd example in deployment section ([@VMois](https://github.com/VMois))

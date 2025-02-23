@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import DefaultExport from './ThisFileSouldNotExist';
+import DefaultExport from './ThisFileShouldNotExist';
 
 class App extends Component {
   render() {

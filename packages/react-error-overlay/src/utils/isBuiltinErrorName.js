@@ -6,7 +6,7 @@
  */
 
 /* @flow */
-function isBultinErrorName(errorName: ?string) {
+function isBuiltinErrorName(errorName: ?string) {
   switch (errorName) {
     case 'EvalError':
     case 'InternalError':
@@ -21,5 +21,5 @@ function isBultinErrorName(errorName: ?string) {
   }
 }
 
-export { isBultinErrorName };
-export default isBultinErrorName;
+export { isBuiltinErrorName };
+export default isBuiltinErrorName;

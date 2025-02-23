@@ -10,7 +10,7 @@ import React, { Component } from 'react';
 import StackFrame from './StackFrame';
 import Collapsible from '../components/Collapsible';
 import { isInternalFile } from '../utils/isInternalFile';
-import { isBultinErrorName } from '../utils/isBultinErrorName';
+import { isBuiltinErrorName } from '../utils/isBultinErrorName';
 
 import type { StackFrame as StackFrameType } from '../utils/stack-frame';
 import type { ErrorLocation } from '../utils/parseCompileError';
@@ -40,7 +40,7 @@ class StackTrace extends Component<Props> {
     stackFrames.forEach((frame, index) => {
       const { fileName, _originalFileName: sourceFileName } = frame;
       const isInternalUrl = isInternalFile(sourceFileName, fileName);
-      const isThrownIntentionally = !isBultinErrorName(errorName);
+      const isThrownIntentionally = !isBuiltinErrorName(errorName);
       const shouldCollapse =
         isInternalUrl && (isThrownIntentionally || hasReachedAppCode);
 
