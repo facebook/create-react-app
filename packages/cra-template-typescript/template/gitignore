@@ -2,8 +2,16 @@
 
 # dependencies
 /node_modules
-/.pnp
-.pnp.js
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+# swap the comments on the following lines if you don't wish to use zero-installs
+# documentation here: https://yarnpkg.com/features/zero-installs
+!.yarn/cache
+#.pnp.*
 
 # testing
 /coverage
