@@ -26,9 +26,18 @@
     -->
     <title>React App</title>
   </head>
-  <body>
+  <body style="margin: 0;">
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
+    <div id="root">
+      <div style="min-height: 100vh; background-color: #282c34; display: grid; place-items: center">
+        <h1 style="margin: 0; color: #fff">Loading ...</h1>
+      </div>
+      <!--
+        This is a loader div.
+        If you open it directly in the browser, you will just see this.
+        You can add a custom loader here but beware it will be replaced by app as soon as it loads
+    -->
+    </div>
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
