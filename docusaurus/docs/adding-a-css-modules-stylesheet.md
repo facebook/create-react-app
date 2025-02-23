@@ -6,7 +6,9 @@ sidebar_label: Adding CSS Modules
 
 > Note: this feature is available with `react-scripts@2.0.0` and higher.
 
-This project supports [CSS Modules](https://github.com/css-modules/css-modules) alongside regular stylesheets using the `[name].module.css` file naming convention. CSS Modules allows the scoping of CSS by automatically creating a unique classname of the format `[filename]\_[classname]\_\_[hash]`.
+Except regular stylesheets this project supports [CSS Modules](https://github.com/css-modules/css-modules)
+
+CSS modules have to have `.module.css` extension (`[name].module.css`). CSS Modules allows the scoping of CSS by automatically creating a unique classname of the format `[filename]\_[classname]\_\_[hash]`.
 
 > **Tip:** Should you want to preprocess a stylesheet with Sass then make sure to [follow the installation instructions](adding-a-sass-stylesheet.md) and then change the stylesheet file extension as follows: `[name].module.scss` or `[name].module.sass`.
 
