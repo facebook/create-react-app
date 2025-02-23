@@ -50,6 +50,7 @@ function printFileSizesAfterBuild(
             ),
             name: path.basename(asset.name),
             size: size,
+            previousSize,
             sizeLabel:
               filesize(size) + (difference ? ' (' + difference + ')' : ''),
           };
@@ -85,6 +86,23 @@ function printFileSizesAfterBuild(
         chalk.cyan(asset.name)
     );
   });
+
+  var { totalSize, previousTotalSize } = assets.reduce(
+    (accumulator, asset) => ({
+      totalSize: accumulator.totalSize + asset.size,
+      previousTotalSize: accumulator.previousTotalSize + asset.previousSize,
+    }),
+    { totalSize: 0, previousTotalSize: 0 }
+  );
+
+  var differenceTotalSize = getDifferenceLabel(totalSize, previousTotalSize);
+  console.log();
+  console.log(
+    '  Total Size: ' +
+      filesize(totalSize) +
+      (differenceTotalSize ? ' (' + differenceTotalSize + ')' : '')
+  );
+
   if (suggestBundleSplitting) {
     console.log();
     console.log(
