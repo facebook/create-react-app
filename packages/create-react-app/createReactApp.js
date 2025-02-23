@@ -252,19 +252,25 @@ function init() {
         console.log();
       } else {
         const useYarn = isUsingYarn();
+        let yarnInfo;
+        if (useYarn) {
+          yarnInfo = checkYarnVersion();
+        }
+
         createApp(
           projectName,
           program.verbose,
           program.scriptsVersion,
           program.template,
           useYarn,
+          yarnInfo,
           program.usePnp
         );
       }
     });
 }
 
-function createApp(name, verbose, version, template, useYarn, usePnp) {
+function createApp(name, verbose, version, template, useYarn, yarnInfo, usePnp) {
   const unsupportedNodeVersion = !semver.satisfies(
     // Coerce strings with metadata (i.e. `15.0.0-nightly`).
     semver.coerce(process.version),
@@ -300,6 +306,11 @@ function createApp(name, verbose, version, template, useYarn, usePnp) {
     version: '0.1.0',
     private: true,
   };
+
+  if (yarnInfo.hasMaxYarnPnp) {
+    packageJson.packageManager = `yarn@${yarnInfo.yarnVersion}`;
+  }
+
   fs.writeFileSync(
     path.join(root, 'package.json'),
     JSON.stringify(packageJson, null, 2) + os.EOL
@@ -326,7 +337,6 @@ function createApp(name, verbose, version, template, useYarn, usePnp) {
       version = 'react-scripts@0.9.x';
     }
   } else if (usePnp) {
-    const yarnInfo = checkYarnVersion();
     if (yarnInfo.yarnVersion) {
       if (!yarnInfo.hasMinYarnPnp) {
         console.log(
@@ -794,10 +804,14 @@ function checkYarnVersion() {
   let hasMaxYarnPnp = false;
   let yarnVersion = null;
   try {
-    yarnVersion = execSync('yarnpkg --version').toString().trim();
+    const userAgentMatches = (process.env.npm_config_user_agent || '').match('yarn/([^ ]+)');
+    yarnVersion = userAgentMatches ? userAgentMatches[1] : null;
+    if (!yarnVersion) {
+      yarnVersion = execSync('yarnpkg --version').toString().trim();
+    }
     if (semver.valid(yarnVersion)) {
       hasMinYarnPnp = semver.gte(yarnVersion, minYarnPnp);
-      hasMaxYarnPnp = semver.lt(yarnVersion, maxYarnPnp);
+      hasMaxYarnPnp = semver.gte(yarnVersion, maxYarnPnp);
     } else {
       // Handle non-semver compliant yarn version strings, which yarn currently
       // uses for nightly builds. The regex truncates anything after the first
@@ -806,7 +820,7 @@ function checkYarnVersion() {
       if (trimmedYarnVersionMatch) {
         const trimmedYarnVersion = trimmedYarnVersionMatch.pop();
         hasMinYarnPnp = semver.gte(trimmedYarnVersion, minYarnPnp);
-        hasMaxYarnPnp = semver.lt(trimmedYarnVersion, maxYarnPnp);
+        hasMaxYarnPnp = semver.gte(trimmedYarnVersion, maxYarnPnp);
       }
     }
   } catch (err) {
