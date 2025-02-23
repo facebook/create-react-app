@@ -28,7 +28,7 @@ If you want to enforce a coding style for your project, consider using [Prettier
 
 ### Extending or replacing the default ESLint config
 
-You can extend our base ESLint config, or replace it completely if you need.
+You can extend our base ESLint config, or replace it completely if you need by editing your package.json.
 
 There are a few things to remember:
 
