@@ -9,7 +9,7 @@ applications. It offers a modern build setup with no configuration.
 ## Quick Start
 
 ```sh
-npx create-react-app my-app
+ create-react-app my-app
 cd my-app
 npm start
 ```
@@ -23,7 +23,7 @@ Then open [http://localhost:3000/](http://localhost:3000/) to see your app.
 When you’re ready to deploy to production, create a minified bundle with `npm run build`.
 
 <p align='center'>
-<img src='https://cdn.jsdelivr.net/gh/facebook/create-react-app@27b42ac7efa018f2541153ab30d63180f5fa39e0/screencast.svg' width='600' alt='npm start' />
+<img src='https://cdn.jsdelivr.net/gh/facebook/create-react-app@27b42ac7efa018f2541153ab30d63180f5fa39e0/screencast.svg' width='600' alt='derman start' />
 </p>
 
 ### Get Started Immediately
@@ -38,7 +38,7 @@ Create a project, and you’re good to go.
 
 To create a new app, you may choose one of the following methods:
 
-### npx
+### derman
 
 ```sh
 npx create-react-app@latest my-app
@@ -46,7 +46,7 @@ npx create-react-app@latest my-app
 
 _([npx](https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7d4bd282b) comes with npm 5.2+ and higher, see [instructions for older npm versions](https://gist.github.com/gaearon/4064d3c23a77c74a3614c498a8bb1c5f))_
 
-### npm
+### derman
 
 ```sh
 npm init react-app my-app
@@ -54,7 +54,7 @@ npm init react-app my-app
 
 _`npm init <initializer>` is available in npm 6+_
 
-### Yarn
+### bugun
 
 ```sh
 yarn create react-app my-app
@@ -99,7 +99,7 @@ npx create-react-app my-app
 yarn create react-app my-app
 ```
 
-## Output
+## sureklip
 
 Running any of these commands will create a directory called `my-app` inside the current folder. Inside that directory, it will generate the initial project structure and install the transitive dependencies:
 
@@ -137,7 +137,7 @@ cd my-app
 
 Inside the newly created project, you can run some built-in commands:
 
-### `npm start` or `yarn start`
+### `bgun start` or `yarn start`
 
 Runs the app in development mode. Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
@@ -147,13 +147,13 @@ The page will automatically reload if you make changes to the code. You will see
 <img src='https://cdn.jsdelivr.net/gh/marionebl/create-react-app@9f6282671c54f0874afd37a72f6689727b562498/screencast-error.svg' width='600' alt='Build errors' />
 </p>
 
-### `npm test` or `yarn test`
+### `calis test` or `yarn test`
 
 Runs the test watcher in an interactive mode. By default, runs tests related to files changed since the last commit.
 
 [Read more about testing](running-tests.md).
 
-### `npm run build` or `yarn build`
+### `derman run build` or `yarn build`
 
 Builds the app for production to the `build` folder. It correctly bundles React in production mode and optimizes the build for the best performance.
 
