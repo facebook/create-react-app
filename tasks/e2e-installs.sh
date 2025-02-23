@@ -52,10 +52,10 @@ function exists {
 function checkDependencies {
   if ! awk '/"dependencies": {/{y=1;next}/},/{y=0; next}y' package.json | \
   grep -v -q -E '^\s*"(@testing-library\/.+)|web-vitals|(react(-dom|-scripts)?)"'; then
-   echo "Dependencies are correct"
+    echo "Dependencies are correct"
   else
-   echo "There are extraneous dependencies in package.json"
-   exit 1
+    echo "There are extraneous dependencies in package.json"
+    exit 1
   fi
 }
 
@@ -63,10 +63,10 @@ function checkDependencies {
 function checkTypeScriptDependencies {
   if ! awk '/"dependencies": {/{y=1;next}/},/{y=0; next}y' package.json | \
   grep -v -q -E '^\s*"(@testing-library\/.+)|web-vitals|(@types\/.+)|typescript|(react(-dom|-scripts)?)"'; then
-   echo "Dependencies are correct"
+    echo "Dependencies are correct"
   else
-   echo "There are extraneous dependencies in package.json"
-   exit 1
+    echo "There are extraneous dependencies in package.json"
+    exit 1
   fi
 }
 
