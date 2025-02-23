@@ -22,6 +22,8 @@
   "dependencies": {
     "@babel/core": "^7.16.0",
     "@babel/eslint-parser": "^7.16.3",
+    "@babel/plugin-syntax-flow": "^7.17.0",
+    "@babel/plugin-transform-react-jsx": "^7.17.0",
     "@rushstack/eslint-patch": "^1.1.0",
     "@typescript-eslint/eslint-plugin": "^5.5.0",
     "@typescript-eslint/parser": "^5.5.0",
