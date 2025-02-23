@@ -740,6 +740,7 @@ module.exports = function (webpackEnv) {
             diagnosticOptions: {
               syntactic: true,
             },
+            build: true,
             mode: 'write-references',
             // profile: true,
           },
