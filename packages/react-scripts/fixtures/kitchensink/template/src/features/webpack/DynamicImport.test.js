@@ -6,13 +6,16 @@
  */
 
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOMClient from 'react-dom/client';
+import { flushSync } from 'react-dom';
 
 describe('dynamic import', () => {
   it('renders without crashing', async () => {
     const DynamicImport = (await import('./DynamicImport')).default;
     const div = document.createElement('div');
-    ReactDOM.render(<DynamicImport />, div);
+    flushSync(() => {
+      ReactDOMClient.createRoot(div).render(<DynamicImport />);
+    });
     expect(div.textContent).toBe('Hello World!');
   });
 });

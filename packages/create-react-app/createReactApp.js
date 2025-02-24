@@ -53,9 +53,41 @@ function isUsingYarn() {
   return (process.env.npm_config_user_agent || '').indexOf('yarn') === 0;
 }
 
+function hasGivenWarning() {
+  const localWarningFilePath = path.join(
+    __dirname,
+    'given-deprecation-warning'
+  );
+  return fs.existsSync(localWarningFilePath);
+}
+
+function writeWarningFile() {
+  const localWarningFilePath = path.join(
+    __dirname,
+    'given-deprecation-warning'
+  );
+  fs.writeFileSync(localWarningFilePath, 'true');
+}
+
 let projectName;
 
 function init() {
+  if (!hasGivenWarning()) {
+    console.log(chalk.yellow.bold('create-react-app is deprecated.'));
+    console.log('');
+    console.log(
+      'You can find a list of up-to-date React frameworks on react.dev'
+    );
+    console.log(
+      'For more info see:' + chalk.underline('https://react.dev/link/cra')
+    );
+    console.log('');
+    console.log(
+      chalk.grey('This error message will only be shown once per install.')
+    );
+    writeWarningFile();
+  }
+
   const program = new commander.Command(packageJson.name)
     .version(packageJson.version)
     .arguments('<project-directory>')

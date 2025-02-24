@@ -72,12 +72,12 @@ Different projects choose different testing tradeoffs based on how often compone
 
 ```js
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOMClient from 'react-dom/client';
 import App from './App';
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
-  ReactDOM.render(<App />, div);
+  ReactDOMClient.createRoot(div).render(<App />);
 });
 ```
 
@@ -92,13 +92,13 @@ If you’d like to test components in isolation from the child components they r
 To install `react-testing-library` and `jest-dom`, you can run:
 
 ```sh
-npm install --save @testing-library/react @testing-library/jest-dom
+npm install --save @testing-library/react @testing-library/dom @testing-library/jest-dom
 ```
 
 Alternatively you may use `yarn`:
 
 ```sh
-yarn add @testing-library/react @testing-library/jest-dom
+yarn add @testing-library/react @testing-library/dom @testing-library/jest-dom
 ```
 
 If you want to avoid boilerplate in your test files, you can create a [`src/setupTests.js`](#initializing-test-environment) file:
@@ -245,7 +245,7 @@ Popular CI servers already set the environment variable `CI` by default but you 
 ### Travis CI
 
 1. Following the [Travis Getting started](https://docs.travis-ci.com/user/getting-started/) guide for syncing your GitHub repository with Travis. You may need to initialize some settings manually in your [profile](https://travis-ci.org/profile) page.
-1. Add a `.travis.yml` file to your git repository.
+2. Add a `.travis.yml` file to your git repository.
 
 ```yaml
 language: node_js
@@ -259,8 +259,8 @@ script:
   - npm test
 ```
 
-1. Trigger your first build with a git push.
-1. [Customize your Travis CI Build](https://docs.travis-ci.com/user/customizing-the-build/) if needed.
+3. Trigger your first build with a git push.
+4. [Customize your Travis CI Build](https://docs.travis-ci.com/user/customizing-the-build/) if needed.
 
 ### CircleCI
 

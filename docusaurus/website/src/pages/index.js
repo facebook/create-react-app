@@ -7,6 +7,7 @@
 
 import React from 'react';
 import Link from '@docusaurus/Link';
+import Head from '@docusaurus/Head';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
@@ -41,43 +42,56 @@ function Home() {
 
   return (
     <Layout
-      permalink={ '/' }
-      description={ 'Set up a modern web app by running one command.' }
+      permalink={'/'}
+      description={'Set up a modern web app by running one command.'}
     >
-      <div className={ clsx('hero hero--dark', styles.heroBanner) }>
+      <Head>
+        <meta name="robots" content="noindex" />
+        <title>Create React App is deprecated.</title>
+        <meta
+          name="description"
+          content="Create React App is deprecated. Please see react.dev for modern options."
+        />
+        <meta property="og:title" content="Create React App is deprecated." />
+        <meta
+          property="og:description"
+          content="Create React App is deprecated. Please see react.dev for modern options."
+        />
+      </Head>
+      <div className={clsx('hero hero--dark', styles.heroBanner)}>
         <div className="container">
           <img
-            className={ clsx(styles.heroBannerLogo, 'margin-vert--md') }
+            className={clsx(styles.heroBannerLogo, 'margin-vert--md')}
             alt="Create React App logo"
-            src={ useBaseUrl('img/logo.svg') }
+            src={useBaseUrl('img/logo.svg')}
           />
-          <h1 className="hero__title">{ siteConfig.title }</h1>
-          <p className="hero__subtitle">{ siteConfig.tagline }</p>
-          <div className={ styles.getStarted }>
+          <h1 className="hero__title">{siteConfig.title}</h1>
+          <p className="hero__subtitle">{siteConfig.tagline}</p>
+          <div className={styles.getStarted}>
             <Link
               className="button button--outline button--primary button--lg"
-              to={ useBaseUrl('docs/getting-started') }
+              to={useBaseUrl('docs/getting-started')}
             >
               Get Started
             </Link>
           </div>
         </div>
       </div>
-      { features && features.length && (
-        <div className={ styles.features }>
+      {features.length > 0 && (
+        <div className={styles.features}>
           <div className="container">
             <div className="row">
-              { features.map(({ title, content }, idx) => (
-                <div key={ idx } className={ clsx('col col--4', styles.feature) }>
-                  <h2>{ title }</h2>
-                  <p>{ content }</p>
+              {features.map(({ title, content }, idx) => (
+                <div key={idx} className={clsx('col col--4', styles.feature)}>
+                  <h2>{title}</h2>
+                  <p>{content}</p>
                 </div>
-              )) }
+              ))}
             </div>
           </div>
         </div>
-      ) }
-      <div className={ styles.gettingStartedSection }>
+      )}
+      <div className={styles.gettingStartedSection}>
         <div className="container padding-vert--xl text--left">
           <div className="row">
             <div className="col col--4 col--offset-1">
@@ -96,7 +110,7 @@ function Home() {
             </div>
             <div className="col col--5 col--offset-1">
               <img
-                className={ styles.featureImage }
+                className={styles.featureImage}
                 alt="Easy to get started in seconds"
                 src={
                   'https://cdn.jsdelivr.net/gh/facebook/create-react-app@27b42ac/screencast.svg'
@@ -111,9 +125,9 @@ function Home() {
           <div className="row">
             <div className="col col--4 col--offset-1">
               <img
-                className={ styles.featureImage }
+                className={styles.featureImage}
                 alt="Easy to update"
-                src={ useBaseUrl('img/update.png') }
+                src={useBaseUrl('img/update.png')}
               />
             </div>
             <div className="col col--5 col--offset-1">
