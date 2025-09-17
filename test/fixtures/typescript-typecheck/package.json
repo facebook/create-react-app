@@ -1,9 +1,9 @@
 {
   "dependencies": {
-    "@types/react": "*",
-    "@types/react-dom": "*",
-    "react": "*",
-    "react-dom": "*",
-    "typescript": "^3.9.5"
+    "@types/react": "17.0.38",
+    "@types/react-dom": "19.1.9",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "typescript": "3.9.10"
   }
 }
