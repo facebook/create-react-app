@@ -19,7 +19,7 @@ For example, see the sections on [adding a stylesheet](adding-a-stylesheet.md) a
 This mechanism provides a number of benefits:
 
 - Scripts and stylesheets get minified and bundled together to avoid extra network requests.
-- Missing files cause compilation errors instead of 404 errors for your users.
+- Missing files cause compilation errors instead of
 - Result filenames include content hashes so you don’t need to worry about browsers caching their old versions.
 
 However there is an **escape hatch** that you can use to add an asset outside of the module system.
