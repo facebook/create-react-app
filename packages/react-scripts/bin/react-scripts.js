@@ -8,6 +8,20 @@
 
 'use strict';
 
+// Check Node.js version early for clearer errors (see #5430)
+const currentNodeVersion = process.versions.node;
+const [major] = currentNodeVersion.split('.');
+if (Number(major) < 14) {
+  console.error(
+    'You are running Node ' +
+      currentNodeVersion +
+      '.\n' +
+      'react-scripts requires Node 14 or higher. \n' +
+      'Please update your version of Node.'
+  );
+  process.exit(1);
+}
+
 // Makes the script crash on unhandled rejections instead of silently
 // ignoring them. In the future, promise rejections that are not handled will
 // terminate the Node.js process with a non-zero exit code.
