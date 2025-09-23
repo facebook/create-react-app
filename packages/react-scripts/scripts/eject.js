@@ -237,8 +237,29 @@ prompts({
 
   // Add Babel config
   console.log(`  Adding ${cyan('Babel')} preset`);
+  // Detect if the new JSX transform is available and prefer it after eject
+  const hasJsxRuntime = (() => {
+    if (process.env.DISABLE_NEW_JSX_TRANSFORM === 'true') {
+      return false;
+    }
+    try {
+      require.resolve('react/jsx-runtime');
+      return true;
+    } catch (e) {
+      return false;
+    }
+  })();
+
   appPackage.babel = {
-    presets: ['react-app'],
+    // Preserve preset with explicit runtime so ejected apps keep working without importing React
+    presets: [
+      [
+        'react-app',
+        {
+          runtime: hasJsxRuntime ? 'automatic' : 'classic',
+        },
+      ],
+    ],
   };
 
   // Add ESlint config

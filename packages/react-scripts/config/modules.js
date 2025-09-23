@@ -123,7 +123,39 @@ function getModules() {
     // Otherwise we'll check if there is jsconfig.json
     // for non TS projects.
   } else if (hasJsConfig) {
-    config = require(paths.appJsConfig);
+    // Prefer using TypeScript parser to support JSON with comments in jsconfig.json
+    let ts;
+    try {
+      ts = require(
+        resolve.sync('typescript', {
+          basedir: paths.appNodeModules,
+        })
+      );
+    } catch (e) {
+      ts = null;
+    }
+
+    if (ts) {
+      // Use TypeScript's tolerant JSON parser which supports comments (JSONC)
+      config = ts.readConfigFile(paths.appJsConfig, ts.sys.readFile).config;
+    } else {
+      // Fallback: parse as strict JSON and provide actionable error for JSONC
+      try {
+        const fileContent = fs.readFileSync(paths.appJsConfig, 'utf8');
+        config = JSON.parse(fileContent);
+      } catch (e) {
+        throw new Error(
+          chalk.red.bold(
+            'Failed to parse jsconfig.json.\n' +
+              'If your jsconfig.json contains comments, please install TypeScript in your project:\n' +
+              '  npm install --save-dev typescript\n' +
+              'or\n' +
+              '  yarn add --dev typescript\n' +
+              'Create React App will then parse jsconfig.json with comment support.'
+          )
+        );
+      }
+    }
   }
 
   config = config || {};
