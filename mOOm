@@ -1,0 +1,545 @@
+import React, { useState, useMemo } from "react";
+
+// Moom CRM - Single-file React App (Tailwind CSS required in host project)
+// Default export: MoomCRMApp
+// Features: Role switcher (Admin / Team Lead / Associate), Dashboard, Leads List, Lead Detail, Teams, Users
+// Data: in-memory sample data. Replace with API calls in real app.
+
+export default function MoomCRMApp() {
+  const [role, setRole] = useState("admin"); // 'admin' | 'team_lead' | 'associate'
+  const [selectedPage, setSelectedPage] = useState("dashboard");
+  const [selectedLead, setSelectedLead] = useState(null);
+
+  // sample teams and users
+  const [teams, setTeams] = useState([
+    { id: "t1", name: "Lucknow Team", managerId: "u2", region: "Lucknow" },
+    { id: "t2", name: "Ayodhya Team", managerId: "u3", region: "Ayodhya" },
+  ]);
+
+  const [users, setUsers] = useState([
+    { id: "u1", name: "Admin User", email: "admin@moom.com", role: "admin", teamId: null },
+    { id: "u2", name: "Suresh Yadav", email: "suresh.associate@moom.com", role: "team_lead", teamId: "t1" },
+    { id: "u3", name: "Anita Sharma", email: "anita.employee@moom.com", role: "team_lead", teamId: "t2" },
+    { id: "u4", name: "Ramesh Kumar", email: "ramesh@moom.com", role: "associate", teamId: "t1" },
+  ]);
+
+  const [leads, setLeads] = useState([
+    {
+      id: "L-1001",
+      title: "Maa Kisan Traders - Fertilizer Needs",
+      company: "Maa Kisan Traders",
+      contact: "Ramesh Kumar",
+      phone: "+919812345678",
+      ownerId: "u4",
+      teamId: "t1",
+      stage: "New",
+      expectedValue: 15000,
+      source: "Website",
+      territory: "Lucknow",
+      createdAt: "2025-09-28",
+      notes: "Interested in bulk fertilizer supply",
+    },
+    {
+      id: "L-1002",
+      title: "Krishna Agro Pvt Ltd - Seeds",
+      company: "Krishna Agro Pvt Ltd",
+      contact: "Anita Sharma",
+      phone: "+919876543219",
+      ownerId: "u3",
+      teamId: "t2",
+      stage: "Contacted",
+      expectedValue: 25000,
+      source: "Referral",
+      territory: "Ayodhya",
+      createdAt: "2025-09-25",
+      notes: "Looking for organic seeds",
+    },
+  ]);
+
+  // derived data
+  const me = useMemo(() => users.find((u) => (role === "admin" ? u.id === "u1" : u.role === role) ?? users[0]), [role, users]);
+
+  // role-based filtered leads
+  const visibleLeads = useMemo(() => {
+    if (role === "admin") return leads;
+    if (role === "team_lead") {
+      // team lead sees leads for their team
+      const myUser = users.find((u) => u.role === "team_lead");
+      if (!myUser) return [];
+      return leads.filter((l) => l.teamId === myUser.teamId);
+    }
+    // associate sees own leads
+    const myAssociate = users.find((u) => u.role === "associate");
+    if (!myAssociate) return [];
+    return leads.filter((l) => l.ownerId === myAssociate.id);
+  }, [role, leads, users]);
+
+  function createLead(payload) {
+    const newLead = { id: `L-${Math.floor(Math.random() * 9000) + 1000}`, createdAt: new Date().toISOString().slice(0, 10), ...payload };
+    setLeads((s) => [newLead, ...s]);
+    return newLead;
+  }
+
+  function updateLead(id, patch) {
+    setLeads((s) => s.map((l) => (l.id === id ? { ...l, ...patch } : l)));
+  }
+
+  function bulkAssign(leadIds, userId) {
+    setLeads((s) => s.map((l) => (leadIds.includes(l.id) ? { ...l, ownerId: userId, teamId: users.find((u) => u.id === userId)?.teamId } : l)));
+  }
+
+  // UI
+  return (
+    <div className="min-h-screen bg-slate-50 text-slate-800">
+      <div className="max-w-7xl mx-auto p-4">
+        <Header role={role} setRole={setRole} selectedPage={selectedPage} setSelectedPage={setSelectedPage} />
+        <div className="flex gap-4 mt-4">
+          <Sidebar selectedPage={selectedPage} setSelectedPage={setSelectedPage} role={role} />
+
+          <main className="flex-1">
+            {selectedPage === "dashboard" && (
+              <Dashboard
+                role={role}
+                leads={leads}
+                visibleLeads={visibleLeads}
+                users={users}
+                teams={teams}
+                onOpenLead={(lead) => {
+                  setSelectedLead(lead);
+                  setSelectedPage("lead");
+                }}
+              />
+            )}
+
+            {selectedPage === "leads" && (
+              <LeadsList
+                leads={visibleLeads}
+                users={users}
+                teams={teams}
+                onOpenLead={(l) => {
+                  setSelectedLead(l);
+                  setSelectedPage("lead");
+                }}
+                onCreate={(payload) => createLead(payload)}
+                onUpdate={updateLead}
+                onBulkAssign={bulkAssign}
+                role={role}
+              />
+            )}
+
+            {selectedPage === "teams" && <TeamsPage teams={teams} users={users} />}
+
+            {selectedPage === "users" && <UsersPage users={users} setUsers={setUsers} teams={teams} />}
+
+            {selectedPage === "lead" && selectedLead && (
+              <LeadDetail lead={selectedLead} onClose={() => setSelectedPage("leads")} onSave={updateLead} users={users} />
+            )}
+          </main>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function Header({ role, setRole, selectedPage, setSelectedPage }) {
+  return (
+    <header className="flex items-center justify-between gap-4">
+      <div className="flex items-center gap-3">
+        <div className="w-12 h-12 bg-green-600 text-white rounded flex items-center justify-center font-bold">M</div>
+        <div>
+          <h1 className="text-xl font-semibold">moom — Har Ghar Ki Dukaan</h1>
+          <p className="text-sm text-slate-500">Sales CRM Portal Prototype</p>
+        </div>
+      </div>
+
+      <div className="flex items-center gap-3">
+        <nav className="hidden md:flex gap-2">
+          <button className={`px-3 py-2 rounded ${selectedPage === "dashboard" ? "bg-white shadow" : "hover:bg-white/50"}`} onClick={() => setSelectedPage("dashboard")}>Dashboard</button>
+          <button className={`px-3 py-2 rounded ${selectedPage === "leads" ? "bg-white shadow" : "hover:bg-white/50"}`} onClick={() => setSelectedPage("leads")}>Leads</button>
+          <button className={`px-3 py-2 rounded ${selectedPage === "teams" ? "bg-white shadow" : "hover:bg-white/50"}`} onClick={() => setSelectedPage("teams")}>Teams</button>
+          <button className={`px-3 py-2 rounded ${selectedPage === "users" ? "bg-white shadow" : "hover:bg-white/50"}`} onClick={() => setSelectedPage("users")} >Users</button>
+        </nav>
+
+        <div className="flex items-center gap-2 bg-white p-2 rounded shadow">
+          <label className="text-xs text-slate-500">Role</label>
+          <select value={role} onChange={(e) => setRole(e.target.value)} className="text-sm rounded px-2 py-1">
+            <option value="admin">Admin</option>
+            <option value="team_lead">Employee Team Lead</option>
+            <option value="associate">Associate</option>
+          </select>
+        </div>
+      </div>
+    </header>
+  );
+}
+
+function Sidebar({ selectedPage, setSelectedPage, role }) {
+  return (
+    <aside className="w-72 bg-white rounded shadow p-3 h-[75vh] sticky top-6">
+      <div className="mb-4">
+        <h3 className="text-sm text-slate-500">Quick Actions</h3>
+        <div className="flex flex-col gap-2 mt-2">
+          <button className="px-3 py-2 rounded bg-green-600 text-white" onClick={() => setSelectedPage("leads")}>Create Lead</button>
+          <button className="px-3 py-2 rounded border" onClick={() => setSelectedPage("leads")}>Import CSV</button>
+        </div>
+      </div>
+
+      <div>
+        <h4 className="text-sm text-slate-500">Navigation</h4>
+        <ul className="mt-2 space-y-1">
+          <li>
+            <button className={`w-full text-left px-3 py-2 rounded ${selectedPage === "dashboard" ? "bg-green-50" : "hover:bg-slate-50"}`} onClick={() => setSelectedPage("dashboard")}>Dashboard</button>
+          </li>
+          <li>
+            <button className={`w-full text-left px-3 py-2 rounded ${selectedPage === "leads" ? "bg-green-50" : "hover:bg-slate-50"}`} onClick={() => setSelectedPage("leads")} >Leads</button>
+          </li>
+          {(role === "admin" || role === "team_lead") && (
+            <>
+              <li>
+                <button className={`w-full text-left px-3 py-2 rounded ${selectedPage === "teams" ? "bg-green-50" : "hover:bg-slate-50"}`} onClick={() => setSelectedPage("teams")} >Teams</button>
+              </li>
+              <li>
+                <button className={`w-full text-left px-3 py-2 rounded ${selectedPage === "users" ? "bg-green-50" : "hover:bg-slate-50"}`} onClick={() => setSelectedPage("users")} >Users</button>
+              </li>
+            </>
+          )}
+        </ul>
+      </div>
+    </aside>
+  );
+}
+
+function Dashboard({ role, leads, visibleLeads, users, teams, onOpenLead }) {
+  const totalLeads = leads.length;
+  const myLeads = visibleLeads.length;
+  const byStage = leads.reduce((acc, l) => {
+    acc[l.stage] = (acc[l.stage] || 0) + 1;
+    return acc;
+  }, {});
+
+  return (
+    <div>
+      <div className="grid grid-cols-3 gap-4">
+        <StatCard title="Total Leads" value={totalLeads} />
+        <StatCard title={role === "admin" ? "All Visible Leads" : "My / Team Leads"} value={myLeads} />
+        <StatCard title="Teams" value={teams.length} />
+      </div>
+
+      <div className="mt-6">
+        <h3 className="text-lg font-semibold">Pipeline Overview</h3>
+        <div className="mt-3 grid grid-cols-4 gap-3">
+          {Object.keys(byStage).length === 0 && <div className="text-sm text-slate-500">No leads yet</div>}
+          {Object.entries(byStage).map(([stage, count]) => (
+            <div key={stage} className="bg-white p-3 rounded shadow">
+              <div className="text-sm text-slate-500">{stage}</div>
+              <div className="text-2xl font-bold">{count}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="mt-6">
+        <h3 className="text-lg font-semibold">Recent Leads</h3>
+        <div className="mt-3 space-y-2">
+          {visibleLeads.slice(0, 5).map((l) => (
+            <div key={l.id} className="bg-white p-3 rounded shadow flex items-center justify-between">
+              <div>
+                <div className="font-semibold">{l.title}</div>
+                <div className="text-sm text-slate-500">{l.company} • {l.contact} • {l.territory}</div>
+              </div>
+              <div className="flex gap-2">
+                <div className="text-sm">{l.stage}</div>
+                <button className="px-2 py-1 rounded bg-green-600 text-white text-sm" onClick={() => onOpenLead(l)}>Open</button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function StatCard({ title, value }) {
+  return (
+    <div className="bg-white p-4 rounded shadow flex flex-col">
+      <div className="text-sm text-slate-500">{title}</div>
+      <div className="text-2xl font-bold mt-2">{value}</div>
+    </div>
+  );
+}
+
+function LeadsList({ leads, users, teams, onOpenLead, onCreate, onUpdate, onBulkAssign, role }) {
+  const [filter, setFilter] = useState({ q: "", stage: "", territory: "" });
+  const [selectedIds, setSelectedIds] = useState([]);
+  const filtered = leads.filter((l) => (filter.q ? `${l.title} ${l.company} ${l.contact}`.toLowerCase().includes(filter.q.toLowerCase()) : true) && (filter.stage ? l.stage === filter.stage : true) && (filter.territory ? l.territory === filter.territory : true));
+
+  function toggleSelect(id) {
+    setSelectedIds((s) => (s.includes(id) ? s.filter((x) => x !== id) : [...s, id]));
+  }
+
+  return (
+    <div>
+      <div className="flex items-center justify-between">
+        <h2 className="text-xl font-semibold">Leads</h2>
+        <div className="flex gap-2">
+          <CreateLeadButton onCreate={onCreate} users={users} teams={teams} currentRole={role} />
+          <button
+            className="px-3 py-2 rounded border"
+            onClick={() => {
+              // CSV import placeholder
+              alert("CSV import modal not implemented in prototype. Use export/import in production.");
+            }}
+          >
+            Import CSV
+          </button>
+        </div>
+      </div>
+
+      <div className="bg-white mt-4 p-3 rounded shadow">
+        <div className="flex gap-2 mb-3">
+          <input className="flex-1 rounded border px-2 py-1" placeholder="Search leads..." value={filter.q} onChange={(e) => setFilter({ ...filter, q: e.target.value })} />
+          <select value={filter.stage} onChange={(e) => setFilter({ ...filter, stage: e.target.value })} className="rounded border px-2 py-1">
+            <option value="">All Stages</option>
+            <option>New</option>
+            <option>Contacted</option>
+            <option>Qualified</option>
+            <option>Converted</option>
+            <option>Closed</option>
+          </select>
+          <select value={filter.territory} onChange={(e) => setFilter({ ...filter, territory: e.target.value })} className="rounded border px-2 py-1">
+            <option value="">All Territories</option>
+            {[...new Set(leads.map((l) => l.territory))].map((t) => <option key={t}>{t}</option>)}
+          </select>
+        </div>
+
+        <table className="w-full text-sm">
+          <thead>
+            <tr className="text-left text-slate-500">
+              <th className="pr-2"><input type="checkbox" checked={selectedIds.length === filtered.length && filtered.length > 0} onChange={(e) => setSelectedIds(e.target.checked ? filtered.map((f) => f.id) : [])} /></th>
+              <th>Lead</th>
+              <th>Company</th>
+              <th>Contact</th>
+              <th>Owner</th>
+              <th>Stage</th>
+              <th>Value</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {filtered.map((l) => (
+              <tr key={l.id} className="border-t">
+                <td className="py-2"><input type="checkbox" checked={selectedIds.includes(l.id)} onChange={() => toggleSelect(l.id)} /></td>
+                <td className="py-2"><div className="font-medium">{l.title}</div><div className="text-xs text-slate-500">{l.createdAt}</div></td>
+                <td className="py-2">{l.company}</td>
+                <td className="py-2">{l.contact} • {l.phone}</td>
+                <td className="py-2">{users.find((u) => u.id === l.ownerId)?.name ?? "-"}</td>
+                <td className="py-2">{l.stage}</td>
+                <td className="py-2">₹{l.expectedValue}</td>
+                <td className="py-2 text-right"><button className="px-2 py-1 rounded bg-green-600 text-white" onClick={() => onOpenLead(l)}>Open</button></td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+
+        <div className="flex items-center justify-between mt-3">
+          <div className="text-sm text-slate-500">{filtered.length} results</div>
+          <div className="flex items-center gap-2">
+            <select id="assignUser" className="rounded border px-2 py-1">
+              <option value="">Assign to...</option>
+              {users.filter((u) => u.role === "associate").map((u) => <option key={u.id} value={u.id}>{u.name}</option>)}
+            </select>
+            <button
+              className="px-3 py-2 rounded bg-blue-600 text-white"
+              onClick={() => {
+                const sel = document.getElementById("assignUser").value;
+                if (!sel) return alert("Choose an associate to assign");
+                onBulkAssign(selectedIds, sel);
+                setSelectedIds([]);
+              }}
+            >Assign</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function CreateLeadButton({ onCreate, users, teams, currentRole }) {
+  const [open, setOpen] = useState(false);
+  const [form, setForm] = useState({ title: "", company: "", contact: "", phone: "", ownerId: "", teamId: "", stage: "New", expectedValue: 0, source: "Website", territory: "" });
+
+  function submit() {
+    if (!form.contact || !form.company) return alert("Company and Contact are required");
+    onCreate({ ...form, ownerId: form.ownerId || (currentRole === "associate" ? users.find((u) => u.role === "associate")?.id : users.find((u) => u.role === "team_lead")?.id) });
+    setOpen(false);
+    setForm({ title: "", company: "", contact: "", phone: "", ownerId: "", teamId: "", stage: "New", expectedValue: 0, source: "Website", territory: "" });
+  }
+
+  return (
+    <div>
+      <button className="px-3 py-2 rounded bg-white border" onClick={() => setOpen(true)}>+ New Lead</button>
+      {open && (
+        <div className="fixed inset-0 bg-black/30 flex items-center justify-center">
+          <div className="bg-white p-4 rounded shadow w-[520px]">
+            <h3 className="font-semibold">Create Lead</h3>
+            <div className="grid grid-cols-2 gap-2 mt-3">
+              <input placeholder="Company" value={form.company} onChange={(e) => setForm({ ...form, company: e.target.value })} className="border rounded px-2 py-1" />
+              <input placeholder="Contact" value={form.contact} onChange={(e) => setForm({ ...form, contact: e.target.value })} className="border rounded px-2 py-1" />
+              <input placeholder="Phone" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} className="border rounded px-2 py-1" />
+              <input placeholder="Title" value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} className="border rounded px-2 py-1" />
+              <select value={form.stage} onChange={(e) => setForm({ ...form, stage: e.target.value })} className="border rounded px-2 py-1">
+                <option>New</option>
+                <option>Contacted</option>
+                <option>Qualified</option>
+                <option>Converted</option>
+              </select>
+              <input type="number" placeholder="Expected Value" value={form.expectedValue} onChange={(e) => setForm({ ...form, expectedValue: Number(e.target.value) })} className="border rounded px-2 py-1" />
+              <select value={form.ownerId} onChange={(e) => setForm({ ...form, ownerId: e.target.value })} className="border rounded px-2 py-1 col-span-2">
+                <option value="">Assign owner (optional)</option>
+                {users.map((u) => <option key={u.id} value={u.id}>{u.name} — {u.role}</option>)}
+              </select>
+              <input placeholder="Territory" value={form.territory} onChange={(e) => setForm({ ...form, territory: e.target.value })} className="border rounded px-2 py-1 col-span-2" />
+            </div>
+
+            <div className="flex justify-end gap-2 mt-4">
+              <button className="px-3 py-2 rounded border" onClick={() => setOpen(false)}>Cancel</button>
+              <button className="px-3 py-2 rounded bg-green-600 text-white" onClick={submit}>Create</button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function LeadDetail({ lead, onClose, onSave, users }) {
+  const [draft, setDraft] = useState(lead);
+
+  function save() {
+    onSave(lead.id, draft);
+    onClose();
+  }
+
+  return (
+    <div className="bg-white p-4 rounded shadow">
+      <div className="flex items-start justify-between">
+        <div>
+          <h2 className="text-xl font-semibold">{lead.title}</h2>
+          <div className="text-sm text-slate-500">{lead.company} • {lead.contact} • {lead.territory}</div>
+        </div>
+        <div className="flex gap-2">
+          <button className="px-3 py-2 rounded border" onClick={onClose}>Back</button>
+          <button className="px-3 py-2 rounded bg-green-600 text-white" onClick={save}>Save</button>
+        </div>
+      </div>
+
+      <div className="mt-4 grid grid-cols-3 gap-3">
+        <div className="col-span-2">
+          <label className="text-sm text-slate-500">Notes</label>
+          <textarea value={draft.notes} onChange={(e) => setDraft({ ...draft, notes: e.target.value })} className="w-full border rounded p-2 mt-1 h-40" />
+        </div>
+
+        <div>
+          <div className="mb-2">
+            <label className="text-sm text-slate-500">Owner</label>
+            <select value={draft.ownerId} onChange={(e) => setDraft({ ...draft, ownerId: e.target.value })} className="w-full border rounded px-2 py-1 mt-1">
+              <option value="">Unassigned</option>
+              {users.map((u) => <option key={u.id} value={u.id}>{u.name} — {u.role}</option>)}
+            </select>
+          </div>
+
+          <div className="mb-2">
+            <label className="text-sm text-slate-500">Stage</label>
+            <select value={draft.stage} onChange={(e) => setDraft({ ...draft, stage: e.target.value })} className="w-full border rounded px-2 py-1 mt-1">
+              <option>New</option>
+              <option>Contacted</option>
+              <option>Qualified</option>
+              <option>Converted</option>
+              <option>Closed</option>
+            </select>
+          </div>
+
+          <div>
+            <label className="text-sm text-slate-500">Expected Value</label>
+            <input type="number" value={draft.expectedValue} onChange={(e) => setDraft({ ...draft, expectedValue: Number(e.target.value) })} className="w-full border rounded px-2 py-1 mt-1" />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function TeamsPage({ teams, users }) {
+  return (
+    <div>
+      <h2 className="text-xl font-semibold">Teams</h2>
+      <div className="mt-4 grid grid-cols-2 gap-4">
+        {teams.map((t) => (
+          <div key={t.id} className="bg-white p-3 rounded shadow">
+            <div className="flex items-center justify-between">
+              <div>
+                <div className="font-semibold">{t.name}</div>
+                <div className="text-sm text-slate-500">Region: {t.region}</div>
+              </div>
+              <div className="text-sm">Lead: {users.find((u) => u.id === t.managerId)?.name ?? "-"}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function UsersPage({ users, setUsers, teams }) {
+  const [open, setOpen] = useState(false);
+  const [form, setForm] = useState({ name: "", email: "", role: "associate", teamId: "" });
+
+  function create() {
+    setUsers((s) => [...s, { id: `u${s.length + 1 + Math.floor(Math.random() * 90)}`, ...form }]);
+    setOpen(false);
+  }
+
+  return (
+    <div>
+      <div className="flex items-center justify-between">
+        <h2 className="text-xl font-semibold">Users</h2>
+        <button className="px-3 py-2 rounded bg-white border" onClick={() => setOpen(true)}>+ Invite User</button>
+      </div>
+
+      <div className="mt-4 grid grid-cols-2 gap-3">
+        {users.map((u) => (
+          <div key={u.id} className="bg-white p-3 rounded shadow">
+            <div className="font-semibold">{u.name}</div>
+            <div className="text-sm text-slate-500">{u.email} • {u.role} • {teams.find((t) => t.id === u.teamId)?.name ?? "No team"}</div>
+          </div>
+        ))}
+      </div>
+
+      {open && (
+        <div className="fixed inset-0 bg-black/30 flex items-center justify-center">
+          <div className="bg-white p-4 rounded shadow w-[420px]">
+            <h3 className="font-semibold">Invite User</h3>
+            <div className="mt-3 grid grid-cols-1 gap-2">
+              <input placeholder="Name" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className="border rounded px-2 py-1" />
+              <input placeholder="Email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} className="border rounded px-2 py-1" />
+              <select value={form.role} onChange={(e) => setForm({ ...form, role: e.target.value })} className="border rounded px-2 py-1">
+                <option value="associate">Associate</option>
+                <option value="team_lead">Team Lead</option>
+                <option value="employee">Employee</option>
+              </select>
+              <select value={form.teamId} onChange={(e) => setForm({ ...form, teamId: e.target.value })} className="border rounded px-2 py-1">
+                <option value="">Select Team (optional)</option>
+                {teams.map((t) => <option key={t.id} value={t.id}>{t.name}</option>)}
+              </select>
+            </div>
+
+            <div className="flex justify-end gap-2 mt-4">
+              <button className="px-3 py-2 rounded border" onClick={() => setOpen(false)}>Cancel</button>
+              <button className="px-3 py-2 rounded bg-green-600 text-white" onClick={create}>Invite</button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
