@@ -1,162 +1,374 @@
----
-id: getting-started
-title: Getting Started
----
+import React, { useEffect, useState } from "react";
 
-Create React App is an officially supported way to create single-page React
-applications. It offers a modern build setup with no configuration.
+// Compatibility App - Single-file React component
+// Usage:
+// - Paste this component into a Create React App / Vite project.
+// - Tailwind CSS classes are used for styling; if Tailwind is not available the UI will still work but look plain.
+// - The app stores data in localStorage under keys: 'parts', 'rules'.
 
-## Quick Start
+export default function CompatibilityApp() {
+  // Parts: { id, name, type, attrs: { key: value } }
+  const [parts, setParts] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem("parts") || "[]");
+    } catch (e) {
+      return [];
+    }
+  });
+  const [rules, setRules] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem("rules") || "[]");
+    } catch (e) {
+      return [];
+    }
+  });
 
-```sh
-npx create-react-app my-app
-cd my-app
-npm start
-```
+  useEffect(() => {
+    localStorage.setItem("parts", JSON.stringify(parts));
+  }, [parts]);
+  useEffect(() => {
+    localStorage.setItem("rules", JSON.stringify(rules));
+  }, [rules]);
 
-> If you've previously installed `create-react-app` globally via `npm install -g create-react-app`, we recommend you uninstall the package using `npm uninstall -g create-react-app` or `yarn global remove create-react-app` to ensure that `npx` always uses the latest version.
+  // Form states for new part
+  const [name, setName] = useState("");
+  const [type, setType] = useState("");
+  const [attrKey, setAttrKey] = useState("");
+  const [attrValue, setAttrValue] = useState("");
+  const [attrsEditor, setAttrsEditor] = useState([]); // array of {k,v}
 
-_([npx](https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7d4bd282b) comes with npm 5.2+ and higher, see [instructions for older npm versions](https://gist.github.com/gaearon/4064d3c23a77c74a3614c498a8bb1c5f))_
+  // Rule builder state
+  const [ruleAType, setRuleAType] = useState("");
+  const [ruleAKey, setRuleAKey] = useState("");
+  const [ruleOp, setRuleOp] = useState("=");
+  const [ruleBType, setRuleBType] = useState("");
+  const [ruleBKey, setRuleBKey] = useState("");
 
-Then open [http://localhost:3000/](http://localhost:3000/) to see your app.
+  // Compare selections
+  const [selA, setSelA] = useState("");
+  const [selB, setSelB] = useState("");
+  const [compatResult, setCompatResult] = useState(null);
 
-When you’re ready to deploy to production, create a minified bundle with `npm run build`.
+  // Helpers
+  const uniqueTypes = Array.from(new Set(parts.map((p) => p.type))).filter(Boolean);
 
-<p align='center'>
-<img src='https://cdn.jsdelivr.net/gh/facebook/create-react-app@27b42ac7efa018f2541153ab30d63180f5fa39e0/screencast.svg' width='600' alt='npm start' />
-</p>
+  function addAttrToEditor() {
+    if (!attrKey) return;
+    setAttrsEditor((s) => {
+      const existing = s.filter((x) => x.k !== attrKey);
+      return [...existing, { k: attrKey, v: attrValue }];
+    });
+    setAttrKey("");
+    setAttrValue("");
+  }
 
-### Get Started Immediately
+  function removeAttrFromEditor(k) {
+    setAttrsEditor((s) => s.filter((x) => x.k !== k));
+  }
 
-You **don’t** need to install or configure tools like webpack or Babel. They are preconfigured and hidden so that you can focus on the code.
+  function addPart() {
+    if (!name || !type) return alert("Preencha nome e tipo da peça.");
+    const newPart = {
+      id: Date.now().toString(),
+      name,
+      type,
+      attrs: attrsEditor.reduce((acc, cur) => ({ ...acc, [cur.k]: cur.v }), {}),
+    };
+    setParts((p) => [newPart, ...p]);
+    setName("");
+    setType("");
+    setAttrsEditor([]);
+  }
 
-Create a project, and you’re good to go.
+  function deletePart(id) {
+    if (!window.confirm("Excluir esta peça?")) return;
+    setParts((p) => p.filter((x) => x.id !== id));
+  }
 
-## Creating an App
+  function addRule() {
+    if (!ruleAType || !ruleAKey || !ruleBType || !ruleBKey) return alert("Preencha todos os campos da regra.");
+    const newRule = {
+      id: Date.now().toString(),
+      a: { type: ruleAType, key: ruleAKey },
+      op: ruleOp,
+      b: { type: ruleBType, key: ruleBKey },
+    };
+    setRules((r) => [newRule, ...r]);
+  }
 
-**You’ll need to have Node >= 14 on your local development machine** (but it’s not required on the server). You can use [nvm](https://github.com/creationix/nvm#installation) (macOS/Linux) or [nvm-windows](https://github.com/coreybutler/nvm-windows#node-version-manager-nvm-for-windows) to switch Node versions between different projects.
+  function deleteRule(id) {
+    setRules((r) => r.filter((x) => x.id !== id));
+  }
 
-To create a new app, you may choose one of the following methods:
+  function evaluateRule(rule, partA, partB) {
+    // Return true if rule satisfied between given parts
+    const va = partA?.attrs?.[rule.a.key];
+    const vb = partB?.attrs?.[rule.b.key];
+    switch (rule.op) {
+      case "=":
+        return va !== undefined && vb !== undefined && String(va) === String(vb);
+      case "!=":
+        return va !== undefined && vb !== undefined && String(va) !== String(vb);
+      case "in":
+        // check list membership (comma separated in vb)
+        if (va === undefined || vb === undefined) return false;
+        return String(vb).split(",").map(x=>x.trim()).includes(String(va));
+      case "contains":
+        if (va === undefined || vb === undefined) return false;
+        return String(va).includes(String(vb)) || String(vb).includes(String(va));
+      default:
+        return false;
+    }
+  }
 
-### npx
+  function checkCompatibility(partAId, partBId) {
+    const pA = parts.find((p) => p.id === partAId);
+    const pB = parts.find((p) => p.id === partBId);
+    if (!pA || !pB) {
+      setCompatResult({ ok: false, message: "Selecione duas peças válidas." });
+      return;
+    }
 
-```sh
-npx create-react-app@latest my-app
-```
+    // Collect rules relevant between these two types (both directions)
+    const relevant = rules.filter(
+      (r) => (r.a.type === pA.type && r.b.type === pB.type) || (r.a.type === pB.type && r.b.type === pA.type)
+    );
 
-_([npx](https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7d4bd282b) comes with npm 5.2+ and higher, see [instructions for older npm versions](https://gist.github.com/gaearon/4064d3c23a77c74a3614c498a8bb1c5f))_
+    // If no rules defined between these types, fallback: compare attributes with same key equality
+    if (relevant.length === 0) {
+      const sharedKeys = Object.keys(pA.attrs || {}).filter((k) => k in (pB.attrs || {}));
+      if (sharedKeys.length === 0) {
+        setCompatResult({ ok: true, message: "Nenhuma regra definida: nenhum atributo em comum detectado — compatibilidade assumida (verifique manualmente)." });
+        return;
+      }
+      // require all shared keys to be equal
+      const allEqual = sharedKeys.every((k) => String(pA.attrs[k]) === String(pB.attrs[k]));
+      setCompatResult({ ok: allEqual, message: allEqual ? "Compatível por atributos coincidentes." : `Incompatível: atributo(s) divergente(s): ${sharedKeys.filter(k=>String(pA.attrs[k])!==String(pB.attrs[k])).join(", ")}` });
+      return;
+    }
 
-### npm
+    // Evaluate all relevant rules; for direction-specific, ensure mapping
+    const results = relevant.map((r) => {
+      if (r.a.type === pA.type && r.b.type === pB.type) {
+        return evaluateRule(r, pA, pB);
+      } else {
+        // rule defined in opposite direction
+        return evaluateRule(r, pB, pA);
+      }
+    });
 
-```sh
-npm init react-app my-app
-```
+    const ok = results.every(Boolean);
+    setCompatResult({ ok, message: ok ? "Todas as regras satisfeitas." : "Uma ou mais regras não foram satisfeitas." });
+  }
 
-_`npm init <initializer>` is available in npm 6+_
+  // CSV import: expected columns: name,type,attr:key,attr:key ... or name,type,key1,key2... where header names become attr keys
+  function importCSV(text) {
+    const lines = text.split(/\r?\n/).map((l) => l.trim()).filter(Boolean);
+    if (lines.length === 0) return;
+    const header = lines[0].split(",").map(h=>h.trim());
+    const newParts = [];
+    for (let i=1;i<lines.length;i++){
+      const cols = lines[i].split(",").map(c=>c.trim());
+      const row = {};
+      header.forEach((h, idx) => row[h] = cols[idx] ?? "");
+      // Build attrs: all headers except name,type become attrs
+      const attrs = {};
+      Object.keys(row).forEach(k => {
+        if (k !== 'name' && k !== 'type') attrs[k] = row[k];
+      });
+      newParts.push({ id: Date.now().toString()+"_"+i, name: row['name'] || `part_${i}`, type: row['type'] || 'unknown', attrs });
+    }
+    setParts((p) => [...newParts, ...p]);
+  }
 
-### Yarn
+  function handleCSVUpload(ev) {
+    const file = ev.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      importCSV(String(e.target.result || ''));
+    };
+    reader.readAsText(file);
+  }
 
-```sh
-yarn create react-app my-app
-```
+  function exportJSON() {
+    const data = { parts, rules };
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'compatibility-db.json';
+    a.click();
+    URL.revokeObjectURL(url);
+  }
 
-_`yarn create` is available in Yarn 0.25+_
+  function importJSONFile(ev) {
+    const f = ev.target.files?.[0];
+    if (!f) return;
+    const r = new FileReader();
+    r.onload = (e) => {
+      try {
+        const obj = JSON.parse(String(e.target.result || '{}'));
+        if (Array.isArray(obj.parts)) setParts(obj.parts);
+        if (Array.isArray(obj.rules)) setRules(obj.rules);
+      } catch (err) { alert('JSON inválido'); }
+    };
+    r.readAsText(f);
+  }
 
-### Selecting a template
+  function clearAll() {
+    if (!window.confirm('Apagar tudo (peças + regras)?')) return;
+    setParts([]);
+    setRules([]);
+  }
 
-You can now optionally start a new app from a template by appending `--template [template-name]` to the creation command.
+  return (
+    <div className="p-6 max-w-6xl mx-auto">
+      <h1 className="text-2xl font-bold mb-4">Compatibility App — Protótipo</h1>
+      <div className="grid md:grid-cols-2 gap-6">
+        <div className="bg-white p-4 rounded shadow">
+          <h2 className="font-semibold">Cadastrar peça</h2>
+          <div className="mt-2">
+            <label className="block text-sm">Nome</label>
+            <input value={name} onChange={e=>setName(e.target.value)} className="w-full border p-2 rounded" />
+            <label className="block text-sm mt-2">Tipo (ex: placa-mãe, cpu, ram)</label>
+            <input value={type} onChange={e=>setType(e.target.value)} className="w-full border p-2 rounded" />
+            <div className="mt-2 grid grid-cols-3 gap-2">
+              <input placeholder="chave" value={attrKey} onChange={e=>setAttrKey(e.target.value)} className="border p-2 rounded col-span-1" />
+              <input placeholder="valor" value={attrValue} onChange={e=>setAttrValue(e.target.value)} className="border p-2 rounded col-span-1" />
+              <button onClick={addAttrToEditor} className="col-span-1 p-2 rounded bg-blue-600 text-white">Adicionar</button>
+            </div>
+            <div className="mt-2">
+              {attrsEditor.map(a=> (
+                <div key={a.k} className="flex items-center gap-2 text-sm">
+                  <strong>{a.k}:</strong> <span className="flex-1">{a.v}</span>
+                  <button onClick={()=>removeAttrFromEditor(a.k)} className="text-red-600">x</button>
+                </div>
+              ))}
+            </div>
+            <div className="mt-4 flex gap-2">
+              <button onClick={addPart} className="p-2 rounded bg-green-600 text-white">Salvar peça</button>
+              <button onClick={()=>{setName(''); setType(''); setAttrsEditor([]);}} className="p-2 rounded border">Limpar</button>
+            </div>
+          </div>
 
-If you don't select a template, we'll create your project with our base template.
+          <hr className="my-4" />
 
-Templates are always named in the format `cra-template-[template-name]`, however you only need to provide the `[template-name]` to the creation command.
+          <h3 className="font-semibold">Importar</h3>
+          <p className="text-sm">CSV com cabeçalho: name,type,<i>attr1,attr2...</i></p>
+          <input type="file" accept=".csv" onChange={handleCSVUpload} className="mt-2" />
 
-```sh
-npx create-react-app my-app --template [template-name]
-```
+          <p className="text-sm mt-3">Ou importar/exportar banco JSON</p>
+          <div className="flex gap-2 mt-2">
+            <button onClick={exportJSON} className="p-2 rounded bg-sky-600 text-white">Exportar JSON</button>
+            <input type="file" accept=".json" onChange={importJSONFile} />
+          </div>
 
-> You can find a list of available templates by searching for ["cra-template-\*"](https://www.npmjs.com/search?q=cra-template-*) on npm.
+          <div className="mt-4">
+            <button onClick={clearAll} className="text-sm text-red-600">Apagar tudo</button>
+          </div>
+        </div>
 
-Our [Custom Templates](custom-templates.md) documentation describes how you can build your own template.
+        <div className="bg-white p-4 rounded shadow">
+          <h2 className="font-semibold">Criar regra de compatibilidade</h2>
+          <div className="grid grid-cols-2 gap-2 mt-2">
+            <div>
+              <label className="text-sm">Tipo A</label>
+              <input value={ruleAType} onChange={e=>setRuleAType(e.target.value)} className="w-full border p-2 rounded" placeholder="ex: placa-mãe" />
+              <label className="text-sm mt-1">Chave A</label>
+              <input value={ruleAKey} onChange={e=>setRuleAKey(e.target.value)} className="w-full border p-2 rounded" placeholder="ex: socket" />
+            </div>
+            <div>
+              <label className="text-sm">Tipo B</label>
+              <input value={ruleBType} onChange={e=>setRuleBType(e.target.value)} className="w-full border p-2 rounded" placeholder="ex: cpu" />
+              <label className="text-sm mt-1">Chave B</label>
+              <input value={ruleBKey} onChange={e=>setRuleBKey(e.target.value)} className="w-full border p-2 rounded" placeholder="ex: socket" />
+            </div>
+          </div>
+          <div className="mt-2">
+            <label className="text-sm">Operador</label>
+            <select value={ruleOp} onChange={e=>setRuleOp(e.target.value)} className="border p-2 rounded w-full mt-1">
+              <option value="=">igual (=)</option>
+              <option value="!=">diferente (!=)</option>
+              <option value="in">membro em (in) — verifica se A está listado em B (csv)</option>
+              <option value="contains">contém / contém (contains)</option>
+            </select>
+          </div>
+          <div className="mt-4 flex gap-2">
+            <button onClick={addRule} className="p-2 rounded bg-green-600 text-white">Salvar regra</button>
+          </div>
 
-#### Creating a TypeScript app
+          <hr className="my-4" />
 
-You can start a new TypeScript app using templates. To use our provided TypeScript template, append `--template typescript` to the creation command.
+          <h3 className="font-semibold">Regras existentes</h3>
+          <div className="max-h-48 overflow-auto mt-2 text-sm">
+            {rules.length === 0 && <p className="text-gray-500">Nenhuma regra criada.</p>}
+            {rules.map(r=> (
+              <div key={r.id} className="flex items-center justify-between gap-2 p-2 border rounded mb-1">
+                <div>
+                  <strong>{r.a.type}.{r.a.key}</strong> {r.op} <strong>{r.b.type}.{r.b.key}</strong>
+                </div>
+                <div className="flex gap-2">
+                  <button onClick={()=>deleteRule(r.id)} className="text-red-600">Remover</button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
 
-```sh
-npx create-react-app my-app --template typescript
-```
+      <div className="mt-6 bg-white p-4 rounded shadow">
+        <h2 className="font-semibold">Banco de peças</h2>
+        <div className="mt-2 grid md:grid-cols-3 gap-2">
+          {parts.map(p => (
+            <div key={p.id} className="border p-3 rounded">
+              <div className="flex justify-between items-start">
+                <div>
+                  <strong>{p.name}</strong>
+                  <div className="text-xs text-gray-500">{p.type}</div>
+                </div>
+                <div className="text-sm text-right">
+                  <button onClick={()=>deletePart(p.id)} className="text-red-600">Excluir</button>
+                </div>
+              </div>
+              <div className="mt-2 text-sm">
+                {Object.keys(p.attrs || {}).length === 0 && <div className="text-gray-400">Sem atributos</div>}
+                {Object.entries(p.attrs || {}).map(([k,v])=> (
+                  <div key={k} className="flex justify-between"><span>{k}</span><span className="text-gray-600">{v}</span></div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
 
-If you already have a project and would like to add TypeScript, see our [Adding TypeScript](adding-typescript.md) documentation.
+      <div className="mt-6 bg-white p-4 rounded shadow">
+        <h2 className="font-semibold">Verificar compatibilidade</h2>
+        <div className="mt-2 flex gap-2 flex-wrap">
+          <select value={selA} onChange={e=>setSelA(e.target.value)} className="border p-2 rounded">
+            <option value="">-- selecione peça A --</option>
+            {parts.map(p=> <option key={p.id} value={p.id}>{p.name} — {p.type}</option>)}
+          </select>
+          <select value={selB} onChange={e=>setSelB(e.target.value)} className="border p-2 rounded">
+            <option value="">-- selecione peça B --</option>
+            {parts.map(p=> <option key={p.id} value={p.id}>{p.name} — {p.type}</option>)}
+          </select>
+          <button onClick={()=>checkCompatibility(selA, selB)} className="p-2 rounded bg-blue-600 text-white">Verificar</button>
+        </div>
+        {compatResult && (
+          <div className={`mt-4 p-3 rounded ${compatResult.ok ? 'bg-green-50 border-green-400' : 'bg-red-50 border-red-300'}`}>
+            <div className="font-semibold">{compatResult.ok ? 'Compatível' : 'Incompatível'}</div>
+            <div className="text-sm mt-1">{compatResult.message}</div>
+          </div>
+        )}
 
-### Selecting a package manager
+        <div className="mt-4">
+          <h4 className="font-semibold">Notas sobre verificação</h4>
+          <p className="text-sm text-gray-600">A verificação: procura regras explícitas entre tipos; se não houver regras, compara atributos com nomes iguais e exige igualdade. Este protótipo é pensada para ser facilmente estendida (ex.: operadores adicionais, avaliação heurística, UI de prioridade de regras).</p>
+        </div>
+      </div>
 
-When you create a new app, the CLI will use [npm](https://docs.npmjs.com) or [Yarn](https://yarnpkg.com/) to install dependencies, depending on which tool you use to run `create-react-app`. For example:
-
-```sh
-# Run this to use npm
-npx create-react-app my-app
-# Or run this to use yarn
-yarn create react-app my-app
-```
-
-## Output
-
-Running any of these commands will create a directory called `my-app` inside the current folder. Inside that directory, it will generate the initial project structure and install the transitive dependencies:
-
-```
-my-app
-├── README.md
-├── node_modules
-├── package.json
-├── .gitignore
-├── public
-│   ├── favicon.ico
-│   ├── index.html
-│   ├── logo192.png
-│   ├── logo512.png
-│   ├── manifest.json
-│   └── robots.txt
-└── src
-    ├── App.css
-    ├── App.js
-    ├── App.test.js
-    ├── index.css
-    ├── index.js
-    ├── logo.svg
-    ├── serviceWorker.js
-    └── setupTests.js
-```
-
-No configuration or complicated folder structures, only the files you need to build your app. Once the installation is done, you can open your project folder:
-
-```sh
-cd my-app
-```
-
-## Scripts
-
-Inside the newly created project, you can run some built-in commands:
-
-### `npm start` or `yarn start`
-
-Runs the app in development mode. Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will automatically reload if you make changes to the code. You will see the build errors and lint warnings in the console.
-
-<p align='center'>
-<img src='https://cdn.jsdelivr.net/gh/marionebl/create-react-app@9f6282671c54f0874afd37a72f6689727b562498/screencast-error.svg' width='600' alt='Build errors' />
-</p>
-
-### `npm test` or `yarn test`
-
-Runs the test watcher in an interactive mode. By default, runs tests related to files changed since the last commit.
-
-[Read more about testing](running-tests.md).
-
-### `npm run build` or `yarn build`
-
-Builds the app for production to the `build` folder. It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.
-
-Your app is ready to be deployed.
+      <footer className="mt-6 text-sm text-gray-500 text-center">Protótipo gerado — personalize campos e regras conforme o seu domínio.</footer>
+    </div>
+  );
+}
