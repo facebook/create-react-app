@@ -1,10 +1,10 @@
 {
   "name": "react-scripts",
-  "version": "1.0.0",
+  "version": "5.0.1",
   "description": "Configuration and scripts for Create React App.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/jeffrylim92/create-react-app",
+    "url": "https://github.com/facebook/create-react-app.git",
     "directory": "packages/react-scripts"
   },
   "license": "MIT",
@@ -12,7 +12,7 @@
     "node": ">=14.0.0"
   },
   "bugs": {
-    "url": "https://github.com/jeffrylim92/create-react-app/issues"
+    "url": "https://github.com/facebook/create-react-app/issues"
   },
   "files": [
     "bin",
