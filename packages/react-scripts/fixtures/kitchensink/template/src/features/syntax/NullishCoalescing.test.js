@@ -6,14 +6,16 @@
  */
 
 import React from 'react';
-import ReactDOM from 'react-dom';
 import NullishCoalescing from './NullishCoalescing';
+import ReactDOMClient from 'react-dom/client';
 
 describe('nullish coalescing', () => {
   it('renders without crashing', () => {
     const div = document.createElement('div');
     return new Promise(resolve => {
-      ReactDOM.render(<NullishCoalescing onReady={resolve} />, div);
+      ReactDOMClient.createRoot(div).render(
+        <NullishCoalescing onReady={resolve} />
+      );
     });
   });
 });

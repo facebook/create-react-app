@@ -6,14 +6,16 @@
  */
 
 import React from 'react';
-import ReactDOM from 'react-dom';
 import OptionalChaining from './OptionalChaining';
+import ReactDOMClient from 'react-dom/client';
 
 describe('optional chaining', () => {
   it('renders without crashing', () => {
     const div = document.createElement('div');
     return new Promise(resolve => {
-      ReactDOM.render(<OptionalChaining onReady={resolve} />, div);
+      ReactDOMClient.createRoot(div).render(
+        <OptionalChaining onReady={resolve} />
+      );
     });
   });
 });

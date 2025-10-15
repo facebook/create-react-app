@@ -8,7 +8,8 @@
 
 const siteConfig = {
   title: 'Create React App',
-  tagline: 'Set up a modern web app by running one command.',
+  tagline:
+    'Create React App has been deprecated. Please visit react.dev for modern options.',
   url: 'https://create-react-app.dev',
   baseUrl: '/',
   projectName: 'create-react-app',
@@ -35,10 +36,9 @@ const siteConfig = {
   themeConfig: {
     image: 'img/logo-og.png',
     announcementBar: {
-      id: 'support_ukraine',
+      id: 'deprecated',
       content:
-        'Support Ukraine 🇺🇦 <a target="_blank" rel="noopener noreferrer" \
-        href="https://opensource.facebook.com/support-ukraine"> Help Provide Humanitarian Aid to Ukraine</a>.',
+        'Create React App is deprecated. <a target="_blank" rel="noopener noreferrer" href="https://react.dev/link/cra">Read more here</a>.',
       backgroundColor: '#20232a',
       textColor: '#fff',
       isCloseable: false,

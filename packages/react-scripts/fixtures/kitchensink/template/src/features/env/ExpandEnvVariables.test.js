@@ -6,12 +6,15 @@
  */
 
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOMClient from 'react-dom/client';
 import ExpandEnvVariables from './ExpandEnvVariables';
+import { flushSync } from 'react-dom';
 
 describe('expand .env variables', () => {
   it('renders without crashing', () => {
     const div = document.createElement('div');
-    ReactDOM.render(<ExpandEnvVariables />, div);
+    flushSync(() => {
+      ReactDOMClient.createRoot(div).render(<ExpandEnvVariables />);
+    });
   });
 });

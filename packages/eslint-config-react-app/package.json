@@ -1,6 +1,6 @@
 {
   "name": "eslint-config-react-app",
-  "version": "7.0.1",
+  "version": "7.1.0",
   "description": "ESLint configuration used by Create React App",
   "repository": {
     "type": "git",
@@ -25,7 +25,7 @@
     "@rushstack/eslint-patch": "^1.1.0",
     "@typescript-eslint/eslint-plugin": "^5.5.0",
     "@typescript-eslint/parser": "^5.5.0",
-    "babel-preset-react-app": "^10.0.1",
+    "babel-preset-react-app": "^10.1.0",
     "confusing-browser-globals": "^1.0.11",
     "eslint-plugin-flowtype": "^8.0.3",
     "eslint-plugin-import": "^2.25.3",

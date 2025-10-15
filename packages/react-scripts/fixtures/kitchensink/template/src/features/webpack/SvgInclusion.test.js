@@ -6,12 +6,15 @@
  */
 
 import React from 'react';
-import ReactDOM from 'react-dom';
 import SvgInclusion from './SvgInclusion';
+import ReactDOMClient from 'react-dom/client';
+import { flushSync } from 'react-dom';
 
 describe('svg inclusion', () => {
   it('renders without crashing', () => {
     const div = document.createElement('div');
-    ReactDOM.render(<SvgInclusion />, div);
+    flushSync(() => {
+      ReactDOMClient.createRoot(div).render(<SvgInclusion />);
+    });
   });
 });

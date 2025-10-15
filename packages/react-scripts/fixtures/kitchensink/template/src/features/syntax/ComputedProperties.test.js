@@ -6,14 +6,16 @@
  */
 
 import React from 'react';
-import ReactDOM from 'react-dom';
 import ComputedProperties from './ComputedProperties';
+import ReactDOMClient from 'react-dom/client';
 
 describe('computed properties', () => {
   it('renders without crashing', () => {
     const div = document.createElement('div');
     return new Promise(resolve => {
-      ReactDOM.render(<ComputedProperties onReady={resolve} />, div);
+      ReactDOMClient.createRoot(div).render(
+        <ComputedProperties onReady={resolve} />
+      );
     });
   });
 });
