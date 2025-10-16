@@ -1,7 +1,10 @@
 ---
 name: Bug report
 about: Create a report to help us improve
-labels: 'issue: bug report, needs triage'
+title: ''
+labels: ''
+assignees: ''
+
 ---
 
 <!--

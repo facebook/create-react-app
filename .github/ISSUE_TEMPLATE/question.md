@@ -1,7 +1,10 @@
 ---
 name: Question
 about: Get help with Create React App
-labels: 'needs triage'
+title: ''
+labels: ''
+assignees: ''
+
 ---
 
 If you have a general question about Create React App or about building an app with Create React App we encourage you to post in GitHub Discussions instead of this issue tracker. The maintainers and other community members can provide help and answer your questions there: https://github.com/facebook/create-react-app/discussions
