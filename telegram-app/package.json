@@ -1,0 +1,15 @@
+{
+  "name": "telegram-app",
+  "version": "1.0.0",
+  "description": "Full-stack Telegram-like messaging application",
+  "private": true,
+  "scripts": {
+    "install:all": "cd server && npm install && cd ../client && npm install",
+    "build:all": "cd server && npm run build && cd ../client && npm run build",
+    "server": "cd server && npm run dev",
+    "client": "cd client && npm run dev"
+  },
+  "keywords": ["telegram", "messaging", "chat", "websocket", "real-time"],
+  "author": "",
+  "license": "MIT"
+}

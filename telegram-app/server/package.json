@@ -1,0 +1,34 @@
+{
+  "name": "telegram-server",
+  "version": "1.0.0",
+  "description": "Telegram-like messaging app server",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "ts-node src/index.ts"
+  },
+  "keywords": ["messaging", "chat", "websocket"],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "socket.io": "^4.6.1",
+    "cors": "^2.8.5",
+    "jsonwebtoken": "^9.0.2",
+    "bcryptjs": "^2.4.3",
+    "multer": "^1.4.5-lts.1",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.17",
+    "@types/node": "^20.11.0",
+    "@types/cors": "^2.8.13",
+    "@types/jsonwebtoken": "^9.0.1",
+    "@types/bcryptjs": "^2.4.2",
+    "@types/multer": "^1.4.7",
+    "@types/uuid": "^9.0.1",
+    "typescript": "^5.3.3",
+    "ts-node": "^10.9.2"
+  }
+}
