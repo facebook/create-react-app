@@ -1,0 +1,620 @@
+import React, { useState, useEffect } from 'react';
+import { 
+  MessageCircle, Shield, Users, AlertTriangle, Star, 
+  Wrench, Hammer, Settings, ClipboardList, FileText, 
+  Briefcase, GraduationCap, Eye, UserCheck, Crown,
+  Info, CheckCircle, Sparkles, Bot, ArrowRight, Loader2, 
+  LayoutGrid, BookOpen, Activity, Save, FileCheck, PieChart
+} from 'lucide-react';
+
+const apiKey = ""; // L'environnement d'exécution injectera la clé ici.
+
+// --- DATA STRUCTURE ---
+
+const DATA = {
+  relationnel: {
+    id: 'relationnel',
+    label: 'Relationnel',
+    icon: MessageCircle,
+    intro: "Ce critère recouvre le lien relationnel avec les occupants et les tiers.",
+    levels: [
+      { id: 'A', points: 100, title: 'Convivialité Simple', shortDesc: "Pas d'échanges pro demandés", icon: MessageCircle, color: 'bg-blue-100 text-blue-600', borderColor: 'border-blue-200', description: "Il n'est pas demandé d'échanges professionnels particuliers. Simple convivialité.", criteria: [], example: "Dire bonjour, être poli." },
+      { id: 'B', points: 107, title: 'Échange Standard', shortDesc: "Échanges pro & surveillance simple", icon: Shield, color: 'bg-teal-100 text-teal-600', borderColor: 'border-teal-200', description: "Échanges professionnels et/ou surveillance sans complexité.", criteria: [], example: "Prendre note d'une réclamation simple." },
+      { id: 'C', points: 112, title: 'Contexte Complexe', shortDesc: "Grand ensemble ou médiation", icon: Users, color: 'bg-indigo-100 text-indigo-600', borderColor: 'border-indigo-200', description: "Échanges/surveillance avec complexité (>60 lots, médiation, forte rotation).", criteria: ["Ensemble > 60 lots", "Relais médiation/conflits", "Forte rotation occupants"], example: "Gérer les déménagements fréquents, calmer une dispute." },
+      { id: 'D', points: 118, title: 'Responsabilité & Sensible', shortDesc: "Zone Sensible / Gestion Conflits", icon: AlertTriangle, color: 'bg-orange-100 text-orange-600', borderColor: 'border-orange-200', description: "Responsabilité explicite en médiation ou zone sensible.", criteria: ["Responsabilité médiation/conflits", "Quartier zone sensible"], example: "Désamorcer des conflits dans un quartier prioritaire." },
+      { id: 'E', points: 125, title: 'Haut Standing', shortDesc: "Conciergerie & Initiative", icon: Star, color: 'bg-purple-100 text-purple-600', borderColor: 'border-purple-200', description: "Haut standing, capacité d'initiative, conciergerie.", criteria: ["Réponse besoins variés (conciergerie)"], example: "Commander taxis, pressing, gérer prestataires de luxe." }
+    ]
+  },
+  technique: {
+    id: 'technique',
+    label: 'Technique',
+    icon: Wrench,
+    intro: "Ce critère évalue le niveau de savoir-faire technique (entretien, maintenance).",
+    levels: [
+      { id: 'A', points: 100, title: 'Aucune Technique', shortDesc: "Aucune tâche technique", icon: XIconStyle, color: 'bg-slate-100 text-slate-600', borderColor: 'border-slate-200', description: "Aucune tâche technique n'est exigée.", criteria: [], example: "Uniquement distribution de courrier ou surveillance." },
+      { id: 'B', points: 103, title: 'Entretien Courant', shortDesc: "Nettoyage sans formation spé.", icon: Hammer, color: 'bg-emerald-100 text-emerald-600', borderColor: 'border-emerald-200', description: "Entretien courant (produits, outils) sans nécessité d'expérience/formation spécifique.", criteria: [], example: "Balayer le hall, changer une ampoule simple accessible." },
+      { id: 'C', points: 107, title: 'Maintenance Niveau 1', shortDesc: "Habilitations ou Maintenance simple", icon: Wrench, color: 'bg-cyan-100 text-cyan-600', borderColor: 'border-cyan-200', description: "Entretien avec expérience/formation/habilitation OU Maintenance de niveau 1.", criteria: ["Habilitation hygiène/sécurité", "Maintenance niveau 1 (simple)"], example: "Utiliser une monobrosse, relancer une chaudière (bouton simple)." },
+      { id: 'D', points: 112, title: 'Maintenance Niveau 2', shortDesc: "Interventions techniques (N2)", icon: Settings, color: 'bg-amber-100 text-amber-600', borderColor: 'border-amber-200', description: "Réalisation de travaux de maintenance de deuxième niveau.", criteria: ["Maintenance niveau 2"], example: "Remplacer une prise électrique, changer un joint de plomberie complet." },
+      { id: 'E', points: 120, title: 'Maintenance Niveau 3', shortDesc: "Expertise technique (N3)", icon: Activity, color: 'bg-red-100 text-red-600', borderColor: 'border-red-200', description: "Réalisation de travaux de maintenance de troisième niveau.", criteria: ["Maintenance niveau 3"], example: "Diagnostic de panne complexe, réparation importante sur installations." }
+    ]
+  },
+  administratif: {
+    id: 'administratif',
+    label: 'Administratif',
+    icon: ClipboardList,
+    intro: "Ce critère évalue l'ampleur des compétences administratives et informatiques.",
+    levels: [
+      { id: 'A', points: 100, title: 'Néant', shortDesc: "Pas de tâches admin", icon: XIconStyle, color: 'bg-slate-100 text-slate-600', borderColor: 'border-slate-200', description: "Il n'est pas demandé d'effectuer des tâches administratives.", criteria: [], example: "Poste purement technique ou de surveillance." },
+      { id: 'B', points: 103, title: 'Transmission', shortDesc: "Courrier & Notes simples", icon: FileText, color: 'bg-lime-100 text-lime-600', borderColor: 'border-lime-200', description: "Distribution documents, registre manuscrit, notes simples.", criteria: [], example: "Distribuer les avis d'échéance, noter les passages sur un cahier." },
+      { id: 'C', points: 107, title: 'Gestion Courante', shortDesc: "Informatique & Caisse", icon: LayoutGrid, color: 'bg-sky-100 text-sky-600', borderColor: 'border-sky-200', description: "Gestion courante avec informatique et/ou gestion fonds de caisse.", criteria: ["Usage informatique", "Gestion fonds de caisse"], example: "Envoyer des emails aux résidents, acheter des produits d'entretien (petite caisse)." },
+      { id: 'D', points: 112, title: 'Gestion Complexe', shortDesc: "États des lieux & Reporting", icon: Briefcase, color: 'bg-violet-100 text-violet-600', borderColor: 'border-violet-200', description: "Documents complexes, système de remontée d'infos, états des lieux.", criteria: ["États des lieux", "Rédaction comptes rendus", "Système d'info"], example: "Faire l'état des lieux d'entrée d'un locataire, rédiger un rapport d'incident formel." },
+      { id: 'E', points: 120, title: 'Budgets', shortDesc: "Responsabilités budgétaires", icon: Crown, color: 'bg-fuchsia-100 text-fuchsia-600', borderColor: 'border-fuchsia-200', description: "Responsabilités administratives incluant l'élaboration de budgets.", criteria: ["Élaboration de budgets"], example: "Préparer le budget prévisionnel des charges, gérer les contrats fournisseurs." }
+    ]
+  },
+  supervision: {
+    id: 'supervision',
+    label: 'Supervision',
+    icon: Eye,
+    intro: "Organisation, suivi et évaluation des équipes internes ou prestataires.",
+    levels: [
+      { id: 'A', points: 100, title: 'Aucune', shortDesc: "Pas de supervision", icon: XIconStyle, color: 'bg-slate-100 text-slate-600', borderColor: 'border-slate-200', description: "Il n'est pas demandé de superviser.", criteria: [], example: "Employé seul sur son poste." },
+      { id: 'B', points: 103, title: 'Vérification', shortDesc: "Contrôle simple rapporté", icon: CheckCircle, color: 'bg-green-100 text-green-600', borderColor: 'border-green-200', description: "Vérification du travail fait, rapportée à l'employeur.", criteria: [], example: "Vérifier que l'entreprise de nettoyage est passée et le signaler au syndic." },
+      { id: 'C', points: 107, title: 'Organisation', shortDesc: "Suivi technique (sans hiérarchie)", icon: UserCheck, color: 'bg-blue-100 text-blue-600', borderColor: 'border-blue-200', description: "Organisation/suivi technique (internes) OU Déclenchement prestations simples (externes).", criteria: ["Suivi technique sans pouvoir hiérarchique", "Déclenchement prestations simples"], example: "Appeler le plombier pour une fuite connue, montrer le local aux ouvriers." },
+      { id: 'D', points: 112, title: 'Encadrement', shortDesc: "Hiérarchie < 5 salariés", icon: Users, color: 'bg-indigo-100 text-indigo-600', borderColor: 'border-indigo-200', description: "Resp. hiérarchique directe (< 5 salariés) OU Prestations complexes.", criteria: ["Hiérarchie < 5 salariés", "Déclenchement prestations complexes"], example: "Manager 2 employés de ménage, coordonner un chantier de rénovation hall." },
+      { id: 'E', points: 120, title: 'Management', shortDesc: "Hiérarchie ≥ 5 salariés", icon: Crown, color: 'bg-purple-100 text-purple-600', borderColor: 'border-purple-200', description: "Responsabilité hiérarchique directe sur 5 salariés ou plus.", criteria: ["Hiérarchie ≥ 5 salariés"], example: "Chef d'équipe dirigeant 6 gardiens sur une grande copropriété." }
+    ]
+  },
+  autonomie: {
+    id: 'autonomie',
+    label: 'Autonomie',
+    icon: Activity,
+    intro: "Latitude dans l'organisation, l'initiative et la prise de décision.",
+    levels: [
+      { id: 'A', points: 100, title: 'Nulle', shortDesc: "Pas d'autonomie", icon: XIconStyle, color: 'bg-slate-100 text-slate-600', borderColor: 'border-slate-200', description: "Il n'est pas demandé d'être autonome.", criteria: [], example: "Exécuter une tâche immédiate sur ordre direct." },
+      { id: 'B', points: 103, title: 'Limitée', shortDesc: "Instructions & Contrôle fréquent", icon: Shield, color: 'bg-orange-100 text-orange-600', borderColor: 'border-orange-200', description: "Instructions précises, contrôle fréquent.", criteria: [], example: "Suivre un planning horaire strict avec pointage quotidien." },
+      { id: 'C', points: 107, title: 'Exécution', shortDesc: "Sans contrôle fréquent", icon: CheckCircle, color: 'bg-yellow-100 text-yellow-600', borderColor: 'border-yellow-200', description: "Instructions précises, SANS contrôle fréquent.", criteria: ["Pas de contrôle fréquent"], example: "Faire son ménage toute la semaine, le syndic ne passe qu'une fois par mois." },
+      { id: 'D', points: 112, title: 'Organisation', shortDesc: "Compétences org. & planif.", icon: LayoutGrid, color: 'bg-teal-100 text-teal-600', borderColor: 'border-teal-200', description: "Instructions précises, sans contrôle fréquent, compétences spécifiques d'organisation.", criteria: ["Compétences organisation/planification"], example: "Organiser soi-même son planning annuel de grand nettoyage et de rotation des poubelles." },
+      { id: 'E', points: 120, title: 'Globale', shortDesc: "Resp. bon fonctionnement", icon: Star, color: 'bg-emerald-100 text-emerald-600', borderColor: 'border-emerald-200', description: "Responsabilité globale de bon entretien/fonctionnement de l'ensemble.", criteria: ["Évaluation d'ensemble"], example: "Gérer l'immeuble comme si c'était le sien, rendre des comptes uniquement sur le résultat final annuel." }
+    ]
+  },
+  formation: {
+    id: 'formation',
+    label: 'Formation',
+    icon: GraduationCap,
+    intro: "Niveau général nécessaire pour exercer le poste (diplômes ou équivalents).",
+    levels: [
+      { id: 'A', points: 80, title: 'Aucun Prérequis', shortDesc: "Sans diplôme", icon: XIconStyle, color: 'bg-slate-100 text-slate-600', borderColor: 'border-slate-200', description: "Poste n'exigeant pas de prérequis.", criteria: [], example: "Débutant complet accepté." },
+      { id: 'B', points: 83, title: 'Savoirs de Base', shortDesc: "Lire, écrire, compter", icon: BookOpen, color: 'bg-stone-100 text-stone-600', borderColor: 'border-stone-200', description: "Maîtrise des savoirs de base (lire, écrire, compter).", criteria: [], example: "Savoir lire les noms sur les boîtes aux lettres et compter les containers." },
+      { id: 'C', points: 87, title: 'CAP / BEP', shortDesc: "Niveau V (CAP/CQP I)", icon: GraduationCap, color: 'bg-bronze-100 text-orange-700', borderColor: 'border-orange-300', description: "Niveau V (CAP hors branche) ou CQP branche niveau I.", criteria: ["CAP hors branche", "CQP Niveau I"], example: "Titulaire d'un CAP Maintenance ou Gardien CQP I." },
+      { id: 'D', points: 92, title: 'BAC / BP', shortDesc: "Niveau IV (Bac/CQP II)", icon: GraduationCap, color: 'bg-slate-200 text-slate-700', borderColor: 'border-slate-400', description: "Niveau IV (Bac), CAP branche ou CQP branche niveau II.", criteria: ["Baccalauréat", "CAP Gardien", "CQP Niveau II"], example: "Titulaire du CAP Gardien d'immeuble ou Bac Pro." },
+      { id: 'E', points: 100, title: 'BAC +2', shortDesc: "Niveau III", icon: Crown, color: 'bg-yellow-100 text-yellow-700', borderColor: 'border-yellow-400', description: "Niveau III (Bac+2).", criteria: ["Bac +2"], example: "BTS Professions Immobilières." }
+    ]
+  }
+};
+
+// Placeholder icon helper
+function XIconStyle(props) {
+  return (
+      <div className="flex items-center justify-center font-bold text-slate-400 text-lg" {...props}>
+          Ø
+      </div>
+  );
+}
+
+// --- AI Helper Functions ---
+
+async function callGemini(prompt) {
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+  
+  const payload = {
+    contents: [{ parts: [{ text: prompt }] }]
+  };
+
+  let delay = 1000;
+  for (let i = 0; i < 5; i++) {
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      
+      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+      
+      const data = await response.json();
+      return data.candidates?.[0]?.content?.parts?.[0]?.text || "Désolé, je n'ai pas pu générer de réponse.";
+    } catch (error) {
+      if (i === 4) throw error;
+      await new Promise(resolve => setTimeout(resolve, delay));
+      delay *= 2;
+    }
+  }
+}
+
+export default function App() {
+  const [activeCategory, setActiveCategory] = useState('relationnel');
+  const [selectedLevel, setSelectedLevel] = useState(DATA['relationnel'].levels[0]);
+  const [activeTab, setActiveTab] = useState('explore'); // 'explore', 'assistant', 'summary'
+  
+  // Profile Selections (Initialized to level 'A' for all)
+  const [selections, setSelections] = useState({
+    relationnel: 'A',
+    technique: 'A',
+    administratif: 'A',
+    supervision: 'A',
+    autonomie: 'A',
+    formation: 'A'
+  });
+
+  // AI States
+  const [scenario, setScenario] = useState('');
+  const [loadingScenario, setLoadingScenario] = useState(false);
+  const [userDescription, setUserDescription] = useState('');
+  const [analysisResult, setAnalysisResult] = useState('');
+  const [loadingAnalysis, setLoadingAnalysis] = useState(false);
+
+  // Update selected level when category changes
+  useEffect(() => {
+    setSelectedLevel(DATA[activeCategory].levels[0]);
+    setScenario('');
+    setAnalysisResult('');
+    setUserDescription('');
+  }, [activeCategory]);
+
+  // Reset scenario when level changes within same category
+  useEffect(() => {
+    setScenario('');
+  }, [selectedLevel]);
+
+  const handleSelectLevel = (levelId) => {
+    setSelections(prev => ({
+      ...prev,
+      [activeCategory]: levelId
+    }));
+  };
+
+  const handleGenerateScenario = async () => {
+    setLoadingScenario(true);
+    setScenario('');
+    const categoryLabel = DATA[activeCategory].label;
+    
+    const prompt = `Tu es un expert en formation de gardiens d'immeuble.
+    Génère un court scénario de "mise en situation" (max 3 phrases) pour tester le critère "${categoryLabel}" à l'échelon ${selectedLevel.id}.
+    
+    Définition échelon : ${selectedLevel.description}
+    Exemple typique : ${selectedLevel.example}
+    
+    Le scénario doit être réaliste et centré sur le thème "${categoryLabel}".
+    Termine par : "Que faites-vous ?"`;
+
+    try {
+      const text = await callGemini(prompt);
+      setScenario(text);
+    } catch (e) {
+      setScenario("Erreur lors de la génération. Veuillez réessayer.");
+    }
+    setLoadingScenario(false);
+  };
+
+  const handleAnalyzeTasks = async () => {
+    if (!userDescription.trim()) return;
+    setLoadingAnalysis(true);
+    setAnalysisResult('');
+    
+    const currentData = DATA[activeCategory];
+    const gridDescription = currentData.levels.map(l => `Niveau ${l.id} (${l.points}pts): ${l.description} (Ex: ${l.example})`).join('\n');
+
+    const prompt = `Tu es un expert RH Gardiens d'Immeubles.
+    Critère analysé : ${currentData.label}.
+    Description : "${userDescription}"
+    
+    Grille :
+    ${gridDescription}
+    
+    Détermine l'échelon (A-E) le plus probable.
+    Justifie ton choix.`;
+
+    try {
+      const text = await callGemini(prompt);
+      setAnalysisResult(text);
+    } catch (e) {
+      setAnalysisResult("Erreur lors de l'analyse. Veuillez réessayer.");
+    }
+    setLoadingAnalysis(false);
+  };
+
+  const CurrentCategoryData = DATA[activeCategory];
+
+  // Calculate total points
+  const totalPoints = Object.entries(selections).reduce((sum, [catId, levelId]) => {
+    const catLevels = DATA[catId].levels;
+    const level = catLevels.find(l => l.id === levelId);
+    return sum + (level ? level.points : 0);
+  }, 0);
+
+  return (
+    <div className="min-h-screen bg-slate-50 p-2 md:p-6 font-sans text-slate-800 flex flex-col">
+      <div className="max-w-7xl mx-auto w-full">
+        
+        {/* Top Navigation (Categories) */}
+        {activeTab !== 'summary' && (
+          <div className="mb-6 overflow-x-auto pb-2">
+            <nav className="flex space-x-2 min-w-max p-1">
+              {Object.values(DATA).map((cat) => {
+                const Icon = cat.icon;
+                const isActive = activeCategory === cat.id;
+                // Check if a level other than 'A' is selected (optional visual cue) or just show selected
+                const currentSelection = selections[cat.id];
+                
+                return (
+                  <button
+                    key={cat.id}
+                    onClick={() => setActiveCategory(cat.id)}
+                    className={`
+                      flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-bold transition-all relative
+                      ${isActive 
+                        ? 'bg-slate-800 text-white shadow-md scale-105' 
+                        : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'}
+                    `}
+                  >
+                    <Icon size={18} />
+                    {cat.label}
+                    {/* Badge for selection */}
+                    <span className={`ml-1 text-[10px] px-1.5 py-0.5 rounded-full ${isActive ? 'bg-slate-600 text-white' : 'bg-slate-200 text-slate-600'}`}>
+                      {currentSelection}
+                    </span>
+                  </button>
+                )
+              })}
+            </nav>
+          </div>
+        )}
+
+        {/* Header */}
+        <header className="mb-6 text-center md:text-left flex flex-col md:flex-row justify-between items-center gap-4">
+          <div>
+            <h1 className="text-2xl md:text-3xl font-bold text-slate-900 flex items-center gap-2 justify-center md:justify-start">
+              {activeTab === 'summary' ? <PieChart className="text-emerald-600" /> : <CurrentCategoryData.icon className="text-indigo-600" />}
+              {activeTab === 'summary' ? 'Récapitulatif du Profil' : `Critère : ${CurrentCategoryData.label}`}
+            </h1>
+            <p className="text-slate-500 text-sm mt-1 max-w-2xl">
+              {activeTab === 'summary' 
+                ? "Synthèse des niveaux sélectionnés pour chaque critère." 
+                : CurrentCategoryData.intro}
+            </p>
+          </div>
+          
+          {/* Mode Toggle */}
+          <div className="bg-slate-200 p-1 rounded-full flex text-sm font-semibold">
+            <button
+              onClick={() => setActiveTab('explore')}
+              className={`px-4 py-1.5 rounded-full transition-all flex items-center gap-2 ${activeTab === 'explore' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
+            >
+              <Eye size={14} /> Explorer
+            </button>
+            <button
+              onClick={() => setActiveTab('assistant')}
+              className={`px-4 py-1.5 rounded-full transition-all flex items-center gap-2 ${activeTab === 'assistant' ? 'bg-white text-indigo-600 shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
+            >
+              <Sparkles size={14} /> Assistant
+            </button>
+            <button
+              onClick={() => setActiveTab('summary')}
+              className={`px-4 py-1.5 rounded-full transition-all flex items-center gap-2 ${activeTab === 'summary' ? 'bg-white text-emerald-600 shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
+            >
+              <FileCheck size={14} /> Récapitulatif
+            </button>
+          </div>
+        </header>
+
+        {/* MAIN CONTENT: EXPLORE MODE */}
+        {activeTab === 'explore' && (
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 animate-in fade-in duration-300">
+            
+            {/* Left Navigation (Levels) */}
+            <div className="lg:col-span-4 flex flex-col gap-2">
+              {CurrentCategoryData.levels.map((level) => {
+                const Icon = level.icon;
+                const isSelectedView = selectedLevel.id === level.id;
+                const isProfileSelected = selections[activeCategory] === level.id;
+                
+                return (
+                  <button
+                    key={level.id}
+                    onClick={() => setSelectedLevel(level)}
+                    className={`
+                      relative group flex items-center w-full p-3 md:p-4 rounded-xl border-2 transition-all duration-200 text-left
+                      ${isSelectedView 
+                        ? `${level.borderColor} bg-white shadow-md scale-[1.01]` 
+                        : 'border-transparent bg-white hover:bg-slate-100 shadow-sm'
+                      }
+                    `}
+                  >
+                    <div className={`
+                      p-2 rounded-lg mr-3 transition-colors relative
+                      ${isSelectedView ? level.color : 'bg-slate-100 text-slate-400'}
+                    `}>
+                      <Icon size={20} />
+                      {isProfileSelected && (
+                         <div className="absolute -top-1 -right-1 bg-emerald-500 text-white rounded-full p-0.5 border-2 border-white">
+                            <CheckCircle size={10} fill="currentColor" />
+                         </div>
+                      )}
+                    </div>
+                    
+                    <div className="flex-1 min-w-0">
+                      <div className="flex justify-between items-center mb-0.5">
+                        <span className={`font-bold text-base ${isSelectedView ? 'text-slate-900' : 'text-slate-600'}`}>
+                          Niveau {level.id}
+                        </span>
+                        <span className={`text-xs font-mono font-bold px-1.5 py-0.5 rounded ${isSelectedView ? 'bg-slate-900 text-white' : 'bg-slate-200 text-slate-500'}`}>
+                          {level.points} pts
+                        </span>
+                      </div>
+                      <p className="text-xs text-slate-500 truncate">{level.shortDesc}</p>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Right Content (Detail) */}
+            <div className="lg:col-span-8">
+              <div className="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden h-full flex flex-col">
+                
+                {/* Banner */}
+                <div className={`h-20 ${selectedLevel.color} flex items-center justify-between px-6 relative overflow-hidden`}>
+                  <div className="z-10 flex items-center gap-3">
+                    <h2 className="text-2xl font-bold opacity-90">{selectedLevel.title}</h2>
+                    {selections[activeCategory] === selectedLevel.id && (
+                      <span className="bg-white/90 text-emerald-700 px-3 py-1 rounded-full text-xs font-bold shadow-sm flex items-center gap-1">
+                        <CheckCircle size={12} /> Sélectionné
+                      </span>
+                    )}
+                  </div>
+                  <selectedLevel.icon className="absolute -right-4 -bottom-4 w-32 h-32 opacity-10 rotate-12" />
+                </div>
+
+                {/* Body */}
+                <div className="p-6 flex-1 flex flex-col gap-6">
+                  
+                  {/* Selection Button */}
+                  <div className="flex justify-end">
+                     <button 
+                        onClick={() => handleSelectLevel(selectedLevel.id)}
+                        className={`
+                          flex items-center gap-2 px-4 py-2 rounded-lg font-semibold transition-all border-2
+                          ${selections[activeCategory] === selectedLevel.id
+                            ? 'bg-emerald-50 border-emerald-200 text-emerald-700 cursor-default'
+                            : 'bg-white border-slate-200 text-slate-600 hover:border-emerald-500 hover:text-emerald-600'
+                          }
+                        `}
+                     >
+                        {selections[activeCategory] === selectedLevel.id ? (
+                          <>
+                             <CheckCircle size={18} className="text-emerald-600" />
+                             Niveau {selectedLevel.id} validé pour le profil
+                          </>
+                        ) : (
+                          <>
+                             <div className="w-4 h-4 rounded-full border-2 border-current" />
+                             Sélectionner ce niveau pour mon profil
+                          </>
+                        )}
+                     </button>
+                  </div>
+
+                  {/* Definition */}
+                  <div>
+                    <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2 flex items-center gap-2">
+                      <Info size={14} />
+                      Définition Officielle
+                    </h3>
+                    <p className="text-base font-medium text-slate-700 bg-slate-50 p-3 rounded-lg border border-slate-100">
+                      {selectedLevel.description}
+                    </p>
+                  </div>
+
+                  {/* Criteria List */}
+                  {selectedLevel.criteria.length > 0 && (
+                    <div>
+                      <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2 flex items-center gap-2">
+                        <CheckCircle size={14} />
+                        Critères Spécifiques
+                      </h3>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        {selectedLevel.criteria.map((crit, idx) => (
+                          <div key={idx} className="flex items-center gap-2 text-slate-600 text-sm bg-white p-2 rounded border border-slate-100 shadow-sm">
+                            <div className="w-1.5 h-1.5 rounded-full bg-green-500"></div>
+                            {crit}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Example */}
+                  <div className="border-l-4 border-slate-300 pl-4 py-1">
+                    <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400">Concrètement</h3>
+                    <p className="text-slate-600 italic text-sm">"{selectedLevel.example}"</p>
+                  </div>
+
+                  {/* AI Section */}
+                  <div className="mt-auto pt-6 border-t border-slate-100">
+                    <div className="flex items-center justify-between mb-3">
+                      <h3 className="text-xs font-bold uppercase tracking-wider text-indigo-600 flex items-center gap-2">
+                        <Bot size={16} />
+                        Assistant Formation (IA)
+                      </h3>
+                    </div>
+                    
+                    {!scenario && !loadingScenario && (
+                      <button 
+                        onClick={handleGenerateScenario}
+                        className="w-full py-3 rounded-xl border-2 border-dashed border-indigo-200 text-indigo-600 font-semibold hover:bg-indigo-50 transition-colors flex justify-center items-center gap-2"
+                      >
+                        <Sparkles size={18} />
+                        Générer une mise en situation pour ce niveau
+                      </button>
+                    )}
+
+                    {loadingScenario && (
+                      <div className="flex justify-center p-4 text-indigo-600">
+                         <Loader2 className="animate-spin" size={24} />
+                      </div>
+                    )}
+
+                    {scenario && !loadingScenario && (
+                      <div className="bg-indigo-50 rounded-xl p-4 border border-indigo-100">
+                        <div className="flex gap-3">
+                          <div className="mt-1 min-w-[24px]"><Bot size={24} className="text-indigo-600" /></div>
+                          <div>
+                             <p className="text-slate-700 text-sm whitespace-pre-line mb-2">{scenario}</p>
+                             <button onClick={handleGenerateScenario} className="text-xs text-indigo-600 font-bold hover:underline flex items-center gap-1">
+                               Autre scénario <ArrowRight size={10} />
+                             </button>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* MAIN CONTENT: ASSISTANT MODE */}
+        {activeTab === 'assistant' && (
+          <div className="max-w-2xl mx-auto animate-in fade-in zoom-in-95 duration-300">
+            <div className="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden">
+              <div className="bg-slate-900 p-6 text-white">
+                <div className="flex items-center gap-3 mb-2">
+                  <Sparkles className="text-yellow-400" size={24} />
+                  <h2 className="text-xl font-bold">Auto-Diagnostic : {CurrentCategoryData.label}</h2>
+                </div>
+                <p className="text-slate-300 text-sm">
+                  Décrivez vos tâches réelles liées au critère <strong>{CurrentCategoryData.label.toUpperCase()}</strong>. L'IA vous aidera à identifier votre niveau.
+                </p>
+              </div>
+
+              <div className="p-6">
+                <textarea 
+                  className="w-full p-4 rounded-xl border-2 border-slate-200 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100 transition-all min-h-[120px] text-slate-700 mb-4 text-sm"
+                  placeholder={`Exemple pour ${CurrentCategoryData.label} : ${CurrentCategoryData.levels[2].example}...`}
+                  value={userDescription}
+                  onChange={(e) => setUserDescription(e.target.value)}
+                />
+
+                <div className="flex justify-end">
+                  <button
+                    onClick={handleAnalyzeTasks}
+                    disabled={!userDescription.trim() || loadingAnalysis}
+                    className={`
+                      px-5 py-2.5 rounded-lg font-bold text-white flex items-center gap-2 text-sm transition-all
+                      ${!userDescription.trim() || loadingAnalysis ? 'bg-slate-300' : 'bg-indigo-600 hover:bg-indigo-700'}
+                    `}
+                  >
+                    {loadingAnalysis ? <Loader2 className="animate-spin" size={18} /> : <Sparkles size={18} />}
+                    Analyser mon niveau {CurrentCategoryData.label}
+                  </button>
+                </div>
+
+                {analysisResult && (
+                  <div className="mt-6 bg-slate-50 rounded-xl p-5 border border-slate-200 animate-in slide-in-from-bottom-2">
+                    <h3 className="text-sm font-bold text-slate-800 mb-2 flex items-center gap-2">
+                      <Bot size={16} className="text-indigo-600" />
+                      Résultat
+                    </h3>
+                    <div className="text-slate-700 text-sm leading-relaxed whitespace-pre-line">
+                      {analysisResult}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* MAIN CONTENT: SUMMARY MODE */}
+        {activeTab === 'summary' && (
+          <div className="max-w-4xl mx-auto animate-in fade-in zoom-in-95 duration-300">
+             <div className="bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden">
+                {/* Header */}
+                <div className="bg-emerald-600 p-6 text-white flex justify-between items-center">
+                   <div>
+                      <h2 className="text-2xl font-bold flex items-center gap-2">
+                        <FileCheck size={24} /> Fiche de Synthèse
+                      </h2>
+                      <p className="text-emerald-100 opacity-90 text-sm mt-1">
+                        Récapitulatif des niveaux validés pour le poste
+                      </p>
+                   </div>
+                   <div className="text-right">
+                      <div className="text-sm text-emerald-100 uppercase tracking-wider font-bold">Total Valorisation</div>
+                      <div className="text-4xl font-bold">{totalPoints} pts</div>
+                   </div>
+                </div>
+
+                {/* Table */}
+                <div className="p-6">
+                   <div className="grid gap-4">
+                      {Object.values(DATA).map((cat) => {
+                        const selectedLevelId = selections[cat.id];
+                        const levelDetails = cat.levels.find(l => l.id === selectedLevelId);
+                        const Icon = cat.icon;
+
+                        return (
+                          <div key={cat.id} className="flex flex-col md:flex-row items-start md:items-center p-4 rounded-xl border border-slate-100 bg-slate-50 hover:bg-white hover:shadow-md transition-all">
+                             {/* Cat Icon & Name */}
+                             <div className="flex items-center gap-3 w-full md:w-1/4 mb-2 md:mb-0">
+                                <div className="bg-white p-2 rounded-lg text-slate-500 border border-slate-200">
+                                  <Icon size={20} />
+                                </div>
+                                <span className="font-bold text-slate-700">{cat.label}</span>
+                             </div>
+
+                             {/* Level Details */}
+                             <div className="flex-1 w-full md:w-auto pl-0 md:pl-4 border-l-0 md:border-l-2 border-slate-200">
+                                <div className="flex items-center gap-2 mb-1">
+                                  <span className="bg-slate-800 text-white text-xs font-bold px-2 py-0.5 rounded">
+                                    Niveau {selectedLevelId}
+                                  </span>
+                                  <span className="font-bold text-slate-800">{levelDetails.title}</span>
+                                </div>
+                                <p className="text-sm text-slate-500 truncate">{levelDetails.shortDesc}</p>
+                             </div>
+
+                             {/* Points */}
+                             <div className="text-right w-full md:w-auto mt-2 md:mt-0">
+                                <span className="text-lg font-mono font-bold text-emerald-600">
+                                  {levelDetails.points} pts
+                                </span>
+                             </div>
+                          </div>
+                        );
+                      })}
+                   </div>
+
+                   <div className="mt-8 bg-emerald-50 p-6 rounded-xl border border-emerald-100 text-center">
+                      <p className="text-emerald-800 font-medium mb-4">
+                        Ce profil totalise <strong>{totalPoints} points</strong> de valorisation.
+                      </p>
+                      <button 
+                        onClick={() => window.print()}
+                        className="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2 rounded-lg font-bold transition-colors inline-flex items-center gap-2 shadow-sm"
+                      >
+                        <Save size={18} />
+                        Imprimer / Sauvegarder la fiche
+                      </button>
+                   </div>
+                </div>
+             </div>
+          </div>
+        )}
+
+      </div>
+    </div>
+  );
+}
