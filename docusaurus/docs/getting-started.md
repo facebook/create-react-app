@@ -1,162 +1,303 @@
----
-id: getting-started
-title: Getting Started
----
+import React, { useRef, useState, useEffect } from "react";
 
-Create React App is an officially supported way to create single-page React
-applications. It offers a modern build setup with no configuration.
+// KidsDrawingApp.jsx
+// Single-file React component. Uses Tailwind CSS for styling.
+// Features: touch + mouse drawing, color palette, brush size, eraser,
+// undo, clear, save PNG, simple stickers (emoji), background patterns.
 
-## Quick Start
+export default function KidsDrawingApp() {
+  const canvasRef = useRef(null);
+  const wrapperRef = useRef(null);
+  const [isDrawing, setIsDrawing] = useState(false);
+  const [color, setColor] = useState("#ff3b30");
+  const [size, setSize] = useState(12);
+  const [isEraser, setIsEraser] = useState(false);
+  const [undoStack, setUndoStack] = useState([]);
+  const [maxUndo] = useState(20);
+  const [selectedSticker, setSelectedSticker] = useState(null);
+  const stickers = ["🌟", "🐶", "🚀", "🌈", "🍎", "🎈", "⚽️", "😊"];
 
-```sh
-npx create-react-app my-app
-cd my-app
-npm start
-```
+  // initialize canvas size
+  useEffect(() => {
+    resizeCanvas();
+    window.addEventListener("resize", resizeCanvas);
+    const canvas = canvasRef.current;
+    // set initial white background
+    const ctx = canvas.getContext("2d");
+    ctx.fillStyle = "#fff";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    pushUndo();
+    return () => window.removeEventListener("resize", resizeCanvas);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-> If you've previously installed `create-react-app` globally via `npm install -g create-react-app`, we recommend you uninstall the package using `npm uninstall -g create-react-app` or `yarn global remove create-react-app` to ensure that `npx` always uses the latest version.
+  function resizeCanvas() {
+    const canvas = canvasRef.current;
+    if (!canvas || !wrapperRef.current) return;
+    const rect = wrapperRef.current.getBoundingClientRect();
+    // preserve current content
+    const old = canvas.toDataURL();
+    canvas.width = Math.max(600, Math.floor(rect.width));
+    canvas.height = Math.max(400, Math.floor(rect.height));
+    const img = new Image();
+    img.onload = () => {
+      const ctx = canvas.getContext("2d");
+      // fill white background then draw old content
+      ctx.fillStyle = "#fff";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(img, 0, 0);
+    };
+    img.src = old;
+  }
 
-_([npx](https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7d4bd282b) comes with npm 5.2+ and higher, see [instructions for older npm versions](https://gist.github.com/gaearon/4064d3c23a77c74a3614c498a8bb1c5f))_
+  function getPointerPos(e) {
+    const canvas = canvasRef.current;
+    const rect = canvas.getBoundingClientRect();
+    const isTouch = e.touches && e.touches[0];
+    const clientX = isTouch ? e.touches[0].clientX : e.clientX;
+    const clientY = isTouch ? e.touches[0].clientY : e.clientY;
+    return {
+      x: Math.round((clientX - rect.left) * (canvas.width / rect.width)),
+      y: Math.round((clientY - rect.top) * (canvas.height / rect.height)),
+    };
+  }
 
-Then open [http://localhost:3000/](http://localhost:3000/) to see your app.
+  function startDraw(e) {
+    if (selectedSticker) {
+      placeSticker(e);
+      return;
+    }
+    setIsDrawing(true);
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext("2d");
+    const pos = getPointerPos(e);
+    ctx.beginPath();
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
+    ctx.lineWidth = size;
+    ctx.strokeStyle = isEraser ? "#fff" : color;
+    ctx.moveTo(pos.x, pos.y);
+    e.preventDefault();
+  }
 
-When you’re ready to deploy to production, create a minified bundle with `npm run build`.
+  function draw(e) {
+    if (!isDrawing) return;
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext("2d");
+    const pos = getPointerPos(e);
+    ctx.lineTo(pos.x, pos.y);
+    ctx.stroke();
+    e.preventDefault();
+  }
 
-<p align='center'>
-<img src='https://cdn.jsdelivr.net/gh/facebook/create-react-app@27b42ac7efa018f2541153ab30d63180f5fa39e0/screencast.svg' width='600' alt='npm start' />
-</p>
+  function endDraw() {
+    if (!isDrawing) return;
+    setIsDrawing(false);
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext("2d");
+    ctx.closePath();
+    pushUndo();
+  }
 
-### Get Started Immediately
+  function pushUndo() {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const url = canvas.toDataURL("image/png");
+    setUndoStack((s) => {
+      const next = [...s, url];
+      if (next.length > maxUndo) next.shift();
+      return next;
+    });
+  }
 
-You **don’t** need to install or configure tools like webpack or Babel. They are preconfigured and hidden so that you can focus on the code.
+  function undo() {
+    setUndoStack((s) => {
+      if (s.length <= 1) return s; // keep at least one state
+      const next = s.slice(0, -1);
+      const last = next[next.length - 1];
+      const img = new Image();
+      img.onload = () => {
+        const canvas = canvasRef.current;
+        const ctx = canvas.getContext("2d");
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(img, 0, 0);
+      };
+      img.src = last;
+      return next;
+    });
+  }
 
-Create a project, and you’re good to go.
+  function clearCanvas() {
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext("2d");
+    ctx.fillStyle = "#fff";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    pushUndo();
+  }
 
-## Creating an App
+  function saveImage() {
+    const canvas = canvasRef.current;
+    const link = document.createElement("a");
+    link.download = `kids-drawing-${new Date().toISOString()}.png`;
+    link.href = canvas.toDataURL("image/png");
+    link.click();
+  }
 
-**You’ll need to have Node >= 14 on your local development machine** (but it’s not required on the server). You can use [nvm](https://github.com/creationix/nvm#installation) (macOS/Linux) or [nvm-windows](https://github.com/coreybutler/nvm-windows#node-version-manager-nvm-for-windows) to switch Node versions between different projects.
+  function placeSticker(e) {
+    if (!selectedSticker) return;
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext("2d");
+    const pos = getPointerPos(e);
+    // draw sticker as text in a big font
+    const fontSize = 64;
+    ctx.font = `${fontSize}px serif`;
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText(selectedSticker, pos.x, pos.y);
+    pushUndo();
+    // auto-deselect sticker after placing
+    setSelectedSticker(null);
+  }
 
-To create a new app, you may choose one of the following methods:
+  function setToolColor(c) {
+    setColor(c);
+    setIsEraser(false);
+  }
 
-### npx
+  return (
+    <div className="w-full h-full min-h-[520px] p-4 bg-gradient-to-br from-blue-50 to-pink-50 rounded-2xl shadow-2xl">
+      <div className="max-w-4xl mx-auto">
+        <header className="flex items-center justify-between mb-4">
+          <h1 className="text-2xl font-extrabold">Fun Drawing — Kids Edition</h1>
+          <div className="flex gap-2">
+            <button
+              onClick={undo}
+              className="px-3 py-2 rounded-xl bg-white shadow hover:scale-105 transition"
+              aria-label="Undo"
+            >
+              ↶ Undo
+            </button>
+            <button
+              onClick={clearCanvas}
+              className="px-3 py-2 rounded-xl bg-white shadow hover:scale-105 transition"
+              aria-label="Clear canvas"
+            >
+              🗑 Clear
+            </button>
+            <button
+              onClick={saveImage}
+              className="px-3 py-2 rounded-xl bg-white shadow hover:scale-105 transition"
+              aria-label="Save image"
+            >
+              💾 Save
+            </button>
+          </div>
+        </header>
 
-```sh
-npx create-react-app@latest my-app
-```
+        <div className="flex gap-4">
+          <aside className="w-64 p-3 bg-white rounded-2xl shadow-md flex flex-col gap-3">
+            <div>
+              <div className="text-sm font-semibold mb-2">Colors</div>
+              <div className="flex flex-wrap gap-2">
+                {[
+                  "#ff3b30",
+                  "#ff9500",
+                  "#ffd60a",
+                  "#32d74b",
+                  "#0a84ff",
+                  "#5e5ce6",
+                  "#ff2d55",
+                  "#000000",
+                ].map((c) => (
+                  <button
+                    key={c}
+                    onClick={() => setToolColor(c)}
+                    className={`w-9 h-9 rounded-full border-2 ${c === color ? "ring-4 ring-offset-2" : ""}`}
+                    style={{ background: c }}
+                    aria-label={`Set color ${c}`}
+                  />
+                ))}
+              </div>
+            </div>
 
-_([npx](https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7d4bd282b) comes with npm 5.2+ and higher, see [instructions for older npm versions](https://gist.github.com/gaearon/4064d3c23a77c74a3614c498a8bb1c5f))_
+            <div>
+              <div className="text-sm font-semibold mb-2">Brush Size</div>
+              <input
+                type="range"
+                min="2"
+                max="80"
+                value={size}
+                onChange={(e) => setSize(parseInt(e.target.value, 10))}
+                className="w-full"
+                aria-label="Brush size"
+              />
+              <div className="text-xs mt-1">Size: {size}px</div>
+            </div>
 
-### npm
+            <div className="flex gap-2 mt-1">
+              <button
+                onClick={() => setIsEraser(false)}
+                className={`flex-1 py-2 rounded-xl ${!isEraser ? "bg-yellow-100" : "bg-white"}`}
+              >
+                ✏️ Draw
+              </button>
+              <button
+                onClick={() => setIsEraser(true)}
+                className={`flex-1 py-2 rounded-xl ${isEraser ? "bg-yellow-100" : "bg-white"}`}
+              >
+                🧽 Eraser
+              </button>
+            </div>
 
-```sh
-npm init react-app my-app
-```
+            <div>
+              <div className="text-sm font-semibold mb-2">Stickers</div>
+              <div className="flex flex-wrap gap-2">
+                {stickers.map((s) => (
+                  <button
+                    key={s}
+                    onClick={() => setSelectedSticker(s)}
+                    className={`w-10 h-10 rounded-lg text-xl flex items-center justify-center text-center ${selectedSticker === s ? "ring-4" : "bg-white"}`}
+                  >
+                    {s}
+                  </button>
+                ))}
+              </div>
+              <div className="text-xs mt-1 text-gray-500">Tap sticker, then tap canvas to place it.</div>
+            </div>
 
-_`npm init <initializer>` is available in npm 6+_
+            <div className="mt-auto text-xs text-gray-600">Tip: Use big brush sizes for colorful splashes!</div>
+          </aside>
 
-### Yarn
+          <main className="flex-1 bg-white rounded-2xl p-3 shadow-inner">
+            <div ref={wrapperRef} className="relative w-full h-[520px] rounded-lg overflow-hidden border-4 border-dashed border-gray-200">
+              <canvas
+                ref={canvasRef}
+                className="w-full h-full touch-none"
+                onMouseDown={startDraw}
+                onMouseMove={draw}
+                onMouseUp={endDraw}
+                onMouseLeave={endDraw}
+                onTouchStart={startDraw}
+                onTouchMove={draw}
+                onTouchEnd={endDraw}
+              />
+              <div className="absolute right-3 top-3 bg-white bg-opacity-80 rounded-xl p-2">
+                <div className="text-xs">Tool preview</div>
+                <div className="flex items-center gap-2 mt-2">
+                  <div className="rounded-full" style={{ width: size / 2, height: size / 2, background: isEraser ? '#fff' : color, border: '1px solid #ccc' }} />
+                  <div className="text-xs text-gray-600">{isEraser ? 'Eraser' : 'Brush'}</div>
+                </div>
+              </div>
+            </div>
 
-```sh
-yarn create react-app my-app
-```
+            <div className="mt-3 flex gap-2 items-center justify-between">
+              <div className="text-sm text-gray-600">Made for little artists — friendly controls and big buttons.</div>
+              <div className="text-xs text-gray-500">Undo steps: {undoStack.length - 1}</div>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+  );
+}
 
-_`yarn create` is available in Yarn 0.25+_
-
-### Selecting a template
-
-You can now optionally start a new app from a template by appending `--template [template-name]` to the creation command.
-
-If you don't select a template, we'll create your project with our base template.
-
-Templates are always named in the format `cra-template-[template-name]`, however you only need to provide the `[template-name]` to the creation command.
-
-```sh
-npx create-react-app my-app --template [template-name]
-```
-
-> You can find a list of available templates by searching for ["cra-template-\*"](https://www.npmjs.com/search?q=cra-template-*) on npm.
-
-Our [Custom Templates](custom-templates.md) documentation describes how you can build your own template.
-
-#### Creating a TypeScript app
-
-You can start a new TypeScript app using templates. To use our provided TypeScript template, append `--template typescript` to the creation command.
-
-```sh
-npx create-react-app my-app --template typescript
-```
-
-If you already have a project and would like to add TypeScript, see our [Adding TypeScript](adding-typescript.md) documentation.
-
-### Selecting a package manager
-
-When you create a new app, the CLI will use [npm](https://docs.npmjs.com) or [Yarn](https://yarnpkg.com/) to install dependencies, depending on which tool you use to run `create-react-app`. For example:
-
-```sh
-# Run this to use npm
-npx create-react-app my-app
-# Or run this to use yarn
-yarn create react-app my-app
-```
-
-## Output
-
-Running any of these commands will create a directory called `my-app` inside the current folder. Inside that directory, it will generate the initial project structure and install the transitive dependencies:
-
-```
-my-app
-├── README.md
-├── node_modules
-├── package.json
-├── .gitignore
-├── public
-│   ├── favicon.ico
-│   ├── index.html
-│   ├── logo192.png
-│   ├── logo512.png
-│   ├── manifest.json
-│   └── robots.txt
-└── src
-    ├── App.css
-    ├── App.js
-    ├── App.test.js
-    ├── index.css
-    ├── index.js
-    ├── logo.svg
-    ├── serviceWorker.js
-    └── setupTests.js
-```
-
-No configuration or complicated folder structures, only the files you need to build your app. Once the installation is done, you can open your project folder:
-
-```sh
-cd my-app
-```
-
-## Scripts
-
-Inside the newly created project, you can run some built-in commands:
-
-### `npm start` or `yarn start`
-
-Runs the app in development mode. Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will automatically reload if you make changes to the code. You will see the build errors and lint warnings in the console.
-
-<p align='center'>
-<img src='https://cdn.jsdelivr.net/gh/marionebl/create-react-app@9f6282671c54f0874afd37a72f6689727b562498/screencast-error.svg' width='600' alt='Build errors' />
-</p>
-
-### `npm test` or `yarn test`
-
-Runs the test watcher in an interactive mode. By default, runs tests related to files changed since the last commit.
-
-[Read more about testing](running-tests.md).
-
-### `npm run build` or `yarn build`
-
-Builds the app for production to the `build` folder. It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.
-
-Your app is ready to be deployed.
