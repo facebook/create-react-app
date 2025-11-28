@@ -68,6 +68,7 @@ module.exports = function (api, opts, env) {
     presets: [
       isEnvTest && [
         // ES features necessary for user's Node version
+        // Most of the time
         require('@babel/preset-env').default,
         {
           targets: {
