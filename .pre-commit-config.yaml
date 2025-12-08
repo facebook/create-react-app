@@ -1,0 +1,21 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-merge-conflict
+      - id: check-yaml
+
+  - repo: local
+    hooks:
+      - id: eslint
+        name: eslint
+        entry: npm run eslint
+        language: system
+        pass_filenames: false
+      - id: prettier
+        name: prettier
+        entry: npm run prettier
+        language: system
+        pass_filenames: false

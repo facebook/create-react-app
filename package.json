@@ -19,8 +19,8 @@
     "test:integration": "jest test/integration",
     "test": "cd packages/react-scripts && node bin/react-scripts.js test",
     "eslint": "eslint .",
-    "prettier": "prettier .",
-    "format": "npm run prettier -- --write"
+    "prettier": "prettier --write .",
+    "format": "npm run prettier"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.15.1",
