@@ -1,4 +1,5 @@
----
+---npx create-react-app playmoney-casino
+cd playmoney-casino
 id: getting-started
 title: Getting Started
 ---
