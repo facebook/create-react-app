@@ -12,7 +12,7 @@ You can find different topics in the table of contents. On desktop, you should s
 
 ## Looking for React Docs?
 
-The documentation for React itself is located on a separate website: **[reactjs.org](https://reactjs.org/)**.
+The documentation for React itself is located on a separate website: **[react.dev](https://react.dev/)**.
 
 This website is only about Create React App.
 
