@@ -193,7 +193,7 @@ Here are a few common cases where you might want to try something else:
 
 All of the above tools can work with little to no configuration.
 
-If you prefer configuring the build yourself, [follow this guide](https://react.dev/learn/add-react-to-an-existing-project).
+If you prefer adding React to an existing build setup manually, [follow this guide](https://react.dev/learn/add-react-to-an-existing-project).
 
 ## React Native
 
