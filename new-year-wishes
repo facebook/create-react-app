@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Happy New Year 🎆</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  overflow: hidden;
+  font-family: 'Segoe UI', sans-serif;
+  background: radial-gradient(circle, #000428, #004e92);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+.card {
+  z-index: 2;
+  text-align: center;
+  background: rgba(0,0,0,0.4);
+  padding: 30px;
+  border-radius: 20px;
+  animation: zoom 2s ease;
+}
+
+h1 { font-size: 2.5rem; }
+h2 { font-size: 2rem; color: #ffdd59; }
+p { font-size: 1.1rem; }
+
+@keyframes zoom {
+  from { transform: scale(0); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* Fireworks */
+.firework {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  background: transparent;
+  border-radius: 50%;
+  box-shadow:
+    0 0 #ff0,
+    0 0 #f00,
+    0 0 #0ff;
+  animation: explode 1.5s infinite;
+}
+
+@keyframes explode {
+  0% { box-shadow: 0 0 white; opacity: 1; }
+  100% {
+    box-shadow:
+      0 -100px red,
+      100px 0 yellow,
+      0 100px cyan,
+      -100px 0 lime;
+    opacity: 0;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="firework" style="top:20%; left:30%"></div>
+<div class="firework" style="top:60%; left:70%"></div>
+<div class="firework" style="top:40%; left:50%"></div>
+
+<div class="card">
+  <h1>🎆 Happy New Year 2026 🎆</h1>
+  <h2 id="name">Anchal💖</h2>
+  <p>
+    May this year bring you love, happiness,<br>
+    success and beautiful memories ✨
+  </p>
+  <p>— From Someone Who Truly Cares 💌</p>
+</div>
+
+<!-- Music -->
+<audio autoplay loop>
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_1b7c7e8e8a.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const name = params.get("name") || "Anchal";
+document.getElementById("name").innerText = name + " 💖";
+</script>
+
+</body>
+</html>
