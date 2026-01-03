@@ -1,4 +1,5 @@
----
+Sachin Singh
+Tittle Name Syno---
 id: making-a-progressive-web-app
 title: Making a Progressive Web App
 ---
