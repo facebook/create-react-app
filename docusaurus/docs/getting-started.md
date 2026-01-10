@@ -6,6 +6,28 @@ title: Getting Started
 Create React App is an officially supported way to create single-page React
 applications. It offers a modern build setup with no configuration.
 
+## Project Scope and Current Status
+
+Create React App is in long-term maintenance mode.
+
+It continues to receive critical bug fixes and security updates, but new features are unlikely to be added. The project remains a stable option for certain use cases.
+
+Create React App may be a good fit if:
+- You are learning React and want a zero-configuration setup
+- You are maintaining an existing Create React App codebase
+- You prefer a stable, well-known toolchain with minimal change
+
+You may want to consider alternatives if:
+- You are starting a new production application
+- You need faster development startup times
+- You require more flexibility in bundling or framework integration
+
+For new projects, the React team recommends exploring modern alternatives such as:
+- Vite
+- Next.js
+- Remix
+
+
 ## Quick Start
 
 ```sh
