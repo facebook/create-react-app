@@ -10,6 +10,7 @@ function startLocalRegistry {
   tmp_registry_log=`mktemp`
   echo "Registry output file: $tmp_registry_log"
   (cd && nohup npx ${VERDACCIO_PACKAGE:-$default_verdaccio_package} -c $1 &>$tmp_registry_log &)
+  verdaccio_pid=$!
   # Wait for Verdaccio to boot
   grep -q 'http address' <(tail -f $tmp_registry_log)
 
@@ -22,6 +23,13 @@ function stopLocalRegistry {
   # Restore the original NPM and Yarn registry URLs and stop Verdaccio
   npm set registry "$original_npm_registry_url"
   yarn config set registry "$original_yarn_registry_url"
+  
+  # Kill verdaccio process if it's running
+  if [ ! -z "$verdaccio_pid" ]; then
+    kill $verdaccio_pid 2>/dev/null || true
+  fi
+  # Also kill any remaining verdaccio processes
+  pkill -f verdaccio 2>/dev/null || true
 }
 
 function publishToLocalRegistry {
