@@ -1,4 +1,27 @@
----
+---<!DOCTYPE html>
+<html>
+<head>
+  <title>FMCSA Dashboard</title>
+</head>
+
+<body>
+<h1>🚛 FMCSA Scraper Dashboard</h1>
+
+<button onclick="startScrape()">Start Scraper</button>
+
+<p id="status">Idle</p>
+
+<script>
+async function startScrape() {
+  document.getElementById("status").innerText =
+    "Scraping Started...";
+
+  await fetch("/api/scrape");
+}
+</script>
+
+</body>
+</html>
 id: getting-started
 title: Getting Started
 ---
