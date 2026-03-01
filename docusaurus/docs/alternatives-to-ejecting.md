@@ -1,4 +1,4 @@
----
+ ---
 id: alternatives-to-ejecting
 title: Alternatives to Ejecting
 ---
