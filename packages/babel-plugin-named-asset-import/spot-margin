@@ -1,0 +1,2590 @@
+
+Spot/Margin/Savings/Mining USDⓈ-M Futures COIN-M Futures Vanilla Options
+简体中文
+
+Change Log
+Introduction
+General Info
+General API Information
+LIMITS
+Data Sources
+Endpoint security type
+SIGNED (TRADE, USER_DATA, AND MARGIN) Endpoint security
+Public API Definitions
+Filters
+Wallet Endpoints
+Sub-Account Endpoints
+Market Data Endpoints
+Websocket Market Streams
+Spot Account/Trade
+Margin Account/Trade
+User Data Streams
+Savings Endpoints
+Mining Endpoints
+Futures
+BLVT Endpoints
+BSwap Endpoints
+Fiat Endpoints
+C2C Endpoints
+Crypto Loans Endpoints
+Pay Endpoints
+Convert Endpoints
+Rebate Endpoints
+NFT Endpoints
+Binance Code Endpoints
+Error Codes
+Notes
+Binance Exchange
+Change Log
+2022-02-28
+
+New field allowTrailingStop has been added to GET /api/v3/exchangeInfo
+2022-02-22
+
+SPOT API
+
+(price-minPrice) % tickSize == 0 rule in PRICE_FILTER has been changed to price % tickSize == 0.
+A new filter PERCENT_PRICE_BY_SIDE has been added.
+Changes to GET api/v3/depth
+The limit value can be outside of the previous values (i.e. 5, 10, 20, 50, 100, 500, 1000,5000) and will return the correct limit. (i.e. if limit=3 then the response will be the top 3 bids and asks)
+The limit still cannot exceed 5000. If the limit provided is greater than 5000, then the response will be truncated to 5000.
+Due to the changes, these are the updated request weights based on the limit value provided:
+Limit	Request Weight
+1-100	1
+101-500	5
+501-1000	10
+1001-5000	50
+Changes to GET api/v3/aggTrades
+When providing startTime and endTime, the oldest items are returned.
+2022-2-18
+
+Update endpoint for Sub-Account:
+New fields isManagedSubAccountand isAssetManagementSubAccount added inGET /sapi/v1/sub-account/listto support query whether the sub-account is a managed sub-account or a asset management sub-account
+2022-2-17
+
+The following updates will take effect on February 24, 2022 08:00 AM UTC
+
+Update endpoint for Wallet：
+GET /sapi/v1/accountSnapshot
+The time limit of this endpoint is shortened to only support querying the data of the latest month
+
+2022-2-09
+
+New endpoint for Wallet:
+POST /sapi/v1/asset/dust-btc to get assets that can be converted into BNB
+2022-1-25
+
+From January 28, 2022 4:00 AM UTC, You need to openEnable Spot & Margin Tradingpermission for the API key which requests these endpoints as following：
+POST /sapi/v1/asset/dust Dust transfer
+POST /sapi/v1/lending/daily/purchase Purchase Savings flexible product
+POST /sapi/v1/lending/daily/redeem Redeem Savings flexible product
+POST /sapi/v1/lending/customizedFixed/purchase Purchase Savings Fixed/Activity project
+POST /sapi/v1/lending/positionChanged Change Savings Fixed/Activity position to Daily position
+POST /sapi/v1/bswap/liquidityAdd Bswap add liquidity
+POST /sapi/v1/bswap/liquidityRemove Bswap remove liquidity
+POST /sapi/v1/bswap/swap Bswap swap
+POST /sapi/v1/bswap/claimRewards Bswap claim rewards
+2022-1-21
+
+New endpoints for Binance Code:
+POST /sapi/v1/giftcard/createCode to create a Binance Code.
+POST /sapi/v1/giftcard/redeemCode to redeem a Binance Code.
+GET /sapi/v1/giftcard/verify to verify a Binance Code.
+2022-1-4
+
+New endpoint for Mining:
+
+GET /sapi/v1/mining/payment/uid to get Mining account earning.
+New endpoints for BSwap:
+
+GET /sapi/v1/bswap/unclaimedRewards to get unclaimed rewards record.
+POST /sapi/v1/bswap/claimRewards to claim swap rewards or liquidity rewards.
+GET /sapi/v1/bswap/claimedHistory to get history of claimed rewards.
+2021-12-30
+
+Update endpoint for Margin：
+
+Removed out limit fromGET /sapi/v1/margin/interestRateHistory; The max interval between startTime and endTime is 30 days.
+Update endpoint for Wallet：
+
+As the Mining account is merged into Funding account, transfer types MAIN_MINING, MINING_MAIN, MINING_UMFUTURE, MARGIN_MINING, and MINING_MARGIN will be discontinued in Universal Transfer endpoint POST /sapi/v1/asset/transfer on January 05, 2022 08:00 AM UTC
+2021-12-29
+
+Removed out dated "Symbol Type" enum; added "Permissions" enum.
+2021-12-24
+
+Update endpoints for Sub-Account:
+New parameterclientTranIdadded inPOST /sapi/v1/sub-account/universalTransfer and GET /sapi/v1/sub-account/universalTransfer to support custom transfer id
+2021-12-03
+
+New endpoints for Margin:
+
+GET /sapi/v1/margin/crossMarginData to get cross margin fee data collection
+GET /sapi/v1/margin/isolatedMarginData to get isolated margin fee data collection
+GET /sapi/v1/margin/isolatedMarginTier to get isolated margin tier data collection
+New endpoints for NFT:
+
+GET /sapi/v1/nft/history/transactions to get NFT transaction history
+GET /sapi/v1/nft/history/deposit to get NFT deposit history
+GET /sapi/v1/nft/history/withdraw to get NFT withdraw history
+GET /sapi/v1/nft/user/getAsset to get NFT asset
+2021-11-30
+
+New endpoint for Convert:
+
+GET /sapi/v1/convert/tradeFlow to support user query convert trade history records
+New endpoint for Rebate:
+
+GET /sapi/v1/rebate/taxQuery to support user query spot rebate history records
+2021-11-19
+
+New endpoint for Pay:
+
+GET /sapi/v1/pay/transactionsto support user query Pay trade history
+Update endpoint for Wallet:
+
+New fieldinfoadded inGET /sapi/v1/capital/withdraw/historyto show the reason for withdrawal failure
+2021-11-18
+
+The following updates will take effect on November 25, 2021 08:00 AM UTC
+
+Update endpoint for Wallet：
+GET /sapi/v1/accountSnapshot
+The query time range of both endpoints are shortened to support data query within the last 6 months only, where startTime does not support selecting a timestamp beyond 6 months. If you do not specify startTime and endTime, the data of the last 7 days will be returned by default.
+
+2021-11-17
+
+The following endpoints will be discontinued on November 17, 2021 13:00 PM UTC:
+POST /sapi/v1/account/apiRestrictions/ipRestriction to support user enable and disable IP restriction for an API Key
+POST /sapi/v1/account/apiRestrictions/ipRestriction/ipList to support user add IP list for an API Key
+GET /sapi/v1/account/apiRestrictions/ipRestriction to support user query IP restriction for an API Key
+DELETE /sapi/v1/account/apiRestrictions/ipRestriction/ipList to support user delete IP list for an API Key
+2021-11-16
+
+New endpoints for Sub-Account:
+POST /sapi/v1/sub-account/subAccountApi/ipRestriction to support master account enable and disable IP restriction for a sub-account API Key
+POST /sapi/v1/sub-account/subAccountApi/ipRestriction/ipList to support master account add IP list for a sub-account API Key
+GET /sapi/v1/sub-account/subAccountApi/ipRestriction to support master account query IP restriction for a sub-account API Key
+DELETE /sapi/v1/sub-account/subAccountApi/ipRestriction/ipList to support master account delete IP list for a sub-account API Key
+2021-11-09
+
+New endpoints for Wallet:
+POST /sapi/v1/account/apiRestrictions/ipRestriction to support user enable and disable IP restriction for an API Key
+POST /sapi/v1/account/apiRestrictions/ipRestriction/ipList to support user add IP list for an API Key
+GET /sapi/v1/account/apiRestrictions/ipRestriction to support user query IP restriction for an API Key
+DELETE /sapi/v1/account/apiRestrictions/ipRestriction/ipList to support user delete IP list for an API Key
+2021-11-08
+
+New endpoint for Crypto Loans:
+New endpointGET /sapi/v1/loan/incometo support user query crypto loans income history
+2021-11-05
+
+Update endpoint for Wallet:
+New parameter walletTypeadded in POST /sapi/v1/capital/withdraw/apply to support user choose wallet type spot wallet and funding wallet when withdraw crypto.
+2021-11-04
+
+The following updates will take effect on November 11, 2021 08:00 AM UTC
+
+Update endpoints for Wallet and Futures：
+GET /sapi/v1/asset/transfer
+GET /sapi/v1/futures/transfer
+The query time range of both endpoints are shortened to support data query within the last 6 months only, where startTime does not support selecting a timestamp beyond 6 months. If you do not specify startTime and endTime, the data of the last 7 days will be returned by default.
+
+2021-11-01
+
+GET /api/v3/rateLimit/order added
+The endpoint will display the user's current order count usage for all intervals.
+This endpoint will have a request weight of 20.
+2021-10-22
+
+Update endpoint for Wallet:
+New transfer types MAIN_FUNDING,FUNDING_MAIN,FUNDING_UMFUTURE,UMFUTURE_FUNDING,MARGIN_FUNDING,FUNDING_MARGIN,FUNDING_CMFUTUREand CMFUTURE_FUNDING added in Universal Transfer endpoint POST /sapi/v1/asset/transfer and GET /sapi/v1/asset/transfer to support transfer assets among funding account and other accounts
+As the C2C account, Binance Payment, Binance Card and other business account are merged into a Funding account, transfer types MAIN_C2C,C2C_MAIN,C2C_UMFUTURE,C2C_MINING,UMFUTURE_C2C,MINING_C2C,MARGIN_C2C,C2C_MARGIN,MAIN_PAYand PAY_MAIN will be discontinued in Universal Transfer endpoint POST /sapi/v1/asset/transfer and GET /sapi/v1/asset/transfer on November 04, 2021 08:00 AM UTC
+2021-10-14
+
+Update the time range of the response data for the following margin account endpoints, startTime and endTime time span will not exceed 30 days, without time parameter sent the system will return the last 7 days of data by default, while the archived parameter is true, the system will return the last 7 days of data 6 months ago by default:
+GET /sapi/v1/margin/transfer
+GET /sapi/v1/margin/loan
+GET /sapi/v1/margin/repay
+GET /sapi/v1/margin/isolated/transfer
+GET /sapi/v1/margin/interestHistory
+2021-09-18
+
+New endpoints for BSwap:
+GET /sapi/v1/bswap/poolConfigure to get pool configure
+GET /sapi/v1/bswap/addLiquidityPreview to get add liquidity preview
+GET /sapi/v1/bswap/removeLiquidityPreview to get remove liquidity preview
+2021-09-17
+
+Add/api/*and/sapi/* limit introduction in General Info
+2021-09-08
+
+Add endpoints for enabled isolated margin account limit:
+
+DELETE /sapi/v1/margin/isolated/account to disable isolated margin account for a specific symbol
+POST /sapi/v1/margin/isolated/account to enable isolated margin account for a specific symbol
+GET /sapi/v1/margin/isolated/accountLimit to query enabled isolated margin account limit
+New field "enabled" in response of GET /sapi/v1/margin/isolated/account to check if the isolated margin account is enabled
+
+2021-09-03
+
+Update endpoint for Wallet:
+New fields sameAddress,depositDust and specialWithdrawTipsadded in GET /sapi/v1/capital/config/getall sameAddress means if the coin needs to provide memo to withdraw depositDust means minimum creditable amount specialWithdrawTips means special tips for withdraw
+New field confirmNoadded in GET /sapi/v1/capital/withdraw/history to support query confirm times for withdraw history
+2021-08-27
+
+Update endpoint for Wallet:
+New parameter withdrawOrderIdadded in GET /sapi/v1/capital/withdraw/history to support user query withdraw history by withdrawOrderId
+New field unlockConfirmadded in GET /sapi/v1/capital/deposit/hisrec to support query network confirm times for unlocking
+2021-08-23
+
+New endpoints for Margin Account OCO:
+POST /sapi/v1/margin/order/oco
+DELETE /sapi/v1/margin/orderList
+GET /sapi/v1/margin/orderList
+GET /sapi/v1/margin/allOrderList
+GET /sapi/v1/margin/openOrderList
+Same usage as spot account OCO
+
+2021-08-20
+
+Update endpoint for Wallet:
+New parametersfromSymbol,toSymboland new transfer types ISOLATEDMARGIN_MARGIN, MARGIN_ISOLATEDMARGINand ISOLATEDMARGIN_ISOLATEDMARGIN added in POST /sapi/v1/asset/transfer and GET /sapi/v1/asset/transfer to support user transfer assets between Margin(cross) account and Margin(isolated) account
+2021-08-12
+
+GET api/v3/myTrades has a new optional field orderId
+2021-08-05
+
+New endpoint for C2C:
+GET /sapi/v1/c2c/orderMatch/listUserOrderHistory to query user C2C trade history
+2021-08-05
+
+Update endpoints for Savings:
+GET /sapi/v1/lending/union/purchaseRecord
+GET /sapi/v1/lending/union/redemptionRecord
+GET /sapi/v1/lending/union/interestHistory
+The time between startTime and endTime cannot be longer than 30 days. If startTime and endTime are both not sent, then the last 30 days' data will be returned
+
+2021-07-29
+
+Update endpoint for Sub-Account:
+GET /sapi/v1/sub-account/transfer/subUserHistory if startTimeandendTimeare not sent, the recent 30-day data will be returned by default
+2021-07-27
+
+New endpoint for Fiat:
+GET /sapi/v1/fiat/orders to query user fiat deposit and withdraw history
+GET /sapi/v1/fiat/payments to query user fiat payments history
+2021-07-16
+
+New endpoint for Wallet:
+GET /sapi/v1/account/apiRestrictions to query user API Key permission
+2021-07-09
+
+New endpoint for Wallet:
+POST /sapi/v1/asset/get-funding-asset to query funding wallet, includes Binance Pay, Binance Card, Binance Gift Card, Stock Token
+2021-06-24
+
+Update endpoints for Wallet:
+GET /sapi/v1/capital/withdraw/history added default value 1000, max value 1000 for the parameterlimit
+GET /sapi/v1/capital/deposit/hisrec added default value 1000, max value 1000 for the parameterlimit
+2021-06-17
+
+Update endpoint for Savings:
+GET /sapi/v1/lending/daily/product/list to include new parameters current and size
+2021-06-15
+
+New endpoints for Sub-Account:
+POST /sapi/v1/managed-subaccount/deposit to deposit assets into the managed sub-account (only for investor master account)
+GET /sapi/v1/managed-subaccount/asset to query managed sub-account asset details (only for investor master account)
+POST /sapi/v1/managed-subaccount/withdraw to withdrawal assets from the managed sub-account (only for investor master account)
+2021-06-04
+
+On August 01, 2021 02:00 AM UTC the WAPI endpoints will be discontinued:
+
+GET /wapi/v3/systemStatus.html
+POST /wapi/v3/withdraw.html
+GET /wapi/v3/depositHistory.html
+GET /wapi/v3/withdrawHistory.html
+GET /wapi/v3/depositAddress.html
+GET /wapi/v3/accountStatus.html
+GET /wapi/v3/apiTradingStatus.html
+GET /wapi/v3/userAssetDribbletLog.html
+GET /wapi/v3/assetDetail.html
+GET /wapi/v3/tradeFee.html
+GET /wapi/v3/sub-account/list.html
+GET /wapi/v3/sub-account/transfer/history.html
+POST /wapi/v3/sub-account/transfer.html
+GET /wapi/v3/sub-account/assets.html
+The WAPI endpoints have been removed from Binance API Documentation.To ensure your trading strategies are not affected, all API users are encouraged to upgrade trading bots to SAPI endpoints as soon as possible.
+
+2021-05-26
+
+Update endpoint for Wallet:
+New transfer types MAIN_PAY ,PAY_MAIN added in Universal Transfer endpoint POST /sapi/v1/asset/transfer and GET /sapi/v1/asset/transfer to support trasnfer assets between spot account and pay account
+2021-05-12
+
+Added Data Source in the documentation to explain where each endpoint is retrieving its data
+Added field Data Source to each Spot API endpoint in the documentation
+GET api/v3/exchangeInfo now supports single or multi-symbol query
+2021-04-28
+
+On May 15, 2021 08:00 UTC the SAPI Create Margin Account endpoint will be discontinued:
+
+POST /sapi/v1/margin/isolated/create
+Isolated Margin account creation and trade preparation can be completed directly through Isolated Margin funds transfer POST /sapi/v1/margin/isolated/transfer
+
+2021-04-26
+
+On April 28, 2021 00:00 UTC the weights to the following endpoints will be adjusted:
+
+GET /api/v3/order weight increased to 2
+GET /api/v3/openOrders weight increased to 3
+GET /api/v3/allOrders weight increased to 10
+GET /api/v3/orderList weight increased to 2
+GET /api/v3/openOrderList weight increased to 3
+GET /api/v3/account weight increased to 10
+GET /api/v3/myTrades weight increased to 10
+GET /api/v3/exchangeInfo weight increased to 10
+2021-04-08
+
+Update endpoint for Sub-Account:
+GET /sapi/v1/sub-account/futures/accountSummary and GET /sapi/v2/sub-account/futures/accountSummary the unit of field asset changed to USD valued summary of sub-account assets
+2021-04-02
+
+New endpoints for Wallet:
+GET /sapi/v1/system/status to query system status
+GET /sapi/v1/account/status to query account status
+GET /sapi/v1/account/apiTradingStatus to query account API trading status
+GET /sapi/v1/asset/dribblet to query dust log
+GET /sapi/v1/asset/assetDetail to query asset detail
+GET /sapi/v1/asset/tradeFee to query trade fee
+New endpoint for Sub-Account:
+GET /sapi/v3/sub-account/assets to query sub-account assets
+2021-04-01
+
+Update endpoint for Sub-Account:
+GET /sapi/v1/sub-account/transfer/subUserHistory new fields fromAccountType and toAccountType added in response
+2021-03-31
+
+Update endpoint for Sub-Account:
+GET /wapi/v3/sub-account/transfer/history.html added new parameters fromEmail and toEmail, the original parameteremail is equal tofromEmailby default
+2021-03-08
+
+New endpoint for Sub-Account:
+POST /sapi/v1/sub-account/virtualSubAccount to support create a virtual sub-account
+GET /sapi/v1/sub-account/list to support query sub-account list
+POST /sapi/v1/sub-account/blvt/enable to support enable blvt for sub-account
+2021-03-05
+
+New endpoints for Margin:
+GET /sapi/v1/margin/interestRateHistory to support margin interest rate history query
+2021-02-08
+
+New endpoints for Futures:
+GET /sapi/v2/futures/loan/wallet to support BUSD loan query
+GET /sapi/v2/futures/loan/configs to support BUSD loan query
+GET /sapi/v2/futures/loan/calcAdjustLevel to support BUSD loan
+GET /sapi/v2/futures/loan/calcMaxAdjustAmount to support adjustment of BUSD loan
+POST /sapi/v2/futures/loan/adjustCollateral to support adjustment of BUSD loan
+Update endpoints for Futures
+GET /sapi/v1/futures/loan/adjustCollateral/history new parameter and fields in response loanCoin for BUSD loan
+GET /sapi/v1/futures/loan/liquidationHistory new parameter and fields in response loanCoin for BUSD loan
+2021-02-04
+
+New transfer types MARGIN_MINING ,MINING_MARGIN, MARGIN_C2C ,C2C_MARGIN, MARGIN_CMFUTURE, CMFUTURE_MARGIN added in Universal Transfer endpoint POST /sapi/v1/asset/transfer and GET /sapi/v1/asset/transfer.
+2021-01-15
+
+New endpoint DELETE /sapi/v1/margin/openOrders for Margin Trade
+This will allow a user to cancel all open orders on a single symbol for margin account.
+This endpoint will cancel all open orders including OCO orders for margin account.
+2021-01-10
+
+New parameter pageSize for Mining endpoint GET /sapi/v1/mining/payment/list
+New fields in response to Mining endpoint GET /sapi/v1/mining/payment/list:
+
+"type" for income type
+"hashTransfer" for resale Hashrate
+"transferAmount" for transferred Income
+New Mining endpoints:
+
+GET /sapi/v1/mining/payment/other
+GET /sapi/v1/mining/hash-transfer/config/details
+GET /sapi/v1/mining/hash-transfer/config/details/list
+GET /sapi/v1/mining/hash-transfer/profit/details
+POST /sapi/v1/mining/hash-transfer/config
+POST /sapi/v1/mining/hash-transfer/config/cancel
+2021-01-01
+
+USER DATA STREAM
+
+outboundAccountInfo has been removed.
+2020-12-30
+
+New endpoint for Wallet:
+POST /sapi/v1/asset/transfer to support user universal transfer among Spot, Margin, Futures, C2C, MINING accounts.
+GET /sapi/v1/asset/transfer to get user universal transfer history.
+2020-12-22
+
+New endpoint for Sub-Account:
+GET /sapi/v1/sub-account/sub/transfer/history to get spot asset transfer history.
+2020-12-11
+
+Update endpoints for Futures Cross-Collateral:
+GET /sapi/v1/futures/loan/wallet new fields in response interestFreeLimit for total interest free limit, interestFreeLimitUsed for interest free limit used.
+GET /sapi/v1/futures/loan/interestHistory new fields in response interestFreeLimitUsed for interest free limit used.
+2020-12-04
+
+Update endpoint for BLVT:
+
+GET /sapi/v1/blvt/tokenInfo new fields in response currentBaskets(include symbol, amount , notionalValue ),purchaseFeePct,dailyPurchaseLimit,redeemFeePct,dailyRedeemLimit.
+New endpoint for BLVT:
+
+GET /sapi/v1/blvt/userLimit to get BLVT user limit info.
+2020-12-02
+
+New endpoints for Sub-Account:
+GET /sapi/v2/sub-account/futures/account to get detail on sub-account's USDT margined futures account and COIN margined futures account.
+GET /sapi/v2/sub-account/futures/accountSummary to get summary of sub-account's USDT margined futures account and COIN margined futures account.
+GET /sapi/v2/sub-account/futures/positionRisk to get position risk of sub-account's USDT margined futures account and COIN margined futures account.
+2020-12-01
+
+Update Margin Trade Endpoint:
+POST /sapi/v1/margin/order new parameter quoteOrderQty allow a user to specify the total quoteOrderQty spent or received in the MARKET order.
+2020-11-27
+
+New API clusters have been added in order to improve performance.
+
+Users can access any of the following API clusters, in addition to api.binance.com
+
+If there are any performance issues with accessing api.binance.com please try any of the following instead:
+
+https://api1.binance.com/api/v3/*
+https://api2.binance.com/api/v3/*
+https://api3.binance.com/api/v3/*
+2020-11-16
+
+Updated endpoints for Margin, new parameter archived to query data from 6 months ago:
+GET /sapi/v1/margin/loan
+GET /sapi/v1/margin/repay
+GET /sapi/v1/margin/interestHistory
+2020-11-13
+
+New endpoints for Sub-Account:
+POST /sapi/v1/sub-account/universalTransfer to transfer spot and futures asset between master account and sub accounts.
+GET /sapi/v1/sub-account/universalTransfer to search transfer records.
+2020-11-10
+
+New endpoint to toggle BNB Burn:
+POST /sapi/v1/bnbBurn to toggle BNB Burn on spot trade and margin interest.
+GET /sapi/v1/bnbBurn to get BNB Burn status.
+2020-11-09
+
+New field tranId is available from endpoints:
+GET /sapi/v1/sub-account/futures/internalTransfer
+GET /sapi/v1/sub-account/transfer/subUserHistory
+2020-11-03
+
+Update endpoints for Futures Cross-Collateral:
+
+GET /sapi/v1/futures/loan/repay/history new fields in response repayType(NORMAL for normal repayment, COLLATERAL for collateral repayment), price (collateral repayment rate), repayCollateral(collateral amount for collateral repayment).
+GET /sapi/v1/futures/loan/wallet new fields in response totalInterest (total interest for cross-collateral), principalForInterest(cross-collateral principal for interest), interest(cross-collateral interest).
+GET /sapi/v1/futures/loan/configs new fields in response interestRate (interest rate for cross-collateral), interestGracePeriod (interest grace period for cross-collateral).
+New endpoints for Futures Cross-Collateral:
+
+GET /sapi/v1/futures/loan/collateralRepayLimit to check the maximum and minimum limit when repay with collateral.
+GET /sapi/v1/futures/loan/collateralRepay to get quote for collateral repayment.
+POST /sapi/v1/futures/loan/collateralRepay to repay with collateral.
+GET /sapi/v1/futures/loan/collateralRepayResult to check collateral repayment result.
+GET /sapi/v1/futures/loan/interestHistory to get cross-collateral interest history.
+2020-10-14
+
+Update endpoints for Futures Cross-Collateral:
+POST /sapi/v1/futures/loan/borrow and GET /sapi/v1/futures/loan/borrow/history new field borrowId in response for ID of Cross-Collateral borrow operation.
+POST /sapi/v1/futures/loan/repay and GET /sapi/v1/futures/loan/repay/history new field repayId in response for ID of Cross-Collateral repay operation.
+2020-10-10
+
+New type added in the endpoint POST /sapi/v1/sub-account/futures/transferto support transfer asset from subaccount's spot account to its COIN-margined futures account and transfer asset from subaccount's COIN-margined futures account to its spot account.
+2020-09-30
+
+Update endpoints for Margin Account:
+GET /sapi/v1/margin/maxBorrowable new field borrowLimit in response for account borrow limit.
+2020-09-28
+
+New endpoints for Binance Savings:
+POST /sapi/v1/lending/positionChanged to change fixed/activity position to daily position.
+New parameter ACTIVITY replace REGULARin the following Binance Savings endpoints:
+GET /sapi/v1/lending/project/list
+POST /sapi/v1/lending/customizedFixed/purchase
+GET /sapi/v1/lending/project/position/list
+GET /sapi/v1/lending/union/purchaseRecord
+GET /sapi/v1/lending/union/interestHistory
+2020-09-23
+
+New SAPI endpoints for BSwap:
+GET /sapi/v1/bswap/pools to list all swap pools.
+GET /sapi/v1/bswap/liquidity to get liquidity information of a pool.
+POST /sapi/v1/bswap/liquidityAdd to add liquidity.
+POST /sapi/v1/bswap/liquidityRemove to remove liquidity.
+GET /sapi/v1/bswap/liquidityOps to get liquidity operation record.
+GET /sapi/v1/bswap/quote to request quotes.
+POST /sapi/v1/bswap/swap to swap.
+GET /sapi/v1/bswap/swap to get swap history.
+2020-09-16
+
+New SAPI endpoints for BLVT:
+
+GET /sapi/v1/blvt/tokenInfo to get BLVT info.
+POST /sapi/v1/blvt/subscribe (HMAC SHA256) to subscribe BLVT.
+GET /sapi/v1/blvt/subscribe/record (HMAC SHA256) to get subscription record。
+POST /sapi/v1/blvt/redeem (HMAC SHA256) to redeem BLVT.
+GET /sapi/v1/blvt/redeem/record (HMAC SHA256 to get redemption record.
+The BLVT NAV system is working relatively with Binance Futures, so some endpoints are based on futures system:
+
+New endpoint to get historical BLVT Kline.
+New WebSocket streams for BLVT Info and BLVT NAV Kline:
+2020-09-09
+
+USER DATA STREAM
+
+outboundAccountInfo has been deprecated.
+outboundAccountInfo will be removed in the future. (Exact date unknown) Please use outboundAccountPosition instead.
+outboundAccountInfo will now only show the balance of non-zero assets and assets that have been reduced to 0.
+2020-09-03
+
+New endpoint POST /sapi/v1/sub-account/futures/internalTransfer to transfer futures asset between master account and subaccount.
+New endpointGET /sapi/v1/sub-account/futures/internalTransfer to get futures transfer history of subaccount.
+2020-09-01
+
+New parameter masterAccountTotalAsset added in the endpoint GET /sapi/v1/sub-account/spotSummary to get BTC valued asset summary of master account.
+2020-08-27
+
+New endpoint GET /sapi/v1/sub-account/spotSummary to get BTC valued asset summary of subaccout.
+2020-08-26
+
+New parameter symbols added in the endpoint GET /sapi/v1/margin/isolated/account.
+2020-07-28
+
+ISOLATED MARGIN
+
+New parameters "isIsolated" and "symbol" added for isolated margin in the following endpoints:
+
+POST /sapi/v1/margin/loan
+POST /sapi/v1/margin/repay
+New parameter "isIsolated" and new response field "isIsolated" added for isolated margin in the following endpoints:
+
+POST /sapi/v1/margin/order
+DELETE /sapi/v1/margin/order
+GET /sapi/v1/margin/order
+GET /sapi/v1/margin/openOrders
+GET /sapi/v1/margin/allOrders
+GET /sapi/v1/margin/myTrades
+New parameter "isolatedSymbol" and new response field "isolatedSymbol" added for isolated margin in the following endpoints:
+
+GET /sapi/v1/margin/loan
+GET /sapi/v1/margin/repay
+GET /sapi/v1/margin/interestHistory
+New parameter "isolatedSymbol" and new response field "isIsolated" added for isolated margin in the following endpoint GET /sapi/v1/margin/forceLiquidationRec
+
+New parameter "isolatedSymbol" added for isolated margin in the following endpoints:
+
+GET /sapi/v1/margin/maxBorrowable
+GET /sapi/v1/margin/maxTransferable
+New endpoints for isolated margin:
+
+POST /sapi/v1/margin/isolated/create
+POST /sapi/v1/margin/isolated/transfer
+GET /sapi/v1/margin/isolated/transfer
+GET /sapi/v1/margin/isolated/account
+GET /sapi/v1/margin/isolated/pair
+GET /sapi/v1/margin/isolated/allPairs
+New endpoints for listenKey management of isolated margin account:
+
+POST /sapi/v1/userDataStream/isolated
+PUT /sapi/v1/userDataStream/isolated
+DELETE /sapi/v1/userDataStream/isolated
+2020-07-20
+
+The max value of parameter "limit" in GET /sapi/v1/margin/allOrders has been changed as 500.
+2020-07-17
+
+There is now a request limit specifically for the sapi/v1/margin/allOrders endpoint at 60 raw requests per minute for a single IP address.
+2020-07-13
+
+New SAPI Endpoints for futures Cross-Collateral:
+POST /sapi/v1/futures/loan/borrow
+GET /sapi/v1/futures/loan/borrow/history
+POST /sapi/v1/futures/loan/repay
+GET /sapi/v1/futures/loan/repay/history
+GET /sapi/v1/futures/loan/wallet
+GET /sapi/v1/futures/loan/configs
+GET /sapi/v1/futures/loan/calcAdjustLevel
+GET /sapi/v1/futures/loan/calcMaxAdjustAmount
+POST /sapi/v1/futures/loan/adjustCollateral
+GET /sapi/v1/futures/loan/adjustCollateral/history
+GET /sapi/v1/futures/loan/liquidationHistory
+2020-06-28
+
+SAPI Endpoints for futures:
+POST /sapi/v1/futures/transfer
+GET /sapi/v1/futures/transfer
+2020-05-06
+
+New endpoints for Mining:
+GET /sapi/v1/mining/pub/algoList
+GET /sapi/v1/mining/pub/coinList
+GET /sapi/v1/mining/worker/detail
+GET /sapi/v1/mining/worker/list
+GET /sapi/v1/mining/payment/list
+GET /sapi/v1/mining/statistics/user/status
+GET /sapi/v1/mining/statistics/user/list
+2020-05-03
+
+New request limit for some margin endpoints
+Changes on these endpoints:
+POST /sapi/v1/margin/transfer
+POST /sapi/v1/margin/loan
+POST /sapi/v1/margin/repay
+Limit to 1 every 2 seconds。
+Request beyond the limit will receive HTTP status code 429。
+2020-05-01
+
+From 2020-05-01 UTC 00:00, all symbols will have a limit of 200 open orders using the MAX_NUM_ORDERS filter.
+No existing orders will be removed or canceled.
+Accounts that have 200 or more open orders on a symbol will not be able to place new orders on that symbol until the open order count is below 200.
+OCO orders count as 2 open orders before the LIMIT order is touched or the STOP_LOSS (or STOP_LOSS_LIMIT) order is triggered; once this happens the other order is canceled and will no longer count as an open order.
+2020-04-25
+
+SPOT API
+
+New field permissions
+Defines the trading permissions that are allowed on accounts and symbols.
+permissions is an enum array; values:
+SPOT
+MARGIN
+permissions will replace isSpotTradingAllowed and isMarginTradingAllowed on GET api/v3/exchangeInfo in future API versions (v4+).
+For an account to trade on a symbol, the account and symbol must share at least 1 permission in common.
+Updates to GET api/v3/exchangeInfo
+New field permissions added.
+New field quoteAssetPrecision added; a duplicate of the quotePrecision field. quotePrecision will be removed in future API versions (v4+).
+Updates to GET api/v3/account
+New field permissions added.
+New endpoint DELETE api/v3/openOrders
+This will allow a user to cancel all open orders on a single symbol.
+This endpoint will cancel all open orders including OCO orders.
+Orders can be canceled via the API on symbols in the BREAK or HALT status.
+USER DATA STREAM
+
+OutboundAccountInfo has new field P which shows the trading permissions of the account.
+2020-04-23
+
+WEB SOCKET STREAM
+
+WebSocket connections have a limit of 5 incoming messages per second. A message is considered:
+A PING frame
+A PONG frame
+A JSON control message (e.g. subscribe, unsubscribe)
+A connection that goes beyond the limit will be disconnected; IPs that are repeatedly disconnected may be banned.
+A single connection can listen to a maximum of 1024 streams.
+2020-04-16
+
+New fields in response to endpointGET /sapi/v1/lending/daily/token/position：
+
+todayPurchasedAmount for user's purchased amount today
+New lending endpoints for customized fixed projects:
+
+GET /sapi/v1/lending/project/list
+POST /sapi/v1/lending/customizedFixed/purchase
+GET /sapi/v1/lending/project/position/list
+2020-04-02
+
+New fields in response to endpointGET /sapi/v1/capital/config/getall：
+minConfirm for min number for balance confirmation
+unLockConfirm for confirmation number for balance unlock
+2020-03-24
+
+MAX_POSITION filter added.
+
+This filter defines the allowed maximum position an account can have on the base asset of a symbol. An account's position defined as the sum of the account's:
+free balance of the base asset
+locked balance of the base asset
+sum of the qty of all open BUY orders
+BUY orders will be rejected if the account's position is greater than the maximum position allowed.
+2020-03-13
+
+New parameter transactionFeeFlag is available in endpoint:
+POST /sapi/v1/capital/withdraw/apply and
+POST /wapi/v3/withdraw.html
+2020-02-05
+
+New sub account endpoints:
+POST /sapi/v1/sub-account/futures/transfer to transfer between futures and spot accout of sub-account.
+POST /sapi/v1/sub-account/margin/transfer to transfer between margin and spot accout of sub-account.
+POST /sapi/v1/sub-account/transfer/subToSub to transfer to another account by sub-account.
+POST /sapi/v1/sub-account/transfer/subToMaster to transfer to same master by sub-account.
+GET /sapi/v1/sub-account/transfer/subUserHistory to get transfer history of sub-account.
+2020-01-15
+
+New parameter withdrawOrderId for client customized withdraw id for endpoint POST /wapi/v3/withdraw.html.
+
+New field withdrawOrderId in response to GET /wapi/v3/withdrawHistory.html
+
+2019-12-25
+
+New endpoints for Binance Savings:
+
+GET /sapi/v1/lending/daily/product/list
+GET /sapi/v1/lending/daily/userLeftQuota
+POST /sapi/v1/lending/daily/purchase
+GET /sapi/v1/lending/daily/userRedemptionQuota
+POST /sapi/v1/lending/daily/redeem
+GET /sapi/v1/lending/daily/token/position
+GET /sapi/v1/lending/union/account
+GET /sapi/v1/lending/union/purchaseRecord
+GET /sapi/v1/lending/union/redemptionRecord
+GET /sapi/v1/lending/union/interestHistory
+Added time interval limit in
+GET /sapi/v1/capital/withdraw/history,
+GET /wapi/v3/withdrawHistory.html,
+GET /sapi/v1/capital/deposit/hisrec and
+GET /wapi/v3/depositHistory.html:
+
+The default startTime is 90 days from current time, and the default endTime is current time.
+Please notice the default startTime and endTime to make sure that time interval is within 0-90 days.
+If both startTime and endTime are sent, time between startTime and endTime must be less than 90 days.
+2019-12-18
+
+New endpoint to get daily snapshot of account:
+GET /sapi/v1/accountSnapshot
+2019-11-30
+
+Added parameter sideEffectType in POST /sapi/v1/margin/order (HMAC SHA256) with enums:
+
+NO_SIDE_EFFECT for normal trade order;
+MARGIN_BUY for margin trade order;
+AUTO_REPAY for making auto repayment after order filled.
+New field marginBuyBorrowAmount and marginBuyBorrowAsset in FULL response to POST /sapi/v1/margin/order (HMAC SHA256)
+
+2019-11-28
+
+New SAPI endpont to disable fast withdraw switch:
+POST /sapi/v1/account/disableFastWithdrawSwitch (HMAC SHA256)
+New SAPI endpont to enable fast withdraw switch:
+POST /sapi/v1/account/enableFastWithdrawSwitch (HMAC SHA256)
+2019-11-22
+
+Quote Order Qty Market orders have been enabled on all symbols.
+Quote Order Qty MARKET orders allow a user to specify the total quoteOrderQty spent or received in the MARKET order.
+Quote Order Qty MARKET orders will not break LOT_SIZE filter rules; the order will execute a quantity that will have the notional value as close as possible to quoteOrderQty.
+Using BNBBTC as an example:
+On the BUY side, the order will buy as many BNB as quoteOrderQty BTC can.
+On the SELL side, the order will sell as much BNB as needed to receive quoteOrderQty BTC.
+2019-11-19
+
+GET /sapi/v1/sub-account/margin/account has new field: marginTradeCoeffVo which contains
+forceLiquidationBar for liquidation margin ratio
+marginCallBar for margin call margin ratio
+normalBar for initial margin ratio
+2019-11-13
+
+Rest API
+
+api/v3/exchangeInfo has new fields:
+quoteOrderQtyMarketAllowed
+baseCommissionPrecision
+quoteCommissionPrecision
+MARKET orders have a new optional field: quoteOrderQty used to specify the quote quantity to BUY or SELL. This cannot be used in combination with quantity.
+The exact timing that quoteOrderQty MARKET orders will be enabled is TBD. There will be a separate announcement and further details at that time.
+All order query endpoints will return a new field origQuoteOrderQty in the JSON payload. (e.g. GET api/v3/allOrders)
+    {
+      "code": -1128,
+      "msg": "Combination of optional parameters invalid. Recommendation: 'stopLimitTimeInForce' should also be sent."
+    }
+Updated error messages for -1128
+
+Sending an OCO with a stopLimitPrice but without a stopLimitTimeInForce will return the error:
+Updated error messages for -1003 to specify the limit is referring to the request weight, not to the number of requests.
+
+Deprecation of v1 endpoints:
+
+By end of Q1 2020, the following endpoints will be removed from the API. The documentation has been updated to use the v3 versions of these endpoints.
+
+GET api/v1/depth
+GET api/v1/historicalTrades
+GET api/v1/aggTrades
+GET api/v1/klines
+GET api/v1/ticker/24hr
+GET api/v1/ticker/price
+GET api/v1/exchangeInfo
+POST api/v1/userDataStream
+PUT api/v1/userDataStream
+GET api/v1/ping
+GET api/v1/time
+GET api/v1/ticker/bookTicker
+These endpoints however, will NOT be migrated to v3. Please use the following endpoints instead moving forward.
+
+Old V1 Endpoints	New V3 Endpoints
+GET api/v1/ticker/allPrices	GET api/v3/ticker/price
+GET api/v1/ticker/allBookTickers	GET api/v3/ticker/bookTicker
+USER DATA STREAM
+
+Changes toexecutionReport event
+
+If the C field is empty, it will now properly return null, instead of "null".
+New field Q which represents the quoteOrderQty.
+balanceUpdate event type added
+
+This event occurs when funds are deposited or withdrawn from your account.
+WEB SOCKET STREAM
+
+WSS now supports live subscribing/unsubscribing to streams.
+2019-11-08
+
+New sapi for subaccount management on margin and futures:
+GET /sapi/v1/sub-account/status (HMAC SHA256)
+POST /sapi/v1/sub-account/margin/enable (HMAC SHA256)
+GET /sapi/v1/sub-account/margin/account (HMAC SHA256)
+GET /sapi/v1/sub-account/margin/accountSummary (HMAC SHA256)
+POST /sapi/v1/sub-account/futures/enable (HMAC SHA256)
+GET /sapi/v1/sub-account/futures/account (HMAC SHA256)
+GET /sapi/v1/sub-account/futures/accountSummary (HMAC SHA256)
+GET /sapi/v1/sub-account/futures/positionRisk (HMAC SHA256)
+2019-11-04
+
+New sapi endpoints for subaccount wallet.
+GET /sapi/v1/capital/deposit/subAddress (HMAC SHA256)): fetch subaccount deposit address.
+GET /sapi/v1/capital/deposit/subHisrec (HMAC SHA256)): fetch subaccount deposit history.
+2019-10-29
+
+New sapi endpoints for wallet.
+POST /sapi/v1/capital/withdraw/apply (HMAC SHA256): withdraw.
+Get /sapi/v1/capital/withdraw/history (HMAC SHA256): fetch withdraw history with network.
+2019-10-14
+
+New sapi endpoints for wallet.
+GET /sapi/v1/capital/config/getall (HMAC SHA256): get all coins' information for user.
+GET /sapi/v1/capital/deposit/hisrec (HMAC SHA256): fetch deposit history with network.
+GET /sapi/v1/capital/deposit/address (HMAC SHA256): fetch deposit address with network.
+2019-10-11
+
+Added parameter network in POST /wapi/v3/withdraw.html so that asset can be withdrawed with specific network.
+2019-09-09
+
+New WebSocket streams for bookTickers added: <symbol>@bookTicker and !bookTicker.
+2019-09-03
+
+Faster order book data with 100ms updates: <symbol>@depth@100ms and <symbol>@depth#@100ms
+Added "Update Speed:" to Websocket Market Streams
+Removed deprecated v1 endpoints as per previous announcement:
+GET api/v1/order
+GET api/v1/openOrders
+POST api/v1/order
+DELETE api/v1/order
+GET api/v1/allOrders
+GET api/v1/account
+GET api/v1/myTrades
+2019-08-16
+
+GET api/v1/depth limit of 10000 has been temporarily removed
+
+In Q4 2017, the following endpoints were deprecated and removed from the API documentation. They have been permanently removed from the API as of this version. We apologize for the omission from the original changelog:
+
+GET api/v1/order
+GET api/v1/openOrders
+POST api/v1/order
+DELETE api/v1/order
+GET api/v1/allOrders
+GET api/v1/account
+GET api/v1/myTrades
+Streams, endpoints, parameters, payloads, etc. described in the documents in this repository are considered official and supported. The use of any other streams, endpoints, parameters, or payloads, etc. is not supported; use them at your own risk and with no guarantees.
+
+2019-09-15
+
+Rest API
+
+New order type: OCO ("One Cancels the Other")
+
+An OCO has 2 orders: (also known as legs in financial terms)
+STOP_LOSS or STOP_LOSS_LIMIT leg
+LIMIT_MAKER leg
+Price Restrictions:
+SELL Orders : Limit Price > Last Price > Stop Price
+BUY Orders : Limit Price < Last Price < Stop Price
+As stated, the prices must "straddle" the last traded price on the symbol. EX: If the last price is 10:
+A SELL OCO must have the limit price greater than 10, and the stop price less than 10.
+A BUY OCO must have a limit price less than 10, and the stop price greater than 10.
+Quantity Restrictions:
+Both legs must have the same quantity.
+ICEBERG quantities however, do not have to be the same.
+Execution Order:
+If the LIMIT_MAKER is touched, the limit maker leg will be executed first BEFORE canceling the Stop Loss Leg.
+if the Market Price moves such that the STOP_LOSS or STOP_LOSS_LIMIT will trigger, the Limit Maker leg will be cancelled BEFORE executing the STOP_LOSS Leg.
+Cancelling an OCO
+Cancelling either order leg will cancel the entire OCO.
+The entire OCO can be canceled via the orderListId or the listClientOrderId.
+New Enums for OCO:
+ListStatusType
+RESPONSE - used when ListStatus is responding to a failed action. (either order list placement or cancellation)
+EXEC_STARTED - used when an order list has been placed or there is an update to a list's status.
+ALL_DONE - used when an order list has finished executing and is no longer active.
+ListOrderStatus
+EXECUTING - used when an order list has been placed or there is an update to a list's status.
+ALL_DONE - used when an order list has finished executing and is no longer active.
+REJECT - used when ListStatus is responding to a failed action. (either order list placement or cancellation)
+ContingencyType
+OCO - specifies the type of order list.
+New Endpoints:
+POST api/v3/order/oco
+DELETE api/v3/orderList
+GET api/v3/orderList
+recvWindow cannot exceed 60000.
+
+New intervalLetter values for headers:
+
+SECOND => S
+MINUTE => M
+HOUR => H
+DAY => D
+New Headers X-MBX-USED-WEIGHT-(intervalNum)(intervalLetter) will give your current used request weight for the (intervalNum)(intervalLetter) rate limiter. For example, if there is a one minute request rate weight limiter set, you will get a X-MBX-USED-WEIGHT-1M header in the response. The legacy header X-MBX-USED-WEIGHT will still be returned and will represent the current used weight for the one minute request rate weight limit.
+
+New Header X-MBX-ORDER-COUNT-(intervalNum)(intervalLetter)that is updated on any valid order placement and tracks your current order count for the interval; rejected/unsuccessful orders are not guaranteed to have X-MBX-ORDER-COUNT-** headers in the response.
+
+Eg. X-MBX-ORDER-COUNT-1S for "orders per 1 second" and X-MBX-ORDER-COUNT-1D for orders per "one day"
+GET api/v1/depth now supports limit 5000 and 10000; weights are 50 and 100 respectively.
+
+GET api/v1/exchangeInfo has a new parameter ocoAllowed.
+
+USER DATA STREAM
+
+executionReport event now contains "g" which has the orderListId; it will be set to -1 for non-OCO orders.
+New Event Type listStatus; listStatus is sent on an update to any OCO order.
+New Event Type outboundAccountPosition; outboundAccountPosition is sent any time an account's balance changes and contains the assets that could have changed by the event that generated the balance change (a deposit, withdrawal, trade, order placement, or cancelation).
+NEW ERRORS
+
+-1131 BAD_RECV_WINDOW
+recvWindow must be less than 60000
+-1099 Not found, authenticated, or authorized
+This replaces error code -1999
+NEW -2011 ERRORS
+
+OCO_BAD_ORDER_PARAMS
+A parameter for one of the orders is incorrect.
+OCO_BAD_PRICES
+The relationship of the prices for the orders is not correct.
+UNSUPPORTED_ORD_OCO
+OCO orders are not supported for this symbol.
+2019-03-12
+
+Rest API
+
+X-MBX-USED-WEIGHT header added to Rest API responses.
+Retry-After header added to Rest API 418 and 429 responses.
+When canceling the Rest API can now return errorCode -1013 OR -2011 if the symbol's status isn't TRADING.
+api/v1/depth no longer has the ignored and empty [].
+api/v3/myTrades now returns quoteQty; the price * qty of for the trade.
+Websocket streams
+
+<symbol>@depth and <symbol>@depthX streams no longer have the ignored and empty [].
+System improvements
+
+Matching Engine stability/reliability improvements.
+Rest API performance improvements.
+2018-11-13
+
+Rest API
+
+Can now cancel orders through the Rest API during a trading ban.
+New filters: PERCENT_PRICE, MARKET_LOT_SIZE, MAX_NUM_ICEBERG_ORDERS.
+Added RAW_REQUESTS rate limit. Limits based on the number of requests over X minutes regardless of weight.
+/api/v3/ticker/price increased to weight of 2 for a no symbol query.
+/api/v3/ticker/bookTicker increased weight of 2 for a no symbol query.
+DELETE /api/v3/order will now return an execution report of the final state of the order.
+MIN_NOTIONAL filter has two new parameters: applyToMarket (whether or not the filter is applied to MARKET orders) and avgPriceMins (the number of minutes over which the price averaged for the notional estimation).
+intervalNum added to /api/v1/exchangeInfo limits. intervalNum describes the amount of the interval. For example: intervalNum 5, with interval minute, means "every 5 minutes".
+Explanation for the average price calculation:
+
+(qty * price) of all trades / sum of qty of all trades over previous 5 minutes.
+
+If there is no trade in the last 5 minutes, it takes the first trade that happened outside of the 5min window. For example if the last trade was 20 minutes ago, that trade's price is the 5 min average.
+
+If there is no trade on the symbol, there is no average price and market orders cannot be placed. On a new symbol with applyToMarket enabled on the MIN_NOTIONAL filter, market orders cannot be placed until there is at least 1 trade.
+
+The current average price can be checked here: https://api.binance.com/api/v3/avgPrice?symbol=<symbol> For example: https://api.binance.com/api/v3/avgPrice?symbol=BNBUSDT
+
+User data stream
+
+Last quote asset transacted quantity (as variable Y) added to execution reports. Represents the lastPrice * lastQty (L * l).
+2018-07-18
+
+Rest API
+
+New filter: ICEBERG_PARTS
+POST api/v3/order new defaults for newOrderRespType. ACK, RESULT, or FULL; MARKET and LIMIT order types default to FULL, all other orders default to ACK.
+POST api/v3/order RESULT and FULL responses now have cummulativeQuoteQty
+GET api/v3/openOrders with no symbol weight reduced to 40.
+GET api/v3/ticker/24hr with no symbol weight reduced to 40.
+Max amount of trades from GET /api/v1/trades increased to 1000.
+Max amount of trades from GET /api/v1/historicalTrades increased to 1000.
+Max amount of aggregate trades from GET /api/v1/aggTrades increased to 1000.
+Max amount of aggregate trades from GET /api/v1/klines increased to 1000.
+Rest API Order lookups now return updateTime which represents the last time the order was updated; time is the order creation time.
+Order lookup endpoints will now return cummulativeQuoteQty. If cummulativeQuoteQty is < 0, it means the data isn't available for this order at this time.
+REQUESTS rate limit type changed to REQUEST_WEIGHT. This limit was always logically request weight and the previous name for it caused confusion.
+User data stream
+
+cummulativeQuoteQty field added to order responses and execution reports (as variable Z). Represents the cummulative amount of the quote that has been spent (with a BUY order) or received (with a SELL order). Historical orders will have a value < 0 in this field indicating the data is not available at this time. cummulativeQuoteQty divided by cummulativeQty will give the average price for an order.
+O (order creation time) added to execution reports
+2018-01-23
+
+GET /api/v1/historicalTrades weight decreased to 5
+GET /api/v1/aggTrades weight decreased to 1
+GET /api/v1/klines weight decreased to 1
+GET /api/v1/ticker/24hr all symbols weight decreased to number of trading symbols / 2
+GET /api/v3/allOrders weight decreased to 5
+GET /api/v3/myTrades weight decreased to 5
+GET /api/v3/account weight decreased to 5
+GET /api/v1/depth limit=500 weight decreased to 5
+GET /api/v1/depth limit=1000 weight decreased to 10
+-1003 error message updated to direct users to websockets
+2018-01-20
+
+GET /api/v1/ticker/24hr single symbol weight decreased to 1
+GET /api/v3/openOrders all symbols weight decreased to number of trading symbols / 2
+GET /api/v3/allOrders weight decreased to 15
+GET /api/v3/myTrades weight decreased to 15
+GET /api/v3/order weight decreased to 1
+myTrades will now return both sides of a self-trade/wash-trade
+2018-01-14
+
+GET /api/v1/aggTrades weight changed to 2
+GET /api/v1/klines weight changed to 2
+GET /api/v3/order weight changed to 2
+GET /api/v3/allOrders weight changed to 20
+GET /api/v3/account weight changed to 20
+GET /api/v3/myTrades weight changed to 20
+GET /api/v3/historicalTrades weight changed to 20
+Introduction
+API Key Setup
+Some endpoints will require an API Key. Please refer to this page regarding API key creation.
+Once API key is created, it is recommended to set IP restrictions on the key for security reasons.
+Never share your API key/secret key to ANYONE.
+ If the API keys were accidentally shared, please delete them immediately and create a new key.
+API Key Restrictions
+After creating the API key, the default restrictions is Enable Reading.
+To enable withdrawals via the API, the API key restriction needs to be modified through the Binance UI.
+Enabling Accounts
+Spot Account
+A SPOT account is provided by default upon creation of a Binance Account.
+
+Margin Account
+To enable a MARGIN account for Margin Trading, please refer to the Margin Trading Guide
+
+Spot Testnet
+Users can use the SPOT Testnet to practice SPOT trading.
+
+Currently, this is only available via the API.
+
+Please refer to the SPOT Testnet page for more information and how to set up the Testnet API key.
+
+API Library
+Python connector
+This is a lightweight library that works as a connector to Binance public API, written in Python.
+
+https://github.com/binance/binance-connector-python
+
+Node.js connector
+This is a lightweight library that works as a connector to Binance public API, written for Node.js users.
+
+https://github.com/binance/binance-connector-node
+
+Ruby connector
+This is a lightweight library that works as a connector to Binance public API, written for Ruby users.
+
+https://github.com/binance/binance-connector-ruby
+
+DotNET connector
+This is a lightweight library that works as a connector to Binance public API, written for C# users.
+
+https://github.com/binance/binance-connector-dotnet
+
+Java connector
+This is a lightweight library that works as a connector to Binance public API, written for Java users.
+
+https://github.com/binance/binance-connector-java
+
+Postman Collections
+There is now a Postman collection containing the API endpoints for quick and easy use.
+
+This is recommended for new users who want to get a quick-start into using the API.
+
+For more information please refer to this page: Binance API Postman
+
+Swagger
+A YAML file with OpenAPI specification on the RESTful API is available to be used, as well as a Swagger UI page for the consulting.
+
+https://github.com/binance/binance-api-swagger
+
+Contact Us
+Binance API Telegram Group
+For any questions in sudden drop in performance with the API and/or Websockets.
+For any general questions about the API not covered in the documentation.
+Binance Developers
+For any questions on your code implementation with the API and/or Websockets.
+Binance Customer Support
+For cases such as missing funds, help with 2FA, etc.
+General Info
+General API Information
+The base endpoint is: https://api.binance.com
+If there are performance issues with the endpoint above, these API clusters are also available:
+https://api1.binance.com
+https://api2.binance.com
+https://api3.binance.com
+All endpoints return either a JSON object or array.
+Data is returned in ascending order. Oldest first, newest last.
+All time and timestamp related fields are in milliseconds.
+HTTP Return Codes
+HTTP 4XX return codes are used for malformed requests; the issue is on the sender's side.
+HTTP 403 return code is used when the WAF Limit (Web Application Firewall) has been violated.
+HTTP 429 return code is used when breaking a request rate limit.
+HTTP 418 return code is used when an IP has been auto-banned for continuing to send requests after receiving 429 codes.
+HTTP 5XX return codes are used for internal errors; the issue is on Binance's side. It is important to NOT treat this as a failure operation; the execution status is UNKNOWN and could have been a success.
+Error Codes and Messages
+If there is an error, the API will return an error with a message of the reason.
+The error payload on API and SAPI is as follows:
+
+{
+  "code": -1121,
+  "msg": "Invalid symbol."
+}
+Specific error codes and messages defined in Error Codes.
+General Information on Endpoints
+For GET endpoints, parameters must be sent as a query string.
+For POST, PUT, and DELETE endpoints, the parameters may be sent as a query string or in the request body with content type application/x-www-form-urlencoded. You may mix parameters between both the query string and request body if you wish to do so.
+Parameters may be sent in any order.
+If a parameter sent in both the query string and request body, the query string parameter will be used.
+LIMITS
+General Info on Limits
+The following intervalLetter values for headers:
+SECOND => S
+MINUTE => M
+HOUR => H
+DAY => D
+intervalNum describes the amount of the interval. For example, intervalNum 5 with intervalLetter M means "Every 5 minutes".
+The /api/v3/exchangeInfo rateLimits array contains objects related to the exchange's RAW_REQUESTS, REQUEST_WEIGHT, and ORDERS rate limits. These are further defined in the ENUM definitions section under Rate limiters (rateLimitType).
+A 429 will be returned when either rate limit is violated.
+IP Limits
+Every request will contain X-MBX-USED-WEIGHT-(intervalNum)(intervalLetter) in the response headers which has the current used weight for the IP for all request rate limiters defined.
+Each route has a weight which determines for the number of requests each endpoint counts for. Heavier endpoints and endpoints that do operations on multiple symbols will have a heavier weight.
+When a 429 is received, it's your obligation as an API to back off and not spam the API.
+Repeatedly violating rate limits and/or failing to back off after receiving 429s will result in an automated IP ban (HTTP status 418).
+IP bans are tracked and scale in duration for repeat offenders, from 2 minutes to 3 days.
+A Retry-After header is sent with a 418 or 429 responses and will give the number of seconds required to wait, in the case of a 429, to prevent a ban, or, in the case of a 418, until the ban is over.
+The limits on the API are based on the IPs, not the API keys.
+ We recommend using the websocket for getting data as much as possible, as this will not count to the request rate limit.
+Order Rate Limits
+Every successful order response will contain a X-MBX-ORDER-COUNT-(intervalNum)(intervalLetter) header which has the current order count for the account for all order rate limiters defined.
+
+When the order count exceeds the limit, you will receive a 429 error without the Retry-After header. Please check the Order Rate Limit rules using GET api/v3/exchangeInfo and wait for reactivation accordingly.
+
+Rejected/unsuccessful orders are not guaranteed to have X-MBX-ORDER-COUNT-** headers in the response.
+
+The order rate limit is counted against each account.
+
+To monitor order count usage, refer to GET api/v3/rateLimit/order
+
+Websocket Limits
+WebSocket connections have a limit of 5 incoming messages per second. A message is considered:
+A PING frame
+A PONG frame
+A JSON controlled message (e.g. subscribe, unsubscribe)
+A connection that goes beyond the limit will be disconnected; IPs that are repeatedly disconnected may be banned.
+A single connection can listen to a maximum of 1024 streams.
+/api/ and /sapi/ Limit Introduction
+The /api/* and /sapi/* endpoints adopt either of two access limiting rules, IP limits or UID (account) limits.
+
+Endpoints related to /api/*:
+
+According to the two modes of IP and UID (account) limit, each are independent.
+Endpoints share the 1200 per minute limit based on IP.
+Responses contain the header X-MBX-USED-WEIGHT-(intervalNum)(intervalLetter), defining the weight used by the current IP.
+Successful order responses contain the header X-MBX-ORDER-COUNT-(intervalNum)(intervalLetter), defining the order limit used by the UID.
+Endpoints related to /sapi/*:
+
+Endpoints are marked according to IP or UID limit and their corresponding weight value.
+Each endpoint with IP limits has an independent 12000 per minute limit.
+Each endpoint with UID limits has an independent 180000 per minute limit.
+Responses from endpoints with IP limits contain the header X-SAPI-USED-IP-WEIGHT-1M, defining the weight used by the current IP.
+Responses from endpoints with UID limits contain the header X-SAPI-USED-UID-WEIGHT-1M, defining the weight used by the current UID.
+Data Sources
+The API system is asynchronous, so some delay in the response is normal and expected.
+Each endpoint has a data source indicating where the data is being retrieved, and thus which endpoints have the most up-to-date response.
+These are the three sources, ordered by which is has the most up-to-date response to the one with potential delays in updates.
+
+Matching Engine - the data is from the matching Engine
+Memory - the data is from a server's local or external memory
+Database - the data is taken directly from a database
+ Some endpoints can have more than 1 data source. (e.g. Memory => Database)
+This means that the endpoint will check the first Data Source, and if it cannot find the value it's looking for it will check the next one.
+Endpoint security type
+Each endpoint has a security type that determines how you will interact with it. This is stated next to the NAME of the endpoint.
+If no security type is stated, assume the security type is NONE.
+API-keys are passed into the Rest API via the X-MBX-APIKEY header.
+API-keys and secret-keys are case sensitive.
+API-keys can be configured to only access certain types of secure endpoints. For example, one API-key could be used for TRADE only, while another API-key can access everything except for TRADE routes.
+By default, API-keys can access all secure routes.
+Security Type	Description
+NONE	Endpoint can be accessed freely.
+TRADE	Endpoint requires sending a valid API-Key and signature.
+MARGIN	Endpoint requires sending a valid API-Key and signature.
+USER_DATA	Endpoint requires sending a valid API-Key and signature.
+USER_STREAM	Endpoint requires sending a valid API-Key.
+MARKET_DATA	Endpoint requires sending a valid API-Key.
+TRADE, MARGIN and USER_DATA endpoints are SIGNED endpoints.
+SIGNED (TRADE, USER_DATA, AND MARGIN) Endpoint security
+SIGNED endpoints require an additional parameter, signature, to be sent in the query string or request body.
+Endpoints use HMAC SHA256 signatures. The HMAC SHA256 signature is a keyed HMAC SHA256 operation. Use your secretKey as the key and totalParams as the value for the HMAC operation.
+The signature is not case sensitive.
+totalParams is defined as the query string concatenated with the request body.
+Timing security
+A SIGNED endpoint also requires a parameter, timestamp, to be sent which should be the millisecond timestamp of when the request was created and sent.
+An additional parameter, recvWindow, may be sent to specify the number of milliseconds after timestamp the request is valid for. If recvWindow is not sent, it defaults to 5000.
+The logic is as follows:
+
+  if (timestamp < (serverTime + 1000) && (serverTime - timestamp) <= recvWindow)
+  {
+    // process request
+  } 
+  else 
+  {
+    // reject request
+  }
+Serious trading is about timing. Networks can be unstable and unreliable, which can lead to requests taking varying amounts of time to reach the servers. With recvWindow, you can specify that the request must be processed within a certain number of milliseconds or be rejected by the server.
+
+ It is recommended to use a small recvWindow of 5000 or less! The max cannot go beyond 60,000!
+SIGNED Endpoint Examples for POST /api/v3/order
+Here is a step-by-step example of how to send a vaild signed payload from the Linux command line using echo, openssl, and curl.
+
+Key	Value
+apiKey	vmPUZE6mv9SD5VNHk4HlWFsOr6aKE2zvsw0MuIgwCIPy6utIco14y7Ju91duEh8A
+secretKey	NhqPtmdSJYdKjVHjA7PZj4Mge3R5YNiP1e3UZjInClVN65XAbvqqM6A7H5fATj0j
+Parameter	Value
+symbol	LTCBTC
+side	BUY
+type	LIMIT
+timeInForce	GTC
+quantity	1
+price	0.1
+recvWindow	5000
+timestamp	1499827319559
+Example 1: As a request body
+Example 1
+
+HMAC SHA256 signature:
+
+    $ echo -n "symbol=LTCBTC&side=BUY&type=LIMIT&timeInForce=GTC&quantity=1&price=0.1&recvWindow=5000&timestamp=1499827319559" | openssl dgst -sha256 -hmac "NhqPtmdSJYdKjVHjA7PZj4Mge3R5YNiP1e3UZjInClVN65XAbvqqM6A7H5fATj0j"
+    (stdin)= c8db56825ae71d6d79447849e617115f4a920fa2acdcab2b053c4b2838bd6b71
+curl command:
+
+    (HMAC SHA256)
+    $ curl -H "X-MBX-APIKEY: vmPUZE6mv9SD5VNHk4HlWFsOr6aKE2zvsw0MuIgwCIPy6utIco14y7Ju91duEh8A" -X POST 'https://api.binance.com/api/v3/order' -d 'symbol=LTCBTC&side=BUY&type=LIMIT&timeInForce=GTC&quantity=1&price=0.1&recvWindow=5000&timestamp=1499827319559&signature=c8db56825ae71d6d79447849e617115f4a920fa2acdcab2b053c4b2838bd6b71'
+
+requestBody:
+symbol=LTCBTC
+&side=BUY
+&type=LIMIT
+&timeInForce=GTC
+&quantity=1
+&price=0.1
+&recvWindow=5000
+&timestamp=1499827319559
+
+Example 2: As a query string
+Example 2
+
+HMAC SHA256 signature:
+
+    $ echo -n "symbol=LTCBTC&side=BUY&type=LIMIT&timeInForce=GTC&quantity=1&price=0.1&recvWindow=5000&timestamp=1499827319559" | openssl dgst -sha256 -hmac "NhqPtmdSJYdKjVHjA7PZj4Mge3R5YNiP1e3UZjInClVN65XAbvqqM6A7H5fATj0j"
+    (stdin)= c8db56825ae71d6d79447849e617115f4a920fa2acdcab2b053c4b2838bd6b71
+
+curl command:
+
+    (HMAC SHA256)
+   $ curl -H "X-MBX-APIKEY: vmPUZE6mv9SD5VNHk4HlWFsOr6aKE2zvsw0MuIgwCIPy6utIco14y7Ju91duEh8A" -X POST 'https://api.binance.com/api/v3/order?symbol=LTCBTC&side=BUY&type=LIMIT&timeInForce=GTC&quantity=1&price=0.1&recvWindow=5000&timestamp=1499827319559&signature=c8db56825ae71d6d79447849e617115f4a920fa2acdcab2b053c4b2838bd6b71'
+
+queryString:
+symbol=LTCBTC
+&side=BUY
+&type=LIMIT
+&timeInForce=GTC
+&quantity=1
+&price=0.1
+&recvWindow=5000
+&timestamp=1499827319559
+
+Example 3: Mixed query string and request body
+Example 3
+
+HMAC SHA256 signature:
+
+   $ echo -n "symbol=LTCBTC&side=BUY&type=LIMIT&timeInForce=GTCquantity=1&price=0.1&recvWindow=5000&timestamp=1499827319559" | openssl dgst -sha256 -hmac "NhqPtmdSJYdKjVHjA7PZj4Mge3R5YNiP1e3UZjInClVN65XAbvqqM6A7H5fATj0j"
+    (stdin)= 0fd168b8ddb4876a0358a8d14d0c9f3da0e9b20c5d52b2a00fcf7d1c602f9a77
+
+curl command:
+
+    (HMAC SHA256)
+    $ curl -H "X-MBX-APIKEY: vmPUZE6mv9SD5VNHk4HlWFsOr6aKE2zvsw0MuIgwCIPy6utIco14y7Ju91duEh8A" -X POST 'https://api.binance.com/api/v3/order?symbol=LTCBTC&side=BUY&type=LIMIT&timeInForce=GTC' -d 'quantity=1&price=0.1&recvWindow=5000&timestamp=1499827319559&signature=0fd168b8ddb4876a0358a8d14d0c9f3da0e9b20c5d52b2a00fcf7d1c602f9a77'
+queryString:
+symbol=LTCBTC&side=BUY&type=LIMIT&timeInForce=GTC
+
+requestBody:
+quantity=1&price=0.1&recvWindow=5000&timestamp=1499827319559
+
+Note that the signature is different in example 3. There is no & between "GTC" and "quantity=1".
+
+Public API Definitions
+Terminology
+These terms will be used throughout the documentation, so it is recommended especially for new users to read to help their understanding of the API.
+
+base asset refers to the asset that is the quantity of a symbol. For the symbol BTCUSDT, BTC would be the base asset.
+quote asset refers to the asset that is the price of a symbol. For the symbol BTCUSDT, USDT would be the quote asset.
+ENUM definitions
+Symbol status (status):
+
+PRE_TRADING
+TRADING
+POST_TRADING
+END_OF_DAY
+HALT
+AUCTION_MATCH
+BREAK
+Account and Symbol Permissions (permissions):
+
+SPOT
+MARGIN
+LEVERAGED
+TRD_GRP_002
+Order status (status):
+
+Status	Description
+NEW	The order has been accepted by the engine.
+PARTIALLY_FILLED	A part of the order has been filled.
+FILLED	The order has been completed.
+CANCELED	The order has been canceled by the user.
+PENDING_CANCEL	Currently unused
+REJECTED	The order was not accepted by the engine and not processed.
+EXPIRED	The order was canceled according to the order type's rules (e.g. LIMIT FOK orders with no fill, LIMIT IOC or MARKET orders that partially fill) or by the exchange, (e.g. orders canceled during liquidation, orders canceled during maintenance)
+OCO Status (listStatusType):
+
+Status	Description
+RESPONSE	This is used when the ListStatus is responding to a failed action. (E.g. Orderlist placement or cancellation)
+EXEC_STARTED	The order list has been placed or there is an update to the order list status.
+ALL_DONE	The order list has finished executing and thus no longer active.
+OCO Order Status (listOrderStatus):
+
+Status	Description
+EXECUTING	Either an order list has been placed or there is an update to the status of the list.
+ALL_DONE	An order list has completed execution and thus no longer active.
+REJECT	The List Status is responding to a failed action either during order placement or order canceled.)
+ContingencyType
+
+OCO
+Order types (orderTypes, type):
+
+More information on how the order types definitions can be found here: Types of Orders
+
+LIMIT
+MARKET
+STOP_LOSS
+STOP_LOSS_LIMIT
+TAKE_PROFIT
+TAKE_PROFIT_LIMIT
+LIMIT_MAKER
+Order Response Type (newOrderRespType):
+
+ACK
+RESULT
+FULL
+Order side (side):
+
+BUY
+SELL
+Time in force (timeInForce):
+
+This sets how long an order will be active before expiration.
+
+Status	Description
+GTC	Good Til Canceled
+An order will be on the book unless the order is canceled.
+IOC	Immediate Or Cancel
+An order will try to fill the order as much as it can before the order expires.
+FOK	Fill or Kill
+An order will expire if the full order cannot be filled upon execution.
+Kline/Candlestick chart intervals:
+
+m -> minutes; h -> hours; d -> days; w -> weeks; M -> months
+
+1m
+3m
+5m
+15m
+30m
+1h
+2h
+4h
+6h
+8h
+12h
+1d
+3d
+1w
+1M
+Rate limiters (rateLimitType)
+
+REQUEST_WEIGHT
+
+    {
+      "rateLimitType": "REQUEST_WEIGHT",
+      "interval": "MINUTE",
+      "intervalNum": 1,
+      "limit": 1200
+    }
+ORDERS
+
+    {
+      "rateLimitType": "ORDERS",
+      "interval": "SECOND",
+      "intervalNum": 10,
+      "limit": 100
+    },
+    {
+      "rateLimitType": "ORDERS",
+      "interval": "DAY",
+      "intervalNum": 1,
+      "limit": 200000
+    }
+RAW_REQUESTS
+
+    {
+      "rateLimitType": "RAW_REQUESTS",
+      "interval": "MINUTE",
+      "intervalNum": 5,
+      "limit": 5000
+    }
+REQUEST_WEIGHT
+
+ORDERS
+
+RAW_REQUESTS
+
+Rate limit intervals (interval)
+
+SECOND
+MINUTE
+DAY
+Filters
+Filters define trading rules on a symbol or an exchange. Filters come in two forms: symbol filters and exchange filters.
+
+Symbol Filters
+PRICE_FILTER
+ExchangeInfo format:
+
+  {
+    "filterType": "PRICE_FILTER",
+    "minPrice": "0.00000100",
+    "maxPrice": "100000.00000000",
+    "tickSize": "0.00000100"
+  }
+The PRICE_FILTER defines the price rules for a symbol. There are 3 parts:
+
+minPrice defines the minimum price/stopPrice allowed; disabled on minPrice == 0.
+maxPrice defines the maximum price/stopPrice allowed; disabled on maxPrice == 0.
+tickSize defines the intervals that a price/stopPrice can be increased/decreased by; disabled on tickSize == 0.
+Any of the above variables can be set to 0, which disables that rule in the price filter. In order to pass the price filter, the following must be true for price/stopPrice of the enabled rules:
+
+price >= minPrice
+price <= maxPrice
+price % tickSize == 0
+PERCENT_PRICE
+ExchangeInfo format:
+
+  {
+    "filterType": "PERCENT_PRICE",
+    "multiplierUp": "1.3000",
+    "multiplierDown": "0.7000",
+    "avgPriceMins": 5
+  }
+The PERCENT_PRICE filter defines valid range for a price based on the average of the previous trades. avgPriceMins is the number of minutes the average price is calculated over. 0 means the last price is used.
+
+In order to pass the percent price, the following must be true for price:
+
+price <= weightedAveragePrice * multiplierUp
+price >= weightedAveragePrice * multiplierDown
+PERCENT_PRICE_BY_SIDE
+ExchangeInfo format:
+
+    {
+          "filterType": "PERCENT_PRICE_BY_SIDE",
+          "bidMultiplierUp": "1.2",
+          "bidMultiplierDown": "0.2",
+          "askMultiplierUp": "5",
+          "askMultiplierDown": "0.8",
+          "avgPriceMins": 1
+    }
+The PERCENT_PRICE_BY_SIDE filter defines the valid range for the price based on the lastPrice of the symbol. There is a different range depending on whether the order is placed on the BUY side or the SELL side.
+
+Buy orders will succeed on this filter if:
+
+Order price <= bidMultiplierUp * lastPrice
+Order price >= bidMultiplierDown * lastPrice
+Sell orders will succeed on this filter if:
+
+Order Price <= askMultiplierUp * lastPrice
+Order Price >= askMultiplierDown * lastPrice
+LOT_SIZE
+ExchangeInfo format:
+
+  {
+    "filterType": "LOT_SIZE",
+    "minQty": "0.00100000",
+    "maxQty": "100000.00000000",
+    "stepSize": "0.00100000"
+  }
+The LOT_SIZE filter defines the quantity (aka "lots" in auction terms) rules for a symbol. There are 3 parts:
+
+minQty defines the minimum quantity/icebergQty allowed.
+maxQty defines the maximum quantity/icebergQty allowed.
+stepSize defines the intervals that a quantity/icebergQty can be increased/decreased by.
+In order to pass the lot size, the following must be true for quantity/icebergQty:
+
+quantity >= minQty
+quantity <= maxQty
+(quantity-minQty) % stepSize == 0
+MIN_NOTIONAL
+ExchangeInfo format:
+
+  {
+    "filterType": "MIN_NOTIONAL",
+    "minNotional": "0.00100000",
+    "applyToMarket": true,
+    "avgPriceMins": 5
+  }
+The MIN_NOTIONAL filter defines the minimum notional value allowed for an order on a symbol. An order's notional value is the price * quantity. If the order is an Algo order (e.g. STOP_LOSS_LIMIT), then the notional value of the stopPrice * quantity will also be evaluated. If the order is an Iceberg Order, then the notional value of the price * icebergQty will also be evaluated. applyToMarket determines whether or not the MIN_NOTIONAL filter will also be applied to MARKET orders. Since MARKET orders have no price, the average price is used over the last avgPriceMins minutes. avgPriceMins is the number of minutes the average price is calculated over. 0 means the last price is used.
+
+ICEBERG_PARTS
+ExchangeInfo format:
+
+  {
+    "filterType": "ICEBERG_PARTS",
+    "limit": 10
+  }
+The ICEBERG_PARTS filter defines the maximum parts an iceberg order can have. The number of ICEBERG_PARTS is defined as CEIL(qty / icebergQty).
+
+MARKET_LOT_SIZE
+ExchangeInfo format:
+
+  {
+    "filterType": "MARKET_LOT_SIZE",
+    "minQty": "0.00100000",
+    "maxQty": "100000.00000000",
+    "stepSize": "0.00100000"
+  }
+The MARKET_LOT_SIZE filter defines the quantity (aka "lots" in auction terms) rules for MARKET orders on a symbol. There are 3 parts:
+
+minQty defines the minimum quantity allowed.
+maxQty defines the maximum quantity allowed.
+stepSize defines the intervals that a quantity can be increased/decreased by.
+In order to pass the market lot size, the following must be true for quantity:
+
+quantity >= minQty
+quantity <= maxQty
+(quantity-minQty) % stepSize == 0
+MAX_NUM_ORDERS
+ExchangeInfo format:
+
+  {
+    "filterType": "MAX_NUM_ORDERS",
+    "maxNumOrders": 25
+  }
+The MAX_NUM_ORDERS filter defines the maximum number of orders an account is allowed to have open on a symbol. Note that both "algo" orders and normal orders are counted for this filter.
+
+MAX_NUM_ALGO_ORDERS
+ExchangeInfo format:
+
+  {
+    "filterType": "MAX_NUM_ALGO_ORDERS",
+    "maxNumAlgoOrders": 5
+  }
+The MAX_NUM_ALGO_ORDERS filter defines the maximum number of "algo" orders an account is allowed to have open on a symbol. "Algo" orders are STOP_LOSS, STOP_LOSS_LIMIT, TAKE_PROFIT, and TAKE_PROFIT_LIMIT orders.
+
+MAX_NUM_ICEBERG_ORDERS
+The MAX_NUM_ICEBERG_ORDERS filter defines the maximum number of ICEBERG orders an account is allowed to have open on a symbol. An ICEBERG order is any order where the icebergQty is > 0.
+
+ExchangeInfo format:
+
+  {
+    "filterType": "MAX_NUM_ICEBERG_ORDERS",
+    "maxNumIcebergOrders": 5
+  }
+MAX_POSITION
+The MAX_POSITION filter defines the allowed maximum position an account can have on the base asset of a symbol. An account's position defined as the sum of the account's:
+
+free balance of the base asset
+locked balance of the base asset
+sum of the qty of all open BUY orders
+BUY orders will be rejected if the account's position is greater than the maximum position allowed.
+
+ExchangeInfo format:
+
+{
+  "filterType":"MAX_POSITION",
+  "maxPosition":"10.00000000"
+}
+Exchange Filters
+EXCHANGE_MAX_NUM_ORDERS
+ExchangeInfo format:
+
+  {
+    "filterType": "EXCHANGE_MAX_NUM_ORDERS",
+    "maxNumOrders": 1000
+  }
+The EXCHANGE_MAX_NUM_ORDERS filter defines the maximum number of orders an account is allowed to have open on the exchange. Note that both "algo" orders and normal orders are counted for this filter.
+
+EXCHANGE_MAX_NUM_ALGO_ORDERS
+ExchangeInfo format:
+
+  {
+    "filterType": "EXCHANGE_MAX_NUM_ALGO_ORDERS",
+    "maxNumAlgoOrders": 200
+  }
+The EXCHANGE_MAX_NUM_ALGO_ORDERS filter defines the maximum number of "algo" orders an account is allowed to have open on the exchange. "Algo" orders are STOP_LOSS, STOP_LOSS_LIMIT, TAKE_PROFIT, and TAKE_PROFIT_LIMIT orders.
+
+Wallet Endpoints
+System Status (System)
+Response
+
+{ 
+    "status": 0,              // 0: normal，1：system maintenance
+    "msg": "normal"           // "normal", "system_maintenance"
+}
+GET /sapi/v1/system/status
+
+Fetch system status.
+
+Weight(IP): 1
+
+All Coins' Information (USER_DATA)
+Get information of coins (available for deposit and withdraw) for user.
+
+Response:
+
+[
+    {
+        "coin": "BTC",
+        "depositAllEnable": true,
+        "free": "0.08074558",
+        "freeze": "0.00000000",
+        "ipoable": "0.00000000",
+        "ipoing": "0.00000000",
+        "isLegalMoney": false,
+        "locked": "0.00000000",
+        "name": "Bitcoin",
+        "networkList": [
+            {
+                "addressRegex": "^(bnb1)[0-9a-z]{38}$",
+                "coin": "BTC",
+                "depositDesc": "Wallet Maintenance, Deposit Suspended", // shown only when "depositEnable" is false.
+                "depositEnable": false,
+                "isDefault": false,        
+                "memoRegex": "^[0-9A-Za-z\\-_]{1,120}$",
+                "minConfirm": 1,  // min number for balance confirmation
+                "name": "BEP2",
+                "network": "BNB",            
+                "resetAddressStatus": false,
+                "specialTips": "Both a MEMO and an Address are required to successfully deposit your BEP2-BTCB tokens to Binance.",
+                "unLockConfirm": 0,  // confirmation number for balance unlock 
+                "withdrawDesc": "Wallet Maintenance, Withdrawal Suspended", // shown only when "withdrawEnable" is false.
+                "withdrawEnable": false,
+                "withdrawFee": "0.00000220",
+                "withdrawIntegerMultiple": "0.00000001",
+                "withdrawMax": "9999999999.99999999",
+                "withdrawMin": "0.00000440",
+                "sameAddress": true  // If the coin needs to provide memo to withdraw
+            },
+            {
+                "addressRegex": "^[13][a-km-zA-HJ-NP-Z1-9]{25,34}$|^(bc1)[0-9A-Za-z]{39,59}$",
+                "coin": "BTC",
+                "depositEnable": true,
+                "isDefault": true,
+                "memoRegex": "",
+                "minConfirm": 1, 
+                "name": "BTC",
+                "network": "BTC",
+                "resetAddressStatus": false,
+                "specialTips": "",
+                "unLockConfirm": 2,
+                "withdrawEnable": true,
+                "withdrawFee": "0.00050000",
+                "withdrawIntegerMultiple": "0.00000001",
+                "withdrawMax": "750",
+                "withdrawMin": "0.00100000",
+                "sameAddress": false
+            }
+        ],
+        "storage": "0.00000000",
+        "trading": true,
+        "withdrawAllEnable": true,
+        "withdrawing": "0.00000000"
+    }
+]
+GET /sapi/v1/capital/config/getall (HMAC SHA256)
+
+Weight(IP): 10
+
+Parameters:
+
+Name	Type	Mandatory	Description
+recvWindow	LONG	NO	
+timestamp	LONG	YES	
+Daily Account Snapshot (USER_DATA)
+Response:
+
+{
+   "code":200, // 200 for success; others are error codes
+   "msg":"", // error message
+   "snapshotVos":[
+      {
+         "data":{
+            "balances":[
+               {
+                  "asset":"BTC",
+                  "free":"0.09905021",
+                  "locked":"0.00000000"
+               },
+               {
+                  "asset":"USDT",
+                  "free":"1.89109409",
+                  "locked":"0.00000000"
+               }
+            ],
+            "totalAssetOfBtc":"0.09942700"
+         },
+         "type":"spot",
+         "updateTime":1576281599000
+      }
+   ]
+}
+
+OR
+
+{
+   "code":200, // 200 for success; others are error codes
+   "msg":"", // error message
+   "snapshotVos":[
+      {
+         "data":{
+            "marginLevel":"2748.02909813",
+            "totalAssetOfBtc":"0.00274803",
+            "totalLiabilityOfBtc":"0.00000100",
+            "totalNetAssetOfBtc":"0.00274750",
+            "userAssets":[
+               {
+                  "asset":"XRP",
+                  "borrowed":"0.00000000",
+                  "free":"1.00000000",
+                  "interest":"0.00000000",
+                  "locked":"0.00000000",
+                  "netAsset":"1.00000000"
+               }
+            ]
+         },
+         "type":"margin",
+         "updateTime":1576281599000
+      }
+   ]
+}
+OR
+
+{
+   "code":200, // 200 for success; others are error codes
+   "msg":"", // error message
+   "snapshotVos":[
+      {
+         "data":{
+            "assets":[
+               {
+                  "asset":"USDT",
+                  "marginBalance":"118.99782335",
+                  "walletBalance":"120.23811389"
+               }
+            ],
+            "position":[
+               {
+                  "entryPrice":"7130.41000000",
+                  "markPrice":"7257.66239673",
+                  "positionAmt":"0.01000000",
+                  "symbol":"BTCUSDT",
+                  "unRealizedProfit":"1.24029054"  // Only show the value at the time of opening the position
+               }
+            ]
+         },
+         "type":"futures",
+         "updateTime":1576281599000
+      }
+   ]
+}
+GET /sapi/v1/accountSnapshot (HMAC SHA256)
+
+Weight(IP): 2400
+
+Parameters:
+
+Name	Type	Mandatory	Description
+type	STRING	YES	"SPOT", "MARGIN", "FUTURES"
+startTime	LONG	NO	
+endTime	LONG	NO	
+limit	INT	NO	min 7, max 30, default 7
+recvWindow	LONG	NO	
+timestamp	LONG	YES	
+The query time period must be less then 30 days
+Support query within the last one month only
+If startTimeand endTime not sent, return records of the last 7 days by default
+Disable Fast Withdraw Switch (USER_DATA)
+Response:
+
+{}
+POST /sapi/v1/account/disableFastWithdrawSwitch (HMAC SHA256)
+
+Weight(IP): 1
+
+Parameters:
+
+Name	Type	Mandatory	Description
+recvWindow	LONG	NO	
+timestamp	LONG	YES	
+Caution:
+
+This request will disable fastwithdraw switch under your account.
+You need to enable "trade" option for the api key which requests this endpoint.
+
+Enable Fast Withdraw Switch (USER_DATA)
+Response:
+
+{}
+POST /sapi/v1/account/enableFastWithdrawSwitch (HMAC SHA256)
+
+Weight(IP): 1
+
+Parameters:
+
+Name	Type	Mandatory	Description
+recvWindow	LONG	NO	
+timestamp	LONG	YES	
+This request will enable fastwithdraw switch under your account.
+You need to enable "trade" option for the api key which requests this endpoint.
+When Fast Withdraw Switch is on, transferring funds to a Binance account will be done instantly. There is no on-chain transaction, no transaction ID and no withdrawal fee.
+Withdraw(USER_DATA)
+Response:
+
+{
+    "id":"7213fea8e94b4a5593d507237e5a555b"
+}
+POST /sapi/v1/capital/withdraw/apply (HMAC SHA256)
+
+Submit a withdraw request.
+
+Weight(IP): 1
+
+Parameters:
+
+Name	Type	Mandatory	Description
+coin	STRING	YES	
+withdrawOrderId	STRING	NO	client id for withdraw
+network	STRING	NO	
+address	STRING	YES	
+addressTag	STRING	NO	Secondary address identifier for coins like XRP,XMR etc.
+amount	DECIMAL	YES	
+transactionFeeFlag	BOOLEAN	NO	When making internal transfer, true for returning the fee to the destination account; false for returning the fee back to the departure account. Default false.
+name	STRING	NO	Description of the address. Space in name should be encoded into %20.
+walletType	INTEGER	NO	The wallet type for withdraw，0-spot wallet ，1-funding wallet.Default spot wallet
+recvWindow	LONG	NO	
+timestamp	LONG	YES	
+If network not send, return with default network of the coin.
+You can get network and isDefault in networkList of a coin in the response of Get /sapi/v1/capital/config/getall (HMAC SHA256).
+Deposit History(supporting network) (USER_DATA)
+Response:
+
+[
+    {
+        "amount":"0.00999800",
+        "coin":"PAXG",
+        "network":"ETH",
+        "status":1,
+        "address":"0x788cabe9236ce061e5a892e1a59395a81fc8d62c",
+        "addressTag":"",
+        "txId":"0xaad4654a3234aa6118af9b4b335f5ae81c360b2394721c019b5d1e75328b09f3",
+        "insertTime":1599621997000,
+        "transferType":0,
+        "unlockConfirm":"12/12",  // confirm times for unlocking
+        "confirmTimes":"12/12"
+    },
+    {
+        "amount":"0.50000000",
+        "coin":"IOTA",
+        "network":"IOTA",
+        "status":1,
+        "address":"SIZ9VLMHWATXKV99LH99CIGFJFUMLEHGWVZVNNZXRJJVWBPHYWPPBOSDORZ9EQSHCZAMPVAPGFYQAUUV9DROOXJLNW",
+        "addressTag":"",
+        "txId":"ESBFVQUTPIWQNJSPXFNHNYHSQNTGKRVKPRABQWTAXCDWOAKDKYWPTVG9BGXNVNKTLEJGESAVXIKIZ9999",
+        "insertTime":1599620082000,
+        "transferType":0,
+        "unlockConfirm":"1/12",
+        "confirmTimes":"1/1"
+    }
+]
+GET /sapi/v1/capital/deposit/hisrec (HMAC SHA256)
+
+Fetch deposit history.
+
+Weight(IP): 1
+
+Parameters:
+
+Name	Type	Mandatory	Description
+coin	STRING	NO	
+status	INT	NO	0(0:pending,6: credited but cannot withdraw, 1:success)
+startTime	LONG	NO	Default: 90 days from current timestamp
+endTime	LONG	NO	Default: present timestamp
+offset	INT	NO	Default:0
+limit	INT	NO	Default:1000, Max:1000
+recvWindow	LONG	NO	
+timestamp	LONG	YES	
+Please notice the default startTime and endTime to make sure that time interval is within 0-90 days.
+If both startTime and endTime are sent, time between startTime and endTime must be less than 90 days.
+Withdraw History (supporting network) (USER_DATA)
+Response:
+
+[
+    {
+        "address": "0x94df8b352de7f46f64b01d3666bf6e936e44ce60",
+        "amount": "8.91000000",
+        "applyTime": "2019-10-12 11:12:02",
+        "coin": "USDT",
+        "id": "b6ae22b3aa844210a7041aee7589627c",
+        "withdrawOrderId": "WITHDRAWtest123", // will not be returned if there's no withdrawOrderId for this withdraw.
+        "network": "ETH", 
+        "transferType": 0,   // 1 for internal transfer, 0 for external transfer   
+        "status": 6,
+        "transactionFee": "0.004",
+        "confirmNo":3,  // confirm times for withdraw
+        "info":"The address is not valid. Please confirm with the recipient", // reason for withdrawal failure
+        "txId": "0xb5ef8c13b968a406cc62a93a8bd80f9e9a906ef1b3fcf20a2e48573c17659268"
+    },
+    {
+        "address": "1FZdVHtiBqMrWdjPyRPULCUceZPJ2WLCsB",
+        "amount": "0.00150000",
+        "applyTime": "2019-09-24 12:43:45",
+        "coin": "BTC",
+        "id": "156ec387f49b41df8724fa744fa82719",
+        "network": "BTC",
+        "status": 6,
+        "transactionFee": "0.004",
+        "transferType": 0,   // 1 for internal transfer, 0 for external transfer   
+        "confirmNo":2,
+        "info":"",
+        "txId": "60fd9007ebfddc753455f95fafa808c4302c836e4d1eebc5a132c36c1d8ac354"
+    }
+]
+GET /sapi/v1/capital/withdraw/history (HMAC SHA256)
+
+Fetch withdraw history.
+
+Weight(IP): 1
+
+Parameters:
+
+Name	Type	Mandatory	Description
+coin	STRING	NO	
+withdrawOrderId	STRING	NO	
+status	INT	NO	0(0:Email Sent,1:Cancelled 2:Awaiting Approval 3:Rejected 4:Processing 5:Failure 6:Completed)
+offset	INT	NO	
+limit	INT	NO	Default: 1000, Max: 1000
+startTime	LONG	NO	Default: 90 days from current timestamp
+endTime	LONG	NO	Default: present timestamp
+recvWindow	LONG	NO	
+timestamp	LONG	YES	
+network may not be in the response for old withdraw.
+Please notice the default startTime and endTime to make sure that time interval is within 0-90 days.
+If both startTime and endTime are sent, time between startTime and endTime must be less than 90 days.
+Deposit Address (supporting network) (USER_DATA)
+Response:
+
+{
+    "address": "1HPn8Rx2y6nNSfagQBKy27GB99Vbzg89wv",
+    "coin": "BTC",
+    "tag": "",
+    "url": "https://btc.com/1HPn8Rx2y6nNSfagQBKy27GB99Vbzg89wv"
+}
+GET /sapi/v1/capital/deposit/address (HMAC SHA256)
+
+Fetch deposit address with network.
+
+Weight(IP): 10
+
+Parameters:
+
+Name	Type	Mandatory	Description
+coin	STRING	YES	
+network	STRING	NO	
+recvWindow	LONG	NO	
+timestamp	LONG	YES	
+If network is not send, return with default network of the coin.
+You can get network and isDefault in networkList in the response of Get /sapi/v1/capital/config/getall (HMAC SHA256).
+Account Status (USER_DATA)
+Response:
+
+{
+    "data": "Normal"
+}
+GET /sapi/v1/account/status
+
+Fetch account status detail.
+
+Weight(IP): 1
+
+Parameters:
+
+Name	Type	Mandatory	Description
+recvWindow	LONG	NO	
+timestamp	LONG	YES	
+Account API Trading Status (USER_DATA)
+Response:
+
+{
+    "data": {          // API trading status detail
+            "isLocked": false,   // API trading function is locked or not
+            "plannedRecoverTime": 0,  // If API trading function is locked, this is the planned recover time
+            "triggerCondition": { 
+                    "GCR": 150,  // Number of GTC orders
+                    "IFER": 150, // Number of FOK/IOC orders
+                    "UFR": 300   // Number of orders
+            },
+            "updateTime": 1547630471725   
+    }
+}
+GET /sapi/v1/account/apiTradingStatus (HMAC SHA256)
+
+Fetch account api trading status detail.
+
+Weight(IP): 1
+
+Parameters:
+
+Name	Type	Mandatory	Description
+recvWindow	LONG	NO	
+timestamp	LONG	YES	
+DustLog(USER_DATA)
+Response
+
+{
+        "total": 8,   //Total counts of exchange
+        "userAssetDribblets": [
+            {
+                "operateTime": 1615985535000,
+                "totalTransferedAmount": "0.00132256",   // Total transfered BNB amount for this exchange.
+                "totalServiceChargeAmount": "0.00002699",    //Total service charge amount for this exchange.
+                "transId": 45178372831,
+                "userAssetDribbletDetails": [           //Details of  this exchange.
+                    {
+                        "transId": 4359321,
+                        "serviceChargeAmount": "0.000009",
+                        "amount": "0.0009",
+                        "operateTime": 1615985535000,
+                        "transferedAmount": "0.000441",
+                        "fromAsset": "USDT"
+                    },
+                    {
+                        "transId": 4359321,
+                        "serviceChargeAmount": "0.00001799",
+                        "amount": "0.0009",
+                        "operateTime": 1615985535000,
+                        "transferedAmount": "0.00088156",
+                        "fromAsset": "ETH"
+                    }
+                ]
+            },
+            {
+                "operateTime":1616203180000,
+                "totalTransferedAmount": "0.00058795",
+                "totalServiceChargeAmount": "0.000012",
+                "transId": 4357015,
+                "userAssetDribbletDetails": [       
+                    {
+                        "transId": 4357015,
+                        "serviceChargeAmount": "0.00001",
+                        "amount": "0.001",
+                        "operateTime": 1616203180000,
+                        "transferedAmount": "0.00049",
+                        "fromAsset": "USDT"
+                    },
+                    {
+                        "transId": 4357015,
+                        "serviceChargeAmount": "0.000002",         
+                        "amount": "0.0001",
+                        "operateTime": 1616203180000,
+                        "transferedAmount": "0.00009795",
+                        "fromAsset": "ETH"
+                    }
+                ]
+            }
+        ]
+    }
+}
+GET /sapi/v1/asset/dribblet (HMAC SHA256)
+
+Weight(IP): 1
+
+Parameters:
+
+Name	Type	Mandatory	Description
+startTime	LONG	NO	
+endTime	LONG	NO	
+recvWindow	LONG	NO	
+timestamp	LONG	YES	
+Only return last 100 records
+Only return records after 2020/12/01
+Get Assets That Can Be Converted Into BNB (USER_DATA)
+Response
+
+{
+    "details": [
+        {
+            "asset": "ADA",         
+            "assetFullName": "ADA", 
+            "amountFree": "6.21",   //Convertible amount
+            "toBTC": "0.00016848",  //BTC amount
+            "toBNB": "0.01777302",  //BNB amount（Not deducted commission fee）
+            "toBNBOffExchange": "0.01741756", //BNB amount（Deducted commission fee）
+            "exchange": "0.00035546" //Commission fee
+        }
+    ],
+    "totalTransferBtc": "0.00016848",
+    "totalTransferBNB": "0.01777302",
+    "dribbletPercentage": "0.02"     //Commission fee
+}  
+POST /sapi/v1/asset/dust-btc (HMAC SHA256)
+
+Weight(IP): 1
+
+Parameters:
+
+Name	Type	Mandatory	Description
+recvWindow	LONG	NO	
+timestamp	LONG	YES	
+Dust Transfer (USER_DATA)
+Response:
+
+{
+    "totalServiceCharge":"0.02102542",
+    "totalTransfered":"1.05127099",
+    "transferResult":[
+        {
+            "amount":"0.03000000",
+            "fromAsset":"ETH",
+            "operateTime":1563368549307,
+            "serviceChargeAmount":"0.00500000",
+            "tranId":2970932918,
+            "transferedAmount":"0.25000000"
+        },
+        {
+            "amount":"0.09000000",
+            "fromAsset":"LTC",
+            "operateTime":1563368549404,
+            "serviceChargeAmount":"0.01548000",
+            "tranId":2970932918,
+            "transferedAmount":"0.77400000"
+        },
+        {
+            "amount":"248.61878453",
+            "fromAsset":"TRX",
+            "operateTime":1563368549489,
+            "serviceChargeAmount":"0.00054542",
+            "tranId":2970932918,
+            "transferedAmount":"0.02727099"
+        }
+    ]
+}
+POST /sapi/v1/asset/dust (HMAC SHA256)
+
+Convert dust assets to BNB.
+
+Weight(UID): 10
+
+Parameters:
+
+Name	Type	Mandatory	Description
+asset	ARRAY	YES	The asset being converted. For example: asset=BTC&asset=USDT
+recvWindow	LONG	NO	
+timestamp	LONG	YES	
+You need to openEnable Spot & Margin Trading permission for the API Key which requests this endpoint.
+Asset Dividend Record (USER_DATA)
+Response:
+
+{
+    "rows":[
+        {
+            "id":1637366104,
+            "amount":"10.00000000",
+            "asset":"BHFT",
+            "divTime":1563189166000,
+            "enInfo":"BHFT distribution",
+            "tranId":2968885920
+        },
+        {
+            "id":1631750237,
+            "amount":"10.00000000",
+            "asset":"BHFT",
+            "divTime":1563189165000,
+            "enInfo":"BHFT distribution",
+            "tranId":2968885920
+        }
+    ],
+    "total":2
+}
+GET /sapi/v1/asset/assetDividend (HMAC SHA256)
+
+Query asset dividend record.
+
+Weight(IP): 10
+
+Parameters:
+
+Name	Type	Mandatory	Description
+asset	STRING	NO	
+startTime	LONG	NO	
+endTime	LONG	NO	
+limit	INT	NO	Default 20, max 500
+recvWindow	LONG	NO	
+timestamp	LONG	YES	
+Asset Detail (USER_DATA)
+Response:
+
+{
+        "CTR": {
+            "minWithdrawAmount": "70.00000000", //min withdraw amount
+            "depositStatus": false,//deposit status (false if ALL of networks' are false)
+            "withdrawFee": 35, // withdraw fee
+            "withdrawStatus": true, //withdraw status (false if ALL of networks' are false)
+            "depositTip": "Delisted, Deposit Suspended" //reason
+        },
+        "SKY": {
+            "minWithdrawAmount": "0.02000000",
+            "depositStatus": true,
+            "withdrawFee": 0.01,
+            "withdrawStatus": true
+        }   
+}
+GET /sapi/v1/asset/assetDetail (HMAC SHA256)
+
+Fetch details of assets supported on Binance.
+
+Weight(IP): 1
+
+Parameters:
+
+Name	Type	Mandatory	Description
+asset	STRING	NO	
+recvWindow	LONG	NO	
+timestamp	LONG	YES	
+Please get network and other deposit or withdraw details from GET /sapi/v1/capital/config/getall.
+Trade Fee (USER_DATA)
+Response:
+
+[
+    {
+        "symbol": "ADABNB",
+        "makerCommission": "0.001",
+        "takerCommission": "0.001"
+    },
+    {
+        "symbol": "BNBBTC",
+        "makerCommission": "0.001",
+        "takerCommission": "0.001"
+    }
+]
+GET /sapi/v1/asset/tradeFee (HMAC SHA256)
+
+Fetch trade fee
+
+Weight(IP): 1
+
+Parameters:
+
+Name	Type	Mandatory	Description
+symbol	STRING	NO	
+recvWindow	LONG	NO	
+timestamp	LONG	YES	
+User Universal Transfer (USER_DATA)
+Response:
+
+{
+    "tranId":13526853623
+}
+
+POST /sapi/v1/asset/transfer (HMAC SHA256)
+
+You need to enable Permits Universal Transfer option for the API Key which requests this endpoint.
+
+Weight(IP): 1
+
+Parameters:
+
+Name	Type	Mandatory	Description
+type	ENUM	YES	
+asset	STRING	YES	
+amount	DECIMAL	YES	
+fromSymbol	STRING	NO	
+toSymbol	STRING	NO	
+recvWindow	LONG	NO	
+timestamp	LONG	YES	
+fromSymbol must be sent when type are ISOLATEDMARGIN_MARGIN and ISOLATEDMARGIN_ISOLATEDMARGIN
+toSymbol must be sent when type are MARGIN_ISOLATEDMARGIN and ISOLATEDMARGIN_ISOLATEDMARGIN
+
+ENUM of transfer types:
+
+MAIN_UMFUTURE Spot account transfer to USDⓈ-M Futures account
+MAIN_CMFUTURE Spot account transfer to COIN-M Futures account
+MAIN_MARGIN Spot account transfer to Margin（cross）account
+UMFUTURE_MAIN USDⓈ-M Futures account transfer to Spot account
+UMFUTURE_MARGIN USDⓈ-M Futures account transfer to Margin（cross）account
+CMFUTURE_MAIN COIN-M Futures account transfer to Spot account
+CMFUTURE_MARGIN COIN-M Futures account transfer to Margin(cross) account
+MARGIN_MAIN Margin（cross）account transfer to Spot account
+MARGIN_UMFUTURE Margin（cross）account transfer to USDⓈ-M Futures
+MARGIN_CMFUTURE Margin（cross）account transfer to COIN-M Futures
+ISOLATEDMARGIN_MARGIN Isolated margin account transfer to Margin(cross) account
+MARGIN_ISOLATEDMARGIN Margin(cross) account transfer to Isolated margin account
+ISOLATEDMARGIN_ISOLATEDMARGIN Isolated margin account transfer to Isolated margin account
+MAIN_FUNDING Spot account transfer to Funding account
+FUNDING_MAIN Funding account transfer to Spot account
+FUNDING_UMFUTURE Funding account transfer to UMFUTURE account
+UMFUTURE_FUNDING UMFUTURE account transfer to Funding account
+MARGIN_FUNDING MARGIN account transfer to Funding account
+FUNDING_MARGIN Funding account transfer to Margin account
+FUNDING_CMFUTURE Funding account transfer to CMFUTURE account
+CMFUTURE_FUNDING CMFUTURE account transfer to Funding account
+Query User Universal Transfer History (USER_DATA)
+Response:
+
+{
+    "total":2,
+    "rows":[
+        {
+            "asset":"USDT",
+            "amount":"1",
+            "type":"MAIN_UMFUTURE",
+            "status": "CONFIRMED",
+            "tranId": 11415955596,
+            "timestamp":1544433328000
+        },
+        {
+            "asset":"USDT",
+            "amount":"2",
+            "type":"MAIN_UMFUTURE",
+            "status": "CONFIRMED",
+            "tranId": 11366865406,
+            "timestamp":1544433328000
+        }
+    ]
+}
+GET /sapi/v1/asset/transfer (HMAC SHA256)
+
+Weight(IP): 1
+
+Parameters:
+
+Name	Type	Mandatory	Description
+type	ENUM	YES	
+startTime	LONG	NO	
+endTime	LONG	NO	
+current	INT	NO	Default 1
+size	INT	NO	Default 10, Max 100
+fromSymbol	STRING	NO	
+toSymbol	STRING	NO	
+recvWindow	LONG	NO	
+timestamp	LONG	YES	
+fromSymbol must be sent when type are ISOLATEDMARGIN_MARGIN and ISOLATEDMARGIN_ISOLATEDMARGIN
+toSymbol must be sent when type are MARGIN_ISOLATEDMARGIN and ISOLATEDMARGIN_ISOLATEDMARGIN
+Support query within the last 6 months only
+If startTimeand endTime not sent, return records of the last 7 days by default
+Funding Wallet (USER_DATA)
+Response
+
+[
+    {
+        "asset": "USDT",
+        "free": "1",    // avalible balance
+        "locked": "0",  // locked asset
+        "freeze": "0",  // freeze asset
+        "withdrawing": "0",  
+        "btcValuation": "0.00000091"  
+    }
+]
+POST /sapi/v1/asset/get-funding-asset (HMAC SHA256)
+
+Weight(IP): 1
+
+Parameters:
+
+Name	Type	Mandatory	Description
+asset	STRING	NO	
+needBtcValuation	STRING	NO	true or false
+recvWindow	LONG	NO	
+timestamp	LONG	YES	
+Currently supports querying the following business assets：Binance Pay, Binance Card, Binance Gift Card, Stock Token
+Get API Key Permission (USER_DATA)
+Response
+
+{
+   "ipRestrict": false,
+   "createTime": 1623840271000,   
+   "enableWithdrawals": false,   // This option allows you to withdraw via API. You must apply the IP Access Restriction filter in order to enable withdrawals
+   "enableInternalTransfer": true,  // This option authorizes this key to transfer funds between your master account and your sub account instantly
+   "permitsUniversalTransfer": true,  // Authorizes this key to be used for a dedicated universal transfer API to transfer multiple supported currencies. Each business's own transfer API rights are not affected by this authorization
+   "enableVanillaOptions": false,  //  Authorizes this key to Vanilla options trading
+   "enableReading": true,
+   "enableFutures": false,  //  API Key created before your futures account opened does not support futures API service
+   "enableMargin": false,   //  This option can be adjusted after the Cross Margin account transfer is completed
+   "enableSpotAndMarginTrading": false, // Spot and margin trading
+   "tradingAuthorityExpirationTime": 1628985600000  // Expiration time for spot and margin trading permission
+}
+GET /sapi/v1/account/apiRestrictions (HMAC SHA256)
+
+Weight(IP): 1
+
+Parameters:
+
+Name	Type	Mandatory	Description
+recvWindow	LONG	NO	
+timestamp	LONG	YES	
+Sub-Account Endpoints
+The endpoints documented in this section are for Corporate Accounts.
+To become a corporate account, please refer to this document: Corporate Account Application
+Create a Virtual Sub-account(For Master Account)
+Response:
+
+{
+    "email":"addsdd_virtual@aasaixwqnoemail.com"
+}
+POST /sapi/v1/sub-account/virtualSubAccount (HMAC SHA256)
+
+Weight(IP): 1
+
+Parameters:
+
+Name	Type	Mandatory	Description
+subAccountString	STRING	YES	Please input a string. We will create a virtual email using that string for you to register
+recvWindow	LONG	NO	
+timestamp	LONG	YES	
+This request will generate a virtual sub account under your master account.
+You need to enable "trade" option for the API Key which requests this endpoint.
+Query Sub-account List (For Master Account)
+Response:
+
+{
+    "subAccounts":[
+        {
+            "email":"testsub@gmail.com",
+            "isFreeze":false,
+            "createTime":1544433328000,
+            "isManagedSubAccount": false,
+            "isAssetManagementSubAccount": false
+        },
+        {
+            "email":"virtual@oxebmvfonoemail.com",
+            "isFreeze":false,
+            "createTime":1544433328000,
+            "isManagedSubAccount": false,
+            "isAssetManagementSubAccount": false
+        }
+    ]
+}
+GET /sapi/v1/sub-account/list (HMAC SHA256)
+
+Weight(IP): 1
+
+Parameters:
+
+Name	Type	Mandatory	Description
+email	STRING	NO	Sub-account email
+isFreeze	STRING	NO	true or false
+page	INT	NO	Default value: 1
+limit	INT	NO	Default value: 1, Max value: 200
+recvWindow	LONG	NO	
+timestamp	LONG	YES	
+Query Sub-account Spot Asset Transfer History (For Master Account)
+Response:
+
+[
+    {
+        "from":"aaa@test.com",
+        "to":"bbb@test.com",
+        "asset":"BTC",
+        "qty":"10",
+        "status": "SUCCESS",
+        "tranId": 6489943656,
+        "time":1544433328000
+    },
+    {
+        "from":"bbb@test.com",
+        "to":"ccc@test.com",
+        "asset":"ETH",
+        "qty":"2",
+        "status": "SUCCESS",
+        "tranId": 6489938713,
+        "time":1544433328000
+    }
+]
+GET /sapi/v1/sub-account/sub/transfer/history (HMAC SHA256)
+
+Weight(IP): 1
+
+Parameters:
+
+Name	Type	Mandatory	Description
+fromEmail	STRING	NO	Sub-account email
+toEmail	STRING	NO	Sub-account email
+startTime	LONG	NO	
+endTime	LONG	NO	
+page	INT	NO	Default value: 1
+limit	INT	NO	Default value: 500
+recvWindow	LONG	NO	
+timestamp	LONG	YES	
+fromEmail and toEmail cannot be sent at the same time.
+Return fromEmail equal master account email by default.
+Query Sub-account Futures Asset Transfer History (For Master Account)
+Response
+
+{
+    "success":true,
+    "futuresType": 2,
+    "transfers":[
+        {
+            "from":"aaa@test.com",
+            "to":"bbb@test.com",
+            "asset":"BTC",
+            "qty":"1",
+            "tranId":11897001102,
+            "time":1544433328000
+        },
+        {
+            "from":"bbb@test.com",
+            "to":"ccc@test.com",
+            "asset":"ETH",
+            "qty":"2",
+            "tranId":11631474902,
+            "time":1544433328000
+        }
+    ]
+}
+GET /sapi/v1/sub-account/futures/internalTransfer (HMAC SHA256)
+
+Weight(IP…
