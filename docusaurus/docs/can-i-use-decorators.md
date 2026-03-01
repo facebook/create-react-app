@@ -1,4 +1,4 @@
----
+ ---
 id: can-i-use-decorators
 title: Can I Use Decorators?
 ---
