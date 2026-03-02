@@ -16,7 +16,7 @@ function checkRequiredFiles(files) {
   try {
     files.forEach(filePath => {
       currentFilePath = filePath;
-      fs.accessSync(filePath, fs.F_OK);
+      fs.accessSync(filePath, fs.constants.F_OK);
     });
     return true;
   } catch (err) {
