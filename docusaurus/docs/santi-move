@@ -1,0 +1,337 @@
+santimove/
+├── public/
+├── src/
+│   ├── components/
+│   │   ├── MapView.jsx
+│   │   ├── RoutePlanner.jsx
+│   │   └── Header.jsx
+│   ├── firebase.js
+│   ├── App.jsx
+│   ├── App.css
+│   └── index.js
+└── package.json
+package.json - Dependencias
+{
+  "name": "santimove",
+  "version": "1.0.0",
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "leaflet": "^1.9.4",
+    "react-leaflet": "^4.2.1",
+    "firebase": "^10.7.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build"
+  },
+  "devDependencies": {
+    "react-scripts": "5.0.1"
+  }
+}
+}
+rc/firebase.js - Conexión a Firebase
+// Configuración de Firebase para datos en tiempo real
+// Crea tu proyecto en https://console.firebase.google.com
+import { initializeApp } from "firebase/app";
+import { getFirestore, collection, getDocs } from "firebase/firestore";
+
+const firebaseConfig = {
+  apiKey: "TU_API_KEY",
+  authDomain: "santimove-santiago.firebaseapp.com",
+  projectId: "santimove-santiago",
+  storageBucket: "santimove-santiago.appspot.com",
+  messagingSenderId: "123456789",
+  appId: "1:123456789:web:abcdef"
+};
+
+const app = initializeApp(firebaseConfig);
+export const db = getFirestore(app);
+
+// Función para obtener paradas de concho desde Firestore
+export const getParadasConcho = async () => {
+  const paradasCol = collection(db, 'rutas_informales');
+  const paradasSnapshot = await getDocs(paradasCol);
+  return paradasSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+src/components/MapView.jsx - Mapa con Leaflet
+
+import { MapContainer, TileLayer, Marker, Popup, Polyline } from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
+import L from 'leaflet';
+
+// Fix para iconos de Leaflet en React
+delete L.Icon.Default.prototype._getIconUrl;
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
+  iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
+  shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+});
+
+const monorrielIcon = new L.Icon({
+  iconUrl: 'https://cdn-icons-png.flaticon.com/512/821356.png',
+  iconSize: [35, 35],
+});
+
+const conchoIcon = new L.Icon({
+  iconUrl: 'https://cdn-icons-png.flaticon.com/512/75/75538.png',
+  iconSize: [30, 30],
+});
+
+function MapView({ origen, destino, rutaCalculada }) {
+  const santiagoCenter = [19.4517, -70.6970]; // Coordenadas centro Santiago
+
+  // Datos simulados del Monorriel - Estación 3 como ejemplo
+  const estacionMonorriel = [19.4685, -70.6850];
+  const paradaSajoma = [19.4320, -70.7100];
+
+  return (
+    <MapContainer center={santiagoCenter} zoom={13} style={{ height: "500px", width: "100%" }}>
+      <TileLayer
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        attribution='&copy; OpenStreetMap'
+      />
+      
+      {/* Marcador Origen */}
+      {origen && <Marker position={origen}><Popup>Tu ubicación</Popup></Marker>}
+      
+      {/* Marcador Destino */}
+      {destino && <Marker position={destino}><Popup>Destino: PUCMM</Popup></Marker>}
+
+      {/* Estación Monorriel */}
+      <Marker position={estacionMonorriel} icon={monorrielIcon}>
+        <Popup>Monorriel Est. 3 - Pueblo Nuevo</Popup>
+      </Marker>
+
+      {/* Parada de Concho */}
+      <Marker position={paradaSajoma} icon={conchoIcon}>
+        <Popup>Parada Sajoma - Ruta al centro</Popup>
+      </Marker>
+
+      {/* Dibujar ruta si existe */}
+      {rutaCalculada && <Polyline positions={rutaCalculada} color="blue" />}
+    </MapContainer>
+  );
+}
+
+export default MapView;
+
+import { useState } from 'react';
+
+function RoutePlanner({ setRutaCalculada, setOrigen, setDestino }) {
+  const [origenTxt, setOrigenTxt] = useState('');
+  const [destinoTxt, setDestinoTxt] = useState('');
+  const [resultado, setResultado] = useState(null);
+
+  // Coordenadas hardcodeadas para el demo - Gurabo a PUCMM
+  const coordenadas = {
+    "gurabo": [19.4320, -70.7100],
+    "pucmm": [19.4436, -70.6828],
+    "estacion monorriel 3": [19.4685, -70.6850]
+  };
+
+  const calcularRuta = () => {
+    // Simulamos la lógica de "InterSantiago"
+    if (origenTxt.toLowerCase().includes('gurabo') && destinoTxt.toLowerCase().includes('pucmm')) {
+      const ruta = [
+        coordenadas["gurabo"], // Caminar a Parada Sajoma
+        [19.4320, -70.7100], // Parada Sajoma
+        [19.4685, -70.6850], // Estación Monorriel 3
+        coordenadas["pucmm"]  // PUCMM
+      ];
+      
+      setRutaCalculada(ruta);
+      setOrigen(coordenadas["gurabo"]);
+      setDestino(coordenadas["pucmm"]);
+      
+      setResultado({
+        tiempo: "32 min",
+        costo: "RD$60",
+        pasos: [
+          "1. Caminar 4 min a Parada Sajoma",
+          "2. Tomar concho Ruta Sajoma - 15 min",
+          "3. Abordar Monorriel Est. 3 hasta Est. PUCMM - 10 min",
+          "4. Caminar 3 min a destino"
+        ],
+        co2: "1.2 kg CO₂ ahorrado vs. ir en carro privado"
+      });
+    } else {
+      alert("Para el demo, usa: Origen 'Gurabo' y Destino 'PUCMM'");
+    }
+  };
+
+  return (
+    <div className="route-planner">
+      <h2>¿A dónde vamos hoy?</h2>
+      <input 
+        type="text" 
+        placeholder="Origen: Ej. Gurabo" 
+        value={origenTxt}
+        onChange={(e) => setOrigenTxt(e.target.value)}
+      />
+      <input 
+        type="text" 
+        placeholder="Destino: Ej. PUCMM" 
+        value={destinoTxt}
+        onChange={(e) => setDestinoTxt(e.target.value)}
+      />
+      <button onClick={calcularRuta}>Calcular Ruta InterSantiago</button>
+
+      {resultado && (
+        <div className="resultado">
+          <h3>Tu mejor ruta: {resultado.tiempo} | {resultado.costo}</h3>
+          <ul>
+
+          
+            {resultado.pasos.map((paso, i) => <li key={i}>{paso}</li>)}
+          </ul>
+          <p className="co2"> {resultado.co2}</p>
+        </div>
+      )}
+    </div>
+  );
+}
+src/App.jsx - App Principal
+export default RoutePlanner;
+
+import { useState } from 'react';
+import MapView from './components/MapView';
+import RoutePlanner from './components/RoutePlanner';
+import './App.css';
+
+function App() {
+  const [rutaCalculada, setRutaCalculada] = useState(null);
+  const [origen, setOrigen] = useState(null);
+  const [destino, setDestino] = useState(null);
+
+  return (
+    <div className="App">
+      <header className="header">
+        <h1>SantiMove</h1>
+        <p className="alerta">⚠️ Obras Av. Las Carreras: use ruta alterna</p>
+      </header>
+      
+      <main>
+        <RoutePlanner 
+          setRutaCalculada={setRutaCalculada} 
+          setOrigen={setOrigen}
+          setDestino={setDestino}
+        />
+        <MapView 
+          origen={origen} 
+          destino={destino} 
+          rutaCalculada={rutaCalculada} 
+        />
+      </main>
+    </div>
+  );
+}
+
+export default App;
+ src/App.css - Estilos básicos
+CSS
+.App {
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+
+.header {
+  background-color: #1e3a8a;
+  color: white;
+  padding: 1rem;
+}
+
+.alerta {
+  background: #f59e0b;
+  color: black;
+  padding: 0.5rem;
+  margin: 0;
+}
+
+.route-planner {
+  padding: 1rem;
+  background: #f3f4f6;
+}
+
+.route-planner input {
+  display: block;
+  width: 80%;
+  margin: 10px auto;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.route-planner button {
+  background: #1e3a8a;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.resultado {
+  background: white;
+  margin: 1rem auto;
+  padding: 1rem;
+  width: 80%;
+  text-align: left;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.co2 {
+  color: #059669;
+  font-weight: bold;
+}
+Colección: rutas_informales
+JSON
+Tree
+Raw
+▶
+{
+"nombre_parada"
+:
+"Parada Sajoma",
+"lat"
+:
+19.432,
+"lng"
+:
+-70.71,
+"ruta"
+:
+"Sajoma - Centro",
+"choferes_activos"
+:
+8,
+"horario"
+:
+"6:00 AM - 9:00 PM"
+
+Colección: reportes_ciudadanos
+
+▶
+{
+"tipo"
+:
+"tapon",
+"lat"
+:
+19.4517,
+"lng"
+:
+-70.697,
+"descripcion"
+:
+"Tapón por construcción Monorriel",
+"timestamp"
+:
+"2026-04-14T08:30:00Z",
+"estado"
+:
+"activo"
+
+
+
+
