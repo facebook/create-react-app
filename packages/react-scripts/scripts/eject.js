@@ -82,7 +82,7 @@ prompts({
         '\n\n' +
         gitStatus
           .split('\n')
-          .map(line => line.match(/ .*/g)[0].trim())
+          .map(line => (line.match(/ .*/g) || [line])[0].trim())
           .join('\n') +
         '\n\n' +
         chalk.red(
