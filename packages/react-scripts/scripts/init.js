@@ -232,7 +232,16 @@ module.exports = function (
   // Copy the files for the user
   const templateDir = path.join(templatePath, 'template');
   if (fs.existsSync(templateDir)) {
-    fs.copySync(templateDir, appPath);
+    fs.copySync(templateDir, appPath, {
+      dereference: true,
+      filter: (src) => {
+        // Prevent path traversal: ensure all paths resolve within appPath
+        const relativePath = path.relative(templateDir, src);
+        const resolvedDest = path.resolve(appPath, relativePath);
+        const normalizedAppPath = path.resolve(appPath) + path.sep;
+        return resolvedDest.startsWith(normalizedAppPath) || resolvedDest === path.resolve(appPath);
+      },
+    });
   } else {
     console.error(
       `Could not locate supplied template: ${chalk.green(templateDir)}`
