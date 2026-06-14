@@ -1,19 +1,26 @@
 {
-  "package": {
-    "dependencies": {
-      "@testing-library/dom": "^10.4.0",
-      "@testing-library/jest-dom": "^6.6.3",
-      "@testing-library/react": "^16.1.0",
-      "@testing-library/user-event": "^13.2.1",
-      "@types/jest": "^27.0.1",
-      "@types/node": "^16.7.13",
-      "@types/react": "^19.0.0",
-      "@types/react-dom": "^19.0.0",
-      "typescript": "^4.4.2",
-      "web-vitals": "^2.1.0"
-    },
-    "eslintConfig": {
-      "extends": ["react-app", "react-app/jest"]
-    }
+  "name": "babel-preset-react-app",
+  "version": "11.0.0",
+  "description": "Babel preset optimized for React 18 applications",
+  "main": "index.js",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/facebook/create-react-app.git",
+    "directory": "packages/babel-preset-react-app"
+  },
+  "dependencies": {
+    "@babel/core": "^7.22.10",
+    "@babel/plugin-transform-react-jsx": "^7.22.5",
+    "@babel/plugin-transform-react-jsx-development": "^7.22.5",
+    "@babel/plugin-transform-react-jsx-self": "^7.22.5",
+    "@babel/plugin-transform-react-jsx-source": "^7.22.5",
+    "@babel/preset-env": "^7.22.10",
+    "@babel/preset-typescript": "^7.22.5"
+  },
+  "peerDependencies": {
+    "@babel/core": "^7.22.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
   }
 }

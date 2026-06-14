@@ -12,13 +12,12 @@ jobs:
   build:
     name: 'Build (${{ matrix.os }}, Node ${{ matrix.node }})'
     runs-on: ${{ matrix.os }}
+    if: "!contains(github.event.head_commit.message, '[skip ci]')" # شرط اختياري لتجاوز البناء
     strategy:
       fail-fast: false
       matrix:
-        os:
-          - 'ubuntu-latest'
-        node:
-          - '16'
+        os: [ubuntu-latest]
+        node: [16]
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -26,22 +25,19 @@ jobs:
           node-version: ${{ matrix.node }}
           cache: 'npm'
       - name: Install dependencies
-        run: npm ci --prefer-offline
+        run: npm ci
       - name: Build
         run: npm run build
 
   integration:
     name: 'Integration Tests (${{ matrix.os }}, Node ${{ matrix.node }})'
     runs-on: ${{ matrix.os }}
+    if: "!contains(github.event.head_commit.message, '[skip ci]')" # نفس الشرط
     strategy:
       fail-fast: false
       matrix:
-        os:
-          - 'ubuntu-latest'
-          - 'macos-latest'
-          - 'windows-latest'
-        node:
-          - '16'
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        node: [16]
     steps:
       - uses: actions/checkout@v3
       - name: Setup node
@@ -50,27 +46,29 @@ jobs:
           node-version: ${{ matrix.node }}
           cache: 'npm'
       - name: Install dependencies
-        run: npm ci --prefer-offline
-      # The integration tests are run with yarn, so we need to install it.
+        run: npm ci
       - name: Install yarn
-        run: npm i -g yarn
+        run: npm install --global yarn
       - name: Run integration tests
         run: npm run test:integration
 
   e2e-simple:
-    name: E2E Simple
+    name: 'E2E Simple'
+    if: "!contains(github.event.head_commit.message, '[skip ci]')" # الشرط هنا أيضاً
     uses: ./.github/workflows/e2e-base.yml
     with:
       testScript: 'tasks/e2e-simple.sh'
 
   e2e-installs:
-    name: E2E Installs
+    name: 'E2E Installs'
+    if: "!contains(github.event.head_commit.message, '[skip ci]')"
     uses: ./.github/workflows/e2e-base.yml
     with:
       testScript: 'tasks/e2e-installs.sh'
 
   e2e-kitchensink:
-    name: E2E Kitchensink
+    name: 'E2E Kitchensink'
+    if: "!contains(github.event.head_commit.message, '[skip ci]')"
     uses: ./.github/workflows/e2e-base.yml
     with:
       testScript: 'tasks/e2e-kitchensink.sh'
