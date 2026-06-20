@@ -1,0 +1,34 @@
+<?php
+
+namespace App\Modules\Inventory\Policies;
+
+use App\Models\User;
+use App\Modules\Inventory\Models\CycleCount;
+
+class CycleCountPolicy
+{
+    public function viewAny(User $user): bool
+    {
+        return $user->can('inventory.view');
+    }
+
+    public function view(User $user, CycleCount $cycleCount): bool
+    {
+        return $user->can('inventory.view');
+    }
+
+    public function create(User $user): bool
+    {
+        return $user->can('inventory.create');
+    }
+
+    public function update(User $user, CycleCount $cycleCount): bool
+    {
+        return $user->can('inventory.create');
+    }
+
+    public function delete(User $user, CycleCount $cycleCount): bool
+    {
+        return $user->can('inventory.delete');
+    }
+}

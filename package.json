@@ -56,5 +56,9 @@
     "*.{js,json,yml,yaml,css,scss,ts,tsx,md}": [
       "prettier --write"
     ]
+  },
+  "dependencies": {
+    "laravel-echo": "^2.3.7",
+    "pusher-js": "^8.5.0"
   }
 }

@@ -1,0 +1,2930 @@
+openapi: 3.0.3
+info:
+  title: ERP API
+  version: 1.0.0
+  description: >
+    REST API for the multi-tenant ERP system.
+    Authenticate via POST /api/v1/auth/login to get a Bearer token,
+    then pass it as `Authorization: Bearer <token>` on every subsequent request.
+  contact:
+    name: ERP Support
+    email: support@erp.local
+  license:
+    name: Proprietary
+
+servers:
+  - url: /api/v1
+    description: Production (v1)
+
+security:
+  - bearerAuth: []
+
+tags:
+  - name: Auth
+    description: Authentication — login, logout, current user
+  - name: Dashboard
+    description: Aggregated KPI metrics
+  - name: Products
+    description: Product catalogue management
+  - name: Invoices
+    description: Invoice lifecycle management
+  - name: Customers
+    description: Customer / contact records
+  - name: Inventory
+    description: Stock levels, movements, and adjustments
+  - name: CRM
+    description: CRM leads and opportunities pipeline
+  - name: Helpdesk
+    description: Support ticket management
+  - name: HR
+    description: Human resources — employees, departments, leave
+  - name: Manufacturing
+    description: Manufacturing orders and bills of materials
+  - name: POS
+    description: Point-of-sale sessions and orders
+  - name: Currencies
+    description: Currency list and conversion
+
+# ─────────────────────────────────────────────────────────────
+# Components
+# ─────────────────────────────────────────────────────────────
+components:
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  # ── Reusable parameters ──────────────────────────────────
+  parameters:
+    PageParam:
+      name: page
+      in: query
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+      description: Page number (default 1)
+    PerPageParam:
+      name: per_page
+      in: query
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 20
+      description: Items per page (default 20, max 100)
+    IdPath:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+        example: 1
+
+  # ── Schemas ───────────────────────────────────────────────
+  schemas:
+
+    # ── Shared envelope wrappers ──────────────────────────
+    SuccessResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        data:
+          description: Response payload — shape varies per endpoint
+      required:
+        - success
+        - data
+
+    ErrorResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: false
+        message:
+          type: string
+          example: Invalid credentials
+      required:
+        - success
+        - message
+
+    ValidationErrorResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: false
+        message:
+          type: string
+          example: The given data was invalid.
+        errors:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+          example:
+            email:
+              - The email field is required.
+
+    PaginationMeta:
+      type: object
+      properties:
+        total:
+          type: integer
+          example: 150
+        per_page:
+          type: integer
+          example: 20
+        current_page:
+          type: integer
+          example: 1
+        last_page:
+          type: integer
+          example: 8
+      required:
+        - total
+        - per_page
+        - current_page
+        - last_page
+
+    PaginatedResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        data:
+          type: array
+          items: {}
+          description: Array of resource objects
+        meta:
+          $ref: '#/components/schemas/PaginationMeta'
+      required:
+        - success
+        - data
+        - meta
+
+    # ── Auth ─────────────────────────────────────────────
+    LoginRequest:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          format: email
+          example: admin@demo.erp
+        password:
+          type: string
+          format: password
+          example: secret123
+
+    LoginResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        data:
+          type: object
+          properties:
+            token:
+              type: string
+              example: "1|aBcDeFgHiJ..."
+            user:
+              $ref: '#/components/schemas/AuthUser'
+
+    AuthUser:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: Jane Smith
+        email:
+          type: string
+          format: email
+          example: jane@demo.erp
+        tenant_id:
+          type: integer
+          example: 42
+
+    MeResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: Jane Smith
+        email:
+          type: string
+          format: email
+          example: jane@demo.erp
+        tenant_id:
+          type: integer
+          example: 42
+        tenant:
+          type: object
+          nullable: true
+          properties:
+            id:
+              type: integer
+              example: 42
+            name:
+              type: string
+              example: Acme Corp
+            slug:
+              type: string
+              example: acme-corp
+
+    # ── Product ──────────────────────────────────────────
+    Product:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 10
+        name:
+          type: string
+          example: Wireless Keyboard
+        sku:
+          type: string
+          example: WK-1001
+        sale_price:
+          type: number
+          format: float
+          example: 49.99
+        cost_price:
+          type: number
+          format: float
+          example: 22.50
+        stock_quantity:
+          type: number
+          format: float
+          example: 120
+        is_active:
+          type: boolean
+          example: true
+        category_id:
+          type: integer
+          nullable: true
+          example: 3
+      required:
+        - id
+        - name
+        - sku
+        - sale_price
+        - cost_price
+
+    ProductCreateRequest:
+      type: object
+      required:
+        - name
+        - sku
+        - sale_price
+        - cost_price
+      properties:
+        name:
+          type: string
+          maxLength: 255
+          example: Wireless Mouse
+        sku:
+          type: string
+          maxLength: 100
+          example: WM-2002
+        sale_price:
+          type: number
+          minimum: 0
+          example: 29.99
+        cost_price:
+          type: number
+          minimum: 0
+          example: 12.00
+        description:
+          type: string
+          nullable: true
+          example: Ergonomic wireless mouse with 2-year battery life
+        category_id:
+          type: integer
+          nullable: true
+          example: 3
+        is_active:
+          type: boolean
+          example: true
+        reorder_point:
+          type: number
+          minimum: 0
+          nullable: true
+          example: 10
+
+    ProductUpdateRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 255
+          example: Wireless Mouse Pro
+        sku:
+          type: string
+          maxLength: 100
+          example: WM-2002-PRO
+        sale_price:
+          type: number
+          minimum: 0
+          example: 34.99
+        cost_price:
+          type: number
+          minimum: 0
+          example: 14.00
+        description:
+          type: string
+          nullable: true
+        category_id:
+          type: integer
+          nullable: true
+        is_active:
+          type: boolean
+        reorder_point:
+          type: number
+          minimum: 0
+          nullable: true
+
+    # ── Invoice ──────────────────────────────────────────
+    Invoice:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 55
+        invoice_number:
+          type: string
+          example: INV-00055
+        customer_name:
+          type: string
+          nullable: true
+          example: Acme Corp
+        status:
+          type: string
+          enum: [draft, sent, partial, paid, cancelled]
+          example: sent
+        issue_date:
+          type: string
+          format: date
+          example: "2025-04-01"
+        due_date:
+          type: string
+          format: date
+          nullable: true
+          example: "2025-04-30"
+        total:
+          type: number
+          format: float
+          example: 1250.00
+        currency_code:
+          type: string
+          example: USD
+      required:
+        - id
+        - invoice_number
+        - status
+        - total
+
+    InvoiceDetail:
+      allOf:
+        - $ref: '#/components/schemas/Invoice'
+        - type: object
+          properties:
+            contact:
+              type: object
+              nullable: true
+              properties:
+                id:
+                  type: integer
+                  example: 7
+                name:
+                  type: string
+                  example: Acme Corp
+                email:
+                  type: string
+                  format: email
+                  example: billing@acme.com
+            items:
+              type: array
+              items:
+                $ref: '#/components/schemas/InvoiceItem'
+            notes:
+              type: string
+              nullable: true
+              example: Net 30 payment terms
+
+    InvoiceItem:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 201
+        description:
+          type: string
+          example: Development services — April 2025
+        quantity:
+          type: number
+          example: 10
+        unit_price:
+          type: number
+          example: 125.00
+        tax_rate:
+          type: number
+          example: 10
+        subtotal:
+          type: number
+          example: 1250.00
+
+    InvoiceCreateRequest:
+      type: object
+      required:
+        - contact_id
+        - issue_date
+      properties:
+        contact_id:
+          type: integer
+          example: 7
+        issue_date:
+          type: string
+          format: date
+          example: "2025-04-01"
+        due_date:
+          type: string
+          format: date
+          nullable: true
+          example: "2025-04-30"
+        status:
+          type: string
+          enum: [draft, sent]
+          example: draft
+        notes:
+          type: string
+          nullable: true
+        items:
+          type: array
+          items:
+            type: object
+            required:
+              - description
+              - quantity
+              - unit_price
+            properties:
+              description:
+                type: string
+                example: Consulting — April 2025
+              quantity:
+                type: number
+                example: 5
+              unit_price:
+                type: number
+                example: 200.00
+              tax_rate:
+                type: number
+                example: 10
+
+    InvoiceStatusRequest:
+      type: object
+      required:
+        - status
+      properties:
+        status:
+          type: string
+          enum: [draft, sent, partial, paid, cancelled]
+          example: paid
+
+    # ── Customer ─────────────────────────────────────────
+    Customer:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 7
+        name:
+          type: string
+          example: Acme Corp
+        email:
+          type: string
+          format: email
+          nullable: true
+          example: contact@acme.com
+        phone:
+          type: string
+          nullable: true
+          example: "+1-555-0100"
+        company:
+          type: string
+          nullable: true
+          example: Acme Corp Ltd.
+        type:
+          type: string
+          example: customer
+        created_at:
+          type: string
+          format: date-time
+          example: "2025-01-15T09:00:00Z"
+      required:
+        - id
+        - name
+
+    CustomerCreateRequest:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          maxLength: 255
+          example: Beta Industries
+        email:
+          type: string
+          format: email
+          nullable: true
+          example: info@beta.io
+        phone:
+          type: string
+          nullable: true
+          example: "+1-555-0200"
+        company:
+          type: string
+          nullable: true
+          example: Beta Industries Ltd.
+        type:
+          type: string
+          example: customer
+        notes:
+          type: string
+          nullable: true
+
+    CustomerUpdateRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 255
+        email:
+          type: string
+          format: email
+          nullable: true
+        phone:
+          type: string
+          nullable: true
+        company:
+          type: string
+          nullable: true
+        notes:
+          type: string
+          nullable: true
+
+    # ── Inventory ────────────────────────────────────────
+    StockItem:
+      type: object
+      properties:
+        product_id:
+          type: integer
+          example: 10
+        product_name:
+          type: string
+          example: Wireless Keyboard
+        sku:
+          type: string
+          example: WK-1001
+        stock_quantity:
+          type: number
+          example: 120
+        reorder_point:
+          type: number
+          nullable: true
+          example: 10
+        warehouse:
+          type: string
+          nullable: true
+          example: Main Warehouse
+
+    StockMovement:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 301
+        product_id:
+          type: integer
+          example: 10
+        product_name:
+          type: string
+          example: Wireless Keyboard
+        type:
+          type: string
+          enum: [in, out, adjustment, transfer]
+          example: in
+        quantity:
+          type: number
+          example: 50
+        reference:
+          type: string
+          nullable: true
+          example: PO-0012
+        notes:
+          type: string
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          example: "2025-04-05T14:00:00Z"
+
+    InventoryAdjustRequest:
+      type: object
+      required:
+        - product_id
+        - quantity
+        - type
+      properties:
+        product_id:
+          type: integer
+          example: 10
+        quantity:
+          type: number
+          example: 25
+        type:
+          type: string
+          enum: [in, out, adjustment]
+          example: adjustment
+        notes:
+          type: string
+          nullable: true
+          example: Stocktake correction
+
+    # ── CRM Lead ─────────────────────────────────────────
+    CrmLead:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 88
+        title:
+          type: string
+          example: Enterprise SaaS deal — Acme
+        type:
+          type: string
+          enum: [lead, opportunity]
+          example: opportunity
+        contact_name:
+          type: string
+          nullable: true
+          example: John Doe
+        company_name:
+          type: string
+          nullable: true
+          example: Acme Corp
+        email:
+          type: string
+          format: email
+          nullable: true
+          example: john.doe@acme.com
+        phone:
+          type: string
+          nullable: true
+          example: "+1-555-0199"
+        source:
+          type: string
+          nullable: true
+          example: Website
+        stage:
+          type: object
+          nullable: true
+          properties:
+            id:
+              type: integer
+              example: 2
+            name:
+              type: string
+              example: Qualified
+        expected_revenue:
+          type: number
+          nullable: true
+          example: 50000.00
+        probability:
+          type: number
+          nullable: true
+          example: 60
+        priority:
+          type: string
+          nullable: true
+          example: high
+        status:
+          type: string
+          enum: [open, won, lost]
+          example: open
+        score:
+          type: integer
+          nullable: true
+          example: 72
+        assigned_to:
+          type: integer
+          nullable: true
+          example: 3
+        created_at:
+          type: string
+          format: date-time
+          example: "2025-03-10T10:30:00Z"
+      required:
+        - id
+        - title
+        - type
+        - status
+
+    CrmLeadCreateRequest:
+      type: object
+      required:
+        - title
+      properties:
+        title:
+          type: string
+          maxLength: 255
+          example: New SaaS deal — Beta Inc
+        type:
+          type: string
+          enum: [lead, opportunity]
+          example: lead
+        contact_name:
+          type: string
+          nullable: true
+          example: Alice Brown
+        company_name:
+          type: string
+          nullable: true
+          example: Beta Inc
+        email:
+          type: string
+          format: email
+          nullable: true
+          example: alice@beta.io
+        phone:
+          type: string
+          nullable: true
+          example: "+1-555-0201"
+        source:
+          type: string
+          nullable: true
+          example: Trade Show
+        expected_revenue:
+          type: number
+          minimum: 0
+          nullable: true
+          example: 20000.00
+        probability:
+          type: number
+          minimum: 0
+          maximum: 100
+          nullable: true
+          example: 30
+        priority:
+          type: string
+          nullable: true
+          example: medium
+        stage_id:
+          type: integer
+          nullable: true
+          example: 1
+        assigned_to:
+          type: integer
+          nullable: true
+          example: 3
+        description:
+          type: string
+          nullable: true
+
+    CrmLeadMarkLostRequest:
+      type: object
+      properties:
+        reason:
+          type: string
+          nullable: true
+          example: Budget constraints
+
+    # ── Helpdesk Ticket ──────────────────────────────────
+    Ticket:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 500
+        ticket_number:
+          type: string
+          example: TK-000500
+        subject:
+          type: string
+          example: Cannot export invoices to PDF
+        status:
+          type: string
+          enum: [open, pending, resolved, closed]
+          example: open
+        priority:
+          type: string
+          enum: [low, medium, high, urgent]
+          example: high
+        type:
+          type: string
+          nullable: true
+          example: bug
+        customer_name:
+          type: string
+          nullable: true
+          example: Jane Customer
+        customer_email:
+          type: string
+          format: email
+          nullable: true
+          example: jane@client.com
+        sla_deadline:
+          type: string
+          format: date-time
+          nullable: true
+          example: "2025-04-10T17:00:00Z"
+        first_response_at:
+          type: string
+          format: date-time
+          nullable: true
+          example: "2025-04-08T09:15:00Z"
+        resolved_at:
+          type: string
+          format: date-time
+          nullable: true
+        assignee:
+          type: object
+          nullable: true
+          properties:
+            id:
+              type: integer
+              example: 4
+            name:
+              type: string
+              example: Support Agent
+        created_at:
+          type: string
+          format: date-time
+          example: "2025-04-08T08:00:00Z"
+      required:
+        - id
+        - ticket_number
+        - subject
+        - status
+        - priority
+
+    TicketCreateRequest:
+      type: object
+      required:
+        - subject
+      properties:
+        subject:
+          type: string
+          maxLength: 255
+          example: Login page throws 500 error
+        description:
+          type: string
+          nullable: true
+          example: Steps to reproduce — go to /login and click submit with no password
+        type:
+          type: string
+          nullable: true
+          example: bug
+        priority:
+          type: string
+          enum: [low, medium, high, urgent]
+          example: urgent
+        team_id:
+          type: integer
+          nullable: true
+          example: 1
+        assigned_to:
+          type: integer
+          nullable: true
+          example: 4
+        customer_name:
+          type: string
+          nullable: true
+          example: Bob Customer
+        customer_email:
+          type: string
+          format: email
+          nullable: true
+          example: bob@client.com
+
+    TicketReplyRequest:
+      type: object
+      required:
+        - body
+      properties:
+        body:
+          type: string
+          example: We have reproduced the issue and a fix will be deployed shortly.
+        is_internal:
+          type: boolean
+          example: false
+
+    # ── HR ───────────────────────────────────────────────
+    Employee:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 12
+        name:
+          type: string
+          example: Jane Smith
+        first_name:
+          type: string
+          example: Jane
+        last_name:
+          type: string
+          example: Smith
+        employee_number:
+          type: string
+          example: EMP-0012
+        email:
+          type: string
+          format: email
+          nullable: true
+          example: jane.smith@erp.local
+        phone:
+          type: string
+          nullable: true
+          example: "+1-555-0312"
+        position:
+          type: string
+          nullable: true
+          example: Senior Developer
+        status:
+          type: string
+          enum: [active, on_leave, terminated]
+          example: active
+        department:
+          type: object
+          nullable: true
+          properties:
+            id:
+              type: integer
+              example: 2
+            name:
+              type: string
+              example: Engineering
+        start_date:
+          type: string
+          format: date
+          nullable: true
+          example: "2022-06-01"
+      required:
+        - id
+        - name
+        - employee_number
+
+    EmployeeListItem:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 12
+        name:
+          type: string
+          example: Jane Smith
+        employee_number:
+          type: string
+          example: EMP-0012
+        department:
+          type: string
+          nullable: true
+          example: Engineering
+        position:
+          type: string
+          nullable: true
+          example: Senior Developer
+        status:
+          type: string
+          example: active
+
+    Department:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 2
+        name:
+          type: string
+          example: Engineering
+        employees_count:
+          type: integer
+          example: 14
+
+    LeaveRequest:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 77
+        employee:
+          type: object
+          nullable: true
+          properties:
+            id:
+              type: integer
+              example: 12
+            first_name:
+              type: string
+              example: Jane
+            last_name:
+              type: string
+              example: Smith
+            employee_number:
+              type: string
+              example: EMP-0012
+        leave_type:
+          type: string
+          example: annual
+        start_date:
+          type: string
+          format: date
+          example: "2025-05-01"
+        end_date:
+          type: string
+          format: date
+          example: "2025-05-05"
+        status:
+          type: string
+          enum: [pending, approved, rejected, cancelled]
+          example: pending
+        reason:
+          type: string
+          nullable: true
+          example: Family vacation
+
+    # ── Manufacturing ─────────────────────────────────────
+    ManufacturingOrder:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 33
+        mo_number:
+          type: string
+          example: MO-000033
+        product:
+          type: string
+          nullable: true
+          example: Widget A
+        qty_to_produce:
+          type: number
+          example: 500
+        qty_produced:
+          type: number
+          example: 200
+        status:
+          type: string
+          enum: [draft, confirmed, in_progress, done, cancelled]
+          example: in_progress
+        scheduled_date:
+          type: string
+          format: date
+          nullable: true
+          example: "2025-05-15"
+      required:
+        - id
+        - mo_number
+        - status
+
+    ManufacturingOrderDetail:
+      allOf:
+        - $ref: '#/components/schemas/ManufacturingOrder'
+        - type: object
+          properties:
+            product:
+              type: object
+              nullable: true
+              properties:
+                id:
+                  type: integer
+                  example: 10
+                name:
+                  type: string
+                  example: Widget A
+                sku:
+                  type: string
+                  example: WGT-A
+            bom:
+              type: object
+              nullable: true
+              description: Bill of Materials attached to this order
+            components:
+              type: array
+              items:
+                type: object
+                properties:
+                  product:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      sku:
+                        type: string
+                  qty_required:
+                    type: number
+                    example: 10
+
+    ManufacturingStatusRequest:
+      type: object
+      required:
+        - status
+      properties:
+        status:
+          type: string
+          enum: [draft, confirmed, in_progress, done, cancelled]
+          example: done
+
+    BillOfMaterials:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 5
+        product:
+          type: object
+          nullable: true
+          properties:
+            id:
+              type: integer
+              example: 10
+            name:
+              type: string
+              example: Widget A
+            sku:
+              type: string
+              example: WGT-A
+        quantity:
+          type: number
+          example: 1
+        is_active:
+          type: boolean
+          example: true
+        created_at:
+          type: string
+          format: date-time
+          example: "2025-01-10T08:00:00Z"
+
+    # ── POS ──────────────────────────────────────────────
+    PosSession:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 15
+        session_number:
+          type: string
+          example: POS-SES-0015
+        cashier:
+          type: object
+          nullable: true
+          properties:
+            id:
+              type: integer
+              example: 5
+            name:
+              type: string
+              example: Cashier One
+        opened_at:
+          type: string
+          format: date-time
+          example: "2025-04-10T09:00:00Z"
+        closed_at:
+          type: string
+          format: date-time
+          nullable: true
+        status:
+          type: string
+          enum: [open, closed]
+          example: open
+        total_sales:
+          type: number
+          nullable: true
+          example: 1450.00
+
+    PosOrder:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 99
+        order_number:
+          type: string
+          example: POS-ORD-0099
+        session_id:
+          type: integer
+          example: 15
+        total:
+          type: number
+          example: 89.97
+        payment_method:
+          type: string
+          example: cash
+        status:
+          type: string
+          enum: [completed, voided, refunded]
+          example: completed
+        created_at:
+          type: string
+          format: date-time
+          example: "2025-04-10T10:45:00Z"
+        items:
+          type: array
+          items:
+            type: object
+            properties:
+              product_id:
+                type: integer
+                example: 10
+              product_name:
+                type: string
+                example: Wireless Keyboard
+              quantity:
+                type: number
+                example: 1
+              unit_price:
+                type: number
+                example: 49.99
+              discount:
+                type: number
+                example: 0
+              line_total:
+                type: number
+                example: 49.99
+
+    PosOrderCreateRequest:
+      type: object
+      required:
+        - session_id
+        - items
+        - payment_method
+      properties:
+        session_id:
+          type: integer
+          example: 15
+        payment_method:
+          type: string
+          example: cash
+        customer_id:
+          type: integer
+          nullable: true
+          example: 7
+        items:
+          type: array
+          minItems: 1
+          items:
+            type: object
+            required:
+              - product_id
+              - quantity
+              - unit_price
+            properties:
+              product_id:
+                type: integer
+                example: 10
+              quantity:
+                type: number
+                minimum: 0.001
+                example: 2
+              unit_price:
+                type: number
+                minimum: 0
+                example: 49.99
+              discount:
+                type: number
+                minimum: 0
+                example: 0
+
+    # ── Currency ─────────────────────────────────────────
+    Currency:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        code:
+          type: string
+          example: USD
+        name:
+          type: string
+          example: US Dollar
+        symbol:
+          type: string
+          example: "$"
+        exchange_rate:
+          type: number
+          example: 1.0
+        is_base:
+          type: boolean
+          example: true
+
+    CurrencyConvertResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        data:
+          type: object
+          properties:
+            from:
+              type: string
+              example: USD
+            to:
+              type: string
+              example: EUR
+            amount:
+              type: number
+              example: 100
+            converted:
+              type: number
+              example: 92.50
+            rate:
+              type: number
+              example: 0.925
+
+    # ── Dashboard ────────────────────────────────────────
+    DashboardData:
+      type: object
+      properties:
+        revenue_this_month:
+          type: number
+          example: 125000.00
+        outstanding_invoices:
+          type: number
+          example: 38500.00
+        open_tickets:
+          type: integer
+          example: 12
+        active_leads:
+          type: integer
+          example: 47
+        products_low_stock:
+          type: integer
+          example: 5
+        employees_active:
+          type: integer
+          example: 82
+        recent_invoices:
+          type: array
+          items:
+            $ref: '#/components/schemas/Invoice'
+        recent_tickets:
+          type: array
+          items:
+            $ref: '#/components/schemas/Ticket'
+
+# ─────────────────────────────────────────────────────────────
+# Paths
+# ─────────────────────────────────────────────────────────────
+paths:
+
+  # ── Auth ──────────────────────────────────────────────────
+  /auth/login:
+    post:
+      tags: [Auth]
+      summary: Log in and obtain an API token
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+            example:
+              email: admin@demo.erp
+              password: secret123
+      responses:
+        "200":
+          description: Successful login
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+        "401":
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "422":
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+
+  /auth/logout:
+    post:
+      tags: [Auth]
+      summary: Revoke the current Bearer token
+      responses:
+        "200":
+          description: Logged out
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+              example:
+                success: true
+                data:
+                  message: Logged out successfully
+        "401":
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /auth/me:
+    get:
+      tags: [Auth]
+      summary: Return the authenticated user with tenant info
+      responses:
+        "200":
+          description: Current user
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: '#/components/schemas/MeResponse'
+        "401":
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  # ── Dashboard ─────────────────────────────────────────────
+  /dashboard:
+    get:
+      tags: [Dashboard]
+      summary: Aggregated KPI metrics for the authenticated tenant
+      responses:
+        "200":
+          description: Dashboard data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: '#/components/schemas/DashboardData'
+        "401":
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  # ── Products ──────────────────────────────────────────────
+  /products:
+    get:
+      tags: [Products]
+      summary: List products (paginated)
+      parameters:
+        - $ref: '#/components/parameters/PageParam'
+        - $ref: '#/components/parameters/PerPageParam'
+        - name: search
+          in: query
+          description: Filter by name or SKU
+          schema:
+            type: string
+            example: keyboard
+        - name: category_id
+          in: query
+          schema:
+            type: integer
+            example: 3
+        - name: is_active
+          in: query
+          schema:
+            type: boolean
+            example: true
+      responses:
+        "200":
+          description: Paginated product list
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/PaginatedResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Product'
+        "401":
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    post:
+      tags: [Products]
+      summary: Create a new product
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductCreateRequest'
+      responses:
+        "201":
+          description: Product created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: '#/components/schemas/Product'
+        "422":
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+
+  /products/{id}:
+    get:
+      tags: [Products]
+      summary: Retrieve a single product
+      parameters:
+        - $ref: '#/components/parameters/IdPath'
+      responses:
+        "200":
+          description: Product detail
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: '#/components/schemas/Product'
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    put:
+      tags: [Products]
+      summary: Update a product
+      parameters:
+        - $ref: '#/components/parameters/IdPath'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductUpdateRequest'
+      responses:
+        "200":
+          description: Updated product
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: '#/components/schemas/Product'
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "422":
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+
+    delete:
+      tags: [Products]
+      summary: Delete a product
+      parameters:
+        - $ref: '#/components/parameters/IdPath'
+      responses:
+        "200":
+          description: Deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  # ── Invoices ──────────────────────────────────────────────
+  /invoices:
+    get:
+      tags: [Invoices]
+      summary: List invoices (paginated)
+      parameters:
+        - $ref: '#/components/parameters/PageParam'
+        - $ref: '#/components/parameters/PerPageParam'
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [draft, sent, partial, paid, cancelled]
+        - name: customer_id
+          in: query
+          schema:
+            type: integer
+            example: 7
+      responses:
+        "200":
+          description: Paginated invoice list
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/PaginatedResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Invoice'
+        "401":
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    post:
+      tags: [Invoices]
+      summary: Create a new invoice
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InvoiceCreateRequest'
+      responses:
+        "201":
+          description: Invoice created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: '#/components/schemas/InvoiceDetail'
+        "422":
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+
+  /invoices/{id}:
+    get:
+      tags: [Invoices]
+      summary: Retrieve a single invoice with line items
+      parameters:
+        - $ref: '#/components/parameters/IdPath'
+      responses:
+        "200":
+          description: Invoice detail
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: '#/components/schemas/InvoiceDetail'
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    delete:
+      tags: [Invoices]
+      summary: Delete an invoice
+      parameters:
+        - $ref: '#/components/parameters/IdPath'
+      responses:
+        "200":
+          description: Deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /invoices/{id}/status:
+    put:
+      tags: [Invoices]
+      summary: Update invoice status
+      parameters:
+        - $ref: '#/components/parameters/IdPath'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InvoiceStatusRequest'
+      responses:
+        "200":
+          description: Status updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: '#/components/schemas/Invoice'
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "422":
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+
+  # ── Customers ─────────────────────────────────────────────
+  /customers:
+    get:
+      tags: [Customers]
+      summary: List customers (paginated)
+      parameters:
+        - $ref: '#/components/parameters/PageParam'
+        - $ref: '#/components/parameters/PerPageParam'
+        - name: search
+          in: query
+          schema:
+            type: string
+            example: Acme
+      responses:
+        "200":
+          description: Paginated customer list
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/PaginatedResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Customer'
+        "401":
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    post:
+      tags: [Customers]
+      summary: Create a new customer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerCreateRequest'
+      responses:
+        "201":
+          description: Customer created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: '#/components/schemas/Customer'
+        "422":
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+
+  /customers/{id}:
+    get:
+      tags: [Customers]
+      summary: Retrieve a single customer
+      parameters:
+        - $ref: '#/components/parameters/IdPath'
+      responses:
+        "200":
+          description: Customer detail
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: '#/components/schemas/Customer'
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    put:
+      tags: [Customers]
+      summary: Update a customer
+      parameters:
+        - $ref: '#/components/parameters/IdPath'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerUpdateRequest'
+      responses:
+        "200":
+          description: Updated customer
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: '#/components/schemas/Customer'
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    delete:
+      tags: [Customers]
+      summary: Delete a customer
+      parameters:
+        - $ref: '#/components/parameters/IdPath'
+      responses:
+        "200":
+          description: Deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  # ── Inventory ─────────────────────────────────────────────
+  /inventory/stock:
+    get:
+      tags: [Inventory]
+      summary: Current stock levels for all products
+      parameters:
+        - $ref: '#/components/parameters/PageParam'
+        - $ref: '#/components/parameters/PerPageParam'
+        - name: low_stock
+          in: query
+          description: Return only products at or below reorder point
+          schema:
+            type: boolean
+            example: true
+      responses:
+        "200":
+          description: Stock list
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/PaginatedResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/StockItem'
+        "401":
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /inventory/movements:
+    get:
+      tags: [Inventory]
+      summary: Stock movement history
+      parameters:
+        - $ref: '#/components/parameters/PageParam'
+        - $ref: '#/components/parameters/PerPageParam'
+        - name: product_id
+          in: query
+          schema:
+            type: integer
+            example: 10
+        - name: type
+          in: query
+          schema:
+            type: string
+            enum: [in, out, adjustment, transfer]
+      responses:
+        "200":
+          description: Paginated movement list
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/PaginatedResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/StockMovement'
+        "401":
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /inventory/adjust:
+    post:
+      tags: [Inventory]
+      summary: Record a manual stock adjustment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InventoryAdjustRequest'
+      responses:
+        "200":
+          description: Adjustment recorded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        "422":
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+
+  # ── CRM ───────────────────────────────────────────────────
+  /crm/leads:
+    get:
+      tags: [CRM]
+      summary: List CRM leads / opportunities (paginated)
+      parameters:
+        - $ref: '#/components/parameters/PageParam'
+        - $ref: '#/components/parameters/PerPageParam'
+        - name: type
+          in: query
+          schema:
+            type: string
+            enum: [lead, opportunity]
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [open, won, lost]
+        - name: assigned_to
+          in: query
+          schema:
+            type: integer
+            example: 3
+      responses:
+        "200":
+          description: Paginated lead list
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/PaginatedResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/CrmLead'
+        "401":
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    post:
+      tags: [CRM]
+      summary: Create a new lead or opportunity
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CrmLeadCreateRequest'
+      responses:
+        "201":
+          description: Lead created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: '#/components/schemas/CrmLead'
+        "422":
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+
+  /crm/leads/{id}:
+    get:
+      tags: [CRM]
+      summary: Retrieve a single lead with activities
+      parameters:
+        - $ref: '#/components/parameters/IdPath'
+      responses:
+        "200":
+          description: Lead detail
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: '#/components/schemas/CrmLead'
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    put:
+      tags: [CRM]
+      summary: Update a lead
+      parameters:
+        - $ref: '#/components/parameters/IdPath'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CrmLeadCreateRequest'
+      responses:
+        "200":
+          description: Updated lead
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: '#/components/schemas/CrmLead'
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    delete:
+      tags: [CRM]
+      summary: Delete a lead
+      parameters:
+        - $ref: '#/components/parameters/IdPath'
+      responses:
+        "200":
+          description: Deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /crm/leads/{id}/won:
+    post:
+      tags: [CRM]
+      summary: Mark a lead as won
+      parameters:
+        - $ref: '#/components/parameters/IdPath'
+      responses:
+        "200":
+          description: Lead marked won
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: '#/components/schemas/CrmLead'
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /crm/leads/{id}/lost:
+    post:
+      tags: [CRM]
+      summary: Mark a lead as lost
+      parameters:
+        - $ref: '#/components/parameters/IdPath'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CrmLeadMarkLostRequest'
+      responses:
+        "200":
+          description: Lead marked lost
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: '#/components/schemas/CrmLead'
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  # ── Helpdesk ──────────────────────────────────────────────
+  /helpdesk/tickets:
+    get:
+      tags: [Helpdesk]
+      summary: List helpdesk tickets (paginated)
+      parameters:
+        - $ref: '#/components/parameters/PageParam'
+        - $ref: '#/components/parameters/PerPageParam'
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [open, pending, resolved, closed]
+        - name: priority
+          in: query
+          schema:
+            type: string
+            enum: [low, medium, high, urgent]
+        - name: assigned_to
+          in: query
+          schema:
+            type: integer
+            example: 4
+      responses:
+        "200":
+          description: Paginated ticket list
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/PaginatedResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Ticket'
+        "401":
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    post:
+      tags: [Helpdesk]
+      summary: Create a new support ticket
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TicketCreateRequest'
+      responses:
+        "201":
+          description: Ticket created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: '#/components/schemas/Ticket'
+        "422":
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+
+  /helpdesk/tickets/{id}:
+    get:
+      tags: [Helpdesk]
+      summary: Retrieve a ticket with all messages
+      parameters:
+        - $ref: '#/components/parameters/IdPath'
+      responses:
+        "200":
+          description: Ticket detail
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    allOf:
+                      - $ref: '#/components/schemas/Ticket'
+                      - type: object
+                        properties:
+                          messages:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                id:
+                                  type: integer
+                                  example: 801
+                                body:
+                                  type: string
+                                  example: We reproduced the issue.
+                                is_internal:
+                                  type: boolean
+                                  example: false
+                                author:
+                                  type: object
+                                  properties:
+                                    id:
+                                      type: integer
+                                      example: 4
+                                    name:
+                                      type: string
+                                      example: Support Agent
+                                created_at:
+                                  type: string
+                                  format: date-time
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    put:
+      tags: [Helpdesk]
+      summary: Update ticket fields
+      parameters:
+        - $ref: '#/components/parameters/IdPath'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                subject:
+                  type: string
+                priority:
+                  type: string
+                  enum: [low, medium, high, urgent]
+                status:
+                  type: string
+                  enum: [open, pending, resolved, closed]
+                assigned_to:
+                  type: integer
+                  nullable: true
+      responses:
+        "200":
+          description: Updated ticket
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: '#/components/schemas/Ticket'
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    delete:
+      tags: [Helpdesk]
+      summary: Delete a ticket
+      parameters:
+        - $ref: '#/components/parameters/IdPath'
+      responses:
+        "200":
+          description: Deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /helpdesk/tickets/{id}/reply:
+    post:
+      tags: [Helpdesk]
+      summary: Post a reply (or internal note) on a ticket
+      parameters:
+        - $ref: '#/components/parameters/IdPath'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TicketReplyRequest'
+      responses:
+        "201":
+          description: Reply created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 802
+                      body:
+                        type: string
+                        example: The fix has been deployed.
+                      is_internal:
+                        type: boolean
+                        example: false
+                      author_id:
+                        type: integer
+                        example: 4
+                      created_at:
+                        type: string
+                        format: date-time
+        "404":
+          description: Ticket not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /helpdesk/tickets/{id}/resolve:
+    post:
+      tags: [Helpdesk]
+      summary: Mark a ticket as resolved
+      parameters:
+        - $ref: '#/components/parameters/IdPath'
+      responses:
+        "200":
+          description: Ticket resolved
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: '#/components/schemas/Ticket'
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  # ── HR ────────────────────────────────────────────────────
+  /hr/employees:
+    get:
+      tags: [HR]
+      summary: List employees (paginated)
+      parameters:
+        - $ref: '#/components/parameters/PageParam'
+        - $ref: '#/components/parameters/PerPageParam'
+        - name: department_id
+          in: query
+          schema:
+            type: integer
+            example: 2
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [active, on_leave, terminated]
+      responses:
+        "200":
+          description: Paginated employee list
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/PaginatedResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/EmployeeListItem'
+        "401":
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /hr/employees/{id}:
+    get:
+      tags: [HR]
+      summary: Retrieve a single employee with department info
+      parameters:
+        - $ref: '#/components/parameters/IdPath'
+      responses:
+        "200":
+          description: Employee detail
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: '#/components/schemas/Employee'
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /hr/departments:
+    get:
+      tags: [HR]
+      summary: List all departments with employee count
+      responses:
+        "200":
+          description: Department list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Department'
+        "401":
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /hr/leave-requests:
+    get:
+      tags: [HR]
+      summary: List leave requests (paginated)
+      parameters:
+        - $ref: '#/components/parameters/PageParam'
+        - $ref: '#/components/parameters/PerPageParam'
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [pending, approved, rejected, cancelled]
+        - name: employee_id
+          in: query
+          schema:
+            type: integer
+            example: 12
+      responses:
+        "200":
+          description: Paginated leave request list
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/PaginatedResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/LeaveRequest'
+        "401":
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  # ── Manufacturing ─────────────────────────────────────────
+  /manufacturing/orders:
+    get:
+      tags: [Manufacturing]
+      summary: List manufacturing orders (paginated)
+      parameters:
+        - $ref: '#/components/parameters/PageParam'
+        - $ref: '#/components/parameters/PerPageParam'
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [draft, confirmed, in_progress, done, cancelled]
+      responses:
+        "200":
+          description: Paginated manufacturing order list
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/PaginatedResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/ManufacturingOrder'
+        "401":
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /manufacturing/orders/{id}:
+    get:
+      tags: [Manufacturing]
+      summary: Retrieve a manufacturing order with BOM and components
+      parameters:
+        - $ref: '#/components/parameters/IdPath'
+      responses:
+        "200":
+          description: Manufacturing order detail
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: '#/components/schemas/ManufacturingOrderDetail'
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /manufacturing/orders/{id}/status:
+    put:
+      tags: [Manufacturing]
+      summary: Update a manufacturing order status
+      parameters:
+        - $ref: '#/components/parameters/IdPath'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ManufacturingStatusRequest'
+      responses:
+        "200":
+          description: Status updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: '#/components/schemas/ManufacturingOrder'
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "422":
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+
+  /manufacturing/boms:
+    get:
+      tags: [Manufacturing]
+      summary: List bills of materials (paginated)
+      parameters:
+        - $ref: '#/components/parameters/PageParam'
+        - $ref: '#/components/parameters/PerPageParam'
+      responses:
+        "200":
+          description: Paginated BOM list
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/PaginatedResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/BillOfMaterials'
+        "401":
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  # ── POS ───────────────────────────────────────────────────
+  /pos/sessions:
+    get:
+      tags: [POS]
+      summary: List POS sessions (paginated)
+      parameters:
+        - $ref: '#/components/parameters/PageParam'
+        - $ref: '#/components/parameters/PerPageParam'
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [open, closed]
+      responses:
+        "200":
+          description: Paginated session list
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/PaginatedResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/PosSession'
+        "401":
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /pos/orders:
+    post:
+      tags: [POS]
+      summary: Create a new POS sale order
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PosOrderCreateRequest'
+      responses:
+        "201":
+          description: POS order created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: '#/components/schemas/PosOrder'
+        "422":
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+
+  /pos/orders/{id}:
+    get:
+      tags: [POS]
+      summary: Retrieve a POS order with line items
+      parameters:
+        - $ref: '#/components/parameters/IdPath'
+      responses:
+        "200":
+          description: POS order detail
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: '#/components/schemas/PosOrder'
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  # ── Currencies ────────────────────────────────────────────
+  /currencies:
+    get:
+      tags: [Currencies]
+      summary: List all configured currencies
+      responses:
+        "200":
+          description: Currency list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Currency'
+        "401":
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /currencies/convert:
+    get:
+      tags: [Currencies]
+      summary: Convert an amount between two currencies
+      parameters:
+        - name: from
+          in: query
+          required: true
+          schema:
+            type: string
+            example: USD
+          description: Source currency code
+        - name: to
+          in: query
+          required: true
+          schema:
+            type: string
+            example: EUR
+          description: Target currency code
+        - name: amount
+          in: query
+          required: true
+          schema:
+            type: number
+            example: 100
+          description: Amount to convert
+      responses:
+        "200":
+          description: Conversion result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CurrencyConvertResponse'
+        "422":
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'

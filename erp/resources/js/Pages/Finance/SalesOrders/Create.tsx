@@ -1,0 +1,248 @@
+import { Head, router } from '@inertiajs/react';
+import { useState } from 'react';
+import AppLayout from '@/Layouts/AppLayout';
+import { Button } from '@/Components/Common/Button';
+import type { PageProps } from '@/types';
+import type { Contact } from '@/types/finance';
+
+interface ProductOption {
+    id: number;
+    name: string;
+    sku: string;
+    sale_price: number | string;
+}
+
+interface Props extends PageProps {
+    contacts: Pick<Contact, 'id' | 'name'>[];
+    warehouses: { id: number; name: string }[];
+    products: ProductOption[];
+}
+
+interface LineItem {
+    product_id: string;
+    description: string;
+    quantity: string;
+    unit_price: string;
+    tax_rate: string;
+}
+
+const emptyItem = (): LineItem => ({ product_id: '', description: '', quantity: '1', unit_price: '', tax_rate: '0' });
+
+export default function SalesOrderCreate({ contacts, warehouses, products }: Props) {
+    const [form, setForm] = useState({
+        contact_id: '' as number | '',
+        warehouse_id: '' as number | '',
+        order_date: new Date().toISOString().slice(0, 10),
+        expected_date: '',
+        notes: '',
+    });
+    const [items, setItems] = useState<LineItem[]>([emptyItem()]);
+    const [processing, setProcessing] = useState(false);
+
+    function updateItem(i: number, field: keyof LineItem, value: string) {
+        const next = [...items];
+        next[i] = { ...next[i], [field]: value };
+        setItems(next);
+    }
+
+    function selectProduct(i: number, productId: string) {
+        const next = [...items];
+        const product = products.find((p) => String(p.id) === productId);
+        next[i] = {
+            ...next[i],
+            product_id: productId,
+            description: product ? product.name : next[i].description,
+            unit_price: product ? String(product.sale_price) : next[i].unit_price,
+        };
+        setItems(next);
+    }
+
+    function addItem() {
+        setItems([...items, emptyItem()]);
+    }
+
+    function removeItem(i: number) {
+        if (items.length <= 1) return;
+        setItems(items.filter((_, idx) => idx !== i));
+    }
+
+    function lineTotal(item: LineItem) {
+        const qty = parseFloat(item.quantity) || 0;
+        const price = parseFloat(item.unit_price) || 0;
+        const sub = qty * price;
+        const tax = sub * ((parseFloat(item.tax_rate) || 0) / 100);
+        return sub + tax;
+    }
+
+    const subtotal = items.reduce((s, i) => {
+        const qty = parseFloat(i.quantity) || 0;
+        const price = parseFloat(i.unit_price) || 0;
+        return s + qty * price;
+    }, 0);
+
+    const taxTotal = items.reduce((s, i) => {
+        const qty = parseFloat(i.quantity) || 0;
+        const price = parseFloat(i.unit_price) || 0;
+        const sub = qty * price;
+        return s + sub * ((parseFloat(i.tax_rate) || 0) / 100);
+    }, 0);
+
+    const grandTotal = subtotal + taxTotal;
+
+    function submit(e: React.FormEvent) {
+        e.preventDefault();
+        setProcessing(true);
+        router.post('/finance/sales-orders', {
+            ...form,
+            contact_id: form.contact_id || null,
+            warehouse_id: form.warehouse_id || null,
+            items: items.map((i) => ({
+                product_id:  i.product_id ? Number(i.product_id) : null,
+                description: i.description,
+                quantity:    parseFloat(i.quantity) || 0,
+                unit_price:  parseFloat(i.unit_price) || 0,
+                tax_rate:    parseFloat(i.tax_rate) || 0,
+            })),
+        } as any, { onFinish: () => setProcessing(false) });
+    }
+
+    return (
+        <AppLayout>
+            <Head title="New Sales Order" />
+            <div className="mx-auto max-w-4xl space-y-6">
+                <h1 className="text-2xl font-semibold text-slate-900">New Sales Order</h1>
+                <form onSubmit={submit} className="space-y-6">
+                    {/* Header */}
+                    <div className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm">
+                        <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+                            <div className="sm:col-span-2">
+                                <label className="block text-sm font-medium text-slate-700 mb-1">Customer</label>
+                                <select value={form.contact_id}
+                                    onChange={(e) => setForm({ ...form, contact_id: e.target.value ? Number(e.target.value) : '' })}
+                                    className="w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none">
+                                    <option value="">No customer</option>
+                                    {contacts.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
+                                </select>
+                            </div>
+                            <div className="sm:col-span-2">
+                                <label className="block text-sm font-medium text-slate-700 mb-1">Warehouse</label>
+                                <select value={form.warehouse_id}
+                                    onChange={(e) => setForm({ ...form, warehouse_id: e.target.value ? Number(e.target.value) : '' })}
+                                    className="w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none">
+                                    <option value="">No warehouse</option>
+                                    {warehouses.map((w) => <option key={w.id} value={w.id}>{w.name}</option>)}
+                                </select>
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-slate-700 mb-1">Order Date <span className="text-red-500">*</span></label>
+                                <input type="date" value={form.order_date}
+                                    onChange={(e) => setForm({ ...form, order_date: e.target.value })}
+                                    className="w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none" />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-slate-700 mb-1">Expected Date</label>
+                                <input type="date" value={form.expected_date}
+                                    onChange={(e) => setForm({ ...form, expected_date: e.target.value })}
+                                    className="w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none" />
+                            </div>
+                            <div className="sm:col-span-4">
+                                <label className="block text-sm font-medium text-slate-700 mb-1">Notes</label>
+                                <textarea value={form.notes} onChange={(e) => setForm({ ...form, notes: e.target.value })} rows={2}
+                                    className="w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none" />
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Line items */}
+                    <div className="rounded-lg border border-slate-200 bg-white shadow-sm overflow-hidden">
+                        <div className="border-b border-slate-200 bg-slate-50 px-6 py-3">
+                            <h2 className="text-sm font-medium text-slate-700">Line Items</h2>
+                        </div>
+                        <table className="w-full text-sm">
+                            <thead className="bg-slate-50 text-xs text-slate-500 uppercase">
+                                <tr>
+                                    <th className="px-4 py-2 text-left font-medium w-44">Product</th>
+                                    <th className="px-4 py-2 text-left font-medium">Description</th>
+                                    <th className="px-4 py-2 text-right font-medium w-20">Qty</th>
+                                    <th className="px-4 py-2 text-right font-medium w-28">Unit Price</th>
+                                    <th className="px-4 py-2 text-right font-medium w-20">Tax %</th>
+                                    <th className="px-4 py-2 text-right font-medium w-28">Total</th>
+                                    <th className="px-2 py-2 w-8"></th>
+                                </tr>
+                            </thead>
+                            <tbody className="divide-y divide-slate-100">
+                                {items.map((item, i) => (
+                                    <tr key={i}>
+                                        <td className="px-4 py-2">
+                                            <select value={item.product_id} onChange={(e) => selectProduct(i, e.target.value)}
+                                                className="w-full rounded border border-slate-300 px-2 py-1 text-sm focus:border-indigo-500 focus:outline-none">
+                                                <option value="">Free text</option>
+                                                {products.map((p) => <option key={p.id} value={p.id}>{p.name} ({p.sku})</option>)}
+                                            </select>
+                                        </td>
+                                        <td className="px-4 py-2">
+                                            <input value={item.description} onChange={(e) => updateItem(i, 'description', e.target.value)}
+                                                placeholder="Description…"
+                                                className="w-full rounded border border-slate-300 px-2 py-1 text-sm focus:border-indigo-500 focus:outline-none" />
+                                        </td>
+                                        <td className="px-4 py-2">
+                                            <input type="number" min="0.01" step="0.01" value={item.quantity}
+                                                onChange={(e) => updateItem(i, 'quantity', e.target.value)}
+                                                className="w-full rounded border border-slate-300 px-2 py-1 text-right text-sm focus:border-indigo-500 focus:outline-none" />
+                                        </td>
+                                        <td className="px-4 py-2">
+                                            <input type="number" min="0" step="0.01" value={item.unit_price}
+                                                onChange={(e) => updateItem(i, 'unit_price', e.target.value)}
+                                                className="w-full rounded border border-slate-300 px-2 py-1 text-right text-sm focus:border-indigo-500 focus:outline-none" />
+                                        </td>
+                                        <td className="px-4 py-2">
+                                            <input type="number" min="0" max="100" step="0.1" value={item.tax_rate}
+                                                onChange={(e) => updateItem(i, 'tax_rate', e.target.value)}
+                                                className="w-full rounded border border-slate-300 px-2 py-1 text-right text-sm focus:border-indigo-500 focus:outline-none" />
+                                        </td>
+                                        <td className="px-4 py-2 text-right font-medium">{lineTotal(item).toFixed(2)}</td>
+                                        <td className="px-2 py-2">
+                                            <button type="button" onClick={() => removeItem(i)}
+                                                disabled={items.length <= 1}
+                                                className="text-slate-400 hover:text-red-500 disabled:opacity-30">✕</button>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                            <tfoot className="bg-slate-50 border-t border-slate-200">
+                                <tr>
+                                    <td colSpan={5} className="px-4 py-2">
+                                        <button type="button" onClick={addItem}
+                                            className="text-sm text-indigo-600 hover:text-indigo-800">+ Add item</button>
+                                    </td>
+                                    <td className="px-4 py-2 text-right text-slate-500 text-sm">Subtotal</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td colSpan={5}></td>
+                                    <td className="px-4 py-1 text-right text-slate-500 text-sm">{subtotal.toFixed(2)}</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td colSpan={5} className="px-4 py-1 text-right text-slate-500 text-sm">Tax</td>
+                                    <td className="px-4 py-1 text-right text-slate-500 text-sm">{taxTotal.toFixed(2)}</td>
+                                    <td></td>
+                                </tr>
+                                <tr className="border-t border-slate-200">
+                                    <td colSpan={5} className="px-4 py-2 text-right font-semibold text-slate-900">Total</td>
+                                    <td className="px-4 py-2 text-right font-semibold text-slate-900">{grandTotal.toFixed(2)}</td>
+                                    <td></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+
+                    <div className="flex justify-end gap-3">
+                        <Button type="button" variant="secondary" onClick={() => history.back()}>Cancel</Button>
+                        <Button type="submit" disabled={processing}>Create Sales Order</Button>
+                    </div>
+                </form>
+            </div>
+        </AppLayout>
+    );
+}
