@@ -1,0 +1,56 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: internship-mongo
+    ports:
+      - '27017:27017'
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - internship-network
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: internship-backend
+    ports:
+      - '5000:5000'
+    environment:
+      MONGODB_URI: mongodb://admin:password@mongodb:27017/internship-training
+      PORT: 5000
+      NODE_ENV: development
+      JWT_SECRET: your_jwt_secret_key_change_in_production
+      JWT_EXPIRATION: 7d
+      CORS_ORIGIN: http://localhost:3000
+    depends_on:
+      - mongodb
+    networks:
+      - internship-network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: internship-frontend
+    ports:
+      - '3000:3000'
+    environment:
+      REACT_APP_API_URL: http://localhost:5000/api
+      REACT_APP_ENV: development
+    depends_on:
+      - backend
+    networks:
+      - internship-network
+
+volumes:
+  mongodb_data:
+
+networks:
+  internship-network:
+    driver: bridge

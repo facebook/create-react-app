@@ -1,0 +1,50 @@
+{
+  "name": "internship-training-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.10.0",
+    "axios": "^1.4.0",
+    "react-icons": "^4.8.0",
+    "react-player": "^2.11.0",
+    "react-hook-form": "^7.43.0",
+    "@hookform/resolvers": "^3.1.0",
+    "zod": "^3.21.4",
+    "clsx": "^1.2.1",
+    "date-fns": "^2.29.3"
+  },
+  "devDependencies": {
+    "react-scripts": "5.0.1",
+    "typescript": "^5.0.0",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "tailwindcss": "^3.3.0",
+    "autoprefixer": "^10.4.14",
+    "postcss": "^8.4.24"
+  },
+  "scripts": {
+    "dev": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
