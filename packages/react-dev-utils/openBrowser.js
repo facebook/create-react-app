@@ -9,6 +9,7 @@
 
 var chalk = require('chalk');
 var execSync = require('child_process').execSync;
+var execFileSync = require('child_process').execFileSync;
 var spawn = require('cross-spawn');
 var open = require('open');
 
@@ -91,12 +92,9 @@ function startBrowserProcess(browser, url, args) {
         // Try our best to reuse existing tab
         // on OSX Chromium-based browser with AppleScript
         execSync('ps cax | grep "' + chromiumBrowser + '"');
-        execSync(
-          'osascript openChrome.applescript "' +
-            encodeURI(url) +
-            '" "' +
-            chromiumBrowser +
-            '"',
+        execFileSync(
+          'osascript',
+          ['openChrome.applescript', encodeURI(url), chromiumBrowser],
           {
             cwd: __dirname,
             stdio: 'ignore',
