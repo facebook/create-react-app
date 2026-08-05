@@ -1,0 +1,7 @@
+export { LoginPage } from './auth/LoginPage'
+export { DashboardPage } from './dashboard/DashboardPage'
+export { QuotationsPage } from './quotations/QuotationsPage'
+export { ClientsPage } from './clients/ClientsPage'
+export { ProductsPage } from './products/ProductsPage'
+export { SettingsPage } from './settings/SettingsPage'
+export { NotFoundPage } from './NotFoundPage'
