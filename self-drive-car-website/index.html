@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nova Drive — Autonomous Vehicles</title>
+  <meta name="description" content="Nova Drive builds self-driving cars that see further, think faster, and get you home safer." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚗</text></svg>" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header class="navbar" id="navbar">
+    <div class="container navbar-inner">
+      <a href="#" class="logo">
+        <span class="logo-mark">◎</span> Nova Drive
+      </a>
+      <nav class="nav-links" id="navLinks">
+        <a href="#features">Features</a>
+        <a href="#how-it-works">How It Works</a>
+        <a href="#specs">Specs</a>
+        <a href="#safety">Safety</a>
+        <a href="#testimonials">Testimonials</a>
+        <a href="#contact" class="btn btn-primary btn-sm">Book a Demo</a>
+      </nav>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-bg" aria-hidden="true">
+      <div class="road"></div>
+      <div class="grid-overlay"></div>
+    </div>
+    <div class="container hero-inner">
+      <p class="eyebrow">Level 4 Autonomous Driving</p>
+      <h1>The road drives itself.<br />You just arrive.</h1>
+      <p class="hero-sub">
+        Nova Drive combines lidar, radar, and neural vision to deliver a self-driving
+        experience that's smoother, safer, and smarter than any human behind the wheel.
+      </p>
+      <div class="hero-actions">
+        <a href="#contact" class="btn btn-primary btn-lg">Book a Demo Ride</a>
+        <a href="#how-it-works" class="btn btn-ghost btn-lg">See How It Works ↓</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat">
+          <span class="stat-num" data-count="12">0</span><span class="stat-suffix">M+</span>
+          <span class="stat-label">Autonomous Miles</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num" data-count="99">0</span><span class="stat-suffix">.8%</span>
+          <span class="stat-label">Ride Safety Score</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num" data-count="40">0</span><span class="stat-suffix">+</span>
+          <span class="stat-label">Cities Mapped</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Logos strip -->
+  <section class="strip">
+    <div class="container strip-inner">
+      <p>Trusted by fleets and partners worldwide</p>
+      <div class="strip-logos">
+        <span>METRO FLEET</span>
+        <span>URBANLINK</span>
+        <span>SWIFTHAUL</span>
+        <span>GRIDWAY</span>
+        <span>CIVITAS</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="section" id="features">
+    <div class="container">
+      <p class="eyebrow center">Why Nova Drive</p>
+      <h2 class="section-title center">Engineered for total awareness</h2>
+      <p class="section-sub center">
+        A full sensor suite fused with real-time AI means Nova Drive sees around corners,
+        predicts pedestrian intent, and reacts in milliseconds.
+      </p>
+
+      <div class="grid grid-3 features-grid">
+        <div class="card feature-card">
+          <div class="icon-badge">🛰️</div>
+          <h3>360° Sensor Fusion</h3>
+          <p>Lidar, radar, and 12 HD cameras combine into a single live model of the world, updated 30 times a second.</p>
+        </div>
+        <div class="card feature-card">
+          <div class="icon-badge">🧠</div>
+          <h3>Predictive Neural Net</h3>
+          <p>Our driving model anticipates the next move of every car, cyclist, and pedestrian nearby — not just what they're doing now.</p>
+        </div>
+        <div class="card feature-card">
+          <div class="icon-badge">🛡️</div>
+          <h3>Redundant Safety Systems</h3>
+          <p>Dual compute units, backup braking, and independent power mean one failure never becomes an incident.</p>
+        </div>
+        <div class="card feature-card">
+          <div class="icon-badge">🌦️</div>
+          <h3>All-Weather Confidence</h3>
+          <p>Trained on billions of miles of rain, snow, fog, and glare so performance doesn't drop when the weather does.</p>
+        </div>
+        <div class="card feature-card">
+          <div class="icon-badge">🔄</div>
+          <h3>Over-the-Air Learning</h3>
+          <p>Every fleet vehicle contributes driving data back to the model — the whole fleet gets smarter every night.</p>
+        </div>
+        <div class="card feature-card">
+          <div class="icon-badge">🗺️</div>
+          <h3>Live HD Mapping</h3>
+          <p>Centimeter-accurate maps refresh continuously, so road work and detours are known before you get there.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section class="section section-alt" id="how-it-works">
+    <div class="container">
+      <p class="eyebrow center">The Journey</p>
+      <h2 class="section-title center">From pickup to drop-off, fully autonomous</h2>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">01</div>
+          <h3>Request a Ride</h3>
+          <p>Set your destination in the app. Nova Drive calculates the safest, fastest route in real time.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">02</div>
+          <h3>Vehicle Arrives</h3>
+          <p>Your Nova Drive vehicle navigates traffic, lights, and pedestrians to reach you — no driver required.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">03</div>
+          <h3>Sit Back & Ride</h3>
+          <p>Watch the live sensor view on the in-cabin display or just relax — the car handles every decision.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">04</div>
+          <h3>Arrive Safely</h3>
+          <p>Precision drop-off at your exact destination, with a full trip summary and safety report.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Specs -->
+  <section class="section" id="specs">
+    <div class="container specs-layout">
+      <div class="specs-copy">
+        <p class="eyebrow">Under the Hood</p>
+        <h2 class="section-title">Built on the Nova Autonomy Stack</h2>
+        <p class="section-sub">
+          Every Nova Drive vehicle ships with the same core platform — a tightly integrated
+          stack of sensors, compute, and software validated across millions of real-world miles.
+        </p>
+        <ul class="specs-list">
+          <li><span>Sensor Suite</span><strong>5x Lidar · 8x Radar · 12x HD Camera</strong></li>
+          <li><span>Compute</span><strong>2x redundant AI processors, 1,000+ TOPS</strong></li>
+          <li><span>Range</span><strong>Up to 320 mi / charge</strong></li>
+          <li><span>Autonomy Level</span><strong>SAE Level 4 (driverless in mapped zones)</strong></li>
+          <li><span>Reaction Time</span><strong>&lt; 100 ms hazard response</strong></li>
+          <li><span>Software Updates</span><strong>Continuous over-the-air</strong></li>
+        </ul>
+      </div>
+      <div class="specs-visual" aria-hidden="true">
+        <div class="car-diagram">
+          <div class="car-shape"></div>
+          <span class="sensor-point p1"><i></i>Lidar Array</span>
+          <span class="sensor-point p2"><i></i>Radar Cluster</span>
+          <span class="sensor-point p3"><i></i>HD Camera Ring</span>
+          <span class="sensor-point p4"><i></i>Compute Core</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Safety -->
+  <section class="section section-dark" id="safety">
+    <div class="container">
+      <p class="eyebrow center light">Safety First, Always</p>
+      <h2 class="section-title center light">Safety isn't a feature. It's the foundation.</h2>
+      <div class="grid grid-4 safety-grid">
+        <div class="safety-item">
+          <span class="safety-num">10x</span>
+          <p>Fewer incidents per mile than the national human-driving average</p>
+        </div>
+        <div class="safety-item">
+          <span class="safety-num">24/7</span>
+          <p>Remote safety monitoring across the entire active fleet</p>
+        </div>
+        <div class="safety-item">
+          <span class="safety-num">100%</span>
+          <p>Independent third-party audited crash simulation testing</p>
+        </div>
+        <div class="safety-item">
+          <span class="safety-num">0</span>
+          <p>Compromises on redundant braking &amp; steering systems</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="section" id="testimonials">
+    <div class="container">
+      <p class="eyebrow center">Riders Love It</p>
+      <h2 class="section-title center">Don't just take our word for it</h2>
+
+      <div class="grid grid-3 testimonial-grid">
+        <div class="card testimonial-card">
+          <p>"I was skeptical the first ride. By the third, I trusted it more than my own driving in rush hour."</p>
+          <div class="testimonial-author">
+            <div class="avatar">AM</div>
+            <div><strong>Amara M.</strong><span>Daily Commuter</span></div>
+          </div>
+        </div>
+        <div class="card testimonial-card">
+          <p>"Our delivery fleet cut incident reports to nearly zero after switching to Nova Drive vehicles."</p>
+          <div class="testimonial-author">
+            <div class="avatar">JT</div>
+            <div><strong>James T.</strong><span>Fleet Operations Lead</span></div>
+          </div>
+        </div>
+        <div class="card testimonial-card">
+          <p>"The smoothest ride I've had in any car, autonomous or not. It drives like it's been doing this for decades."</p>
+          <div class="testimonial-author">
+            <div class="avatar">SK</div>
+            <div><strong>Sofia K.</strong><span>Product Designer</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA / Contact -->
+  <section class="cta" id="contact">
+    <div class="container cta-inner">
+      <div class="cta-copy">
+        <h2>Ready to experience the future of driving?</h2>
+        <p>Book a free demo ride in your city and feel what Level 4 autonomy is like from the inside.</p>
+      </div>
+      <form class="cta-form" id="demoForm">
+        <div class="form-row">
+          <input type="text" placeholder="Full name" required aria-label="Full name" />
+          <input type="email" placeholder="Email address" required aria-label="Email address" />
+        </div>
+        <div class="form-row">
+          <input type="text" placeholder="City" required aria-label="City" />
+        </div>
+        <button type="submit" class="btn btn-primary btn-lg btn-block">Request My Demo Ride</button>
+        <p class="form-note" id="formNote" role="status"></p>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <a href="#" class="logo"><span class="logo-mark">◎</span> Nova Drive</a>
+        <p>Autonomous vehicles for a safer, calmer commute.</p>
+      </div>
+      <div class="footer-cols">
+        <div>
+          <h4>Product</h4>
+          <a href="#features">Features</a>
+          <a href="#specs">Technology</a>
+          <a href="#safety">Safety</a>
+        </div>
+        <div>
+          <h4>Company</h4>
+          <a href="#testimonials">Riders</a>
+          <a href="#contact">Contact</a>
+          <a href="#">Careers</a>
+        </div>
+        <div>
+          <h4>Legal</h4>
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+          <a href="#">Safety Reports</a>
+        </div>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <p>© <span id="year"></span> Nova Drive. All rights reserved. Concept demo site.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin — Nitesha Cars</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔐</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+
+  <!-- ===== Login screen ===== -->
+  <div class="login-screen" id="loginScreen">
+    <div class="login-card">
+      <div class="login-logo"><span class="logo-mark"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12.5l1.4-4.2A2 2 0 0 1 6.3 7h11.4a2 2 0 0 1 1.9 1.3L21 12.5"/><rect x="2.5" y="12.5" width="19" height="5" rx="1.5"/><circle cx="7" cy="18" r="1.4" fill="#fff" stroke="none"/><circle cx="17" cy="18" r="1.4" fill="#fff" stroke="none"/></svg></span> Nitesha Cars</div>
+      <h1>Admin Login</h1>
+      <p class="login-note">Demo login — this protects nothing on a real server. See the note at the bottom of this page.</p>
+      <form id="loginForm">
+        <label for="loginPassword">Password</label>
+        <input type="password" id="loginPassword" placeholder="Enter admin password" autocomplete="current-password" required />
+        <p class="login-error" id="loginError"></p>
+        <button type="submit" class="btn btn-primary btn-block">Log In</button>
+      </form>
+      <p class="login-hint">Demo password: <code>nitesha2026</code></p>
+      <a href="index.html" class="back-link">← Back to site</a>
+    </div>
+  </div>
+
+  <!-- ===== Dashboard ===== -->
+  <div class="dashboard" id="dashboard" hidden>
+    <header class="admin-header">
+      <div class="admin-header-inner">
+        <span class="logo"><span class="logo-mark"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12.5l1.4-4.2A2 2 0 0 1 6.3 7h11.4a2 2 0 0 1 1.9 1.3L21 12.5"/><rect x="2.5" y="12.5" width="19" height="5" rx="1.5"/><circle cx="7" cy="18" r="1.4" fill="#fff" stroke="none"/><circle cx="17" cy="18" r="1.4" fill="#fff" stroke="none"/></svg></span> Nitesha Cars <span class="admin-tag">Admin</span></span>
+        <div class="admin-header-actions">
+          <a href="index.html" target="_blank" class="btn btn-outline btn-sm">View Site ↗</a>
+          <button class="btn btn-ghost btn-sm" id="logoutBtn">Log Out</button>
+        </div>
+      </div>
+    </header>
+
+    <div class="admin-body">
+      <nav class="admin-tabs">
+        <button class="admin-tab active" data-tab="dashboard"><svg class="tab-icon" width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="12" width="4" height="8" rx="1"/><rect x="10" y="4" width="4" height="16" rx="1"/><rect x="17" y="9" width="4" height="11" rx="1"/></svg> Dashboard</button>
+        <button class="admin-tab" data-tab="bookings"><svg class="tab-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="4" width="14" height="17" rx="2"/><rect x="8.5" y="2" width="7" height="4" rx="1"/><line x1="8" y1="11" x2="16" y2="11"/><line x1="8" y1="15" x2="16" y2="15"/></svg> Bookings <span class="tab-count" id="bookingCount"></span></button>
+        <button class="admin-tab" data-tab="cars"><svg class="tab-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13l1.4-4.2A2 2 0 0 1 6.3 7.5h11.4a2 2 0 0 1 1.9 1.3L21 13"/><rect x="2.5" y="13" width="19" height="5" rx="1.5"/><circle cx="7" cy="18.5" r="1.4"/><circle cx="17" cy="18.5" r="1.4"/></svg> Vehicles</button>
+        <button class="admin-tab" data-tab="inquiries"><svg class="tab-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h5l1.5 3h5L16 12h5"/><path d="M5.5 5h13l2.5 7v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7l2.5-7z"/></svg> Inquiries <span class="tab-count" id="inquiryCount"></span></button>
+        <button class="admin-tab" data-tab="finance"><svg class="tab-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/><circle cx="16.5" cy="14.5" r="1"/></svg> Finance</button>
+        <button class="admin-tab" data-tab="reports"><svg class="tab-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg> Reports</button>
+      </nav>
+
+      <!-- Dashboard tab -->
+      <section class="admin-panel" id="panel-dashboard">
+        <div class="panel-header">
+          <div>
+            <h2>Overview</h2>
+            <p>A snapshot of your fleet, inquiries, and finances.</p>
+          </div>
+        </div>
+
+        <div class="stat-grid">
+          <div class="stat-card">
+            <span class="stat-label">Cars Listed</span>
+            <span class="stat-value" id="statCarCount">0</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">Booking Inquiries</span>
+            <span class="stat-value" id="statInquiryCount">0</span>
+          </div>
+          <div class="stat-card stat-card-income">
+            <span class="stat-label">Total Income</span>
+            <span class="stat-value" id="statIncome">₹0</span>
+          </div>
+          <div class="stat-card stat-card-expense">
+            <span class="stat-label">Total Expenses</span>
+            <span class="stat-value" id="statExpense">₹0</span>
+          </div>
+          <div class="stat-card stat-card-balance">
+            <span class="stat-label">Net Balance</span>
+            <span class="stat-value" id="statBalance">₹0</span>
+          </div>
+        </div>
+
+        <div class="dashboard-cols">
+          <div class="dashboard-col">
+            <h3>Recent Inquiries</h3>
+            <div id="recentInquiries"></div>
+          </div>
+          <div class="dashboard-col">
+            <h3>Recent Transactions</h3>
+            <div id="recentTransactions"></div>
+          </div>
+        </div>
+
+        <h3 class="dashboard-subheading">Rental Overview</h3>
+        <div class="stat-grid stat-grid-4" id="rentalStatGrid">
+          <div class="stat-card"><span class="stat-label">Today's Bookings</span><span class="stat-value" id="statTodayBookings">0</span></div>
+          <div class="stat-card"><span class="stat-label">Active Rentals</span><span class="stat-value" id="statActiveRentals">0</span></div>
+          <div class="stat-card"><span class="stat-label">Upcoming Bookings</span><span class="stat-value" id="statUpcomingBookings">0</span></div>
+          <div class="stat-card stat-card-income"><span class="stat-label">Total Rental Revenue</span><span class="stat-value" id="statRentalRevenue">₹0</span></div>
+          <div class="stat-card stat-card-income"><span class="stat-label">Advance Received</span><span class="stat-value" id="statAdvanceReceived">₹0</span></div>
+          <div class="stat-card stat-card-expense"><span class="stat-label">Pending Balance</span><span class="stat-value" id="statPendingBalance">₹0</span></div>
+          <div class="stat-card stat-card-deposit"><span class="stat-label">Security Deposit Held</span><span class="stat-value" id="statDepositHeld">₹0</span></div>
+          <div class="stat-card stat-card-deposit"><span class="stat-label">Security Deposit Refunded</span><span class="stat-value" id="statDepositRefunded">₹0</span></div>
+          <div class="stat-card stat-card-income"><span class="stat-label">Extra KM Revenue</span><span class="stat-value" id="statExtraKmRevenue">₹0</span></div>
+          <div class="stat-card"><span class="stat-label">Total KM Driven</span><span class="stat-value" id="statTotalKm">0</span></div>
+          <div class="stat-card stat-card-expense"><span class="stat-label">Total Expenses</span><span class="stat-value" id="statTotalExpenses">₹0</span></div>
+          <div class="stat-card stat-card-balance"><span class="stat-label">Net Revenue</span><span class="stat-value" id="statNetRevenue">₹0</span></div>
+        </div>
+
+        <div class="dashboard-col">
+          <h3>Active &amp; Upcoming Rentals</h3>
+          <div id="activeUpcomingBookings"></div>
+        </div>
+      </section>
+
+      <!-- Bookings tab -->
+      <section class="admin-panel" id="panel-bookings" hidden>
+        <div class="panel-header">
+          <div>
+            <h2>Bookings / Rental Management</h2>
+            <p>Create and manage rental bookings, payments, deposits, and vehicle pickup/return.</p>
+          </div>
+          <button class="btn btn-primary" id="addBookingBtn">+ New Booking</button>
+        </div>
+
+        <div class="booking-filters">
+          <button class="filter-chip active" data-status="all">All</button>
+          <button class="filter-chip" data-status="Confirmed">Confirmed</button>
+          <button class="filter-chip" data-status="Active">Active</button>
+          <button class="filter-chip" data-status="Completed">Completed</button>
+          <button class="filter-chip" data-status="Cancelled">Cancelled</button>
+        </div>
+
+        <div id="bookingListWrap"></div>
+      </section>
+
+      <!-- Vehicles tab -->
+      <section class="admin-panel" id="panel-cars" hidden>
+        <div class="panel-header">
+          <div>
+            <h2>Vehicle Management</h2>
+            <p>Fleet, rates, KM limits, and status. Available cars also show in "Popular Rentals" on the public site.</p>
+          </div>
+          <button class="btn btn-primary" id="addCarBtn">+ Add Vehicle</button>
+        </div>
+
+        <div class="car-admin-grid" id="carAdminGrid"></div>
+      </section>
+
+      <!-- Inquiries tab -->
+      <section class="admin-panel" id="panel-inquiries" hidden>
+        <div class="panel-header">
+          <div>
+            <h2>Booking Inquiries</h2>
+            <p>Submissions from the "Request a Callback" form on the public site.</p>
+          </div>
+          <button class="btn btn-outline btn-sm" id="clearInquiriesBtn">Clear All</button>
+        </div>
+
+        <div id="inquiriesWrap"></div>
+      </section>
+
+      <!-- Finance tab -->
+      <section class="admin-panel" id="panel-finance" hidden>
+        <div class="panel-header">
+          <div>
+            <h2>Finance &amp; Accounts</h2>
+            <p>Log booking payments and expenses to track your balance.</p>
+          </div>
+        </div>
+
+        <div class="stat-grid stat-grid-3">
+          <div class="stat-card stat-card-income">
+            <span class="stat-label">Total Income</span>
+            <span class="stat-value" id="financeIncome">₹0</span>
+          </div>
+          <div class="stat-card stat-card-expense">
+            <span class="stat-label">Total Expenses</span>
+            <span class="stat-value" id="financeExpense">₹0</span>
+          </div>
+          <div class="stat-card stat-card-balance">
+            <span class="stat-label">Net Balance</span>
+            <span class="stat-value" id="financeBalance">₹0</span>
+          </div>
+        </div>
+
+        <form class="finance-form" id="financeForm">
+          <div class="field-group">
+            <label for="txnType">Type</label>
+            <select id="txnType" required>
+              <option value="income">Income</option>
+              <option value="expense">Expense</option>
+            </select>
+          </div>
+          <div class="field-group">
+            <label for="txnCategory">Category</label>
+            <select id="txnCategory" required>
+              <option>Booking Payment</option>
+              <option>Fuel</option>
+              <option>Maintenance</option>
+              <option>Insurance</option>
+              <option>Salary</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="field-group">
+            <label for="txnAmount">Amount (₹)</label>
+            <input type="number" id="txnAmount" required min="0" placeholder="1500" />
+          </div>
+          <div class="field-group">
+            <label for="txnVehicle">Vehicle (optional)</label>
+            <select id="txnVehicle"><option value="">General</option></select>
+          </div>
+          <div class="field-group txn-note-group">
+            <label for="txnNote">Note</label>
+            <input type="text" id="txnNote" placeholder="e.g. Swift booking — 3 days" />
+          </div>
+          <button type="submit" class="btn btn-primary">Add Entry</button>
+        </form>
+
+        <div id="transactionsWrap"></div>
+      </section>
+
+      <!-- Reports tab -->
+      <section class="admin-panel" id="panel-reports" hidden>
+        <div class="panel-header">
+          <div>
+            <h2>Reports</h2>
+            <p>Booking, revenue, vehicle, KM, deposit, and payment reports — all computed from your booking records.</p>
+          </div>
+        </div>
+
+        <nav class="report-tabs">
+          <button class="report-tab active" data-report="booking">Booking Report</button>
+          <button class="report-tab" data-report="revenue">Revenue Report</button>
+          <button class="report-tab" data-report="vehicle">Vehicle Report</button>
+          <button class="report-tab" data-report="km">KM Report</button>
+          <button class="report-tab" data-report="deposit">Deposit Report</button>
+          <button class="report-tab" data-report="payment">Payment Report</button>
+        </nav>
+
+        <div class="report-filters" id="reportFilters"></div>
+
+        <div class="report-export-row">
+          <button class="btn btn-outline btn-sm" id="exportCsvBtn"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M5 21h14"/></svg> CSV</button>
+          <button class="btn btn-outline btn-sm" id="exportExcelBtn"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M5 21h14"/></svg> Excel</button>
+          <button class="btn btn-outline btn-sm" id="exportPdfBtn"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V3h12v6"/><rect x="4" y="9" width="16" height="8" rx="1"/><path d="M6 17v4h12v-4"/></svg> Print / PDF</button>
+        </div>
+
+        <div class="report-results" id="reportResults"></div>
+      </section>
+    </div>
+
+    <p class="storage-note">
+      ⚠️ Data here is stored in this browser only (localStorage), for demo/testing. To make edits appear
+      for every visitor on the live site, this needs a real backend (e.g. PHP + MySQL on Hostinger).
+    </p>
+  </div>
+
+  <!-- ===== Car edit/add modal ===== -->
+  <div class="modal-overlay" id="carModalOverlay" hidden>
+    <div class="modal modal-wide">
+      <h3 id="carModalTitle">Add Car</h3>
+      <form id="carForm">
+        <input type="hidden" id="carId" />
+        <div class="modal-row">
+          <div class="field-group">
+            <label for="carBrand">Brand</label>
+            <input type="text" id="carBrand" required placeholder="e.g. Suzuki" />
+          </div>
+          <div class="field-group">
+            <label for="carBodyType">Body Type</label>
+            <select id="carBodyType" required>
+              <option>Hatchback</option>
+              <option>Sedan</option>
+              <option>SUV</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-row modal-row-3">
+          <div class="field-group">
+            <label for="carName">Listing Name</label>
+            <input type="text" id="carName" required placeholder="e.g. Fronx — Brand New 2026" />
+          </div>
+          <div class="field-group">
+            <label for="carRegNumber">Registration Number</label>
+            <input type="text" id="carRegNumber" required placeholder="e.g. KA05AB1234" style="text-transform:uppercase" />
+          </div>
+          <div class="field-group">
+            <label for="carColor">Colour</label>
+            <input type="color" id="carColor" required value="#5B6472" class="color-input" />
+          </div>
+        </div>
+        <div class="modal-row">
+          <div class="field-group">
+            <label for="carFuel">Fuel</label>
+            <select id="carFuel" required>
+              <option>Petrol</option>
+              <option>Diesel</option>
+              <option>Electric</option>
+              <option>CNG</option>
+            </select>
+          </div>
+          <div class="field-group">
+            <label for="carTransmission">Transmission</label>
+            <select id="carTransmission" required>
+              <option>Manual</option>
+              <option>Automatic</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-row modal-row-3">
+          <div class="field-group">
+            <label for="carSeats">Seats</label>
+            <input type="number" id="carSeats" required min="2" max="9" placeholder="5" />
+          </div>
+          <div class="field-group">
+            <label for="carYear">Year</label>
+            <input type="number" id="carYear" required min="2000" max="2030" placeholder="2025" />
+          </div>
+          <div class="field-group">
+            <label for="carStatus">Status</label>
+            <select id="carStatus" required>
+              <option>Available</option>
+              <option>Booked</option>
+              <option>On Rental</option>
+              <option>Maintenance</option>
+              <option>Inactive</option>
+            </select>
+          </div>
+        </div>
+
+        <p class="modal-section-label">Rate Card (₹)</p>
+        <div class="modal-row modal-row-4">
+          <div class="field-group">
+            <label for="carPrice">Daily</label>
+            <input type="number" id="carPrice" required min="0" placeholder="3000" />
+          </div>
+          <div class="field-group">
+            <label for="carPrice7">7-Day</label>
+            <input type="number" id="carPrice7" min="0" placeholder="19000" />
+          </div>
+          <div class="field-group">
+            <label for="carPrice15">15-Day</label>
+            <input type="number" id="carPrice15" min="0" placeholder="36000" />
+          </div>
+          <div class="field-group">
+            <label for="carPrice30">30-Day</label>
+            <input type="number" id="carPrice30" min="0" placeholder="66000" />
+          </div>
+        </div>
+
+        <p class="modal-section-label">KM &amp; Deposit</p>
+        <div class="modal-row modal-row-3">
+          <div class="field-group">
+            <label for="carKmLimit">KM Limit / day</label>
+            <input type="number" id="carKmLimit" required min="0" placeholder="200" />
+          </div>
+          <div class="field-group">
+            <label for="carExtraKmRate">Extra KM Rate (₹)</label>
+            <input type="number" id="carExtraKmRate" required min="0" placeholder="10" />
+          </div>
+          <div class="field-group">
+            <label for="carSecurityDeposit">Security Deposit (₹)</label>
+            <input type="number" id="carSecurityDeposit" required min="0" placeholder="5000" />
+          </div>
+        </div>
+        <div class="field-group">
+          <label for="carCurrentKm">Current Odometer (KM)</label>
+          <input type="number" id="carCurrentKm" required min="0" placeholder="4200" />
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="btn btn-ghost" id="carModalCancel">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Vehicle</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ===== Booking create/edit modal ===== -->
+  <div class="modal-overlay" id="bookingModalOverlay" hidden>
+    <div class="modal modal-wide">
+      <h3 id="bookingModalTitle">New Booking</h3>
+      <p class="booking-number-preview" id="bookingNumberPreview"></p>
+      <form id="bookingForm">
+        <input type="hidden" id="bookingId" />
+
+        <p class="modal-section-label">Customer Details</p>
+        <div class="modal-row">
+          <div class="field-group"><label for="bkCustomerName">Customer Name</label><input type="text" id="bkCustomerName" required placeholder="e.g. Ravi Kumar" /></div>
+          <div class="field-group"><label for="bkPhone">Phone Number</label><input type="tel" id="bkPhone" required placeholder="e.g. 9876543210" /></div>
+        </div>
+        <div class="modal-row">
+          <div class="field-group"><label for="bkAddress">Address</label><input type="text" id="bkAddress" placeholder="e.g. HSR Layout, Bengaluru" /></div>
+          <div class="field-group"><label for="bkLicence">Driving Licence Number</label><input type="text" id="bkLicence" required placeholder="e.g. KA0120230012345" /></div>
+        </div>
+
+        <p class="modal-section-label">Vehicle &amp; Rental Period</p>
+        <div class="modal-row">
+          <div class="field-group"><label for="bkVehicle">Vehicle</label><select id="bkVehicle" required></select></div>
+          <div class="field-group"><label for="bkVehicleReg">Vehicle Registration Number</label><input type="text" id="bkVehicleReg" readonly /></div>
+        </div>
+        <div class="modal-row modal-row-4">
+          <div class="field-group"><label for="bkStartDate">Start Date</label><input type="date" id="bkStartDate" required /></div>
+          <div class="field-group"><label for="bkStartTime">Start Time</label><input type="time" id="bkStartTime" required value="10:00" /></div>
+          <div class="field-group"><label for="bkReturnDate">Return Date</label><input type="date" id="bkReturnDate" required /></div>
+          <div class="field-group"><label for="bkReturnTime">Return Time</label><input type="time" id="bkReturnTime" required value="10:00" /></div>
+        </div>
+        <p class="field-hint">Rental Duration: <strong id="bkDurationPreview">1 day</strong></p>
+        <p class="booking-conflict-error" id="bookingConflictError"></p>
+
+        <p class="modal-section-label">Charges</p>
+        <div class="modal-row modal-row-3">
+          <div class="field-group"><label for="bkRentalAmount">Rental Amount (₹)</label><input type="number" id="bkRentalAmount" required min="0" placeholder="9000" /></div>
+          <div class="field-group"><label for="bkKmLimit">KM Limit / day</label><input type="number" id="bkKmLimit" required min="0" placeholder="200" /></div>
+          <div class="field-group"><label for="bkExtraKmRate">Extra KM Rate (₹)</label><input type="number" id="bkExtraKmRate" required min="0" placeholder="10" /></div>
+        </div>
+        <div class="field-group"><label for="bkNotes">Notes</label><input type="text" id="bkNotes" placeholder="Optional notes about this booking" /></div>
+
+        <div class="modal-actions">
+          <button type="button" class="btn btn-ghost" id="bookingModalCancel">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Booking</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ===== Booking detail modal (populated dynamically) ===== -->
+  <div class="modal-overlay" id="bookingDetailOverlay" hidden>
+    <div class="modal modal-wide modal-tall">
+      <div class="booking-detail-header">
+        <h3 id="bookingDetailTitle">Booking</h3>
+        <button type="button" class="btn btn-ghost btn-sm" id="bookingDetailClose">✕ Close</button>
+      </div>
+      <div id="bookingDetailBody"></div>
+    </div>
+  </div>
+
+  <!-- ===== Payment modal ===== -->
+  <div class="modal-overlay" id="paymentModalOverlay" hidden>
+    <div class="modal">
+      <h3>Add Payment</h3>
+      <form id="paymentForm">
+        <input type="hidden" id="paymentBookingId" />
+        <div class="field-group">
+          <label for="paymentType">Payment Type</label>
+          <select id="paymentType" required>
+            <option value="advance">Advance</option>
+            <option value="balance">Balance</option>
+            <option value="additional">Additional Payment</option>
+            <option value="extra_km">Extra KM</option>
+          </select>
+        </div>
+        <div class="modal-row">
+          <div class="field-group"><label for="paymentAmount">Amount (₹)</label><input type="number" id="paymentAmount" required min="0" placeholder="10000" /></div>
+          <div class="field-group"><label for="paymentDate">Payment Date</label><input type="date" id="paymentDate" required /></div>
+        </div>
+        <div class="modal-row">
+          <div class="field-group">
+            <label for="paymentMethod">Payment Method</label>
+            <select id="paymentMethod" required>
+              <option>Cash</option>
+              <option>UPI</option>
+              <option>Card</option>
+              <option>Bank Transfer</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="field-group"><label for="paymentReference">Transaction / Reference No.</label><input type="text" id="paymentReference" placeholder="e.g. UPI Ref / UTR" /></div>
+        </div>
+        <div class="field-group"><label for="paymentNotes">Notes</label><input type="text" id="paymentNotes" placeholder="Optional" /></div>
+        <div class="field-group">
+          <label for="paymentProof">Payment Screenshot / Receipt</label>
+          <input type="file" id="paymentProof" accept="image/*" />
+          <div class="proof-preview" id="paymentProofPreview"></div>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-ghost" id="paymentModalCancel">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Payment</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ===== Security deposit modal ===== -->
+  <div class="modal-overlay" id="depositModalOverlay" hidden>
+    <div class="modal">
+      <h3>Security Deposit</h3>
+      <form id="depositForm">
+        <input type="hidden" id="depositBookingId" />
+        <div class="modal-row">
+          <div class="field-group"><label for="depositAmount">Deposit Amount (₹)</label><input type="number" id="depositAmount" required min="0" placeholder="5000" /></div>
+          <div class="field-group"><label for="depositDate">Deposit Date</label><input type="date" id="depositDate" required /></div>
+        </div>
+        <div class="modal-row">
+          <div class="field-group">
+            <label for="depositMethod">Payment Method</label>
+            <select id="depositMethod" required>
+              <option>Cash</option>
+              <option>UPI</option>
+              <option>Card</option>
+              <option>Bank Transfer</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="field-group"><label for="depositReference">Reference Number</label><input type="text" id="depositReference" placeholder="Optional" /></div>
+        </div>
+        <div class="field-group"><label for="depositNotes">Notes</label><input type="text" id="depositNotes" placeholder="Optional" /></div>
+        <div class="field-group">
+          <label for="depositProof">Deposit Proof</label>
+          <input type="file" id="depositProof" accept="image/*" />
+          <div class="proof-preview" id="depositProofPreview"></div>
+        </div>
+        <p class="field-hint">This is tracked separately and is <strong>not</strong> counted as rental revenue.</p>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-ghost" id="depositModalCancel">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Deposit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ===== Deposit refund modal ===== -->
+  <div class="modal-overlay" id="refundModalOverlay" hidden>
+    <div class="modal">
+      <h3>Refund Security Deposit</h3>
+      <p class="field-hint">Original Deposit: <strong id="refundOriginalDeposit">₹0</strong></p>
+      <form id="refundForm">
+        <input type="hidden" id="refundBookingId" />
+        <div class="modal-row">
+          <div class="field-group"><label for="refundDeduction">Deduction Amount (₹)</label><input type="number" id="refundDeduction" required min="0" value="0" /></div>
+          <div class="field-group"><label for="refundReason">Deduction Reason</label><input type="text" id="refundReason" placeholder="e.g. Minor scratch" /></div>
+        </div>
+        <p class="field-hint">Refund Amount: <strong id="refundAmountPreview">₹0</strong></p>
+        <div class="modal-row">
+          <div class="field-group"><label for="refundDate">Refund Date</label><input type="date" id="refundDate" required /></div>
+          <div class="field-group">
+            <label for="refundMethod">Refund Method</label>
+            <select id="refundMethod" required>
+              <option>Cash</option>
+              <option>UPI</option>
+              <option>Card</option>
+              <option>Bank Transfer</option>
+              <option>Other</option>
+            </select>
+          </div>
+        </div>
+        <div class="field-group"><label for="refundReference">Refund Reference</label><input type="text" id="refundReference" placeholder="Optional" /></div>
+        <div class="field-group"><label for="refundNotes">Notes</label><input type="text" id="refundNotes" placeholder="Optional" /></div>
+        <div class="field-group">
+          <label for="refundProof">Refund Proof</label>
+          <input type="file" id="refundProof" accept="image/*" />
+          <div class="proof-preview" id="refundProofPreview"></div>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-ghost" id="refundModalCancel">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Refund</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ===== Vehicle pickup modal ===== -->
+  <div class="modal-overlay" id="pickupModalOverlay" hidden>
+    <div class="modal">
+      <h3>Vehicle Pickup</h3>
+      <form id="pickupForm">
+        <input type="hidden" id="pickupBookingId" />
+        <div class="modal-row">
+          <div class="field-group"><label for="pickupDateField">Pickup Date</label><input type="date" id="pickupDateField" required /></div>
+          <div class="field-group"><label for="pickupTimeField">Pickup Time</label><input type="time" id="pickupTimeField" required /></div>
+        </div>
+        <div class="modal-row">
+          <div class="field-group"><label for="pickupStartKm">Starting KM</label><input type="number" id="pickupStartKm" required min="0" placeholder="4200" /></div>
+          <div class="field-group">
+            <label for="pickupFuelLevel">Starting Fuel Level</label>
+            <select id="pickupFuelLevel" required>
+              <option>Full</option>
+              <option>3/4</option>
+              <option>1/2</option>
+              <option>1/4</option>
+              <option>Empty</option>
+            </select>
+          </div>
+        </div>
+        <div class="field-group"><label for="pickupCondition">Vehicle Condition</label><input type="text" id="pickupCondition" placeholder="e.g. Clean, no visible damage" /></div>
+        <div class="field-group"><label for="pickupNotes">Pickup Notes</label><input type="text" id="pickupNotes" placeholder="Optional" /></div>
+        <div class="field-group">
+          <label for="pickupPhotos">Pickup Photos</label>
+          <input type="file" id="pickupPhotos" accept="image/*" multiple />
+          <div class="proof-preview" id="pickupPhotosPreview"></div>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-ghost" id="pickupModalCancel">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Pickup</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ===== Vehicle return modal ===== -->
+  <div class="modal-overlay" id="returnModalOverlay" hidden>
+    <div class="modal">
+      <h3>Vehicle Return</h3>
+      <form id="returnForm">
+        <input type="hidden" id="returnBookingId" />
+        <div class="modal-row">
+          <div class="field-group"><label for="returnDateField">Return Date</label><input type="date" id="returnDateField" required /></div>
+          <div class="field-group"><label for="returnTimeField">Return Time</label><input type="time" id="returnTimeField" required /></div>
+        </div>
+        <div class="modal-row">
+          <div class="field-group"><label for="returnEndKm">Ending KM</label><input type="number" id="returnEndKm" required min="0" placeholder="5800" /></div>
+          <div class="field-group">
+            <label for="returnFuelLevel">Ending Fuel Level</label>
+            <select id="returnFuelLevel" required>
+              <option>Full</option>
+              <option>3/4</option>
+              <option>1/2</option>
+              <option>1/4</option>
+              <option>Empty</option>
+            </select>
+          </div>
+        </div>
+        <div class="field-group"><label for="returnCondition">Return Condition</label><input type="text" id="returnCondition" placeholder="e.g. Minor scratch on rear bumper" /></div>
+        <div class="field-group"><label for="returnNotes">Return Notes</label><input type="text" id="returnNotes" placeholder="Optional" /></div>
+        <div class="field-group">
+          <label for="returnPhotos">Return Photos</label>
+          <input type="file" id="returnPhotos" accept="image/*" multiple />
+          <div class="proof-preview" id="returnPhotosPreview"></div>
+        </div>
+        <p class="field-hint" id="returnKmPreview"></p>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-ghost" id="returnModalCancel">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Return</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="car-data.js"></script>
+  <script src="booking-data.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>
