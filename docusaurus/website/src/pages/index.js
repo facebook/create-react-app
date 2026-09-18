@@ -63,14 +63,14 @@ function Home() {
           <img
             className={clsx(styles.heroBannerLogo, 'margin-vert--md')}
             alt="Create React App logo"
-            src={useBaseUrl('img/logo.svg')}
+            src={useBaseUrl('https://cdn-ikponof.nitrocdn.com/vGqfYAGlOLDkYkJqZhYIYKEsibdbZnkc/assets/images/optimized/rev-f684a87/www.propelleraero.com/wp-content/uploads/2023/05/footer-logo.svg')}
           />
           <h1 className="hero__title">{siteConfig.title}</h1>
           <p className="hero__subtitle">{siteConfig.tagline}</p>
           <div className={styles.getStarted}>
             <Link
               className="button button--outline button--primary button--lg"
-              to={useBaseUrl('docs/getting-started')}
+              to={useBaseUrl('https://www.propelleraero.com/dirtmate/')}
             >
               Get Started
             </Link>
