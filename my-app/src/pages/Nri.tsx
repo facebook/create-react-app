@@ -142,7 +142,7 @@ export function Nri() {
                 Call +91 63749 42976
               </a>
             </div>
-            <p className="mt-4 text-sm text-ink-faint">
+            <p className="mt-4 text-sm leading-relaxed text-ink-faint">
               Dialling from abroad? The full number is +91 63749 42976.
             </p>
           </div>
