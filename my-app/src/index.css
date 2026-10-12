@@ -153,6 +153,28 @@ body {
   font-family: var(--font-sans);
 }
 
+/* One leading for prose, set once.
+
+   Most paragraphs on this site carry `leading-relaxed`, and the ones that did
+   not fell back to the browser's own 1.5 -- so a section intro written with
+   the class and one written without it were set differently, and four
+   sections had been given hand-picked values besides (1.5, 1.55, 1.6, 1.65).
+   Five leadings for the same job is not a decision anybody made; it is what
+   happens when each section is written on its own day.
+
+   In @layer base so `leading-snug` and `leading-tight` still win where a line
+   is deliberately tighter -- the eleven-pixel note under the hero form, and
+   headings. Everything else now starts level without being told to, which is
+   what keeps the next paragraph anyone writes from landing at 1.5 again. */
+@layer base {
+  p,
+  /* A spec value on a car's page wraps to two lines as readily as a sentence
+     does, and sat beside one at a different leading. */
+  dd {
+    line-height: var(--leading-relaxed);
+  }
+}
+
 /* ---------------------------------------------------------------------------
    Motion.
 
@@ -617,11 +639,11 @@ body {
    out at 12.0:1 and the white/80 intro at 8.3:1, both well clear of the 4.5:1
    floor, so the crop can be anything and the page still reads. */
 /* The scrim over a banner photograph.
-   
+
    It was a flat 82-88% navy over the whole band, which kept white type legible
    against any photograph and turned every photograph into a dark rectangle --
    the picture may as well not have been uploaded.
-   
+
    Weighted instead of flat: heavy on the left, where the heading and intro
    sit, clearing across the right where there is nothing to read. The photo is
    visible where it can be, and the type keeps its contrast where it matters.
@@ -962,7 +984,6 @@ body {
 .benefit-body {
   margin-top: 0.5rem;
   font-size: 0.875rem;
-  line-height: 1.55;
   opacity: 0.82;
 }
 
@@ -1123,7 +1144,6 @@ body {
   margin-top: 0.7rem;
   max-width: 38rem;
   font-size: 0.82rem;
-  line-height: 1.6;
   color: var(--color-ink-faint);
 }
 
@@ -1368,7 +1388,6 @@ body {
 .deliver-intro {
   margin-top: 0.9rem;
   max-width: 34rem;
-  line-height: 1.65;
   color: color-mix(in srgb, #fff 78%, transparent);
 }
 
@@ -1615,7 +1634,6 @@ body {
   -webkit-line-clamp: 3;
   overflow: hidden;
   font-size: 0.85rem;
-  line-height: 1.5;
 }
 
 /* ---- A rail of cards ---------------------------------------------------

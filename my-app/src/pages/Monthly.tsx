@@ -130,7 +130,7 @@ export function Monthly() {
                 </li>
               ))}
             </ul>
-            <p className="mt-4 text-sm text-ink-faint">
+            <p className="mt-4 text-sm leading-relaxed text-ink-faint">
               Tell us the vehicle and the dates and you will have a figure the
               same day — no obligation.
             </p>
@@ -168,7 +168,7 @@ export function Monthly() {
                 Send an enquiry
               </Link>
             </div>
-            <p className="mt-5 text-sm text-ink-faint">
+            <p className="mt-5 text-sm leading-relaxed text-ink-faint">
               Visiting from abroad?{' '}
               <Link to="/nri" className="font-semibold text-navy hover:text-gold-deep">
                 We can have it waiting at the airport
