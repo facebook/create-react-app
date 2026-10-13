@@ -59,7 +59,7 @@ export function Blog() {
                   <p className="mt-2.5 leading-relaxed text-ink-dim">{post.excerpt}</p>
                   <Link
                     to={`/blog/${post.slug}`}
-                    className="group mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-gold-deep"
+                    className="tap-target group mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-gold-deep"
                   >
                     Read it
                     <span aria-hidden="true" className="transition group-hover:translate-x-1">
