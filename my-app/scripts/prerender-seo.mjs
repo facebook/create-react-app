@@ -71,13 +71,13 @@ const serviceAreas = JSON.parse(
 );
 // And one per article.
 const blog = JSON.parse(readFileSync(join(root, 'src/data/posts.json'), 'utf8'));
-const routes = [
-  ...seo.routes,
-  ...allTownRoutes(towns.towns, seo.site),
-  ...modelRoutes(models.models),
-  ...serviceAreaRoutes(serviceAreas.pages),
-  ...postRoutes(blog.posts),
-];
+// Composed by scripts/seo-routes.mjs, which runs before the bundle is built
+// and from these same files. Read rather than recomposed, so the titles this
+// writes into each page's HTML and the titles useSeo() puts in the tab after
+// a client-side navigation are the same list and cannot drift.
+const routes = JSON.parse(
+  readFileSync(join(root, 'src/data/seo-routes.json'), 'utf8'),
+).routes;
 // A title or a description longer than a search result shows is not wrong,
 // it is just cut -- and the part that gets cut is the part written last,
 // which is usually the towns. Both numbers are where Google starts trimming
