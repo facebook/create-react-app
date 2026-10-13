@@ -1,30 +1,20 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import seo from '../data/seo.json';
-import townData from '../data/towns.json';
-import modelData from '../data/models.json';
-import serviceAreaData from '../data/service-areas.json';
-import postData from '../data/posts.json';
-// @ts-expect-error -- plain ESM, shared verbatim with the build so the routes
-// the app knows about and the routes the sitemap lists cannot disagree.
-import { allTownRoutes } from '../data/town-routes.mjs';
-// @ts-expect-error -- as above.
-import { modelRoutes } from '../data/model-routes.mjs';
-// @ts-expect-error -- as above.
-import { serviceAreaRoutes } from '../data/service-area-routes.mjs';
-// @ts-expect-error -- as above.
-import { postRoutes } from '../data/post-routes.mjs';
+// The fixed pages plus one per town, car, service area and post, composed at
+// build time by scripts/seo-routes.mjs from those same files -- and read here
+// rather than recomposed.
+//
+// This used to import towns.json, models.json, service-areas.json and
+// posts.json and compose the list in the browser. All four then landed in the
+// entry chunk, so every page of the site shipped every blog post's body and
+// every car's luggage capacity in order to end up with a path, a title and a
+// sentence. On a mid-range phone that was the longest task of the load, and
+// none of it was on screen.
+import generated from '../data/seo-routes.json';
 
-// The fixed pages, plus one per town and one per car. Composed rather than
-// written into seo.json, because towns.json and models.json are where those
-// are added and a second list to edit is a second list to forget.
-const routes = [
-  ...seo.routes,
-  ...allTownRoutes(townData.towns, seo.site),
-  ...modelRoutes(modelData.models),
-  ...serviceAreaRoutes(serviceAreaData.pages),
-  ...postRoutes(postData.posts),
-];
+const routes: { path: string; title: string; description: string }[] =
+  generated.routes;
 
 /**
  * Keeps the document title, description and canonical in step with the route.
