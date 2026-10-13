@@ -2031,26 +2031,40 @@ body {
 }
 
 /* ---------------------------------------------------------------------------
-   Touch targets.
+   Targets you have to hit.
 
-   On a phone these are pressed with a thumb rather than clicked with a
-   pointer. The footer's list of pages was a column of 16px lines with 8px
-   between them -- nine targets a thumb cannot pick between, which is most of
-   what "the buttons are not clickable" means on a small screen.
+   Two sizes, because a thumb and a mouse are not the same problem.
 
-   Only standalone links grow. A link inside a sentence keeps the size of its
-   words: padding one would open a gap in the line it sits in, and the
-   sentence around it is the thing that makes it findable anyway.
+   24px is the floor everywhere. That is what WCAG 2.5.8 asks of a target
+   under any pointer, and "any pointer" includes a mouse: a tremor, a
+   trackpad, a laptop on a train. These links were 20px -- a line of 14px
+   text with nothing around it -- so the floor costs four pixels and settles
+   the question.
+
+   On a phone they go much further. The footer's list of pages was a column
+   of 16px lines with 8px between them: nine targets a thumb cannot pick
+   between, which is most of what "the buttons are not clickable" means on a
+   small screen. 40 and 44 are what a thumb wants, not what a standard
+   requires, and there is room for them on a page scrolled with a thumb.
+
+   Only standalone links grow, at either size. A link inside a sentence keeps
+   the size of its words: padding one would open a gap in the line it sits
+   in, and the sentence around it is the thing that makes it findable anyway.
+   That is 2.5.8's own exception, and it is why these are two named classes
+   rather than a rule about every `a`.
 --------------------------------------------------------------------------- */
+.tap-list a,
+.tap-target {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+}
+
 @media (hover: none), (max-width: 700px) {
   .tap-list a {
-    display: inline-flex;
-    align-items: center;
     min-height: 40px;
   }
   .tap-target {
-    display: inline-flex;
-    align-items: center;
     min-height: 44px;
   }
 }
