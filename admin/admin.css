@@ -1247,6 +1247,16 @@ label.finance-toggle {
   body.is-printing-confirmation #bookingConfirmation { display: block; }
 
   @page { margin: 14mm; }
+
+  /* The confirmation's band runs to the paper's edge, so that page carries
+     no margin of its own and the sheet holds its own padding instead. A
+     named page rather than setting margin:0 outright, because the reports
+     print through here too and they want their 14mm. An engine that does
+     not know named pages falls back to the 14mm above: the band is then
+     inset rather than bled, which is a plainer document and not a broken
+     one. */
+  @page confirmation { margin: 0; }
+  body.is-printing-confirmation #bookingConfirmation { page: confirmation; }
 }
 
 /* ---------------------------------------------------------------------------
@@ -1256,112 +1266,226 @@ label.finance-toggle {
    second window: a popup blocker cannot stop it, and it prints the same from
    a phone at the handover counter as from a laptop.
 
-   Black on white and nothing else. It is read on paper or in a messaging app,
-   where the panel's cream and gold cost ink and legibility and buy nothing.
+   print-color-adjust is the line the whole design rests on. A browser asked
+   to print throws every background away unless somebody has ticked
+   "Background graphics" in the dialogue -- so without it the navy band, the
+   gold discs, the grey cards and the highlighted total all come out white
+   and the customer is sent a skeleton. It is the one declaration here that
+   is not decoration.
 --------------------------------------------------------------------------- */
 #bookingConfirmation {
   display: none;
+  position: relative;
   /* The site's own navy and gold, so a customer who has seen the website
-     recognises the document. Written as hex rather than as the panel's
-     custom properties: this prints, and a print stylesheet that depends on
-     a variable defined for the screen is a document that comes out grey on
-     the one machine nobody tested. */
-  --pc-navy: #0a0e20;
-  --pc-gold: #d4af37;
+     recognises the document. Hex rather than the panel's custom properties:
+     this prints, and a print stylesheet leaning on a variable defined for
+     the screen is a document that comes out grey on the one machine nobody
+     tested. */
+  --pc-navy: #0e1226;
   --pc-ink: #1a1a1a;
-  --pc-dim: #555;
+  --pc-dim: #5b6070;
+  --pc-gold: #f5c518;
+  --pc-card: #f4f5f7;
+  --pc-hair: #e3e5ea;
   color: var(--pc-ink);
   background: #fff;
-  font-size: 11pt;
+  font-size: 10pt;
   line-height: 1.45;
+  /* A4 less a hair, so the sheet fills the page without rounding its way
+     onto a second one. Without it the watermark anchors to wherever the
+     text stopped, which on a short booking is across the middle of the
+     terms. */
+  min-height: 290mm;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
 }
 
-#bookingConfirmation h1 { font-size: 16pt; margin: 0; letter-spacing: -0.01em; color: var(--pc-navy); }
-#bookingConfirmation h2.pc-title {
-  font-size: 13pt;
-  margin: 12pt 0 8pt;
-  padding-bottom: 4pt;
-  color: var(--pc-navy);
-  /* Gold under the title and above the total, and nowhere else. Two strokes
-     of it read as the brand; everywhere would read as a template. */
-  border-bottom: 2px solid var(--pc-gold);
+/* ---- the band across the top ------------------------------------------ */
+.pc-band {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12pt;
+  padding: 11pt 16pt;
+  background: var(--pc-navy);
+  color: #fff;
+  overflow: hidden;
+  border-bottom: 4pt solid var(--pc-gold);
 }
-#bookingConfirmation h3 {
-  font-size: 9pt;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  margin: 0 0 4pt;
-  color: var(--pc-dim);
+.pc-mark { height: 58pt; width: auto; max-width: 110pt; object-fit: contain; flex: none; }
+.pc-ident { position: relative; flex: none; max-width: 180pt; }
+.pc-name { margin: 0 0 4pt; font-size: 13pt; font-weight: 700; letter-spacing: -0.01em; }
+.pc-row { display: flex; align-items: flex-start; gap: 5pt; margin: 1.5pt 0; font-size: 8.5pt; line-height: 1.3; }
+
+/* The photograph fills what the logo and the details leave, bled to the
+   edges. object-fit, so a tall upload and a wide one both crop rather than
+   stretching a road into a smear. */
+.pc-banner {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 4pt;
+  width: 46%;
+  height: auto;
+  object-fit: cover;
+  /* Cut on the diagonal and faded into the navy on its left, so it reads as
+     part of the band rather than a rectangle pasted onto it. */
+  clip-path: polygon(14% 0, 100% 0, 100% 100%, 0 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 22%);
+  mask-image: linear-gradient(to right, transparent 0, #000 22%);
 }
 
-.pc-head { display: flex; justify-content: space-between; gap: 16pt; align-items: flex-start; }
-.pc-ident { display: flex; gap: 10pt; align-items: flex-start; }
-/* Capped by height so a wide logo and a square one both sit on the same
-   line as the name rather than one of them setting the letterhead's size. */
-.pc-logo { height: 34pt; width: auto; max-width: 150pt; object-fit: contain; }
-.pc-contact { margin: 3pt 0 0; font-size: 9.5pt; color: var(--pc-dim); }
-
-/* The number is what somebody quotes back on the phone, so it is the one
-   thing on the page that can be read at arm's length. */
-.pc-ref { text-align: right; white-space: nowrap; }
-.pc-ref-k { display: block; font-size: 8pt; text-transform: uppercase; letter-spacing: 0.08em; color: var(--pc-dim); }
-.pc-ref-v { display: block; font-size: 14pt; font-weight: 700; color: var(--pc-navy); }
+/* The number is the one thing on the page somebody reads back over the
+   phone, and it sits on top of a photograph the owner chooses -- which may
+   be a sunrise, and was. A scrim under it so it stays legible whatever is
+   uploaded, rather than hoping the picture is dark in the corner. */
+.pc-ref {
+  position: relative;
+  margin-left: auto;
+  padding: 5pt 4pt 5pt 20pt;
+  text-align: right;
+  white-space: nowrap;
+  background: linear-gradient(to right, rgba(14, 18, 38, 0), rgba(14, 18, 38, 0.82) 38%);
+  border-radius: 4pt;
+}
+.pc-ref-k { display: block; font-size: 8pt; letter-spacing: 0.1em; text-transform: uppercase; color: #fff; }
+.pc-ref-v { display: block; font-size: 15pt; font-weight: 700; color: var(--pc-gold); }
 /* Only ever "Cancelled", and it has to be impossible to miss. */
 .pc-ref-x {
   display: inline-block;
-  margin-top: 2pt;
-  padding: 1pt 5pt;
-  border: 1.5pt solid #b3261e;
-  color: #b3261e;
-  font-size: 9pt;
+  margin-top: 3pt;
+  padding: 1pt 6pt;
+  background: #b3261e;
+  color: #fff;
+  font-size: 8.5pt;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.06em;
 }
 
-.pc-cols { display: flex; gap: 22pt; }
-.pc-cols > section { flex: 1; }
-#bookingConfirmation section { margin-top: 12pt; break-inside: avoid; }
+/* ---- the gold discs ---------------------------------------------------- */
+.pc-ico {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 13pt;
+  height: 13pt;
+  border-radius: 50%;
+  background: var(--pc-gold);
+}
+.pc-ico svg { width: 8pt; height: 8pt; fill: var(--pc-navy); }
+
+/* ---- section titles ---------------------------------------------------- */
+#bookingConfirmation h2.pc-title {
+  display: flex;
+  align-items: center;
+  gap: 8pt;
+  margin: 13pt 16pt 8pt;
+  font-size: 14pt;
+  font-weight: 700;
+  color: var(--pc-navy);
+}
+#bookingConfirmation h2.pc-title .pc-ico { width: 22pt; height: 22pt; }
+#bookingConfirmation h2.pc-title .pc-ico svg { width: 13pt; height: 13pt; }
+/* The rule runs from the end of the words to the margin. */
+#bookingConfirmation h2.pc-title::after {
+  content: "";
+  flex: 1;
+  height: 2pt;
+  background: var(--pc-gold);
+}
+
+/* ---- the four cards ----------------------------------------------------- */
+.pc-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 9pt;
+  margin: 0 16pt;
+}
+.pc-card {
+  background: var(--pc-card);
+  border-radius: 6pt;
+  padding: 8pt 11pt 9pt;
+  break-inside: avoid;
+}
+#bookingConfirmation .pc-card h3 {
+  display: flex;
+  align-items: center;
+  gap: 7pt;
+  margin: 0 0 5pt;
+  padding-bottom: 4pt;
+  border-bottom: 1px solid var(--pc-hair);
+  font-size: 10pt;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--pc-navy);
+}
+#bookingConfirmation .pc-card h3 .pc-ico { width: 19pt; height: 19pt; }
+#bookingConfirmation .pc-card h3 .pc-ico svg { width: 11pt; height: 11pt; }
 
 .pc-line {
   display: flex;
   justify-content: space-between;
-  gap: 12pt;
+  gap: 10pt;
   padding: 2.5pt 0;
-  border-bottom: 1px dotted #bbb;
+  border-bottom: 1px solid var(--pc-hair);
+  font-size: 9.5pt;
 }
+.pc-line:last-child { border-bottom: 0; }
 .pc-line > span:first-child { color: var(--pc-dim); }
-.pc-line > span:last-child { font-weight: 600; text-align: right; }
+.pc-line > span:last-child { font-weight: 700; text-align: right; color: var(--pc-ink); }
 
+/* The one figure the whole page is about. */
 .pc-total {
-  border-top: 2px solid var(--pc-gold);
-  border-bottom: 1px solid var(--pc-navy);
-  font-size: 12pt;
-  margin-top: 4pt;
+  margin: 2pt -11pt;
+  padding: 3.5pt 11pt;
+  background: var(--pc-gold);
+  border-bottom: 0;
+  font-size: 11.5pt;
 }
-.pc-total > span { font-weight: 700; color: var(--pc-navy); }
+.pc-total > span, .pc-total > span:first-child { color: var(--pc-navy); font-weight: 700; }
 
 /* The deposit, said once and outside the column that adds up. */
-.pc-note { margin: 6pt 0 0; font-size: 8.5pt; line-height: 1.35; color: var(--pc-dim); }
-/* What is still owed is the line the customer looks for, and the one a
-   handover argument turns on. */
-.pc-balance > span:last-child { font-size: 12pt; font-weight: 700; }
+.pc-note { margin: 6pt 0 0; font-size: 8pt; line-height: 1.35; color: var(--pc-dim); }
 
-/* The terms. Numbered, because "point 4" is how somebody refers to one on
-   the phone, and smaller than the booking itself: they are the fine print
-   and should not compete with the dates and the figures above them. */
-.pc-rules { margin-top: 14pt; }
+/* ---- the terms ---------------------------------------------------------- */
 .pc-rules ol {
-  margin: 0;
-  padding-left: 14pt;
-  font-size: 9pt;
+  margin: 0 16pt;
+  padding-left: 16pt;
+  font-size: 8.5pt;
   line-height: 1.4;
-  color: #222;
+  color: var(--pc-ink);
 }
 .pc-rules li { padding: 1pt 0; break-inside: avoid; }
 
-.pc-foot { margin-top: 14pt; padding-top: 6pt; border-top: 1px solid var(--pc-navy); font-size: 9.5pt; color: var(--pc-dim); }
-.pc-issued { display: block; margin-top: 3pt; color: #777; }
+/* ---- the closing note --------------------------------------------------- */
+.pc-foot {
+  display: flex;
+  align-items: flex-start;
+  gap: 8pt;
+  margin: 12pt 16pt 0;
+  padding-top: 7pt;
+  border-top: 2pt solid var(--pc-gold);
+  font-size: 9pt;
+  color: var(--pc-navy);
+}
+.pc-foot p { margin: 0; }
+.pc-foot .pc-ico { width: 17pt; height: 17pt; }
+.pc-foot .pc-ico svg { width: 10pt; height: 10pt; }
+.pc-issued { display: block; margin-top: 2pt; font-size: 8pt; color: var(--pc-dim); }
+
+/* The mark again, faint, behind the foot of the page. Decorative: it says
+   nothing the letterhead has not, so it is the one thing here that may
+   safely be dropped by a printer set to save ink. */
+.pc-watermark {
+  position: absolute;
+  right: 18pt;
+  bottom: 14pt;
+  width: 110pt;
+  opacity: 0.08;
+}
 
 @media (max-width: 900px) {
   .stat-grid, .stat-grid-4 { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }

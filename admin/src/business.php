@@ -61,6 +61,12 @@ function business_details(): array
             $out['logo'] = site_image_url($images['logo']);
             $out['logoFallback'] = 'brand.php?f=' . rawurlencode((string) $images['logo']);
         }
+        // The picture across the header band. The home page's own background,
+        // so the document and the site show the same road. Not uploaded, and
+        // the band is navy and gold on its own, which is not a fault.
+        if (!empty($images['home-hero'])) {
+            $out['banner'] = site_image_url($images['home-hero']);
+        }
     } catch (Throwable) {
         // No logo line. The name above it still says who sent this.
     }

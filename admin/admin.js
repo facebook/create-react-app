@@ -2211,6 +2211,47 @@ function businessDetails() {
   }
 }
 
+/**
+ * The glyphs on the confirmation.
+ *
+ * Drawn here rather than pulled from a font or a sprite: this document is
+ * printed and sent as a file, and an icon that depends on a font loading is
+ * an icon that is sometimes a square box on somebody else's phone. Single
+ * paths, dark on the gold disc behind them.
+ */
+const PC_ICONS = {
+  phone: '<path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.24 11.4 11.4 0 0 0 3.6.58 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1 11.4 11.4 0 0 0 .58 3.6 1 1 0 0 1-.25 1z"/>',
+  mail: '<path d="M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zm0 2.2V18h16V7.2l-8 5-8-5z"/>',
+  pin: '<path d="M12 2a7 7 0 0 0-7 7c0 5.1 7 13 7 13s7-7.9 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/>',
+  calendar: '<path d="M7 2v2H5a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2V2h-2v2H9V2zm12 8v9H5v-9zM7 12h4v4H7z"/>',
+  user: '<path d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10zm0 2c-4.4 0-8 2.5-8 5.5V22h16v-2.5c0-3-3.6-5.5-8-5.5z"/>',
+  car: '<path d="M5 11l1.5-4.3A2 2 0 0 1 8.4 5.3h7.2a2 2 0 0 1 1.9 1.4L19 11h.5a1.5 1.5 0 0 1 1.5 1.5V18h-3v-1.6H6V18H3v-5.5A1.5 1.5 0 0 1 4.5 11zm2.1-.4h9.8l-1-3H8.1zM7 15a1.2 1.2 0 1 0 0-2.4A1.2 1.2 0 0 0 7 15zm10 0a1.2 1.2 0 1 0 0-2.4 1.2 1.2 0 0 0 0 2.4z"/>',
+  rupee: '<path d="M7 4h10v2h-3.6c.5.5.9 1.2 1.1 2H17v2h-2.5c-.4 2.3-2.3 4-4.9 4H9.4l5.9 6H12l-5.7-5.8V12h3.1c1.5 0 2.7-.8 3.1-2H7V8h5.4c-.4-1.2-1.6-2-3.1-2H7z"/>',
+  payment: '<path d="M3 16.5c1.6-1.1 3-1 4.4-.2l2 1.1h3.2c.6 0 .6-.8 0-.9l-3.3-.6-1-2c1.9-.8 3.8-.6 5.6.3l5 2.5c.7.4 1 1.2.7 1.9-.3.7-1.1 1-1.8.7l-4-1.5v1.7H7.5L3 20zM8 3h11a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zm1.6 2.2v1.4h2.1c.4 0 .7.2.8.5H9.6V8.5h2.9c-.2.4-.6.6-1.2.6H9.6v1.3L12 12.8h1.9l-2.4-2.4h.1c1.1 0 2-.7 2.3-1.9h1.5V7.1h-1.5a3 3 0 0 0-.3-.9h1.8V5.2z"/>',
+  doc: '<path d="M6 2h7l5 5v15a0 0 0 0 1 0 0H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm7 1.8V8h4.2zM7.5 12h9v1.6h-9zm0 3.2h9v1.6h-9zm0 3.2h6v1.6h-6z"/>',
+};
+const pcIcon = (name) =>
+  `<span class="pc-ico"><svg viewBox="0 0 24 24" aria-hidden="true">${PC_ICONS[name] || ''}</svg></span>`;
+
+/**
+ * The booking confirmation a customer is given.
+ *
+ * Printed rather than generated as a file: the browser's own print dialogue
+ * saves a PDF on every machine and phone the panel is used from, with no
+ * library to ship and nothing to install on the server. What it costs is one
+ * extra step -- choose "Save as PDF" -- and what it buys is a document that
+ * works the first time on a phone at a handover counter.
+ *
+ * The filename is the thing that makes it sendable, and browsers take it
+ * from document.title. So the title becomes the booking number for the
+ * length of the dialogue and is put back afterwards: a customer receives
+ * NSC-2026-0024.pdf rather than dashboard.pdf, and knows what it is before
+ * opening it.
+ *
+ * Everything on it is already on the booking. Nothing is recalculated here --
+ * a confirmation that disagrees with the record is worse than no
+ * confirmation, so this only ever reads.
+ */
 async function printConfirmation(booking) {
   const biz = businessDetails();
   const c = booking.charges || {};
@@ -2227,20 +2268,25 @@ async function printConfirmation(booking) {
   const terms = ((biz.terms || {}).items || []).filter((t) => String(t || '').trim() !== '');
   const held = Number(booking.deposit_held) || 0;
   const cancelled = booking.status === 'Cancelled';
+  const finished = booking.status === 'Completed' || booking.status === 'Returned';
+
+  const card = (icon, title, body, cls = '') => `
+    <section class="pc-card${cls ? ` ${cls}` : ''}">
+      <h3>${pcIcon(icon)}<span>${title}</span></h3>
+      ${body}
+    </section>`;
 
   const html = `
-    <div class="pc-head">
+    <header class="pc-band">
+      ${biz.logo ? `<img class="pc-mark" src="${escapeHTML(biz.logo)}" alt=""
+           onerror="this.onerror=null;this.src='${escapeHTML(biz.logoFallback || '')}'">` : ''}
       <div class="pc-ident">
-        ${biz.logo ? `<img class="pc-logo" src="${escapeHTML(biz.logo)}" alt=""
-             onerror="this.onerror=null;this.src='${escapeHTML(biz.logoFallback || '')}'">` : ''}
-        <div>
-          <h1>${escapeHTML(biz.name || 'Booking confirmation')}</h1>
-          <p class="pc-contact">
-            ${biz.phone ? escapeHTML(biz.phone) : ''}${biz.phone && biz.email ? ' · ' : ''}${biz.email ? escapeHTML(biz.email) : ''}
-            ${addr ? `<br>${addr}` : ''}
-          </p>
-        </div>
+        <p class="pc-name">${escapeHTML(biz.name || 'Booking confirmation')}</p>
+        ${biz.phone ? `<p class="pc-row">${pcIcon('phone')}<span>${escapeHTML(biz.phone)}</span></p>` : ''}
+        ${biz.email ? `<p class="pc-row">${pcIcon('mail')}<span>${escapeHTML(biz.email)}</span></p>` : ''}
+        ${addr ? `<p class="pc-row">${pcIcon('pin')}<span>${addr}</span></p>` : ''}
       </div>
+      ${biz.banner ? `<img class="pc-banner" src="${escapeHTML(biz.banner)}" alt="">` : ''}
       <div class="pc-ref">
         <span class="pc-ref-k">Booking</span>
         <span class="pc-ref-v">${escapeHTML(booking.booking_number)}</span>
@@ -2252,72 +2298,77 @@ async function printConfirmation(booking) {
               the one way this document could mislead somebody. */
           cancelled ? '<span class="pc-ref-x">Cancelled</span>' : ''}
       </div>
-    </div>
+    </header>
 
-    <h2 class="pc-title">Booking confirmation</h2>
+    <h2 class="pc-title">${pcIcon('calendar')}<span>Booking Confirmation</span></h2>
 
-    <div class="pc-cols">
-      <section>
-        <h3>Who it is for</h3>
+    <div class="pc-cards">
+      ${card('user', 'Who it is for', `
         ${line('Name', escapeHTML(booking.customer_name))}
         ${line('Phone', escapeHTML(booking.customer_phone))}
         ${booking.customer_address ? line('Address', escapeHTML(booking.customer_address)) : ''}
-        ${booking.licence_number ? line('Licence no.', escapeHTML(booking.licence_number)) : ''}
-      </section>
+        ${booking.licence_number ? line('Licence no.', escapeHTML(booking.licence_number)) : ''}`)}
 
-      <section>
-        <h3>The vehicle</h3>
+      ${card('car', 'The vehicle', `
         ${line('Vehicle', escapeHTML(booking.vehicle_name))}
         ${booking.vehicle_reg ? line('Registration', escapeHTML(booking.vehicle_reg)) : ''}
         ${line('From', formatDateTime(booking.start_at))}
         ${line('Until', formatDateTime(booking.return_at))}
-        ${line('Days', String(booking.duration_days))}
-      </section>
-    </div>
+        ${line('Days', String(booking.duration_days))}`)}
 
-    <div class="pc-cols">
-    <section class="pc-terms">
-      <h3>What was agreed</h3>
-      ${c.rate_daily ? line('Daily rate', formatINR(c.rate_daily)) : ''}
-      ${c.km_limit_per_day ? line('KM included', `${c.km_limit_per_day} km a day`) : ''}
-      ${c.extra_km_rate ? line('Beyond that', `${formatINR(c.extra_km_rate)} a km`) : ''}
-      ${c.deposit_required ? line('Deposit', formatINR(c.deposit_required)) : ''}
-    </section>
+      ${card('rupee', 'What was agreed', `
+        ${c.rate_daily ? line('Daily rate', formatINR(c.rate_daily)) : ''}
+        ${c.km_limit_per_day ? line('KM included', `${c.km_limit_per_day} km a day`) : ''}
+        ${c.extra_km_rate ? line('Beyond that', `${formatINR(c.extra_km_rate)} a km`) : ''}
+        ${c.deposit_required ? line('Deposit', formatINR(c.deposit_required)) : ''}`)}
 
-    <section class="pc-money">
-      <h3>The money</h3>
-      ${money('Rental', c.base_rental, true)}
-      ${money('Other charges', c.other_charges)}
-      ${/* Negated, because the total already has it taken off. Printed as a
-            plain 500 it reads as another charge, and a customer adding the
-            column up finds it does not reach the total -- which is exactly
-            the sort of thing that turns a handover into an argument. */
-        money('Discount', -Math.abs(Number(c.discount) || 0))}
-      ${money('Extra KM', (booking.km || {}).extra_km_charge)}
-      ${money('Extras', booking.extras_total)}
-      <div class="pc-line pc-total"><span>Total</span><span>${formatINR(booking.total)}</span></div>
-      ${money('Received', booking.paid, true)}
-      <div class="pc-line pc-balance"><span>${balance > 0 ? 'Still to pay' : 'Balance'}</span><span>${formatINR(balance)}</span></div>
-      ${/* The deposit was a line here and a line under "What was agreed",
-            which reads as being charged for it twice. It is not part of the
-            total, so it is not a row in the column that adds up to one --
-            it is a note under it, which is also the thing a customer
-            actually wants to know: how much of theirs is being held. */
-        held > 0 ? `<p class="pc-note">${formatINR(held)} deposit held, separate from the total above and returned after the car comes back.</p>` : ''}
-    </section>
+      ${card('payment', 'The money', `
+        ${money('Rental', c.base_rental, true)}
+        ${money('Other charges', c.other_charges)}
+        ${/* Negated, because the total already has it taken off. Printed as a
+              plain 500 it reads as another charge, and a customer adding the
+              column up finds it does not reach the total -- which is exactly
+              the sort of thing that turns a handover into an argument. */
+          money('Discount', -Math.abs(Number(c.discount) || 0))}
+        ${money('Extra KM', (booking.km || {}).extra_km_charge)}
+        ${money('Extras', booking.extras_total)}
+        <div class="pc-line pc-total"><span>Total</span><span>${formatINR(booking.total)}</span></div>
+        ${money('Received', booking.paid, true)}
+        <div class="pc-line"><span>${balance > 0 ? 'Still to pay' : 'Balance'}</span><span>${formatINR(balance)}</span></div>
+        ${/* The deposit was a line here and a line under "What was agreed",
+              which reads as being charged for it twice. It is not part of the
+              total, so it is not a row in the column that adds up to one. The
+              figure stays under "What was agreed"; what belongs here is only
+              the reason the total does not include it. */
+          held > 0 ? '<p class="pc-note">The deposit shown under what was agreed is held separately. It is not part of the total above and comes back after the car does.</p>' : ''}`, 'pc-money')}
     </div>
 
     ${terms.length ? `
       <section class="pc-rules">
-        <h3>${escapeHTML((biz.terms && biz.terms.heading) || 'Terms')}</h3>
+        <h2 class="pc-title">${pcIcon('doc')}<span>${escapeHTML((biz.terms && biz.terms.heading) || 'Terms of hire')}</span></h2>
         <ol>${terms.map((t) => `<li>${escapeHTML(t)}</li>`).join('')}</ol>
       </section>` : ''}
 
-    <p class="pc-foot">
-      Please bring the licence used to book, and an ID.
-      ${biz.phone ? `Any question before pickup, call ${escapeHTML(biz.phone)}.` : ''}
-      <span class="pc-issued">Issued ${formatDate(new Date().toISOString())}</span>
-    </p>`;
+    ${/* The closing line is an instruction for a pickup that is still to
+          happen. On a cancelled booking it contradicts the badge at the top,
+          and on a finished one it asks for a licence the customer already
+          brought -- so each state gets the line that is true of it. */''}
+    <div class="pc-foot">
+      ${pcIcon('doc')}
+      <p>
+        ${cancelled
+          ? `This booking is cancelled. The car is not held and nothing is to be brought.
+             ${biz.phone ? `To book again, call ${escapeHTML(biz.phone)}.` : ''}`
+          : finished
+            ? `This hire is finished and the car is back.
+               ${biz.phone ? `Any question about it, call ${escapeHTML(biz.phone)}.` : ''}`
+            : `Please bring the original licence used to book the car, and an ID.
+               ${biz.phone ? `Any question before pickup, call ${escapeHTML(biz.phone)}.` : ''}`}
+        <span class="pc-issued">Issued ${formatDate(new Date().toISOString())}</span>
+      </p>
+    </div>
+
+    ${biz.logo ? `<img class="pc-watermark" src="${escapeHTML(biz.logo)}" alt="">` : ''}`;
 
   let sheet = document.getElementById('bookingConfirmation');
   if (!sheet) {
@@ -2327,20 +2378,21 @@ async function printConfirmation(booking) {
   }
   sheet.innerHTML = html;
 
-  // The logo is fetched the instant it is written into the page, and
+  // Every picture is fetched the instant it is written into the page, and
   // print() is called in the same breath. A browser usually waits, but
   // "usually" is a confirmation handed over with no logo on it, which is
   // exactly the kind of fault nobody reports and everybody notices. So wait
-  // for it -- briefly, and never at the cost of the document: a logo that is
-  // slow or missing prints a confirmation without one rather than nothing.
-  const logo = sheet.querySelector('.pc-logo');
-  if (logo && !logo.complete) {
+  // for them -- briefly, and never at the cost of the document: a picture
+  // that is slow or missing prints a confirmation without it rather than
+  // nothing at all.
+  const pictures = [...sheet.querySelectorAll('img')].filter((i) => !i.complete);
+  if (pictures.length) {
     await Promise.race([
-      new Promise((done) => {
-        logo.addEventListener('load', done, { once: true });
-        logo.addEventListener('error', done, { once: true });
-      }),
-      new Promise((done) => setTimeout(done, 1500)),
+      Promise.all(pictures.map((i) => new Promise((done) => {
+        i.addEventListener('load', done, { once: true });
+        i.addEventListener('error', done, { once: true });
+      }))),
+      new Promise((done) => setTimeout(done, 2000)),
     ]);
   }
 
