@@ -2211,7 +2211,7 @@ function businessDetails() {
   }
 }
 
-function printConfirmation(booking) {
+async function printConfirmation(booking) {
   const biz = businessDetails();
   const c = booking.charges || {};
   const line = (k, v) => `<div class="pc-line"><span>${k}</span><span>${v}</span></div>`;
@@ -2225,20 +2225,32 @@ function printConfirmation(booking) {
   // Written by the owner in Website content. None written means no terms
   // section, rather than a document carrying rules nobody agreed to.
   const terms = ((biz.terms || {}).items || []).filter((t) => String(t || '').trim() !== '');
+  const held = Number(booking.deposit_held) || 0;
+  const cancelled = booking.status === 'Cancelled';
 
   const html = `
     <div class="pc-head">
-      <div>
-        <h1>${escapeHTML(biz.name || 'Booking confirmation')}</h1>
-        <p class="pc-contact">
-          ${biz.phone ? escapeHTML(biz.phone) : ''}${biz.phone && biz.email ? ' · ' : ''}${biz.email ? escapeHTML(biz.email) : ''}
-          ${addr ? `<br>${addr}` : ''}
-        </p>
+      <div class="pc-ident">
+        ${biz.logo ? `<img class="pc-logo" src="${escapeHTML(biz.logo)}" alt=""
+             onerror="this.onerror=null;this.src='${escapeHTML(biz.logoFallback || '')}'">` : ''}
+        <div>
+          <h1>${escapeHTML(biz.name || 'Booking confirmation')}</h1>
+          <p class="pc-contact">
+            ${biz.phone ? escapeHTML(biz.phone) : ''}${biz.phone && biz.email ? ' · ' : ''}${biz.email ? escapeHTML(biz.email) : ''}
+            ${addr ? `<br>${addr}` : ''}
+          </p>
+        </div>
       </div>
       <div class="pc-ref">
         <span class="pc-ref-k">Booking</span>
         <span class="pc-ref-v">${escapeHTML(booking.booking_number)}</span>
-        <span class="pc-ref-s">${escapeHTML(booking.status)}</span>
+        ${/* The booking's status is the panel's business, not the customer's:
+              on a page headed "Booking confirmation", a line reading
+              "Completed" raises a question it does not answer. The one state
+              that must be said out loud is cancelled -- handing over a
+              confirmation for a booking that is off, without saying so, is
+              the one way this document could mislead somebody. */
+          cancelled ? '<span class="pc-ref-x">Cancelled</span>' : ''}
       </div>
     </div>
 
@@ -2286,7 +2298,12 @@ function printConfirmation(booking) {
       <div class="pc-line pc-total"><span>Total</span><span>${formatINR(booking.total)}</span></div>
       ${money('Received', booking.paid, true)}
       <div class="pc-line pc-balance"><span>${balance > 0 ? 'Still to pay' : 'Balance'}</span><span>${formatINR(balance)}</span></div>
-      ${money('Deposit held', booking.deposit_held)}
+      ${/* The deposit was a line here and a line under "What was agreed",
+            which reads as being charged for it twice. It is not part of the
+            total, so it is not a row in the column that adds up to one --
+            it is a note under it, which is also the thing a customer
+            actually wants to know: how much of theirs is being held. */
+        held > 0 ? `<p class="pc-note">${formatINR(held)} deposit held, separate from the total above and returned after the car comes back.</p>` : ''}
     </section>
     </div>
 
@@ -2309,6 +2326,23 @@ function printConfirmation(booking) {
     document.body.appendChild(sheet);
   }
   sheet.innerHTML = html;
+
+  // The logo is fetched the instant it is written into the page, and
+  // print() is called in the same breath. A browser usually waits, but
+  // "usually" is a confirmation handed over with no logo on it, which is
+  // exactly the kind of fault nobody reports and everybody notices. So wait
+  // for it -- briefly, and never at the cost of the document: a logo that is
+  // slow or missing prints a confirmation without one rather than nothing.
+  const logo = sheet.querySelector('.pc-logo');
+  if (logo && !logo.complete) {
+    await Promise.race([
+      new Promise((done) => {
+        logo.addEventListener('load', done, { once: true });
+        logo.addEventListener('error', done, { once: true });
+      }),
+      new Promise((done) => setTimeout(done, 1500)),
+    ]);
+  }
 
   const title = document.title;
   document.title = `${booking.booking_number} — ${biz.name || 'Booking confirmation'}`;

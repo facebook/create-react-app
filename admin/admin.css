@@ -1261,36 +1261,63 @@ label.finance-toggle {
 --------------------------------------------------------------------------- */
 #bookingConfirmation {
   display: none;
-  color: #000;
+  /* The site's own navy and gold, so a customer who has seen the website
+     recognises the document. Written as hex rather than as the panel's
+     custom properties: this prints, and a print stylesheet that depends on
+     a variable defined for the screen is a document that comes out grey on
+     the one machine nobody tested. */
+  --pc-navy: #0a0e20;
+  --pc-gold: #d4af37;
+  --pc-ink: #1a1a1a;
+  --pc-dim: #555;
+  color: var(--pc-ink);
   background: #fff;
   font-size: 11pt;
   line-height: 1.45;
 }
 
-#bookingConfirmation h1 { font-size: 16pt; margin: 0; letter-spacing: -0.01em; }
+#bookingConfirmation h1 { font-size: 16pt; margin: 0; letter-spacing: -0.01em; color: var(--pc-navy); }
 #bookingConfirmation h2.pc-title {
   font-size: 13pt;
-  margin: 14pt 0 8pt;
+  margin: 12pt 0 8pt;
   padding-bottom: 4pt;
-  border-bottom: 1px solid #000;
+  color: var(--pc-navy);
+  /* Gold under the title and above the total, and nowhere else. Two strokes
+     of it read as the brand; everywhere would read as a template. */
+  border-bottom: 2px solid var(--pc-gold);
 }
 #bookingConfirmation h3 {
   font-size: 9pt;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   margin: 0 0 4pt;
-  color: #444;
+  color: var(--pc-dim);
 }
 
 .pc-head { display: flex; justify-content: space-between; gap: 16pt; align-items: flex-start; }
-.pc-contact { margin: 3pt 0 0; font-size: 9.5pt; color: #333; }
+.pc-ident { display: flex; gap: 10pt; align-items: flex-start; }
+/* Capped by height so a wide logo and a square one both sit on the same
+   line as the name rather than one of them setting the letterhead's size. */
+.pc-logo { height: 34pt; width: auto; max-width: 150pt; object-fit: contain; }
+.pc-contact { margin: 3pt 0 0; font-size: 9.5pt; color: var(--pc-dim); }
 
 /* The number is what somebody quotes back on the phone, so it is the one
    thing on the page that can be read at arm's length. */
 .pc-ref { text-align: right; white-space: nowrap; }
-.pc-ref-k { display: block; font-size: 8pt; text-transform: uppercase; letter-spacing: 0.08em; color: #444; }
-.pc-ref-v { display: block; font-size: 14pt; font-weight: 700; }
-.pc-ref-s { display: block; font-size: 9pt; color: #333; }
+.pc-ref-k { display: block; font-size: 8pt; text-transform: uppercase; letter-spacing: 0.08em; color: var(--pc-dim); }
+.pc-ref-v { display: block; font-size: 14pt; font-weight: 700; color: var(--pc-navy); }
+/* Only ever "Cancelled", and it has to be impossible to miss. */
+.pc-ref-x {
+  display: inline-block;
+  margin-top: 2pt;
+  padding: 1pt 5pt;
+  border: 1.5pt solid #b3261e;
+  color: #b3261e;
+  font-size: 9pt;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
 
 .pc-cols { display: flex; gap: 22pt; }
 .pc-cols > section { flex: 1; }
@@ -1303,11 +1330,19 @@ label.finance-toggle {
   padding: 2.5pt 0;
   border-bottom: 1px dotted #bbb;
 }
-.pc-line > span:first-child { color: #333; }
+.pc-line > span:first-child { color: var(--pc-dim); }
 .pc-line > span:last-child { font-weight: 600; text-align: right; }
 
-.pc-total { border-bottom: 1px solid #000; border-top: 1px solid #000; font-size: 12pt; margin-top: 4pt; }
-.pc-total > span { font-weight: 700; }
+.pc-total {
+  border-top: 2px solid var(--pc-gold);
+  border-bottom: 1px solid var(--pc-navy);
+  font-size: 12pt;
+  margin-top: 4pt;
+}
+.pc-total > span { font-weight: 700; color: var(--pc-navy); }
+
+/* The deposit, said once and outside the column that adds up. */
+.pc-note { margin: 6pt 0 0; font-size: 8.5pt; line-height: 1.35; color: var(--pc-dim); }
 /* What is still owed is the line the customer looks for, and the one a
    handover argument turns on. */
 .pc-balance > span:last-child { font-size: 12pt; font-weight: 700; }
@@ -1325,8 +1360,8 @@ label.finance-toggle {
 }
 .pc-rules li { padding: 1pt 0; break-inside: avoid; }
 
-.pc-foot { margin-top: 16pt; padding-top: 6pt; border-top: 1px solid #000; font-size: 9.5pt; color: #333; }
-.pc-issued { display: block; margin-top: 3pt; color: #666; }
+.pc-foot { margin-top: 14pt; padding-top: 6pt; border-top: 1px solid var(--pc-navy); font-size: 9.5pt; color: var(--pc-dim); }
+.pc-issued { display: block; margin-top: 3pt; color: #777; }
 
 @media (max-width: 900px) {
   .stat-grid, .stat-grid-4 { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }

@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 require_once __DIR__ . '/content.php';
+require_once __DIR__ . '/site-images.php';
 
 /**
  * Who the business is, for a document a customer keeps.
@@ -49,6 +50,19 @@ function business_details(): array
         }
     } catch (Throwable) {
         // Leave it empty; the rest of the letterhead still stands.
+    }
+
+    // The logo, if one has been uploaded. Printed as an <img> rather than a
+    // background, because a browser printing a page leaves backgrounds out
+    // by default and the letterhead would silently lose its mark.
+    try {
+        $images = site_images();
+        if (!empty($images['logo'])) {
+            $out['logo'] = site_image_url($images['logo']);
+            $out['logoFallback'] = 'brand.php?f=' . rawurlencode((string) $images['logo']);
+        }
+    } catch (Throwable) {
+        // No logo line. The name above it still says who sent this.
     }
 
     return $out;
