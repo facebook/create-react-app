@@ -9,6 +9,7 @@ require_once __DIR__ . '/src/vocab.php';
 require_once __DIR__ . '/src/booking.php';
 require_once __DIR__ . '/src/migrate.php';
 require_once __DIR__ . '/src/shell.php';
+require_once __DIR__ . '/src/business.php';
 
 // Anyone reaching this page must already be signed in; require_login sends
 // them to the sign-in form otherwise.
@@ -1044,6 +1045,15 @@ admin_shell_open($me, 'dashboard', 'Dashboard', true, $migrationError);
       </form>
     </div>
   </div>
+
+  <!-- Who the business is, for the booking confirmation a customer is given.
+       Written once into the page rather than fetched: it is four lines that
+       change twice a year, and a document somebody is about to hand over
+       should not be waiting on a request to find out who sent it. -->
+  <script type="application/json" id="businessDetails"><?= json_encode(
+      business_details(),
+      JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT
+  ) ?></script>
 
   <script src="<?= asset('api.js') ?>"></script>
   <script src="<?= asset('car-data.js') ?>"></script>
