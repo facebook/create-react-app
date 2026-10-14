@@ -211,6 +211,70 @@
       "imageAlt": "Self drive cars and bikes for hire in Azhagiapandipuram, Kanyakumari district"
     },
     {
+      "path": "/car-rental/thovalai",
+      "title": "Self Drive Car Rental in Thovalai — On the Madurai Road",
+      "description": "Self drive car rental in Thovalai, delivered to your door. Twelve kilometres from Nagercoil on the Madurai road. Bikes too. Call +91 63749 42976.",
+      "priority": "0.7",
+      "imageSlot": "cars-hero",
+      "imageAlt": "Self drive cars and bikes for hire in Thovalai, Kanyakumari district"
+    },
+    {
+      "path": "/car-rental/kulasekharam",
+      "title": "Self Drive Car Rental in Kulasekharam — Falls and Hill Country",
+      "description": "Self drive car rental in Kulasekharam, delivered to your door. The north of Kanyakumari district, near Thirparappu Falls and Pechiparai. Call +91 63749 42976.",
+      "priority": "0.7",
+      "imageSlot": "cars-hero",
+      "imageAlt": "Self drive cars and bikes for hire in Kulasekharam, Kanyakumari district"
+    },
+    {
+      "path": "/car-rental/karungal",
+      "title": "Self Drive Car Rental in Karungal — Delivered to Your Door",
+      "description": "Self drive car rental in Karungal, delivered to your door. Market town between Marthandam and the coast. Bikes too. Call +91 63749 42976.",
+      "priority": "0.7",
+      "imageSlot": "cars-hero",
+      "imageAlt": "Self drive cars and bikes for hire in Karungal, Kanyakumari district"
+    },
+    {
+      "path": "/car-rental/muttom",
+      "title": "Self Drive Car Rental in Muttom — Lighthouse and Rocky Coast",
+      "description": "Self drive car rental in Muttom, delivered to your door or your hotel. The lighthouse, the rocks and the coast road west of Nagercoil. Call +91 63749 42976.",
+      "priority": "0.7",
+      "imageSlot": "cars-hero",
+      "imageAlt": "Self drive cars and bikes for hire in Muttom, Kanyakumari district"
+    },
+    {
+      "path": "/car-rental/manavalakurichi",
+      "title": "Self Drive Car Rental in Manavalakurichi — Coast and Town",
+      "description": "Self drive car rental in Manavalakurichi, delivered to your door. On the west coast near Colachel, twenty-two kilometres from Nagercoil. Call +91 63749 42976.",
+      "priority": "0.7",
+      "imageSlot": "cars-hero",
+      "imageAlt": "Self drive cars and bikes for hire in Manavalakurichi, Kanyakumari district"
+    },
+    {
+      "path": "/car-rental/mandaikadu",
+      "title": "Self Drive Car Rental in Mandaikadu — Temple Town on the Coast",
+      "description": "Self drive car rental in Mandaikadu, delivered to your door. For the Bhagavathy Amman temple, the March festival and the coast. Call +91 63749 42976.",
+      "priority": "0.7",
+      "imageSlot": "cars-hero",
+      "imageAlt": "Self drive cars and bikes for hire in Mandaikadu, Kanyakumari district"
+    },
+    {
+      "path": "/car-rental/kaliyakkavilai",
+      "title": "Self Drive Car Rental in Kaliyakkavilai — At the Kerala Border",
+      "description": "Self drive car rental in Kaliyakkavilai, delivered to your door. The last town before Kerala, on the Thiruvananthapuram road. Call +91 63749 42976.",
+      "priority": "0.7",
+      "imageSlot": "cars-hero",
+      "imageAlt": "Self drive cars and bikes for hire in Kaliyakkavilai, Kanyakumari district"
+    },
+    {
+      "path": "/car-rental/thiruvithancode",
+      "title": "Self Drive Car Rental in Thiruvithancode — Delivered to You",
+      "description": "Self drive car rental in Thiruvithancode, delivered to your door. Near the Arappally church, between Thuckalay and Marthandam. Call +91 63749 42976.",
+      "priority": "0.7",
+      "imageSlot": "cars-hero",
+      "imageAlt": "Self drive cars and bikes for hire in Thiruvithancode, Kanyakumari district"
+    },
+    {
       "path": "/cars/swift",
       "title": "Swift Self Drive Car Rental in Nagercoil & Kanyakumari",
       "description": "Rent a Maruti Swift without a driver in Nagercoil and across Kanyakumari district. Petrol, manual, 5 seats. Clear KM limit and a deposit you get back.",
