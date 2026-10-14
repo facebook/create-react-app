@@ -2222,6 +2222,9 @@ function printConfirmation(booking) {
 
   const addr = (biz.address || []).map((l) => escapeHTML(l)).join('<br>');
   const balance = Number(booking.balance) || 0;
+  // Written by the owner in Website content. None written means no terms
+  // section, rather than a document carrying rules nobody agreed to.
+  const terms = ((biz.terms || {}).items || []).filter((t) => String(t || '').trim() !== '');
 
   const html = `
     <div class="pc-head">
@@ -2260,6 +2263,7 @@ function printConfirmation(booking) {
       </section>
     </div>
 
+    <div class="pc-cols">
     <section class="pc-terms">
       <h3>What was agreed</h3>
       ${c.rate_daily ? line('Daily rate', formatINR(c.rate_daily)) : ''}
@@ -2284,6 +2288,13 @@ function printConfirmation(booking) {
       <div class="pc-line pc-balance"><span>${balance > 0 ? 'Still to pay' : 'Balance'}</span><span>${formatINR(balance)}</span></div>
       ${money('Deposit held', booking.deposit_held)}
     </section>
+    </div>
+
+    ${terms.length ? `
+      <section class="pc-rules">
+        <h3>${escapeHTML((biz.terms && biz.terms.heading) || 'Terms')}</h3>
+        <ol>${terms.map((t) => `<li>${escapeHTML(t)}</li>`).join('')}</ol>
+      </section>` : ''}
 
     <p class="pc-foot">
       Please bring the licence used to book, and an ID.

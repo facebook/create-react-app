@@ -53,3 +53,34 @@ function business_details(): array
 
     return $out;
 }
+
+/**
+ * The terms printed at the foot of a booking confirmation.
+ *
+ * Written by the owner in Website content, because they are the business's
+ * terms and not this file's to invent. An empty list means the confirmation
+ * prints no terms section at all, which is the honest result of nobody
+ * having written any -- better than a document carrying rules the business
+ * never agreed to and cannot stand behind.
+ */
+function booking_terms(): array
+{
+    try {
+        $section = content_section('home', 'bookingTerms');
+    } catch (Throwable) {
+        return ['heading' => '', 'items' => []];
+    }
+
+    $items = [];
+    foreach ((array) ($section['items'] ?? []) as $row) {
+        $term = trim((string) (is_array($row) ? ($row['term'] ?? '') : $row));
+        if ($term !== '') {
+            $items[] = $term;
+        }
+    }
+
+    return [
+        'heading' => trim((string) ($section['heading'] ?? '')) ?: 'Terms',
+        'items'   => $items,
+    ];
+}

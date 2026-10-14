@@ -1051,7 +1051,7 @@ admin_shell_open($me, 'dashboard', 'Dashboard', true, $migrationError);
        change twice a year, and a document somebody is about to hand over
        should not be waiting on a request to find out who sent it. -->
   <script type="application/json" id="businessDetails"><?= json_encode(
-      business_details(),
+      business_details() + ['terms' => booking_terms()],
       JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT
   ) ?></script>
 

@@ -1312,6 +1312,19 @@ label.finance-toggle {
    handover argument turns on. */
 .pc-balance > span:last-child { font-size: 12pt; font-weight: 700; }
 
+/* The terms. Numbered, because "point 4" is how somebody refers to one on
+   the phone, and smaller than the booking itself: they are the fine print
+   and should not compete with the dates and the figures above them. */
+.pc-rules { margin-top: 14pt; }
+.pc-rules ol {
+  margin: 0;
+  padding-left: 14pt;
+  font-size: 9pt;
+  line-height: 1.4;
+  color: #222;
+}
+.pc-rules li { padding: 1pt 0; break-inside: avoid; }
+
 .pc-foot { margin-top: 16pt; padding-top: 6pt; border-top: 1px solid #000; font-size: 9.5pt; color: #333; }
 .pc-issued { display: block; margin-top: 3pt; color: #666; }
 

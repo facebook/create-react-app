@@ -142,6 +142,30 @@ function content_schema(): array
                         ],
                     ],
                 ],
+                /* Not on the website. It is here because this is where the
+                   owner already edits the words the business says, and a
+                   second place to edit words is a second place to forget. The
+                   label and the note say where it actually comes out. */
+                'bookingTerms' => [
+                    'label'  => 'Booking terms (printed on confirmations)',
+                    'note'   => 'These do not appear on the website. They print at the bottom of the '
+                        . 'booking confirmation you hand to a customer or send on WhatsApp, so they are '
+                        . 'what you can point at later if there is a disagreement. Worth covering: fuel, '
+                        . 'what happens if the car comes back late, what the deposit covers and when it '
+                        . 'is returned, who pays a fine or a toll, and what to do after an accident. '
+                        . 'One line each, written plainly. Leave it empty and the confirmation simply '
+                        . 'has no terms section.',
+                    'fields' => [
+                        'heading' => ['label' => 'Heading', 'type' => 'text'],
+                        'items'   => [
+                            'label'  => 'Terms',
+                            'type'   => 'repeater',
+                            'fields' => [
+                                'term' => ['label' => 'Term', 'type' => 'textarea'],
+                            ],
+                        ],
+                    ],
+                ],
                 'closingCta' => [
                     'label'  => 'Closing call to action',
                     'fields' => [
