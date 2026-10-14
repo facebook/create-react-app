@@ -1238,7 +1238,82 @@ label.finance-toggle {
   .ns { display: block; }
   .ns-content { max-width: none; padding: 0; }
   .report-results { border: none; }
+
+  /* Printing a booking confirmation is a different job from printing a
+     report: the report is this screen on paper, the confirmation is a
+     document for somebody who will never see this screen. So the panel goes
+     entirely and the sheet is all that is left. */
+  body.is-printing-confirmation > *:not(#bookingConfirmation) { display: none !important; }
+  body.is-printing-confirmation #bookingConfirmation { display: block; }
+
+  @page { margin: 14mm; }
 }
+
+/* ---------------------------------------------------------------------------
+   The booking confirmation.
+
+   Built into the page and shown only while printing, rather than opened in a
+   second window: a popup blocker cannot stop it, and it prints the same from
+   a phone at the handover counter as from a laptop.
+
+   Black on white and nothing else. It is read on paper or in a messaging app,
+   where the panel's cream and gold cost ink and legibility and buy nothing.
+--------------------------------------------------------------------------- */
+#bookingConfirmation {
+  display: none;
+  color: #000;
+  background: #fff;
+  font-size: 11pt;
+  line-height: 1.45;
+}
+
+#bookingConfirmation h1 { font-size: 16pt; margin: 0; letter-spacing: -0.01em; }
+#bookingConfirmation h2.pc-title {
+  font-size: 13pt;
+  margin: 14pt 0 8pt;
+  padding-bottom: 4pt;
+  border-bottom: 1px solid #000;
+}
+#bookingConfirmation h3 {
+  font-size: 9pt;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin: 0 0 4pt;
+  color: #444;
+}
+
+.pc-head { display: flex; justify-content: space-between; gap: 16pt; align-items: flex-start; }
+.pc-contact { margin: 3pt 0 0; font-size: 9.5pt; color: #333; }
+
+/* The number is what somebody quotes back on the phone, so it is the one
+   thing on the page that can be read at arm's length. */
+.pc-ref { text-align: right; white-space: nowrap; }
+.pc-ref-k { display: block; font-size: 8pt; text-transform: uppercase; letter-spacing: 0.08em; color: #444; }
+.pc-ref-v { display: block; font-size: 14pt; font-weight: 700; }
+.pc-ref-s { display: block; font-size: 9pt; color: #333; }
+
+.pc-cols { display: flex; gap: 22pt; }
+.pc-cols > section { flex: 1; }
+#bookingConfirmation section { margin-top: 12pt; break-inside: avoid; }
+
+.pc-line {
+  display: flex;
+  justify-content: space-between;
+  gap: 12pt;
+  padding: 2.5pt 0;
+  border-bottom: 1px dotted #bbb;
+}
+.pc-line > span:first-child { color: #333; }
+.pc-line > span:last-child { font-weight: 600; text-align: right; }
+
+.pc-total { border-bottom: 1px solid #000; border-top: 1px solid #000; font-size: 12pt; margin-top: 4pt; }
+.pc-total > span { font-weight: 700; }
+/* What is still owed is the line the customer looks for, and the one a
+   handover argument turns on. */
+.pc-balance > span:last-child { font-size: 12pt; font-weight: 700; }
+
+.pc-foot { margin-top: 16pt; padding-top: 6pt; border-top: 1px solid #000; font-size: 9.5pt; color: #333; }
+.pc-issued { display: block; margin-top: 3pt; color: #666; }
 
 @media (max-width: 900px) {
   .stat-grid, .stat-grid-4 { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }

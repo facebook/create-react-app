@@ -2183,6 +2183,139 @@ function timelineHTML(entries) {
     </li>`).join('')}</ul>`;
 }
 
+/**
+ * The booking confirmation a customer is given.
+ *
+ * Printed rather than generated as a file: the browser's own print dialogue
+ * saves a PDF on every machine and phone the panel is used from, with no
+ * library to ship and nothing to install on the server. What it costs is one
+ * extra step -- choose "Save as PDF" -- and what it buys is a document that
+ * works the first time on a phone at a handover counter.
+ *
+ * The filename is the thing that makes it sendable, and browsers take it
+ * from document.title. So the title becomes the booking number for the
+ * length of the dialogue and is put back afterwards: a customer receives
+ * NSC-2026-0024.pdf rather than dashboard.pdf, and knows what it is before
+ * opening it.
+ *
+ * Everything on it is already on the booking. Nothing is recalculated here --
+ * a confirmation that disagrees with the record is worse than no
+ * confirmation, so this only ever reads.
+ */
+function businessDetails() {
+  const el = document.getElementById('businessDetails');
+  try {
+    return el ? JSON.parse(el.textContent) : {};
+  } catch {
+    return {};
+  }
+}
+
+function printConfirmation(booking) {
+  const biz = businessDetails();
+  const c = booking.charges || {};
+  const line = (k, v) => `<div class="pc-line"><span>${k}</span><span>${v}</span></div>`;
+  // A figure worth printing. Zero rows are left off: a confirmation listing
+  // "Discount ₹0" invites the question of what the discount was.
+  const money = (k, v, always = false) =>
+    (Number(v) || always) ? line(k, formatINR(v)) : '';
+
+  const addr = (biz.address || []).map((l) => escapeHTML(l)).join('<br>');
+  const balance = Number(booking.balance) || 0;
+
+  const html = `
+    <div class="pc-head">
+      <div>
+        <h1>${escapeHTML(biz.name || 'Booking confirmation')}</h1>
+        <p class="pc-contact">
+          ${biz.phone ? escapeHTML(biz.phone) : ''}${biz.phone && biz.email ? ' · ' : ''}${biz.email ? escapeHTML(biz.email) : ''}
+          ${addr ? `<br>${addr}` : ''}
+        </p>
+      </div>
+      <div class="pc-ref">
+        <span class="pc-ref-k">Booking</span>
+        <span class="pc-ref-v">${escapeHTML(booking.booking_number)}</span>
+        <span class="pc-ref-s">${escapeHTML(booking.status)}</span>
+      </div>
+    </div>
+
+    <h2 class="pc-title">Booking confirmation</h2>
+
+    <div class="pc-cols">
+      <section>
+        <h3>Who it is for</h3>
+        ${line('Name', escapeHTML(booking.customer_name))}
+        ${line('Phone', escapeHTML(booking.customer_phone))}
+        ${booking.customer_address ? line('Address', escapeHTML(booking.customer_address)) : ''}
+        ${booking.licence_number ? line('Licence no.', escapeHTML(booking.licence_number)) : ''}
+      </section>
+
+      <section>
+        <h3>The vehicle</h3>
+        ${line('Vehicle', escapeHTML(booking.vehicle_name))}
+        ${booking.vehicle_reg ? line('Registration', escapeHTML(booking.vehicle_reg)) : ''}
+        ${line('From', formatDateTime(booking.start_at))}
+        ${line('Until', formatDateTime(booking.return_at))}
+        ${line('Days', String(booking.duration_days))}
+      </section>
+    </div>
+
+    <section class="pc-terms">
+      <h3>What was agreed</h3>
+      ${c.rate_daily ? line('Daily rate', formatINR(c.rate_daily)) : ''}
+      ${c.km_limit_per_day ? line('KM included', `${c.km_limit_per_day} km a day`) : ''}
+      ${c.extra_km_rate ? line('Beyond that', `${formatINR(c.extra_km_rate)} a km`) : ''}
+      ${c.deposit_required ? line('Deposit', formatINR(c.deposit_required)) : ''}
+    </section>
+
+    <section class="pc-money">
+      <h3>The money</h3>
+      ${money('Rental', c.base_rental, true)}
+      ${money('Other charges', c.other_charges)}
+      ${/* Negated, because the total already has it taken off. Printed as a
+            plain 500 it reads as another charge, and a customer adding the
+            column up finds it does not reach the total -- which is exactly
+            the sort of thing that turns a handover into an argument. */
+        money('Discount', -Math.abs(Number(c.discount) || 0))}
+      ${money('Extra KM', (booking.km || {}).extra_km_charge)}
+      ${money('Extras', booking.extras_total)}
+      <div class="pc-line pc-total"><span>Total</span><span>${formatINR(booking.total)}</span></div>
+      ${money('Received', booking.paid, true)}
+      <div class="pc-line pc-balance"><span>${balance > 0 ? 'Still to pay' : 'Balance'}</span><span>${formatINR(balance)}</span></div>
+      ${money('Deposit held', booking.deposit_held)}
+    </section>
+
+    <p class="pc-foot">
+      Please bring the licence used to book, and an ID.
+      ${biz.phone ? `Any question before pickup, call ${escapeHTML(biz.phone)}.` : ''}
+      <span class="pc-issued">Issued ${formatDate(new Date().toISOString())}</span>
+    </p>`;
+
+  let sheet = document.getElementById('bookingConfirmation');
+  if (!sheet) {
+    sheet = document.createElement('div');
+    sheet.id = 'bookingConfirmation';
+    document.body.appendChild(sheet);
+  }
+  sheet.innerHTML = html;
+
+  const title = document.title;
+  document.title = `${booking.booking_number} — ${biz.name || 'Booking confirmation'}`;
+  document.body.classList.add('is-printing-confirmation');
+
+  // Put the page back whichever way the dialogue ends. afterprint does not
+  // fire everywhere, so the timer is the one that always runs; both are
+  // written to be safe twice.
+  const restore = () => {
+    document.body.classList.remove('is-printing-confirmation');
+    document.title = title;
+  };
+  window.addEventListener('afterprint', restore, { once: true });
+  setTimeout(restore, 1000);
+
+  window.print();
+}
+
 async function renderBookingDetail(id) {
   const view = document.getElementById('bookingDetailView');
 
@@ -2505,6 +2638,7 @@ async function renderBookingDetail(id) {
             ${formatDate(booking.start_at)} → ${formatDate(booking.return_at)}</p>
         </div>
         <div class="rec-hero-act">
+          <button class="btn btn-ghost btn-sm" id="detailConfirmationBtn">Confirmation</button>
           ${open ? '<button class="btn btn-ghost btn-sm" id="detailEditBtn">Edit</button>' : ''}
           ${open ? '<button class="btn btn-ghost btn-sm" id="detailCancelBtn">Cancel Booking</button>' : ''}
           ${open ? '<button class="btn btn-primary btn-sm" id="detailCompleteBtn">Mark Completed</button>' : ''}
@@ -2602,6 +2736,8 @@ function wireDetailActions(booking) {
       } catch (err) { showError(err); }
     });
   });
+
+  on('detailConfirmationBtn', () => printConfirmation(booking));
 
   // The form opens over the record rather than in place of it: saving
   // re-renders what is behind, so you end up back where you were.
