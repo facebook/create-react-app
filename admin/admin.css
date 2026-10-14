@@ -1244,7 +1244,14 @@ label.finance-toggle {
      document for somebody who will never see this screen. So the panel goes
      entirely and the sheet is all that is left. */
   body.is-printing-confirmation > *:not(#bookingConfirmation) { display: none !important; }
-  body.is-printing-confirmation #bookingConfirmation { display: block; }
+  /* A column, so the closing strip can be pushed to the foot of the paper
+     with margin-top:auto rather than left wherever the text happened to
+     stop. On a short booking that was two thirds of the way up the page,
+     with the rest blank under it. */
+  body.is-printing-confirmation #bookingConfirmation {
+    display: flex;
+    flex-direction: column;
+  }
 
   @page { margin: 14mm; }
 
@@ -1465,8 +1472,12 @@ label.finance-toggle {
   display: flex;
   align-items: flex-start;
   gap: 8pt;
-  margin: 12pt 16pt 0;
-  padding-top: 7pt;
+  /* Pushed to the foot of the sheet. Everything above it keeps its natural
+     height, so on a booking with eight terms the strip lands just under
+     them and on a bare one it still rules off the bottom of the page. */
+  margin: 14pt 16pt 0;
+  margin-top: auto;
+  padding: 7pt 0 14pt;
   border-top: 2pt solid var(--pc-gold);
   font-size: 9pt;
   color: var(--pc-navy);
@@ -1475,16 +1486,17 @@ label.finance-toggle {
 .pc-foot .pc-ico { width: 17pt; height: 17pt; }
 .pc-foot .pc-ico svg { width: 10pt; height: 10pt; }
 .pc-issued { display: block; margin-top: 2pt; font-size: 8pt; color: var(--pc-dim); }
+.pc-nb { white-space: nowrap; }
 
-/* The mark again, faint, behind the foot of the page. Decorative: it says
-   nothing the letterhead has not, so it is the one thing here that may
-   safely be dropped by a printer set to save ink. */
+/* The mark again at the right end of the closing strip, faint. Decorative:
+   it says nothing the letterhead has not, so it is the one thing here that
+   may safely be dropped by a printer set to save ink. */
 .pc-watermark {
-  position: absolute;
-  right: 18pt;
-  bottom: 14pt;
-  width: 110pt;
-  opacity: 0.08;
+  flex: none;
+  margin-left: auto;
+  align-self: center;
+  width: 62pt;
+  opacity: 0.2;
 }
 
 @media (max-width: 900px) {

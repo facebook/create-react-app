@@ -2270,6 +2270,10 @@ async function printConfirmation(booking) {
   const cancelled = booking.status === 'Cancelled';
   const finished = booking.status === 'Completed' || booking.status === 'Returned';
 
+  /* A phone number has a space in it, so a line can break through the
+     middle of it and leave the customer half a number to dial. */
+  const nb = (t) => `<span class="pc-nb">${escapeHTML(t)}</span>`;
+
   const card = (icon, title, body, cls = '') => `
     <section class="pc-card${cls ? ` ${cls}` : ''}">
       <h3>${pcIcon(icon)}<span>${title}</span></h3>
@@ -2358,17 +2362,20 @@ async function printConfirmation(booking) {
       <p>
         ${cancelled
           ? `This booking is cancelled. The car is not held and nothing is to be brought.
-             ${biz.phone ? `To book again, call ${escapeHTML(biz.phone)}.` : ''}`
+             ${biz.phone ? `To book again, call ${nb(biz.phone)}.` : ''}`
           : finished
             ? `This hire is finished and the car is back.
-               ${biz.phone ? `Any question about it, call ${escapeHTML(biz.phone)}.` : ''}`
+               ${biz.phone ? `Any question about it, call ${nb(biz.phone)}.` : ''}`
             : `Please bring the original licence used to book the car, and an ID.
-               ${biz.phone ? `Any question before pickup, call ${escapeHTML(biz.phone)}.` : ''}`}
+               ${biz.phone ? `Any question before pickup, call ${nb(biz.phone)}.` : ''}`}
         <span class="pc-issued">Issued ${formatDate(new Date().toISOString())}</span>
       </p>
-    </div>
-
-    ${biz.logo ? `<img class="pc-watermark" src="${escapeHTML(biz.logo)}" alt="">` : ''}`;
+      ${/* The mark rides in the closing strip rather than floating loose on
+            the page. Absolutely positioned it anchored to the paper, which
+            on a booking with terms put it straight through them; here it
+            has a place of its own and cannot land on anything. */
+        biz.logo ? `<img class="pc-watermark" src="${escapeHTML(biz.logo)}" alt="">` : ''}
+    </div>`;
 
   let sheet = document.getElementById('bookingConfirmation');
   if (!sheet) {
