@@ -10,6 +10,18 @@ require_once __DIR__ . '/src/booking.php';
 require_once __DIR__ . '/src/migrate.php';
 require_once __DIR__ . '/src/shell.php';
 require_once __DIR__ . '/src/business.php';
+require_once __DIR__ . '/src/phone.php';
+/** The country-code select that sits in front of a phone input. */
+function dial_select(string $id, string $selected = DIAL_DEFAULT): string
+{
+    $out = '<select class="dial-code" id="' . e($id) . '" aria-label="Country code">';
+    foreach (DIAL_CODES as $entry) {
+        $on = $entry['code'] === $selected ? ' selected' : '';
+        $out .= '<option value="' . e($entry['code']) . '"' . $on . '>'
+             . e($entry['code']) . ' ' . e($entry['name']) . '</option>';
+    }
+    return $out . '</select>';
+}
 
 // Anyone reaching this page must already be signed in; require_login sends
 // them to the sign-in form otherwise.
@@ -320,6 +332,65 @@ admin_shell_open($me, 'dashboard', 'Dashboard', true, $migrationError);
        what is about to be removed, and everything else that used to be
        crammed into a browser confirm(), is built there instead of marked up
        on this page. -->
+  <!-- ===== Correct a customer's enquiry ===== -->
+  <div class="modal-overlay" id="enquiryEditOverlay" hidden>
+    <div class="modal modal-wide">
+      <h3>Correct enquiry details</h3>
+      <p class="modal-note">What the customer typed. The original is kept in the audit log.</p>
+      <form id="enquiryEditForm">
+        <input type="hidden" id="enqEditId" />
+        <div class="modal-row">
+          <div class="field-group">
+            <label for="enqEditName">Name</label>
+            <input type="text" id="enqEditName" required />
+          </div>
+          <div class="field-group">
+            <label for="enqEditPhone">Phone Number</label>
+            <div class="phone-field"><?= dial_select('enqEditPhoneCode') ?>
+            <input type="tel" id="enqEditPhone" required inputmode="numeric" /></div>
+            <p class="field-hint" id="enqEditPhoneHint"></p>
+          </div>
+        </div>
+        <div class="modal-row">
+          <div class="field-group">
+            <label for="enqEditEmail">Email</label>
+            <input type="email" id="enqEditEmail" placeholder="Optional" />
+          </div>
+          <div class="field-group">
+            <label for="enqEditVehicle">Vehicle asked for</label>
+            <select id="enqEditVehicle"><option value="">Not specified</option></select>
+          </div>
+        </div>
+        <div class="modal-row modal-row-3">
+          <div class="field-group">
+            <label for="enqEditStart">Start date</label>
+            <input type="date" id="enqEditStart" />
+          </div>
+          <div class="field-group">
+            <label for="enqEditReturn">Return date</label>
+            <input type="date" id="enqEditReturn" />
+          </div>
+          <div class="field-group">
+            <label for="enqEditPickup">Pickup</label>
+            <input type="text" id="enqEditPickup" maxlength="190" placeholder="e.g. Nagercoil Junction" />
+          </div>
+        </div>
+        <div class="field-group">
+          <label for="enqEditRequirements">Requirements</label>
+          <textarea id="enqEditRequirements" rows="2"></textarea>
+        </div>
+        <div class="field-group">
+          <label for="enqEditMessage">Message</label>
+          <textarea id="enqEditMessage" rows="3"></textarea>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-ghost" id="enqEditCancel">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save corrections</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <div class="modal-overlay" id="expenseModalOverlay" hidden>
         <div class="modal">
           <h3 id="expenseModalTitle">Record Expense</h3>
@@ -472,7 +543,7 @@ admin_shell_open($me, 'dashboard', 'Dashboard', true, $migrationError);
         <div class="modal-row" data-partner-only hidden>
           <div class="field-group">
             <label for="carOwnerPhone">Car owner's phone</label>
-            <input type="tel" id="carOwnerPhone" placeholder="Optional" />
+            <div class="phone-field"><?= dial_select('carOwnerPhoneCode') ?><input type="tel" id="carOwnerPhone" inputmode="numeric" placeholder="Optional" /></div><p class="field-hint" id="carOwnerPhoneHint"></p>
           </div>
           <div class="field-group">
             <label class="finance-toggle" for="carTemporary">
@@ -612,10 +683,10 @@ admin_shell_open($me, 'dashboard', 'Dashboard', true, $migrationError);
         <p class="modal-section-label">Customer Details</p>
         <div class="modal-row">
           <div class="field-group"><label for="bkCustomerName">Customer Name</label><input type="text" id="bkCustomerName" required placeholder="e.g. Ravi Kumar" /></div>
-          <div class="field-group"><label for="bkPhone">Phone Number</label><input type="tel" id="bkPhone" required placeholder="e.g. 9876543210" /></div>
+          <div class="field-group"><label for="bkPhone">Phone Number</label><div class="phone-field"><?= dial_select('bkPhoneCode') ?><input type="tel" id="bkPhone" required inputmode="numeric" autocomplete="tel-national" placeholder="9876543210" /></div><p class="field-hint" id="bkPhoneHint"></p></div>
         </div>
         <div class="modal-row">
-          <div class="field-group"><label for="bkAddress">Address</label><input type="text" id="bkAddress" placeholder="e.g. HSR Layout, Bengaluru" /></div>
+          <div class="field-group"><label for="bkAddress">Address</label><textarea id="bkAddress" rows="3" placeholder="Door and street&#10;Town&#10;District and PIN"></textarea></div>
           <div class="field-group"><label for="bkLicence">Driving Licence Number</label><input type="text" id="bkLicence" required placeholder="e.g. KA0120230012345" /></div>
         </div>
 
@@ -623,7 +694,9 @@ admin_shell_open($me, 'dashboard', 'Dashboard', true, $migrationError);
         <div class="modal-row">
           <div class="field-group">
             <label for="bkWhatsapp">WhatsApp Number</label>
-            <input type="tel" id="bkWhatsapp" placeholder="If different from the phone number" />
+            <div class="phone-field"><?= dial_select('bkWhatsappCode') ?>
+            <input type="tel" id="bkWhatsapp" inputmode="numeric" placeholder="If different from the phone" /></div>
+            <p class="field-hint" id="bkWhatsappHint"></p>
           </div>
           <div class="field-group">
             <label for="bkLicenceExpiry">Licence Expiry</label>
@@ -675,7 +748,7 @@ admin_shell_open($me, 'dashboard', 'Dashboard', true, $migrationError);
 
         <p class="modal-section-label">Charges</p>
         <div class="modal-row modal-row-3">
-          <div class="field-group"><label for="bkRentalAmount">Rental Amount (₹)</label><input type="number" id="bkRentalAmount" required min="0" placeholder="9000" /></div>
+          <div class="field-group"><label for="bkRentalAmount">Rental Amount (₹)</label><input type="number" id="bkRentalAmount" required min="0" placeholder="9000" /><p class="rate-suggest" id="bkRentalSuggest" hidden><span id="bkRentalSuggestText"></span> <button type="button" class="btn-link" id="bkRentalApply">Use this</button></p></div>
           <div class="field-group"><label for="bkKmLimit">KM Limit / day</label><input type="number" id="bkKmLimit" required min="0" placeholder="200" /></div>
           <div class="field-group"><label for="bkExtraKmRate">Extra KM Rate (₹)</label><input type="number" id="bkExtraKmRate" required min="0" placeholder="10" /></div>
         </div>
