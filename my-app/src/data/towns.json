@@ -9,7 +9,7 @@
       "distanceKm": 0,
       "knownFor": "being the headquarters of Kanyakumari district, and for being the easiest place in it to pick up a self drive car",
       "intro": "Nagercoil is where our rental cars and bikes are kept, so a self drive car here is the quickest in the district to arrange. We hand over at Nagercoil Junction, at Nagercoil Town railway station, at the Vadasery bus stand, at your hotel or at your own door — usually the same day, and often within the hour.",
-      "local": "Most self drive car rentals in Nagercoil start in one of three places: the junction, the Vadasery bus stand, or a house in town. The centre is built around the Nagaraja temple and the traffic through it is heavy for most of the day, so anyone driving here for the first time is better off on the bypass than the old town roads, and parking near the market is easier before ten in the morning. For errands inside town a scooter is the easier thing; a car earns its keep the moment you leave Nagercoil, which is what most of our rentals here are for — the coast, the temples, or a run up towards Tirunelveli.",
+      "local": "Most self drive car rentals in Nagercoil start in one of three places: the junction, the Vadasery bus stand, or a house in town. The centre is built around the Nagaraja temple and the traffic through it is heavy for most of the day, so anyone driving here for the first time is better off on the bypass than the old town roads, and parking near the market is easier before ten in the morning. For errands inside town a scooter is the easier thing; a car earns its keep the moment you leave Nagercoil, which is what most of our rentals here are for — the coast, the temples, or a run up towards Tirunelveli. If you want something particular, say so when you book rather than on the day. A 7 seater car rental in Nagercoil means the Rumion or the Innova and we hold two of them, not a row; an automatic car rental in Nagercoil means the Glanza, and there is one. The cheapest car rental in Nagercoil we do is one of the small hatchbacks, the WagonR or the Grand i10 — the tariff page carries the rate for every car, the KM it includes and what a kilometre beyond that costs.",
       "landmarks": [
         "Nagaraja Temple, in the centre of town",
         "Nagercoil Junction, on the Thiruvananthapuram line — we deliver to the station",
@@ -48,7 +48,7 @@
       "distanceKm": 20,
       "knownFor": "the southern tip of the mainland, and the reason most visitors come to the district",
       "intro": "Almost everyone who rents a vehicle in Kanyakumari is staying a night or two and wants to see more than the tip itself. A car for a day covers the temples inland and the coast road west, which no tour bus timetable will give you, and a two wheeler is the easier thing for getting around the town itself.",
-      "local": "The streets around the ferry and the beach are narrow and busy from before dawn, because the sunrise crowd starts early. Parking is far easier a few streets back from the seafront, and we can deliver to any of the hotels along the main road rather than meeting in the middle of that. A self drive car in Kanyakumari is handed over at Kanyakumari Railway Station or at your hotel, whichever is easier on the day you arrive.",
+      "local": "The streets around the ferry and the beach are narrow and busy from before dawn, because the sunrise crowd starts early. Parking is far easier a few streets back from the seafront, and we can deliver to any of the hotels along the main road rather than meeting in the middle of that. A self drive car in Kanyakumari is handed over at Kanyakumari Railway Station or at your hotel, whichever is easier on the day you arrive. Self drive cars in Kanyakumari are worth having for the same reason they are anywhere on this coast: the sunrise is at the tip, but Vattakottai, Suchindram and the quieter beaches are a drive away and the buses to them stop early. Car rental in Kanyakumari from us includes the KM limit and the deposit in writing before you take the keys.",
       "landmarks": [
         "The Vivekananda Rock Memorial, reached by ferry",
         "The Thiruvalluvar Statue on the neighbouring rock",
@@ -390,6 +390,262 @@
           "to": "Colachel",
           "km": 18,
           "note": "South-west to the coast"
+        }
+      ]
+    },
+    {
+      "slug": "thovalai",
+      "name": "Thovalai",
+      "title": "Self Drive Car Rental in Thovalai — On the Madurai Road",
+      "description": "Self drive car rental in Thovalai, delivered to your door. Twelve kilometres from Nagercoil on the Madurai road. Bikes too. Call +91 63749 42976.",
+      "distanceKm": 12,
+      "knownFor": "its flower market, which supplies garlands across this part of Tamil Nadu",
+      "intro": "Thovalai sits twelve kilometres from Nagercoil on the road to Madurai, which makes it the easiest town in the district to leave from if you are heading north. A self drive car here is usually wanted for exactly that: a run up to Tirunelveli or Madurai without first driving into Nagercoil to collect it. We deliver to the door.",
+      "local": "The flower market is the thing Thovalai is known for, and it works before dawn -- by the time most people are up, the day's trading is finishing. If you want to see it, that means leaving early, and a car you already have the keys to is worth more than one you have to collect. Past the town the road runs through the Aralvaimozhi gap, where the wind turbines start and the landscape changes from coconut to open scrub in about ten minutes. It is the windiest stretch of road in the district and a light car can feel it, which is worth knowing before anyone puts a roof box on.",
+      "landmarks": [
+        "The flower market, trading before dawn",
+        "The Aralvaimozhi gap, where the wind farms begin",
+        "The Madurai road, the fastest way out of the district"
+      ],
+      "trips": [
+        {
+          "to": "Nagercoil",
+          "km": 12,
+          "note": "Straight down the main road"
+        },
+        {
+          "to": "Suchindram",
+          "km": 14,
+          "note": "For the Thanumalayan temple"
+        },
+        {
+          "to": "Kanyakumari",
+          "km": 30,
+          "note": "Through Nagercoil, about an hour"
+        }
+      ]
+    },
+    {
+      "slug": "kulasekharam",
+      "name": "Kulasekharam",
+      "title": "Self Drive Car Rental in Kulasekharam — Falls and Hill Country",
+      "description": "Self drive car rental in Kulasekharam, delivered to your door. The north of Kanyakumari district, near Thirparappu Falls and Pechiparai. Call +91 63749 42976.",
+      "distanceKm": 34,
+      "knownFor": "being the way in to the falls and the rubber country at the foot of the Ghats",
+      "intro": "Kulasekharam is at the northern edge of the district, where the coconut gives way to rubber and the hills start showing. Almost everyone renting a car here is going up rather than down -- to Thirparappu, to Pechiparai, or on into the plantation roads. It is thirty-four kilometres from Nagercoil, far enough that collecting a car in town and driving back out wastes most of a morning, so we bring it.",
+      "local": "The roads north of Kulasekharam are narrow, shaded and wet for much of the year, and the rubber estates on either side mean long stretches with nowhere to pull over. They are good driving, but not quick driving -- an hour on these roads covers less ground than an hour anywhere else in the district, and anyone planning a day out should allow for it. The falls are busiest on Sundays and after rain, when the water is worth the trip; in the dry months they are a trickle and Pechiparai is the better destination.",
+      "landmarks": [
+        "Thirparappu Falls, about six kilometres on",
+        "Pechiparai Dam and reservoir, further north",
+        "The rubber estates either side of the road"
+      ],
+      "trips": [
+        {
+          "to": "Thirparappu Falls",
+          "km": 6,
+          "note": "Best after rain, quiet on a weekday"
+        },
+        {
+          "to": "Pechiparai Dam",
+          "km": 16,
+          "note": "Through the plantations"
+        },
+        {
+          "to": "Nagercoil",
+          "km": 34,
+          "note": "About an hour back down"
+        }
+      ]
+    },
+    {
+      "slug": "karungal",
+      "name": "Karungal",
+      "title": "Self Drive Car Rental in Karungal — Delivered to Your Door",
+      "description": "Self drive car rental in Karungal, delivered to your door. Market town between Marthandam and the coast. Bikes too. Call +91 63749 42976.",
+      "distanceKm": 27,
+      "knownFor": "its market, and for sitting between the inland towns and the coast road",
+      "intro": "Karungal is a market town in the west of the district, with Marthandam inland of it and the coast a short run the other way. Rentals here are mostly practical rather than touristic -- a family car for a few days, a month's use while something is in the workshop, or a vehicle for a wedding. We deliver to the door, which saves a bus into Nagercoil at both ends.",
+      "local": "The town is busiest on market days and the through road narrows to one working lane when it is, so anyone passing through in the middle of the day should expect to crawl. Going west towards the coast the roads are quieter and the villages come quickly one after another. For a day out, the coast at Muttom and Colachel is twenty minutes away and far less crowded than anything near Kanyakumari.",
+      "landmarks": [
+        "The market, busiest in the morning",
+        "The road west to the coast at Colachel",
+        "Marthandam, ten kilometres inland"
+      ],
+      "trips": [
+        {
+          "to": "Marthandam",
+          "km": 10,
+          "note": "The nearest big town"
+        },
+        {
+          "to": "Colachel",
+          "km": 12,
+          "note": "West to the harbour and the beach"
+        },
+        {
+          "to": "Nagercoil",
+          "km": 27,
+          "note": "About forty minutes"
+        }
+      ]
+    },
+    {
+      "slug": "muttom",
+      "name": "Muttom",
+      "title": "Self Drive Car Rental in Muttom — Lighthouse and Rocky Coast",
+      "description": "Self drive car rental in Muttom, delivered to your door or your hotel. The lighthouse, the rocks and the coast road west of Nagercoil. Call +91 63749 42976.",
+      "distanceKm": 24,
+      "knownFor": "its lighthouse and the black rocks the sea breaks on, rather than sand",
+      "intro": "Muttom is a fishing village on the west coast with a lighthouse above it and a shoreline of rock instead of beach, which is why photographers come and swimmers do not. We already hand cars over here, so a self drive car in Muttom is straightforward -- to the house you are staying in, or at the lighthouse road if that is easier.",
+      "local": "The shore at Muttom is rock, and the sea comes in hard against it. It looks spectacular and it is genuinely dangerous to get close to on a rough day, which is worth saying plainly to anyone bringing children. The lighthouse is the landmark everyone drives to, and the road up to it is steep and narrow with very little room to turn at the top, so a small car is the easier thing here. Early morning and late evening are when the light is worth the trip; the middle of the day is hot and there is no shade on the rocks.",
+      "landmarks": [
+        "The lighthouse, up a steep and narrow road",
+        "The rock shore, better looked at than walked on",
+        "The fishing harbour, busy at first light"
+      ],
+      "trips": [
+        {
+          "to": "Colachel",
+          "km": 7,
+          "note": "The next harbour along the coast"
+        },
+        {
+          "to": "Padmanabhapuram Palace",
+          "km": 16,
+          "note": "Inland, through the plantations"
+        },
+        {
+          "to": "Nagercoil",
+          "km": 24,
+          "note": "The inland road is quicker than the coast"
+        }
+      ]
+    },
+    {
+      "slug": "manavalakurichi",
+      "name": "Manavalakurichi",
+      "title": "Self Drive Car Rental in Manavalakurichi — Coast and Town",
+      "description": "Self drive car rental in Manavalakurichi, delivered to your door. On the west coast near Colachel, twenty-two kilometres from Nagercoil. Call +91 63749 42976.",
+      "distanceKm": 22,
+      "knownFor": "its beach sands and the mineral works that have worked them for generations",
+      "intro": "Manavalakurichi is a coastal town near Colachel, a working place rather than a resort. Most rentals here are for the ordinary reasons -- getting a family somewhere, a month's car while another is off the road, or a day along the coast. It is twenty-two kilometres from Nagercoil and we deliver, so there is no trip into town to collect anything.",
+      "local": "The coast road through here is shared with fishing traffic and it is at its worst early, when the catch is moving. Inland the roads are quieter and the run to Nagercoil is faster that way even though it looks longer on a map. The beach itself is open and windy, good for an evening walk and not much use for swimming -- the current along this stretch is strong and the locals do not go in casually, which is the best guidance a visitor can take.",
+      "landmarks": [
+        "The beach, open and windy",
+        "The mineral sands works, long part of the town",
+        "Colachel harbour, five kilometres on"
+      ],
+      "trips": [
+        {
+          "to": "Colachel",
+          "km": 5,
+          "note": "The harbour and the battle memorial"
+        },
+        {
+          "to": "Nagercoil",
+          "km": 22,
+          "note": "Faster by the inland road"
+        },
+        {
+          "to": "Kanyakumari",
+          "km": 42,
+          "note": "The long coastal run, worth doing once"
+        }
+      ]
+    },
+    {
+      "slug": "mandaikadu",
+      "name": "Mandaikadu",
+      "title": "Self Drive Car Rental in Mandaikadu — Temple Town on the Coast",
+      "description": "Self drive car rental in Mandaikadu, delivered to your door. For the Bhagavathy Amman temple, the March festival and the coast. Call +91 63749 42976.",
+      "distanceKm": 28,
+      "knownFor": "the Bhagavathy Amman temple and the festival that fills the town every March",
+      "intro": "Mandaikadu is a coastal temple town, quiet for most of the year and then very much not during the Kodai festival in March, when people come from across the district and well beyond it. A self drive car here is easiest booked ahead for those weeks, because everything is. We deliver to the door the rest of the year without any fuss.",
+      "local": "During the festival the roads into Mandaikadu are closed or crawling for several days and parking is wherever you can find it, often a long walk from the temple. Anyone driving in for it should come early in the day and expect to leave the car further out than they would like. Outside those weeks the town is quiet and the coast road either side of it is one of the emptier drives in the district -- Colachel one way, the smaller fishing villages the other.",
+      "landmarks": [
+        "The Bhagavathy Amman temple",
+        "The Kodai festival in March, when the town fills",
+        "The coast road, empty for most of the year"
+      ],
+      "trips": [
+        {
+          "to": "Colachel",
+          "km": 9,
+          "note": "East along the coast"
+        },
+        {
+          "to": "Muttom",
+          "km": 12,
+          "note": "The lighthouse and the rocks"
+        },
+        {
+          "to": "Nagercoil",
+          "km": 28,
+          "note": "About three quarters of an hour"
+        }
+      ]
+    },
+    {
+      "slug": "kaliyakkavilai",
+      "name": "Kaliyakkavilai",
+      "title": "Self Drive Car Rental in Kaliyakkavilai — At the Kerala Border",
+      "description": "Self drive car rental in Kaliyakkavilai, delivered to your door. The last town before Kerala, on the Thiruvananthapuram road. Call +91 63749 42976.",
+      "distanceKm": 38,
+      "knownFor": "being the last town in Tamil Nadu on the road to Thiruvananthapuram",
+      "intro": "Kaliyakkavilai sits on the state border, which makes it a junction more than a destination -- buses, lorries and everyone heading for Thiruvananthapuram pass through it. Rentals here are often for people arriving from the Kerala side who want a car on the Tamil Nadu side. It is thirty-eight kilometres from Nagercoil and we bring the vehicle to you.",
+      "local": "The border means the road through town carries more heavy traffic than its width deserves, and the stretch by the checkpost can hold you up at any hour. Thiruvananthapuram is about an hour on from here, and the drive is easy enough, but anyone planning to cross should tell us beforehand -- taking one of our cars into Kerala is fine, we simply want to know. Marthandam, twelve kilometres back, is the nearest town of any size for anything you forgot.",
+      "landmarks": [
+        "The state border and the checkpost",
+        "The Thiruvananthapuram road, about an hour on",
+        "Marthandam, twelve kilometres back towards Nagercoil"
+      ],
+      "trips": [
+        {
+          "to": "Marthandam",
+          "km": 12,
+          "note": "The nearest big town"
+        },
+        {
+          "to": "Thiruvananthapuram",
+          "km": 45,
+          "note": "Tell us first if you are crossing into Kerala"
+        },
+        {
+          "to": "Nagercoil",
+          "km": 38,
+          "note": "About an hour by the main road"
+        }
+      ]
+    },
+    {
+      "slug": "thiruvithancode",
+      "name": "Thiruvithancode",
+      "title": "Self Drive Car Rental in Thiruvithancode — Delivered to You",
+      "description": "Self drive car rental in Thiruvithancode, delivered to your door. Near the Arappally church, between Thuckalay and Marthandam. Call +91 63749 42976.",
+      "distanceKm": 19,
+      "knownFor": "the Arappally, an old church that draws visitors from well outside the district",
+      "intro": "Thiruvithancode lies between Thuckalay and Marthandam, and most people who have heard of it have heard of it for the Arappally. It is nineteen kilometres from Nagercoil -- close enough to be easy, far enough that collecting a car in town and coming back is an hour wasted. We deliver.",
+      "local": "The town is on the inland road, which is the one to take if you are going anywhere north or west: it is faster than the coast and better surfaced. Padmanabhapuram Palace is a short run from here and the two make an easy half day together, with the palace wanting a couple of hours and the church rather less. Both are quieter early. Parking at the palace is tight by mid-morning on a weekend.",
+      "landmarks": [
+        "The Arappally, the old church",
+        "The inland road, faster than the coast",
+        "Padmanabhapuram Palace, a short run west"
+      ],
+      "trips": [
+        {
+          "to": "Thuckalay",
+          "km": 5,
+          "note": "The next town along"
+        },
+        {
+          "to": "Padmanabhapuram Palace",
+          "km": 7,
+          "note": "Allow a couple of hours inside"
+        },
+        {
+          "to": "Nagercoil",
+          "km": 19,
+          "note": "Half an hour on the inland road"
         }
       ]
     }
