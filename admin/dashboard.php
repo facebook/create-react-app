@@ -73,6 +73,16 @@ admin_shell_open($me, 'dashboard', 'Dashboard', true, $migrationError);
           <button class="btn btn-outline btn-sm" data-quick="finance">Finance</button>
         </div>
 
+        <!-- Everything below the search splits into two columns that each
+             scroll on their own, so the overview is one screen however many
+             alerts there are. It was a single narrow column of ten stacked
+             sections, which on a wide monitor ran to twice the height of the
+             screen with half the width unused. Counts on the left, because
+             they are a fixed block you scan; what needs doing on the right,
+             because it is the part that grows. -->
+        <div class="dash-body">
+        <div class="dash-col-main">
+
         <!-- The shape of the day, before any of the totals. Three pickups is
              not a problem, it is a morning -- which is why these sit apart
              from "Needs attention". -->
@@ -87,14 +97,6 @@ admin_shell_open($me, 'dashboard', 'Dashboard', true, $migrationError);
             <div class="ops-card"><span class="ops-value" id="opsEnquiries">0</span><span class="ops-label">New inquiries</span></div>
             <div class="ops-card"><span class="ops-value" id="opsReminders">0</span><span class="ops-label">Reminders</span></div>
           </div>
-        </section>
-
-        <!-- What needs doing, above the figures.
-             A number tells you where the business stands; these tell you what
-             is about to go wrong, and only one of the two has a deadline. -->
-        <section class="alerts" id="alertsPanel" hidden>
-          <h3 class="dashboard-subheading">Needs attention</h3>
-          <ul class="alert-list" id="alertList"></ul>
         </section>
 
         <div class="stat-grid">
@@ -154,10 +156,24 @@ admin_shell_open($me, 'dashboard', 'Dashboard', true, $migrationError);
           <div class="stat-card stat-card-balance"><span class="stat-label">Net Revenue</span><span class="stat-value" id="statNetRevenue">₹0</span></div>
         </div>
 
-        <div class="dashboard-col">
-          <h3>Active &amp; Upcoming Rentals</h3>
-          <div id="activeUpcomingBookings"></div>
-        </div>
+        </div><!-- /dash-col-main -->
+
+        <div class="dash-col-side">
+          <!-- What needs doing, above the figures.
+               A number tells you where the business stands; these tell you
+               what is about to go wrong, and only one of the two has a
+               deadline. -->
+          <section class="alerts" id="alertsPanel" hidden>
+            <h3 class="dashboard-subheading">Needs attention</h3>
+            <ul class="alert-list" id="alertList"></ul>
+          </section>
+
+          <div class="dashboard-col">
+            <h3>Active &amp; Upcoming Rentals</h3>
+            <div id="activeUpcomingBookings"></div>
+          </div>
+        </div><!-- /dash-col-side -->
+        </div><!-- /dash-body -->
       </section>
 
       <!-- Bookings tab -->

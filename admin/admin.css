@@ -121,6 +121,24 @@ button { font-family: inherit; }
 
 .ns { display: grid; grid-template-columns: var(--side, 244px) minmax(0, 1fr); min-height: 100vh; }
 
+/* ---- the window itself does not scroll ----
+   On a desktop the shell is the height of the screen and the page area inside
+   it does the scrolling. The sidebar and the top bar then stay where they
+   are, instead of the whole document sliding and taking the navigation with
+   it -- which is what made a long tab feel like a web page rather than a
+   panel. A phone keeps ordinary page scrolling: a fixed-height shell there
+   fights the address bar hiding and showing, and loses. */
+@media (min-width: 1024px) {
+  html, body { height: 100%; overflow: hidden; }
+  .ns { height: 100dvh; min-height: 0; }
+  .ns-main { min-height: 0; overflow: hidden; }
+  .ns-content {
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+}
+
 /* ---- the column ---- */
 .ns-side {
   grid-column: 1; background: var(--primary); color: #fff;
@@ -315,7 +333,7 @@ button { font-family: inherit; }
   outline: 2px solid var(--primary); outline-offset: 1px; opacity: 1;
 }
 
-.ns-content { flex: 1; width: 100%; max-width: 1180px; padding: 24px; }
+.ns-content { flex: 1; width: 100%; max-width: 1180px; padding: 16px 20px; }
 
 /* Except on a list. 1180px is a reading measure -- the width at which a
    paragraph or a form stays comfortable -- and a records table is neither. At
@@ -324,6 +342,11 @@ button { font-family: inherit; }
    showing a list the column opens out to the window; on every other screen,
    and on any screen too narrow to use it, nothing changes. */
 .ns-content:has(.admin-panel:not([hidden]) .rec-tablewrap:not([hidden] *)) { max-width: 1520px; }
+
+/* The overview too, and for the same reason: it is counters and lists, not a
+   paragraph. Held to a reading measure it stacked ten sections down a narrow
+   strip with a third of the monitor empty beside it. */
+.ns-content:has(#panel-dashboard:not([hidden])) { max-width: 1520px; }
 
 /* The scrim only exists while the drawer is open, and only on a phone. */
 .ns-scrim { display: none; }
@@ -357,8 +380,8 @@ button { font-family: inherit; }
 }
 
 .panel-header {
-  display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 12px;
-  margin-bottom: 14px;
+  display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 10px;
+  margin-bottom: 9px;
 }
 /* Heading and description on one line. They were stacked, which cost a whole
    line of height at the top of every panel for a sentence that is context
@@ -366,8 +389,8 @@ button { font-family: inherit; }
 .panel-header > div {
   display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; min-width: 0;
 }
-.panel-header h2 { font-size: 1.15rem; margin-bottom: 0; }
-.panel-header p { color: var(--ink-dim); font-size: 0.84rem; }
+.panel-header h2 { font-size: 1.05rem; margin-bottom: 0; }
+.panel-header p { color: var(--ink-dim); font-size: 0.78rem; }
 
 /* Shown only when a migration could not be applied, which is rare and worth
    interrupting for: the panel works, but something in it will not. */
@@ -605,22 +628,23 @@ button { font-family: inherit; }
 
 /* ---------- Dashboard stats ---------- */
 .stat-grid {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(158px, 1fr));
-  gap: 10px; margin-bottom: 18px;
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(118px, 1fr));
+  gap: 7px; margin-bottom: 12px;
 }
 .stat-grid-3 { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); margin-bottom: 16px; }
 .stat-card {
-  background: #fff; border: 1px solid var(--border); border-radius: var(--radius);
-  padding: 11px 13px; display: flex; flex-direction: column; gap: 3px;
+  background: #fff; border: 1px solid var(--border); border-radius: 10px;
+  padding: 7px 10px; display: flex; flex-direction: column; gap: 1px;
+  line-height: 1.3;
 }
 /* The plate on a counter card: top right, out of the way of the number, which
    is what anybody is here to read. Only the five cards that carry one -- the
    rest of the grid keeps its own rhythm without a hole where an icon is not. */
 .stat-card .ns-ico3d {
-  position: absolute; top: 9px; right: 10px;
+  position: absolute; top: 6px; right: 8px;
   transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1);
 }
-.stat-card:has(.ns-ico3d) { position: relative; padding-right: 52px; }
+.stat-card:has(.ns-ico3d) { position: relative; padding-right: 44px; }
 .stat-card:hover .ns-ico3d { transform: translateY(-2px) scale(1.05); }
 
 /* The sidebar's plates sit a hair lower than a hairline did, and brighten
@@ -635,21 +659,62 @@ button { font-family: inherit; }
    small, and it was already being used at 0.78rem. Shrinking it further would
    have made a failing contrast worse, so the label moves to --ink-dim at
    7.54:1. */
-.stat-label { font-size: 0.72rem; color: var(--ink-dim); font-weight: 600; text-transform: uppercase; letter-spacing: 0.03em; }
+.stat-label { font-size: 0.66rem; color: var(--ink-dim); font-weight: 600; text-transform: uppercase; letter-spacing: 0.02em; }
 /* margin-top:auto: grid stretches every card in a row to the tallest one, so a
    label that wraps to two lines ("Security deposit refunded") left its
    neighbours' numbers floating mid-card. Pinning the value to the bottom lines
    the numbers up across the row again. */
 .stat-value {
-  font-size: 1.15rem; font-weight: 800; color: var(--ink);
+  font-size: 1rem; font-weight: 800; color: var(--ink);
   font-variant-numeric: tabular-nums; margin-top: auto;
 }
 .stat-card-income .stat-value { color: #2F6B4F; }
 .stat-card-expense .stat-value { color: var(--danger); }
 .stat-card-balance .stat-value { color: var(--primary); }
 
-.dashboard-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-.dashboard-col h3 { font-size: 0.95rem; margin-bottom: 8px; }
+.dashboard-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+/* ---------- The overview, as two columns that fill the screen ----------
+   The panel is a column: a fixed head (title, search, the six buttons) and a
+   body that takes whatever height is left. The body's two columns scroll on
+   their own, so the overview is exactly one screen whether there are two
+   alerts or twenty -- and the head, with the search box in it, never scrolls
+   away from under the cursor.
+
+   Only where there is height to divide. A short window and a phone get the
+   plain stacked column back, because two 200px-tall scrolling panes side by
+   side is a worse way to read this than one honest list. */
+@media (min-width: 1024px) and (min-height: 620px) {
+  .ns-content > #panel-dashboard:not([hidden]) {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 0;
+  }
+  .dash-body {
+    flex: 1 1 auto;
+    min-height: 0;
+    display: grid;
+    grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+    gap: 14px;
+  }
+  .dash-col-main, .dash-col-side {
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    /* Room for the scrollbar so a column that has one does not jump its
+       contents sideways against one that does not. */
+    padding-right: 4px;
+  }
+  /* Side by side the two recent lists are too narrow to read, so in the
+     right-hand column they stack. */
+  .dash-col-side .dashboard-cols { grid-template-columns: 1fr; }
+  /* The last thing in a column needs no gap under it; the column's own
+     scroll end is the edge. */
+  .dash-col-main > *:last-child,
+  .dash-col-side > *:last-child { margin-bottom: 0; }
+}
+.dashboard-col h3 { font-size: 0.85rem; margin-bottom: 5px; }
 
 /* ---------- Finance ---------- */
 .finance-form {
@@ -792,10 +857,10 @@ label.finance-toggle {
 .modal-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 10px; margin-top: 6px; }
 
 /* ---------- Dashboard: rental overview ---------- */
-.dashboard-subheading { font-size: 0.95rem; margin: 2px 0 10px; }
+.dashboard-subheading { font-size: 0.82rem; margin: 0 0 5px; }
 /* Was a fixed four columns. Auto-fill lets a wide screen show more and a
    narrow one fewer, without a breakpoint for each size. */
-.stat-grid-4 { grid-template-columns: repeat(auto-fill, minmax(158px, 1fr)); }
+.stat-grid-4 { grid-template-columns: repeat(auto-fill, minmax(112px, 1fr)); }
 .stat-card-deposit .stat-value { color: #8A5A00; }
 
 /* ---------- Wide/tall modal variants ---------- */
@@ -813,10 +878,10 @@ label.finance-toggle {
   color: var(--danger); font-size: 0.85rem; font-weight: 600; margin: -6px 0 14px; min-height: 1.2em;
 }
 /* One box that finds anything, and the list it drops. */
-.search-wrap { position: relative; margin-bottom: 14px; }
+.search-wrap { position: relative; margin-bottom: 10px; }
 .search-box {
-  width: 100%; padding: 11px 14px; font-size: 0.95rem;
-  border: 1px solid var(--border); border-radius: 12px;
+  width: 100%; padding: 8px 12px; font-size: 0.9rem;
+  border: 1px solid var(--border); border-radius: 10px;
   background: var(--surface); color: var(--ink);
 }
 .search-box:focus-visible { outline: 2px solid var(--primary); outline-offset: 1px; }
@@ -843,34 +908,35 @@ label.finance-toggle {
 .search-empty { padding: 12px 14px; color: var(--ink-dim); font-size: 0.9rem; }
 
 /* The six things started most often, each of which was three clicks away. */
-.quick-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
+.quick-actions { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
 
 /* The shape of the day. Apart from "Needs attention" on purpose: three
    pickups is not a problem, it is a morning. */
-.today-ops { margin-bottom: 22px; }
+.today-ops { margin-bottom: 12px; }
 .ops-grid {
-  display: grid; gap: 10px; margin-top: 8px;
-  grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
+  display: grid; gap: 7px; margin-top: 6px;
+  grid-template-columns: repeat(auto-fit, minmax(96px, 1fr));
 }
 .ops-card {
-  border: 1px solid var(--border); border-radius: 12px;
-  background: var(--surface); padding: 12px 14px;
-  display: flex; flex-direction: column; gap: 2px;
+  border: 1px solid var(--border); border-radius: 10px;
+  background: var(--surface); padding: 7px 10px;
+  display: flex; flex-direction: column-reverse; gap: 0;
 }
-.ops-value { font-size: 1.35rem; font-weight: 800; color: var(--ink); }
-.ops-label { font-size: 0.78rem; color: var(--ink-dim); }
+.ops-value { font-size: 1.1rem; font-weight: 800; color: var(--ink); line-height: 1.25; }
+.ops-label { font-size: 0.7rem; color: var(--ink-dim); line-height: 1.3; }
 
 /* The amount a customer actually pays, beside the discount that made it. */
 .final-price { font-size: 1.25rem; font-weight: 800; color: var(--ink); margin: 6px 0 0; }
 
 /* What needs doing, above the figures. Colour carries the urgency and a word
    carries it too, because colour alone is not a message to everyone. */
-.alerts { margin-bottom: 22px; }
-.alert-list { list-style: none; margin: 8px 0 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.alerts { margin-bottom: 12px; }
+.alert-list { list-style: none; margin: 6px 0 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
 .alert-row {
-  display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap;
-  border: 1px solid var(--border); border-left-width: 4px; border-radius: 10px;
-  padding: 9px 12px; background: var(--surface); font-size: 0.9rem;
+  display: flex; align-items: center; gap: 8px; flex-wrap: nowrap;
+  border: 1px solid var(--border); border-left-width: 4px; border-radius: 9px;
+  padding: 5px 10px; background: var(--surface); font-size: 0.84rem;
+  line-height: 1.35;
 }
 .alert-row.is-overdue { border-left-color: var(--danger); }
 .alert-row.is-soon    { border-left-color: var(--accent); }
@@ -1902,13 +1968,54 @@ label.finance-toggle {
   overscroll-behavior: contain;
 }
 
+/* ---- a list fills the screen, and scrolls inside itself ----
+   With the window no longer scrolling, a fixed 72vh left dead space under
+   the table on a tall monitor and still cut it off on a short one. The
+   panel, the view and the wrapper around the list are each a column that
+   gives its remaining height to the one below, so the table ends where the
+   screen does: the filters and the pager stay put, the rows move, and the
+   sticky header stays over them.
+
+   :has() does the choosing, so this reaches the bookings list and the
+   enquiries list without either of them needing a class of its own, and
+   leaves the detail view -- which is a page of prose and photographs, and
+   wants to scroll normally -- alone. */
+@media (min-width: 1024px) {
+  .ns-content > .admin-panel:not([hidden]):has(> div:not([hidden]) .rec-tablewrap) {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 0;
+  }
+  .admin-panel > div:not([hidden]):has(.rec-tablewrap) {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+  .admin-panel div:not([hidden]) > .rec-tablewrap {
+    flex: 1 1 auto;
+    min-height: 140px;
+    max-height: none;
+  }
+  /* The wrapper the list is written into sits between the two and would
+     otherwise be a block of its own height. */
+  #bookingListWrap, #inquiriesWrap {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+  .rec-pager { flex: none; }
+}
+
 /* separate, not collapse: a collapsed border belongs to the table rather than
    to the cell, and a sticky cell carries its own borders with it or carries
    none at all. With no vertical rules in this table the two look identical. */
-.rec-table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 0.86rem; }
+.rec-table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 0.82rem; line-height: 1.35; }
 .rec-table th {
-  text-align: left; padding: 13px 12px; white-space: nowrap;
-  font-size: 0.71rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em;
+  text-align: left; padding: 7px 10px; white-space: nowrap;
+  font-size: 0.67rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em;
   color: var(--ink-faint); border-bottom: 1px solid var(--border); background: var(--surface);
   /* Stays on screen while the rows go past it. A column of dates with no
      heading is a column of numbers. */
@@ -1918,14 +2025,14 @@ label.finance-toggle {
 .rec-table th.is-sortable:hover { color: var(--ink); }
 .rec-table th .ord { opacity: 0.4; margin-left: 4px; font-size: 0.8em; }
 .rec-table th.is-sorted .ord { opacity: 1; color: var(--accent-deep); }
-.rec-table td { padding: 14px 12px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+.rec-table td { padding: 5px 10px; border-bottom: 1px solid var(--border); vertical-align: middle; }
 .rec-table tbody tr { cursor: pointer; }
 .rec-table tbody tr:hover { background: var(--bg); }
 .rec-table tbody tr:last-child td { border-bottom: 0; }
 .rec-table .rec-sno { color: var(--ink-faint); width: 1%; }
 .rec-table .rec-id { font-weight: 800; color: var(--accent-deep); white-space: nowrap; }
-.rec-table .rec-who { font-weight: 700; color: var(--ink); }
-.rec-table .rec-sub { color: var(--ink-dim); font-size: 0.82rem; }
+.rec-table .rec-who { font-weight: 700; color: var(--ink); line-height: 1.25; }
+.rec-table .rec-sub { color: var(--ink-dim); font-size: 0.74rem; line-height: 1.2; }
 .rec-table .rec-money { font-weight: 700; white-space: nowrap; }
 /* A date is one thing. Left to wrap it became "28 Sept" over "2026", which
    cost the row a line for nothing. */
