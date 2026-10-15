@@ -720,6 +720,74 @@ label.finance-toggle {
 .field-group input:focus,
 .field-group select:focus,
 .field-group textarea:focus { border-color: var(--primary); }
+
+/* ---------- A phone number and the code in front of it ---------- */
+/* The code is a short fixed column and the digits take the rest, so the two
+   read as one control rather than as two fields that happen to be adjacent.
+   The select is sized to its longest entry -- "+971 Saudi Arabia" -- because
+   a select that resizes as you change it drags the input about under the
+   cursor. */
+.phone-field { display: flex; gap: 6px; align-items: stretch; }
+.phone-field .dial-code {
+  width: 7.5rem;
+  flex: none;
+  padding: 10px 6px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  font-size: 0.82rem;
+  font-family: inherit;
+  background: var(--surface, #fff);
+  outline: none;
+}
+.phone-field .dial-code:focus { border-color: var(--primary); }
+.phone-field input { flex: 1 1 auto; min-width: 0; }
+/* The count only appears once it is wrong, so a correct number is a quiet
+   field rather than one wearing a green tick. */
+.field-hint.is-wrong { color: var(--danger, #c0392b); font-weight: 600; }
+.phone-field.is-wrong input,
+.phone-field.is-wrong .dial-code { border-color: var(--danger, #c0392b); }
+
+/* The address is a box because an address has lines in it. A single-line
+   input made people put the whole thing on one line with commas, which is
+   then what prints on the confirmation. */
+.field-group textarea { resize: vertical; min-height: 76px; line-height: 1.45; }
+
+/* The rental the dates imply, offered under the amount rather than written
+   into it -- a rate agreed off the card is a real thing and overwriting it
+   silently would be worse than never offering. */
+.rate-suggest {
+  margin: 6px 0 0;
+  font-size: 0.78rem;
+  color: var(--ink-dim);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px;
+}
+.btn-link {
+  background: none;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  font-weight: 700;
+  color: var(--primary);
+  cursor: pointer;
+  text-decoration: underline;
+}
+.btn-link:hover { opacity: 0.8; }
+
+/* A line under a modal's heading, saying what the form is for. */
+.modal-note {
+  margin: -4px 0 14px;
+  font-size: 0.8rem;
+  color: var(--ink-dim);
+}
+
+@media (max-width: 520px) {
+  /* Below this the code and ten digits stop fitting on one line together. */
+  .phone-field { flex-wrap: wrap; }
+  .phone-field .dial-code { width: 100%; }
+}
 .color-input { padding: 4px !important; height: 40px; cursor: pointer; }
 .modal-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 10px; margin-top: 6px; }
 

@@ -276,7 +276,7 @@ function openCarModal(car) {
   document.getElementById('carStatus').value = car ? car.status : 'Available';
   document.getElementById('carOwnership').value = car ? (car.ownership || 'own') : 'own';
   document.getElementById('carOwnerName').value = car ? (car.ownerName || '') : '';
-  document.getElementById('carOwnerPhone').value = car ? (car.ownerPhone || '') : '';
+  fillPhone('carOwnerPhone', car ? car.ownerPhone : '');
   document.getElementById('carTemporary').checked = Boolean(car && car.isTemporary);
   for (const [id, key] of UPKEEP_FIELDS) {
     document.getElementById(id).value = car ? (car[key] ?? '') : '';
@@ -498,7 +498,7 @@ function syncOwnerFields() {
   for (const el of document.querySelectorAll('[data-partner-only]')) el.hidden = !partner;
   if (!partner) {
     document.getElementById('carOwnerName').value = '';
-    document.getElementById('carOwnerPhone').value = '';
+    fillPhone('carOwnerPhone', '');
     document.getElementById('carTemporary').checked = false;
   }
 }
@@ -529,7 +529,8 @@ carForm.addEventListener('submit', async (e) => {
     status: document.getElementById('carStatus').value,
     ownership: document.getElementById('carOwnership').value,
     ownerName: document.getElementById('carOwnerName').value.trim(),
-    ownerPhone: document.getElementById('carOwnerPhone').value.trim(),
+    ownerPhone: phoneDigits('carOwnerPhone'),
+    ownerPhoneCode: document.getElementById('carOwnerPhoneCode').value,
     isTemporary: document.getElementById('carTemporary').checked,
     ...Object.fromEntries(UPKEEP_FIELDS.map(([id, key]) => [key, document.getElementById(id).value])),
     price: Number(document.getElementById('carPrice').value),
@@ -837,6 +838,7 @@ async function renderEnquiry(id) {
       <div class="detail-section">
         <div class="detail-section-title"><span>Handle this enquiry</span></div>
         <div class="enquiry-actions">
+          <button class="btn btn-outline btn-sm" id="enqEdit">Correct details</button>
           <button class="btn btn-ghost btn-sm" data-enq-status="Contacted">Mark Contacted</button>
           <button class="btn btn-ghost btn-sm" data-enq-status="Pending">Mark Pending</button>
           <button class="btn btn-ghost btn-sm" data-enq-status="Rejected">Reject</button>
@@ -938,6 +940,8 @@ async function renderEnquiry(id) {
     } catch (err) { showError(err); }
   });
 
+  document.getElementById('enqEdit')?.addEventListener('click', () => openEnquiryEdit(e));
+
   document.getElementById('enqDelete')?.addEventListener('click', () => deleteEnquiry(e));
 
   view.querySelectorAll('[data-enq-status]').forEach((btn) => {
@@ -982,7 +986,7 @@ function openConvertModal(enquiry) {
   document.getElementById('bookingNumberPreview').textContent =
     `Creating a booking from ${enquiry.enquiry_number} for ${enquiry.name}.`;
   document.getElementById('bkCustomerName').value = enquiry.name || '';
-  document.getElementById('bkPhone').value = enquiry.phone || '';
+  fillPhone('bkPhone', enquiry.phone);
   document.getElementById('bkAddress').value = '';
   if (enquiry.vehicle_id) {
     document.getElementById('bkVehicle').value = enquiry.vehicle_id;
@@ -1929,7 +1933,221 @@ function updateBookingDurationPreview() {
     days = Math.max(1, Math.ceil((end - start) / 86400000));
   }
   document.getElementById('bkDurationPreview').textContent = `${days} day${days === 1 ? '' : 's'}`;
+  updateRentalSuggestion(days);
   return days;
+}
+
+/* ---------------------------------------------------------------------------
+   What the rental comes to for the days now on the form.
+
+   The days preview already moved when the dates did; the money did not, so a
+   customer who brought the car back three days early left the booking showing
+   the full hire until somebody retyped the figure from memory. That is the
+   change this is for: pull the return date back to the day they actually
+   returned, and the rental the dates now imply is offered underneath.
+
+   Offered, not applied. A rate can be agreed off the card -- a regular, a
+   long weekend, a favour -- and a panel that silently overwrote that would be
+   worse than one that never suggested anything. The button is the consent.
+--------------------------------------------------------------------------- */
+
+/** The band the hire falls into, times the days. Null when there is no rate. */
+function rentalForDays(car, days) {
+  if (!car || !days) return null;
+  const band = days >= 30 && car.price30 ? car.price30
+    : days >= 15 && car.price15 ? car.price15
+    : days >= 7 && car.price7 ? car.price7
+    : car.price;
+  const rate = Number(band) || 0;
+  return rate > 0 ? { rate, total: rate * days } : null;
+}
+
+function updateRentalSuggestion(days) {
+  const row = document.getElementById('bkRentalSuggest');
+  const text = document.getElementById('bkRentalSuggestText');
+  if (!row || !text) return;
+
+  const car = loadCars().find((c) => c.id === Number(bookingVehicleSelect.value));
+  const quote = rentalForDays(car, days);
+  if (!quote) { row.hidden = true; return; }
+
+  const typed = Number(document.getElementById('bkRentalAmount').value) || 0;
+  // Nothing to offer when the field already says what the rate card says.
+  if (typed === quote.total) { row.hidden = true; return; }
+
+  text.textContent =
+    `${days} day${days === 1 ? '' : 's'} at ${formatINR(quote.rate)} a day is ${formatINR(quote.total)}.`;
+  row.dataset.total = String(quote.total);
+  row.hidden = false;
+}
+
+/* ---------------------------------------------------------------------------
+   Correcting what the customer typed.
+
+   The website form is filled in on a phone, often in a hurry, and a digit
+   goes missing from the number or the pickup is written as something only the
+   person typing it would recognise. Until now the panel could read that and
+   not fix it, so the correction went in a note while the wrong number stayed
+   in the field the panel dials from.
+
+   The original is not lost: the endpoint writes the before and after into the
+   audit log, which is the difference between correcting a record and quietly
+   rewriting it.
+--------------------------------------------------------------------------- */
+
+const enquiryEditOverlay = document.getElementById('enquiryEditOverlay');
+const enquiryEditForm = document.getElementById('enquiryEditForm');
+
+function openEnquiryEdit(e) {
+  if (!enquiryEditForm) return;
+  enquiryEditForm.reset();
+  document.getElementById('enqEditId').value = e.id;
+  document.getElementById('enqEditName').value = e.name || '';
+  fillPhone('enqEditPhone', e.phone);
+  document.getElementById('enqEditEmail').value = e.email || '';
+  populateVehicleSelect(document.getElementById('enqEditVehicle'), e.vehicle_id);
+  // populateVehicleSelect writes only the cars, so the "not specified" row
+  // has to go back in front of them -- an enquiry often names no car at all.
+  const vsel = document.getElementById('enqEditVehicle');
+  vsel.insertAdjacentHTML('afterbegin', '<option value="">Not specified</option>');
+  vsel.value = e.vehicle_id || '';
+  document.getElementById('enqEditStart').value = e.start_date || '';
+  document.getElementById('enqEditReturn').value = e.return_date || '';
+  document.getElementById('enqEditPickup').value = e.pickup_location || '';
+  document.getElementById('enqEditRequirements').value = e.requirements || '';
+  document.getElementById('enqEditMessage').value = e.message || '';
+  enquiryEditOverlay.hidden = false;
+}
+
+function closeEnquiryEdit() {
+  if (enquiryEditOverlay) enquiryEditOverlay.hidden = true;
+}
+
+document.getElementById('enqEditCancel')?.addEventListener('click', closeEnquiryEdit);
+
+document.getElementById('enqEditPhone')?.addEventListener('input', () => checkPhone('enqEditPhone'));
+document.getElementById('enqEditPhoneCode')?.addEventListener('change', () => checkPhone('enqEditPhone'));
+
+enquiryEditForm?.addEventListener('submit', async (ev) => {
+  ev.preventDefault();
+  if (!checkPhone('enqEditPhone', true)) return;
+
+  const id = Number(document.getElementById('enqEditId').value);
+  const submit = enquiryEditForm.querySelector('button[type="submit"]');
+  submit.disabled = true;
+  try {
+    await api.enquiries.edit({
+      id,
+      name: document.getElementById('enqEditName').value.trim(),
+      phone: phoneDigits('enqEditPhone'),
+      phone_code: document.getElementById('enqEditPhoneCode').value,
+      email: document.getElementById('enqEditEmail').value.trim(),
+      vehicle_id: document.getElementById('enqEditVehicle').value,
+      start_date: document.getElementById('enqEditStart').value,
+      return_date: document.getElementById('enqEditReturn').value,
+      pickup_location: document.getElementById('enqEditPickup').value.trim(),
+      requirements: document.getElementById('enqEditRequirements').value.trim(),
+      message: document.getElementById('enqEditMessage').value.trim(),
+    });
+    closeEnquiryEdit();
+    // Re-read rather than patching what is on screen, so what is shown is
+    // what was actually stored.
+    await renderEnquiry(id);
+    await renderInquiries();
+  } catch (err) {
+    showError(err);
+  } finally {
+    submit.disabled = false;
+  }
+});
+
+/* ---------------------------------------------------------------------------
+   Phone numbers, and the country code in front of them.
+
+   Mirrors admin/src/phone.php. The server is what actually keeps a bad number
+   out of the column -- this half is so the person typing finds out while the
+   field is still under the cursor, rather than after pressing Save.
+--------------------------------------------------------------------------- */
+const DIAL_DIGITS = {
+  '+91': [10], '+971': [9], '+966': [9], '+965': [8], '+974': [8],
+  '+968': [8], '+973': [8], '+65': [8], '+60': [9, 10], '+94': [9],
+  '+44': [10], '+1': [10], '+61': [9],
+};
+const DIAL_FALLBACK = '+91';
+
+/** A stored "+91 9876543210" into its two fields. */
+function fillPhone(inputId, stored) {
+  const input = document.getElementById(inputId);
+  const code = document.getElementById(inputId + 'Code');
+  if (!input) return;
+  const raw = String(stored || '').trim();
+  if (!code) { input.value = raw; return; }
+
+  if (raw.startsWith('+')) {
+    const bare = raw.replace(/[^0-9]/g, '');
+    // Longest first, or +9 would match before +91.
+    const codes = Object.keys(DIAL_DIGITS).sort((a, b) => b.length - a.length);
+    const hit = codes.find((c) => bare.startsWith(c.slice(1)));
+    if (hit) {
+      code.value = hit;
+      input.value = bare.slice(hit.length - 1);
+      checkPhone(inputId);
+      return;
+    }
+    // A code we do not list: leave it whole, it is still dialable.
+    input.value = raw;
+    checkPhone(inputId);
+    return;
+  }
+
+  // Saved before the code existed. Those bookings were local ones.
+  code.value = DIAL_FALLBACK;
+  input.value = raw.replace(/[^0-9]/g, '');
+  checkPhone(inputId);
+}
+
+/** Just the digits. The code travels in its own field and the endpoint
+    joins the two, so the stored format is decided in one place. */
+function phoneDigits(inputId) {
+  const input = document.getElementById(inputId);
+  return input ? input.value.replace(/[^0-9]/g, '') : '';
+}
+
+/** True when it is the right length. Writes the hint either way. */
+function checkPhone(inputId, required = false) {
+  const input = document.getElementById(inputId);
+  const code = document.getElementById(inputId + 'Code');
+  const hint = document.getElementById(inputId + 'Hint');
+  const field = input && input.closest('.phone-field');
+  if (!input || !code) return true;
+
+  const digits = input.value.replace(/[^0-9]/g, '');
+  const want = DIAL_DIGITS[code.value] || null;
+  let wrong = '';
+
+  if (digits === '') {
+    if (required) wrong = 'A phone number is needed.';
+  } else if (want && !want.includes(digits.length)) {
+    const n = want.length === 1 ? `${want[0]} digits` : `${want.join(' or ')} digits`;
+    wrong = `A ${code.value} number is ${n}. This one has ${digits.length}.`;
+  }
+
+  if (hint) {
+    hint.textContent = wrong;
+    hint.classList.toggle('is-wrong', wrong !== '');
+  }
+  if (field) field.classList.toggle('is-wrong', wrong !== '');
+  return wrong === '';
+}
+
+/* Check as they type, and again when the code changes -- switching from
+   India to the UAE makes a correct number wrong, and saying so straight
+   away is the whole point. */
+for (const id of ['bkPhone', 'bkWhatsapp', 'carOwnerPhone']) {
+  const input = document.getElementById(id);
+  const code = document.getElementById(id + 'Code');
+  if (input) input.addEventListener('input', () => checkPhone(id));
+  if (code) code.addEventListener('change', () => checkPhone(id));
 }
 
 ['bkStartDate', 'bkStartTime', 'bkReturnDate', 'bkReturnTime'].forEach((id) => {
@@ -1942,6 +2160,27 @@ bookingVehicleSelect.addEventListener('change', () => {
   document.getElementById('bkVehicleReg').value = car.regNumber || '';
   document.getElementById('bkKmLimit').value = car.kmLimitPerDay;
   document.getElementById('bkExtraKmRate').value = car.extraKmRate;
+  // A different car is a different rate card, so the offer is recomputed.
+  updateBookingDurationPreview();
+});
+
+document.getElementById('bkRentalApply').addEventListener('click', () => {
+  const row = document.getElementById('bkRentalSuggest');
+  const field = document.getElementById('bkRentalAmount');
+  if (!row || !field || !row.dataset.total) return;
+  field.value = row.dataset.total;
+  // The total line below the charges reads from this field, so it has to be
+  // told the value changed -- setting .value fires nothing by itself.
+  field.dispatchEvent(new Event('input', { bubbles: true }));
+  row.hidden = true;
+});
+
+// Typing the figure by hand dismisses the offer once it matches.
+document.getElementById('bkRentalAmount').addEventListener('input', () => {
+  const row = document.getElementById('bkRentalSuggest');
+  if (row && !row.hidden && Number(document.getElementById('bkRentalAmount').value) === Number(row.dataset.total)) {
+    row.hidden = true;
+  }
 });
 
 function openBookingModal(booking) {
@@ -1960,10 +2199,10 @@ function openBookingModal(booking) {
     const [sd, st] = splitDateTime(booking.start_at);
     const [rd, rt] = splitDateTime(booking.return_at);
     document.getElementById('bkCustomerName').value = booking.customer_name || '';
-    document.getElementById('bkPhone').value = booking.customer_phone || '';
+    fillPhone('bkPhone', booking.customer_phone);
     document.getElementById('bkAddress').value = booking.customer_address || '';
     document.getElementById('bkLicence').value = booking.licence_number || '';
-    document.getElementById('bkWhatsapp').value = booking.whatsapp || '';
+    fillPhone('bkWhatsapp', booking.whatsapp);
     document.getElementById('bkLicenceExpiry').value = booking.licence_expiry || '';
     document.getElementById('bkIdNumber').value = booking.id_number || '';
     document.getElementById('bkCustomerType').value = booking.customer_type || 'New';
@@ -2056,10 +2295,12 @@ bookingForm.addEventListener('submit', async (e) => {
 
   const payload = {
     customer_name: document.getElementById('bkCustomerName').value.trim(),
-    phone: document.getElementById('bkPhone').value.trim(),
+    phone: phoneDigits('bkPhone'),
+    phone_code: document.getElementById('bkPhoneCode').value,
     address: document.getElementById('bkAddress').value.trim(),
     licence_number: document.getElementById('bkLicence').value.trim(),
-    whatsapp: document.getElementById('bkWhatsapp').value.trim(),
+    whatsapp: phoneDigits('bkWhatsapp'),
+    whatsapp_code: document.getElementById('bkWhatsappCode').value,
     licence_expiry: document.getElementById('bkLicenceExpiry').value,
     id_number: document.getElementById('bkIdNumber').value.trim(),
     customer_type: document.getElementById('bkCustomerType').value,
@@ -3447,7 +3688,7 @@ async function runSearch(query) {
         // booking with their details already looked up -- which is what
         // somebody searching a phone number is almost always about to do.
         openBookingModal(null);
-        document.getElementById('bkPhone').value = btn.querySelector('.search-sub').textContent.split(' · ')[0];
+        fillPhone('bkPhone', btn.querySelector('.search-sub').textContent.split(' · ')[0]);
         void lookupCustomer();
       }
     });

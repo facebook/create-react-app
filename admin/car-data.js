@@ -80,6 +80,7 @@ function toApiShape(car) {
     ownership: car.ownership || 'own',
     owner_name: car.ownerName || '',
     owner_phone: car.ownerPhone || '',
+    owner_phone_code: car.ownerPhoneCode || '+91',
     is_temporary: car.isTemporary ? 1 : 0,
     purchase_date: car.purchase_date || '',
     insurance_expiry: car.insurance_expiry || '',

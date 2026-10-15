@@ -109,7 +109,25 @@ switch ($action) {
         // name happens to be filled in.
         $ownership = ($input['ownership'] ?? 'own') === 'partner' ? 'partner' : 'own';
         $ownerName  = $ownership === 'partner' ? trim((string) ($input['owner_name'] ?? '')) : '';
-        $ownerPhone = $ownership === 'partner' ? trim((string) ($input['owner_phone'] ?? '')) : '';
+        // The code arrives separately, the same as every other phone field.
+        $ownerPhone = '';
+        if ($ownership === 'partner') {
+            $ownerCode   = trim((string) ($input['owner_phone_code'] ?? DIAL_DEFAULT));
+            $ownerDigits = preg_replace('/[^0-9]/', '', (string) ($input['owner_phone'] ?? ''));
+            if ($ownerDigits !== '') {
+                $allowed = dial_digits($ownerCode);
+                if ($allowed !== null && !in_array(strlen($ownerDigits), $allowed, true)) {
+                    $want = count($allowed) === 1
+                        ? $allowed[0] . ' digits'
+                        : implode(' or ', $allowed) . ' digits';
+                    json_error('Please correct the highlighted fields.', 422, ['fields' => [
+                        'owner_phone' => "A {$ownerCode} number is {$want}, and this one is "
+                            . strlen($ownerDigits) . '.',
+                    ]]);
+                }
+                $ownerPhone = join_phone($ownerCode, $ownerDigits);
+            }
+        }
         $temporary  = $ownership === 'partner' && !empty($input['is_temporary']) ? 1 : 0;
 
         if ($ownership === 'partner' && $ownerName === '') {

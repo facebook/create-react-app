@@ -167,6 +167,79 @@ switch ($action) {
         json_out(['ok' => true]);
     }
 
+    // ----------------------------------------------------------------- edit --
+    /*
+     * What the customer typed, corrected.
+     *
+     * The website form is filled in by somebody on a phone, often in a hurry,
+     * and a digit goes missing from the number or the pickup is written as
+     * "ngl". The panel could read it and could not fix it, so the correction
+     * lived in a note and the wrong number stayed in the field the panel
+     * dials from. The original is kept in the audit log, which is the point
+     * of editing rather than overwriting.
+     */
+    case 'edit': {
+        $user  = api_guard('enquiry.edit', true);
+        $input = json_input();
+
+        $data = (new Validator($input))
+            ->integer('id', 'Enquiry', 1)
+            ->required('name', 'Name')
+            ->phone('phone', 'phone number')
+            ->optional('email', 190)
+            ->optional('pickup_location', 190)
+            ->optional('message', 2000)
+            ->optional('requirements', 2000)
+            ->orFail();
+
+        $before = enquiry_or_404((int) $data['id']);
+
+        // Dates are optional on an enquiry -- plenty come in with "sometime
+        // next month" -- so an empty one clears rather than refuses.
+        $start  = trim((string) ($input['start_date'] ?? ''));
+        $return = trim((string) ($input['return_date'] ?? ''));
+        $start  = $start === '' ? null : $start;
+        $return = $return === '' ? null : $return;
+
+        if ($start !== null && $return !== null && $return < $start) {
+            json_error('Please correct the highlighted fields.', 422, ['fields' => [
+                'return_date' => 'The return date is before the start date.',
+            ]]);
+        }
+
+        $email = ($data['email'] ?? '') === '' ? null : $data['email'];
+        if ($email !== null && !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            json_error('Please correct the highlighted fields.', 422, ['fields' => [
+                'email' => 'That does not look like an email address.',
+            ]]);
+        }
+
+        $vehicleId = isset($input['vehicle_id']) && $input['vehicle_id'] !== ''
+            ? (int) $input['vehicle_id'] : null;
+
+        query(
+            'UPDATE enquiries
+                SET name = ?, phone = ?, email = ?, vehicle_id = ?,
+                    start_date = ?, return_date = ?, pickup_location = ?,
+                    message = ?, requirements = ?
+              WHERE id = ?',
+            [
+                $data['name'], $data['phone'], $email, $vehicleId,
+                $start, $return,
+                ($data['pickup_location'] ?? '') === '' ? null : $data['pickup_location'],
+                ($data['message'] ?? '') === '' ? null : $data['message'],
+                ($data['requirements'] ?? '') === '' ? null : $data['requirements'],
+                $data['id'],
+            ]
+        );
+
+        $after = enquiry_or_404((int) $data['id']);
+        audit_log('enquiry_edited', 'enquiries', 'enquiry', (int) $data['id'],
+            $before, $after, null, (int) $user['id'], $user['name']);
+
+        json_out(['ok' => true]);
+    }
+
     // -------------------------------------------------------------- convert --
     case 'convert': {
         $user  = api_guard('booking.create', true);

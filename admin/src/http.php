@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/csrf.php';
 require_once __DIR__ . '/migrate.php';
+require_once __DIR__ . '/phone.php';
 
 /**
  * Shared plumbing for the JSON endpoints.
@@ -303,6 +304,47 @@ final class Validator
             return $this;
         }
         $this->clean[$field] = strtoupper($value);
+        return $this;
+    }
+
+    /**
+     * A phone number, with its country code counted.
+     *
+     * The code arrives in its own field ("{field}_code") because it is picked
+     * from a list rather than typed. A wrong digit count is refused here as
+     * well as in the browser: the browser check is a courtesy to whoever is
+     * typing, and this one is what actually keeps an undialable number out of
+     * the column.
+     */
+    public function phone(string $field, string $label, bool $required = true): self
+    {
+        $code   = trim((string) ($this->input[$field . '_code'] ?? DIAL_DEFAULT));
+        $digits = preg_replace('/[^0-9]/', '', (string) ($this->input[$field] ?? ''));
+
+        if ($digits === '') {
+            if ($required) {
+                $this->errors[$field] = "{$label} is needed.";
+            } else {
+                $this->clean[$field] = null;
+            }
+            return $this;
+        }
+
+        $allowed = dial_digits($code);
+        if ($allowed === null) {
+            $this->errors[$field] = "Pick a country code for the {$label}.";
+            return $this;
+        }
+        if (!in_array(strlen($digits), $allowed, true)) {
+            $want = count($allowed) === 1
+                ? $allowed[0] . ' digits'
+                : implode(' or ', $allowed) . ' digits';
+            $this->errors[$field] =
+                "A {$code} {$label} is {$want}, and this one is " . strlen($digits) . '.';
+            return $this;
+        }
+
+        $this->clean[$field] = join_phone($code, $digits);
         return $this;
     }
 

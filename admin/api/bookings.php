@@ -207,7 +207,7 @@ switch ($action) {
 
         $data = (new Validator($input))
             ->required('customer_name', 'Customer name')
-            ->required('phone', 'Phone number')
+            ->phone('phone', 'phone number')
             ->required('licence_number', 'Driving licence number')
             ->optional('address', 255)
             ->optional('pickup_location', 190)
@@ -217,7 +217,7 @@ switch ($action) {
             ->required('start_at', 'Start date and time')
             ->required('return_at', 'Return date and time')
             ->optional('balance_due_on', 10)
-            ->optional('whatsapp', 20)
+            ->phone('whatsapp', 'WhatsApp number', false)
             ->optional('licence_expiry', 10)
             ->optional('id_number', 40)
             ->integer('estimated_km', 'Estimated KM', 0, 999999, false)
