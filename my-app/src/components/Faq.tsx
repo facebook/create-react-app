@@ -197,7 +197,7 @@ export function Faq({
   };
 
   return (
-    <section className="relative isolate overflow-hidden bg-navy py-11 text-white sm:py-14">
+    <section className="relative isolate overflow-hidden bg-navy py-20 text-white">
       <picture className="contents">
         {avif ? <source type="image/avif" srcSet={avif} sizes="100vw" /> : null}
         <img

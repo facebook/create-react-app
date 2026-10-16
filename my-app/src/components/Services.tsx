@@ -79,8 +79,12 @@ export function Services({ showHeading = true }: { showHeading?: boolean }) {
     </div>
   );
 
+  // pb-16 rather than pb-20: the rail below carries pb-4 so the cards' shadows
+  // are not clipped by its own overflow-x, and that 16px reads as section
+  // spacing. 64 + 16 lands on the same 80 as every other section, so the gap
+  // to the next one matches the rest of the page.
   return (
-    <section className="py-20">
+    <section className="pt-20 pb-16">
       <div className="mx-auto max-w-[86rem] px-5 sm:px-8 lg:px-12">
         <div className="flex items-end justify-between gap-6">
           {showHeading ? (
