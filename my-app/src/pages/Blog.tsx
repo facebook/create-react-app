@@ -37,7 +37,7 @@ export function Blog() {
         intro="Answers to the things people ask before they rent a vehicle — documents, distances, what a day out really takes, and what the roads are like."
       />
 
-      <section className="mx-auto max-w-3xl px-5 py-16">
+      <section className="mx-auto max-w-[86rem] px-5 py-16 sm:px-8 lg:px-12">
         {ordered.length === 0 ? (
           <BrandPanel title="Nothing here yet">
             We have not published anything so far. In the meantime, the fastest

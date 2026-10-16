@@ -47,7 +47,7 @@ export function ServicePage({ title, intro, sections, points, cta, photo, scene,
     <>
       <PageHeader title={title} intro={intro} photo={photo} scene={scene} imageAlt={imageAlt} />
 
-      <section className="mx-auto max-w-3xl px-5 py-16">
+      <section className="mx-auto max-w-[86rem] px-5 py-16 sm:px-8 lg:px-12">
         <div className="space-y-8">
           {sections.map((s, i) => (
             <Reveal key={s.heading} delay={i * 70}>

@@ -60,7 +60,7 @@ export function Nri() {
         intro={`Arrange self drive car rental, or a bike, before you land. We look after families visiting ${seo.site.district} district from the Gulf, Singapore, Malaysia and further afield.`}
       />
 
-      <section className="mx-auto max-w-3xl px-5 py-16">
+      <section className="mx-auto max-w-[86rem] px-5 py-16 sm:px-8 lg:px-12">
         <Reveal>
           <p className="leading-relaxed text-ink-dim">
             Coming back for a wedding, for the December holidays, or just to

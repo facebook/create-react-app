@@ -27,7 +27,7 @@ export function About() {
         intro="NiteSha Cars & Bikes is a self drive car rental in Nagercoil, and we rent two-wheelers, wedding cars and tourist vehicles across Kanyakumari district as well."
       />
 
-      <section className="mx-auto max-w-3xl px-5 py-16">
+      <section className="mx-auto max-w-[86rem] px-5 py-16 sm:px-8 lg:px-12">
         <div className="space-y-5 leading-relaxed text-ink-dim">
           <p>
             We are based in {seo.site.city} and work across the whole of{' '}
