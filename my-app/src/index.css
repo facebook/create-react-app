@@ -1302,7 +1302,8 @@ body {
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  padding: 4.5rem 0;
+  /* 5rem top and bottom, the same as every other section on the page. */
+  padding: 5rem 0;
   background:
     radial-gradient(
       38rem 26rem at 78% 18%,

@@ -55,7 +55,7 @@ export function Benefits() {
   if (items.length === 0) return null;
 
   return (
-    <section className="benefits bg-white py-16 sm:py-20">
+    <section className="benefits bg-white py-20">
       <div className="mx-auto max-w-[86rem] px-5 sm:px-8 lg:px-12">
         <Reveal className="mx-auto max-w-2xl text-center">
           <h2 className="text-3xl font-bold tracking-tight text-navy sm:text-4xl">
