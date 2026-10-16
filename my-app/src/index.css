@@ -1,0 +1,2087 @@
+@import 'tailwindcss';
+
+/* Poppins, served from this site rather than from Google.
+ *
+ * It was a stylesheet <link> to fonts.googleapis.com, which is the single
+ * slowest thing on a cold load: the browser cannot paint until it has that
+ * file, and getting it costs a DNS lookup, a TLS handshake and a round trip to
+ * a third party -- then a second set of all three to fonts.gstatic.com for the
+ * files it names. On a phone on a rural connection that is most of the wait
+ * before the first word appears. Here it is one same-origin request the
+ * browser already has a connection for, cached for a year by the rule in
+ * .htaccess, and the font files are named in the CSS it is already parsing.
+ *
+ * The rupee sign is the reason for the third set of files. Google puts U+20B9
+ * in the devanagari subset, so a page showing a price pulls 38 KB of Hindi per
+ * weight -- 155 KB to draw one character, on a site where every tariff line
+ * has one. Subset down to that single glyph it is 570 bytes.
+ *
+ * unicode-range is what makes the rest free: a browser downloads a file only
+ * once it needs a character from it, so an English page never fetches the
+ * accented-Latin set and a page with no price never fetches the rupee.
+ *
+ * swap, so the words are readable in a fallback face immediately and reflow
+ * when Poppins lands, rather than the page sitting blank while it loads.
+ */
+
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/poppins-latin-400.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/poppins-latin-ext-400.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/poppins-rupee-400.woff2') format('woff2');
+  unicode-range: U+20B9;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/fonts/poppins-latin-600.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/fonts/poppins-latin-ext-600.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/fonts/poppins-rupee-600.woff2') format('woff2');
+  unicode-range: U+20B9;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/poppins-latin-700.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/poppins-latin-ext-700.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/poppins-rupee-700.woff2') format('woff2');
+  unicode-range: U+20B9;
+}
+
+/* Brand tokens carried over from the admin panel (admin.css :root), so the
+   public site and the admin share one palette. */
+@theme {
+  /* Taken from the logo: metallic gold on near-black, not the flatter #F5A500
+     used before. These read well on dark and badly on light -- #D4AF37 is
+     9.11:1 on navy but 1.99:1 on cream -- so gold belongs on dark surfaces,
+     and light sections use navy or gold-deep for text. */
+  --color-gold: #d4af37;
+  --color-gold-light: #f0d060;
+  --color-gold-mid: #c9a227;
+  --color-bronze: #c8873a;
+  /* The only gold dark enough to be read on a light background. */
+  --color-gold-deep: #8a5a00;
+
+  /* The logo bar's near-black, slightly bluer than pure black. */
+  --color-navy: #0a0e20;
+  --color-navy-deep: #070a16;
+
+  --color-ink: #14100d;
+  --color-ink-dim: #5c5348;
+  --color-ink-faint: #948b80;
+
+  --color-cream: #fff8ea;
+  --color-sand: #fff8ea;
+  --color-surface: #ffffff;
+  --color-line: #efdfc2;
+
+  --color-danger: #b3261e;
+  --color-ok: #2f6b4f;
+  --color-ok-soft: #e8f4ec;
+
+  --font-sans: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    Helvetica, Arial, sans-serif;
+
+  --radius-brand: 14px;
+  --shadow-brand: 0 10px 30px rgba(16, 24, 40, 0.08);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-cream);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+}
+
+/* One leading for prose, set once.
+
+   Most paragraphs on this site carry `leading-relaxed`, and the ones that did
+   not fell back to the browser's own 1.5 -- so a section intro written with
+   the class and one written without it were set differently, and four
+   sections had been given hand-picked values besides (1.5, 1.55, 1.6, 1.65).
+   Five leadings for the same job is not a decision anybody made; it is what
+   happens when each section is written on its own day.
+
+   In @layer base so `leading-snug` and `leading-tight` still win where a line
+   is deliberately tighter -- the eleven-pixel note under the hero form, and
+   headings. Everything else now starts level without being told to, which is
+   what keeps the next paragraph anyone writes from landing at 1.5 again. */
+@layer base {
+  p,
+  /* A spec value on a car's page wraps to two lines as readily as a sentence
+     does, and sat beside one at a different leading. */
+  dd {
+    line-height: var(--leading-relaxed);
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Motion.
+
+   Everything here animates only `opacity` and `transform`. Those are handled
+   by the compositor, so they do not trigger layout or paint and stay at 60fps
+   on a mid-range phone -- which matters, because animating `height`, `top` or
+   `margin` is what makes a site feel cheap on the hardware most visitors have.
+
+   The whole file is wrapped so that anyone who has asked their system to
+   reduce motion gets none of it. That is an accessibility requirement, not a
+   nicety: for some people this kind of movement causes nausea.
+--------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translate3d(0, 18px, 0);
+    }
+    to {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes scale-in {
+    from {
+      opacity: 0;
+      transform: scale3d(0.96, 0.96, 1);
+    }
+    to {
+      opacity: 1;
+      transform: scale3d(1, 1, 1);
+    }
+  }
+
+  @keyframes drop-in {
+    from {
+      opacity: 0;
+      transform: translate3d(0, -6px, 0) scale3d(0.98, 0.98, 1);
+    }
+    to {
+      opacity: 1;
+      transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
+    }
+  }
+
+  /* Scroll reveal. Elements start hidden and are released by the observer in
+     useReveal, so nothing pops in before it is actually on screen.
+
+     Only where there is a script to release them. The page is written into
+     the HTML at build time so that it reads without one, and a rule that
+     hid two thirds of it until an observer fired undid exactly that: with
+     scripting off, everything below the banner was a blank cream page. The
+     data-js attribute is set by one line in the <head>, so the hiding only
+     ever happens where the unhiding can follow. */
+  :root[data-js] [data-reveal] {
+    opacity: 0;
+  }
+
+  [data-reveal].is-visible {
+    animation: fade-up 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: var(--reveal-delay, 0ms);
+  }
+
+  /* Route change: the new page fades up as it mounts. */
+  [data-page] {
+    animation: fade-up 0.38s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  [data-menu] {
+    animation: drop-in 0.18s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  [data-hero-item] {
+    animation: fade-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: var(--hero-delay, 0ms);
+  }
+
+  /* Cards lift slightly on hover. transform only, so no reflow. */
+  [data-lift] {
+    transition:
+      transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 0.25s ease;
+  }
+
+  [data-lift]:hover {
+    transform: translate3d(0, -3px, 0);
+  }
+
+  /* Buttons acknowledge the press. */
+  a,
+  button {
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease,
+      border-color 0.2s ease,
+      transform 0.12s ease;
+  }
+
+  a:active,
+  button:active {
+    transform: scale3d(0.985, 0.985, 1);
+  }
+}
+
+/* ---- How it works: the steps either side of one picture ---------------
+ *
+ * They were three cards in a row, each with its own photograph, then a rail
+ * drawn between numbered nodes. Both had the same fault: the numeral -- the
+ * only part of a step that carries the order -- was the smallest thing in the
+ * card, and three small photographs were three things to look at and nothing
+ * to read.
+ *
+ * So the numeral is the largest thing in the step now, the steps stand in two
+ * columns, and between them is one picture big enough to be worth having.
+ *
+ * The list runs 1, 2, 3, 4 in the markup and is placed into the grid, so what
+ * a screen reader hears and what the eye follows are the same order by two
+ * different routes.
+ */
+.how-grid {
+  display: grid;
+  gap: 2.5rem;
+}
+
+.how-photo {
+  /* Above the steps while there is one column, and between them once there
+     are three. */
+  order: -1;
+}
+
+@media (min-width: 1024px) {
+  .how-grid {
+    grid-template-columns: 1fr minmax(17rem, 21rem) 1fr;
+    grid-template-rows: repeat(var(--how-rows, 2), auto);
+    column-gap: 3.5rem;
+    row-gap: 3rem;
+    align-items: center;
+  }
+
+  .how-item {
+    grid-column: var(--how-col);
+    grid-row: var(--how-row);
+  }
+
+  .how-photo {
+    grid-column: 2;
+    grid-row: 1 / -1;
+    order: 0;
+  }
+}
+
+/* Three corners round and one square. A rectangle with a photograph in it is
+   what every other section on this page already has; this is the one that is
+   allowed to be a shape. */
+.art-frame.how-leaf {
+  aspect-ratio: 4 / 5;
+  border-radius: 46% 46% 0 46%;
+  box-shadow: 0 22px 50px rgb(16 24 40 / 0.18);
+}
+
+/* The gold hairline the card frames carry runs along the bottom edge, which
+   on a curve cuts straight across it. */
+.art-frame.how-leaf::after {
+  content: none;
+}
+
+.how-n {
+  flex: none;
+  font-size: 2.5rem;
+  font-weight: 800;
+  line-height: 0.85;
+  letter-spacing: -0.02em;
+  /* The deep gold, not the bright one: at this size on white the bright gold
+     is a pale smear, and this is text somebody reads. */
+  color: var(--color-gold-deep);
+}
+
+@media (min-width: 640px) {
+  .how-n {
+    font-size: 3rem;
+  }
+}
+
+/* Under each step, fading out: it separates them without drawing a box. */
+.how-rule {
+  display: block;
+  margin-top: 1.5rem;
+  height: 1px;
+  background: linear-gradient(90deg, var(--color-line), transparent);
+}
+
+/* The picture lifts a little under the pointer. The frame already clips, so
+   it grows inside the shape rather than pushing the layout. */
+.how-leaf .art-photo,
+.how-leaf .art-svg {
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.how-leaf:hover .art-photo,
+.how-leaf:hover .art-svg {
+  transform: scale(1.06);
+}
+
+/* Reduced motion: show everything, move nothing. Without this the reveal rule
+   further up would leave content permanently invisible. */
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] {
+    opacity: 1;
+  }
+
+  .how-leaf .art-photo,
+  .how-leaf .art-svg,
+  .how-leaf:hover .art-photo,
+  .how-leaf:hover .art-svg {
+    transition: none;
+    transform: none;
+  }
+}
+
+/* A list bullet.
+ *
+ * These were ticks -- a gold disc with a check mark in it on the dark cards, a
+ * bare check mark on the light pages. A tick says "done", and none of these
+ * lists are things that have been done: they are what is included, what the
+ * rate depends on, what to bring. A dot says "item", which is what they are.
+ *
+ * Sized and positioned here rather than with utilities at each call site,
+ * because the one thing a bullet has to get right is sitting on the optical
+ * centre of the first line, and that depends on the line height it is next to.
+ * lh gets it exactly; the em fallback is close enough everywhere it is used.
+ */
+.bullet-dot {
+  flex: none;
+  width: 0.375rem;
+  height: 0.375rem;
+  border-radius: 50%;
+  background: var(--color-gold);
+  margin-top: 0.5em;
+}
+
+@supports (margin-top: 1lh) {
+  .bullet-dot {
+    margin-top: calc(0.5lh - 0.1875rem);
+  }
+}
+
+/* The gold rule that runs under the logo bar. A gradient rather than a flat
+   fill, so it catches the light the way the metallic lettering does. */
+.gold-rule {
+  height: 4px;
+  background: linear-gradient(
+    90deg,
+    var(--color-bronze) 0%,
+    var(--color-gold-light) 25%,
+    var(--color-gold) 50%,
+    var(--color-gold-light) 75%,
+    var(--color-bronze) 100%
+  );
+}
+
+/* The gold line above a section heading — "Our Services", "Where we deliver".
+   One class rather than the same five utilities written out in four
+   components, because the four of them have to stay the same size as each
+   other: they are the same thing on the same page, and one of them being
+   bigger reads as a mistake rather than as emphasis.
+
+   16px where it was 14. Wide-tracked caps are read as a label rather than as
+   a sentence, and at 14 that label was smaller than the body text under it. */
+.section-eyebrow {
+  color: var(--color-gold-deep);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+@media (min-width: 640px) {
+  .section-eyebrow {
+    font-size: 1.0625rem;
+    letter-spacing: 0.16em;
+  }
+}
+
+/* "PREMIUM RENTALS" — wide-tracked gold caps above the name. */
+.eyebrow-gold {
+  color: var(--color-gold-light);
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+}
+
+/* ---------------------------------------------------------------------------
+   Illustrated card headers.
+
+   The frame is a fixed aspect ratio so a grid of cards keeps its rhythm
+   whether a cell holds a drawing or a photograph, and so nothing reflows as
+   images arrive. The art is absolutely positioned inside it for the same
+   reason -- the row height is decided by CSS, never by the asset.
+--------------------------------------------------------------------------- */
+
+.art-frame {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 2 / 1;
+  background: var(--color-navy-deep);
+}
+
+.art-svg,
+.art-photo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* A soft diagonal highlight, so the panel reads as a lit surface rather than
+   a flat fill. Pure overlay: it never affects the art's own contrast enough
+   to matter, because nothing is read off the art. */
+.art-sheen {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    115deg,
+    color-mix(in srgb, var(--color-gold-light) 14%, transparent) 0%,
+    transparent 42%,
+    transparent 58%,
+    color-mix(in srgb, var(--color-navy-deep) 34%, transparent) 100%
+  );
+}
+
+/* The gold hairline under each illustration, matching the rule beneath the
+   logo bar so the cards feel like the same object as the header. */
+.art-frame::after {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    var(--color-bronze),
+    var(--color-gold-light),
+    var(--color-gold),
+    var(--color-bronze)
+  );
+  opacity: 0.55;
+}
+
+/* ---------------------------------------------------------------------------
+   Cards.
+
+   .card-lift is the hover behaviour; the gradient edge is drawn on a
+   pseudo-element rather than as a border so it can fade in without the
+   1px layout shift a border-width change would cause.
+--------------------------------------------------------------------------- */
+
+.card-lift {
+  position: relative;
+  isolation: isolate;
+}
+
+.card-lift::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    140deg,
+    var(--color-gold-light),
+    var(--color-gold) 40%,
+    transparent 70%
+  );
+  /* Masks the fill out of the middle, leaving only the 1px padding ring. */
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .card-lift {
+    transition:
+      transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .card-lift::before {
+    transition: opacity 0.3s ease;
+  }
+
+  .card-lift:hover,
+  .card-lift:focus-within {
+    transform: translate3d(0, -5px, 0);
+    box-shadow: 0 18px 44px rgba(10, 14, 32, 0.16);
+  }
+
+  .card-lift:hover::before,
+  .card-lift:focus-within::before {
+    opacity: 1;
+  }
+
+  /* The illustration pushes in slightly as the card lifts, which reads as
+     depth rather than as the whole tile sliding. */
+  .card-lift .art-svg,
+  .card-lift .art-photo {
+    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .card-lift:hover .art-svg,
+  .card-lift:focus-within .art-svg,
+  .card-lift:hover .art-photo,
+  .card-lift:focus-within .art-photo {
+    transform: scale3d(1.06, 1.06, 1);
+  }
+}
+
+/* Focus must stay visible for keyboard users whatever the motion setting, so
+   this sits outside the motion query. */
+.card-lift:focus-within::before {
+  opacity: 1;
+}
+
+/* A gold hairline, for dividing a card's description from its list. Fading at
+   both ends rather than a flat rule, so it reads as a seam in the card rather
+   than a line drawn across it. */
+.gold-hair {
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    color-mix(in srgb, var(--color-gold) 55%, transparent) 20%,
+    color-mix(in srgb, var(--color-gold) 55%, transparent) 80%,
+    transparent
+  );
+}
+
+/* Scrim over an inner page's banner photograph.
+
+   It has to hold a title and a paragraph of intro copy over whatever
+   photograph happens to be dropped into the slot. Measured at its lightest
+   point against the worst case -- a pure white image -- the white title comes
+   out at 12.0:1 and the white/80 intro at 8.3:1, both well clear of the 4.5:1
+   floor, so the crop can be anything and the page still reads. */
+/* The scrim over a banner photograph.
+
+   It was a flat 82-88% navy over the whole band, which kept white type legible
+   against any photograph and turned every photograph into a dark rectangle --
+   the picture may as well not have been uploaded.
+
+   Weighted instead of flat: heavy on the left, where the heading and intro
+   sit, clearing across the right where there is nothing to read. The photo is
+   visible where it can be, and the type keeps its contrast where it matters.
+   The gentle wash underneath stops a white sky from blowing out on the clear
+   side. */
+.page-scrim {
+  background:
+    linear-gradient(
+      to right,
+      color-mix(in srgb, var(--color-navy-deep) 88%, transparent) 0%,
+      color-mix(in srgb, var(--color-navy-deep) 80%, transparent) 40%,
+      color-mix(in srgb, var(--color-navy-deep) 36%, transparent) 74%,
+      color-mix(in srgb, var(--color-navy-deep) 18%, transparent) 100%
+    ),
+    linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--color-navy-deep) 26%, transparent),
+      color-mix(in srgb, var(--color-navy-deep) 38%, transparent)
+    );
+}
+
+/* Below the point where the text stops being a left-hand column, it runs the
+   full width -- so a scrim that clears on the right would leave the last words
+   of every line over bare photograph. Even coverage there, just lighter than
+   it was. */
+@media (max-width: 1023px) {
+  .page-scrim {
+    background:
+      linear-gradient(
+        to bottom,
+        color-mix(in srgb, var(--color-navy-deep) 60%, transparent),
+        color-mix(in srgb, var(--color-navy-deep) 70%, transparent)
+      );
+  }
+}
+
+/* The home page's background, which is the same problem as the banner scrim
+   with one difference that changes the answer: the hero's text is a left-hand
+   column for four of its five blocks, and then the three points at the bottom
+   run the full width. A scrim that clears on the right the way .page-scrim
+   does would leave the last of those three sitting on bare photograph.
+
+   So it clears less far, and the wash underneath deepens towards the bottom
+   where that row is. Measured against a white photograph -- the worst case a
+   scrim has to survive, because the owner uploads whatever they like and a
+   bright sky is the commonest thing behind a car. */
+/* The home banner with no photograph behind it.
+   Three layers on deep navy. A warm gold glow up behind the enquiry card, so
+   the white panel has something to lift off instead of sitting on flat black.
+   A second, cooler and much weaker one low on the left, which stops the
+   bottom-left corner going dead under the heading. And a faint diagonal
+   sheen across the whole thing, at a strength you would not name if asked --
+   it is there so the surface reads as lit rather than filled.
+
+   All of it in the brand's own gold. A photograph would have to be a good one
+   to beat this, which is the bar a replacement should have to clear. */
+.hero-backdrop {
+  background:
+    radial-gradient(
+      64rem 44rem at 76% -14%,
+      color-mix(in srgb, var(--color-gold) 26%, transparent) 0%,
+      color-mix(in srgb, var(--color-gold) 10%, transparent) 40%,
+      transparent 70%
+    ),
+    radial-gradient(
+      52rem 36rem at 4% 114%,
+      color-mix(in srgb, var(--color-bronze) 18%, transparent) 0%,
+      transparent 62%
+    ),
+    linear-gradient(
+      146deg,
+      color-mix(in srgb, #ffffff 4%, transparent) 0%,
+      transparent 38%,
+      transparent 62%,
+      color-mix(in srgb, #ffffff 2%, transparent) 100%
+    ),
+    linear-gradient(to bottom, var(--color-navy) 0%, var(--color-navy-deep) 100%);
+}
+
+/* Where the banner meets the cream page under it. Without this the navy just
+   stops, and a hard edge between two flat colours is the one place a drawn
+   banner looks unfinished. */
+.hero-backdrop::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    color-mix(in srgb, var(--color-gold) 38%, transparent) 22%,
+    color-mix(in srgb, var(--color-gold) 38%, transparent) 78%,
+    transparent 100%
+  );
+}
+
+/* The panel a page shows when it has nothing to list.
+   The banner's glow at a smaller radius, so an empty page still looks like it
+   belongs to the same site rather than like a box that failed to fill. */
+.brand-panel {
+  box-shadow: 0 18px 44px -14px color-mix(in srgb, var(--color-navy-deep) 45%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-gold) 26%, transparent);
+}
+.brand-panel-glow {
+  background:
+    radial-gradient(
+      34rem 22rem at 50% -18%,
+      color-mix(in srgb, var(--color-gold) 22%, transparent) 0%,
+      transparent 68%
+    ),
+    radial-gradient(
+      26rem 18rem at 8% 118%,
+      color-mix(in srgb, var(--color-bronze) 16%, transparent) 0%,
+      transparent 62%
+    );
+}
+
+/* The enquiry card in the banner.
+   A white panel on a photograph needs a shadow that reads on both the dark
+   and the bright parts of it, so this is two: a wide soft one for depth and a
+   tight dark one at the edge, which is what keeps the corner defined where the
+   photo behind happens to be pale. The hairline is the gold at a fraction of
+   its strength -- enough to tie it to the brand, not enough to look like a
+   border somebody forgot to remove. */
+.hero-card {
+  box-shadow:
+    0 24px 60px -12px color-mix(in srgb, var(--color-navy-deep) 55%, transparent),
+    0 4px 14px color-mix(in srgb, var(--color-navy-deep) 28%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-gold) 22%, transparent);
+}
+
+/* A control whose whole face is an icon plate: the button is the hit area,
+   the plate is what anybody sees. Lifting the plate rather than the button
+   keeps the focus ring where the keyboard put it. */
+.icon-btn3d svg {
+  transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.icon-btn3d:hover svg {
+  transform: translateY(-2px) scale(1.06);
+}
+
+.icon-btn3d:active svg {
+  transform: translateY(0) scale(0.97);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .icon-btn3d svg,
+  .icon-btn3d:hover svg,
+  .icon-btn3d:active svg {
+    transition: none;
+    transform: none;
+  }
+}
+
+/* ---- The about page's four cards -------------------------------------
+ *
+ * Folders rather than boxes, stepped down and up across the row, in the four
+ * colours the site already owns. The shape is the card plus a tab above its
+ * left edge, both painted from one custom property, so a card is one colour
+ * declaration rather than three.
+ */
+.benefit-row {
+  display: grid;
+  gap: 1.25rem;
+  position: relative;
+}
+
+@media (min-width: 640px) {
+  .benefit-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem;
+    /* Each card keeps its own height, so the step down is a step down rather
+       than a card that grew a shorter body to make room for it. */
+    align-items: start;
+  }
+}
+
+@media (min-width: 1024px) {
+  .benefit-row {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.75rem;
+    /* Room for the step down, so the row does not collide with what follows. */
+    padding-bottom: 3.5rem;
+  }
+
+  /* The wave. Flat rows of four are what every other rental site in the
+     district has.
+
+     Margin rather than a transform: these cards are revealed on scroll, and
+     the reveal animates transform to nothing at its last frame -- a
+     translate here would be undone the moment the card arrived. */
+  .benefit-1 { --benefit-lift: 0rem; }
+  .benefit-2 { --benefit-lift: 3.5rem; }
+  .benefit-3 { --benefit-lift: 2.25rem; }
+  .benefit-4 { --benefit-lift: 0.5rem; }
+}
+
+.benefit-card {
+  position: relative;
+  margin-top: calc(1.375rem + var(--benefit-lift, 0rem));
+  border-radius: 22px;
+  background: var(--benefit-bg);
+  color: var(--benefit-fg);
+  padding: 1.5rem 1.5rem 1.75rem;
+  min-height: 14rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  box-shadow: 0 16px 34px rgb(16 24 40 / 0.12);
+}
+
+/* The tab. Painted from the same property as the card and tucked behind it,
+   so the join never shows as a seam. */
+.benefit-tab {
+  position: absolute;
+  top: -1.25rem;
+  left: 0;
+  width: 55%;
+  height: 1.5rem;
+  border-radius: 16px 16px 0 0;
+  background: var(--benefit-bg);
+}
+
+.benefit-1 {
+  --benefit-bg: var(--color-navy);
+  --benefit-fg: #fff;
+  --benefit-badge: linear-gradient(140deg, var(--color-gold-light), var(--color-gold));
+  --benefit-mark: var(--color-navy);
+  --benefit-beat: 0ms;
+}
+
+.benefit-2 {
+  --benefit-bg: #f1e9da;
+  --benefit-fg: var(--color-ink);
+  --benefit-badge: linear-gradient(140deg, var(--color-bronze), #a85f22);
+  --benefit-mark: #fff;
+  --benefit-beat: 450ms;
+}
+
+.benefit-3 {
+  --benefit-bg: var(--color-gold);
+  --benefit-fg: var(--color-navy);
+  --benefit-badge: linear-gradient(140deg, #16204a, var(--color-navy-deep));
+  --benefit-mark: var(--color-gold-light);
+  --benefit-beat: 900ms;
+}
+
+.benefit-4 {
+  --benefit-bg: var(--color-bronze);
+  --benefit-fg: #fff;
+  --benefit-badge: linear-gradient(140deg, #fffdf6, var(--color-cream));
+  --benefit-mark: var(--color-bronze);
+  --benefit-beat: 1350ms;
+}
+
+/* The mark, on a disc of its own and far bigger than the 28px it started at:
+   at that size four line drawings on four coloured cards were four smudges.
+   Each disc is the colour its card is not, which is what gives the row its
+   four colours rather than one gold repeated. */
+.benefit-badge {
+  display: grid;
+  place-items: center;
+  width: 4rem;
+  height: 4rem;
+  margin-bottom: auto;
+  border-radius: 999px;
+  background: var(--benefit-badge);
+  color: var(--benefit-mark);
+  box-shadow: 0 8px 18px rgb(6 12 28 / 0.18);
+  animation: benefit-float 3.6s ease-in-out infinite;
+  animation-delay: var(--benefit-beat, 0ms);
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (min-width: 640px) {
+  .benefit-badge {
+    width: 4.5rem;
+    height: 4.5rem;
+  }
+}
+
+.benefit-icon {
+  width: 2.25rem;
+  height: 2.25rem;
+}
+
+@media (min-width: 640px) {
+  .benefit-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+}
+
+/* Drawn on as the card arrives. Gated on data-js for the same reason the
+   reveals are: with no script there is nothing to add .is-visible, and an
+   undrawn icon is an invisible one. */
+:root[data-js] [data-reveal] .benefit-icon > * {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+
+[data-reveal].is-visible .benefit-icon > * {
+  animation: benefit-draw 0.9s cubic-bezier(0.65, 0, 0.35, 1) both;
+  animation-delay: calc(var(--reveal-delay, 0ms) + 220ms);
+}
+
+/* The second stroke of each mark follows the first rather than racing it. */
+[data-reveal].is-visible .benefit-icon > *:nth-child(2) {
+  animation-delay: calc(var(--reveal-delay, 0ms) + 420ms);
+}
+
+[data-reveal].is-visible .benefit-icon > *:nth-child(n + 3) {
+  animation-delay: calc(var(--reveal-delay, 0ms) + 560ms);
+}
+
+.benefit-card:hover .benefit-badge {
+  transform: scale(1.08) rotate(-6deg);
+}
+
+@keyframes benefit-draw {
+  from { stroke-dashoffset: 1; }
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes benefit-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+.benefit-title {
+  margin-top: 1.5rem;
+  font-size: 1.125rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.benefit-body {
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  opacity: 0.82;
+}
+
+/* The stamp between the middle two. Only where there is room for it to sit
+   between cards rather than on top of one. */
+.benefit-stamp {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .benefit-stamp {
+    display: block;
+    position: absolute;
+    /* Mostly above the cards rather than across one of them: gold type on a
+       gold card is not type anybody reads. */
+    top: -4.75rem;
+    left: 50%;
+    width: 9rem;
+    height: 9rem;
+    margin-left: -4.5rem;
+    z-index: 3;
+    pointer-events: none;
+  }
+}
+
+.benefit-stamp-svg {
+  width: 100%;
+  height: 100%;
+  animation: benefit-turn 24s linear infinite;
+}
+
+.benefit-stamp-text {
+  fill: var(--color-gold-deep);
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+@keyframes benefit-turn {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .benefit-stamp-svg,
+  .benefit-badge,
+  [data-reveal].is-visible .benefit-icon > * {
+    animation: none;
+  }
+
+  /* Drawn rather than undrawn, which is what the animation was for. */
+  :root[data-js] [data-reveal] .benefit-icon > * {
+    stroke-dashoffset: 0;
+  }
+
+  .benefit-badge,
+  .benefit-card:hover .benefit-badge {
+    transition: none;
+    transform: none;
+  }
+}
+
+/* The foot of the page. The same gold the banner uses, at a fraction of it,
+   so the site ends in the brand rather than in a flat block of navy. */
+.footer-glow {
+  background:
+    radial-gradient(
+      44rem 20rem at 12% -10%,
+      color-mix(in srgb, var(--color-gold) 13%, transparent) 0%,
+      transparent 62%
+    ),
+    radial-gradient(
+      30rem 16rem at 92% 108%,
+      color-mix(in srgb, var(--color-bronze) 12%, transparent) 0%,
+      transparent 60%
+    );
+}
+
+/* ---- Where we deliver: the route ----------------------------------------
+ *
+ * The pickup points as stops on a line that draws itself downward as the
+ * section is scrolled to. A list of places is a list; a line through them is
+ * a route, which is what a delivery actually is -- and it gives the eye an
+ * order to read the ten in rather than ten things competing at once.
+ *
+ * The line is built per stop rather than as one long rule behind them all:
+ * each segment then belongs to the stop above it and is released by that
+ * stop's own reveal, so the route draws in step with the reading rather than
+ * all at once on first sight. One observer each, none added.
+ *
+ * Everything that moves here moves on transform and opacity. A segment that
+ * animated its height would relayout the whole column on every frame.
+ */
+
+.route-stop {
+  position: relative;
+  padding-left: 1.85rem;
+  padding-bottom: 1.6rem;
+}
+
+.route-stop:last-child {
+  padding-bottom: 0;
+}
+
+/* The stop itself. A ring of its own colour under it, so it reads as a point
+   on a line rather than a bullet. */
+.route-dot {
+  position: absolute;
+  left: 0;
+  top: 0.34rem;
+  width: 0.72rem;
+  height: 0.72rem;
+  border-radius: 50%;
+  background: var(--color-gold);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-gold) 22%, transparent);
+}
+
+/* The segment down to the next stop. */
+.route-stop:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  left: 0.3rem;
+  top: 1.3rem;
+  /* Past this stop's own box, so it meets the next dot rather than stopping
+     short of it. A route with gaps in it reads as a route that is not
+     finished. */
+  bottom: -0.36rem;
+  width: 2px;
+  border-radius: 2px;
+  background: linear-gradient(
+    180deg,
+    var(--color-gold) 0%,
+    color-mix(in srgb, var(--color-gold) 35%, var(--color-line)) 100%
+  );
+  transform-origin: top center;
+}
+
+.route-town {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-navy);
+}
+
+.route-note {
+  font-size: 0.78rem;
+  color: var(--color-ink-faint);
+}
+
+/* The sentence under a group's chips. It carries the phrases people actually
+   type -- "self drive car at Nagercoil Railway Station" -- as prose, because
+   putting them in the chips would be the same four words ten times in one
+   glance, which reads as a page written for a search engine rather than for
+   the person who is about to hire a car. */
+.route-line {
+  margin-top: 0.7rem;
+  max-width: 38rem;
+  font-size: 0.82rem;
+  color: var(--color-ink-faint);
+}
+
+.deliver-band .route-line {
+  color: color-mix(in srgb, #fff 56%, transparent);
+}
+
+.route-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.625rem;
+  margin-top: 0.75rem;
+}
+
+.route-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 999px;
+  border: 1px solid var(--color-line);
+  background: var(--color-cream);
+  padding: 0.4rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-ink-dim);
+  transition:
+    transform 0.18s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.18s ease,
+    box-shadow 0.18s ease,
+    color 0.18s ease;
+}
+
+.route-chip:hover,
+.route-chip:focus-visible {
+  transform: translateY(-2px);
+  border-color: var(--color-gold);
+  color: var(--color-navy);
+  box-shadow: 0 6px 16px color-mix(in srgb, var(--color-gold) 26%, transparent);
+}
+
+.route-ico {
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+  color: var(--color-gold-deep);
+  transition: transform 0.18s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.route-chip:hover .route-ico {
+  transform: scale(1.14);
+}
+
+.route-tag {
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--color-gold) 20%, transparent);
+  padding: 0.1rem 0.45rem;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-gold-deep);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Hidden only where a script exists to release them, the same bargain the
+     reveal rule at the top of this file makes. */
+  :root[data-js] [data-reveal].route-stop:not(:last-child)::after {
+    transform: scaleY(0);
+  }
+
+  /* The list item, not the chip inside it. An entrance animation with
+     fill-mode: both keeps owning every property it names for good, so a
+     transform animated here would quietly beat the hover lift below and the
+     chip would never move under the pointer. One element each: the li
+     arrives, the chip responds. */
+  :root[data-js] [data-reveal] .route-chips > li {
+    opacity: 0;
+  }
+
+  :root[data-js] [data-reveal] .route-ico > * {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+  }
+
+  /* The line reaches the next stop just after the chips of this one have
+     landed, so the eye is carried down rather than racing ahead of itself. */
+  [data-reveal].route-stop.is-visible:not(:last-child)::after {
+    animation: route-draw 0.75s cubic-bezier(0.65, 0, 0.35, 1) both;
+    animation-delay: calc(var(--reveal-delay, 0ms) + 260ms);
+  }
+
+  [data-reveal].route-stop.is-visible .route-dot {
+    animation: route-arrive 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    animation-delay: var(--reveal-delay, 0ms);
+  }
+
+  /* One ring outward as the stop lands. A pulse that repeated would be three
+     things blinking on a page somebody is trying to read an address off. */
+  [data-reveal].route-stop.is-visible .route-dot::after {
+    content: '';
+    position: absolute;
+    inset: -0.3rem;
+    border-radius: 50%;
+    border: 2px solid var(--color-gold);
+    animation: route-ping 1.1s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: calc(var(--reveal-delay, 0ms) + 120ms);
+  }
+
+  [data-reveal].route-stop.is-visible .route-chips > li {
+    animation: fade-up 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: calc(var(--reveal-delay, 0ms) + 180ms + var(--chip-delay, 0ms));
+  }
+
+  [data-reveal].route-stop.is-visible .route-ico > * {
+    animation: benefit-draw 0.7s cubic-bezier(0.65, 0, 0.35, 1) both;
+    animation-delay: calc(var(--reveal-delay, 0ms) + 320ms + var(--chip-delay, 0ms));
+  }
+
+  @keyframes route-draw {
+    from { transform: scaleY(0); }
+    to { transform: scaleY(1); }
+  }
+
+  @keyframes route-arrive {
+    from { opacity: 0; transform: scale3d(0.2, 0.2, 1); }
+    to { opacity: 1; transform: scale3d(1, 1, 1); }
+  }
+
+  @keyframes route-ping {
+    from { opacity: 0.75; transform: scale3d(0.5, 0.5, 1); }
+    to { opacity: 0; transform: scale3d(1.9, 1.9, 1); }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .route-chip,
+  .route-ico {
+    transition: none;
+  }
+}
+
+/* ---- The delivery band -------------------------------------------------
+ *
+ * The section goes dark so the photograph behind it can be a photograph. On
+ * white, a coast at sunrise has to be faded to about a fifth before type sits
+ * on it, by which point it is a grey smear that cost 60KB. On navy it can run
+ * at full strength on the side with no words over it, and the gradient does
+ * the separating.
+ *
+ * It has to read with no photograph at all, because a panel slot is empty
+ * until somebody fills it: the dark is the brand's own navy with a gold glow
+ * in it, and the picture is an improvement on that rather than a requirement.
+ */
+
+.deliver-band {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  /* 5rem top and bottom, the same as every other section on the page. */
+  padding: 5rem 0;
+  background:
+    radial-gradient(
+      38rem 26rem at 78% 18%,
+      color-mix(in srgb, var(--color-gold) 22%, transparent) 0%,
+      transparent 65%
+    ),
+    linear-gradient(160deg, var(--color-navy) 0%, var(--color-navy-deep) 100%);
+}
+
+.deliver-photo {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 70% 40%;
+}
+
+/* Dark where the words are, clear where the picture is. Two stops rather than
+   a flat tint: a uniform scrim over a photograph dims the part worth seeing
+   as much as the part being written on. */
+.deliver-veil {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(
+      100deg,
+      var(--color-navy-deep) 0%,
+      color-mix(in srgb, var(--color-navy) 92%, transparent) 38%,
+      color-mix(in srgb, var(--color-navy) 55%, transparent) 62%,
+      color-mix(in srgb, var(--color-navy) 18%, transparent) 100%
+    );
+}
+
+/* Below the breakpoint the two columns stack, so the picture is behind
+   everything rather than beside it and needs covering throughout. */
+@media (max-width: 1023px) {
+  .deliver-veil {
+    background: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--color-navy-deep) 94%, transparent) 0%,
+      color-mix(in srgb, var(--color-navy) 88%, transparent) 100%
+    );
+  }
+}
+
+.deliver-inner {
+  position: relative;
+}
+
+.deliver-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+}
+
+.deliver-eyebrow svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.deliver-heading {
+  margin-top: 0.6rem;
+  font-size: clamp(1.75rem, 1.1rem + 2.4vw, 2.6rem);
+  font-weight: 700;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  color: #fff;
+}
+
+.deliver-heading-mark {
+  display: block;
+  color: var(--color-gold);
+}
+
+.deliver-intro {
+  margin-top: 0.9rem;
+  max-width: 34rem;
+  color: color-mix(in srgb, #fff 78%, transparent);
+}
+
+.deliver-foot a {
+  font-weight: 600;
+  color: color-mix(in srgb, #fff 88%, transparent);
+  text-underline-offset: 2px;
+}
+
+.deliver-foot a:hover {
+  color: var(--color-gold);
+  text-decoration: underline;
+}
+
+.deliver-foot {
+  margin-top: 1.1rem;
+  color: color-mix(in srgb, #fff 72%, transparent);
+}
+
+/* The route, on dark. The shapes are shared with the light version; only the
+   colours change, so the two cannot drift apart in spacing or timing. */
+.deliver-band .route-town {
+  color: #fff;
+}
+
+.deliver-band .route-note {
+  color: color-mix(in srgb, #fff 52%, transparent);
+}
+
+.deliver-band .route-stop:not(:last-child)::after {
+  background: linear-gradient(
+    180deg,
+    var(--color-gold) 0%,
+    color-mix(in srgb, var(--color-gold) 30%, transparent) 100%
+  );
+}
+
+.deliver-band .route-chip {
+  border-color: color-mix(in srgb, #fff 18%, transparent);
+  background: color-mix(in srgb, #fff 10%, transparent);
+  color: color-mix(in srgb, #fff 92%, transparent);
+  backdrop-filter: blur(6px);
+}
+
+.deliver-band .route-chip:hover,
+.deliver-band .route-chip:focus-visible {
+  border-color: var(--color-gold);
+  background: color-mix(in srgb, #fff 18%, transparent);
+  color: #fff;
+}
+
+.deliver-band .route-ico {
+  color: var(--color-gold);
+}
+
+.deliver-band .route-tag {
+  background: var(--color-gold);
+  color: var(--color-navy-deep);
+}
+
+/* ---- The flourish and the map ----------------------------------------- */
+
+.deliver-map-wrap {
+  position: relative;
+}
+
+.deliver-script {
+  position: relative;
+  margin: 0 0 0.25rem auto;
+  width: fit-content;
+  text-align: center;
+  color: var(--color-gold-light);
+  font-style: italic;
+  line-height: 1.12;
+  transform: rotate(-4deg);
+  transform-origin: right bottom;
+}
+
+.deliver-script-1,
+.deliver-script-2 {
+  display: block;
+  font-size: clamp(1.1rem, 0.8rem + 1vw, 1.45rem);
+  font-weight: 400;
+}
+
+.deliver-script-2 strong {
+  font-weight: 700;
+  color: #fff;
+}
+
+.deliver-swoosh {
+  display: block;
+  width: 9rem;
+  height: 0.9rem;
+  margin: 0.15rem 0 0 auto;
+  color: var(--color-gold);
+}
+
+.deliver-map {
+  display: block;
+  width: 100%;
+  max-width: 33rem;
+  margin: 0 auto;
+  overflow: visible;
+}
+
+.map-label {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  paint-order: stroke;
+  stroke: #fffdf8;
+  stroke-width: 3.5px;
+  stroke-linejoin: round;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  :root[data-js] [data-reveal] .deliver-swoosh path {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+  }
+
+  [data-reveal].deliver-map-wrap.is-visible .deliver-swoosh path {
+    animation: route-draw-line 0.7s cubic-bezier(0.65, 0, 0.35, 1) both;
+    animation-delay: 420ms;
+  }
+
+  @keyframes route-draw-line {
+    from { stroke-dashoffset: 1; }
+    to { stroke-dashoffset: 0; }
+  }
+
+  /* The land, then the road, then the towns, then the car: the order somebody
+     would draw it in, which is why it reads as being drawn rather than as
+     four things arriving late. */
+  :root[data-js] [data-reveal] .map-land {
+    opacity: 0;
+  }
+
+  [data-reveal].deliver-map-wrap.is-visible .map-land {
+    animation: scale-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  :root[data-js] [data-reveal] .map-route {
+    stroke-dashoffset: 300;
+  }
+
+  [data-reveal].deliver-map-wrap.is-visible .map-route {
+    /* Dashed and drawn at once: the offset animates from a length longer than
+       the path, so the dashes march into place rather than fading in. */
+    animation: map-road 1.5s linear both;
+    animation-delay: 420ms;
+  }
+
+  @keyframes map-road {
+    from { stroke-dashoffset: 300; }
+    to { stroke-dashoffset: 0; }
+  }
+
+  :root[data-js] [data-reveal] .map-pin {
+    opacity: 0;
+  }
+
+  [data-reveal].deliver-map-wrap.is-visible .map-pin {
+    animation: map-drop 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    animation-delay: calc(760ms + var(--pin-delay, 0ms));
+  }
+
+  @keyframes map-drop {
+    from { opacity: 0; transform: translateY(-14px) scale(0.6); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .map-pin {
+    transform-box: fill-box;
+    transform-origin: bottom center;
+  }
+
+  /* The car runs the same path the road is drawn from, handed over as a
+     custom property by the component that works it out. Hidden unless the
+     browser can actually follow a path -- a car parked at the origin of the
+     viewBox is worse than no car. */
+  .map-car {
+    opacity: 0;
+  }
+
+  @supports (offset-path: path('M0 0L1 1')) {
+    [data-reveal].deliver-map-wrap.is-visible .map-car {
+      offset-path: var(--route-d);
+      offset-rotate: auto;
+      animation: map-drive 9s 1.6s cubic-bezier(0.37, 0, 0.63, 1) infinite;
+    }
+
+    @keyframes map-drive {
+      0% { offset-distance: 0%; opacity: 0; }
+      6% { opacity: 1; }
+      55% { offset-distance: 100%; opacity: 1; }
+      62% { offset-distance: 100%; opacity: 0; }
+      100% { offset-distance: 0%; opacity: 0; }
+    }
+  }
+}
+
+/* ---- A place, as a card ------------------------------------------------
+ *
+ * Everything here is about the row rather than the card. These sit four
+ * across, and what matters is that the four read as one row: the headings on
+ * one line, the buttons on another. A picture that sets its own height, or a
+ * name that takes two lines where its neighbour takes one, puts everything
+ * below it out of step with the card beside it.
+ *
+ * So the picture is a fixed height rather than an aspect ratio, and the name
+ * and the sentence are each held to a fixed number of lines. Shorter than
+ * they were, too: the old card was five hundred pixels tall, most of it
+ * picture, and four of them filled a laptop screen on their own.
+ */
+
+.place-media {
+  height: 9.5rem;
+  flex: 0 0 auto;
+}
+
+@media (min-width: 1280px) {
+  .place-media {
+    height: 10.5rem;
+  }
+}
+
+/* Two lines of room whether the name needs them or not, so the sentence under
+   it starts at the same height on every card in the row. */
+.place-title {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  font-size: 1.05rem;
+  line-height: 1.3;
+  min-height: calc(2 * 1.3em);
+}
+
+.place-blurb {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  font-size: 0.85rem;
+}
+
+/* ---- A rail of cards ---------------------------------------------------
+ *
+ * Native horizontal scrolling that also moves on its own: the crawl lives in
+ * Services.tsx and only ever sets scrollLeft, so a flick, a trackpad,
+ * shift-wheel, the arrows and the keyboard all keep working while it runs.
+ *
+ * No scroll snapping. Snap and a crawl are two things deciding where the rail
+ * should be, and mandatory snapping wins every frame -- the rail would inch
+ * forward and be yanked back to the nearest card, which reads as a fault.
+ */
+.rail {
+  /* Not scroll-behavior: smooth. With it, every assignment to scrollLeft is
+     animated -- including the crawl's own fraction of a pixel per frame,
+     which is then still easing when the next frame overwrites it, so the rail
+     never actually moves. The arrows ask for smooth scrolling themselves,
+     which is the one place it is wanted. */
+  scrollbar-width: none;
+  /* Room for the lift on hover and for a focus ring, which a plain
+     overflow-x would otherwise clip. */
+  padding-top: 4px;
+  overscroll-behavior-x: contain;
+
+  /* Saying what is already true: nothing in here paints outside it. Without
+     it Chrome counts the whole strip of cards -- several thousand pixels of
+     them -- in document.scrollWidth, which is the number every "is this page
+     wider than the screen" check reads, including Lighthouse's and our own.
+     The page could not actually be panned sideways either way, so this
+     changes no behaviour; it stops the page reporting a fault it does not
+     have. Both axes already clip here (a scroller on one axis makes the other
+     auto), so the hover lift keeps exactly the room the padding gives it. */
+  contain: paint;
+}
+
+.rail::-webkit-scrollbar {
+  display: none;
+}
+
+/* The rail takes focus, because a scroller a keyboard cannot reach is a
+   scroller a keyboard user cannot read. The browser's own ring around a
+   full-width strip is a black box; this is the ring everything else here
+   uses. */
+.rail:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: -2px;
+  border-radius: 18px;
+}
+
+/* The cards fade out at both ends rather than being chopped, so the rail
+   reads as something passing through the column rather than as a grid that
+   overflowed it. */
+.rail-mask {
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 3.5%, #000 96.5%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 3.5%, #000 96.5%, transparent 100%);
+}
+
+/* Each card is a fixed width, so the rail is a rail rather than six cards
+   squeezed into the width of one screen. */
+.rail-item {
+  flex: 0 0 auto;
+  width: 17rem;
+}
+
+@media (min-width: 640px) {
+  .rail-item {
+    width: 19rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .rail-item {
+    width: 20.5rem;
+  }
+}
+
+.rail-item > * {
+  height: 100%;
+}
+
+/* Four across instead of three, for the rails whose cards are a picture, a
+   category and a sentence. Worked out from the column rather than set to a
+   fixed width, so four of them and their three gaps come to exactly the
+   width the rest of the page uses -- a fixed rem width that nearly fits
+   leaves a sliver of a fifth card, which reads as the rail being broken
+   rather than as there being more.
+
+   Only once there is room for it. Below this the fixed widths above apply
+   and the rail shows two and a bit, which is what a phone has room for. */
+@media (min-width: 1024px) {
+  .rail-4 .rail-item {
+    width: calc((100% - 3 * 1.25rem) / 4);
+  }
+}
+
+/* The arrows. They are scrollBy() and nothing else, so with no script to run
+   them they are two buttons that do nothing -- hidden until the page says it
+   has one, the same way the reveals are. Touch, trackpad and the keyboard
+   scroll the rail without them. */
+.rail-btn {
+  display: none;
+}
+
+:root[data-js] .rail-btn {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 999px;
+  border: 1px solid var(--color-line);
+  background: #fff;
+  color: var(--color-navy);
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.rail-btn:hover {
+  background: var(--color-navy);
+  border-color: var(--color-navy);
+  color: var(--color-gold-light);
+  transform: translateY(-2px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rail-btn,
+  .rail-btn:hover {
+    transition: none;
+    transform: none;
+  }
+}
+
+/* The services page.
+
+   Six blocks down one page, alternating white and cream so each one is a
+   place rather than a paragraph, with the picture changing sides as they go.
+   The numeral is the only ornament: it says how far down the list you are
+   without another line of type saying it. */
+.service-n {
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  flex: none;
+  border-radius: 50%;
+  border: 1px solid color-mix(in srgb, var(--color-gold) 45%, transparent);
+  background: color-mix(in srgb, var(--color-gold) 12%, transparent);
+  color: var(--color-gold-deep);
+  font-size: 0.8125rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+/* Taller than the 2:1 the cards use: beside a column of type, a letterbox
+   reads as a banner that lost its heading. */
+.service-art {
+  aspect-ratio: 16 / 11;
+  box-shadow: 0 18px 40px rgb(16 24 40 / 0.14);
+}
+
+@media (min-width: 1024px) {
+  .service-art {
+    aspect-ratio: 3 / 2;
+  }
+}
+
+/* The row of jump buttons at the top. */
+.service-jump {
+  transition:
+    transform 0.2s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.2s ease,
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.service-jump:hover {
+  transform: translate3d(0, -2px, 0);
+  border-color: color-mix(in srgb, var(--color-gold) 60%, transparent);
+  background: var(--color-gold);
+  color: var(--color-navy);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .service-jump {
+    transition: none;
+  }
+
+  .service-jump:hover {
+    transform: none;
+  }
+}
+
+/* The questions band.
+
+   The list used to be white boxes on cream at the foot of the page, which is
+   where small print goes. It is not small print: it is the ten things people
+   ring up to ask, answered. So it gets a band of its own -- the banner
+   photograph almost entirely under navy, with the same gold glow the banner
+   uses, and the questions on white cards over it. */
+.faq-photo {
+  opacity: 0.22;
+  filter: saturate(0.6);
+}
+
+.faq-wash {
+  background:
+    radial-gradient(
+      38rem 24rem at 50% -12%,
+      color-mix(in srgb, var(--color-gold) 20%, transparent) 0%,
+      transparent 66%
+    ),
+    linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--color-navy-deep) 88%, transparent),
+      color-mix(in srgb, var(--color-navy) 80%, transparent)
+    );
+}
+
+/* Safari still draws its own triangle for a summary unless told twice. */
+.faq-panel summary::-webkit-details-marker {
+  display: none;
+}
+
+/* A panel of the band's own navy, lit from within, rather than a cream card.
+   Ten pale blocks on a dark photograph read as a stack of paper dropped on
+   the page: the section fought the banner behind it and won, which is not
+   what a photograph is for.
+
+   The alphas are chosen against the worst case the scrim allows -- the
+   photograph at its brightest under 80% navy -- so white at 75% stays above
+   4.5:1 whatever picture ends up behind it. */
+.faq-panel {
+  background: color-mix(in srgb, var(--color-navy-deep) 62%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-gold) 18%, transparent);
+  backdrop-filter: blur(6px);
+  transition:
+    border-color 0.2s ease,
+    background-color 0.2s ease,
+    transform 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* The entrance animation fills forwards, which means it goes on owning
+   `transform` after it has finished -- and an animation beats a transition,
+   so the lift below was computing and never showing. Handing the property
+   back once the panel has arrived costs nothing: fade-up ends on
+   translate3d(0,0,0), which is where the panel sits anyway. The explicit
+   opacity is what the fill was holding for, so it has to stay behind. */
+.faq-panel[data-reveal].is-visible {
+  opacity: 1;
+  animation-fill-mode: backwards;
+}
+
+.faq-panel:hover {
+  border-color: color-mix(in srgb, var(--color-gold) 42%, transparent);
+  transform: translate3d(0, -2px, 0);
+}
+
+/* The open one is the one being read, so it is the one lit. */
+.faq-panel[open] {
+  background: color-mix(in srgb, var(--color-navy-deep) 82%, transparent);
+  border-color: color-mix(in srgb, var(--color-gold) 55%, transparent);
+  box-shadow: 0 18px 44px rgb(3 6 16 / 0.45);
+}
+
+.faq-chevron {
+  transition:
+    transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.faq-panel[open] .faq-chevron {
+  transform: rotate(180deg);
+  background: var(--color-gold);
+  border-color: var(--color-gold);
+  color: var(--color-navy);
+}
+
+/* The answer arrives rather than appears. Only one can be open, so this is
+   also what tells the eye which panel just took over. */
+.faq-panel[open] .faq-answer {
+  animation: fade-up 0.3s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .faq-panel,
+  .faq-chevron {
+    transition: none;
+  }
+
+  .faq-panel:hover {
+    transform: none;
+  }
+
+  .faq-panel[open] .faq-answer {
+    animation: none;
+  }
+}
+
+/* The three badges under the headline.
+   A tinted glass pill on a photograph: the gold hairline ties it to the brand
+   and the eighth of white behind it lifts the words off whatever part of the
+   picture happens to be pale. The lift on hover is the same small one the
+   cards elsewhere use, so the whole page reacts to a pointer the same way. */
+.hero-chip {
+  transition:
+    transform 0.2s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.hero-chip:hover {
+  transform: translate3d(0, -2px, 0);
+  border-color: color-mix(in srgb, var(--color-gold) 65%, transparent);
+  background-color: rgb(255 255 255 / 0.14);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-chip {
+    transition: none;
+  }
+
+  .hero-chip:hover {
+    transform: none;
+  }
+}
+
+.hero-scrim {
+  /* Weighted, not a flat wash. The complaint the last one earned was that the
+     picture could not be seen, and the reason was a single curtain drawn over
+     all of it at one strength -- enough for the headline meant far too much
+     everywhere else.
+
+     So it is shaped to the layout. Heavy down the left where the heading and
+     the paragraph sit, easing off through the middle, and lightest on the
+     right where the enquiry card brings its own white background and needs no
+     help. The picture is legible as a picture across most of its width. */
+  background:
+    linear-gradient(
+      to right,
+      color-mix(in srgb, var(--color-navy-deep) 90%, transparent) 0%,
+      color-mix(in srgb, var(--color-navy-deep) 84%, transparent) 30%,
+      color-mix(in srgb, var(--color-navy-deep) 64%, transparent) 56%,
+      color-mix(in srgb, var(--color-navy-deep) 30%, transparent) 78%,
+      color-mix(in srgb, var(--color-navy-deep) 22%, transparent) 100%
+    ),
+    /* A little more at the very top and bottom: the header sits on one edge
+       and the cream page begins at the other, and a photograph running into
+       either without a settle looks like a mistake. */
+    linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--color-navy-deep) 46%, transparent) 0%,
+      color-mix(in srgb, var(--color-navy-deep) 16%, transparent) 34%,
+      color-mix(in srgb, var(--color-navy-deep) 22%, transparent) 70%,
+      color-mix(in srgb, var(--color-navy-deep) 58%, transparent) 100%
+    );
+}
+
+/* On a phone the text runs the full width, so a left-to-right gradient has
+   nowhere to ease off to. Flat and darker is the only thing that keeps a
+   paragraph readable over a photograph on a narrow screen. */
+@media (max-width: 767px) {
+  .hero-scrim {
+    background:
+      linear-gradient(
+        to bottom,
+        color-mix(in srgb, var(--color-navy-deep) 84%, transparent),
+        color-mix(in srgb, var(--color-navy-deep) 90%, transparent)
+      );
+  }
+}
+
+.hero-card {
+  box-shadow:
+    0 24px 60px -12px color-mix(in srgb, var(--color-navy-deep) 55%, transparent),
+    0 4px 14px color-mix(in srgb, var(--color-navy-deep) 28%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-gold) 22%, transparent);
+}
+
+/* The art frame is 2:1 as a card header, but a page banner is governed by the
+   height of the text inside it -- so it fills its container instead. */
+.art-frame.h-full {
+  aspect-ratio: auto;
+  height: 100%;
+}
+
+/* The drawn banner fades into the navy on its left edge, so the illustration
+   reads as part of the band rather than as a rectangle pasted onto it. */
+.banner-art {
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 45%);
+  mask-image: linear-gradient(to right, transparent 0%, #000 45%);
+}
+
+/* ---------------------------------------------------------------------------
+   Targets you have to hit.
+
+   Two sizes, because a thumb and a mouse are not the same problem.
+
+   24px is the floor everywhere. That is what WCAG 2.5.8 asks of a target
+   under any pointer, and "any pointer" includes a mouse: a tremor, a
+   trackpad, a laptop on a train. These links were 20px -- a line of 14px
+   text with nothing around it -- so the floor costs four pixels and settles
+   the question.
+
+   On a phone they go much further. The footer's list of pages was a column
+   of 16px lines with 8px between them: nine targets a thumb cannot pick
+   between, which is most of what "the buttons are not clickable" means on a
+   small screen. 40 and 44 are what a thumb wants, not what a standard
+   requires, and there is room for them on a page scrolled with a thumb.
+
+   Only standalone links grow, at either size. A link inside a sentence keeps
+   the size of its words: padding one would open a gap in the line it sits
+   in, and the sentence around it is the thing that makes it findable anyway.
+   That is 2.5.8's own exception, and it is why these are two named classes
+   rather than a rule about every `a`.
+--------------------------------------------------------------------------- */
+.tap-list a,
+.tap-target {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+}
+
+@media (hover: none), (max-width: 700px) {
+  .tap-list a {
+    min-height: 40px;
+  }
+  .tap-target {
+    min-height: 44px;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Anchor targets clear the header.
+
+   The header is sticky, so scrolling an #anchor to the top of the viewport
+   puts its heading behind the logo bar. scroll-margin-top reserves that
+   height, and it applies to a keyboard "skip to" jump and a pasted link with
+   a hash just as much as to a click.
+--------------------------------------------------------------------------- */
+:target,
+#fleet,
+#enquire,
+#how,
+#top {
+  scroll-margin-top: 88px;
+}

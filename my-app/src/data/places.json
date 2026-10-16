@@ -1,0 +1,103 @@
+{
+  "note": "Places worth driving to, baked into the build so /places is not served to a crawler as 'The list is on its way'. Refreshed from the panel by scripts/fetch-places.mjs, which keeps this file when the panel cannot be reached. Distances are approximate road distances from Nagercoil, which is where the vehicles are kept -- a straight-line figure is not the number anybody plans a day around.",
+  "fetched": null,
+  "live": false,
+  "places": [
+    {
+      "id": "kanyakumari-point",
+      "name": "Kanyakumari and the Vivekananda Rock",
+      "category": "Coast",
+      "km": 20,
+      "blurb": "The southern tip, where the sea on three sides meets at one point. Sunrise is what people come for; the ferry out to the Vivekananda Rock and the Thiruvalluvar statue queues in season, so go early or accept it will take an hour.",
+      "mapUrl": "https://www.google.com/maps/search/?api=1&query=Kanyakumari"
+    },
+    {
+      "id": "vattakottai",
+      "name": "Vattakottai Fort",
+      "category": "Coast",
+      "km": 26,
+      "blurb": "A small granite fort right on the shore about six kilometres up the coast from Kanyakumari, with the sea on one side and the hills behind. Half an hour is enough, and the drive there along the coast road is half the reason to go.",
+      "mapUrl": "https://www.google.com/maps/search/?api=1&query=Vattakottai+Fort"
+    },
+    {
+      "id": "padmanabhapuram",
+      "name": "Padmanabhapuram Palace",
+      "category": "Heritage",
+      "km": 35,
+      "blurb": "The old wooden palace of the Travancore kings at Thuckalay, and the largest of its kind anywhere. Bigger inside than it looks and worth ninety minutes. It shuts earlier in the afternoon than most people expect, so check before setting off.",
+      "mapUrl": "https://www.google.com/maps/search/?api=1&query=Padmanabhapuram+Palace"
+    },
+    {
+      "id": "suchindram",
+      "name": "Thanumalayan Temple, Suchindram",
+      "category": "Temple",
+      "km": 7,
+      "blurb": "A short run out of Nagercoil to one of the district's great temples, known for its musical pillars and the tall Hanuman statue. Like most temples here it closes in the middle of the day and opens again late afternoon.",
+      "mapUrl": "https://www.google.com/maps/search/?api=1&query=Thanumalayan+Temple+Suchindram"
+    },
+    {
+      "id": "thirparappu",
+      "name": "Thirparappu Falls",
+      "category": "Falls",
+      "km": 45,
+      "blurb": "A broad, low waterfall on the Kodayar river with a bathing area below it, inland towards the hills. Fullest after the monsoon and quiet on a weekday. The road out is tarred with some broken stretches — unhurried is the right pace.",
+      "mapUrl": "https://www.google.com/maps/search/?api=1&query=Thirparappu+Falls"
+    },
+    {
+      "id": "mathur-aqueduct",
+      "name": "Mathur Trough Aqueduct",
+      "category": "Engineering",
+      "km": 48,
+      "blurb": "A working aqueduct carrying water across the Pahrali valley on concrete piers, high enough that walking its length is the point. Usually combined with Thirparappu, which is a few kilometres away.",
+      "mapUrl": "https://www.google.com/maps/search/?api=1&query=Mathur+Aqueduct"
+    },
+    {
+      "id": "chitharal",
+      "name": "Chitharal Jain Monuments",
+      "category": "Heritage",
+      "km": 45,
+      "blurb": "Rock-cut Jain carvings from the ninth century on a hill near Marthandam, reached by a short climb. Quiet, rarely crowded, and the view from the top is worth the walk on its own.",
+      "mapUrl": "https://www.google.com/maps/search/?api=1&query=Chitharal+Jain+Monuments"
+    },
+    {
+      "id": "muttom",
+      "name": "Muttom Beach and Lighthouse",
+      "category": "Coast",
+      "km": 32,
+      "blurb": "Rocky shore rather than sand, with a lighthouse above it and far fewer people than Kanyakumari. Good at sunset. The rocks are slippery where the sea reaches them, which is worth saying to anyone with children.",
+      "mapUrl": "https://www.google.com/maps/search/?api=1&query=Muttom+Beach"
+    },
+    {
+      "id": "sanguthurai",
+      "name": "Sanguthurai Beach",
+      "category": "Coast",
+      "km": 12,
+      "blurb": "The closest proper beach to Nagercoil, with a long stretch of sand and a footbridge out over the water. Quiet on weekday mornings and busy at weekends. Twenty minutes from town, which makes it the easy evening drive.",
+      "mapUrl": "https://www.google.com/maps/search/?api=1&query=Sanguthurai+Beach"
+    },
+    {
+      "id": "pechiparai",
+      "name": "Pechiparai Dam",
+      "category": "Hills",
+      "km": 55,
+      "blurb": "A reservoir in the hills north-west of Nagercoil, surrounded by rubber and forest. The drive is the attraction as much as the dam — this is the greenest part of the district and the road climbs gently the whole way.",
+      "mapUrl": "https://www.google.com/maps/search/?api=1&query=Pechiparai+Dam"
+    },
+    {
+      "id": "maruthuvazhmalai",
+      "name": "Maruthuvazhmalai",
+      "category": "Hills",
+      "km": 11,
+      "blurb": "A hill of medicinal herbs just outside Nagercoil with a temple at the top and a steep set of steps to reach it. Early morning is the sensible time; there is no shade on the climb.",
+      "mapUrl": "https://www.google.com/maps/search/?api=1&query=Maruthuvazhmalai"
+    },
+    {
+      "id": "olakaruvi",
+      "name": "Olakaruvi Falls",
+      "category": "Falls",
+      "km": 30,
+      "blurb": "A falls in the Western Ghats reached by a proper walk uphill from where the road ends, which keeps the crowds away. For anyone who wants a half day on foot rather than a drive between car parks.",
+      "mapUrl": "https://www.google.com/maps/search/?api=1&query=Olakaruvi+Falls"
+    }
+  ]
+}

@@ -1,0 +1,347 @@
+{
+  "note": "A service in one town, where that combination has something of its own to say. Deliberately not a matrix: four services across twelve towns is forty-eight pages that are one page with two words swapped, which is the textbook definition of a doorway page and is treated as a reason to trust the whole site less. Renting a scooter in Nagercoil (errands, traffic, parking) and renting one in Kanyakumari (the sunrise run, the coastal wind, the point) really are different jobs; renting a car by the month in Kanyakumari rather than Nagercoil is not, so that page does not exist.",
+  "pages": [
+    {
+      "slug": "nagercoil",
+      "base": "/bikes",
+      "service": "Self drive bike and scooter rental",
+      "town": "Nagercoil",
+      "title": "Self Drive Bike & Scooty Rental in Nagercoil — By the Hour",
+      "description": "Rent a scooter or bike in Nagercoil by the hour, day or week. Helmets included, delivered anywhere in town. Licence and ID needed. Call +91 63749 42976.",
+      "intro": "A two-wheeler is the quickest way to get around Nagercoil, and for a lot of what people need a vehicle for here — a day of errands, a run to the junction, getting to work while your own bike is in the shop — bike rental in Nagercoil is the sensible choice rather than the cheap one.",
+      "sections": [
+        {
+          "heading": "Why a two-wheeler makes sense in town",
+          "body": "Traffic through the centre is heavy for most of the day and parking near the market is the real constraint, not the driving. A scooter goes where a car has to be left three streets away, and it turns a twenty-minute crawl through the old town into five. If you are staying in Nagercoil and your trips are short and frequent, this is what to rent."
+        },
+        {
+          "heading": "By the hour, the day or the week",
+          "body": "Short rentals are normal here. People take a scooter for an afternoon of errands, for a day while a car is being serviced, or for a week while they are visiting family. The daily rate falls on a longer rental the same way a car's does, so a week is not seven times a day."
+        },
+        {
+          "heading": "Delivered, with the paperwork done first",
+          "body": "We bring it to you anywhere in Nagercoil — a house, a hotel, the railway junction or the Vadasery bus stand. The fuel level and the odometer reading are written down in front of you at handover and checked again when it comes back, so there is nothing to argue about at the end."
+        }
+      ],
+      "points": [
+        "Helmets come with the vehicle — two where the bike seats two",
+        "A valid two-wheeler licence and one photo ID, copied at handover",
+        "Fuel is yours; the level at handover is what we expect back",
+        "Delivery anywhere in Nagercoil town, including the junction and the bus stand"
+      ],
+      "faq": [
+        {
+          "question": "Can I rent a scooty in Nagercoil for one day?",
+          "answer": "Yes, and for less than a day. Hourly rental is normal for errands and half-day trips. Tell us roughly when you want it and when you will be done, and we will quote the whole figure before you take it."
+        },
+        {
+          "question": "Do I need my own helmet?",
+          "answer": "No. Helmets come with every two-wheeler, and two where the bike is being ridden two-up. Wearing them is the law in Tamil Nadu and it is also a condition of the rental."
+        },
+        {
+          "question": "What documents do I need to rent a bike in Nagercoil?",
+          "answer": "Your original two-wheeler driving licence and one photo ID. We take a copy at handover and give the originals straight back. A learner's licence is not enough."
+        }
+      ],
+      "alsoSee": [
+        {
+          "to": "/car-rental/nagercoil",
+          "label": "Cars in Nagercoil, if you would rather have a roof"
+        },
+        {
+          "to": "/bikes",
+          "label": "The bikes and scooters we keep"
+        },
+        {
+          "to": "/tariff",
+          "label": "What everything costs"
+        }
+      ]
+    },
+    {
+      "slug": "kanyakumari",
+      "base": "/bikes",
+      "service": "Self drive bike and scooter rental",
+      "town": "Kanyakumari",
+      "title": "Self Drive Bike & Scooty Rental in Kanyakumari",
+      "description": "Rent a scooter or bike in Kanyakumari for sunrise at the point, Vattakottai and the coast road. Helmets included, delivered to your hotel. Hourly and daily.",
+      "intro": "Kanyakumari is a town people explore rather than commute across, and bike rental in Kanyakumari suits that better than a car. The sights are spread along a few kilometres of coast, parking at each of them is easier on two wheels, and you can leave for sunrise without waiting for anybody.",
+      "sections": [
+        {
+          "heading": "The run most people make",
+          "body": "Sunrise at the shore near the Vivekananda Rock, then breakfast, then north along the coast to Vattakottai fort — about six kilometres, and one of the better short rides in the district with the sea on your right the whole way. Sunset Point in the evening closes the loop. All of it is comfortable on a scooter and all of it involves parking somewhere that a car makes harder."
+        },
+        {
+          "heading": "What the coast road is actually like",
+          "body": "It is tarred and in fair condition, and it is windy — genuinely windy, most afternoons, because there is nothing between the road and the sea. A scooter is fine in it if you ride at an unhurried pace and hold the bars properly; a lightweight rider in a crosswind on an exposed stretch should take it slowly. Salt air is also why we check the vehicles over more often here than anywhere else in the district."
+        },
+        {
+          "heading": "Delivered to where you are staying",
+          "body": "Most people renting here are staying a night or two, so we bring the vehicle to the hotel and collect it from there. Tell us the morning you want it and whether you are going out for sunrise, and it will be waiting with fuel in it rather than at a pump at half past five."
+        }
+      ],
+      "points": [
+        "Helmets with every vehicle — and worth wearing properly in the coastal wind",
+        "Hotel delivery and collection anywhere in Kanyakumari town",
+        "Hourly rental, which suits a sunrise run and a morning of sights",
+        "About 20 km from our base in Nagercoil, so say the night before where possible"
+      ],
+      "faq": [
+        {
+          "question": "Can I rent a scooter in Kanyakumari for sunrise?",
+          "answer": "Yes, and it is the most common reason people take one. Arrange it the evening before and we will have it at your hotel with fuel in it, so you are not looking for an open pump before dawn."
+        },
+        {
+          "question": "Is the coast road to Vattakottai safe on a two-wheeler?",
+          "answer": "It is a tarred road in fair condition and it is a popular ride. The thing to respect is the wind — there is nothing between the road and the sea, and it gets strong in the afternoon. Ride at an easy pace and it is a straightforward six kilometres."
+        },
+        {
+          "question": "Do you deliver bikes to hotels in Kanyakumari?",
+          "answer": "Yes. Give us the hotel and a time and we bring it there, and collect from the same place when you are finished. Kanyakumari is about twenty kilometres from our base, so a little notice helps."
+        }
+      ],
+      "alsoSee": [
+        {
+          "to": "/car-rental/kanyakumari",
+          "label": "Cars in Kanyakumari"
+        },
+        {
+          "to": "/places",
+          "label": "What there is to see, and how far"
+        },
+        {
+          "to": "/bikes",
+          "label": "The bikes and scooters we keep"
+        }
+      ]
+    },
+    {
+      "slug": "nagercoil",
+      "base": "/wedding-cars",
+      "service": "Wedding car rental",
+      "town": "Nagercoil",
+      "title": "Wedding Car Rental in Nagercoil — Decorated Cars & Fleet",
+      "description": "Decorated wedding cars and family vehicles in Nagercoil. Muhurtham dates book months ahead. Tell us the date and the hall and we will hold the vehicles.",
+      "intro": "Most weddings in this district happen in or near Nagercoil, and most of them need more than one vehicle: a decorated car for the couple, and something for the family to move between the hall, the temple and the house. We do both, and the thing that matters most is how early you ask.",
+      "sections": [
+        {
+          "heading": "Book on the muhurtham, not on the month",
+          "body": "Auspicious dates are published well in advance and everybody books against the same handful of them. That means the good dates in a season go months ahead and the vehicles for them are spoken for long before the date itself arrives. If you have a muhurtham, tell us the date now even if nothing else is settled — we would rather hold a vehicle and adjust than tell you in March that everything is taken."
+        },
+        {
+          "heading": "The decorated car, and everything behind it",
+          "body": "The car for the couple is decorated to what you want, and we agree the look before the day rather than on it. Behind it, most families need two to four more vehicles for parents, grandparents and guests coming in from outside the district. A seven-seater does more work on a wedding day than two hatchbacks, particularly when elderly relatives are moving between venues."
+        },
+        {
+          "heading": "Timing around the halls",
+          "body": "Nagercoil's halls are spread across the town and traffic through the centre is heavy for most of the day, so the gap between the house, the temple and the reception is usually longer than anyone plans for. Tell us the running order and we will work backwards from it, rather than quoting a vehicle for a block of hours that turns out to be the wrong block."
+        }
+      ],
+      "points": [
+        "Decorated car for the couple, agreed before the day",
+        "Family vehicles alongside it — seven-seaters for the older guests",
+        "Muhurtham dates go months ahead; early is the whole trick",
+        "With a driver, so nobody in the family is driving on the day"
+      ],
+      "faq": [
+        {
+          "question": "How far ahead should I book a wedding car in Nagercoil?",
+          "answer": "As soon as the muhurtham is fixed. Everybody books against the same auspicious dates, so the vehicles for a popular date go months in advance. Tell us the date even if the venue is not settled — it is easier to adjust a held booking than to find a car in the week of the wedding."
+        },
+        {
+          "question": "Can I rent the decorated car and the family vehicles together?",
+          "answer": "That is the usual arrangement, and it is simpler for everyone: one conversation, one quote, and the vehicles arrive together. Most families take a decorated car and two to four more, depending on how many guests are coming from outside the district."
+        },
+        {
+          "question": "Does the wedding car come with a driver?",
+          "answer": "Yes. Wedding rental is with a driver — nobody in the family should be parking a car on the day. The driver knows the town, which matters when the gap between the temple and the hall is tighter than the running order assumed."
+        }
+      ],
+      "alsoSee": [
+        {
+          "to": "/wedding-cars",
+          "label": "Wedding cars, in full"
+        },
+        {
+          "to": "/cars/innova",
+          "label": "The Innova, the usual family vehicle"
+        },
+        {
+          "to": "/car-rental/nagercoil",
+          "label": "Everything we rent in Nagercoil"
+        }
+      ]
+    },
+    {
+      "slug": "kanyakumari",
+      "base": "/wedding-cars",
+      "service": "Wedding car rental",
+      "town": "Kanyakumari",
+      "title": "Wedding Cars in Kanyakumari — Sea-Facing Venues & Guests",
+      "description": "Wedding cars and guest vehicles for Kanyakumari weddings. Sea-facing venues, guests arriving from out of district, and the coast road between them.",
+      "intro": "A wedding in Kanyakumari is usually a wedding people travel to. The venues are sea-facing, the guests are arriving from Nagercoil, Thiruvananthapuram or further, and the vehicles are doing more moving about than they would at a wedding in the bride's own town.",
+      "sections": [
+        {
+          "heading": "Guests who are not from here",
+          "body": "The practical difference from a Nagercoil wedding is that a good share of the party does not know the roads. That usually means vehicles with drivers rather than self-drive, and it means somebody has to think about where people are being collected from — the Nagercoil junction, hotels along the coast, or Thiruvananthapuram airport for anyone flying in."
+        },
+        {
+          "heading": "The coast road, and the wind",
+          "body": "Between the hotels, the venues and the point, everything runs along a few kilometres of exposed coast. It is a short distance and a slow one in season, and it is windy — which is worth knowing before decorations are planned around an open car. We will tell you honestly what will and will not survive the drive."
+        },
+        {
+          "heading": "Distance from where the vehicles are kept",
+          "body": "Our vehicles are based in Nagercoil, about twenty kilometres away. For a wedding that is not a problem — it is planned time rather than a phone call on the morning — but it does mean the schedule wants agreeing properly in advance rather than adjusting on the day."
+        }
+      ],
+      "points": [
+        "Vehicles with drivers, which is what out-of-district guests need",
+        "Airport and junction pickups for people travelling in",
+        "Decorations chosen with the coastal wind in mind",
+        "Based 20 km away in Nagercoil, so the running order is agreed in advance"
+      ],
+      "faq": [
+        {
+          "question": "Can you collect wedding guests from Thiruvananthapuram airport?",
+          "answer": "Yes. It is a common request for Kanyakumari weddings, and it is about two and a half hours each way depending on traffic. Give us the flight numbers and we will build the runs around them rather than around a guessed time."
+        },
+        {
+          "question": "Is an open decorated car a good idea in Kanyakumari?",
+          "answer": "Usually not, and we will say so. The coast is exposed and the wind is strong most afternoons. There are decorations that hold up and decorations that do not, and it is better to hear which before the day than to see it on the way to the venue."
+        },
+        {
+          "question": "How many vehicles will a Kanyakumari wedding need?",
+          "answer": "More than one in the bride's home town, generally, because guests are staying in different hotels rather than at home. Tell us how many people are travelling in and from where, and we will work out the number rather than selling you a round one."
+        }
+      ],
+      "alsoSee": [
+        {
+          "to": "/wedding-cars",
+          "label": "Wedding cars, in full"
+        },
+        {
+          "to": "/tourist-vehicles",
+          "label": "Tourist vehicles for the guests"
+        },
+        {
+          "to": "/car-rental/kanyakumari",
+          "label": "Everything we rent in Kanyakumari"
+        }
+      ]
+    },
+    {
+      "slug": "nagercoil",
+      "base": "/monthly",
+      "service": "Monthly self drive car rental",
+      "town": "Nagercoil",
+      "title": "Monthly Self Drive Car Rental in Nagercoil — Long Term",
+      "description": "Rent a car by the month in Nagercoil. Falling daily rate, no down payment, no loan. For work postings, long visits home and anyone between vehicles.",
+      "intro": "Renting by the month is a different transaction from renting for a weekend, and Nagercoil is where nearly all of it happens — it is the district headquarters, which is where the postings, the offices and the long stays are.",
+      "sections": [
+        {
+          "heading": "Who takes a car for a month here",
+          "body": "Three kinds of people, mostly. Somebody posted to Nagercoil for a few months who does not want to buy a car for it. Somebody home from the Gulf or Singapore for six or eight weeks, which is too long to keep paying a daily rate and too short to buy anything. And somebody between vehicles — a car being rebuilt after an accident, or a delivery date that has slipped."
+        },
+        {
+          "heading": "How the rate works over a month",
+          "body": "The daily figure falls as the rental gets longer, so a month is nothing like thirty times a day. There is no down payment and no loan, and the refundable deposit is the only lump sum involved. What you agree at the start is what you pay at the end: the kilometre allowance and the extra-kilometre rate are fixed in writing before you take the car, and a monthly rental gets an allowance sized for a month rather than a daily one multiplied out."
+        },
+        {
+          "heading": "Servicing and what happens if something goes wrong",
+          "body": "Over a month a car needs looking after, and that is ours to do rather than yours. If something needs attention we sort it out, and if a vehicle has to go in for work we talk to you about a replacement rather than leaving you without one. This is the part that makes a long rental different from a long series of short ones."
+        }
+      ],
+      "points": [
+        "The daily rate falls the longer you keep the vehicle",
+        "No down payment and no loan — a refundable deposit is the only lump sum",
+        "A kilometre allowance sized for a month, agreed in writing",
+        "Servicing and upkeep are ours, not yours"
+      ],
+      "faq": [
+        {
+          "question": "What does it cost to rent a car for a month in Nagercoil?",
+          "answer": "It depends on the vehicle, and the daily figure is lower than a weekly one, which is lower than a daily one. Tell us the car and the length of the rental and we will give you the monthly figure and the kilometre allowance together, because one without the other does not tell you what you are paying."
+        },
+        {
+          "question": "Is there a down payment for a monthly rental?",
+          "answer": "No. There is a refundable security deposit, which comes back when the vehicle does, less anything owing for extra kilometres or damage. There is no loan, no finance and no down payment — that is the main difference from buying."
+        },
+        {
+          "question": "What happens if the car needs servicing during the month?",
+          "answer": "We handle it. Over a long rental the vehicle will need attention at some point, and arranging that is our job. If it has to go in for work, we talk to you about a replacement rather than leaving you to manage without."
+        }
+      ],
+      "alsoSee": [
+        {
+          "to": "/monthly",
+          "label": "Monthly rental, in full"
+        },
+        {
+          "to": "/nri",
+          "label": "Booking from abroad before a long stay"
+        },
+        {
+          "to": "/tariff",
+          "label": "Daily, weekly and monthly rates"
+        }
+      ]
+    },
+    {
+      "slug": "kanyakumari",
+      "base": "/tourist-vehicles",
+      "service": "Tourist vehicle rental",
+      "town": "Kanyakumari",
+      "title": "Tourist Vehicle Rental in Kanyakumari with a Driver",
+      "description": "Vehicles with a driver for Kanyakumari sightseeing — the point, Vattakottai, Suchindram and Padmanabhapuram. For groups, with someone who knows the circuit.",
+      "intro": "Kanyakumari is where most groups arriving in this district start, and it is the one place where renting a vehicle with a driver is usually the better answer than driving yourself. The sights are close together, the parking at each of them is the difficulty, and a driver who knows the circuit saves more time than the map suggests.",
+      "sections": [
+        {
+          "heading": "The circuit, and how long it really takes",
+          "body": "The standard day is the point and the shore at sunrise, Vattakottai fort up the coast, then inland to the Thanumalayan temple at Suchindram and the wooden palace at Padmanabhapuram. On paper it is about eighty kilometres. In practice it is a full day, because the temples have their own hours, the palace closes earlier than people expect, and the ferry to the Vivekananda Rock has a queue that is longer in season than out of it."
+        },
+        {
+          "heading": "Why a driver rather than self drive here",
+          "body": "Every stop on that circuit involves parking somewhere crowded and then walking, and the gaps between them are short. Somebody driving themselves spends a good part of the day finding a space and walking back to it. A driver drops the group at the entrance and collects them from it, and knows which of the temples has closed for the afternoon before you have driven to it."
+        },
+        {
+          "heading": "Sizing the vehicle to the group",
+          "body": "For four or five people a car is plenty. For six or seven a seven-seater is the honest answer rather than squeezing, particularly on a full day with luggage in the back. Larger groups take more than one vehicle, and it is worth telling us the number properly — a group that does not fit discovers it at the first stop, not before."
+        }
+      ],
+      "points": [
+        "With a driver who knows the circuit and its opening hours",
+        "Pickup from hotels in Kanyakumari, or from Nagercoil junction",
+        "Cars for four or five, seven-seaters for a full group",
+        "Rates agreed for the day before you set off, not counted up after"
+      ],
+      "faq": [
+        {
+          "question": "What does a Kanyakumari sightseeing day cover?",
+          "answer": "Usually the point and the shore at sunrise, Vattakottai fort, the Thanumalayan temple at Suchindram and the Padmanabhapuram palace. That is about eighty kilometres and a full day once the temple timings and the ferry queue are allowed for."
+        },
+        {
+          "question": "Is it better to self drive or take a driver in Kanyakumari?",
+          "answer": "For the sightseeing circuit, a driver. Every stop means parking in a crowded place and walking, and the drive between them is short — so most of what you would save by driving yourself goes on finding somewhere to leave the car."
+        },
+        {
+          "question": "Can you pick a group up from Nagercoil junction?",
+          "answer": "Yes. A lot of groups arrive by train at Nagercoil and start the day from there. Tell us the train and the number of people and the vehicle will be waiting on the platform side rather than somewhere you have to find."
+        }
+      ],
+      "alsoSee": [
+        {
+          "to": "/tourist-vehicles",
+          "label": "Tourist vehicles, in full"
+        },
+        {
+          "to": "/places",
+          "label": "Places to visit, with distances"
+        },
+        {
+          "to": "/cars/innova",
+          "label": "The Innova, the usual group vehicle"
+        }
+      ]
+    }
+  ]
+}

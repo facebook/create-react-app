@@ -1,0 +1,170 @@
+# Deploys the PHP admin panel to Hostinger over FTPS.
+#
+# The public site goes to GitHub Pages (deploy-my-app.yml). This is the other
+# half: admin.niteshacars.in runs on Hostinger, which has no connection to this
+# repository, so api/public-vehicles.php only reaches the server through here.
+#
+# Credentials live in repository secrets, never in this file:
+#   Settings -> Secrets and variables -> Actions -> New repository secret
+#
+#   FTP_SERVER      ftp.niteshacars.in, or whatever hPanel shows under FTP Accounts
+#   FTP_USERNAME    the FTP account username
+#   FTP_PASSWORD    its password
+#   FTP_REMOTE_DIR  optional. Only needed if more than one copy of the panel
+#                   exists on the server, to say which one is the live one.
+#
+# The deploy no longer needs to be told where the panel is: it finds the folder
+# holding config.php and writes there. An FTP path is walked from the account's
+# login directory rather than the filesystem root, so the path hPanel's File
+# Manager shows cannot be used directly -- and getting that translation wrong
+# was never loud, because the deploy action creates directories it cannot find.
+# Three "successful" deploys went into folders nobody served.
+#
+# NOTE: never commit a real RESET_TOKEN in tools/reset-password.php. This
+# repository is public, and the file ships inert on purpose. Set the token by
+# editing the file on the server, or upload it by hand when you need it.
+
+name: Deploy admin panel
+
+on:
+  # Push triggers are removed. These workflows upload over FTP to a
+  # directory Hostinger's own Git deployment clears on every publish, so
+  # everything they wrote was erased by the next merge -- and each run
+  # left another stray folder behind on the way. They are kept, manual
+  # only, because the login-directory listing is still the one reliable
+  # way to see what is actually on the server.
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'List what would change without uploading anything'
+        type: boolean
+        default: true
+
+concurrency:
+  # Two deploys overlapping on one FTP account leaves a half-written panel.
+  group: deploy-admin
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check the secrets are set
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          FTP_REMOTE_DIR: ${{ secrets.FTP_REMOTE_DIR }}
+        run: |
+          # Without this the FTP action fails deep inside itself with a
+          # connection error, which reads like the server is down rather than
+          # like a secret was never added.
+          missing=""
+          [ -n "$FTP_SERVER" ]     || missing="$missing FTP_SERVER"
+          [ -n "$FTP_USERNAME" ]   || missing="$missing FTP_USERNAME"
+          [ -n "$FTP_PASSWORD" ]   || missing="$missing FTP_PASSWORD"
+
+          if [ -n "$missing" ]; then
+            echo "::error::Missing repository secrets:$missing"
+            echo "Add them under Settings -> Secrets and variables -> Actions."
+            exit 1
+          fi
+
+          # FTP_REMOTE_DIR is deliberately not in that list. The next step
+          # locates the panel itself; this secret only breaks a tie when there
+          # is more than one copy on the server, and its format does not matter
+          # because it is compared on its tail.
+          if [ -n "$FTP_REMOTE_DIR" ]; then
+            echo "FTP_REMOTE_DIR is set; it will be used only to disambiguate."
+          else
+            echo "FTP_REMOTE_DIR is not set; the panel will be located by config.php."
+          fi
+
+          # FTP_SERVER is a bare host -- an IP or a hostname -- and nothing
+          # else. hPanel displays it as ftp://1.2.3.4, and pasting that whole
+          # string makes the FTP client look up a *hostname* of "ftp://1.2.3.4",
+          # which fails as ENOTFOUND: an error that reads like the server is
+          # missing rather than like the value has a prefix on it.
+          #
+          # Nothing below prints the value. This repository is public, so the
+          # logs are public; only derived facts are reported, never the secret
+          # or anything that reconstructs it.
+          bad=0
+          case "$FTP_SERVER" in
+            *://*)  echo "::error::FTP_SERVER contains '://'. Remove the ftp:// prefix -- just the host."; bad=1 ;;
+          esac
+          case "$FTP_SERVER" in
+            */*)    echo "::error::FTP_SERVER contains '/'. It is a host, not a URL or a path."; bad=1 ;;
+          esac
+          case "$FTP_SERVER" in
+            *:*)    echo "::error::FTP_SERVER contains ':'. Drop the port -- 21 is the default."; bad=1 ;;
+          esac
+          case "$FTP_SERVER" in
+            *[[:space:]]*) echo "::error::FTP_SERVER contains a space. A trailing space survives a paste and breaks the lookup."; bad=1 ;;
+          esac
+
+          echo "FTP_SERVER length: ${#FTP_SERVER} characters"
+          echo "(a bare IPv4 address is 7 to 15 characters)"
+
+          # Only hostnames get the lookup. An IP literal needs no DNS, and
+          # checking one with getent is a reverse lookup that fails whenever
+          # the address has no PTR record -- which is normal for shared
+          # hosting, so it would reject the correct value.
+          if [ "$bad" -eq 0 ]; then
+            if echo "$FTP_SERVER" | grep -Eq '^[0-9]{1,3}(\.[0-9]{1,3}){3}$'; then
+              echo "FTP_SERVER is an IP address; no lookup needed."
+            elif getent hosts "$FTP_SERVER" >/dev/null 2>&1; then
+              echo "FTP_SERVER resolves."
+            else
+              echo "::error::FTP_SERVER is neither an IP address nor a hostname DNS knows about."
+              echo "Check it against hPanel -> Files -> FTP Accounts."
+              bad=1
+            fi
+          fi
+
+          [ "$bad" -eq 0 ] || exit 1
+
+      - name: Find the panel on the server
+        id: panel
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          FTP_REMOTE_DIR: ${{ secrets.FTP_REMOTE_DIR }}
+        run: |
+          # Searches for config.php and prints the folder holding it. See the
+          # script for why that file is the right fingerprint and why the path
+          # cannot simply be configured. Fails if there is not exactly one
+          # answer, rather than picking one -- a wrong choice here is silent.
+          dir="$(.github/scripts/find-panel-dir.sh)"
+          echo "dir=$dir" >> "$GITHUB_OUTPUT"
+          echo "Deploying to: $dir"
+
+      - name: Deploy over FTPS
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps
+          local-dir: ./admin/
+          server-dir: ${{ steps.panel.outputs.dir }}
+          dry-run: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run }}
+
+          # Leaves files the action never uploaded alone. Turning this on would
+          # wipe the folder first and take config.php with it -- the panel would
+          # stop with "Not set up yet" and the database credentials on the
+          # server would be gone.
+          dangerous-clean-slate: false
+
+          # Everything below is either untracked on purpose or meaningless on a
+          # web server. config.php is the important one: it holds the live
+          # database password, which is why it is not in git.
+          exclude: |
+            config.php
+            .ftp-deploy-sync-state.json
+            **/.git*
+            **/.git*/**
+            **/.DS_Store

@@ -1,0 +1,44 @@
+# CI for my-app, the app this repo actively maintains.
+#
+# This previously ran npm ci / build / test at the repo root. That could not
+# pass: the root package.json describes a create-react-app app with no src/ or
+# public/ directory, so react-scripts build always failed looking for
+# public/index.html.
+name: Node.js CI
+
+on:
+  push:
+    branches: ['main']
+  pull_request:
+    branches: ['main']
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: my-app
+
+    strategy:
+      fail-fast: false
+      matrix:
+        # Vite 8 requires ^20.19.0 || >=22.12.0, so 18.x is not supported.
+        node-version: [20.x, 22.x]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: npm
+          cache-dependency-path: my-app/package-lock.json
+
+      - name: Install
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Build
+        run: npm run build

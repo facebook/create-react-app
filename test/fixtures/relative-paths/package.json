@@ -1,7 +1,0 @@
-{
-  "dependencies": {
-    "react": "latest",
-    "react-dom": "latest"
-  },
-  "homepage": "."
-}

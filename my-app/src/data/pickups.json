@@ -1,0 +1,70 @@
+{
+  "groups": [
+    {
+      "town": "Nagercoil",
+      "slug": "nagercoil",
+      "note": "Where the vehicles are kept — often within the hour",
+      "points": [
+        {
+          "name": "Nagercoil",
+          "kind": "town"
+        },
+        {
+          "name": "Nagercoil Railway Station",
+          "kind": "rail"
+        },
+        {
+          "name": "Nagercoil Town Railway Station",
+          "kind": "rail"
+        },
+        {
+          "name": "Vadasery Bus Stand",
+          "kind": "bus"
+        }
+      ],
+      "line": "Self drive car at Nagercoil Railway Station, at Nagercoil Town Railway Station and at Vadasery Bus Stand — handed over on the platform or at the stand, whichever you arrive at."
+    },
+    {
+      "town": "Kanyakumari",
+      "slug": "kanyakumari",
+      "note": "To your hotel, the station or the ferry road",
+      "points": [
+        {
+          "name": "Kanyakumari",
+          "kind": "town"
+        },
+        {
+          "name": "Kanyakumari Railway Station",
+          "kind": "rail"
+        }
+      ],
+      "line": "Self drive car at Kanyakumari Railway Station, or brought to your hotel near the beach. Bikes the same, if a two-wheeler suits the day better."
+    },
+    {
+      "town": "Across the district",
+      "note": "Delivered the same way, a little further out",
+      "points": [
+        {
+          "name": "Parvathipuram",
+          "kind": "town",
+          "tag": "cars & bikes"
+        },
+        {
+          "name": "Marthandam",
+          "kind": "town",
+          "slug": "marthandam"
+        },
+        {
+          "name": "Muttom",
+          "kind": "town"
+        },
+        {
+          "name": "Thuckalay",
+          "kind": "town",
+          "slug": "thuckalay"
+        }
+      ],
+      "line": "Self drive car at Marthandam, at Muttom and at Thuckalay, and self drive cars and bikes at Parvathipuram."
+    }
+  ]
+}

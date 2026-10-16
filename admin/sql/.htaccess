@@ -1,0 +1,14 @@
+# The schema is applied by install.php, which reads these files from disk with
+# glob(__DIR__ . '/sql/*.sql'). Nothing fetches them over HTTP, so serving them
+# only hands a stranger the full shape of the database -- every table, column
+# and relationship -- which is a map for anyone probing the panel.
+#
+# Denying them here does not affect installation.
+
+<IfModule mod_authz_core.c>
+    Require all denied
+</IfModule>
+<IfModule !mod_authz_core.c>
+    Order allow,deny
+    Deny from all
+</IfModule>

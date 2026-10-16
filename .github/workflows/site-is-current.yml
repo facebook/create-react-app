@@ -1,0 +1,49 @@
+# Fails when the site committed at the top level was not built from this source.
+#
+# Hostinger's Git deployment clones this repository into the document root and
+# runs no build, so whatever sits at the top level IS the website. A change to
+# my-app/ or admin/ that does not also update those files never reaches the
+# server -- and nothing reports a problem. The deploy succeeds, the site keeps
+# serving the previous build, and the only symptom is that the thing you
+# changed is not there.
+#
+# This used to rebuild the site and fail if republishing changed anything. That
+# could not work, and had not worked since the panel came online: a build
+# embeds the copy, the fleet and the places the panel is serving at the moment
+# it runs, and this workflow has no way to reproduce those -- the copy lands in
+# live.json, which is not committed, and the rest changes whenever the owner
+# edits anything in the panel. So the rebuild differed every single time, the
+# check was red on every pull request and on main, and a check that is always
+# red is a check nobody reads.
+#
+# It compares a fingerprint of the source instead, which is the question it was
+# always trying to ask: was this site built from this source? That is
+# deterministic, needs no install or build, and takes about a second.
+#
+# It writes nothing back and pushes nothing. The fix is a person running
+# `npm run publish:site` and committing, because a workflow that could commit
+# the fix would also be a workflow that can push to main unattended, which is a
+# far larger permission than catching a stale folder is worth.
+name: Site is current
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.x
+
+      - name: Was the committed site built from this source?
+        run: node scripts/check-site-is-current.mjs

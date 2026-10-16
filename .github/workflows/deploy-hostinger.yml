@@ -1,0 +1,217 @@
+# Deploys the public website to Hostinger.
+#
+# The site moved off GitHub Pages so that it and the admin panel could share
+# one host: the website at niteshacars.in, the panel at niteshacars.in/admin.
+# That was not a preference. The panel is PHP and Pages serves static files
+# only, so /admin could not exist there at all -- and putting them on one
+# origin also removed the CORS allowlist, the second TLS certificate, and the
+# silent failure that came with it.
+#
+# deploy-admin.yml still deploys the panel. This one deploys the site around
+# it, and the two are kept apart by the `exclude` list below.
+#
+# Secrets are the same three the panel deploy uses (FTP_SERVER, FTP_USERNAME,
+# FTP_PASSWORD) -- that account logs in at the website's web root, which is
+# exactly where this needs to write.
+
+name: Deploy site to Hostinger
+
+on:
+  # Push triggers are removed. These workflows upload over FTP to a
+  # directory Hostinger's own Git deployment clears on every publish, so
+  # everything they wrote was erased by the next merge -- and each run
+  # left another stray folder behind on the way. They are kept, manual
+  # only, because the login-directory listing is still the one reliable
+  # way to see what is actually on the server.
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'List what would change without uploading anything'
+        type: boolean
+        default: true
+
+concurrency:
+  # One FTP account, and the panel deploy uses it too. Two uploads interleaving
+  # over one connection leaves a half-written site.
+  group: deploy-hostinger
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.x
+          cache: npm
+          cache-dependency-path: my-app/package-lock.json
+
+      - name: Install
+        working-directory: my-app
+        run: npm ci
+
+      - name: Lint
+        working-directory: my-app
+        run: npm run lint
+
+      - name: Build
+        working-directory: my-app
+        run: npm run build
+
+      - name: Check the secrets are set
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          missing=""
+          [ -n "$FTP_SERVER" ]   || missing="$missing FTP_SERVER"
+          [ -n "$FTP_USERNAME" ] || missing="$missing FTP_USERNAME"
+          [ -n "$FTP_PASSWORD" ] || missing="$missing FTP_PASSWORD"
+          if [ -n "$missing" ]; then
+            echo "::error::Missing repository secrets:$missing"
+            exit 1
+          fi
+          echo "All three FTP secrets are present."
+
+      - name: Make sure we are not about to write into the panel
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          # This deploy writes to the account's login directory, whatever that
+          # is -- so unlike the panel deploy it has no path to verify. The one
+          # thing worth ruling out is the account being re-pointed at the panel
+          # itself: writing a whole website over the panel's index.php would
+          # take the admin offline, and the upload would report success.
+          #
+          # config.php only exists inside the panel, so finding one here means
+          # the login directory IS the panel.
+          cfg="$(mktemp)"
+          trap 'rm -f "$cfg" "$cfg.err"' EXIT
+          printf 'user = "%s:%s"\nurl = "ftp://%s/"\n' \
+            "$FTP_USERNAME" "$FTP_PASSWORD" "$FTP_SERVER" > "$cfg"
+
+          set +e
+          listing="$(curl --silent --show-error --ssl-reqd --insecure --list-only \
+                          --connect-timeout 20 --max-time 60 \
+                          --config "$cfg" 2>"$cfg.err")"
+          rc=$?
+          set -e
+
+          if [ "$rc" -ne 0 ]; then
+            # curl exit 67 is specifically "the server rejected the login", and
+            # saying so is worth the six lines: the generic message sent two
+            # runs chasing the wrong thing, because "could not list the
+            # directory" reads like a network or path problem when it is
+            # actually a username and password the host no longer accepts.
+            if [ "$rc" -eq 67 ]; then
+              echo "::error::The FTP server rejected the username and password."
+              echo ""
+              echo "The three secrets are set, they are just no longer valid --"
+              echo "an account renamed, deleted, or its password changed."
+              echo ""
+              echo "  1. hPanel -> Files -> FTP Accounts: note the hostname and"
+              echo "     username, and set a new password if you do not have it."
+              echo "  2. Check the account's directory is the website root, the"
+              echo "     folder holding index.html. This deploy writes to"
+              echo "     wherever the account lands when it logs in."
+              echo "  3. Update FTP_SERVER, FTP_USERNAME and FTP_PASSWORD under"
+              echo "     Settings -> Secrets and variables -> Actions."
+            else
+              echo "::error::Could not list the FTP login directory, so the target is unverified."
+            fi
+            sed 's/^/  /' "$cfg.err" | head -5
+            exit 1
+          fi
+
+          if printf '%s' "$listing" | grep -qx 'config.php'; then
+            echo "::error::The FTP account logs straight into the admin panel."
+            echo ""
+            echo "Deploying the website here would overwrite the panel. The account"
+            echo "should log in at the website's web root, with the panel in admin/"
+            echo "below it."
+            exit 1
+          fi
+
+          # Sorted and shown in full rather than the first 20 in whatever
+          # order the server felt like. A truncated, unsorted listing of a
+          # directory with dozens of entries answers no question you actually
+          # have -- it cost a round trip to work that out.
+          echo "Login directory is not the panel. It currently holds:"
+          printf '%s\n' "$listing" | grep -vx '\.' | sort | sed 's/^/  /'
+          echo ""
+          echo "(the website's files are written here, alongside whatever else is above)"
+
+      - name: Deploy over FTPS
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps
+          local-dir: ./my-app/dist/
+          server-dir: ./
+          dry-run: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run }}
+
+          # Never wipe first. The panel lives in admin/ under this same root,
+          # and a clean slate would take it and its config.php with it.
+          dangerous-clean-slate: false
+
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/.DS_Store
+            .ftp-deploy-sync-state.json
+            photos/README.md
+
+      - name: Deploy the admin panel to /admin
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps
+          local-dir: ./admin/
+          server-dir: ./admin/
+          dry-run: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run }}
+
+          # deploy-admin.yml refuses to write anywhere it cannot already find
+          # config.php, which is the right rule for finding a panel that exists
+          # somewhere unknown -- it is what stopped three deploys landing in
+          # folders nobody served. It cannot create a panel in a new place,
+          # though, and that is what this step is for: admin/ sits directly
+          # under a login directory we have now positively identified as the
+          # web root, so there is no unknown left for that rule to guard.
+          #
+          # config.php is still excluded and still has to be put there by hand
+          # once. It holds the database password, it is gitignored, and it is
+          # the one file no deploy has ever written -- which is exactly why it
+          # can be trusted as the panel's fingerprint.
+          dangerous-clean-slate: false
+
+          # State is kept per-folder. Sharing one file with the site deploy
+          # above would make each run think the other's files had vanished.
+          state-name: .ftp-deploy-admin-state.json
+
+          # config.php is excluded, and this deploy no longer generates one.
+          #
+          # It used to: the file was written from DB_* secrets and uploaded
+          # beside the panel. That was reasonable when the panel's config could
+          # only live there, and it is now actively harmful. The panel reads
+          # nitesha-config/config.php from above the document root precisely so
+          # that a deploy cannot reach it -- but config_path() checks beside
+          # the panel FIRST, so an uploaded copy silently wins over the real
+          # one. A stale secret would then take the admin offline with
+          # "Database unavailable" on a deploy that only meant to change the
+          # website, and the working config would still be sitting there
+          # untouched and ignored.
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/.DS_Store
+            config.php
+            .ftp-deploy-admin-state.json

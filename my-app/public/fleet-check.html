@@ -1,0 +1,484 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Site check</title>
+<!--
+  Why this page exists.
+
+  When a car added in the admin panel does not appear on the website, there are
+  six different reasons it can happen and they look identical from the outside:
+  the site shows "Ask us what's available" either way. The site already logs
+  which one it hit, but it logs to the browser's developer console, which is
+  not somewhere the person who owns the business is ever going to look.
+
+  So this asks the same question the website asks, and says in plain English
+  what came back and what to do about it. It is a real file in the web root,
+  so it is served whatever else is broken -- including the case where the
+  whole /admin folder is missing, which is exactly when a diagnostic living
+  inside /admin would be useless.
+
+  It now asks two more questions, for the same reason. "The pictures I
+  uploaded do not show on the site" has the same shape as the missing car:
+  the panel says saved, the website shows the drawing, and nothing anywhere
+  says which of the two is wrong. It can be the panel (nothing stored, or the
+  table for it never created) or the website (this server is running a build
+  from before those pictures had anywhere to go). Those need opposite fixes,
+  so the page names which one it is rather than describing both.
+
+  noindex because this is for the owner, not for Google.
+-->
+<style>
+  :root {
+    --bg: #FAF7F2; --card: #fff; --ink: #1A2233; --dim: #5C5348;
+    --line: #E7E0D6; --ok: #2F6B4F; --bad: #B3261E; --warn: #8A5A00;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 24px 16px 64px; background: var(--bg); color: var(--ink);
+    font: 16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  main { max-width: 760px; margin: 0 auto; }
+  h1 { font-size: 1.5rem; margin: 0 0 4px; }
+  .sub { color: var(--dim); margin: 0 0 24px; }
+  .check {
+    background: var(--card); border: 1px solid var(--line); border-radius: 14px;
+    padding: 16px 18px; margin-bottom: 14px;
+  }
+  .check h2 { font-size: 1rem; margin: 0 0 6px; display: flex; align-items: center; gap: 8px; }
+  .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--line); flex: none; }
+  .dot.ok { background: var(--ok); } .dot.bad { background: var(--bad); } .dot.warn { background: var(--warn); }
+  .url { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.82rem; color: var(--dim); word-break: break-all; }
+  .verdict { margin: 10px 0 0; }
+  .fix { margin: 10px 0 0; padding: 10px 12px; background: var(--bg); border-radius: 10px; font-size: 0.93rem; }
+  .fix strong { display: block; margin-bottom: 2px; }
+  pre {
+    margin: 10px 0 0; padding: 10px 12px; background: #2B2A28; color: #F2EDE6;
+    border-radius: 10px; overflow-x: auto; font-size: 0.78rem; line-height: 1.5;
+    white-space: pre-wrap; word-break: break-word;
+  }
+  code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+  table { border-collapse: collapse; width: 100%; margin-top: 10px; font-size: 0.88rem; }
+  th, td { text-align: left; padding: 5px 8px; border-bottom: 1px solid var(--line); }
+  th { color: var(--dim); font-weight: 600; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Site check</h1>
+  <p class="sub">Asks the website's own questions and reports what this server said.</p>
+  <div id="out"></div>
+</main>
+
+<script>
+(function () {
+  var out = document.getElementById('out');
+
+  // Same rule the site uses: the panel sits under /admin on this host.
+  var PANEL = location.origin + '/admin';
+  var ENDPOINT = PANEL + '/api/public-vehicles.php';
+
+  function el(tag, cls, text) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text !== undefined) n.textContent = text;
+    return n;
+  }
+
+  function card(title, url) {
+    var c = el('div', 'check');
+    var h = el('h2');
+    var dot = el('span', 'dot');
+    h.appendChild(dot);
+    h.appendChild(document.createTextNode(title));
+    c.appendChild(h);
+    if (url) c.appendChild(el('p', 'url', url));
+    out.appendChild(c);
+    return {
+      node: c,
+      mark: function (state) { dot.className = 'dot ' + state; },
+      say: function (text) { c.appendChild(el('p', 'verdict', text)); },
+      fix: function (heading, text) {
+        var f = el('div', 'fix');
+        f.appendChild(el('strong', null, heading));
+        f.appendChild(document.createTextNode(text));
+        c.appendChild(f);
+      },
+      raw: function (text) { c.appendChild(el('pre', null, text)); },
+      // Headings and rows of plain strings, rather than a shape per caller:
+      // three checks print tables now and only one of them is about cars.
+      table: function (headings, rows) {
+        var t = el('table');
+        var head = t.insertRow();
+        headings.forEach(function (label) {
+          var th = document.createElement('th');
+          th.textContent = label;
+          head.appendChild(th);
+        });
+        rows.forEach(function (cells) {
+          var tr = t.insertRow();
+          cells.forEach(function (value) { tr.insertCell().textContent = value; });
+        });
+        c.appendChild(t);
+        return t;
+      }
+    };
+  }
+
+  // A body can be a 200-page of HTML, a one-line PHP error, or JSON. Showing
+  // the start of it verbatim is what makes the difference obvious.
+  function snippet(text) {
+    var t = (text || '').trim();
+    return t.length > 500 ? t.slice(0, 500) + '…' : (t || '(empty response)');
+  }
+
+  function checkFleet() {
+    var c = card('The website asks the panel for the fleet', ENDPOINT);
+
+    fetch(ENDPOINT, { headers: { accept: 'application/json' } })
+      .then(function (res) {
+        return res.text().then(function (text) { return { res: res, text: text }; });
+      })
+      .then(function (r) {
+        var status = r.res.status;
+        var type = (r.res.headers.get('content-type') || '').toLowerCase();
+        c.say('The server answered ' + status + ' ' + r.res.statusText + ', as ' + (type || 'no stated type') + '.');
+
+        if (status === 404) {
+          c.mark('bad');
+          c.raw(snippet(r.text));
+          c.fix('The panel is not at /admin on this server.',
+            'The website is being served from a folder that has no admin folder in it. ' +
+            'Open ' + PANEL + '/ in a new tab — if that is also a "page not found", the panel ' +
+            'was never published to the same folder as the website, and that is the whole problem. ' +
+            'Everything else here is fine.');
+          return;
+        }
+
+        if (status >= 500 || /not set up yet/i.test(r.text) || /database unavailable/i.test(r.text)) {
+          c.mark('bad');
+          c.raw(snippet(r.text));
+          if (/not set up yet/i.test(r.text)) {
+            c.fix('The panel cannot find its config file.',
+              'config.php is missing. It should be in a folder named nitesha-config, one level ' +
+              'above the website folder, so that publishing the site does not wipe it.');
+          } else if (/database unavailable/i.test(r.text)) {
+            c.fix('The panel found its config but the database refused it.',
+              'The database name, user or password in config.php does not match what the host has. ' +
+              'Check them in hPanel under Databases.');
+          } else {
+            c.fix('The panel hit a server error.',
+              'The text above is what PHP said. If it is blank, the error log in hPanel under ' +
+              'Advanced → PHP Error Log will have the reason.');
+          }
+          return;
+        }
+
+        if (type.indexOf('application/json') === -1) {
+          c.mark('bad');
+          c.raw(snippet(r.text));
+          c.fix('That is not JSON, so PHP is not running this file.',
+            'The server handed back the file itself, or the website’s "page not found" page, ' +
+            'instead of running it. That usually means the rewrite rule that lets /admin through ' +
+            'is missing from .htaccess, or PHP is switched off for this folder.');
+          return;
+        }
+
+        var body;
+        try {
+          body = JSON.parse(r.text);
+        } catch (e) {
+          c.mark('bad');
+          c.raw(snippet(r.text));
+          c.fix('The response claimed to be JSON but would not parse.',
+            'Usually a PHP notice or warning printed before the real output. The text above shows it.');
+          return;
+        }
+
+        if (!body.ok || !Array.isArray(body.vehicles)) {
+          c.mark('bad');
+          c.raw(snippet(r.text));
+          c.fix('The panel answered, but not with a fleet.', 'This is the raw reply.');
+          return;
+        }
+
+        if (body.vehicles.length === 0) {
+          c.mark('warn');
+          c.fix('The panel is working. It has no cars to show.',
+            'The website only lists a car when its status is Available and it has a rate card ' +
+            'dated today or earlier. A car that is Booked, On Rental, under Maintenance or ' +
+            'Inactive is deliberately hidden, so it is never advertised when it cannot be given ' +
+            'out. Open Vehicles in the panel and check the status and the daily rate on each car.');
+          return;
+        }
+
+        c.mark('ok');
+        c.say('The panel returned ' + body.vehicles.length +
+          (body.vehicles.length === 1 ? ' car.' : ' cars.') +
+          ' These are exactly what the website should be showing.');
+        c.table(['Vehicle', 'Body', 'Per day'], body.vehicles.map(function (v) {
+          return [v.brand + ' ' + v.name, v.bodyType, '₹' + v.rateDaily];
+        }));
+        c.fix('If the website still shows none of these,',
+          'it is holding an old copy of the page. Reload with Ctrl+Shift+R (Cmd+Shift+R on a Mac).');
+      })
+      .catch(function (err) {
+        c.mark('bad');
+        c.fix('The request never completed.',
+          'The browser could not reach ' + ENDPOINT + ' at all — ' + (err && err.message ? err.message : 'no reason given') +
+          '. That is a dead host, a certificate the browser refuses, or no internet on this device. ' +
+          'Open that address directly in a new tab to see what it says.');
+      });
+  }
+
+  // ------------------------------------------------------------- pictures --
+
+  var CONTENT = PANEL + '/api/public-content.php';
+
+  // Fetched once and shared: both the pictures check and the version check
+  // want it, and asking twice would be two chances to disagree with itself.
+  var panelContent = fetch(CONTENT, { headers: { accept: 'application/json' } })
+    .then(function (res) {
+      return res.text().then(function (text) { return { res: res, text: text }; });
+    });
+
+  // The website's own code, as this server is serving it right now.
+  //
+  // The bundle carries every slot name as a plain string -- minifying renames
+  // variables and leaves string literals alone -- so searching it answers the
+  // one question that otherwise cannot be answered from a browser: does the
+  // copy of the website on this server know that this picture exists?
+  var siteBundle = fetch(location.origin + '/index.html', { cache: 'no-store' })
+    .then(function (res) { return res.text(); })
+    .then(function (html) {
+      var m = html.match(/assets\/index-[A-Za-z0-9_-]+\.js/);
+      if (!m) throw new Error('the home page names no script');
+      return fetch(location.origin + '/' + m[0]).then(function (res) {
+        if (!res.ok) throw new Error('the script answered ' + res.status);
+        return res.text().then(function (code) { return { name: m[0], code: code }; });
+      });
+    });
+
+  /** Loads one image and resolves true or false. Never rejects. */
+  function loads(url) {
+    return new Promise(function (resolve) {
+      var img = new Image();
+      img.onload = function () { resolve(true); };
+      img.onerror = function () { resolve(false); };
+      img.src = url;
+    });
+  }
+
+  function checkImages() {
+    var c = card('The website asks the panel for the pictures', CONTENT);
+
+    panelContent
+      .then(function (r) {
+        var type = (r.res.headers.get('content-type') || '').toLowerCase();
+        c.say('The server answered ' + r.res.status + ' ' + r.res.statusText + ', as ' + (type || 'no stated type') + '.');
+
+        if (!r.res.ok || type.indexOf('application/json') === -1) {
+          c.mark('bad');
+          c.raw(snippet(r.text));
+          c.fix('The pictures endpoint is not answering.',
+            'Everything the panel stores for the site — the wording and the pictures — comes ' +
+            'through this one address. Whatever the fleet check above says about /admin applies ' +
+            'here too; fix that first and this will follow.');
+          return;
+        }
+
+        var body;
+        try {
+          body = JSON.parse(r.text);
+        } catch (e) {
+          c.mark('bad');
+          c.raw(snippet(r.text));
+          c.fix('The response claimed to be JSON but would not parse.',
+            'Usually a PHP notice printed before the real output. The text above shows it.');
+          return;
+        }
+
+        if (body.imagesReady === false) {
+          c.mark('bad');
+          c.fix('The panel has no table to keep pictures in.',
+            'The database is missing the site_images table, so every upload had nowhere to go. ' +
+            'Sign in at ' + PANEL + '/ and open any page: the panel applies the missing database ' +
+            'changes on the way in. Then upload the pictures again and reload this page.');
+          return;
+        }
+
+        var brand = body.brand || {};
+        var slots = Object.keys(brand);
+
+        if (slots.length === 0) {
+          c.mark('warn');
+          c.fix('The panel is working. It is holding no pictures.',
+            'Nothing has been uploaded yet, or the uploads did not save. Sign in at ' + PANEL +
+            '/content.php, open Pictures, choose a file for a slot and press the button under it. ' +
+            'The slot shows a thumbnail once it has one — if it does not, the upload was refused ' +
+            'and the panel says why at the top of the page.');
+          return;
+        }
+
+        // Each picture is loaded twice when the first attempt fails: once at
+        // the address the site uses -- /admin/images/<words>-<id>.webp, which
+        // needs the rewrite in admin/.htaccess -- and once at the older
+        // /admin/brand.php?f=<name>, which needs nothing. If the first fails
+        // and the second works, the file is fine and the rewrite is not, and
+        // those are different afternoons.
+        return Promise.all(slots.map(function (slot) {
+          var pretty = PANEL + '/' + brand[slot];
+          var plain = PANEL + '/brand.php?f=' + encodeURIComponent(
+            String(brand[slot]).replace(/^.*[/=]/, ''),
+          );
+          return loads(pretty).then(function (ok) {
+            if (ok) return { slot: slot, ok: true, viaPlain: false };
+            return loads(plain).then(function (plainOk) {
+              return { slot: slot, ok: plainOk, viaPlain: plainOk };
+            });
+          });
+        })).then(function (results) {
+          var broken = results.filter(function (r2) { return !r2.ok; });
+          var rewriteOff = results.filter(function (r2) { return r2.viaPlain; });
+
+          // Which of these the website on this server actually asks for. A
+          // picture stored for a slot the code has never heard of is the exact
+          // shape of a stale deploy, and it is invisible from every other
+          // angle: the panel is right, the file is there, and the page shows
+          // the drawing.
+          return siteBundle.then(function (bundle) {
+            return { results: results, broken: broken, rewriteOff: rewriteOff, bundle: bundle };
+          }, function () {
+            return { results: results, broken: broken, rewriteOff: rewriteOff, bundle: null };
+          });
+        }).then(function (state) {
+          // A plain substring, not a quoted one: a minifier is free to
+          // choose either quote and to fold the name into a longer literal.
+          // The cost of being loose is a slot reported as known when it is
+          // only a coincidence -- a hint that reads as reassuring rather than
+          // as a wrong instruction, which is the right way round for a check
+          // whose job is to point at the stale deploy.
+          var unknown = state.bundle === null ? [] : state.results.filter(function (r2) {
+            return state.bundle.code.indexOf(r2.slot) === -1;
+          });
+
+          c.say('The panel is holding ' + state.results.length +
+            (state.results.length === 1 ? ' picture.' : ' pictures.'));
+
+          c.table(['Where it goes', 'The file', 'On the website'], state.results.map(function (r2) {
+            var known = state.bundle === null ? 'cannot tell'
+              : (unknown.indexOf(r2) === -1 ? 'asked for' : 'not asked for');
+            var file = !r2.ok ? 'will not load' : (r2.viaPlain ? 'loads, old address only' : 'loads');
+            return [r2.slot, file, known];
+          }));
+
+          if (state.rewriteOff.length > 0 && state.broken.length === 0) {
+            c.mark('bad');
+            c.fix('The pictures are there, but this server is not routing their addresses.',
+              'Every file loads at the old address and none at the new one, which means the ' +
+              'rewrite rules in admin/.htaccess are not being applied — either the file did not ' +
+              'reach the server or the host has AllowOverride switched off for this folder. ' +
+              'Re-upload admin/.htaccess; if that changes nothing, ask Hostinger support to ' +
+              'allow .htaccess overrides in public_html/admin.');
+            return;
+          }
+
+          if (state.broken.length > 0) {
+            c.mark('bad');
+            c.fix(state.broken.length + ' of them will not load.',
+              'The panel has a row pointing at a file that is not on the disk any more. That is ' +
+              'what happens when the storage folder is emptied or moved. Upload those pictures ' +
+              'again — the ones that load are fine and do not need touching.');
+            return;
+          }
+
+          if (unknown.length > 0) {
+            c.mark('bad');
+            c.fix('The website on this server is older than these pictures.',
+              'Every file loads, so the panel has done its job. But the copy of the website ' +
+              'running here does not mention ' + unknown.length +
+              (unknown.length === 1 ? ' of these slots' : ' of these slots') +
+              ', which means it was built before they existed and has no place to put them. ' +
+              'This is a publishing step that has not happened, not a fault: see the check below.');
+            return;
+          }
+
+          c.mark('ok');
+          c.fix('The pictures are stored and the website asks for all of them.',
+            'If one of them still does not appear, the browser is holding an old copy of the ' +
+            'page. Reload with Ctrl+Shift+R (Cmd+Shift+R on a Mac).');
+        });
+      })
+      .catch(function (err) {
+        c.mark('bad');
+        c.fix('The request never completed.',
+          'The browser could not reach ' + CONTENT + ' at all — ' +
+          (err && err.message ? err.message : 'no reason given') + '.');
+      });
+  }
+
+  // -------------------------------------------------------------- version --
+
+  function checkBuild() {
+    var c = card('Which build of the website is on this server', location.origin + '/build.json');
+
+    Promise.all([
+      fetch(location.origin + '/build.json', { cache: 'no-store' })
+        .then(function (res) { return res.ok ? res.json() : null; })
+        .catch(function () { return null; }),
+      siteBundle.catch(function () { return null; }),
+    ]).then(function (both) {
+      var info = both[0];
+      var bundle = both[1];
+
+      if (bundle === null) {
+        c.mark('bad');
+        c.fix('The home page names no script this server will serve.',
+          'That is the whole site being broken rather than anything to do with pictures. ' +
+          'Open the home page and see what it does.');
+        return;
+      }
+
+      c.say('The page is running ' + bundle.name + '.');
+
+      if (info === null) {
+        c.mark('warn');
+        c.fix('This server has no build.json.',
+          'It was published before that file existed, which by itself means the copy here is ' +
+          'at least one publish behind. Run npm run publish:site, commit what it changes and ' +
+          'push; the deploy follows the push.');
+        return;
+      }
+
+      var rows = [];
+      if (info.publishedAt) rows.push(['Published', new Date(info.publishedAt).toLocaleString()]);
+      if (info.commitAt) rows.push(['Built from work dated', new Date(info.commitAt).toLocaleString()]);
+      if (info.commit) rows.push(['Commit', info.commit]);
+      c.table(['', ''], rows);
+
+      var stated = (info.assets || []).indexOf(bundle.name.replace('assets/', '')) !== -1;
+      if (!stated) {
+        c.mark('warn');
+        c.fix('build.json and the page disagree about which script this is.',
+          'One of the two was deployed and the other was not, so this server is holding a ' +
+          'half-finished publish. Run npm run publish:site again, commit everything it changes ' +
+          'in one go, and push.');
+        return;
+      }
+
+      c.mark('ok');
+      c.fix('This is a complete publish.',
+        'If something you changed is still missing, compare the date above with when you ' +
+        'changed it. Anything newer than that date has not been published yet.');
+    });
+  }
+
+  checkFleet();
+  checkImages();
+  checkBuild();
+})();
+</script>
+</body>
+</html>

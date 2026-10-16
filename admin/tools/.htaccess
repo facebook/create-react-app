@@ -1,0 +1,32 @@
+# Deny by default. These are maintenance scripts, not part of the panel.
+#
+# create-user.php and clear-enquiry-throttle.php refuse to run outside the
+# command line anyway. test-auth.php and test-money.php do not -- they expect
+# $argv and would run, or fail noisily, for anyone who loaded them.
+
+<IfModule mod_authz_core.c>
+    Require all denied
+</IfModule>
+<IfModule !mod_authz_core.c>
+    Order allow,deny
+    Deny from all
+</IfModule>
+
+# One exception. reset-password.php has a browser mode on purpose: it is the
+# way back in when the hosting plan has no SSH, which is exactly the situation
+# where a locked-out owner cannot use the command-line tools. Blocking it would
+# remove the only route it exists to provide.
+#
+# It is safe to leave reachable: it ships inert, refuses to act until
+# RESET_TOKEN is changed from the placeholder to something 24 characters or
+# longer, requires HTTPS, expires an hour after upload, and stops answering
+# after five wrong tokens.
+<Files "reset-password.php">
+    <IfModule mod_authz_core.c>
+        Require all granted
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Allow from all
+    </IfModule>
+</Files>

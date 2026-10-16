@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en-IN">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <!-- For everything that does not read SVG, and for Google, which asks that
+         a raster favicon be a square whose side is a multiple of 48. The ICO is
+         here because /favicon.ico is requested whether a page names it or not,
+         and it was answering with the 404 page. -->
+    <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png" />
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />
+    <link rel="icon" sizes="48x48" href="/favicon.ico" />
+    <!-- iOS ignores an SVG icon, and a phone that keeps this site on its home
+         screen would draw a screenshot of the page instead. Full-bleed gold,
+         because iOS rounds the corners itself. -->
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <!-- The browser's own furniture, on a phone: navy, like the header it
+         sits above. -->
+    <meta name="theme-color" content="#0A0E20" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Self-Drive Car Rental in Kanyakumari — NiteSha Cars &amp; Bikes</title>
+    <meta
+      name="description"
+      content="Self-drive car hire across Kanyakumari district — Nagercoil, Marthandam, Colachel and Thuckalay. Daily, weekly and monthly rates with clear KM limits."
+    />
+    <link rel="canonical" href="https://niteshacars.in/" />
+
+    <!-- Link previews. WhatsApp, Facebook and X do not run JavaScript, so
+         these have to be in the served HTML; the build writes per-route
+         values into each page's copy. -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="NiteSha Cars &amp; Bikes" />
+    <meta property="og:locale" content="en_IN" />
+    <meta property="og:title" content="Self-Drive Car Rental in Kanyakumari — NiteSha Cars &amp; Bikes" />
+    <meta
+      property="og:description"
+      content="Self-drive car hire across Kanyakumari district — Nagercoil, Marthandam, Colachel and Thuckalay. Daily, weekly and monthly rates with clear KM limits."
+    />
+    <meta property="og:url" content="https://niteshacars.in/" />
+    <!-- The picture a shared link shows, in WhatsApp, on Facebook, in a
+         search result's rich preview.
+
+         It used to be the hero file, which is 223x180. That is below every
+         threshold that matters: a summary_large_image card wants 300x157 at
+         the very least and 1200x630 to look right, Facebook wants 600x315,
+         and Google ignores an Organization image that small. Under them all,
+         a shared link shows no picture at all -- which on WhatsApp, where
+         most of this business's links are sent, is the whole preview gone.
+
+         This one is 1920x1080. The dimensions are declared because Facebook
+         lays the preview out before it has fetched the file, and without them
+         the first person to share a page sees a blank box. -->
+    <meta property="og:image" content="https://niteshacars.in/mountain-road-at-sunrise-self-drive-car-rental.webp" />
+    <meta property="og:image:width" content="1920" />
+    <meta property="og:image:height" content="1080" />
+    <meta property="og:image:alt" content="Self-drive car rental from NiteSha Cars &amp; Bikes, Kanyakumari district" />
+    <meta property="og:image:type" content="image/webp" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://niteshacars.in/mountain-road-at-sunrise-self-drive-car-rental.webp" />
+    <meta name="twitter:image:alt" content="Self-drive car rental from NiteSha Cars &amp; Bikes, Kanyakumari district" />
+
+    <!-- Local search: tells Google this is a car rental business, what it is
+         called, and how to reach it. -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "AutoRental",
+        "name": "NiteSha Cars & Bikes",
+        "description": "Self-drive car rental across Kanyakumari district, Tamil Nadu.",
+        "url": "https://niteshacars.in",
+        "telephone": "+916374942976",
+        "email": "niteshacars045@gmail.com",
+        "image": "https://niteshacars.in/mountain-road-at-sunrise-self-drive-car-rental.webp",
+        "priceRange": "₹₹",
+        "currenciesAccepted": "INR",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Nagercoil",
+          "addressRegion": "Tamil Nadu",
+          "addressCountry": "IN"
+        },
+        "areaServed": {
+          "@type": "AdministrativeArea",
+          "name": "Kanyakumari district",
+          "containedInPlace": {
+            "@type": "State",
+            "name": "Tamil Nadu"
+          }
+        },
+        "serviceArea": {
+          "@type": "AdministrativeArea",
+          "name": "Kanyakumari district, Tamil Nadu"
+        }
+      }
+    </script>
+
+    <!-- Poppins is served from this site now (the @font-face rules are in
+         index.css), so there is no third-party stylesheet to wait on and no
+         preconnect to make. These two weights are on every page above the
+         fold -- body copy, semibold labels and headings -- and a preload
+         starts them with the stylesheet rather than after the browser has
+         parsed it, which is the difference between the text swapping in
+         during the first paint and a moment after it.
+
+         600 is here because it was being fetched on every page anyway, just
+         late: it is what Tailwind's font-semibold asks for, and that is on
+         every card title, every button and every nav link. Discovering it
+         from the stylesheet meant a third swap after the other two had
+         settled. The remaining weights are genuinely occasional and are
+         discovered normally. -->
+    <link rel="preload" href="/fonts/poppins-latin-400.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/poppins-latin-600.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/poppins-latin-700.woff2" as="font" type="font/woff2" crossorigin />
+
+    <!-- Says that there is a script running, before anything is painted.
+         The scroll reveals hide what they are about to animate, and that
+         hiding is keyed on this, so a browser with scripting off is never
+         shown a page whose sections are waiting for an observer that will
+         never run. One line rather than a <noscript> block, because this way
+         the page is visible by default and hidden only where something can
+         unhide it. -->
+    <script>document.documentElement.dataset.js = '';</script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

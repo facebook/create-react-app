@@ -1,0 +1,2328 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+[hidden] { display: none !important; }
+
+/* NiteSha palette — same navy and gold as the public site, but kept flat and
+   dense: this is an operational tool, not a marketing page (spec Part 43). */
+:root {
+  --primary: #0A0E20;      /* brand navy — buttons, active states, links */
+  --accent: #F5A500;       /* brand gold — highlights and key figures */
+  --accent-deep: #B36B00;  /* gold that stays legible as text on white */
+  --danger: #B3261E;
+  --ink: #14100D;
+  --ink-dim: #5C5348;
+  --ink-faint: #948B80;
+  --bg: #FAF8F4;
+  --surface: #ffffff;
+  --border: #E9E2D8;
+  --radius: 14px;
+  --shadow: 0 10px 30px rgba(16, 24, 40, 0.08);
+  --font: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+body {
+  font-family: var(--font);
+  color: var(--ink);
+  background: var(--bg);
+  line-height: 1.6;
+}
+
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  border: none; border-radius: 9px; font-weight: 600; cursor: pointer;
+  transition: transform 0.15s ease, background 0.15s ease;
+  padding: 11px 20px; font-size: 0.9rem;
+  /* "+ Add Deposit" and "Mark Completed" were breaking across two lines on a
+     phone, which makes a button look like a paragraph. A label stays on one
+     line; it is the row of buttons that wraps, not the words inside one. */
+  white-space: nowrap;
+}
+.btn-sm { padding: 8px 14px; font-size: 0.8rem; }
+.btn-block { width: 100%; }
+/* A square button whose whole content is an icon. The label lives in title
+   and aria-label -- an icon button with neither is announced as nothing. */
+.btn-icon { padding: 0; width: 38px; flex: 0 0 38px; }
+.btn-sm.btn-icon { width: 34px; flex: 0 0 34px; }
+/* Gold pill with near-black text — matches "Book Now" on the public site
+   and clears contrast, which gold-on-white text would not. */
+.btn-primary { background: var(--accent); color: #14100D; }
+.btn-primary:hover { background: #FFB829; transform: translateY(-1px); }
+.btn-outline { background: #fff; color: var(--primary); border: 1.5px solid var(--primary); }
+.btn-outline:hover { background: var(--bg); }
+.btn-ghost { background: var(--bg); color: var(--ink-dim); }
+.btn-ghost:hover { background: var(--border); }
+.btn-danger { background: #FBECEA; color: var(--danger); }
+.btn-danger:hover { background: #F7DAD6; }
+
+/* ---------- Login ---------- */
+.login-screen {
+  min-height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  background:
+    radial-gradient(55% 45% at 15% 10%, rgba(245, 165, 0, 0.14), transparent 70%),
+    radial-gradient(45% 45% at 90% 20%, rgba(10, 14, 32, 0.08), transparent 70%),
+    var(--bg);
+  padding: 24px;
+}
+.login-card {
+  background: #fff; border: 1px solid var(--border); border-radius: 20px;
+  box-shadow: var(--shadow); padding: 40px; width: 100%; max-width: 380px; text-align: center;
+}
+.login-logo { font-weight: 800; font-size: 1.1rem; margin-bottom: 20px; display: flex; align-items: center; justify-content: center; gap: 8px; }
+.login-card h1 { font-size: 1.4rem; margin-bottom: 8px; }
+.login-note { font-size: 0.8rem; color: var(--ink-faint); margin-bottom: 24px; line-height: 1.5; }
+.login-card form { text-align: left; }
+.login-card label { display: block; font-size: 0.8rem; font-weight: 600; color: var(--ink-dim); margin-bottom: 6px; }
+.login-card input {
+  width: 100%; padding: 12px 14px; border: 1px solid var(--border); border-radius: 10px;
+  font-size: 0.95rem; margin-bottom: 6px; outline: none;
+}
+.login-card input:focus { border-color: var(--primary); }
+.login-error { color: var(--danger); font-size: 0.82rem; min-height: 1.4em; margin-bottom: 10px; }
+.login-hint { margin-top: 18px; font-size: 0.78rem; color: var(--ink-faint); }
+.login-hint code { background: var(--bg); padding: 2px 6px; border-radius: 6px; font-weight: 600; color: var(--ink); }
+.back-link { display: inline-block; margin-top: 18px; font-size: 0.85rem; color: var(--primary); }
+
+/* ---------- Brand marks, used by the sign-in page and the shell ---------- */
+.logo { font-weight: 800; font-size: 1.1rem; display: flex; align-items: center; gap: 8px; }
+.logo-mark {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
+  background: var(--primary);
+  border: 1.5px solid var(--accent);
+}
+.admin-tag {
+  font-size: 0.7rem; font-weight: 700; background: var(--ink); color: #fff;
+  padding: 3px 9px; border-radius: 999px; text-transform: uppercase; letter-spacing: 0.04em;
+  flex-shrink: 0;
+}
+
+/* ---------------------------------------------------------------------------
+   The panel shell: a column of destinations beside the page.
+
+   It was a row of pills above the page. On a phone that row showed two of its
+   six destinations and the other four were reachable only by dragging a strip
+   that gave no sign it could be dragged -- which is the whole of the
+   "buttons are not clickable" complaint. A column has room for all of them,
+   and folds into a drawer where there is no room for a column.
+--------------------------------------------------------------------------- */
+
+.ns-body { min-height: 100vh; }
+
+/* Keyboard users land here first. Off-screen until it has focus. */
+.ns-skip {
+  position: absolute; left: -9999px; top: 0; z-index: 200;
+  background: var(--ink); color: #fff; padding: 10px 16px; border-radius: 0 0 10px 0;
+  font-size: 0.85rem; font-weight: 600;
+}
+.ns-skip:focus { left: 0; }
+
+.ns { display: grid; grid-template-columns: var(--side, 244px) minmax(0, 1fr); min-height: 100vh; }
+
+/* ---- the window itself does not scroll ----
+   On a desktop the shell is the height of the screen and the page area inside
+   it does the scrolling. The sidebar and the top bar then stay where they
+   are, instead of the whole document sliding and taking the navigation with
+   it -- which is what made a long tab feel like a web page rather than a
+   panel. A phone keeps ordinary page scrolling: a fixed-height shell there
+   fights the address bar hiding and showing, and loses. */
+@media (min-width: 1024px) {
+  html, body { height: 100%; overflow: hidden; }
+  .ns { height: 100dvh; min-height: 0; }
+  .ns-main { min-height: 0; overflow: hidden; }
+  .ns-content {
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+}
+
+/* ---- the column ---- */
+.ns-side {
+  grid-column: 1; background: var(--primary); color: #fff;
+  display: flex; flex-direction: column;
+  position: sticky; top: 0; height: 100vh; overflow-y: auto;
+}
+.ns-brand {
+  display: flex; align-items: center; gap: 9px;
+  padding: 18px 18px 14px; font-weight: 800; font-size: 0.98rem;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.ns-brand .logo-mark { background: rgba(255,255,255,0.08); border-color: var(--accent); }
+
+/* The business's own emblem, where a drawn circle badge used to be.
+   Height-led and auto-width: the file's proportions decide how wide it is, so
+   swapping it for a differently-shaped one cannot squash it. */
+.brand-mark { height: 30px; width: auto; display: block; flex-shrink: 0; }
+/* The sign-in card sets its brand as a row, so the emblem sits beside the
+   name rather than over it. A little larger than the sidebar's, because the
+   card is the first thing seen and has the room. */
+.login-logo .brand-mark { height: 36px; }
+.ns-brand-text { line-height: 1.15; }
+.ns-brand-text span { display: block; font-weight: 500; font-size: 0.76rem; color: rgba(255,255,255,0.6); }
+
+/* Only ever visible inside the drawer. */
+.ns-close {
+  display: none; margin-left: auto; background: none; border: 0; color: #fff;
+  font-size: 1.7rem; line-height: 1; cursor: pointer;
+  width: 44px; height: 44px; border-radius: 10px;
+}
+.ns-close:hover { background: rgba(255,255,255,0.1); }
+
+.ns-nav { flex: 1; padding: 14px 10px; }
+.ns-group {
+  font-size: 0.66rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+  color: rgba(255,255,255,0.42); padding: 14px 10px 6px; margin: 0;
+}
+.ns-group:first-child { padding-top: 2px; }
+
+.ns-item {
+  display: flex; align-items: center; gap: 10px; width: 100%;
+  /* 44px tall, which is the smallest a finger reliably hits. */
+  min-height: 44px; padding: 10px 12px; margin-bottom: 2px;
+  border: 0; border-radius: 10px; background: none; cursor: pointer;
+  font: inherit; font-size: 0.88rem; font-weight: 600; text-align: left;
+  color: rgba(255,255,255,0.74);
+}
+.ns-item:hover { background: rgba(255,255,255,0.08); color: #fff; }
+.ns-item:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+.ns-item.is-on { background: var(--accent); color: #14100D; }
+.ns-item.is-on .ns-ico { opacity: 1; }
+.ns-ico { flex-shrink: 0; opacity: 0.82; }
+.ns-item .ns-ico3d { opacity: 1; }
+.ns-item-label { flex: 1; min-width: 0; }
+
+.ns-item .tab-count {
+  margin: 0; background: rgba(255,255,255,0.16); color: #fff;
+  padding: 1px 8px; border-radius: 999px; font-size: 0.72rem; font-weight: 700;
+}
+.ns-item .tab-count:empty { display: none; }
+.ns-item.is-on .tab-count { background: rgba(0,0,0,0.16); color: #14100D; }
+
+.ns-side-foot {
+  padding: 14px; border-top: 1px solid rgba(255,255,255,0.1);
+  display: flex; flex-direction: column; gap: 10px;
+}
+.ns-who { display: flex; align-items: center; gap: 8px; font-size: 0.82rem; min-width: 0; }
+.ns-who-name { color: rgba(255,255,255,0.86); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ns-side-foot .btn-ghost { background: rgba(255,255,255,0.1); color: #fff; }
+.ns-side-foot .btn-ghost:hover { background: rgba(255,255,255,0.18); }
+
+/* ---- the page beside it ---- */
+.ns-main { grid-column: 2; min-width: 0; display: flex; flex-direction: column; }
+.ns-bar {
+  display: flex; align-items: center; gap: 12px;
+  background: var(--surface); border-bottom: 1px solid var(--border);
+  padding: 14px 24px; position: sticky; top: 0; z-index: 20;
+}
+.ns-bar-title { font-weight: 700; font-size: 1.02rem; flex: 1; min-width: 0; margin: 0; }
+.ns-burger {
+  display: none; align-items: center; justify-content: center;
+  width: 44px; height: 44px; margin-left: -10px;
+  background: none; border: 0; border-radius: 10px; cursor: pointer; color: var(--ink);
+}
+.ns-burger:hover { background: var(--bg); }
+
+
+/* ---- Reminders, in the bar on every page ----
+   The same list the dashboard shows under "Needs attention". It lives here so
+   a payment due today is visible while you are editing the website, which is
+   where most of the time goes. */
+.ns-bell-wrap { flex-shrink: 0; }
+.ns-bell {
+  display: flex; align-items: center; justify-content: center; position: relative;
+  width: 40px; height: 40px; border: 0; border-radius: 10px;
+  /* The icon fills more of the button than the default 20px, so the badge in
+     the corner covers a smaller share of it. */
+  background: none; color: var(--ink-dim); cursor: pointer;
+}
+.ns-bell:hover { background: var(--bg); color: var(--ink); }
+.ns-bell:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+.ns-bell[aria-expanded="true"] { background: var(--bg); color: var(--ink); }
+/* Lit only when something is late or due. A bell that is always on is one
+   nobody looks at -- the same mistake the Inquiries badge used to make. */
+.ns-bell.is-lit { color: var(--ink); }
+/* Small enough to sit on the bell's top corner rather than cover it. At the
+   size this started, a two-digit count hid the icon entirely and the control
+   read as a red dot with no idea what it was for. The border is the bar's own
+   colour, so the badge looks cut out of the bell rather than stuck on it. */
+.ns-bell-count {
+  position: absolute; top: 1px; right: 1px; min-width: 14px; height: 14px;
+  padding: 0 3px; border-radius: 999px; background: var(--danger); color: #fff;
+  font-size: 0.6rem; font-weight: 700; line-height: 14px; text-align: center;
+  border: 2px solid var(--surface); box-sizing: content-box;
+}
+
+/* Hung from the bar, not from the bell. Anchored to the bell it ran off the
+   left edge of a phone: the bell sits inside the bar with the Admin tag beside
+   it, so a 358px panel aligned to the bell's right edge started at -53px. */
+.ns-bell-panel {
+  position: absolute; top: calc(100% + 10px); right: 24px; z-index: 40;
+  width: min(380px, calc(100vw - 32px));
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden;
+}
+.ns-bell-head {
+  display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap;
+  padding: 14px 16px; border-bottom: 1px solid var(--border); background: var(--bg);
+}
+.ns-bell-sub { font-size: 0.78rem; color: var(--ink-dim); }
+.ns-bell-list {
+  list-style: none; margin: 0; padding: 6px;
+  /* Tall enough to read, short enough that the page behind it is still there.
+     Ten reminders is a long list and this is not the place to work through
+     all of them -- the dashboard panel is. */
+  max-height: min(60vh, 420px); overflow-y: auto;
+}
+.ns-bell-row {
+  display: grid; grid-template-columns: auto 1fr; gap: 2px 8px; width: 100%;
+  padding: 10px 12px; border: 0; border-left: 3px solid transparent;
+  border-radius: 8px; background: none; cursor: pointer;
+  font: inherit; text-align: left;
+}
+.ns-bell-row:hover { background: var(--bg); }
+.ns-bell-row:focus-visible { outline: 2px solid var(--primary); outline-offset: -2px; }
+.ns-bell-row.is-overdue { border-left-color: var(--danger); }
+.ns-bell-row.is-soon    { border-left-color: var(--accent); }
+.ns-bell-row.is-new     { border-left-color: var(--primary); }
+.ns-bell-flag {
+  grid-row: 1; font-size: 0.62rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.05em; color: var(--ink-faint); align-self: center;
+}
+.ns-bell-subject { grid-row: 1; font-weight: 700; font-size: 0.86rem; }
+.ns-bell-msg {
+  grid-row: 2; grid-column: 2; font-size: 0.8rem; color: var(--ink-dim); line-height: 1.4;
+}
+.ns-bell-empty { padding: 18px 14px; font-size: 0.84rem; color: var(--ink-dim); text-align: center; }
+
+/* Writing one down. In the panel head rather than at the bottom of the list,
+   because the thought arrives before the list has been read. */
+.ns-bell-add {
+  margin-left: auto; border: 1px solid var(--border); border-radius: 999px;
+  background: var(--surface); color: var(--primary); cursor: pointer;
+  padding: 4px 12px; font: inherit; font-size: 0.76rem; font-weight: 700;
+}
+.ns-bell-add:hover { background: var(--primary); color: #fff; border-color: var(--primary); }
+.ns-bell-add:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+
+/* A reminder somebody set is the one kind that can be finished from here:
+   there is nothing to go and look at, only something to tick off. */
+.ns-bell-list li.is-mine { position: relative; }
+.ns-bell-list li.is-mine .ns-bell-row { padding-right: 62px; }
+.ns-bell-list li.is-mine .ns-bell-flag { color: var(--accent-deep); }
+.ns-bell-tools {
+  position: absolute; top: 7px; right: 8px; display: flex; gap: 2px;
+  opacity: 0; transition: opacity 0.12s ease;
+}
+/* Shown on hover on a mouse, and always where there is no hover to rely on --
+   a control that only appears on hover is a control a phone does not have. */
+.ns-bell-list li.is-mine:hover .ns-bell-tools,
+.ns-bell-tools:focus-within { opacity: 1; }
+@media (hover: none) { .ns-bell-tools { opacity: 1; } }
+.ns-bell-tick, .ns-bell-edit {
+  width: 26px; height: 26px; border: 1px solid var(--border); border-radius: 7px;
+  background: var(--surface); color: var(--ink-dim); cursor: pointer;
+  font: inherit; font-size: 0.82rem; line-height: 1;
+}
+.ns-bell-tick:hover { background: #E8F4EC; color: #2F6B4F; border-color: #2F6B4F; }
+.ns-bell-edit:hover { background: var(--bg); color: var(--ink); }
+.ns-bell-tick:disabled { opacity: 0.5; cursor: default; }
+.ns-bell-tick:focus-visible, .ns-bell-edit:focus-visible {
+  outline: 2px solid var(--primary); outline-offset: 1px; opacity: 1;
+}
+
+.ns-content { flex: 1; width: 100%; max-width: 1180px; padding: 16px 20px; }
+
+/* Except on a list. 1180px is a reading measure -- the width at which a
+   paragraph or a form stays comfortable -- and a records table is neither. At
+   that width the eight columns of the bookings list had nowhere to go but
+   downwards, which is what put every booking on three lines. On a screen
+   showing a list the column opens out to the window; on every other screen,
+   and on any screen too narrow to use it, nothing changes. */
+.ns-content:has(.admin-panel:not([hidden]) .rec-tablewrap:not([hidden] *)) { max-width: 1520px; }
+
+/* The overview too, and for the same reason: it is counters and lists, not a
+   paragraph. Held to a reading measure it stacked ten sections down a narrow
+   strip with a third of the monitor empty beside it. */
+.ns-content:has(#panel-dashboard:not([hidden])) { max-width: 1520px; }
+
+/* The scrim only exists while the drawer is open, and only on a phone. */
+.ns-scrim { display: none; }
+
+@media (max-width: 1000px) {
+  .ns { grid-template-columns: minmax(0, 1fr); }
+  .ns-main { grid-column: 1; }
+  .ns-burger { display: inline-flex; }
+  .ns-close { display: inline-flex; align-items: center; justify-content: center; }
+
+  /* Off-canvas rather than hidden: it slides, so it is obvious where it went
+     and where it comes back from. */
+  .ns-side {
+    position: fixed; inset: 0 auto 0 0; width: 270px; max-width: 84vw; z-index: 120;
+    transform: translateX(-100%); transition: transform 0.22s ease;
+  }
+  .ns-open .ns-side { transform: none; box-shadow: 0 0 40px rgba(0,0,0,0.35); }
+  .ns-open .ns-scrim {
+    display: block; position: fixed; inset: 0; z-index: 110;
+    background: rgba(16, 24, 40, 0.5);
+  }
+  .ns-open { overflow: hidden; }
+  .ns-content { padding: 18px 16px 48px; }
+  .ns-bar { padding: 10px 16px; }
+  .ns-bell-panel { right: 16px; }
+}
+
+/* Nothing to slide on a screen wide enough for the column. */
+@media (min-width: 1001px) {
+  .ns-scrim { display: none !important; }
+}
+
+.panel-header {
+  display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 10px;
+  margin-bottom: 9px;
+}
+/* Heading and description on one line. They were stacked, which cost a whole
+   line of height at the top of every panel for a sentence that is context
+   rather than content. */
+.panel-header > div {
+  display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; min-width: 0;
+}
+.panel-header h2 { font-size: 1.05rem; margin-bottom: 0; }
+.panel-header p { color: var(--ink-dim); font-size: 0.78rem; }
+
+/* Shown only when a migration could not be applied, which is rare and worth
+   interrupting for: the panel works, but something in it will not. */
+.migration-warning {
+  background: #FFF4E0; border-bottom: 1px solid var(--warning, #E8A317);
+  padding: 10px 16px; font-size: 0.9rem; color: var(--ink);
+}
+.migration-warning span { display: block; color: var(--ink-dim); font-size: 0.82rem; margin-top: 2px; }
+
+/* ---------------------------------------------------------------------------
+   The page shell: every admin page that is not the dashboard.
+   
+   This lived in a <style> block inside content.php, so places.php used the
+   same class names and got none of them -- no container, no card, no max
+   width, every field stretched the full width of the monitor. A stylesheet
+   two pages share cannot live inside one of them.
+   
+   Rebuilt on the panel's own tokens rather than the hardcoded greys it had, so
+   these pages and the dashboard are recognisably the same product.
+--------------------------------------------------------------------------- */
+
+.c-wrap { max-width: 900px; margin: 0 auto; padding: 24px 16px 64px; }
+
+.c-top {
+  display: flex; flex-wrap: wrap; gap: 14px;
+  align-items: flex-end; justify-content: space-between; margin-bottom: 18px;
+}
+/* Takes the room it needs and lets the action sit at the far end, rather than
+   growing to the full width and pushing it onto its own line. */
+.c-top > div { flex: 1 1 340px; min-width: 0; }
+.c-top .c-note { margin: 0; }
+
+/* Every section is a card. One rule, so a new page is a card by default rather
+   than by remembering. */
+.c-sec {
+  background: #fff; border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 18px; margin-bottom: 14px;
+}
+.c-sec h2 { font-size: 1.05rem; margin: 0 0 4px; }
+.c-note { color: var(--ink-dim); font-size: 0.87rem; margin: 0 0 14px; }
+.c-hint { color: var(--ink-dim); font-size: 0.8rem; margin: 4px 0 0; }
+
+.c-label { display: block; margin: 14px 0 5px; font-weight: 600; font-size: 0.85rem; }
+.c-input {
+  width: 100%; padding: 9px 11px; border: 1px solid var(--border);
+  border-radius: 8px; font: inherit; font-size: 0.92rem; background: #fff;
+}
+.c-input:focus { border-color: var(--primary); outline: none; }
+
+.c-row { border-left: 3px solid var(--border); padding-left: 14px; margin: 16px 0; }
+.c-row-n {
+  font-size: 0.74rem; font-weight: 700; letter-spacing: 0.07em;
+  text-transform: uppercase; color: var(--ink-faint);
+}
+.c-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+
+.c-flag {
+  display: inline-block; font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.06em; padding: 2px 8px; border-radius: 99px;
+  background: var(--bg); color: var(--ink-dim); white-space: nowrap;
+}
+
+.c-msg { padding: 11px 14px; border-radius: 10px; margin-bottom: 14px; font-size: 0.92rem;
+         background: var(--bg); border-left: 3px solid var(--border); }
+.c-ok  { background: #EAF7EE; border-left-color: #2F6B4F; }
+.c-bad { background: #FDEAEA; border-left-color: var(--danger); }
+
+/* Website content, for an account that may read it and not change it. The
+   fieldset is only there to carry `disabled` to everything inside, so it
+   must not look like a box of its own. min-width keeps a grid inside a
+   fieldset from refusing to shrink, which is a fieldset's own default. */
+.c-readonly { border: 0; margin: 0; padding: 0; min-width: 0; }
+
+/* A button that cannot be pressed should not look pressable. The fields
+   keep their contrast on purpose -- the words in them are what a read-only
+   account came to read -- but they lose the white of something you type in. */
+.c-readonly button:disabled { opacity: 0.5; cursor: not-allowed; }
+.c-readonly input:disabled,
+.c-readonly select:disabled,
+.c-readonly textarea:disabled {
+  background: var(--bg); color: var(--ink); cursor: default;
+}
+
+/* A section that folds. The card is the <details>; the heading is its
+   <summary>, which is what you press to open it. */
+.c-fold { padding: 0; }
+.c-sum {
+  display: flex; align-items: center; gap: 10px;
+  min-height: 52px; padding: 12px 18px; cursor: pointer;
+  font-weight: 700; font-size: 1.02rem; list-style: none;
+  border-radius: var(--radius);
+}
+.c-sum::-webkit-details-marker { display: none; }
+.c-sum:hover { background: var(--bg); }
+.c-sum:focus-visible { outline: 2px solid var(--primary); outline-offset: -2px; }
+.c-sum-name { flex: 1 1 auto; min-width: 0; }
+.c-sum .c-flag { flex-shrink: 0; }
+.c-sum-chev { flex-shrink: 0; color: var(--ink-faint); transition: transform 0.18s ease; }
+.c-fold[open] > .c-sum { border-bottom: 1px solid var(--border); border-radius: var(--radius) var(--radius) 0 0; }
+.c-fold[open] > .c-sum .c-sum-chev { transform: rotate(180deg); }
+.c-fold-body { padding: 4px 18px 18px; }
+
+/* Spacing that was written inline on the element. */
+.c-note-tight { margin: 4px 0 0; }
+.c-label-group { margin-top: 22px; }
+.c-msg-lead { margin: 0 0 .6rem; }
+.c-msg-body { margin: 0 0 .8rem; }
+
+/* A repeated item's header: its number, and the bin that empties it. */
+.c-row-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.c-row.is-cleared { opacity: 0.55; border-left-color: var(--danger); }
+.c-row-note { color: var(--danger); font-weight: 600; }
+
+/* ---------- Places to visit ---------- */
+.place-list { display: flex; flex-direction: column; gap: 10px; }
+.place-row {
+  display: grid; grid-template-columns: 96px 1fr auto; gap: 14px; align-items: start;
+  padding: 12px; border: 1px solid var(--border); border-radius: 12px; background: #fff;
+}
+/* One shape whatever the photograph's own proportions, so the rows line up
+   rather than stepping down the page. */
+.place-thumb {
+  width: 96px; aspect-ratio: 16 / 10; border-radius: 8px; overflow: hidden;
+  background: var(--bg); display: grid; place-items: center;
+}
+.place-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.place-body { min-width: 0; }
+.place-actions { display: flex; gap: 8px; align-items: center; }
+@media (max-width: 560px) {
+  .place-row { grid-template-columns: 72px 1fr; }
+  .place-thumb { width: 72px; }
+  .place-actions { grid-column: 1 / -1; }
+}
+
+/* ---------------------------------------------------------------------------
+   The site-image slots.
+
+   Every card is the same width and the same height whatever shape its picture
+   is, so the grid lines up. It did not: the native file control prints
+   "No file chosen" at a width the browser picks, and with nineteen of them on
+   one page no two rows agreed where anything sat.
+
+   The control is still there and still the thing that opens the file chooser.
+   It is just not the thing anyone looks at.
+--------------------------------------------------------------------------- */
+.brand-slots {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(216px, 1fr)); gap: 16px;
+}
+.brand-slot {
+  display: flex; flex-direction: column; gap: 8px;
+  border: 1px solid var(--border); border-radius: 12px; padding: 12px; background: var(--surface);
+}
+.brand-slot-label { font-weight: 600; font-size: 0.85rem; line-height: 1.3; }
+
+/* aspect-ratio is set per slot, so the frame here is the frame on the site. */
+.brand-slot-preview {
+  display: grid; place-items: center; overflow: hidden;
+  background: #1A2233; border: 1px solid var(--border); border-radius: 10px;
+}
+.brand-slot-preview img { width: 100%; height: 100%; object-fit: contain; }
+.brand-slot-empty { color: #8C8578; font-size: 0.78rem; }
+
+.brand-slot-shape {
+  margin: 0; font-size: 0.7rem; color: var(--ink-faint); font-variant-numeric: tabular-nums;
+}
+
+/* Present for the chooser it opens and for a screen reader, never drawn. */
+.brand-slot-file {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0;
+}
+
+/* Pinned to the bottom, so buttons line up across a row whatever the label
+   above them did. */
+.brand-slot-actions { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; }
+.brand-slot-actions .btn { flex: 1 1 auto; }
+.brand-slot-actions .btn-icon { flex: 0 0 34px; }
+
+/* ---------- Vehicle photograph ---------- */
+.photo-field { display: flex; flex-direction: column; gap: 8px; }
+.photo-preview { display: flex; align-items: center; gap: 10px; }
+.photo-preview img {
+  width: 104px; aspect-ratio: 16 / 10; object-fit: cover;
+  border-radius: 8px; border: 1px solid var(--border); background: var(--bg);
+}
+.field-note { color: var(--ink-dim); font-size: 0.8rem; }
+
+/* The framing window is the card's shape exactly, so what is inside it is what
+   a customer sees. Guessing how a photo will be cut is the thing this removes. */
+.photo-crop { display: flex; flex-direction: column; gap: 8px; }
+.crop-window {
+  /* aspect-ratio is the default; the site-image frame overrides it per slot,
+     because a logo and a page banner are not the same shape. */
+  position: relative; width: 100%; max-width: 420px; aspect-ratio: 16 / 10;
+  margin: 0 auto;
+  overflow: hidden; border-radius: 10px; border: 1px solid var(--border);
+  background: #2B2A28; cursor: grab; touch-action: none;
+}
+.crop-window:active { cursor: grabbing; }
+.crop-window img {
+  position: absolute; top: 0; left: 0; transform-origin: 0 0;
+  user-select: none; -webkit-user-drag: none; max-width: none;
+}
+.crop-zoom { display: flex; align-items: center; gap: 10px; font-size: 0.85rem; color: var(--ink-dim); }
+.crop-zoom input { flex: 1; min-width: 0; }
+.crop-zoom { justify-content: center; }
+
+/* One shape for every card, whatever the photograph's own proportions. Without
+   this the row was ragged: a tall picture made its card taller than the rest. */
+.admin-car-thumb { aspect-ratio: 16 / 10; overflow: hidden; }
+.admin-car-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.admin-car-thumb svg { width: 100%; height: 100%; object-fit: contain; display: block; }
+
+/* ---------- Car admin grid ---------- */
+.car-admin-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+.car-admin-card {
+  background: #fff; border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 18px; display: flex; flex-direction: column; gap: 10px;
+}
+.admin-car-thumb {
+  background: linear-gradient(135deg, #FFF3DC, #FBEFE0); border-radius: 10px;
+  margin: -4px -4px 2px;
+}
+.car-admin-card .row1 { display: flex; align-items: center; gap: 10px; }
+.car-admin-card .name { font-weight: 700; font-size: 0.95rem; flex: 1; }
+.car-admin-card .meta { font-size: 0.8rem; color: var(--ink-dim); display: flex; gap: 10px; flex-wrap: wrap; }
+.car-admin-card .price { font-weight: 800; color: var(--accent-deep); font-size: 1.05rem; }
+.car-admin-card .actions { display: flex; gap: 8px; margin-top: 4px; }
+.car-admin-card .actions .btn { flex: 1; }
+
+.empty-state {
+  text-align: center; padding: 34px 20px; color: var(--ink-faint);
+  background: #fff; border: 1px dashed var(--border); border-radius: var(--radius);
+}
+
+/* ---------- Dashboard stats ---------- */
+.stat-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(118px, 1fr));
+  gap: 7px; margin-bottom: 12px;
+}
+.stat-grid-3 { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); margin-bottom: 16px; }
+.stat-card {
+  background: #fff; border: 1px solid var(--border); border-radius: 10px;
+  padding: 7px 10px; display: flex; flex-direction: column; gap: 1px;
+  line-height: 1.3;
+}
+/* The plate on a counter card: top right, out of the way of the number, which
+   is what anybody is here to read. Only the five cards that carry one -- the
+   rest of the grid keeps its own rhythm without a hole where an icon is not. */
+.stat-card .ns-ico3d {
+  position: absolute; top: 6px; right: 8px;
+  transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.stat-card:has(.ns-ico3d) { position: relative; padding-right: 44px; }
+.stat-card:hover .ns-ico3d { transform: translateY(-2px) scale(1.05); }
+
+/* The sidebar's plates sit a hair lower than a hairline did, and brighten
+   rather than fade: the old rule dimmed the icon on every entry but the one
+   you are on, which on a coloured plate reads as a fault. */
+.ns-ico3d { opacity: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  .stat-card .ns-ico3d, .stat-card:hover .ns-ico3d { transition: none; transform: none; }
+}
+/* --ink-faint measures 3.35:1 on white, under the 4.5:1 needed for text this
+   small, and it was already being used at 0.78rem. Shrinking it further would
+   have made a failing contrast worse, so the label moves to --ink-dim at
+   7.54:1. */
+.stat-label { font-size: 0.66rem; color: var(--ink-dim); font-weight: 600; text-transform: uppercase; letter-spacing: 0.02em; }
+/* margin-top:auto: grid stretches every card in a row to the tallest one, so a
+   label that wraps to two lines ("Security deposit refunded") left its
+   neighbours' numbers floating mid-card. Pinning the value to the bottom lines
+   the numbers up across the row again. */
+.stat-value {
+  font-size: 1rem; font-weight: 800; color: var(--ink);
+  font-variant-numeric: tabular-nums; margin-top: auto;
+}
+.stat-card-income .stat-value { color: #2F6B4F; }
+.stat-card-expense .stat-value { color: var(--danger); }
+.stat-card-balance .stat-value { color: var(--primary); }
+
+.dashboard-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+/* ---------- The overview, as two columns that fill the screen ----------
+   The panel is a column: a fixed head (title, search, the six buttons) and a
+   body that takes whatever height is left. The body's two columns scroll on
+   their own, so the overview is exactly one screen whether there are two
+   alerts or twenty -- and the head, with the search box in it, never scrolls
+   away from under the cursor.
+
+   Only where there is height to divide. A short window and a phone get the
+   plain stacked column back, because two 200px-tall scrolling panes side by
+   side is a worse way to read this than one honest list. */
+@media (min-width: 1024px) and (min-height: 620px) {
+  .ns-content > #panel-dashboard:not([hidden]) {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 0;
+  }
+  .dash-body {
+    flex: 1 1 auto;
+    min-height: 0;
+    display: grid;
+    grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+    gap: 14px;
+  }
+  .dash-col-main, .dash-col-side {
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    /* Room for the scrollbar so a column that has one does not jump its
+       contents sideways against one that does not. */
+    padding-right: 4px;
+  }
+  /* Side by side the two recent lists are too narrow to read, so in the
+     right-hand column they stack. */
+  .dash-col-side .dashboard-cols { grid-template-columns: 1fr; }
+  /* The last thing in a column needs no gap under it; the column's own
+     scroll end is the edge. */
+  .dash-col-main > *:last-child,
+  .dash-col-side > *:last-child { margin-bottom: 0; }
+}
+.dashboard-col h3 { font-size: 0.85rem; margin-bottom: 5px; }
+
+/* ---------- Finance ---------- */
+.finance-form {
+  display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 2fr auto; gap: 12px; align-items: end;
+  background: #fff; border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 18px; margin-bottom: 24px;
+}
+.finance-form .field-group { margin-bottom: 0; }
+.txn-note-group { min-width: 0; }
+
+.transaction-card {
+  background: #fff; border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 14px 18px; display: flex; justify-content: space-between; align-items: center;
+  gap: 16px; margin-bottom: 10px; flex-wrap: wrap;
+}
+.transaction-info { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.transaction-category { font-weight: 700; }
+.transaction-note { font-size: 0.85rem; color: var(--ink-dim); }
+.transaction-time { font-size: 0.75rem; color: var(--ink-faint); }
+.transaction-right { display: flex; align-items: center; gap: 14px; }
+.transaction-amount { font-weight: 800; font-size: 1.05rem; font-variant-numeric: tabular-nums; }
+.transaction-amount.income { color: #2F6B4F; }
+.transaction-amount.expense { color: var(--danger); }
+
+/* ---------- Inquiries ---------- */
+.inquiry-card {
+  background: #fff; border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 16px 20px; display: flex; justify-content: space-between; align-items: center;
+  gap: 16px; margin-bottom: 10px; flex-wrap: wrap;
+}
+.inquiry-info { display: flex; flex-direction: column; gap: 2px; }
+.inquiry-name { font-weight: 700; }
+.inquiry-detail { font-size: 0.85rem; color: var(--ink-dim); }
+.inquiry-time { font-size: 0.75rem; color: var(--ink-faint); white-space: nowrap; }
+
+/* ---------- Modal ---------- */
+.modal-overlay {
+  position: fixed; inset: 0; background: rgba(16,24,40,0.5);
+  display: flex; align-items: center; justify-content: center; z-index: 100; padding: 20px;
+}
+.modal {
+  background: #fff; border-radius: 18px; padding: 28px; width: 100%; max-width: 480px;
+  max-height: 90vh; overflow-y: auto; box-shadow: 0 30px 60px rgba(16,24,40,0.25);
+}
+.modal h3 { margin-bottom: 18px; font-size: 1.2rem; }
+.modal-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.modal-row-3 { grid-template-columns: 1fr 1fr 1fr; }
+.field-group { margin-bottom: 14px; }
+.field-group label { display: block; font-size: 0.8rem; font-weight: 600; color: var(--ink-dim); margin-bottom: 6px; }
+.field-group input, .field-group select, .field-group textarea {
+  width: 100%; padding: 10px 12px; border: 1px solid var(--border); border-radius: 9px;
+  font-size: 0.9rem; outline: none; font-family: inherit;
+}
+/* A tick box given width:100% and a text field's padding stretched across the
+   row, which is why "Shown on the site" had its box floating away from its
+   word. These are the two inputs that are not boxes to type in. */
+.field-group input[type="checkbox"],
+.field-group input[type="radio"] {
+  width: 18px; height: 18px; padding: 0; margin: 0; accent-color: var(--primary); flex-shrink: 0;
+}
+/* A label wrapping a tick box is a row, not a block -- and the whole row is
+   the target, which is what makes it hittable with a thumb. */
+.field-group label.finance-toggle,
+label.finance-toggle {
+  display: flex; align-items: center; gap: 9px;
+  min-height: 44px; margin: 0; cursor: pointer; font-weight: 600; color: var(--ink);
+}
+.field-group input:focus,
+.field-group select:focus,
+.field-group textarea:focus { border-color: var(--primary); }
+
+/* ---------- A phone number and the code in front of it ---------- */
+/* The code is a short fixed column and the digits take the rest, so the two
+   read as one control rather than as two fields that happen to be adjacent.
+   The select is sized to its longest entry -- "+971 Saudi Arabia" -- because
+   a select that resizes as you change it drags the input about under the
+   cursor. */
+.phone-field { display: flex; gap: 6px; align-items: stretch; }
+.phone-field .dial-code {
+  width: 7.5rem;
+  flex: none;
+  padding: 10px 6px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  font-size: 0.82rem;
+  font-family: inherit;
+  background: var(--surface, #fff);
+  outline: none;
+}
+.phone-field .dial-code:focus { border-color: var(--primary); }
+.phone-field input { flex: 1 1 auto; min-width: 0; }
+/* The count only appears once it is wrong, so a correct number is a quiet
+   field rather than one wearing a green tick. */
+.field-hint.is-wrong { color: var(--danger, #c0392b); font-weight: 600; }
+.phone-field.is-wrong input,
+.phone-field.is-wrong .dial-code { border-color: var(--danger, #c0392b); }
+
+/* The address is a box because an address has lines in it. A single-line
+   input made people put the whole thing on one line with commas, which is
+   then what prints on the confirmation. */
+.field-group textarea { resize: vertical; min-height: 76px; line-height: 1.45; }
+
+/* The rental the dates imply, offered under the amount rather than written
+   into it -- a rate agreed off the card is a real thing and overwriting it
+   silently would be worse than never offering. */
+.rate-suggest {
+  margin: 6px 0 0;
+  font-size: 0.78rem;
+  color: var(--ink-dim);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px;
+}
+.btn-link {
+  background: none;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  font-weight: 700;
+  color: var(--primary);
+  cursor: pointer;
+  text-decoration: underline;
+}
+.btn-link:hover { opacity: 0.8; }
+
+/* A line under a modal's heading, saying what the form is for. */
+.modal-note {
+  margin: -4px 0 14px;
+  font-size: 0.8rem;
+  color: var(--ink-dim);
+}
+
+@media (max-width: 520px) {
+  /* Below this the code and ten digits stop fitting on one line together. */
+  .phone-field { flex-wrap: wrap; }
+  .phone-field .dial-code { width: 100%; }
+}
+.color-input { padding: 4px !important; height: 40px; cursor: pointer; }
+.modal-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 10px; margin-top: 6px; }
+
+/* ---------- Dashboard: rental overview ---------- */
+.dashboard-subheading { font-size: 0.82rem; margin: 0 0 5px; }
+/* Was a fixed four columns. Auto-fill lets a wide screen show more and a
+   narrow one fewer, without a breakpoint for each size. */
+.stat-grid-4 { grid-template-columns: repeat(auto-fill, minmax(112px, 1fr)); }
+.stat-card-deposit .stat-value { color: #8A5A00; }
+
+/* ---------- Wide/tall modal variants ---------- */
+.modal-wide { max-width: 720px; }
+.modal-row-4 { grid-template-columns: repeat(4, 1fr); }
+.modal-section-label {
+  font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em;
+  color: var(--ink-faint); margin: 18px 0 10px;
+}
+.modal-section-label:first-of-type { margin-top: 4px; }
+.field-hint { font-size: 0.85rem; color: var(--ink-dim); margin: -6px 0 14px; }
+.field-hint strong { color: var(--ink); }
+.booking-number-preview { font-size: 0.85rem; color: var(--accent-deep); font-weight: 700; margin-bottom: 14px; }
+.booking-conflict-error {
+  color: var(--danger); font-size: 0.85rem; font-weight: 600; margin: -6px 0 14px; min-height: 1.2em;
+}
+/* One box that finds anything, and the list it drops. */
+.search-wrap { position: relative; margin-bottom: 10px; }
+.search-box {
+  width: 100%; padding: 8px 12px; font-size: 0.9rem;
+  border: 1px solid var(--border); border-radius: 10px;
+  background: var(--surface); color: var(--ink);
+}
+.search-box:focus-visible { outline: 2px solid var(--primary); outline-offset: 1px; }
+
+.search-results {
+  position: absolute; z-index: 30; left: 0; right: 0; top: calc(100% + 4px);
+  max-height: 60vh; overflow-y: auto;
+  border: 1px solid var(--border); border-radius: 12px;
+  background: var(--surface); box-shadow: 0 16px 40px rgba(16, 24, 40, 0.14);
+}
+.search-hit {
+  display: block; width: 100%; text-align: left; cursor: pointer;
+  border: 0; border-bottom: 1px solid var(--border);
+  background: none; padding: 10px 14px; font: inherit; color: inherit;
+}
+.search-hit:last-child { border-bottom: 0; }
+.search-hit:hover, .search-hit:focus-visible { background: var(--bg); }
+.search-kind {
+  font-size: 0.68rem; font-weight: 800; letter-spacing: 0.05em;
+  text-transform: uppercase; color: var(--ink-faint);
+}
+.search-title { font-weight: 700; }
+.search-sub { color: var(--ink-dim); font-size: 0.85rem; }
+.search-empty { padding: 12px 14px; color: var(--ink-dim); font-size: 0.9rem; }
+
+/* The six things started most often, each of which was three clicks away. */
+.quick-actions { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+
+/* The shape of the day. Apart from "Needs attention" on purpose: three
+   pickups is not a problem, it is a morning. */
+.today-ops { margin-bottom: 12px; }
+.ops-grid {
+  display: grid; gap: 7px; margin-top: 6px;
+  grid-template-columns: repeat(auto-fit, minmax(96px, 1fr));
+}
+.ops-card {
+  border: 1px solid var(--border); border-radius: 10px;
+  background: var(--surface); padding: 7px 10px;
+  display: flex; flex-direction: column-reverse; gap: 0;
+}
+.ops-value { font-size: 1.1rem; font-weight: 800; color: var(--ink); line-height: 1.25; }
+.ops-label { font-size: 0.7rem; color: var(--ink-dim); line-height: 1.3; }
+
+/* The amount a customer actually pays, beside the discount that made it. */
+.final-price { font-size: 1.25rem; font-weight: 800; color: var(--ink); margin: 6px 0 0; }
+
+/* What needs doing, above the figures. Colour carries the urgency and a word
+   carries it too, because colour alone is not a message to everyone. */
+.alerts { margin-bottom: 12px; }
+.alert-list { list-style: none; margin: 6px 0 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
+.alert-row {
+  display: flex; align-items: center; gap: 8px; flex-wrap: nowrap;
+  border: 1px solid var(--border); border-left-width: 4px; border-radius: 9px;
+  padding: 5px 10px; background: var(--surface); font-size: 0.84rem;
+  line-height: 1.35;
+}
+.alert-row.is-overdue { border-left-color: var(--danger); }
+.alert-row.is-soon    { border-left-color: var(--accent); }
+.alert-row.is-new     { border-left-color: var(--primary); }
+.alert-flag {
+  font-size: 0.7rem; font-weight: 800; letter-spacing: 0.04em;
+  text-transform: uppercase; flex: none;
+}
+.is-overdue .alert-flag { color: var(--danger); }
+.is-soon .alert-flag    { color: var(--accent-deep); }
+.is-new .alert-flag     { color: var(--primary); }
+.alert-subject { font-weight: 700; }
+.alert-message { color: var(--ink-dim); }
+.alert-row .alert-go { margin-left: auto; }
+
+/* The previous hires of whoever this phone number belongs to. */
+.history-note {
+  margin-top: 8px; border: 1px solid var(--border); border-radius: 10px;
+  padding: 10px 12px; background: var(--bg); font-size: 0.88rem;
+}
+.history-note table { width: 100%; border-collapse: collapse; margin-top: 6px; }
+.history-note th, .history-note td { text-align: left; padding: 3px 6px; font-weight: 400; }
+.history-note th { color: var(--ink-faint); font-size: 0.78rem; font-weight: 700; }
+
+/* The handover checklist. Two columns on anything wider than a phone, because
+   thirteen checks in one column is a scroll nobody finishes. */
+.check-grid {
+  display: grid; gap: 4px 16px; margin-top: 8px;
+  /* 165px, not 210: the modal these sit in is about 420px of content wide, and
+     at 210 the grid silently fell back to one column -- thirteen checks in a
+     single column is the scroll this was meant to avoid. */
+  grid-template-columns: repeat(auto-fit, minmax(165px, 1fr));
+}
+.check-item {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 0.88rem; color: var(--ink-dim);
+  /* A 44px row, so a thumb hits the label as readily as the box. */
+  min-height: 34px; cursor: pointer;
+}
+.check-item input { width: 17px; height: 17px; flex: none; accent-color: var(--primary); }
+.check-item:has(input:checked) { color: var(--ink); font-weight: 600; }
+
+/* A document, which may be a PDF and so has no thumbnail to show. */
+.doc-list { display: flex; flex-direction: column; gap: 6px; margin-top: 8px; }
+.doc-row {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  border: 1px solid var(--border); border-radius: 10px; padding: 8px 10px;
+  background: var(--surface);
+}
+.doc-kind { font-weight: 700; font-size: 0.84rem; }
+.doc-meta { color: var(--ink-faint); font-size: 0.8rem; }
+.doc-row .doc-actions { margin-left: auto; display: flex; gap: 6px; }
+.doc-expired { color: var(--danger); font-weight: 700; }
+
+/* A car that is not ours. Stated on the card rather than only inside the edit
+   form, because "whose car is this" decides what a booking on it earns and
+   nobody should have to open a dialog to find out. */
+.owner-badge {
+  background: color-mix(in srgb, var(--accent) 18%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+  color: var(--ink); border-radius: 999px;
+  padding: 1px 9px; font-size: 0.72rem; font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+/* Said once, beside the badge that explains it. A temporary car is kept off
+   the website, which is worth knowing at a glance and not worth shouting -- so
+   it reads as a note rather than as a second label competing with the first. */
+.owner-badge-quiet {
+  background: transparent;
+  border-color: var(--border);
+  color: var(--ink-dim);
+  font-weight: 600;
+}
+
+/* Thumbnails: the files chosen in a form before they are sent, and the ones
+   already attached to a booking. Same strip in both places, so what you see
+   after saving looks like what you saw before it. */
+.proof-preview { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+.proof-preview img { width: 64px; height: 64px; object-fit: cover; border-radius: 8px; border: 1px solid var(--border); display: block; }
+
+/* A stored one carries a remove button, which sits on its corner rather than
+   beside it: a row of thumbnails each with a button underneath is twice as
+   tall and reads as a list of buttons. */
+.proof-item { position: relative; display: inline-block; line-height: 0; }
+.proof-item a { display: block; border-radius: 8px; }
+.proof-item a:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+
+.proof-remove {
+  position: absolute; top: -6px; right: -6px;
+  width: 20px; height: 20px; padding: 0;
+  display: grid; place-items: center;
+  border: 1px solid var(--border); border-radius: 50%;
+  background: var(--surface); color: var(--ink-dim);
+  font-size: 14px; line-height: 1; cursor: pointer;
+}
+.proof-remove:hover { background: var(--danger); border-color: var(--danger); color: #fff; }
+.proof-remove:focus-visible { outline: 2px solid var(--gold); outline-offset: 1px; }
+
+/* A finger is wider than 20px. On a touch screen the target is padded out
+   without the button itself growing, which would crowd the thumbnail. */
+@media (pointer: coarse) {
+  .proof-remove::after {
+    content: ''; position: absolute; inset: -12px;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   The booked-days calendar under a date box.
+
+   A date input takes min, max and step and nothing else, so days that are
+   already gone cannot be greyed out in it. They are drawn here instead: gold
+   for taken, and struck through, because colour on its own is not a message to
+   someone who cannot see this one.
+--------------------------------------------------------------------------- */
+.cal {
+  margin-top: 8px; border: 1px solid var(--border); border-radius: 10px;
+  padding: 10px; background: var(--surface);
+}
+.cal-head { display: flex; align-items: center; justify-content: space-between; }
+.cal-head span { font-size: 0.85rem; font-weight: 700; }
+.cal-nav {
+  width: 32px; height: 32px; border: 0; border-radius: 8px; cursor: pointer;
+  background: none; color: var(--ink-dim); font: inherit; font-size: 1.1rem;
+}
+.cal-nav:hover { background: var(--bg); color: var(--ink); }
+.cal-names, .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; }
+.cal-names {
+  margin-top: 6px; text-align: center;
+  font-size: 0.66rem; font-weight: 700; color: var(--ink-faint);
+}
+.cal-grid { margin-top: 2px; }
+.cal-day {
+  height: 30px; border: 0; border-radius: 7px; background: none; cursor: pointer;
+  font: inherit; font-size: 0.8rem; color: var(--ink-dim);
+}
+.cal-day:hover:not(:disabled) { background: var(--bg); color: var(--ink); }
+.cal-day.is-on { background: var(--primary); color: #fff; font-weight: 700; }
+.cal-day.is-busy {
+  background: var(--accent); color: #14100D; font-weight: 700;
+  text-decoration: line-through; cursor: not-allowed;
+}
+.cal-day:disabled:not(.is-busy) { color: var(--ink-faint); opacity: 0.45; cursor: not-allowed; }
+
+/* A day that has been and gone but can still be chosen, for writing down a
+   hire after it happened. Ringed rather than filled: it is selectable, so it
+   must not read as taken, and it is behind us, so it must not read as an
+   ordinary open day either. */
+.cal-day.is-back:not(.is-on) {
+  color: var(--ink-dim);
+  box-shadow: inset 0 0 0 1px var(--border);
+}
+.cal-day.is-back:hover:not(:disabled) { background: var(--bg); color: var(--ink); }
+.cal-key {
+  display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
+  margin-top: 8px; font-size: 0.7rem; color: var(--ink-faint);
+}
+/* The second swatch needs air before it, or the two keys run together. */
+.cal-key .cal-swatch-back { margin-left: 6px; }
+.cal-swatch {
+  display: inline-block; width: 12px; height: 12px; border-radius: 3px;
+  background: var(--accent);
+}
+.cal-swatch-back { background: transparent; box-shadow: inset 0 0 0 1px var(--border); }
+.cal-warn { margin-top: 6px; font-size: 0.8rem; font-weight: 600; color: var(--danger); }
+
+/* ---------- Users ---------- */
+
+/* The role box sits in a table cell, so the form around it must not add a
+   line of its own. */
+.u-inline { display: inline; }
+.u-inline select {
+  font-family: var(--font); font-size: 0.82rem; padding: 5px 9px;
+  border: 1px solid var(--border); border-radius: 9px; background: var(--surface);
+}
+
+.u-acts { display: flex; align-items: center; gap: 8px; }
+.u-acts form { display: inline; }
+
+/* The password boxes stay shut until somebody asks for them. Open by default
+   they are two empty fields on every row, which reads as something unfinished
+   rather than something available. */
+.u-reset { position: relative; }
+.u-reset > summary { list-style: none; cursor: pointer; display: inline-flex; }
+.u-reset > summary::-webkit-details-marker { display: none; }
+.u-reset-form {
+  position: absolute; right: 0; z-index: 5; margin-top: 6px;
+  display: flex; flex-direction: column; gap: 6px; width: 210px;
+  padding: 12px; background: var(--surface);
+  border: 1px solid var(--border); border-radius: 12px; box-shadow: var(--shadow);
+}
+.u-reset-form input {
+  font-family: var(--font); font-size: 0.84rem; padding: 7px 9px;
+  border: 1px solid var(--border); border-radius: 9px;
+}
+
+.u-new { max-width: 920px; }
+.u-new .modal-row, .u-new > .field-group:not(.u-perm-block) { max-width: 640px; }
+.u-new .field-group { margin-bottom: 12px; }
+
+/* ---------- Who may do what ---------- */
+
+/* One person per row, shut unless they are an exception to their role. An
+   account that is exactly its role has nothing to read, and twenty-seven
+   ticks saying "yes, the standard" is twenty-seven things to scan past to
+   reach the one person somebody opened this page for. */
+.u-perm-person {
+  border: 1px solid var(--border); border-radius: 12px;
+  padding: 0 14px; margin-bottom: 10px; background: var(--surface);
+}
+.u-perm-person > summary {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  padding: 13px 0; cursor: pointer; list-style: none;
+}
+.u-perm-person > summary::-webkit-details-marker { display: none; }
+.u-perm-person > summary::after {
+  content: '+'; margin-left: auto; color: var(--ink-faint);
+  font-weight: 700; font-size: 1.05rem; line-height: 1;
+}
+.u-perm-person[open] > summary::after { content: '\2212'; }
+.u-perm-person[open] > summary { border-bottom: 1px solid var(--border); }
+.u-perm-person > :not(summary) { margin: 14px 0; }
+.u-perm-name { font-weight: 700; }
+.u-perm-person > summary .field-hint { margin: 0; }
+.u-perm-role { font-size: 0.82rem; color: var(--ink-dim); }
+
+/* The tally under a role in the table above: "2 added, 1 removed". */
+.u-perm-tally { display: block; margin-top: 3px; }
+
+/* Columns that fit what is in them rather than a fixed count: eight groups of
+   between one and five permissions, which at one column each on a desk leaves
+   Reports as a column of one, and at four fixed columns on a phone is
+   unreadable. */
+.u-perm-grid {
+  display: grid; gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+}
+.u-perm-group {
+  border: 1px solid var(--border); border-radius: 11px;
+  padding: 10px 13px 12px; margin: 0; min-width: 0;
+}
+.u-perm-group legend {
+  font-size: 0.71rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.04em; color: var(--ink-faint); padding: 0 5px;
+}
+/* Written as .u-perm-grid .u-perm rather than .u-perm so it outranks
+   ".field-group label { display: block }", which the create form's copy of
+   this grid sits inside. Without it the tick box stops being the start of a
+   row and the words wrap underneath it. */
+.u-perm-grid .u-perm {
+  display: flex; align-items: flex-start; gap: 9px; margin: 0;
+  padding: 5px 0; font-size: 0.85rem; font-weight: 500; color: var(--ink);
+  cursor: pointer; line-height: 1.35;
+}
+.u-perm-grid .u-perm input[type="checkbox"] {
+  margin: 1px 0 0; flex-shrink: 0; width: 16px; height: 16px;
+  accent-color: var(--primary);
+}
+.u-perm-grid .u-perm input:disabled { cursor: default; }
+.u-perm-grid .u-perm input:disabled + span { color: var(--ink-faint); }
+
+/* The ones that remove something, or change a figure already counted. Marked
+   rather than separated out: they belong beside the thing they undo, and a
+   "dangerous" group of its own invites being ticked as a group. */
+.u-perm-grid .u-perm.is-weighty > span::after {
+  content: ''; display: inline-block; vertical-align: middle;
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--danger); opacity: 0.55; margin-left: 6px;
+}
+
+.u-perm-save { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+
+@media (max-width: 560px) {
+  .u-perm-grid { grid-template-columns: 1fr; }
+}
+
+/* ---------- Bookings ---------- */
+
+.booking-card {
+  background: #fff; border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 16px 20px; margin-bottom: 12px; display: flex; align-items: center;
+  justify-content: space-between; gap: 16px; flex-wrap: wrap; cursor: pointer;
+  transition: box-shadow 0.15s ease;
+}
+.booking-card:hover { box-shadow: var(--shadow); }
+.booking-card-main { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.booking-card-number { font-weight: 800; color: var(--accent-deep); font-size: 0.92rem; }
+.booking-card-customer { font-weight: 700; }
+.booking-card-meta { font-size: 0.82rem; color: var(--ink-dim); }
+.booking-card-right { display: flex; align-items: center; gap: 14px; flex-shrink: 0; }
+.booking-card-balance { text-align: right; }
+.booking-card-balance .amount { font-weight: 800; font-variant-numeric: tabular-nums; }
+.booking-card-balance .label { display: block; font-size: 0.72rem; color: var(--ink-faint); text-transform: uppercase; }
+
+.status-badge {
+  display: inline-block; padding: 4px 12px; border-radius: 999px; font-size: 0.72rem;
+  font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; white-space: nowrap;
+}
+/* The seven a booking can be, in the order it passes through them.
+
+   The colour says the state of play rather than the stage, which is the
+   question somebody scanning the list is actually asking:
+
+     blue        a conversation, nothing committed
+     gold        agreed
+     deep amber  your move -- hand the keys over, or close the hire off
+     green       live, out with the customer
+     neutral     done
+     red         dead
+
+   Ready and Returned share the amber on purpose. They sit at opposite ends of
+   the hire but they mean the same thing to the person reading the screen:
+   this one is waiting on you today. One colour to look for beats two.
+
+   Enquiry, Ready and Returned had no rule at all until now, so three of the
+   seven rendered as bare text in a column of pills. */
+.status-badge-Enquiry { background: #EAF0F8; color: #3A5A8A; }
+/* Not --accent-deep. That token is #B36B00, tuned to stay legible as text on
+   white, where it reaches 4.6:1 -- but a pill is not white. On the gold wash
+   behind it the same ink falls to 3.8:1, under the 4.5:1 that text this small
+   needs. Four per cent darker clears it at 4.6:1 and is, side by side,
+   indistinguishable. The token itself is left alone: it is right for what it
+   was chosen for. */
+.status-badge-Confirmed { background: #FFF3DC; color: #A05F00; }
+.status-badge-Ready { background: #FDF0D5; color: #8A5A00; }
+.status-badge-Active { background: #E8F4EC; color: #2F6B4F; }
+.status-badge-Returned { background: #FDF0D5; color: #8A5A00; }
+.status-badge-Completed { background: #F1EDE6; color: var(--ink-dim); }
+.status-badge-Cancelled { background: #FBECEA; color: var(--danger); }
+.status-badge-Available { background: #E8F4EC; color: #2F6B4F; }
+.status-badge-Booked { background: #FFF3DC; color: #A05F00; }
+.status-badge-OnRental { background: #FDF0D5; color: #8A5A00; }
+.status-badge-Maintenance { background: #FBECEA; color: var(--danger); }
+/* --ink-faint on this wash was 2.9:1, which is not a colour, it is a rumour.
+   This is dark enough to read at 4.6:1 and still lighter than the --ink-dim
+   that Completed uses at 6.5:1, so an inactive vehicle still recedes next to a
+   finished booking -- which is the whole point of the grey. */
+.status-badge-Inactive { background: #F1EDE6; color: #71695F; }
+
+/* Schedule chip — derived from the booking dates, shown under the recorded
+   status so a booking that is past its start time stops looking dormant. */
+.status-stack { display: inline-flex; flex-direction: column; align-items: flex-end; gap: 5px; }
+.sched-chip {
+  display: inline-block; padding: 3px 10px; border-radius: 999px;
+  font-size: 0.68rem; font-weight: 700; letter-spacing: 0.03em;
+  text-transform: uppercase; white-space: nowrap;
+}
+.sched-neutral { background: #F1EDE6; color: var(--ink-dim); }
+.sched-due     { background: #FDF0D5; color: #8A5A00; }
+.sched-live    { background: #E8F4EC; color: #2F6B4F; }
+.sched-late    { background: #FBECEA; color: var(--danger); }
+
+/* In the detail header the chip sits inline beside the status badge. */
+
+/* ---------- Booking detail ---------- */
+.detail-section {
+  background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 18px; margin-bottom: 14px;
+}
+/* Wrapping, so a narrow screen puts the heading on its own line and the
+   buttons on the next. Without it the heading kept shrinking to leave room --
+   "Customer & Rental Details" came out three words tall beside a column of
+   staggered buttons. */
+.detail-section-title {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+  gap: 10px; font-weight: 700; margin-bottom: 12px;
+}
+.detail-section-title > span:first-child { flex: 1 1 auto; min-width: 0; }
+.detail-section-title > div { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.detail-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px 20px; }
+.detail-field { display: flex; flex-direction: column; gap: 2px; }
+.detail-field .k { font-size: 0.72rem; color: var(--ink-faint); text-transform: uppercase; letter-spacing: 0.03em; }
+.detail-field .v { font-weight: 600; font-size: 0.92rem; }
+.detail-empty { color: var(--ink-faint); font-size: 0.88rem; }
+
+.payment-row {
+  display: flex; justify-content: space-between; align-items: center; gap: 12px;
+  padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 0.88rem;
+}
+.payment-row:last-child { border-bottom: none; }
+.payment-row .amount { font-weight: 700; font-variant-numeric: tabular-nums; }
+
+/* What the row is about, on the left, with its own second line. The note sits
+   under the heading rather than beside it so a long one does not push the
+   amount off the end of the row. */
+.payment-meta { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.payment-note { font-size: 0.8rem; color: var(--ink-faint); }
+
+/* Edit and Remove together at the end of a row, so the amount keeps the
+   space it needs and the buttons do not drift apart as figures change
+   width. */
+.row-acts { display: flex; align-items: center; gap: 2px; flex: 0 0 auto; }
+.row-acts .btn { margin-left: 0; }
+
+.timeline-list { list-style: none; padding: 0; margin: 0; }
+.timeline-list li {
+  position: relative; padding: 0 0 16px 22px; font-size: 0.88rem; border-left: 2px solid var(--border);
+}
+.timeline-list li:last-child { border-left-color: transparent; padding-bottom: 0; }
+.timeline-list li::before {
+  content: ''; position: absolute; left: -5px; top: 2px; width: 8px; height: 8px;
+  border-radius: 50%; background: var(--accent);
+}
+.timeline-list .t-event { font-weight: 600; display: block; }
+.timeline-list .t-time { font-size: 0.75rem; color: var(--ink-faint); }
+
+/* ---------- Reports ---------- */
+.report-tabs { display: flex; gap: 8px; margin-bottom: 18px; overflow-x: auto; }
+.report-tab {
+  border: 1px solid var(--border); background: #fff; color: var(--ink-dim);
+  padding: 9px 16px; border-radius: 999px; font-weight: 600; font-size: 0.82rem; cursor: pointer;
+  flex-shrink: 0; white-space: nowrap;
+}
+.report-tab.active { background: var(--ink); color: #fff; border-color: var(--ink); }
+.report-filters {
+  display: flex; gap: 12px; flex-wrap: wrap; align-items: end; background: #fff;
+  border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; margin-bottom: 16px;
+}
+.report-filters .field-group { margin-bottom: 0; min-width: 160px; }
+.report-export-row { display: flex; gap: 10px; margin-bottom: 18px; }
+.report-results { overflow-x: auto; background: #fff; border: 1px solid var(--border); border-radius: var(--radius); }
+.report-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+.report-table th, .report-table td { padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--border); white-space: nowrap; }
+.report-table th { background: var(--bg); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink-faint); }
+.report-table tfoot td { font-weight: 700; background: var(--bg); }
+
+@media print {
+  .ns-side, .ns-bar, .ns-skip, .ns-scrim, .panel-header .btn, .report-tabs, .report-filters,
+  .report-export-row, .rec-chipbar, .rec-toolbar, .rec-pager, .rec-back,
+  .c-actions, .place-actions,
+  .wa-float, .mobile-footer-nav { display: none !important; }
+  body { background: #fff; }
+  .ns { display: block; }
+  .ns-content { max-width: none; padding: 0; }
+  .report-results { border: none; }
+
+  /* Printing a booking confirmation is a different job from printing a
+     report: the report is this screen on paper, the confirmation is a
+     document for somebody who will never see this screen. So the panel goes
+     entirely and the sheet is all that is left. */
+  body.is-printing-confirmation > *:not(#bookingConfirmation) { display: none !important; }
+  /* A column, so the closing strip can be pushed to the foot of the paper
+     with margin-top:auto rather than left wherever the text happened to
+     stop. On a short booking that was two thirds of the way up the page,
+     with the rest blank under it. */
+  body.is-printing-confirmation #bookingConfirmation {
+    display: flex;
+    flex-direction: column;
+  }
+
+  @page { margin: 14mm; }
+
+  /* The confirmation's band runs to the paper's edge, so that page carries
+     no margin of its own and the sheet holds its own padding instead. A
+     named page rather than setting margin:0 outright, because the reports
+     print through here too and they want their 14mm. An engine that does
+     not know named pages falls back to the 14mm above: the band is then
+     inset rather than bled, which is a plainer document and not a broken
+     one. */
+  @page confirmation { margin: 0; }
+  body.is-printing-confirmation #bookingConfirmation { page: confirmation; }
+}
+
+/* ---------------------------------------------------------------------------
+   The booking confirmation.
+
+   Built into the page and shown only while printing, rather than opened in a
+   second window: a popup blocker cannot stop it, and it prints the same from
+   a phone at the handover counter as from a laptop.
+
+   print-color-adjust is the line the whole design rests on. A browser asked
+   to print throws every background away unless somebody has ticked
+   "Background graphics" in the dialogue -- so without it the navy band, the
+   gold discs, the grey cards and the highlighted total all come out white
+   and the customer is sent a skeleton. It is the one declaration here that
+   is not decoration.
+--------------------------------------------------------------------------- */
+#bookingConfirmation {
+  display: none;
+  position: relative;
+  /* The site's own navy and gold, so a customer who has seen the website
+     recognises the document. Hex rather than the panel's custom properties:
+     this prints, and a print stylesheet leaning on a variable defined for
+     the screen is a document that comes out grey on the one machine nobody
+     tested. */
+  --pc-navy: #0e1226;
+  --pc-ink: #1a1a1a;
+  --pc-dim: #5b6070;
+  --pc-gold: #f5c518;
+  --pc-card: #f4f5f7;
+  --pc-hair: #e3e5ea;
+  color: var(--pc-ink);
+  background: #fff;
+  font-size: 10pt;
+  line-height: 1.45;
+  /* A4 less a hair, so the sheet fills the page without rounding its way
+     onto a second one. Without it the watermark anchors to wherever the
+     text stopped, which on a short booking is across the middle of the
+     terms. */
+  min-height: 290mm;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+/* ---- the band across the top ------------------------------------------ */
+.pc-band {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12pt;
+  padding: 11pt 16pt;
+  background: var(--pc-navy);
+  color: #fff;
+  overflow: hidden;
+  border-bottom: 4pt solid var(--pc-gold);
+}
+.pc-mark { height: 58pt; width: auto; max-width: 110pt; object-fit: contain; flex: none; }
+.pc-ident { position: relative; flex: none; max-width: 180pt; }
+.pc-name { margin: 0 0 4pt; font-size: 13pt; font-weight: 700; letter-spacing: -0.01em; }
+.pc-row { display: flex; align-items: flex-start; gap: 5pt; margin: 1.5pt 0; font-size: 8.5pt; line-height: 1.3; }
+
+/* The photograph fills what the logo and the details leave, bled to the
+   edges. object-fit, so a tall upload and a wide one both crop rather than
+   stretching a road into a smear. */
+.pc-banner {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 4pt;
+  width: 46%;
+  height: auto;
+  object-fit: cover;
+  /* Cut on the diagonal and faded into the navy on its left, so it reads as
+     part of the band rather than a rectangle pasted onto it. */
+  clip-path: polygon(14% 0, 100% 0, 100% 100%, 0 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 22%);
+  mask-image: linear-gradient(to right, transparent 0, #000 22%);
+}
+
+/* The number is the one thing on the page somebody reads back over the
+   phone, and it sits on top of a photograph the owner chooses -- which may
+   be a sunrise, and was. A scrim under it so it stays legible whatever is
+   uploaded, rather than hoping the picture is dark in the corner. */
+.pc-ref {
+  position: relative;
+  margin-left: auto;
+  padding: 5pt 4pt 5pt 20pt;
+  text-align: right;
+  white-space: nowrap;
+  background: linear-gradient(to right, rgba(14, 18, 38, 0), rgba(14, 18, 38, 0.82) 38%);
+  border-radius: 4pt;
+}
+.pc-ref-k { display: block; font-size: 8pt; letter-spacing: 0.1em; text-transform: uppercase; color: #fff; }
+.pc-ref-v { display: block; font-size: 15pt; font-weight: 700; color: var(--pc-gold); }
+/* Only ever "Cancelled", and it has to be impossible to miss. */
+.pc-ref-x {
+  display: inline-block;
+  margin-top: 3pt;
+  padding: 1pt 6pt;
+  background: #b3261e;
+  color: #fff;
+  font-size: 8.5pt;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* ---- the gold discs ---------------------------------------------------- */
+.pc-ico {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 13pt;
+  height: 13pt;
+  border-radius: 50%;
+  background: var(--pc-gold);
+}
+.pc-ico svg { width: 8pt; height: 8pt; fill: var(--pc-navy); }
+
+/* ---- section titles ---------------------------------------------------- */
+#bookingConfirmation h2.pc-title {
+  display: flex;
+  align-items: center;
+  gap: 8pt;
+  margin: 13pt 16pt 8pt;
+  font-size: 14pt;
+  font-weight: 700;
+  color: var(--pc-navy);
+}
+#bookingConfirmation h2.pc-title .pc-ico { width: 22pt; height: 22pt; }
+#bookingConfirmation h2.pc-title .pc-ico svg { width: 13pt; height: 13pt; }
+/* The rule runs from the end of the words to the margin. */
+#bookingConfirmation h2.pc-title::after {
+  content: "";
+  flex: 1;
+  height: 2pt;
+  background: var(--pc-gold);
+}
+
+/* ---- the four cards ----------------------------------------------------- */
+.pc-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 9pt;
+  margin: 0 16pt;
+}
+.pc-card {
+  background: var(--pc-card);
+  border-radius: 6pt;
+  padding: 8pt 11pt 9pt;
+  break-inside: avoid;
+}
+#bookingConfirmation .pc-card h3 {
+  display: flex;
+  align-items: center;
+  gap: 7pt;
+  margin: 0 0 5pt;
+  padding-bottom: 4pt;
+  border-bottom: 1px solid var(--pc-hair);
+  font-size: 10pt;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--pc-navy);
+}
+#bookingConfirmation .pc-card h3 .pc-ico { width: 19pt; height: 19pt; }
+#bookingConfirmation .pc-card h3 .pc-ico svg { width: 11pt; height: 11pt; }
+
+.pc-line {
+  display: flex;
+  justify-content: space-between;
+  gap: 10pt;
+  padding: 2.5pt 0;
+  border-bottom: 1px solid var(--pc-hair);
+  font-size: 9.5pt;
+}
+.pc-line:last-child { border-bottom: 0; }
+.pc-line > span:first-child { color: var(--pc-dim); }
+.pc-line > span:last-child { font-weight: 700; text-align: right; color: var(--pc-ink); }
+
+/* The one figure the whole page is about. */
+.pc-total {
+  margin: 2pt -11pt;
+  padding: 3.5pt 11pt;
+  background: var(--pc-gold);
+  border-bottom: 0;
+  font-size: 11.5pt;
+}
+.pc-total > span, .pc-total > span:first-child { color: var(--pc-navy); font-weight: 700; }
+
+/* The deposit, said once and outside the column that adds up. */
+.pc-note { margin: 6pt 0 0; font-size: 8pt; line-height: 1.35; color: var(--pc-dim); }
+
+/* ---- the terms ---------------------------------------------------------- */
+.pc-rules ol {
+  margin: 0 16pt;
+  padding-left: 16pt;
+  font-size: 8.5pt;
+  line-height: 1.4;
+  color: var(--pc-ink);
+}
+.pc-rules li { padding: 1pt 0; break-inside: avoid; }
+
+/* ---- the closing note --------------------------------------------------- */
+.pc-foot {
+  display: flex;
+  align-items: flex-start;
+  gap: 8pt;
+  /* Pushed to the foot of the sheet. Everything above it keeps its natural
+     height, so on a booking with eight terms the strip lands just under
+     them and on a bare one it still rules off the bottom of the page. */
+  margin: 14pt 16pt 0;
+  margin-top: auto;
+  padding: 7pt 0 14pt;
+  border-top: 2pt solid var(--pc-gold);
+  font-size: 9pt;
+  color: var(--pc-navy);
+}
+.pc-foot p { margin: 0; }
+.pc-foot .pc-ico { width: 17pt; height: 17pt; }
+.pc-foot .pc-ico svg { width: 10pt; height: 10pt; }
+.pc-issued { display: block; margin-top: 2pt; font-size: 8pt; color: var(--pc-dim); }
+.pc-nb { white-space: nowrap; }
+
+/* The mark again at the right end of the closing strip, faint. Decorative:
+   it says nothing the letterhead has not, so it is the one thing here that
+   may safely be dropped by a printer set to save ink. */
+.pc-watermark {
+  flex: none;
+  margin-left: auto;
+  align-self: center;
+  width: 62pt;
+  opacity: 0.2;
+}
+
+@media (max-width: 900px) {
+  .stat-grid, .stat-grid-4 { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+  .dashboard-cols { grid-template-columns: 1fr; }
+  .finance-form { grid-template-columns: 1fr 1fr; }
+  .finance-form button { grid-column: span 2; }
+  .modal-row-4 { grid-template-columns: 1fr 1fr; }
+  .booking-card { flex-direction: column; align-items: flex-start; }
+  .booking-card-right { width: 100%; justify-content: space-between; }
+}
+
+@media (max-width: 560px) {
+  .modal-row, .modal-row-3, .modal-row-4 { grid-template-columns: 1fr; }
+  .stat-grid, .stat-grid-4 { grid-template-columns: repeat(auto-fill, minmax(132px, 1fr)); }
+  .stat-grid-3 { grid-template-columns: 1fr; }
+  .finance-form { grid-template-columns: 1fr; }
+  .finance-form button { grid-column: span 1; }
+  .report-filters .field-group { min-width: 0; flex: 1 1 100%; }
+}
+
+/* Signed-in identity, at the foot of the navigation column. */
+.who-role {
+  font-size: 0.66rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+  background: rgba(245, 165, 0, 0.22); color: var(--accent); padding: 3px 8px; border-radius: 999px;
+  flex-shrink: 0;
+}
+.logout-form { display: inline; margin: 0; }
+
+/* A voided payment stays listed — the record of what was entered is part of
+   the trail — but is clearly no longer counted. */
+.payment-row.payment-void { opacity: 0.6; }
+.payment-row.payment-void .amount { text-decoration: line-through; }
+.payment-row em {
+  font-style: normal; font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.05em; color: var(--ink-faint); margin-left: 6px;
+}
+.payment-row .btn { margin-left: 10px; }
+
+/* ---------- Enquiries ---------- */
+/* The list itself is the shared records table further down; what is left here
+   is the enquiry's own notes and the row of actions on the record. */
+.status-badge-New       { background: #FFF3DC; color: #A05F00; }  /* see Confirmed */
+.status-badge-Contacted { background: #EAF0F8; color: #3A5A8A; }
+.status-badge-Pending   { background: #FDF0D5; color: #8A5A00; }
+.status-badge-Accepted  { background: #E8F4EC; color: #2F6B4F; }
+.status-badge-Converted { background: #E8F4EC; color: #2F6B4F; }
+.status-badge-Rejected  { background: #FBECEA; color: var(--danger); }
+
+.enquiry-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+.enquiry-notes {
+  white-space: pre-wrap; font-size: 0.88rem; color: var(--ink-dim);
+  background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 12px;
+}
+
+/* ---- first-run installer ------------------------------------------------ */
+.install-card { max-width: 460px; text-align: left; }
+.install-card h1 { text-align: center; }
+.install-note { font-size: 0.86rem; color: var(--ink-dim); line-height: 1.5; margin: 10px 0; }
+.install-note code {
+  background: #FFF8EE; padding: 2px 6px; border-radius: 5px;
+  font-size: 0.85em; color: var(--accent-deep);
+}
+.install-heading {
+  font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--ink-dim); margin: 22px 0 2px; padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+.install-checks { list-style: none; margin: 14px 0; padding: 0; }
+.install-checks li {
+  font-size: 0.86rem; padding: 7px 0 7px 26px; position: relative;
+  border-bottom: 1px solid var(--border);
+}
+.install-checks li:last-child { border-bottom: 0; }
+.install-checks li::before {
+  position: absolute; left: 0; top: 6px; font-weight: 800;
+}
+.install-checks li.ok::before { content: '✓'; color: #2F6B4F; }
+.install-checks li.no::before { content: '✕'; color: #B3261E; }
+/* Not a failure -- the install worked -- but the result needs acting on
+   before the next deploy, so it cannot look like the passing rows. */
+.install-checks li.warn::before { content: '!'; color: #8A5A00; font-weight: 800; }
+.install-checks li.warn { color: var(--ink); }
+.install-checks li span { display: block; color: var(--ink-dim); font-size: 0.8rem; }
+.install-errors {
+  background: #FDECEA; border: 1px solid #F3C4BF; border-radius: 10px;
+  padding: 12px 14px; margin: 14px 0;
+}
+.install-errors p { color: #B3261E; font-size: 0.86rem; margin: 4px 0; }
+
+/* ---- Finance: expenses and breakdowns ----------------------------------- */
+.finance-range {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 18px;
+}
+.finance-range label { font-size: 0.82rem; color: var(--ink-dim); font-weight: 600; }
+.finance-range input[type="date"] {
+  padding: 8px 10px; border: 1px solid var(--border); border-radius: 9px;
+  font-family: var(--font); font-size: 0.86rem; background: var(--surface); color: var(--ink);
+}
+.stat-foot {
+  display: block; font-size: 0.75rem; color: var(--ink-dim); margin-top: 4px; min-height: 1em;
+}
+.finance-deposit-note {
+  font-size: 0.82rem; color: var(--ink-dim); margin: 12px 0 4px;
+}
+.finance-deposit-note:empty { display: none; }
+
+.finance-breakdowns {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px; margin: 20px 0;
+}
+.finance-panel {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 16px;
+}
+.finance-panel h3 {
+  font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.07em;
+  color: var(--ink-dim); margin-bottom: 12px;
+}
+.breakdown-row {
+  display: grid; grid-template-columns: 1fr 70px auto; align-items: center;
+  gap: 10px; padding: 6px 0; font-size: 0.84rem;
+}
+.breakdown-label { color: var(--ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.breakdown-bar { background: #F1EBE1; border-radius: 4px; height: 6px; overflow: hidden; }
+.breakdown-bar i { display: block; height: 100%; background: var(--accent); border-radius: 4px; }
+.breakdown-value { font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+.panel-header-sub {
+  margin-top: 8px; padding-top: 16px; border-top: 1px solid var(--border);
+}
+.panel-header-sub h3 { font-size: 1rem; }
+.finance-toggle {
+  font-size: 0.82rem; color: var(--ink-dim); display: flex; align-items: center; gap: 6px;
+}
+
+.expense-card {
+  display: flex; justify-content: space-between; align-items: flex-start; gap: 14px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 14px 16px; margin-bottom: 10px;
+}
+.expense-card.is-voided { opacity: 0.6; }
+.expense-card.is-voided .expense-amount { text-decoration: line-through; }
+.expense-card .row { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.expense-card .num { font-weight: 800; color: var(--accent-deep); font-size: 0.82rem; }
+.expense-what { font-weight: 700; color: var(--ink); font-size: 0.95rem; }
+.expense-card .meta { font-size: 0.8rem; color: var(--ink-dim); }
+.expense-card .meta.corrects { color: var(--accent-deep); }
+.expense-card .meta.reason { font-style: italic; }
+.expense-card .right {
+  display: flex; flex-direction: column; align-items: flex-end; gap: 4px; flex-shrink: 0;
+}
+.expense-amount { font-weight: 800; font-size: 1rem; font-variant-numeric: tabular-nums; }
+.expense-actions { display: flex; gap: 10px; margin-top: 2px; }
+.link-btn {
+  background: none; border: 0; padding: 0; cursor: pointer;
+  font-family: var(--font); font-size: 0.78rem; font-weight: 600;
+  color: var(--accent-deep); text-decoration: underline;
+}
+.link-btn.danger { color: var(--danger); }
+
+@media (max-width: 560px) {
+  .expense-card { flex-direction: column; }
+  .expense-card .right { align-items: flex-start; }
+}
+
+/* ---------------------------------------------------------------------------
+   Touch targets.
+
+   Every one of these was between 31 and 38 pixels tall, which is under the
+   44 a fingertip reliably lands on -- "Delete" on a place was 31. On a mouse
+   a small button is tidy; on a phone it is a button that misses.
+--------------------------------------------------------------------------- */
+@media (hover: none), (max-width: 700px) {
+  .btn { min-height: 44px; padding: 11px 18px; }
+  .btn-sm { min-height: 44px; padding: 10px 16px; font-size: 0.84rem; }
+  .link-btn { min-height: 44px; display: inline-flex; align-items: center; }
+  .rec-chip, .rec-tab, .report-tab { min-height: 44px; }
+  /* Not the one that is only there to open the file chooser: stretching it to
+     the full width pushed a 390px page out to 447. */
+  input[type="file"]:not(.brand-slot-file) { width: 100%; }
+}
+
+/* ---------------------------------------------------------------------------
+   The panel on a phone.
+--------------------------------------------------------------------------- */
+@media (max-width: 700px) {
+  .c-wrap { max-width: none; margin: 0; padding: 0; }
+  .c-top { align-items: flex-start; }
+  .c-sec { padding: 14px; }
+  .c-sum { padding: 12px 14px; }
+  .c-fold-body { padding: 4px 14px 14px; }
+
+  /* Side by side these two were 100px wide each and the labels wrapped to
+     three lines. Stacked, each gets the width of the screen. */
+  .modal-row, .modal-row-3, .modal-row-4 { grid-template-columns: 1fr; }
+  .modal { padding: 18px; border-radius: 16px; max-height: 94vh; }
+  /* A form on a phone rises from the bottom, where the thumb already is.
+     A question does not: it is a few lines and two buttons, and putting it
+     in the middle of the screen is what makes it read as the thing being
+     asked rather than as a tray that slid up. */
+  .modal-overlay { padding: 10px; align-items: flex-end; }
+  .modal-overlay.ns-dialog { align-items: center; }
+  /* Side by side, not stacked. Two 44px-tall buttons fit across a 390px
+     phone with room to spare, and stacking them put Cancel under the primary
+     action where a thumb reaching for one finds the other. */
+  .modal-actions .btn { flex: 1 1 0; min-width: 0; }
+
+  .panel-header { align-items: stretch; }
+  .panel-header > div { flex-direction: column; align-items: flex-start; gap: 2px; }
+  .panel-header .btn { width: 100%; }
+
+  /* The delete button sits inside its own form, so it is the form that has to
+     stretch -- "Edit" grew and "Delete" stayed the width of the word. */
+  .place-actions, .place-actions form { flex: 1; display: flex; }
+  .place-actions .btn { flex: 1; width: 100%; }
+  .car-admin-grid { grid-template-columns: 1fr; }
+  .report-table th, .report-table td { padding: 9px 11px; }
+  .empty-state { padding: 34px 16px; }
+
+  /* Two stat cards to a row rather than whatever fits: at 132px minimum a
+     360px phone got two anyway, and a 320px one got one very wide card. */
+  .stat-grid, .stat-grid-3, .stat-grid-4 { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .stat-card { padding: 10px 11px; }
+  .stat-value { font-size: 1.05rem; }
+
+  /* The fold heading: name across the top with its chevron, count underneath.
+     Side by side, "Logo, mark and page banners" came out three lines tall
+     next to the badge. */
+  .c-sum { flex-wrap: wrap; row-gap: 6px; }
+  .c-sum-name { order: 1; flex: 1 1 auto; }
+  .c-sum-chev { order: 2; margin-left: auto; }
+  .c-sum .c-flag { order: 3; }
+
+  /* A heading takes its own line, and its buttons line up two to a row
+     underneath rather than each ending up a different width. An odd one at
+     the end spans both columns instead of sitting half-width beside a gap. */
+  .detail-section-title > span:first-child { flex: 1 1 100%; }
+  .detail-section-title > div {
+    width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+  }
+  .detail-section-title > div > .btn:last-child:nth-child(odd) { grid-column: 1 / -1; }
+}
+
+/* Narrower than most phones. One column of everything. */
+@media (max-width: 380px) {
+  .stat-grid, .stat-grid-3, .stat-grid-4 { grid-template-columns: 1fr; }
+  .c-top .btn, .place-actions { width: 100%; }
+}
+
+/* ---- Records: the list-and-view shape used by Bookings and Inquiries -----
+ *
+ * One table, the counts above it, the filters beside them, and a record that
+ * opens in place rather than in a modal -- a booking carries payments,
+ * readings, documents and a timeline, and that is a page's worth of material,
+ * not a dialog's.
+ *
+ * The layout follows the ERP the owner asked it to look like. The colours do
+ * not: this is the navy and gold the rest of the panel and the website are
+ * built from, and a second palette inside one product reads as a bug.
+ */
+
+.rec-stats {
+  display: grid; gap: 12px; margin-bottom: 14px;
+  grid-template-columns: repeat(auto-fit, minmax(168px, 1fr));
+}
+.rec-stat {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 14px 16px;
+}
+.rec-stat-n { font-size: 1.5rem; font-weight: 800; color: var(--primary); line-height: 1.1; }
+.rec-stat-k {
+  font-size: 0.76rem; color: var(--ink-dim); font-weight: 600; margin-top: 2px;
+}
+.rec-stat-ico {
+  width: 38px; height: 38px; flex: 0 0 38px; border-radius: 50%;
+  display: grid; place-items: center; background: #FDF1D8; color: var(--accent-deep);
+}
+.rec-stat-danger .rec-stat-n { color: var(--danger); }
+.rec-stat-danger .rec-stat-ico { background: #FBECEA; color: var(--danger); }
+.rec-stat-good .rec-stat-n { color: #2F6B4F; }
+.rec-stat-good .rec-stat-ico { background: #E7F3EC; color: #2F6B4F; }
+
+.rec-chipbar {
+  display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 8px 10px; margin-bottom: 14px;
+}
+.rec-chips { display: flex; gap: 4px; flex-wrap: wrap; flex: 1; min-width: 0; }
+.rec-chip {
+  display: inline-flex; align-items: center; gap: 7px; border: 0; cursor: pointer;
+  background: transparent; color: var(--ink-dim); font-family: var(--font);
+  font-size: 0.82rem; font-weight: 600; padding: 8px 12px; border-radius: 10px;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.rec-chip:hover { background: var(--bg); color: var(--ink); }
+.rec-chip.is-on { background: var(--primary); color: #fff; }
+.rec-chip .n {
+  font-size: 0.74rem; font-weight: 700; color: var(--ink-faint);
+  background: var(--bg); border-radius: 999px; padding: 1px 7px;
+}
+.rec-chip.is-on .n { background: rgba(255,255,255,0.18); color: #fff; }
+.rec-chip .dot { width: 7px; height: 7px; border-radius: 50%; background: currentColor; opacity: 0.55; }
+
+.rec-toolbar { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+.rec-search { position: relative; flex: 1; min-width: 0; max-width: 380px; }
+.rec-search svg { position: absolute; left: 13px; top: 50%; transform: translateY(-50%); color: var(--ink-faint); }
+.rec-search input {
+  width: 100%; padding: 11px 14px 11px 38px; border: 1px solid var(--border);
+  border-radius: 12px; font-family: var(--font); font-size: 0.86rem; background: var(--surface);
+}
+.rec-search input:focus { outline: none; border-color: var(--primary); }
+.rec-icon-btn {
+  width: 40px; height: 40px; flex: 0 0 40px; border-radius: 12px; cursor: pointer;
+  border: 1px solid var(--border); background: var(--surface); color: var(--ink-dim);
+  display: grid; place-items: center;
+}
+.rec-icon-btn:hover { background: var(--bg); color: var(--ink); }
+
+/* A window onto the table rather than the whole of it.
+
+   Both ways: sideways because a row is one line now and a line of eight
+   columns is wider than the panel, and downwards because a page of records is
+   taller than the screen and scrolling the whole page took the column names
+   away with it. Capped rather than fixed, so three bookings still make a short
+   table.
+   
+   overscroll-behavior stops a flick that reaches the bottom of this box from
+   carrying on and scrolling the page behind it. */
+.rec-tablewrap {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 16px; overflow: auto;
+  max-height: min(72vh, 700px);
+  overscroll-behavior: contain;
+}
+
+/* ---- a list fills the screen, and scrolls inside itself ----
+   With the window no longer scrolling, a fixed 72vh left dead space under
+   the table on a tall monitor and still cut it off on a short one. The
+   panel, the view and the wrapper around the list are each a column that
+   gives its remaining height to the one below, so the table ends where the
+   screen does: the filters and the pager stay put, the rows move, and the
+   sticky header stays over them.
+
+   :has() does the choosing, so this reaches the bookings list and the
+   enquiries list without either of them needing a class of its own, and
+   leaves the detail view -- which is a page of prose and photographs, and
+   wants to scroll normally -- alone. */
+@media (min-width: 1024px) {
+  .ns-content > .admin-panel:not([hidden]):has(> div:not([hidden]) .rec-tablewrap) {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 0;
+  }
+  .admin-panel > div:not([hidden]):has(.rec-tablewrap) {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+  .admin-panel div:not([hidden]) > .rec-tablewrap {
+    flex: 1 1 auto;
+    min-height: 140px;
+    max-height: none;
+  }
+  /* The wrapper the list is written into sits between the two and would
+     otherwise be a block of its own height. */
+  #bookingListWrap, #inquiriesWrap {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+  .rec-pager { flex: none; }
+}
+
+/* separate, not collapse: a collapsed border belongs to the table rather than
+   to the cell, and a sticky cell carries its own borders with it or carries
+   none at all. With no vertical rules in this table the two look identical. */
+.rec-table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 0.82rem; line-height: 1.35; }
+.rec-table th {
+  text-align: left; padding: 7px 10px; white-space: nowrap;
+  font-size: 0.67rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em;
+  color: var(--ink-faint); border-bottom: 1px solid var(--border); background: var(--surface);
+  /* Stays on screen while the rows go past it. A column of dates with no
+     heading is a column of numbers. */
+  position: sticky; top: 0; z-index: 2;
+}
+.rec-table th.is-sortable { cursor: pointer; user-select: none; }
+.rec-table th.is-sortable:hover { color: var(--ink); }
+.rec-table th .ord { opacity: 0.4; margin-left: 4px; font-size: 0.8em; }
+.rec-table th.is-sorted .ord { opacity: 1; color: var(--accent-deep); }
+.rec-table td { padding: 5px 10px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+.rec-table tbody tr { cursor: pointer; }
+.rec-table tbody tr:hover { background: var(--bg); }
+.rec-table tbody tr:last-child td { border-bottom: 0; }
+.rec-table .rec-sno { color: var(--ink-faint); width: 1%; }
+.rec-table .rec-id { font-weight: 800; color: var(--accent-deep); white-space: nowrap; }
+.rec-table .rec-who { font-weight: 700; color: var(--ink); line-height: 1.25; }
+.rec-table .rec-sub { color: var(--ink-dim); font-size: 0.74rem; line-height: 1.2; }
+.rec-table .rec-money { font-weight: 700; white-space: nowrap; }
+/* A date is one thing. Left to wrap it became "28 Sept" over "2026", which
+   cost the row a line for nothing. */
+.rec-table .rec-when { white-space: nowrap; }
+
+/* Every cell is one line. Each fact has its own column now, so there is
+   nothing left in a cell to fold against -- and the box above scrolls, which
+   is what pays for the width. */
+.rec-table td { white-space: nowrap; }
+
+/* One part may give, and it is a name: a name is still recognisable from its
+   first twenty characters (the whole of it is on the title attribute), and
+   without a ceiling one long one widens the column for every row. A block
+   rather than inline so the ellipsis has a box to happen in. */
+.rec-table .rec-clip {
+  display: block; max-width: 20ch; overflow: hidden; text-overflow: ellipsis;
+}
+
+/* Something the enquiry did not say -- no car named, no dates given -- is
+   greyer than something it did. The words stay, because a dash does not tell
+   a new reader whether the question was asked. */
+.rec-table .rec-none { color: var(--ink-faint); }
+
+/* The only cell still holding two things, because they are one thing: the
+   recorded status and the position the dates put it in. Centred on each other
+   rather than on a baseline their padding has already moved. */
+.rec-table .rec-line-chips { display: flex; align-items: center; gap: 6px; }
+
+.rec-table .rec-act {
+  width: 1%; white-space: nowrap;
+  position: sticky; right: 0; z-index: 1;
+  background: var(--surface);
+  border-left: 1px solid var(--border);
+}
+/* The shadow only when there is something passing underneath. On a screen
+   wide enough for the whole table this is simply the last column, and an edge
+   drawn there would be an edge drawn for no reason. The class is set by
+   renderRecTable, which is the only thing that knows. */
+.rec-tablewrap.has-overflow-x .rec-act {
+  box-shadow: -10px 0 10px -10px rgb(0 0 0 / 0.18);
+}
+.rec-table tbody tr:hover .rec-act { background: var(--bg); }
+/* The corner: pinned both ways, so it must sit above both. */
+.rec-table thead .rec-act { z-index: 3; }
+.rec-unread td:first-child { box-shadow: inset 3px 0 0 var(--accent); }
+/* On the enquiry number rather than on the name. The name clips with an
+   ellipsis, so a marker inside it would vanish exactly when the name is long
+   -- at random, from the reader's side. The number never clips.
+   
+   It reads once at either width without a second rule: on a desk the number
+   has its own column, and on a phone that column is hidden and the only
+   .rec-id on the row is the copy printed under the name. */
+.rec-unread .rec-id::after {
+  content: ''; display: inline-block; width: 7px; height: 7px; border-radius: 50%;
+  background: var(--accent); margin-left: 7px; vertical-align: middle;
+}
+
+.rec-pager {
+  display: flex; align-items: center; justify-content: space-between; gap: 14px;
+  flex-wrap: wrap; padding: 14px 2px 2px; font-size: 0.82rem; color: var(--ink-dim);
+}
+.rec-pager select {
+  font-family: var(--font); font-size: 0.82rem; padding: 6px 10px;
+  border: 1px solid var(--border); border-radius: 10px; background: var(--surface);
+}
+.rec-pager-right { display: flex; align-items: center; gap: 8px; }
+.rec-pager-right .page-of { padding: 0 4px; }
+
+/* ---- Records: one record, opened in place ------------------------------- */
+
+.rec-back {
+  display: inline-flex; align-items: center; gap: 7px; background: none; border: 0;
+  cursor: pointer; font-family: var(--font); font-size: 0.86rem; font-weight: 600;
+  color: var(--ink-dim); padding: 0; margin-bottom: 14px;
+}
+.rec-back:hover { color: var(--primary); }
+
+.rec-hero {
+  background: linear-gradient(135deg, #0A0E20 0%, #1A2148 100%);
+  color: #fff; border-radius: 18px; padding: 20px 22px;
+}
+.rec-hero-top { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.rec-avatar {
+  width: 52px; height: 52px; flex: 0 0 52px; border-radius: 14px;
+  background: var(--accent); color: #14100D; display: grid; place-items: center;
+  font-weight: 800; font-size: 1.05rem; letter-spacing: 0.02em;
+}
+.rec-hero-id { flex: 1; min-width: 0; }
+.rec-hero-id h2 { font-size: 1.24rem; margin: 0; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.rec-hero-sub { font-size: 0.82rem; color: rgba(255,255,255,0.62); margin-top: 3px; }
+.rec-hero-act { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.rec-hero-act .btn-ghost { background: rgba(255,255,255,0.12); color: #fff; }
+.rec-hero-act .btn-ghost:hover { background: rgba(255,255,255,0.2); }
+.rec-tiles {
+  display: grid; gap: 12px; margin-top: 18px;
+  grid-template-columns: repeat(auto-fit, minmax(146px, 1fr));
+}
+.rec-tile { background: rgba(255,255,255,0.08); border-radius: 12px; padding: 12px 14px; text-align: center; }
+.rec-tile-k {
+  font-size: 0.66rem; letter-spacing: 0.07em; text-transform: uppercase;
+  color: rgba(255,255,255,0.6); font-weight: 600;
+}
+.rec-tile-v { font-size: 1.2rem; font-weight: 800; margin-top: 5px; }
+.rec-tile-v.is-due { color: #FFC24D; }
+
+.rec-tabs {
+  display: flex; gap: 2px; overflow-x: auto; margin: 18px 0 16px;
+  border-bottom: 1px solid var(--border);
+}
+.rec-tab {
+  flex-shrink: 0; background: none; border: 0; cursor: pointer; font-family: var(--font);
+  font-size: 0.86rem; font-weight: 600; color: var(--ink-dim); padding: 12px 14px;
+  border-bottom: 2px solid transparent; display: inline-flex; align-items: center; gap: 7px;
+}
+.rec-tab:hover { color: var(--ink); }
+.rec-tab.is-on { color: var(--primary); border-bottom-color: var(--accent); }
+.rec-tab .n {
+  font-size: 0.72rem; font-weight: 700; background: var(--bg); color: var(--ink-faint);
+  border-radius: 999px; padding: 1px 7px;
+}
+.rec-tab.is-on .n { background: #FDF1D8; color: var(--accent-deep); }
+
+.info-grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+.info-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 16px; padding: 6px 20px 14px;
+}
+.info-card-head {
+  display: flex; align-items: center; gap: 12px; padding: 14px 0 12px;
+  border-bottom: 1px solid var(--border); margin-bottom: 6px;
+}
+.info-card-head h3 { font-size: 0.98rem; margin: 0; }
+/* The card's own Edit, pushed to the far end of its heading. All three open
+   the booking form -- these cards are its fields. */
+.info-card-head .card-edit { margin-left: auto; }
+.info-card-ico {
+  width: 36px; height: 36px; flex: 0 0 36px; border-radius: 10px; display: grid;
+  place-items: center; background: #FDF1D8; color: var(--accent-deep);
+}
+.info-row {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 18px;
+  padding: 11px 0; border-bottom: 1px dashed var(--border);
+}
+.info-row:last-child { border-bottom: 0; }
+.info-row .k { color: var(--ink-faint); font-size: 0.82rem; flex-shrink: 0; }
+.info-row .v { font-weight: 600; text-align: right; min-width: 0; overflow-wrap: anywhere; }
+.info-row .v a { color: var(--primary); }
+
+@media (max-width: 860px) {
+  .rec-stats { grid-template-columns: repeat(auto-fit, minmax(136px, 1fr)); }
+  .rec-stat { padding: 12px 13px; }
+  .rec-stat-n { font-size: 1.24rem; }
+  .rec-stat-ico { width: 32px; height: 32px; flex-basis: 32px; }
+  .rec-search { max-width: none; }
+  .rec-hero { padding: 16px; }
+  .rec-hero-id h2 { font-size: 1.08rem; }
+  .rec-tiles { grid-template-columns: repeat(auto-fit, minmax(118px, 1fr)); }
+  .rec-tile-v { font-size: 1.02rem; }
+}
+
+.rec-acts { display: inline-flex; gap: 6px; }
+.rec-act-btn {
+  width: 32px; height: 32px; border-radius: 9px; cursor: pointer; display: grid;
+  place-items: center; border: 1px solid var(--border); background: var(--surface);
+  color: var(--ink-dim);
+}
+.rec-act-btn:hover { background: var(--bg); color: var(--primary); border-color: var(--primary); }
+
+/* The money half of a booking's state, beside the booking's own. */
+.pay-badge { background: rgba(255,255,255,0.14); color: #fff; }
+.pay-Paid { background: #E8F4EC; color: #2F6B4F; }
+.pay-PartiallyPaid { background: #FDF0D5; color: #8A5A00; }
+.pay-Unpaid { background: #FBECEA; color: var(--danger); }
+
+/* On a phone the table is narrower than its columns, and a row that wraps a
+   name over three lines is harder to read than one that leaves the details to
+   the record. These are the columns the record opens with anyway. */
+.rec-only-sm { display: none; }
+
+@media (max-width: 860px) {
+  .rec-hide-sm, .rec-table .rec-sno { display: none; }
+  .rec-only-sm { display: block; font-size: 0.76rem; }
+  .rec-table th, .rec-table td { padding: 12px 10px; }
+
+  /* Three columns of about 110 pixels each. A long name breaks across lines
+     here rather than setting the column's width, which is the one thing that
+     would push the table wider than the phone it is on. */
+  .rec-table td { white-space: normal; }
+  .rec-table .rec-clip { max-width: none; }
+  .rec-table .rec-line-chips { flex-wrap: wrap; }
+}
+
+/* ---- Are you sure? ------------------------------------------------------ */
+.modal-confirm { max-width: 460px; }
+.modal-confirm h3 { margin: 0 0 10px; font-size: 1.08rem; }
+.confirm-lead { color: var(--ink-dim); font-size: 0.9rem; line-height: 1.55; margin: 0 0 12px; }
+.confirm-lead strong { color: var(--ink); }
+.confirm-points {
+  list-style: none; margin: 0 0 14px; padding: 12px 14px;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+}
+.confirm-points:empty { display: none; }
+.confirm-points li {
+  font-size: 0.86rem; color: var(--ink-dim); padding: 4px 0 4px 18px; position: relative;
+}
+.confirm-points li::before {
+  content: '—'; position: absolute; left: 0; color: var(--ink-faint);
+}
+.confirm-points li strong { color: var(--ink); font-weight: 700; }
+.confirm-final {
+  font-size: 0.82rem; font-weight: 600; color: var(--danger); margin: 0 0 16px;
+}
+/* The panel's dialogs, which replaced alert(), confirm() and prompt() as well
+   as the delete dialog that used to have markup of its own. See dialog.js.
+   They borrow .modal-overlay and .modal, so they are centred and shaped like
+   every other dialog here without describing any of that again; what is left
+   is the field, the error line and the one button that is sometimes red.
+
+   Solid red rather than the pale danger button used elsewhere: in this dialog
+   the destructive button is the action being offered, not a secondary among
+   others. */
+.ns-dialog-danger { background: var(--danger); color: #fff; }
+.ns-dialog-danger:hover { background: #8F1E17; }
+
+.ns-dialog-field { margin: 0 0 16px; }
+.ns-dialog-field label {
+  display: block; font-size: 0.82rem; font-weight: 600; color: var(--ink-dim);
+  margin-bottom: 7px; line-height: 1.45;
+}
+.ns-dialog-field input,
+.ns-dialog-field select,
+.ns-dialog-field textarea {
+  width: 100%; padding: 10px 12px; border: 1px solid var(--border); border-radius: 9px;
+  font-size: 0.92rem; font-family: inherit; color: var(--ink); background: #fff; outline: none;
+}
+.ns-dialog-field textarea { resize: vertical; min-height: 68px; line-height: 1.5; }
+.ns-dialog-field input:focus,
+.ns-dialog-field select:focus,
+.ns-dialog-field textarea:focus {
+  border-color: var(--primary); box-shadow: 0 0 0 3px rgba(212,175,55,0.18);
+}
+
+/* Several fields at once -- correcting a payment, amending a reading. Two to
+   a row where there is room, because an amount and the date it was paid are
+   read together, and a column of six boxes on a laptop is a form that looks
+   longer than the job it does. */
+.ns-dialog-form { display: grid; grid-template-columns: 1fr 1fr; gap: 0 14px; }
+.ns-dialog-form .ns-dialog-field { grid-column: span 2; }
+.ns-dialog-form .ns-dialog-field.is-half { grid-column: span 1; }
+.ns-dialog-form[hidden] { display: none; }
+
+/* What the figure is now, under the box that changes it. */
+.ns-dialog-hint {
+  margin: 6px 0 0; font-size: 0.78rem; color: var(--ink-faint); line-height: 1.45;
+}
+
+@media (max-width: 560px) {
+  .ns-dialog-form { grid-template-columns: 1fr; }
+  .ns-dialog-form .ns-dialog-field,
+  .ns-dialog-form .ns-dialog-field.is-half { grid-column: span 1; }
+}
+
+/* Said under the field rather than in place of it, so what was typed is still
+   there to correct. */
+.ns-dialog-error {
+  margin: -8px 0 14px; font-size: 0.82rem; font-weight: 600; color: var(--danger);
+}
+
+/* A dialog with one button is a message, and a message should not be as wide
+   as a form. */
+.ns-dialog .modal { max-width: 440px; }
+.ns-dialog .modal:has(.ns-dialog-form:not([hidden])) { max-width: 540px; }
+.ns-dialog .confirm-lead p { margin: 0 0 9px; }
+.ns-dialog .confirm-lead p:last-child { margin-bottom: 0; }
+.ns-dialog .confirm-lead { margin-bottom: 16px; }
+.ns-dialog .confirm-lead[hidden] { display: none; }
+
+/* It arrives rather than appears: at this size, a card that is simply there
+   is easy to miss when the answer to it is "yes, delete". */
+@media (prefers-reduced-motion: no-preference) {
+  .ns-dialog:not([hidden]) { animation: ns-dialog-in 0.14s ease-out; }
+  .ns-dialog:not([hidden]) .modal { animation: ns-dialog-rise 0.18s cubic-bezier(0.22, 1, 0.36, 1); }
+}
+@keyframes ns-dialog-in { from { opacity: 0; } }
+@keyframes ns-dialog-rise { from { opacity: 0; transform: translate3d(0, 10px, 0) scale(0.985); } }
+
+.rec-act-btn.is-danger:hover {
+  background: #FBECEA; color: var(--danger); border-color: var(--danger);
+}
+
+/* A slot that keeps the whole image gives it a little room, so a logo with
+   no margin of its own is not flush against the edge of the thumbnail. */
+.brand-slot-preview.is-whole img { padding: 8px; }

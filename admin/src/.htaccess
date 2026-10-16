@@ -1,0 +1,18 @@
+# Deny by default. These are libraries, not pages.
+#
+# Nothing here is meant to be fetched: every file defines functions and prints
+# nothing, so requesting one today returns an empty 200 rather than leaking
+# anything. That is a property of each file continuing to be written that way,
+# which is not a guarantee -- and config.php's path, the schema and the session
+# rules are all described in here. sql/ and tools/ are already denied for the
+# same reason; this folder was the one that was not.
+#
+# Nothing breaks: these are reached by require_once from disk, never over HTTP.
+
+<IfModule mod_authz_core.c>
+    Require all denied
+</IfModule>
+<IfModule !mod_authz_core.c>
+    Order allow,deny
+    Deny from all
+</IfModule>

@@ -1,0 +1,207 @@
+# Apache configuration for niteshacars.in on Hostinger.
+#
+# This file only matters once the domain points at Hostinger rather than
+# GitHub Pages. Pages ignores it; Apache reads it on every request.
+#
+# It has three jobs: keep everyone on HTTPS, keep /admin out of the way of the
+# website's routing, and serve a real 404 for a URL that does not exist.
+
+# ----------------------------------------------------------------- routing --
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # HTTPS. Hostinger terminates TLS upstream, so %{HTTPS} is not reliable here
+  # -- the X-Forwarded-Proto header is what actually says how the visitor
+  # arrived. Both are checked, because a setup where only %{HTTPS} is set would
+  # otherwise redirect forever.
+  RewriteCond %{HTTP:X-Forwarded-Proto} =http [OR]
+  RewriteCond %{HTTPS} !=on
+  RewriteCond %{HTTP:X-Forwarded-Proto} !=https
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+  # /admin is the PHP panel. Hand it straight to PHP and stop: without this,
+  # the website's 404 rule below would swallow every panel URL that is not a
+  # file on disk, and the panel would answer every page with the website's
+  # "page not found".
+  RewriteCond %{REQUEST_URI} ^/admin(/|$) [NC]
+  RewriteRule ^ - [L]
+
+  # ------------------------------------------------- where the pictures live --
+  #
+  # Every photograph on this site is stored above the document root, so Apache
+  # cannot serve it and a small PHP reader in the panel has to. That used to
+  # show in the address:
+  #
+  #   /admin/photos/maruti-swift-self-drive-nagercoil-9f3a1c4b7d2e5a60.jpg
+  #
+  # The words were right and the folder was wrong. Two things follow from
+  # "admin" being in the URL of every picture on a site that sells car hire:
+  #
+  # 1. It is a dead word in the one part of an image's address Google reads
+  #    besides the file name. /car-photos/ is not.
+  #
+  # 2. It is one robots.txt edit from disaster. Disallowing /admin/ is the
+  #    normal, obvious thing to do -- any SEO tool will suggest it -- and
+  #    doing it would make every photograph on the site uncrawlable at a
+  #    stroke. robots.txt carries three Allow lines to prevent exactly that,
+  #    and a rule that survives only because nobody tidies it is not a rule.
+  #
+  # Served from the site root instead, which is where a visitor would assume
+  # they live anyway. The /admin/ addresses still work -- they are what is
+  # stored in pages already indexed -- so this adds an address, it does not
+  # move one.
+  # The static pictures were renamed to say what they show rather than where
+  # they sit on the page. Google Images may hold the old addresses, and a
+  # renamed file is a 404 to anything that already knew the old one -- so the
+  # old names redirect rather than simply stopping. 301, because the move is
+  # permanent and that is what passes the old address's standing to the new.
+  RewriteRule ^hero-car\.webp$ /self-drive-car-rental-nitesha-cars-and-bikes.webp [R=301,L]
+  RewriteRule ^open-road\.webp$ /mountain-road-at-sunrise-self-drive-car-rental.webp [R=301,L]
+  RewriteRule ^car-brezza\.avif$ /maruti-brezza-self-drive-car-rental-nagercoil.avif [R=301,L]
+  RewriteRule ^photos/car-brezza\.avif$ /photos/car-brezza--maruti-brezza-self-drive-rental-nagercoil.avif [R=301,L]
+
+  RewriteRule ^car-photos/([A-Za-z0-9._-]+)$ /admin/photo.php?f=$1 [L]
+  RewriteRule ^site-images/([A-Za-z0-9._-]+)$ /admin/brand.php?f=$1 [L]
+  RewriteRule ^place-photos/([A-Za-z0-9._-]+)$ /admin/place-photo.php?f=$1 [L]
+
+  # The site's pages are real directories with real index.html files -- the
+  # build writes one per route so each carries its own title and description.
+  # Apache serves those itself, so there is nothing to rewrite for a URL that
+  # exists. Anything left over genuinely does not exist, and gets 404.html
+  # with a 404 status rather than a copy of the home page with a 200: a soft
+  # 404 tells Google the page is real and gets the dud URL indexed.
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^ /404.html [L]
+</IfModule>
+
+ErrorDocument 404 /404.html
+
+# ------------------------------------------------------------- compression --
+#
+# Every page is real HTML now rather than an empty <div id="root">, which is
+# what made the site readable before its JavaScript arrives -- and it made the
+# home page 74 KB instead of 3 KB. Compressed it is about 12 KB, so this is
+# most of that cost handed back, on the one file that has to arrive before
+# anything at all can be drawn.
+#
+# Brotli first where the host has it: it beats gzip by roughly 15% on markup
+# and every browser this site sees supports it. gzip is the fallback, and one
+# of the two is on every Apache install worth deploying to.
+#
+# Images and fonts are left alone deliberately. WebP, AVIF, JPEG and WOFF2 are
+# already compressed; running them through again spends CPU on every request to
+# make the file very slightly larger.
+#
+# Both spellings of JavaScript are listed, and that is not belt and braces.
+# IANA reregistered .js as text/javascript and Apache's mime.types followed,
+# so a host on a recent build serves the bundle as text/javascript -- which
+# was not on this list, so the largest file on the site went over the wire
+# uncompressed. Measured on a throttled phone: 350 KB rather than 109 KB, and
+# the page finished loading in 3.3 seconds rather than 1.9. Older hosts still
+# say application/javascript, so both stay.
+<IfModule mod_brotli.c>
+  AddOutputFilterByType BROTLI_COMPRESS text/html text/plain text/xml text/css
+  AddOutputFilterByType BROTLI_COMPRESS application/javascript text/javascript application/json
+  AddOutputFilterByType BROTLI_COMPRESS image/svg+xml application/xml
+</IfModule>
+
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css
+  AddOutputFilterByType DEFLATE application/javascript text/javascript application/json
+  AddOutputFilterByType DEFLATE image/svg+xml application/xml
+  # Proxies must not hand a compressed copy to a client that cannot read it.
+  <IfModule mod_headers.c>
+    Header append Vary Accept-Encoding
+  </IfModule>
+</IfModule>
+
+# ----------------------------------------------------------------- caching --
+<IfModule mod_expires.c>
+  ExpiresActive On
+
+  # Build assets carry a content hash in the filename, so a changed file is a
+  # changed URL and these can be cached hard.
+  <FilesMatch "\.(js|css|woff2?)$">
+    ExpiresDefault "access plus 1 year"
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+
+  # Photographs keep their names across edits, so a year would mean a visitor
+  # who has seen the old one never gets the new one. A week is long enough to
+  # help and short enough to fix a mistake.
+  <FilesMatch "\.(jpe?g|png|webp|avif|svg|ico)$">
+    ExpiresDefault "access plus 1 week"
+  </FilesMatch>
+
+  # HTML is the index of everything else, so it is always revalidated. Cache
+  # it and a deploy would not reach anyone who had visited before.
+  <FilesMatch "\.html$">
+    ExpiresDefault "access plus 0 seconds"
+    Header set Cache-Control "no-cache, must-revalidate"
+  </FilesMatch>
+</IfModule>
+
+# ---------------------------------------------------------------- security --
+<IfModule mod_headers.c>
+  # Stops a browser from second-guessing a file's declared type, which is how
+  # an uploaded image gets treated as a script.
+  Header set X-Content-Type-Options "nosniff"
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+  # Nothing here needs a camera, a microphone or a location.
+  Header set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+</IfModule>
+
+# Dotfiles are configuration, not content. .htaccess itself is already
+# protected by Apache, but this covers anything else that lands here.
+<FilesMatch "^\.">
+  Require all denied
+</FilesMatch>
+
+# FilesMatch above matches file NAMES, which is not enough for a directory:
+# a request for /.git/config has a filename of "config" and sails straight
+# past it. This blocks the paths instead.
+#
+# A served .git is not a tidiness problem -- standard tooling reconstructs the
+# entire repository from it, and this repository's history contains a database
+# password from before it was moved out.
+#
+# This is no longer a precaution. Hostinger's Git deployment clones the whole
+# repository into the document root, so .git is there on every deploy by
+# design, and cannot be removed without giving up automatic deploys. These
+# rules are what stands between it and the internet, which is also why the
+# password still needs rotating in hPanel rather than being considered handled.
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteRule (^|/)\.(git|svn|hg|env|ssh)(/|$) - [F,L]
+
+  # .github is not caught above: the pattern needs a slash or the end of the
+  # path straight after "git", and this has "hub" there instead.
+  RewriteRule (^|/)\.github(/|$) - [F,L]
+
+  # The rest of the repository, which now sits in the web root beside the
+  # site. FilesMatch cannot express these because it matches one filename at a
+  # time, and what needs blocking here is whole trees.
+  RewriteRule ^(my-app|scripts|assets-original|marketing)(/|$) - [F,L]
+</IfModule>
+
+# Source and build files are not content either. None of these should ever
+# reach a web root, but naming them costs nothing and a stray upload is
+# exactly how they arrive.
+<FilesMatch "(^|\.)(env|sql|log|bak|orig|ini)$|^(package(-lock)?\.json|composer\.(json|lock)|.*\.config\.(js|ts|mjs|cjs))$">
+  Require all denied
+</FilesMatch>
+
+# Documentation, which the deploy now puts in the web root: README.md,
+# CODE_OF_CONDUCT.md, LICENSE, and the note in photos/ describing how to name a
+# car photograph. None of it is secret and none of it is for visitors.
+<FilesMatch "\.md$">
+  Require all denied
+</FilesMatch>
+<Files "LICENSE">
+  Require all denied
+</Files>
+
+# The directory listing is off by default on most hosts, but not all, and an
+# open listing of the web root is a map of everything on the server.
+Options -Indexes

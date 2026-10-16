@@ -1,0 +1,44 @@
+# niteshacars.in
+#
+# Everything a visitor can see is meant to be indexed, so the default is open.
+# What is closed is the panel and the parts of the repository that Hostinger's
+# Git deployment puts in the web root beside the site.
+
+User-agent: *
+Allow: /
+
+# The admin panel. Nothing in it is for a search engine: it is a login page,
+# the pages behind it, and the endpoints the website reads. Crawling it wastes
+# the crawl budget that should be spent on the pages that sell cars, and a
+# login form in the index is a page that can only ever rank for the business's
+# own name and disappoint whoever clicks it.
+#
+# The pictures used to be the exception here: they were stored under /admin and
+# three Allow lines were all that kept them crawlable. That was a rule standing
+# on one leg -- anybody tidying this file, or any tool suggesting the obvious
+# "disallow the admin folder", would have taken every photograph on the site
+# out of image search without noticing.
+#
+# They are served from the site root now -- /car-photos/, /site-images/,
+# /place-photos/ -- so nothing here has to protect them. The Allow lines stay
+# for the old addresses, which are what pages already indexed point at.
+Disallow: /admin/
+Allow: /admin/images/
+Allow: /admin/photos/
+Allow: /admin/place-photos/
+Allow: /admin/car-photos/
+Allow: /admin/site-images/
+
+# The repository, which is deployed into the web root by this host's Git
+# publishing. Apache already refuses these; saying so here saves the crawl.
+Disallow: /my-app/
+Disallow: /scripts/
+Disallow: /assets-original/
+Disallow: /marketing/
+
+# The diagnostic page. Useful to the owner, meaningless to anyone else, and it
+# carries a noindex tag as well -- but a crawler has to fetch a page to read
+# that, and there is no reason to make it.
+Disallow: /fleet-check.html
+
+Sitemap: https://niteshacars.in/sitemap.xml

@@ -1,0 +1,39 @@
+{
+  "note": "The questions the rate table itself raises, answered on the page that raises them. Here in code rather than in the panel because they are about how the table is written -- per-day columns, the KM allowance, the deposit -- and that does not change when the figures do. The panel's own questions still appear below these: the ones the home page did not show, so no question is answered twice on the site.",
+  "heading": "Questions about these rates",
+  "intro": "What the figures above include, and what gets added.",
+  "items": [
+    {
+      "question": "Is the weekly rate the price for the whole week, or the rate per day?",
+      "answer": "Per day. The weekly column is what one day costs if you keep the car for a week, so seven days is that figure seven times — the monthly column works the same way. It is written per day because that is the only way to compare one car against another."
+    },
+    {
+      "question": "What does the daily rate cover, and what is added?",
+      "answer": "The vehicle and its daily kilometre allowance. Fuel is yours on a self drive car rental, and kilometres past the allowance are charged at the extra-KM rate in the same row. There is no booking fee and nothing is added at handover that is not in this table."
+    },
+    {
+      "question": "Is the deposit part of the rent or on top of it?",
+      "answer": "On top, and it is not a payment. It is held while you have the vehicle and comes back when the vehicle does, less anything genuinely owing — kilometres past the allowance, fuel if you return it lower than you took it, or damage."
+    },
+    {
+      "question": "How is the extra-KM charge worked out?",
+      "answer": "From the odometer. It is read and written down in front of you at handover and again when the vehicle comes back, and kilometres past the allowance are charged at the fixed rate in the table. Both numbers are on your booking as well, so there is nothing to work out at the end."
+    },
+    {
+      "question": "Why does a car say \"On request\" instead of a rate?",
+      "answer": "Because that rate is not published here. Tell us the car and your dates on WhatsApp or through the form and you get the figure, the kilometre allowance and the deposit in one message — before you book, not when you arrive."
+    },
+    {
+      "question": "Are these rates for the car on its own, without a driver?",
+      "answer": "Yes. Every figure in this table is for self drive car rental — you drive it yourself. A tourist vehicle with a driver is quoted separately, by the day or by the trip, because the driver's time and the distance are part of it."
+    },
+    {
+      "question": "Which is the cheapest car rental in Nagercoil you do?",
+      "answer": "One of the small hatchbacks — the WagonR or the Grand i10. They are the lowest daily rate on the table above and the cheapest to fuel, which matters more than the rate itself on a long day out. The per-day figure also falls as the hire gets longer, so the weekly and monthly columns are where a cheap car rental in Nagercoil actually gets cheap. Nothing is added afterwards that is not on this page: the rate, the KM it includes and the charge beyond it are all here before you book."
+    },
+    {
+      "question": "Do you have a 7 seater, and an automatic?",
+      "answer": "Both, but not many of either. A 7 seater car rental in Nagercoil means the Rumion or the Innova — petrol if you are staying in the district, diesel if the day is mostly highway. An automatic car rental in Nagercoil means the Glanza, and there is one of it. Neither is a car to ask for on the morning you want it; a day or two of notice is usually the difference between having it and not."
+    }
+  ]
+}

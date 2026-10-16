@@ -1,0 +1,141 @@
+# Web access rules for the admin panel.
+#
+# The panel's own files -- index.php, dashboard.php, api/, and the css and js
+# beside them -- are served normally. What is blocked below is everything that
+# is deployed alongside them but was never meant to be fetched.
+
+# No directory listings. Without this, a folder with no index file hands out
+# its contents, which is how the layout of a panel gets mapped.
+Options -Indexes
+
+# Undo the document root's caching rule for this folder.
+#
+# The site's build assets carry a content hash in the filename, so a changed
+# file is a changed URL and the root .htaccess caches every .js and .css for a
+# year as immutable. Correct for those. Fatal for these: admin.js, admin.css,
+# api.js and car-data.js have fixed names, so a browser that has them once
+# would never ask again -- and every change to the panel would reach nobody who
+# had ever used it, with no error and nothing to notice.
+#
+# Revalidated on each load instead. It costs one conditional request per file
+# and it is the difference between shipping a change and appearing to.
+<IfModule mod_expires.c>
+  <FilesMatch "\.(js|css)$">
+    ExpiresActive On
+    ExpiresDefault "access plus 0 seconds"
+  </FilesMatch>
+</IfModule>
+<IfModule mod_headers.c>
+  <FilesMatch "\.(js|css)$">
+    Header set Cache-Control "no-cache, must-revalidate"
+  </FilesMatch>
+</IfModule>
+
+# Readable addresses for the pictures.
+#
+# Everything uploaded here is stored above the document root so a deploy cannot
+# erase it, which means Apache cannot serve it and a small PHP reader has to.
+# That used to show in the address: photo.php?f=v12-9f3a1c4b7d2e5a60.jpg, which
+# says nothing about the picture to a person or to Google. The file names carry
+# the words now, and these three rules let the address carry them too:
+#
+#   /admin/images/self-drive-car-rental-nagercoil-9f3a1c4b7d2e5a60.webp
+#   /admin/photos/maruti-swift-self-drive-car-rental-nagercoil-<hex>.jpg
+#   /admin/place-photos/vattakottai-fort-kanyakumari-<hex>.jpg
+#
+# The readers still answer ?f= as well, so every address stored before this
+# keeps working -- and they check the name against one strict pattern whichever
+# way it arrives, so the rewrite is a convenience and never the security.
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteRule ^images/([A-Za-z0-9._-]+)$ brand.php?f=$1 [L]
+  RewriteRule ^photos/([A-Za-z0-9._-]+)$ photo.php?f=$1 [L]
+  RewriteRule ^place-photos/([A-Za-z0-9._-]+)$ place-photo.php?f=$1 [L]
+
+  # The pictures are served from the site root now -- /car-photos/...,
+  # /site-images/... -- because "admin" in the address of every photograph on a
+  # car hire site is a dead word where a keyword should be, and it leaves the
+  # whole gallery one robots.txt edit from being uncrawlable.
+  #
+  # These three are for the window after a deploy when a browser still holds
+  # the old site script. That script prefixes anything it is given with
+  # /admin, so it turns /car-photos/x.jpg into /admin/car-photos/x.jpg, and a
+  # 404 there is an empty fleet page that looks like a caching bug for a day.
+  RewriteRule ^car-photos/([A-Za-z0-9._-]+)$ photo.php?f=$1 [L]
+  RewriteRule ^site-images/([A-Za-z0-9._-]+)$ brand.php?f=$1 [L]
+</IfModule>
+
+<IfModule mod_authz_core.c>
+    # config.php holds the database password. PHP executes it rather than
+    # printing it, so this changes nothing while PHP is healthy -- it matters
+    # on the day PHP is misconfigured or disabled during an upgrade, when a
+    # .php file is served as text. That is exactly when the file is worth the
+    # least exposure.
+    #
+    # config.sample.php carries no secrets, but there is no reason to serve a
+    # template either.
+    <FilesMatch "^config(\.sample)?\.php$">
+        Require all denied
+    </FilesMatch>
+
+    # The two first-run tools, which have done their job.
+    #
+    # install.php refuses to do anything once an account exists, so it is not a
+    # way in -- but it prints the server's paths, its PHP build and what the
+    # database connection is doing, and none of that is a stranger's business.
+    # session-check.php is the same bargain: it reports cookie settings and
+    # paths to explain a "Session expired" that will not go away.
+    #
+    # Denied rather than deleted, because deleting them is not the fix it
+    # sounds like: this host publishes by cloning the repository into the web
+    # root, so a file removed from the server by hand is back on the next
+    # deploy. Denied here, they stay gone.
+    #
+    # To install on a new host or chase a session problem again, comment out
+    # the FilesMatch below, do it, and put it back.
+    <FilesMatch "^(install|session-check)\.php$">
+        Require all denied
+    </FilesMatch>
+
+    # Documentation, deployed because it lives in the repository. README.md
+    # describes the install steps and the enquiry endpoint's fields;
+    # SECURITY.md is a description of the defences.
+    <FilesMatch "\.md$">
+        Require all denied
+    </FilesMatch>
+
+    # The FTP deploy leaves its state file here. It lists every deployed path.
+    <FilesMatch "^\.ftp-deploy-sync-state\.json$">
+        Require all denied
+    </FilesMatch>
+
+    # Every dotfile, this file included. Apache reads .htaccess from disk,
+    # so denying it over HTTP costs nothing and does not depend on the
+    # server's own default .ht* rule still being in place.
+    <FilesMatch "^\.">
+        Require all denied
+    </FilesMatch>
+</IfModule>
+
+<IfModule !mod_authz_core.c>
+    <FilesMatch "^config(\.sample)?\.php$">
+        Order allow,deny
+        Deny from all
+    </FilesMatch>
+    <FilesMatch "^(install|session-check)\.php$">
+        Order allow,deny
+        Deny from all
+    </FilesMatch>
+    <FilesMatch "\.md$">
+        Order allow,deny
+        Deny from all
+    </FilesMatch>
+    <FilesMatch "^\.ftp-deploy-sync-state\.json$">
+        Order allow,deny
+        Deny from all
+    </FilesMatch>
+    <FilesMatch "^\.">
+        Order allow,deny
+        Deny from all
+    </FilesMatch>
+</IfModule>

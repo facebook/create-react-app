@@ -1,0 +1,30 @@
+{
+  "name": "my-app",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/image-variants.mjs && node scripts/photo-manifest.mjs && node scripts/fetch-content.mjs && node scripts/fetch-fleet.mjs && node scripts/fetch-places.mjs && node scripts/seo-routes.mjs && vite",
+    "build": "node scripts/image-variants.mjs && node scripts/photo-manifest.mjs && node scripts/fetch-content.mjs && node scripts/fetch-fleet.mjs && node scripts/fetch-places.mjs && node scripts/seo-routes.mjs && tsc -b && vite build && vite build --ssr src/entry-server.tsx --outDir dist-ssr && node scripts/copy-admin-panel.mjs && node scripts/prerender-seo.mjs",
+    "lint": "oxlint",
+    "preview": "vite preview",
+    "seo": "node scripts/seo-audit.mjs"
+  },
+  "dependencies": {
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "react-router-dom": "^7.18.3"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.3",
+    "@types/node": "^24.13.3",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.7",
+    "@vitejs/plugin-react": "^6.1.1",
+    "oxlint": "^1.81.0",
+    "sharp": "^0.35.5",
+    "tailwindcss": "^4.3.3",
+    "typescript": "~6.0.2",
+    "vite": "^8.3.0"
+  }
+}

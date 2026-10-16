@@ -1,0 +1,37 @@
+<!-- The browser tab, and the icon a phone keeps when the site is pinned.
+     It used to be a purple-and-blue mark from the project template this
+     repository started as, and then a navy disc with a drawn monogram on it.
+     Now it is the business's own colour: the gold of the logo, with the mark
+     and the sweep over it in the navy the site is built on.
+
+     Gold as the field rather than as the drawing, because at 16 pixels what a
+     favicon has is one colour. A navy disc with gold on it reads as a dark
+     smudge in a row of tabs, and the brand is the gold.
+
+     Letters as paths, not <text>: a favicon has no page font to inherit and
+     would render in whatever the browser picked. The slant is the logo's;
+     its N and S lean forward, and at this size that lean is most of what
+     makes the mark recognisable as the one on the cars. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <title>NiteSha Cars &amp; Bikes</title>
+  <defs>
+    <!-- The logo's metal: a light edge, a saturated middle, a dark foot. -->
+    <linearGradient id="ns-gold" x1="0" y1="0" x2="0.35" y2="1">
+      <stop offset="0" stop-color="#FFE07A"/>
+      <stop offset="0.38" stop-color="#F5A500"/>
+      <stop offset="0.62" stop-color="#FFD75E"/>
+      <stop offset="1" stop-color="#B8720A"/>
+    </linearGradient>
+  </defs>
+
+  <circle cx="32" cy="32" r="32" fill="url(#ns-gold)"/>
+
+  <g fill="#0A0E20" transform="translate(0 1.5)">
+    <!-- The sweep over the letters, as in the logo's mark. -->
+    <path d="M10 22c6-7 14-10 22-9 6 .8 11 3 16 6-6-1.5-11-2-16-1.6-8 .6-15 2.6-22 4.6z"/>
+    <g transform="skewX(-9) translate(5 0)">
+      <path d="M14 46V27h6.5l9 12.2V27H36v19h-6.5l-9-12.2V46z"/>
+      <path d="M39 32.5c0-3.4 3-5.6 7.6-5.6H51v6h-4.4c-.7 0-1.1.3-1.1.8s.4.8 1.1.8h1.6c4.3 0 6.8 2.3 6.8 5.8 0 3.5-2.9 5.7-7.3 5.7H41.5v-6h6c.7 0 1.1-.3 1.1-.8s-.4-.8-1.1-.8h-1.6c-4.3 0-6.9-2.3-6.9-5.9z"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>NiteSha Cars &amp; Bikes — Google Business post</title>
+
+    <!--
+      A post card for the Google Business Profile, drawn in the browser rather
+      than in a design tool: the brand colours, the logo and the font are
+      already in this repository, so the poster is built from the same pieces
+      the website is and cannot drift away from it.
+
+      Two shapes off one page. Google shows a post as a 4:3 card in the profile
+      and crops it nearer to a square in search, so the whole design is laid
+      out against a centre column and nothing that matters -- no word, no part
+      of the logo, no phone number -- goes within 60px of an edge.
+
+      `data-shape` on <body> picks the size; make-post.mjs sets it and the
+      matching viewport before each screenshot.
+    -->
+
+    <style>
+      @font-face {
+        font-family: 'Poppins';
+        font-weight: 400;
+        src: url('../../my-app/public/fonts/poppins-latin-400.woff2') format('woff2');
+      }
+      @font-face {
+        font-family: 'Poppins';
+        font-weight: 500;
+        src: url('../../my-app/public/fonts/poppins-latin-500.woff2') format('woff2');
+      }
+      @font-face {
+        font-family: 'Poppins';
+        font-weight: 600;
+        src: url('../../my-app/public/fonts/poppins-latin-600.woff2') format('woff2');
+      }
+      @font-face {
+        font-family: 'Poppins';
+        font-weight: 700;
+        src: url('../../my-app/public/fonts/poppins-latin-700.woff2') format('woff2');
+      }
+
+      /* The site's own tokens, copied rather than imported: this page is
+         rendered from the file system with no build step behind it. */
+      :root {
+        --gold: #d4af37;
+        --gold-light: #f0d060;
+        --navy: #0a0e20;
+        --navy-deep: #070a16;
+        --cream: #fff8ea;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html,
+      body {
+        background: var(--navy);
+      }
+
+      .card {
+        position: relative;
+        width: 1200px;
+        height: 900px;
+        overflow: hidden;
+        color: #fff;
+        font-family: 'Poppins', sans-serif;
+        display: flex;
+        flex-direction: column;
+        padding: 64px 72px 0;
+      }
+
+      body[data-shape='square'] .card {
+        width: 1080px;
+        height: 1080px;
+        padding: 72px 72px 0;
+      }
+
+      /* The photograph, and the navy poured over it.
+         The gradient is what makes the words readable: at full strength on the
+         left where the headline sits, thinning to nothing at the right where
+         the car is. Without it this is white type on a sunrise. */
+      .shot {
+        position: absolute;
+        inset: 0;
+        background-image: url('../../mountain-road-at-sunrise-self-drive-car-rental.webp');
+        background-size: cover;
+        background-position: 62% 50%;
+      }
+
+      .wash {
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(
+            100deg,
+            rgba(7, 10, 22, 0.97) 0%,
+            rgba(7, 10, 22, 0.93) 38%,
+            rgba(7, 10, 22, 0.62) 62%,
+            rgba(7, 10, 22, 0.38) 100%
+          ),
+          linear-gradient(to top, rgba(7, 10, 22, 0.95) 0%, rgba(7, 10, 22, 0) 45%);
+      }
+
+      /* The gold glow the site's banners use, so this reads as the same brand
+         and not as a stock template with a logo dropped on it. */
+      .glow {
+        position: absolute;
+        width: 780px;
+        height: 780px;
+        left: -260px;
+        top: -300px;
+        background: radial-gradient(circle, rgba(212, 175, 55, 0.22) 0%, rgba(212, 175, 55, 0) 70%);
+      }
+
+      /* Everything above the artwork. A negative z-index would have put the
+         layers behind the card's own background instead of behind its text,
+         so the content is lifted rather than the artwork sunk. */
+      header,
+      .pitch,
+      .call {
+        position: relative;
+        z-index: 1;
+      }
+
+      header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 32px;
+      }
+
+      .logo {
+        width: 272px;
+        height: auto;
+        display: block;
+      }
+
+      body[data-shape='square'] .logo {
+        width: 320px;
+      }
+
+      .since {
+        text-align: right;
+        font-size: 15px;
+        font-weight: 600;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--gold);
+        line-height: 1.6;
+      }
+
+      .since span {
+        display: block;
+        color: rgba(255, 255, 255, 0.62);
+        letter-spacing: 0.1em;
+      }
+
+      .pitch {
+        margin-top: 34px;
+      }
+
+      body[data-shape='square'] .pitch {
+        margin-top: 78px;
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 17px;
+        font-weight: 600;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--gold);
+      }
+
+      .eyebrow::before {
+        content: '';
+        width: 46px;
+        height: 3px;
+        background: var(--gold);
+      }
+
+      h1 {
+        margin-top: 22px;
+        font-size: 68px;
+        font-weight: 700;
+        line-height: 1.06;
+        letter-spacing: -0.02em;
+        max-width: 15ch;
+        text-shadow: 0 6px 30px rgba(0, 0, 0, 0.55);
+      }
+
+      body[data-shape='square'] h1 {
+        font-size: 80px;
+      }
+
+      h1 em {
+        font-style: normal;
+        color: var(--gold-light);
+      }
+
+      .sub {
+        margin-top: 24px;
+        font-size: 24px;
+        font-weight: 400;
+        line-height: 1.5;
+        max-width: 32ch;
+        color: rgba(255, 255, 255, 0.88);
+        text-shadow: 0 4px 18px rgba(0, 0, 0, 0.5);
+      }
+
+      /* What a stranger wants to know before they ring: how many people have
+         done this already, how much choice there is, what state the car is in
+         when it turns up. Three numbers, no sentences. */
+      .proof {
+        display: flex;
+        gap: 24px;
+        margin-top: 34px;
+      }
+
+      body[data-shape='square'] .proof {
+        margin-top: 64px;
+      }
+
+      .proof div {
+        flex: 1;
+        border: 1px solid rgba(212, 175, 55, 0.42);
+        border-radius: 18px;
+        background: rgba(7, 10, 22, 0.62);
+        padding: 17px 20px 19px;
+      }
+
+      .proof b {
+        display: block;
+        font-size: 40px;
+        font-weight: 700;
+        line-height: 1.1;
+        color: var(--gold-light);
+      }
+
+      .proof small {
+        display: block;
+        margin-top: 6px;
+        font-size: 17px;
+        font-weight: 500;
+        line-height: 1.35;
+        color: rgba(255, 255, 255, 0.85);
+      }
+
+      /* The band that runs off both edges: the one thing on the card somebody
+         is meant to act on, and the last thing under the crop whatever shape
+         Google decides to show. */
+      .call {
+        margin: auto -72px 0;
+        background: linear-gradient(100deg, var(--gold-light) 0%, var(--gold) 48%, #b8892a 100%);
+        color: var(--navy-deep);
+        padding: 22px 72px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 28px;
+      }
+
+      .call .ring {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        font-size: 40px;
+        font-weight: 700;
+        letter-spacing: -0.01em;
+      }
+
+      .call .ring svg {
+        flex: none;
+      }
+
+      .call .web {
+        text-align: right;
+        font-size: 21px;
+        font-weight: 600;
+        line-height: 1.4;
+      }
+
+      .call .web span {
+        display: block;
+        font-weight: 500;
+        opacity: 0.72;
+      }
+    </style>
+  </head>
+
+  <body data-shape="post">
+    <div class="card">
+      <div class="shot"></div>
+      <div class="wash"></div>
+      <div class="glow"></div>
+
+      <header>
+        <img
+          class="logo"
+          src="../../nitesha-cars-and-bikes-logo-nagercoil-v2.webp"
+          alt="NiteSha Cars &amp; Bikes"
+        />
+        <p class="since">
+          Nagercoil
+          <span>Kanyakumari district</span>
+        </p>
+      </header>
+
+      <div class="pitch">
+        <p class="eyebrow">Self drive rentals</p>
+
+        <h1>Take the wheel. <em>We&nbsp;bring the car.</em></h1>
+
+        <p class="sub">
+          Cars and bikes on hire by the day, the week or the month &mdash; delivered
+          to your doorstep.
+        </p>
+
+        <div class="proof">
+          <div>
+            <b>1000+</b>
+            <small>customers driven since we opened</small>
+          </div>
+          <div>
+            <b>20+</b>
+            <small>cars and bikes to choose from</small>
+          </div>
+          <div>
+            <b>100%</b>
+            <small>cleaned and checked before pickup</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="call">
+        <p class="ring">
+          <!-- Drawn here rather than pulled from a font: a poster is rendered
+               once and must not depend on a download that might not arrive. -->
+          <svg width="44" height="44" viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              fill="currentColor"
+              d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.4 0 .8-.2 1l-2.3 2.2z"
+            />
+          </svg>
+          +91 63749 42976
+        </p>
+        <p class="web">
+          niteshacars.in
+          <span>Book online in a minute</span>
+        </p>
+      </div>
+    </div>
+  </body>
+</html>
