@@ -241,7 +241,7 @@ export function Faq({
             asked in. */}
         <div
           ref={list}
-          className="mx-auto mt-7 grid max-w-4xl gap-2.5 sm:mt-9 sm:grid-cols-2 sm:gap-3"
+          className="mt-7 grid gap-2.5 sm:mt-9 sm:grid-cols-2 sm:gap-3"
         >
           {[
             items.slice(0, Math.ceil(items.length / 2)),
