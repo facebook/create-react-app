@@ -96,8 +96,8 @@ try {
   if (vehicles.length === 0) {
     console.warn(
       'fetch-fleet: the panel answered with zero vehicles, so the committed ' +
-        'snapshot stays. Check that vehicles are set to Available and have a ' +
-        'rate card dated today or earlier.',
+        'snapshot stays. Check that vehicles are not all set to Maintenance ' +
+        'or Inactive, and that they have a rate card dated today or earlier.',
     );
     process.exit(0);
   }

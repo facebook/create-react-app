@@ -4,6 +4,7 @@ declare(strict_types=1);
 require_once __DIR__ . '/../src/db.php';
 require_once __DIR__ . '/../src/http.php';
 require_once __DIR__ . '/../src/vehicle-photos.php';
+require_once __DIR__ . '/../src/vocab.php';
 
 /**
  * The fleet, for the public website.
@@ -20,9 +21,17 @@ require_once __DIR__ . '/../src/vehicle-photos.php';
  *   created_at   internal
  *   colour       a UI swatch for the panel, meaningless here
  *
- * Only vehicles a customer could actually hire are listed. Booked, On Rental,
- * Maintenance and Inactive are all excluded, so the site never advertises a
- * car that cannot be given out today.
+ * Every vehicle the business rents is listed -- Available, Booked and On
+ * Rental alike. The site is a catalogue of the fleet, not a live availability
+ * board: a car that went out this morning is still a car the business rents,
+ * and hiding it until it came back lost the enquiry for next week. Which days
+ * it is free is answered separately and properly by public-availability.php,
+ * which greys out the taken days in the date pickers.
+ *
+ * Maintenance and Inactive stay out: one is off the road, the other usually
+ * sold. LISTED_STATUSES in vocab.php is the single definition, shared with
+ * the availability endpoint so the two cannot disagree about what the site
+ * shows.
  *
  * A temporary car is excluded as well, whatever its status. One brought in
  * from another owner for a hire or two is not part of what the business
@@ -87,6 +96,11 @@ $notTemporary = table_has_column('vehicles', 'is_temporary')
     ? 'AND v.is_temporary = 0'
     : '';
 
+// Placeholders rather than the statuses inlined: the list is a constant, but
+// the query is built as a string and a constant that grows should not have to
+// be re-escaped by hand.
+$listed = implode(',', array_fill(0, count(LISTED_STATUSES), '?'));
+
 $rows = fetch_all(
     "SELECT v.id,
             v.name,
@@ -112,9 +126,10 @@ $rows = fetch_all(
                WHERE vehicle_id = v.id AND effective_from <= CURDATE()
             ORDER BY effective_from DESC, id DESC LIMIT 1
             )
-      WHERE v.status = 'Available'
+      WHERE v.status IN ($listed)
             $notTemporary
-   ORDER BY v.brand, v.name"
+   ORDER BY v.brand, v.name",
+    LISTED_STATUSES
 );
 
 // A vehicle with no rate card has no price to show, so listing it would invite

@@ -25,6 +25,26 @@ const TRANSMISSIONS    = ['Manual', 'Automatic'];
 const VEHICLE_STATUSES = ['Available', 'Booked', 'On Rental', 'Maintenance', 'Inactive'];
 
 /**
+ * The statuses a car is still advertised under.
+ *
+ * The website is a catalogue of what the business rents, not a live
+ * availability board. A Swift that went out this morning is still a Swift the
+ * business rents, and hiding it until it comes back lost the enquiry for next
+ * week -- the customer saw a fleet of five on Monday and four on Tuesday and
+ * drew the obvious wrong conclusion.
+ *
+ * Which days a car is actually free is a separate question, and one the site
+ * already answers properly: public-availability.php returns the taken days per
+ * vehicle and the date pickers grey them out, so nobody can pick a day the car
+ * is out on. That is the honest way to say "not this weekend" -- removing the
+ * car entirely says "we do not have this car", which is not true.
+ *
+ * Maintenance and Inactive stay out. A car off the road for work is not
+ * bookable for any date, and an inactive one has usually been sold.
+ */
+const LISTED_STATUSES = ['Available', 'Booked', 'On Rental'];
+
+/**
  * What money goes out on.
  *
  * Here for the reason the comment above describes, and because it had already
