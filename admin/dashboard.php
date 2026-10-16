@@ -358,12 +358,12 @@ admin_shell_open($me, 'dashboard', 'Dashboard', true, $migrationError);
         <div class="modal-row">
           <div class="field-group">
             <label for="enqEditName">Name</label>
-            <input type="text" id="enqEditName" required />
+            <input type="text" id="enqEditName" required data-rule="name" />
           </div>
           <div class="field-group">
             <label for="enqEditPhone">Phone Number</label>
             <div class="phone-field"><?= dial_select('enqEditPhoneCode') ?>
-            <input type="tel" id="enqEditPhone" required inputmode="numeric" /></div>
+            <input type="tel" id="enqEditPhone" required inputmode="numeric" data-rule="digits" /></div>
             <p class="field-hint" id="enqEditPhoneHint"></p>
           </div>
         </div>
@@ -507,7 +507,7 @@ admin_shell_open($me, 'dashboard', 'Dashboard', true, $migrationError);
           </div>
           <div class="field-group">
             <label for="carRegNumber">Registration Number</label>
-            <input type="text" id="carRegNumber" required placeholder="e.g. KA05AB1234" style="text-transform:uppercase" />
+            <input type="text" id="carRegNumber" required placeholder="e.g. KA05AB1234" data-rule="plate" />
           </div>
           <div class="field-group">
             <label for="carColor">Colour</label>
@@ -553,13 +553,13 @@ admin_shell_open($me, 'dashboard', 'Dashboard', true, $migrationError);
           </div>
           <div class="field-group" data-partner-only hidden>
             <label for="carOwnerName">Car owner's name</label>
-            <input type="text" id="carOwnerName" placeholder="Who the car belongs to" />
+            <input type="text" id="carOwnerName" placeholder="Who the car belongs to" data-rule="name" />
           </div>
         </div>
         <div class="modal-row" data-partner-only hidden>
           <div class="field-group">
             <label for="carOwnerPhone">Car owner's phone</label>
-            <div class="phone-field"><?= dial_select('carOwnerPhoneCode') ?><input type="tel" id="carOwnerPhone" inputmode="numeric" placeholder="Optional" /></div><p class="field-hint" id="carOwnerPhoneHint"></p>
+            <div class="phone-field"><?= dial_select('carOwnerPhoneCode') ?><input type="tel" id="carOwnerPhone" inputmode="numeric" placeholder="Optional" data-rule="digits" /></div><p class="field-hint" id="carOwnerPhoneHint"></p>
           </div>
           <div class="field-group">
             <label class="finance-toggle" for="carTemporary">
@@ -698,12 +698,12 @@ admin_shell_open($me, 'dashboard', 'Dashboard', true, $migrationError);
 
         <p class="modal-section-label">Customer Details</p>
         <div class="modal-row">
-          <div class="field-group"><label for="bkCustomerName">Customer Name</label><input type="text" id="bkCustomerName" required placeholder="e.g. Ravi Kumar" /></div>
-          <div class="field-group"><label for="bkPhone">Phone Number</label><div class="phone-field"><?= dial_select('bkPhoneCode') ?><input type="tel" id="bkPhone" required inputmode="numeric" autocomplete="tel-national" placeholder="9876543210" /></div><p class="field-hint" id="bkPhoneHint"></p></div>
+          <div class="field-group"><label for="bkCustomerName">Customer Name</label><input type="text" id="bkCustomerName" required placeholder="e.g. Ravi Kumar" data-rule="name" /></div>
+          <div class="field-group"><label for="bkPhone">Phone Number</label><div class="phone-field"><?= dial_select('bkPhoneCode') ?><input type="tel" id="bkPhone" required inputmode="numeric" autocomplete="tel-national" placeholder="9876543210" data-rule="digits" /></div><p class="field-hint" id="bkPhoneHint"></p></div>
         </div>
         <div class="modal-row">
           <div class="field-group"><label for="bkAddress">Address</label><textarea id="bkAddress" rows="3" placeholder="Door and street&#10;Town&#10;District and PIN"></textarea></div>
-          <div class="field-group"><label for="bkLicence">Driving Licence Number</label><input type="text" id="bkLicence" required placeholder="e.g. KA0120230012345" /></div>
+          <div class="field-group"><label for="bkLicence">Driving Licence Number</label><input type="text" id="bkLicence" required placeholder="e.g. KA0120230012345" data-rule="upper" /></div>
         </div>
 
         <p class="modal-section-label">Vehicle &amp; Rental Period</p>
@@ -711,7 +711,7 @@ admin_shell_open($me, 'dashboard', 'Dashboard', true, $migrationError);
           <div class="field-group">
             <label for="bkWhatsapp">WhatsApp Number</label>
             <div class="phone-field"><?= dial_select('bkWhatsappCode') ?>
-            <input type="tel" id="bkWhatsapp" inputmode="numeric" placeholder="If different from the phone" /></div>
+            <input type="tel" id="bkWhatsapp" inputmode="numeric" placeholder="If different from the phone" data-rule="digits" /></div>
             <p class="field-hint" id="bkWhatsappHint"></p>
           </div>
           <div class="field-group">
@@ -723,7 +723,7 @@ admin_shell_open($me, 'dashboard', 'Dashboard', true, $migrationError);
         <div class="modal-row modal-row-3">
           <div class="field-group">
             <label for="bkIdNumber">Aadhaar / ID Number</label>
-            <input type="text" id="bkIdNumber" placeholder="Optional" />
+            <input type="text" id="bkIdNumber" placeholder="Optional" data-rule="upper" />
           </div>
           <div class="field-group">
             <label for="bkCustomerType">Customer Type</label>
@@ -1144,6 +1144,7 @@ admin_shell_open($me, 'dashboard', 'Dashboard', true, $migrationError);
       JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT
   ) ?></script>
 
+  <script src="<?= asset('input-rules.js') ?>"></script>
   <script src="<?= asset('api.js') ?>"></script>
   <script src="<?= asset('car-data.js') ?>"></script>
   <script src="<?= asset('booking-data.js') ?>"></script>

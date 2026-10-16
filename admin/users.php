@@ -533,7 +533,7 @@ admin_shell_open($me, 'users.php', 'Users', false, $migrationError);
       <div class="modal-row">
         <div class="field-group">
           <label for="uName">Full name</label>
-          <input type="text" id="uName" name="name" required maxlength="120">
+          <input type="text" id="uName" name="name" required maxlength="120" data-rule="name" >
         </div>
         <div class="field-group">
           <label for="uEmail">Email</label>
@@ -596,6 +596,7 @@ foreach ($roleSlugs as $slug) {
   <script type="application/json" id="nsRoleStandards"><?= json_encode(
       $roleStandards, JSON_HEX_TAG | JSON_HEX_AMP | JSON_UNESCAPED_SLASHES
   ) ?></script>
+  <script src="<?= asset('input-rules.js') ?>"></script>
   <script src="<?= asset('users.js') ?>"></script>
 
 <?php admin_shell_close(); ?>
