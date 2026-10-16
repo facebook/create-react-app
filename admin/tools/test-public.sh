@@ -69,6 +69,30 @@ curl -s -b "$JAR" "$BASE/api/vehicles.php?action=list" | grep -q "\"id\":$TEMP_I
   && ok "so a booking can be made against it" || bad "so a booking can be made against it"
 
 echo
+echo "-- a car that is out on hire --"
+# The site is a catalogue, not an availability board: a car out this morning
+# is still a car the business rents, and hiding it loses next week's enquiry.
+# Which days it is free is the availability endpoint's job, not this one's.
+RENT_REG="PR$STAMP"
+check "saved" "$(save_car "OnHire $STAMP" "$RENT_REG" "On Rental" own "" 0)" "200"
+public public-vehicles.php | grep -q "OnHire $STAMP" \
+  && ok "it is still on the website" || bad "it is still on the website"
+
+echo
+echo "-- a car in for work, and a retired one --"
+MAINT_REG="PM$STAMP"
+check "saved" "$(save_car "InShop $STAMP" "$MAINT_REG" Maintenance own "" 0)" "200"
+public public-vehicles.php | grep -q "InShop $STAMP" \
+  && bad "a car in for work stays off" "the site is advertising it" \
+  || ok "a car in for work stays off"
+
+DEAD_REG="PD$STAMP"
+check "saved" "$(save_car "Gone $STAMP" "$DEAD_REG" Inactive own "" 0)" "200"
+public public-vehicles.php | grep -q "Gone $STAMP" \
+  && bad "an inactive car stays off" "the site is advertising it" \
+  || ok "an inactive car stays off"
+
+echo
 echo "-- the fleet count the date boxes use --"
 AVAIL=$(public public-availability.php)
 FLEET_WITH=$(printf '%s' "$AVAIL" | sed -n 's/.*"fleet":\([0-9]*\).*/\1/p')

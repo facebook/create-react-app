@@ -4,6 +4,7 @@ declare(strict_types=1);
 require_once __DIR__ . '/../src/db.php';
 require_once __DIR__ . '/../src/http.php';
 require_once __DIR__ . '/../src/booking.php';
+require_once __DIR__ . '/../src/vocab.php';
 
 /**
  * Which days each vehicle is already spoken for.
@@ -119,12 +120,19 @@ foreach ($rows as $row) {
 }
 
 // How many vehicles could be hired at all, so "every one is out" is a fact
-// rather than a guess. Available and advertised, matching what the site lists:
+// rather than a guess. The same set the site lists, from the same constant:
 // counting a car the site never shows would mean a fully booked weekend still
-// looked open.
+// looked open, and counting fewer than it shows would call a free day full.
+//
+// This has to move with public-vehicles.php or the arithmetic breaks. When the
+// listing only showed Available cars, a fleet of six with two out counted four
+// -- and a day both of those two were booked on reached 4 of 4 and was called
+// fully busy while four cars sat free.
 $notTemporary = $hasTemporary ? ' AND is_temporary = 0' : '';
+$listed = implode(',', array_fill(0, count(LISTED_STATUSES), '?'));
 $fleet = (int) (fetch_one(
-    "SELECT COUNT(*) AS n FROM vehicles WHERE status = 'Available'$notTemporary"
+    "SELECT COUNT(*) AS n FROM vehicles WHERE status IN ($listed)$notTemporary",
+    LISTED_STATUSES
 )['n'] ?? 0);
 
 $allBusy = [];

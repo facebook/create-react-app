@@ -2,9 +2,14 @@
  * Fleet loading.
  *
  * Vehicles live in the admin panel's database, which is the single place they
- * are managed. The public endpoint returns only cars whose status is Available
- * and only public-safe columns, so adding a car in the panel puts it on the
- * site and setting one to Maintenance takes it off.
+ * are managed. The public endpoint returns every car the business rents --
+ * out on hire or not -- and only public-safe columns, so adding a car in the
+ * panel puts it on the site and setting one to Maintenance or Inactive takes
+ * it off.
+ *
+ * A car being out today does not remove it: the fleet page is a catalogue,
+ * and which days each car is free comes from the availability endpoint, which
+ * greys those days out in the date pickers.
  *
  * cars.ts remains as a fallback: if the API is unreachable the site shows
  * whatever is in that file rather than an error. It is empty by default, which
