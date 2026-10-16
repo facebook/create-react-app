@@ -84,7 +84,7 @@ export function Monthly() {
         intro={`Need a car for weeks rather than days? Monthly self drive rental across ${seo.site.district} district — hatchbacks, sedans, SUVs and 7 seater vehicles.`}
       />
 
-      <section className="mx-auto max-w-3xl px-5 py-16">
+      <section className="mx-auto max-w-[86rem] px-5 py-16 sm:px-8 lg:px-12">
         <Reveal>
           <p className="leading-relaxed text-ink-dim">
             Renting by the day adds up quickly. Once you need a vehicle for more

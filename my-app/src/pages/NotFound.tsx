@@ -8,7 +8,7 @@ export function NotFound() {
         title="Page not found"
         intro="That address does not match anything on this site."
       />
-      <section className="mx-auto max-w-3xl px-5 py-16 text-center">
+      <section className="mx-auto max-w-[86rem] px-5 py-16 sm:px-8 lg:px-12 text-center">
         <div className="flex flex-wrap justify-center gap-3">
           <Link
             to="/"
