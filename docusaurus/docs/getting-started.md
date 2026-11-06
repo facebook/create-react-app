@@ -6,6 +6,8 @@ title: Getting Started
 Create React App is an officially supported way to create single-page React
 applications. It offers a modern build setup with no configuration.
 
+> Create React App is deprecated. If you have an existing app, see [Migrating from Create React App](migrating-from-create-react-app.md).
+
 ## Quick Start
 
 ```sh
