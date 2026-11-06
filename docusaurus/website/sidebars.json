@@ -6,7 +6,8 @@
       "folder-structure",
       "available-scripts",
       "supported-browsers-features",
-      "updating-to-new-releases"
+      "updating-to-new-releases",
+      "migrating-from-create-react-app"
     ],
     "Development": [
       "setting-up-your-editor",
