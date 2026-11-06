@@ -10,8 +10,7 @@ import SvgComponent, { SvgComponentWithRef } from './SvgComponent';
 import ReactDOMClient from 'react-dom/client';
 import { flushSync } from 'react-dom';
 
-// TODO: these fail with React 19 due to the JSX transform mismatch.
-describe.skip('svg component', () => {
+describe('svg component', () => {
   it('renders without crashing', async () => {
     const div = document.createElement('div');
     flushSync(() => {
